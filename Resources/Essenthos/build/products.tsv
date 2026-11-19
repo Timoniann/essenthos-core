@@ -21,6 +21,7 @@ texts/strong-terms	hand	by hand	-	-	none
 strong/numbers	hand	by hand (readings of Strong numbers no source writes; read by convert, stated-pairs, strong-pairs, strong-numbers)	-	-	none
 strong/references	hand	by hand (the bare references of Strong's Greek dictionary; read by tables and strong-pairs)	-	-	none
 texts/{text}/corrections	hand	by hand (seeded once by texts corrections)	-	-	none
+cross-references/tsk-corrections	hand	by hand (slips in the Treasury module's references; read by cross-references)	-	-	none
 texts/word-id-collisions	build	convert all --parallel 16	Essenthos/texts/*/words	word	all
 texts/{text}/words	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections	text book chapter verse word word_group word_group_word	text
 texts/{text}/verses	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections	verse chapter	text
@@ -89,7 +90,7 @@ records/derived/occupation-words	build	occupations	Essenthos/person-occupations.
 records/derived/parallels	build	cross-references	Essenthos/texts/BHSA/words Essenthos/texts/NESTLE1904/words Essenthos/texts/BHSA/frame Essenthos/texts/NESTLE1904/frame	@records	all
 records/**	hand	by hand (seeded once by records-export)	-	@records	all
 external/openbible/cross-references	build	cross-references	OpenBibleCrossReferences/cross_references.txt	@records	all
-external/tsk/cross-references	build	cross-references	TreasuryOfScriptureKnowledge	@records	all
+external/tsk/cross-references	build	cross-references	TreasuryOfScriptureKnowledge Essenthos/cross-references/tsk-corrections	@records	all
 external/bibledata/topics	build	topics	BibleData2026/NavesTopicalDictionary.csv	@records	all
 external/bibledata/topic-references	build	topics	BibleData2026/NavesTopicalDictionary.csv	@records	all
 external/maimonides/*	build	commandments	Maimonides/commandments.tsv	@records	all

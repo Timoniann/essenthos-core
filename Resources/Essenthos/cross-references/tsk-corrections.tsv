@@ -1,0 +1,8 @@
+# product    Essenthos/cross-references/tsk-corrections.tsv
+# producer   by hand
+# kinds      reference: in the Treasury module's entry for the verse own, the reference written as before is read as after
+# note       slips in the module's references where what they name cannot be a verse and what they mean is plain; read by cross-references
+own	kind	before	after	why
+1.49:8	reference	Phm 2:10,11	Php 2:10,11	Philemon has one chapter: Phm 2:10,11, under the knee that bows, is Philippians
+3.20:7	reference	Phm 2:12,13	Php 2:12,13	Philemon has one chapter: Phm 2:12,13, between Ephesians and Colossians, is Philippians
+22.5:6	reference	Isa 58:2:4,7-9	Isa 58:2-4,7-9	Isa 58:2:4,7-9 is Isaiah 58:2-4 and 7-9

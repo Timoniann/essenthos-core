@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -47,7 +48,7 @@ public class SweteSettledTests(Swete swete) : IClassFixture<Swete>
 
     [Fact]
     public void EverySettlementChangesSomethingAndCitesItsPage() =>
-        SweteSettled.All.Should().NotBeEmpty().And.OnlyContain(r =>
-            r.Digitised != r.Printed && r.Why.StartsWith("Printed in Swete, vol. ", StringComparison.Ordinal)
-                                     && r.Why.Contains("scan leaf", StringComparison.Ordinal));
+        ShippedCorrections.Swete.Of(TextCorrection.Tokens).Where(r => System.Text.RegularExpressions.Regex.IsMatch(r.Why, @"scan leaf \d+ of "))
+            .Should().HaveCount(22).And.OnlyContain(r =>
+                r.Before != r.After && r.Why.StartsWith("Printed in Swete, vol. ", StringComparison.Ordinal));
 }

@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Alexandrinus;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
@@ -126,7 +127,8 @@ internal static class AlexandrinusTextSource
     ];
 
     /// <summary>The codex's books in the order it has them: the Law, the Prophets, Maccabees, then the New Testament.</summary>
-    public static TextSource Read(string resources)
+    /// <param name="ottley">OTTLEY's corrections file, through which Ottley's Isaiah is read here as it is there.</param>
+    public static TextSource Read(string resources, TextCorrections ottley)
     {
         var folder = Path.Combine(resources, Folder);
         var transcription = Path.Combine(folder, NtvmrTranscription.Alexandrinus.File);
@@ -143,7 +145,7 @@ internal static class AlexandrinusTextSource
             books.Add(Book(canonical, books.Count + 1, SweteAlexandrinus.Read(folder, work)));
         }
 
-        books.Add(OttleyTextSource.Read(Path.Combine(resources, "Swete")).Books.Single() with
+        books.Add(OttleyTextSource.Read(Path.Combine(resources, "Swete"), ottley).Books.Single() with
         {
             Position = books.Count + 1,
         });

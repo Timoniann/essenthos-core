@@ -1,4 +1,6 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Products;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Usfm;
 
@@ -32,12 +34,6 @@ internal sealed record BrentonEdit(int Book, int Chapter, int Verse, string Digi
 /// </summary>
 internal static class BrentonEdits
 {
-    private const int Exodus = 2;
-
-    private const int Job = 18;
-
-    private const int FirstEsdras = 68;
-
     /// <summary>What the text's row says about these words, on a cold load and on a warm one.</summary>
     public const string Note =
         "Modified: where eBible's file prints words twice (Exodus 33:10, Job 3:14) or loses a clause between "
@@ -57,29 +53,26 @@ internal static class BrentonEdits
         "The words of 1 Esdras 8:17-18 that the file the text is loaded from loses between two clauses that "
         + "end alike.");
 
-    public static readonly IReadOnlyList<BrentonEdit> All =
+    /// <summary>The <c>words</c> rows of the text's corrections file, in its order.</summary>
+    public static IReadOnlyList<BrentonEdit> Of(TextCorrections corrections) =>
     [
-        new(Exodus, 33, 10, "καὶ ἐλάλει Μωυσῇ. Καὶ", "Καὶ",
-            "33:9 already ends with καὶ ἐλάλει Μωσῇ; Swete and GLAUx print the clause once, at the end of 33:9, and "
-            + "Brenton's English renders it once"),
-        new(Job, 3, 14, "Νῦν ἂν κοιμηθεὶς ἡσύχασα, ὑπνώσας δὲ ἀνεπαυσάμην μετὰ", "μετὰ",
-            "3:13 is these seven words; Swete and GLAUx print them once, and Brenton's English begins 3:14 with "
-            + "\"with kings and councillors\""),
-        new(FirstEsdras, 8, 17, "Θεοῦ σου,", "Θεοῦ σου τοῦ ἐν Ἱερουσαλὴμ,",
-            "GLAUx ends 8:17 τοῦ Θεοῦ σου τοῦ ἐν Ἱερουσαλὴμ, Swete reads τοῦ ἐν Ἰερουσαλήμ there, and Brenton's "
-            + "English 8:17 reads \"which is in Jerusalem\""),
-        new(FirstEsdras, 8, 18, "δώσεις", "Καὶ τὰ λοιπὰ ὅσα ἂν ὑποπίπτῃ σοι εἰς τὴν χρείαν τοῦ ἱεροῦ τοῦ Θεοῦ σου, δώσεις",
-            "GLAUx opens 8:18 with these words, Swete prints them in his own spelling, and Brenton's English 8:18 "
-            + "opens \"And whatsoever thing else thou shalt remember for the use of the temple of thy God\""),
+        .. corrections.Of(TextCorrection.Words).Select(row =>
+        {
+            var key = VerseKey.Parse(row.Own);
+            return key.ChapterLabel.Length == 0 && key.VerseLabel.Length == 0 && row.Before is { } digitised && row.After is { } printed
+                ? new BrentonEdit(key.Book, key.Chapter, key.Verse, digitised, printed, row.Why)
+                : throw new FormatException(
+                    $"The words row at {row.Own} needs a verse without a letter and the words it reads in both before and after.");
+        }),
     ];
 
     /// <summary>A book's chapters with its edits made; any other book's pass through unchanged.</summary>
     public static IReadOnlyList<ChapterDraft> Apply(
         int canonical,
         IReadOnlyList<ChapterDraft> chapters,
-        IReadOnlyList<BrentonEdit>? list = null)
+        IReadOnlyList<BrentonEdit> list)
     {
-        var edits = (list ?? All).Where(e => e.Book == canonical).ToList();
+        var edits = list.Where(e => e.Book == canonical).ToList();
         if (edits.Count == 0)
         {
             return chapters;
@@ -138,5 +131,5 @@ internal static class BrentonEdits
     private static InvalidOperationException Unread(BrentonEdit edit, string what) =>
         new($"Brenton's Greek {BookReferences.Name(edit.Book)} {edit.Chapter}:{edit.Verse} {what}. The file is not the "
             + "one these edits were made against: read the verse against Brenton's English and GLAUx again and correct "
-            + $"the entry in {nameof(BrentonEdits)} before loading.");
+            + "the words row of the corrections file before loading.");
 }

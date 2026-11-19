@@ -50,7 +50,7 @@ public class BrentonEditTests(Brenton brenton) : IClassFixture<Brenton>
     public void AnEditThatNoLongerFindsItsWordsStopsTheRead()
     {
         var verse = new VerseDraft(10, [new WordDraft("Καὶ", " "), new WordDraft("ἑώρα", " ")]);
-        var act = () => BrentonEdits.Apply(Exodus, [new ChapterDraft(33, [verse])]);
+        var act = () => BrentonEdits.Apply(Exodus, [new ChapterDraft(33, [verse])], BrentonEdits.Of(ShippedCorrections.Brenton));
 
         act.Should().Throw<InvalidOperationException>().WithMessage("*33:10*");
     }

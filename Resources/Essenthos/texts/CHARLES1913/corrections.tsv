@@ -1,0 +1,7 @@
+# product    Essenthos/texts/CHARLES1913/corrections.tsv
+# producer   by hand
+# kinds      split: the verse is divided where before opens (once, not at its start), and the second part and every later verse of the chapter are numbered one on; stray: the module's node holds before ahead of the chapter's first verse number, which is no word of the book
+own	kind	before	after	why
+86.1:8	split	For they will forget all My commandments	\N	The Jubilees module's scan of the margin numbers runs two verses into one: its 1:8 is Charles's 1:8 and 1:9, so the module's later verses of the chapter stand a number low. Checked against the 1913 volume (archive.org, apocryphapseudep02charuoft)
+86.11:3	split	And they made for themselves molten images	\N	The Jubilees module's scan of the margin numbers runs two verses into one: its 11:3 is Charles's 11:3 and 11:4, so the module's later verses of the chapter stand a number low. Checked against the 1913 volume (archive.org, apocryphapseudep02charuoft)
+85.75:1	stray	yyy	\N	The Enoch module's one stray before 75:1, which is no word of the book

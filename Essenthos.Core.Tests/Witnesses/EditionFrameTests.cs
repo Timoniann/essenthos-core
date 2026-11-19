@@ -135,7 +135,7 @@ public sealed class BrentonEdition
     /// <summary>Every verse this edition prints, read once: the fifty-two files are not quick.</summary>
     internal IReadOnlyList<(int Book, int Chapter, int Number, string Label, int Length)> Verses { get; } =
     [
-        .. from book in SeptuagintTextSource.Read(TestResources.SeptuagintFolder).Books
+        .. from book in SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton).Books
            from chapter in book.Chapters
            from verse in chapter.Verses
            select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
@@ -419,7 +419,7 @@ public class SweteMalachiTests
     [Fact]
     public void EachVerseStandsBesideItsOwnWords()
     {
-        var malachi = SweteTextSource.Read(TestResources.SweteFolder).Books
+        var malachi = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete).Books
             .Single(book => book.CanonicalOrdinal == Malachi);
         var frame = TestResources.Rules.Frame(
             Versification.Septuagint,
@@ -479,7 +479,7 @@ public sealed class SweteEdition
 
     internal IReadOnlyList<(int Book, int Chapter, int Number, string Label, int Length)> Verses { get; } =
     [
-        .. from book in SweteTextSource.Read(TestResources.SweteFolder).Books
+        .. from book in SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete).Books
            from chapter in book.Chapters
            from verse in chapter.Verses
            select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,

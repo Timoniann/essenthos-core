@@ -1,4 +1,5 @@
-﻿using Essenthos.Core.Database.Entities.Enums;
+﻿using Essenthos.Core.Conversion;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Swete;
 
@@ -112,6 +113,9 @@ internal static class SweteTextSource
 
     public static string FileName(string book) => book + FileExtension;
 
+    /// <summary>The number a file's lines open with, the work's in the TLG catalogue: <c>1</c> for <c>01.Genesis</c>.</summary>
+    public static int Number(string file) => int.Parse(file[..file.IndexOf('.')], System.Globalization.CultureInfo.InvariantCulture);
+
     /// <summary>
     /// Whether a file of the folder is one of this text's, read chapter for chapter as the file numbers
     /// it. The Old Greek files are corrected alike and read as <see cref="SweteOldGreekTextSource"/>;
@@ -185,10 +189,10 @@ internal static class SweteTextSource
                      + "state Creative Commons Attribution-ShareAlike 4.0. So the obligation is on this "
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
                      + "credit and to share alike anything derived from these files. "
-                     + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SwetePage.Note + " "
-                     + SweteCorrections.FiguresNote + " " + SweteDivisions.Note + " " + SweteIsaiah.Note + " "
-                     + SweteOdes.Note + " " + SweteRestorations.ChapterMarkersNote + " " + SweteSettled.Note + " "
-                     + SweteSettled.MarginNote,
+                     + SweteNotes.Restored + " " + SweteNotes.Letters + " " + SweteNotes.Page + " "
+                     + SweteNotes.Figures + " " + SweteNotes.Divisions + " " + SweteIsaiah.Note + " "
+                     + SweteOdes.Note + " " + SweteNotes.ChapterMarkers + " " + SweteNotes.Settled + " "
+                     + SweteNotes.Margin,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -257,18 +261,17 @@ internal static class SweteTextSource
             });
     }
 
-    /// <param name="restored">
-    /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>
-    /// and with its chapter numbers: what a corpus loaded before them holds. The verses it ran together
-    /// are divided either way.
+    /// <param name="corrections">
+    /// The text's corrections file, whose <c>tokens</c>, <c>opens</c> and <c>moves</c> rows are made on each file's
+    /// lines before they are read, in the file's order.
     /// </param>
     /// <param name="chapterMarkers">
-    /// False for the restored edition with the chapter numbers the transcription let into the text
-    /// still standing, as a corpus restored before <see cref="SweteReader"/> took them out holds it.
+    /// False for the edition with the chapter numbers the transcription let into the text still standing.
     /// </param>
-    public static TextSource Read(string folder, bool restored = true, bool chapterMarkers = true)
+    public static TextSource Read(string folder, TextCorrections corrections, bool chapterMarkers = true)
     {
-        var keepChapterMarkers = !restored || !chapterMarkers;
+        var keepChapterMarkers = !chapterMarkers;
+        EditionRepairs.CheckBooks(Slug, corrections, Canon.Select(entry => Number(entry.File)).ToHashSet());
         var books = new List<BookDraft>(Canon.Length + 1);
         var position = 0;
 
@@ -286,10 +289,8 @@ internal static class SweteTextSource
             }
 
             var lines = file == Isaiah
-                ? SweteIsaiah.Lines(folder)
-                : restored
-                    ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)))
-                    : SweteDivisions.Lines(file, File.ReadLines(path));
+                ? SweteIsaiah.Lines(folder, corrections)
+                : EditionRepairs.Apply(file, Number(file), File.ReadLines(path), corrections);
             if (file == SweteOdes.File)
             {
                 books.Add(Book(canonical, ++position, SweteOdes.Chapters(SweteReader.Read(SweteOdes.Lines(lines), keepChapterMarkers))));

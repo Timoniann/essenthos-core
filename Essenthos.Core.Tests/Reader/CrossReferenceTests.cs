@@ -93,7 +93,7 @@ public sealed class CrossReferenceReadingTests
     {
         var (openBible, _) = OpenBibleCrossReferences.Read(
             TestResources.Path(OpenBibleCrossReferences.Folder, OpenBibleCrossReferences.FileName));
-        var (treasury, _) = TreasuryReferences.Read(TestResources.Folder(TreasuryReferences.Folder));
+        var (treasury, _) = TreasuryReferences.Read(TestResources.Folder(TreasuryReferences.Folder), ShippedCorrections.Treasury);
 
         openBible.Where(r => !EnglishVerses.Has(r)).Should().BeEmpty();
         treasury.Where(r => !EnglishVerses.Has(r)).Select(r => (r.From, r.To)).Should().Equal(
@@ -123,7 +123,7 @@ public sealed class CrossReferenceReadingTests
             "beginning.<br /><scripRef>Pr 8:22-24; Joh 1:1-3</scripRef><br />God.<br />" +
             "<scripRef>Isa 40:28; Pr 8:22-24</scripRef><br /><scripRef>Joh 1:1</scripRef>\n";
 
-        var (rows, unread) = TreasuryReferences.Entry(GenesisOne, entry);
+        var (rows, unread) = TreasuryReferences.Entry(GenesisOne, entry, ShippedCorrections.Treasury);
 
         unread.Should().Be(0);
         rows.Select(r => (r.To, r.Note)).Should().Equal(
@@ -137,7 +137,7 @@ public sealed class CrossReferenceReadingTests
     [Fact]
     public void TheShippedTreasuryReadsAlmostWhole()
     {
-        var (rows, unread) = TreasuryReferences.Read(TestResources.Folder(TreasuryReferences.Folder));
+        var (rows, unread) = TreasuryReferences.Read(TestResources.Folder(TreasuryReferences.Folder), ShippedCorrections.Treasury);
 
         rows.Should().HaveCountGreaterThan(370_000);
         ((double)unread / rows.Count).Should().BeLessThan(0.001, $"{unread} pieces of {rows.Count} did not read");

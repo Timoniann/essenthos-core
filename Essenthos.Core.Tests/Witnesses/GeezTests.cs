@@ -242,7 +242,7 @@ public class GeezAlignmentScopeTests
     [Fact]
     public void EveryVerseOfAMappedBookHasOneLineAndEveryLineAConfidence()
     {
-        var geez = GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder));
+        var geez = GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder), ShippedCorrections.Of(GeezTextSource.Slug));
         var verses = geez.Books
             .Where(book => GeezVerseMap.Books.Contains(book.CanonicalOrdinal))
             .SelectMany(book => book.Chapters.SelectMany(chapter =>
@@ -360,7 +360,7 @@ public class GeezWordTests
 public class GeezTextTests
 {
     private static readonly Lazy<TextSource> Text =
-        new(() => GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder)));
+        new(() => GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder), ShippedCorrections.Of(GeezTextSource.Slug)));
 
     private static BookDraft Book(int ordinal) => Text.Value.Books.Single(book => book.CanonicalOrdinal == ordinal);
 

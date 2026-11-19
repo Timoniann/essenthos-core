@@ -1,0 +1,49 @@
+# product    Essenthos/texts/SWETEOG/corrections.tsv
+# producer   by hand
+# kinds      tokens: in the verse own (the transcription's reference book.chapter.verse) the tokens before, standing there once, become those of after (none where after is \N); opens: from the tokens before to the verse's end the words open the verse after names first, with the tokens after that in place of before; moves: every token of the verse moves to the reference after. Rows apply in this file's order, each to the verse as the rows before it left it
+# note       the Old Greek of Susanna, Daniel and Bel in Swete's volume 3 (files 54, 56, 58 of lxx-swete), corrected as Swete's own books are: a Latin letter for the Greek one it looks exactly like, a verse number let into the text in figures taken out and the word kept, and in the song of Daniel 3 a word whose first letters a figure took written as the verses on either side print it
+own	kind	before	after	why
+54.1.44	tokens	–45	\N	The verse number Swete prints in figures, let into the text
+54.1.60	tokens	–62	\N	The verse number Swete prints in figures, let into the text
+56.3.52	tokens	5²Εὐλογητὸς	Εὐλογητὸς	The verse number Swete prints in figures, let into the text
+56.3.53	tokens	⁵³εὐλογημένος	εὐλογημένος	The verse number Swete prints in figures, let into the text
+56.3.54	tokens	⁵³εὐλογητὸς	εὐλογητὸς	The verse number Swete prints in figures, let into the text
+56.3.55	tokens	⁵⁵εὐλογητὸς	εὐλογητὸς	The verse number Swete prints in figures, let into the text
+56.3.56	tokens	⁵⁶τὐλογητὸς	εὐλογητὸς	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.57	tokens	⁵⁷εὺλογεῖτε,	εὺλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.58	tokens	⁵⁸εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.59	tokens	⁵⁹εὺλογεῖτε,	εὺλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.60	tokens	60εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.61	tokens	⁶¹εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.62	tokens	⁶²τὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.63	tokens	⁶³τὐλογεῖτε,	τὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.64	tokens	⁵40ὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.65	tokens	⁶5εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.66	tokens	66τὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.67	tokens	⁶7εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.68	tokens	68εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.69	tokens	⁶9εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.70	tokens	⁷⁰εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.71	tokens	7¹εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.72	tokens	⁷²εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.73	tokens	⁷³εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.74	tokens	⁷⁴εὐλογείτω	εὐλογείτω	The verse number Swete prints in figures, let into the text
+56.3.75	tokens	⁵εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.76	tokens	7⁶εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.77	tokens	⁷⁷εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.78	tokens	7⁸κὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.79	tokens	⁷⁹εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.81	tokens	8¹εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.82	tokens	8²εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.83	tokens	8³εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.84	tokens	84εὺλογεῖτε,	εὺλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.85	tokens	85εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.86	tokens	86τὸλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.87	tokens	8⁷κὺλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, over the first letters of the word the verses beside it print
+56.3.88	tokens	88εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.3.90	tokens	90εὐλογεῖτε,	εὐλογεῖτε,	The verse number Swete prints in figures, let into the text
+56.6.1	tokens	(2)καὶ	καὶ	The verse number Swete prints in figures, let into the text
+56.11.8	tokens	Aἴγυπτον·	Αἴγυπτον·	A Latin letter for the Greek one it looks exactly like
+56.11.29	tokens	Aἴγυπτον,	Αἴγυπτον,	A Latin letter for the Greek one it looks exactly like
+58.1.15	tokens	—17	\N	The verse number Swete prints in figures, let into the text
+58.1.31	tokens	–32	\N	The verse number Swete prints in figures, let into the text

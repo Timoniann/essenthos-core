@@ -10,8 +10,9 @@ namespace Essenthos.Core.Conversion;
 /// <summary>
 /// One text the converter makes: its slug, the sources under Resources/ it reads (whose hashes decide
 /// whether it is made again), and how its words are read from them. The readers are the load's own
-/// <c>*TextSource</c> classes; a text corrected at its source (bible4u's three) is read with the
-/// repairs its corrections file declares instead of the ones the load computes.
+/// <c>*TextSource</c> classes; a text whose reader applies rows of its corrections file to the source as it reads it
+/// (bible4u's three, Swete's and Ottley's transcriptions, Brenton's Greek, the Ge'ez, Charles, a SWORD module) is
+/// handed them.
 /// </summary>
 internal sealed record CataloguedText(
     string Slug,
@@ -26,14 +27,14 @@ internal static class TextCatalogue
     ];
 
     /// <summary>
-    /// The second reading of Swete's and Ottley's text, made from the printed pages: the readings and verdicts the
-    /// tables their readers apply (<c>Swete/SweteSettled.json</c>, <c>Swete/OttleyPage.json</c>) are written from. A
-    /// change to them makes the texts again. They live under <c>Resources/Essenthos/page-readings/</c>, our own readings
-    /// kept beside the rest of our data; the provenance of other model runs is archived off the checkout.
+    /// The second reading of Swete's and Ottley's text, made from the printed pages: the readings and verdicts the rows
+    /// of their corrections files that cite a page are written from. A change to them makes the texts again. They live
+    /// under <c>Resources/Essenthos/page-readings/</c>, our own readings kept beside the rest of our data; the provenance
+    /// of other model runs is archived off the checkout.
     /// </summary>
     private const string SwetePages = "Essenthos/page-readings/pages-swete-2026-10-10/out";
 
-    /// <summary>Ottley's readings, and <c>write_table.py</c>, which writes <c>Swete/OttleyPage.json</c> from them.</summary>
+    /// <summary>Ottley's readings, and <c>write_table.py</c>, which wrote the page's rows from them.</summary>
     private static readonly string[] OttleyPages =
     [
         "Essenthos/page-readings/pages-ottley-2026-10-09/settled.json",
@@ -70,6 +71,8 @@ internal static class TextCatalogue
     {
         CataloguedText Text(string slug, Func<string, TextSource> read, params string[] sources) =>
             new(slug, sources, (resources, _) => read(resources));
+        CataloguedText Corrected(string slug, Func<string, TextCorrections, TextSource> read, params string[] sources) =>
+            new(slug, sources, read);
 
         return
         [
@@ -84,14 +87,20 @@ internal static class TextCatalogue
             Text(WestcottHortTextSource.Slug, resources => WestcottHortTextSource.Read(Path.Combine(resources, "WestcottHort")), "WestcottHort"),
             Text(SblgntTextSource.Slug, SblgntTextSource.Read, "SBLGNT"),
             Text(ByzantineTextSource.Slug, resources => ByzantineTextSource.Read(Path.Combine(resources, "Byzantine")), "Byzantine"),
-            Text(SeptuagintTextSource.Slug, resources => SeptuagintTextSource.Read(Path.Combine(resources, "Septuagint")), "Septuagint"),
-            Text(SweteTextSource.Slug, resources => SweteTextSource.Read(Path.Combine(resources, "Swete")), "Swete", SwetePages),
-            Text(SweteOldGreekTextSource.Slug, resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete")), "Swete"),
-            Text(OttleyTextSource.Slug, resources => OttleyTextSource.Read(Path.Combine(resources, "Swete")), ["Swete", .. OttleyPages]),
-            Text(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Read, ["Alexandrinus", "Swete", .. OttleyPages]),
+            Corrected(SeptuagintTextSource.Slug, (resources, corrections) => SeptuagintTextSource.Read(Path.Combine(resources, "Septuagint"), corrections),
+                "Septuagint"),
+            Corrected(SweteTextSource.Slug, (resources, corrections) => SweteTextSource.Read(Path.Combine(resources, "Swete"), corrections),
+                "Swete", SwetePages),
+            Corrected(SweteOldGreekTextSource.Slug,
+                (resources, corrections) => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete"), corrections), "Swete"),
+            Corrected(OttleyTextSource.Slug, (resources, corrections) => OttleyTextSource.Read(Path.Combine(resources, "Swete"), corrections),
+                ["Swete", .. OttleyPages]),
+            Text(AlexandrinusTextSource.Slug, resources => AlexandrinusTextSource.Read(resources, TextCorrections.Read(resources, OttleyTextSource.Slug)),
+                ["Alexandrinus", "Swete", .. OttleyPages, $"Essenthos/texts/{OttleyTextSource.Slug}/corrections.tsv"]),
             .. CodexTextSource.All.Select(codex => Text(codex.Slug, codex.Read, codex.Folder)),
             Text(SamaritanTextSource.Slug, resources => SamaritanTextSource.Read(Path.Combine(resources, "SamaritanPentateuch")), "SamaritanPentateuch"),
-            Text(GeezTextSource.Slug, resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)), GeezTextSource.Folder),
+            Corrected(GeezTextSource.Slug, (resources, corrections) => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder), corrections),
+                GeezTextSource.Folder),
             Text(BereanTextSource.Slug, resources => BereanTextSource.Read(
                 ResourcePaths.File(resources, "Berean", "bsb.txt"),
                 ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")), "Berean"),
@@ -100,12 +109,14 @@ internal static class TextCatalogue
                 [$"bible4u/{identifier}.xml", .. Bible4uExtended],
                 (resources, corrections) => Bible4u(resources, identifier, corrections))),
             Text(KulishTextSource.Slug, resources => KulishTextSource.Read(Path.Combine(resources, "Kulish")), "Kulish"),
-            Text(CharlesTextSource.Slug, resources => CharlesTextSource.Read(Path.Combine(resources, CharlesTextSource.Folder)),
+            Corrected(CharlesTextSource.Slug,
+                (resources, corrections) => CharlesTextSource.Read(Path.Combine(resources, CharlesTextSource.Folder), corrections),
                 CharlesTextSource.Folder),
             .. EbibleTextSource.Definitions.Select(text => Text(text.Value.Slug,
                 resources => EbibleTextSource.Read(Path.Combine(resources, text.Key)), text.Key)),
-            .. SwordTextSource.Texts.Values.Select(text => Text(text.Definition.Slug,
-                resources => SwordTextSource.Read(Path.Combine(resources, text.Folder), text.FhlPrefixes ? StrongNumberLists.Of(resources) : null),
+            .. SwordTextSource.Texts.Values.Select(text => Corrected(text.Definition.Slug,
+                (resources, corrections) => SwordTextSource.Read(Path.Combine(resources, text.Folder),
+                    text.FhlPrefixes ? StrongNumberLists.Of(resources) : null, corrections),
                 text.Folder)),
             .. EnglishTextSource.Definitions.Select(text => Text(text.Value.Slug,
                 resources => DeuterocanonTextSource.Extend(EnglishTextSource.Read(Path.Combine(resources, text.Key)), resources),

@@ -1,6 +1,6 @@
 # product    Essenthos/texts/GEEZ81/corrections.tsv
 # producer   by hand
-# kinds      drop: the word reading before goes; divide: the word opens the verse after (the source prints no number there)
+# kinds      drop: the word reading before goes; divide: the word opens the verse after (the source prints no number there); line: the source's line numbered own, the last of its chapter to open with before, is numbered after (in another book, it opens that chapter of the book)
 own	kind	before	after	why
 11.2:35.19	divide	ወወህቦ	11.2:35a	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 2:35a ("and the Lord gave Solomon understanding": ወወህቦ፡ እግዚአብሔር፡ ለሰሎሞን፡)
 11.10:22.23	divide	ወዝንቱ	11.10:22a	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 10:22a ("this was the levy": ወዝንቱ፡ ተግባሩ፡), where the source marks the Hebrew's 9:15
@@ -24,3 +24,5 @@ own	kind	before	after	why
 11.16:28.84	divide	ወገብረ	11.16:28f	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28f, which is Dillmann's 9
 11.16:28.101	divide	ወይቤሎ	11.16:28g	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28g, which is Dillmann's 10
 11.16:28.111	divide	ወሰከበ	11.16:28h	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28h, which is Dillmann's 11
+9.31:1	line	ወእምዝ፡ እምድኅረ፡ ሞተ፡ ሳኦል	10.1:1	The last line of 1 Samuel (LIT2697Sam.xml) is numbered 1 and is the first verse of 2 Samuel, which the next file (LIT2698Sam.xml) lacks: it opens at 1:2
+40.7:24	line	እስመ፡ ከመ፡ መኰንን፡ ይሜህሮሙ	40.7:29	Matthew 7 runs 1 to 28 and ends on a line numbered 24, which is the chapter's last verse

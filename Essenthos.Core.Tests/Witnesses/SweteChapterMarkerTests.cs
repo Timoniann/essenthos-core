@@ -82,8 +82,8 @@ public class SweteChapterMarkerTests(ITestOutputHelper output)
     public void SecondSamuelChapterTwentyMarkerIsNotTheLastWordOfNineteen()
     {
         const string file = "12.Regnorum_II";
-        var lines = SweteDivisions.Lines(file, File.ReadLines(Path.Combine(TestResources.SweteFolder, file + ".txt")));
-        var book = SweteReader.Read(SweteRestorations.Apply(file, lines));
+        var lines = File.ReadLines(Path.Combine(TestResources.SweteFolder, file + ".txt"));
+        var book = SweteReader.Read(EditionRepairs.Apply(file, SweteTextSource.Number(file), lines, ShippedCorrections.Swete));
         var chapter = book.Chapters.Single(c => c.Number == 19);
         chapter.Verses.Single(v => v.Number == 42).Words.Should().HaveCount(37);
         var last = chapter.Verses.Single(v => v.Number == 43);
@@ -102,8 +102,8 @@ public class SweteChapterMarkerTests(ITestOutputHelper output)
     [Fact]
     public void EveryChapterNumberTheTranscriptionLetInIsTakenOutAndNoWordWithIt()
     {
-        var marked = SweteTextSource.Read(TestResources.SweteFolder, chapterMarkers: false);
-        var read = SweteTextSource.Read(TestResources.SweteFolder);
+        var marked = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete, chapterMarkers: false);
+        var read = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
         var removed = new List<string>();
         var kept = new List<string>();
 
@@ -156,7 +156,7 @@ public class SweteChapterMarkerTests(ITestOutputHelper output)
     [Fact]
     public void AVerseThatHeldOnlyItsChapterNumberStaysEmpty()
     {
-        var read = SweteTextSource.Read(TestResources.SweteFolder);
+        var read = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
         read.Books.Single(b => b.CanonicalOrdinal == 11).Chapters.Single(c => c.Number == 14)
             .Verses.Single(v => v.Number == 1).Words.Should().BeEmpty();
     }
@@ -171,7 +171,7 @@ public class SweteChapterMarkerTests(ITestOutputHelper output)
     [InlineData(11, 16, 1, "καὶ ἐγένετο λόγος Κυρίου ἐν χειρὶ Εἰοὺ υἱοῦ Ἁνανεὶ πρὸς Βααςά")]
     public void AChapterOpensWithTheLineThePagePrintsBesideItsNumber(int book, int chapter, int verse, string printed)
     {
-        var read = SweteTextSource.Read(TestResources.SweteFolder);
+        var read = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
         var chapters = read.Books.Single(b => b.CanonicalOrdinal == book).Chapters;
         string.Concat(chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse).Words
                 .Select(w => w.Surface + w.Trailer)).TrimEnd()
@@ -183,7 +183,7 @@ public class SweteChapterMarkerTests(ITestOutputHelper output)
     [Fact]
     public void ExodusTwentyOneReadsAsThePagePrintsIt()
     {
-        var read = SweteTextSource.Read(TestResources.SweteFolder);
+        var read = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
         var exodus = read.Books.Single(b => b.CanonicalOrdinal == 2);
         string.Concat(exodus.Chapters.Single(c => c.Number == 20).Verses.Single(v => v.Number == 1).Words
                 .Select(w => w.Surface + w.Trailer)).TrimEnd()

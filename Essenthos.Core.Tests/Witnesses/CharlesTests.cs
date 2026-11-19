@@ -16,10 +16,10 @@ public sealed class CharlesTests
     private static readonly Lazy<(TextSource Source, CharlesTextSource.Tally Tally)> Reading = new(() =>
     {
         var tally = new CharlesTextSource.Tally();
-        return (CharlesTextSource.Read(TestResources.Folder(CharlesTextSource.Folder), tally), tally);
+        return (CharlesTextSource.Read(TestResources.Folder(CharlesTextSource.Folder), ShippedCorrections.Of(CharlesTextSource.Slug), tally), tally);
     });
 
-    private static readonly Lazy<TextSource> Geez = new(() => GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder)));
+    private static readonly Lazy<TextSource> Geez = new(() => GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder), ShippedCorrections.Of(GeezTextSource.Slug)));
 
     /// <summary>
     /// The words of the title pages and introductions, the notes, titles and headings, the verse numbers, the Greek

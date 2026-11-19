@@ -1,0 +1,244 @@
+# product    Essenthos/texts/GRCBRENT/corrections.tsv
+# producer   by hand
+# kinds      begins: the words before, which eBible's file prints at the end of the verse before (after), begin the verse own; ends: the words before, which the file prints at the head of the verse own, end the verse before (after); words: the words before, as the file prints them and once in the verse, are those of after, read as the file's reader reads a line (the first keeps the paragraph break, the last the trailer)
+# note       begins and ends: verse divisions of eBible's Brenton Greek (grcbrent) moved to where Brenton's own English, printed beside the same Greek with the same verse numbers, begins the verse, each only where a Greek edition begins it there too (drawn up 2026-09-28 against the files fetched 2026-09-02). why names the witnesses that begin the verse at exactly that word: BRENTON (Brenton's English, eBible eng-Brenton), GLAUX (the Greek Wikisource Septuagint GLAUx annotates), SWETE (Swete's own division), SWETE-BRACKETED (the English Bible's number Swete prints in brackets); for the one name neither Greek edition prints (Genesis 10:28), the Hebrew. words: where the file prints words twice or loses a clause between two that end alike, read as Brenton's English, Swete and GLAUx read the verse, in GLAUx's words
+own	kind	before	after	why
+1.10:28	begins	καὶ Εὐὰλ,	1.10:27	witnesses: BRENTON. Swete and GLAUx print no Εὐάλ; the Hebrew opens verse 28 with the name (Obal), as Brenton's English does
+1.17:4	ends	Καὶ ἐλάλησεν αὐτῷ ὁ Θεὸς, λέγων,	1.17:3	witnesses: BRENTON GLAUX SWETE
+1.19:19	ends	Κύριε,	1.19:18	witnesses: BRENTON GLAUX SWETE
+1.25:20	begins	Ἁβραάμ ἐγέννησε τὸν Ἰσαάκ.	1.25:19	witnesses: BRENTON GLAUX
+1.37:2	begins	αὗται δὲ αἱ γενέσεις Ἰακώβ.	1.37:1	witnesses: BRENTON GLAUX SWETE
+2.30:27	begins	καὶ πάντα τὰ σκεύη αὐτῆς,	2.30:26	witnesses: BRENTON GLAUX
+2.31:7	ends	καὶ πονήσουσι πάντα ὅσα συνέταξά σοι,	2.31:6	witnesses: BRENTON GLAUX SWETE
+3.20:2	begins	καὶ τοῖς υἱοῖς Ἰσραὴλ λαλήσεις,	3.20:1	witnesses: BRENTON GLAUX SWETE
+3.21:19	ends	ἢ χωλὸς, ἢ κολοβόριν, ἢ ὠτότμητος,	3.21:18	witnesses: BRENTON GLAUX SWETE
+4.1:10	begins	Τῶν υἱῶν Ἰωσὴφ τῶν Ἐφραὶμ, Ἐλισαμὰ υἱὸς Ἐμιούδ·	4.1:9	witnesses: BRENTON GLAUX
+4.6:2	begins	λάλησον τοῖς υἱοῖς Ἰσραὴλ,	4.6:1	witnesses: BRENTON GLAUX SWETE
+4.6:4	begins	πάσας τὰς ἡμέρας τῆς εὐχῆς αὐτοῦ·	4.6:3	witnesses: BRENTON GLAUX SWETE
+4.6:5	begins	πάσας τὰς ἡμέρας τοῦ ἁγνισμοῦ·	4.6:4	witnesses: BRENTON GLAUX SWETE
+4.6:6	begins	πάσας τὰς ἡμέρας τῆς εὐχῆς Κυρίῳ·	4.6:5	witnesses: BRENTON GLAUX SWETE
+4.6:7	begins	ἐπὶ πατρὶ καὶ μητρὶ,	4.6:6	witnesses: BRENTON GLAUX SWETE
+4.6:12	begins	ᾗ ἡγιάσθη Κυρίῳ, τὰς ἡμέρας τῆς εὐχῆς·	4.6:11	witnesses: BRENTON GLAUX
+4.8:2	begins	λάλησον τῷ Ἀαρὼν,	4.8:1	witnesses: BRENTON GLAUX SWETE
+4.9:5	begins	ἐναρχομένου τῇ τεσσαρεσκαιδεκάτῃ ἡμέρᾳ τοῦ μηνὸς ἐν τῇ ἐρήμῳ τοῦ Σινᾶ.	4.9:4	witnesses: BRENTON GLAUX SWETE
+4.9:11	begins	ἐν τῷ μηνὶ τῷ δευτέρῳ ἐν τῇ τεσσαρεσκαιδεκάτῃ ἡμέρᾳ·	4.9:10	witnesses: BRENTON GLAUX SWETE
+4.10:2	begins	ποίησον σεαυτῷ δύο σάλπιγγας ἀγυρᾶς·	4.10:1	witnesses: BRENTON GLAUX SWETE
+4.15:2	begins	λάλησον τοῖς ὑοῖς Ἰσραὴλ,	4.15:1	witnesses: BRENTON GLAUX SWETE
+4.15:40	begins	ὅπως ἂν μνησθῆτε καὶ ποιήσητε πάσας τὰς ἐντολάς μου,	4.15:39	witnesses: BRENTON GLAUX SWETE
+4.17:3	begins	τῶν ἁμαρτωλῶν τούτων ἐν ταῖς ψυχαῖς αὐτῶν,	4.17:2	witnesses: BRENTON. GLAUx begins verse 3 four words earlier still
+4.21:19	ends	καὶ ἀπὸ φρέατος εἰς Μανθαναεὶν,	4.21:18	witnesses: BRENTON GLAUX SWETE
+4.27:8	ends	λέγων,	4.27:7	witnesses: BRENTON GLAUX
+4.30:5	ends	καὶ ἀκούσῃ ὁ πατὴρ αὐτῆς τὰς εὐχὰς αὐτῆς, καὶ τοὺς ὁρισμοὺς αὐτῆς, οὓς ὡρίσατο κατὰ τῆς ψυχῆς αὐτῆς, καὶ παρασιωπήσῃ αὐτῆς ὁ πατὴρ, καὶ στήσονται πᾶσαι αἱ εὐχαὶ αὐτῆς,	4.30:4	witnesses: BRENTON GLAUX
+4.31:49	ends	καὶ εἶπαν πρὸς Μωυσῆν,	4.31:48	witnesses: BRENTON GLAUX
+5.1:3	ends	Σηεὶρ ἕως Κάδης Βαρνή.	5.1:2	witnesses: BRENTON GLAUX SWETE
+5.1:4	begins	μετὰ τὸ πατάξαι	5.1:3	witnesses: BRENTON GLAUX SWETE
+5.1:5	ends	Ἐδραῒν,	5.1:4	witnesses: BRENTON GLAUX SWETE
+5.1:31	begins	καὶ ἐν τῇ ἐρήμῳ ταύτῃ ἣν εἴδετε, ὁδὸν ὄρους τοῦ Ἀμοῤῥαίου· ὡς τροφοφορήσαι σε Κύριος ὁ	5.1:30	witnesses: BRENTON GLAUX SWETE
+5.1:36	begins	πλὴν	5.1:35	witnesses: BRENTON GLAUX SWETE
+5.2:15	ends	Θεός αὐτοὺς.	5.2:14	witnesses: BRENTON GLAUX
+5.2:17	begins	καὶ ἐλάλησε	5.2:16	witnesses: BRENTON GLAUX SWETE
+5.2:18	begins	σὺ παραπορεύσῃ σήμερον τὰ ὅρια	5.2:17	witnesses: BRENTON GLAUX SWETE
+5.3:20	begins	ἕως ἂν καταπαύσῃ Κύριος ὁ	5.3:19	witnesses: BRENTON GLAUX SWETE
+5.4:10	begins	ἡμέραν ἣν ἔστητε ἐνώπιον Κυρίου τοῦ Θεοῦ ἡμῶν ἐν Χωρὴβ τῇ ἡμέρᾳ τῆς ἐκκλησίας· ὅτε εἶπε	5.4:9	witnesses: BRENTON GLAUX
+5.4:26	ends	Θεοῦ ὑμῶν παροργίσαι αὐτόν,	5.4:25	witnesses: BRENTON GLAUX SWETE
+5.4:33	begins	εἰ ἀκήκοεν ἔθνος φωνὴν	5.4:32	witnesses: BRENTON GLAUX SWETE
+5.6:4	ends	καὶ ταῦτα τὰ δικαιώματα καὶ τὰ κρίματα, ὅσα ἐνετείλατο Κύριος τοῖς υἱοῖς Ἰσραὴλ ἐν τῇ ἐρήμῳ, ἐξελθόντων αὐτῶν ἐκ γῆν Αἰγύπτου.	5.6:3	witnesses: BRENTON GLAUX. Swete prints these words at the head of verse 4
+5.6:12	begins	πρόσεχε σεαυτῷ μὴ ἐπιλάθῃ	5.6:11	witnesses: BRENTON GLAUX SWETE
+5.20:3	ends	καὶ ἐρεῖ πρὸς αὐτοὺς,	5.20:2	witnesses: BRENTON GLAUX
+5.24:18	ends	οὐκ ἐνεχυράσεις ἱμαίτιον χήρας,	5.24:17	witnesses: BRENTON GLAUX
+5.28:32	ends	καὶ οὐκ ἔσται σοι ὁ βοηθῶν.	5.28:31	witnesses: BRENTON GLAUX
+5.28:55	ends	αὐτῷ,	5.28:54	witnesses: BRENTON GLAUX SWETE
+6.7:18	begins	Καὶ προσήχθη κατʼ ἄνδρα,	6.7:17	witnesses: BRENTON GLAUX
+6.7:26	ends	Καὶ ἐλιθοβόλησαν αὐτὸν λίθοις πᾶς Ἰσραὴλ,	6.7:25	witnesses: BRENTON GLAUX SWETE
+6.11:17	ends	τὰ πρὸς τῷ ὄρει	6.11:16	witnesses: BRENTON GLAUX
+6.13:19	begins	καὶ, Καριθαὶμ,	6.13:18	witnesses: BRENTON GLAUX SWETE
+6.14:3	ends	ἀπὸ τοῦ πέραν τοῦ Ἰορδάνου.	6.14:2	witnesses: BRENTON GLAUX
+6.15:12	ends	Καὶ τὰ ὅρια αὐτῶν ἀπὸ θαλάσσης, ἡ θάλασσα ἡ μεγάλη ὁριεῖ.	6.15:11	witnesses: BRENTON GLAUX
+6.15:40	begins	καὶ	6.15:39	witnesses: BRENTON GLAUX SWETE
+6.19:20	begins	καὶ Ἀναχερὲθ,	6.19:19	witnesses: BRENTON GLAUX
+6.24:4	begins	καὶ ἔδωκα αὐτῷ τὸν Ἰσαὰκ,	6.24:3	witnesses: BRENTON GLAUX
+7.2:15	begins	ἐν πᾶσιν οἷς ἐπορεύοντο·	7.2:14	witnesses: BRENTON GLAUX SWETE
+7.18:18	ends	καὶ εἰσῆλθον ἐκεῖ εἰς οἶκον Μιχαία, καὶ ὁ ἱερεὺς ἑστώς.	7.18:17	witnesses: BRENTON GLAUX
+9.1:2	ends	Νασὶβ Ἐφραίμ.	9.1:1	witnesses: BRENTON GLAUX SWETE
+9.4:16	begins	Καὶ εἶπεν Ἡλὶ τοῖς ἀνδράσιν τοῖς περιεστηκόσιν αὐτῷ, τίς ἡ φωνὴ τοῦ ἤχου τούτου;	9.4:15	witnesses: BRENTON GLAUX
+9.14:25	ends	καὶ πᾶσα ἡ γῆ ἠρίστα.	9.14:24	witnesses: BRENTON GLAUX SWETE
+9.20:22	begins	Ἐὰν εἴπω λέγων τῷ παιδαρίῳ, ὧδε ἡ σχίζα ἀπὸ σοῦ καὶ ὧδε, λάβε αὐτήν· παραγίνου, ὅτι εἰρήνη σοι, καὶ οὐκ ἔστι λόγος, ζῇ Κύριος·	9.20:21	witnesses: BRENTON GLAUX. Swete divides as the file does
+10.2:31	ends	καὶ Ἀσαήλ.	10.2:30	witnesses: BRENTON GLAUX
+10.4:10	begins	ὅτι ὁ ἀπαγγείλας μοι ὅτι τέθνηκε Σαοὺλ,	10.4:9	witnesses: BRENTON GLAUX SWETE
+10.6:22	ends	καὶ παίξομαι καὶ ὀρχήσομαι ἐνώπιον Κυρίου,	10.6:21	witnesses: BRENTON GLAUX
+10.7:5	begins	πορεύου,	10.7:4	witnesses: BRENTON GLAUX SWETE
+10.7:22	begins	ἕνεκεν τοῦ μεγαλύναι σε	10.7:21	witnesses: BRENTON GLAUX SWETE
+10.14:6	ends	Ἡ δὲ εἶπε, καὶ μάλα γυνὴ χήρα ἐγώ εἰμι, καὶ ἀπέθανεν ὁ ἀνήρ μου.	10.14:5	witnesses: BRENTON GLAUX SWETE
+10.21:5	begins	Καὶ εἶπε, τί ὑμεῖς λέγετε, καὶ ποιήσω ὑμῖν;	10.21:4	witnesses: BRENTON GLAUX
+10.22:37	begins	εἰς πλατυσμὸν εἰς τὰ διαβήματά μου ὑποκάτω μου,	10.22:36	witnesses: BRENTON GLAUX SWETE
+10.23:1	begins	Καὶ οὗτοι οἱ λόγοι Δαυὶδ οἱ ἔσχατοι·	10.22:51	witnesses: BRENTON GLAUX SWETE
+11.6:19	begins	τοῦ δαβὶρ ἐν μέσῳ τοῦ οἴκου ἔσωθεν,	11.6:17	witnesses: BRENTON GLAUX
+11.6:35	begins	ἐγκεκολαμμένα χερουβὶμ,	11.6:34	witnesses: BRENTON GLAUX
+11.11:20	begins	Καὶ ἔτεκεν αὐτῷ ἡ ἀδελφὴ Θεκεμίνας τῷ Ἄδερ τὸν Γανηβὰθ υἱὸν αὐτῆς·	11.11:19	witnesses: BRENTON GLAUX SWETE
+11.13:30	ends	ὁ προφήτης, τοῦ θάψαι αὐτὸν	11.13:29	witnesses: GLAUX. Brenton's English ends verse 29 four words later still
+11.18:34	ends	καὶ εἶπε, λάβετέ μοι τέσσαρας ὑδρίας ὕδατος, καὶ ἐπιχέετε ἐπὶ τὸ ὁλοκαύτωμα καὶ ἐπὶ τὰς σχίδακας· καὶ ἐποίησαν οὕτως.	11.18:33	witnesses: BRENTON GLAUX
+11.22:42	ends	Ἰωσαφὰτ,	11.22:41	witnesses: BRENTON GLAUX
+12.4:40	begins	καὶ ἐνέχει τοῖς ἀνδράσι φαγεῖν·	12.4:39	witnesses: BRENTON GLAUX SWETE
+12.11:6	begins	Τὸ τρίτον ἐξ ὑμῶν εἰσελθέτω τὸ σάββατον,	12.11:5	witnesses: BRENTON GLAUX
+13.1:40	begins	Υἱοὶ Σωβὰλ, Ἀλὼν, Μαχανὰθ, Ταιβὴλ, Σωφὶ, καὶ Ὠνὰν·	13.1:39	witnesses: BRENTON GLAUX SWETE
+13.4:37	begins	καὶ Ζουζὰ υἱὸς Σαφαῒ,	13.4:36	witnesses: BRENTON GLAUX
+13.5:15	begins	ἀδελφοῦ	13.5:14	witnesses: BRENTON GLAUX
+13.11:5	begins	οὐκ εἰσελεύση ὧδε·	13.11:4	witnesses: BRENTON GLAUX SWETE
+13.11:19	ends	καὶ εἶπεν,	13.11:18	witnesses: BRENTON GLAUX
+13.17:6	ends	καὶ ἤμην ἐν σκηνῇ καὶ ἐν καλὺμματι	13.17:5	witnesses: BRENTON GLAUX SWETE
+13.17:10	begins	καὶ ἀφʼ ἡμερῶν ὧν ἔταξα κριτὰς ἐπὶ τὸν λαόν μου Ἰσραήλ·	13.17:9	witnesses: BRENTON GLAUX SWETE
+13.18:11	begins	καὶ πάντα τὰ σκεύη τὰ χρυσᾶ, καὶ τὰ ἀργυρᾶ,	13.18:10	witnesses: BRENTON GLAUX
+13.24:14	begins	τῷ Βελγὰ ὁ πεντεκαιδέκατος,	13.24:13	witnesses: BRENTON GLAUX
+13.24:15	begins	τῷ Χηζὶν ὁ ἑπτακαιδέκατος,	13.24:14	witnesses: BRENTON GLAUX
+13.24:16	begins	τῷ Φεταίᾳ ὁ ἐννεακαιδέκατος,	13.24:15	witnesses: BRENTON GLAUX
+13.24:17	begins	τῷ Ἀχὶμ ὁ εἷς καὶ εἰκοστὸς,	13.24:16	witnesses: BRENTON GLAUX
+13.24:18	begins	τῷ Ἀδαλλαὶ ὁ τρίτος καὶ εἰκοστὸς,	13.24:17	witnesses: BRENTON GLAUX
+13.28:13	ends	καὶ τῶν καταλυμάτων,	13.28:12	witnesses: BRENTON GLAUX
+13.28:15	begins	λυχνιῶν τὴν ὁλκὴν ἔδωκεν αὐτῷ,	13.28:14	witnesses: BRENTON GLAUX SWETE
+13.29:11	ends	Εὐλογητὸς εἶ Κύριε ὁ Θεὸς Ἰσραὴλ, ὁ πατὴρ ἡμῶν, ἀπὸ τοῦ αἰῶνος καὶ ἕως τοῦ αἰῶνος.	13.29:10	witnesses: BRENTON GLAUX SWETE
+14.28:3	begins	τοῖς εἰδώλοις αὐτῶν	14.28:2	witnesses: BRENTON GLAUX
+14.28:17	ends	καὶ ἐν τούτῳ,	14.28:16	witnesses: BRENTON GLAUX
+14.30:19	begins	ὑπὲρ	14.30:18	witnesses: GLAUX SWETE. Brenton's English begins verse 19 three words earlier still
+15.1:10	begins	καὶ ἀργυροῖ διπλοῖ τετρακόσια δέκα,	15.1:9	witnesses: BRENTON. GLAUx and Swete begin verse 10 three words earlier still, with κεφουρῆς χρυσοῖ τριάκοντα
+15.4:22	begins	Ὅπως ἀπὸ τῆς γνώμης	15.4:21	witnesses: BRENTON GLAUX
+15.5:8	ends	Δαρείῳ τῷ βασιλεῖ εἰρήνη πᾶσα.	15.5:7	witnesses: BRENTON GLAUX SWETE
+15.7:21	begins	καὶ ἀπʼ ἐμοῦ.	15.7:20	witnesses: BRENTON GLAUX SWETE
+16.3:25	ends	Βηθαζαρία ἕως τῆς γωνίας, καὶ ἕως τῆς καμπῆς	16.3:24	witnesses: BRENTON GLAUX SWETE
+16.7:7	begins	μετὰ Ζοροβάβελ,	16.7:6	witnesses: BRENTON GLAUX SWETE
+16.11:17	begins	Ματθανίας υἱὸς Μιχὰ,	16.11:15	witnesses: BRENTON GLAUX
+16.12:18	begins	τῷ βαλγὰς, Σαμουέ· τῷ Σεμία, Ἰωνάθαν·	16.12:17	witnesses: BRENTON GLAUX. Swete's Vaticanus lacks these verses
+16.12:19	begins	Τῷ Ἰωαρὶβ,	16.12:18	witnesses: BRENTON GLAUX. Swete's Vaticanus lacks these verses
+16.12:37	begins	ἐπὶ πύλης,	16.12:36	witnesses: BRENTON GLAUX SWETE
+18.3:2	ends	καὶ κατηράσατο τὴν ἡμέραν αὐτοῦ,	18.3:1	witnesses: BRENTON GLAUX SWETE
+18.11:3	ends	εὐλογημένος γεννητὸς γυναικὸς ὀλιγόβιος.	18.11:2	witnesses: BRENTON GLAUX
+18.12:6	ends	οὐ μὴν δὲ ἀλλὰ μηδεὶς πεποιθέτω πονηρὸς ὢν ἀθῶος ἔσεσθαι,	18.12:5	witnesses: BRENTON GLAUX
+18.14:9	ends	τὸ στέλεχος αὐτοῦ	18.14:8	witnesses: BRENTON GLAUX SWETE
+18.18:12	begins	ἐν λιμῷ στενῷ·	18.18:11	witnesses: BRENTON GLAUX
+18.24:19	ends	ἀναφανείη δὲ τὰ φυτὰ αὐτῶν	18.24:18	witnesses: BRENTON GLAUX
+18.32:18	ends	πάλιν λαλήσω,	18.32:17	witnesses: BRENTON GLAUX
+18.34:13	ends	ὃς ἐποίησε τὴν γῆν;	18.34:12	witnesses: BRENTON GLAUX
+19.12:2	begins	Ἕως πότε Κύριε ἐπιλήσῃ μου, εἰς τέλος; ἕως πότε ἀποστρέψεις τὸ πρόσωπόν σου ἀπʼ ἐμοῦ;	19.12:1	witnesses: BRENTON GLAUX SWETE. the superscription is verse 1
+19.12:3	begins	Ἕως τίνος θήσομαι βουλὰς ἐν ψυχῇ μου, ὀδύνας ἐν καρδίᾳ μου ἡμέρας; ἕως πότε ὑψωθήσεται ὁ ἐχθρός μου ἐπʼ ἐμέ;	19.12:2	witnesses: BRENTON GLAUX SWETE
+19.12:4	begins	Ἐπίβλεψον, εἰσάκουσόν μου, Κύριε ὁ Θεός μου· φώτισον τοὺς ὀφθαλμούς μου, μή ποτε ὑπνώσω εἰς θάνατον·	19.12:3	witnesses: BRENTON SWETE
+19.12:5	begins	μή ποτε εἴποι ὁ ἐχθρός μου, ἴσχυσα πρὸς αὐτόν· οἱ θλίβοντές με ἀγαλλιάσονται ἐὰν σαλευθῶ.	19.12:4	witnesses: BRENTON SWETE
+19.12:6	begins	Ἐγὼ δὲ ἐπὶ τῷ ἐλέει σου ἤλπισα· ἀγαλλιάσεται ἡ καρδία μου ἐν τῷ σωτηρίῳ σου.	19.12:5	witnesses: BRENTON GLAUX SWETE
+19.16:4	ends	ὅπως ἂν μὴ λαλήσῃ τὸ στόμα μου.	19.16:3	witnesses: BRENTON SWETE-BRACKETED. GLAUx divides as the file does
+19.33:21	ends	ὁ Κύριος.	19.33:20	witnesses: BRENTON GLAUX
+19.40:8	ends	ἐπὶ τὸ αὐτό.	19.40:7	witnesses: BRENTON GLAUX
+19.54:21	ends	Οὐ γάρ ἐστιν αὐτοῖς ἀντάλλαγμα, καὶ οὐκ ἐφοβήθησαν τὸν Θεόν.	19.54:20	witnesses: BRENTON GLAUX SWETE
+19.70:13	ends	ὁ Θεός μου εἰς τὴν βοήθειάν μου πρόσχες.	19.70:12	witnesses: BRENTON GLAUX
+19.70:19	begins	Τὴν δυναστείαν σου,	19.70:18	witnesses: BRENTON GLAUX
+19.73:5	ends	ἔθεντο τὰ σημεῖα αὐτῶν σημεῖα,	19.73:4	witnesses: BRENTON. GLAUx ends verse 4 three words later still, with καὶ οὐκ ἔγνωσαν, which Brenton renders at the head of verse 5; Swete lacks the clause
+19.73:6	begins	ὡς ἐν δρυμῷ ξύλων ἀξίναις ἐξέκοψαν	19.73:5	witnesses: BRENTON GLAUX
+19.73:14	begins	Σὺ συνέτριψας τὰς κεφαλὰς τοῦ δράκοντος,	19.73:13	witnesses: BRENTON GLAUX
+19.76:7	ends	ἐμνήσθην,	19.76:6	witnesses: BRENTON. GLAUx ends verse 6 two words later still; Swete divides as the file does
+19.77:27	ends	αὐτοῦ Λίβα.	19.77:26	witnesses: BRENTON GLAUX SWETE
+19.77:33	ends	θαυμασίοις αὐτοῦ.	19.77:32	witnesses: BRENTON GLAUX SWETE
+19.77:35	ends	ὤρθριζον πρὸς τὸν Θεόν.	19.77:34	witnesses: BRENTON GLAUX SWETE
+19.77:37	ends	ἐψεύσαντο αὐτῷ·	19.77:36	witnesses: BRENTON GLAUX SWETE
+19.77:41	ends	αὐτὸν ἐν γῇ ἀνύδρῳ;	19.77:40	witnesses: BRENTON GLAUX SWETE
+19.77:44	ends	τέρατα αὐτοῦ ἐν πεδίῳ Τάνεως·	19.77:43	witnesses: BRENTON GLAUX SWETE
+19.77:48	ends	τῇ πάχνῃ.	19.77:47	witnesses: BRENTON GLAUX SWETE
+19.77:50	ends	ἀγγέλων πονηρῶν.	19.77:49	witnesses: BRENTON GLAUX SWETE
+19.77:51	ends	εἰς θάνατον συνέκλεισε.	19.77:50	witnesses: BRENTON GLAUX SWETE
+19.77:53	ends	ποίμνιον ἐν ἐρήμῳ.	19.77:52	witnesses: BRENTON GLAUX SWETE
+19.77:55	ends	ἐκτήσατο ἡ δεξιὰ αὐτοῦ.	19.77:54	witnesses: BRENTON GLAUX SWETE
+19.77:60	ends	ʼΙσραήλ.	19.77:59	witnesses: BRENTON GLAUX
+19.77:64	begins	Οἱ	19.77:63	witnesses: BRENTON GLAUX SWETE
+19.77:66	ends	ἐξ οἴνου.	19.77:65	witnesses: BRENTON GLAUX
+19.77:68	ends	οὐκ ἐξελέξατο.	19.77:67	witnesses: BRENTON GLAUX SWETE
+19.77:69	ends	Σιὼν, ὃ ἠγάπησε.	19.77:68	witnesses: BRENTON GLAUX SWETE
+19.77:71	ends	ποιμνίων τῶν προβάτων.	19.77:70	witnesses: BRENTON GLAUX SWETE
+19.77:72	ends	κληρονομίαν αὐτοῦ.	19.77:71	witnesses: BRENTON GLAUX SWETE
+19.91:16	ends	τοῦ ἀναγγεῖλαι·	19.91:15	witnesses: BRENTON GLAUX
+19.119:7	begins	μετὰ τῶν μισούντων τὴν εἰρήνην.	19.119:6	witnesses: BRENTON GLAUX
+22.1:3	begins	καὶ ὀσμὴ μύρων σου ὑπὲρ πάντα τὰ ἀρώματα·	22.1:2	witnesses: BRENTON GLAUX SWETE
+23.8:2	ends	Πάρεστι γάρ·	23.8:1	witnesses: BRENTON GLAUX SWETE
+23.10:4	begins	τοῦ μὴ ἐμπεσεῖν εἰς ἀπαγωγήν;	23.10:3	witnesses: BRENTON GLAUX SWETE
+23.15:1	begins	ΤΟ ῬΗΜΑ ΤΟ ΚΑΤΑ ΤΗΣ ΜΩΑΒΙΤΙΔΟΣ.	23.14:32	witnesses: BRENTON GLAUX SWETE
+23.17:1	begins	ΤΟ ῬΗΜΑ ΤΟ ΚΑΤΑ ΔΑΜΑΣΚΟΥ.	23.16:14	witnesses: BRENTON GLAUX SWETE
+23.19:1	begins	ὍΡΑΣΙΣ ΑΙΓΥΠΤΟΥ.	23.18:7	witnesses: BRENTON GLAUX SWETE
+23.21:1	begins	ΤΟ ὍΡΑΜΑ ΤΗΣ ἘΡΗΜΟΥ.	23.20:6	witnesses: BRENTON GLAUX SWETE
+23.21:11	begins	ΤΟ ὍΡΑΜΑ ΤΗΣ ἸΔΟΥΜΑΙΑΣ.	23.21:10	witnesses: BRENTON GLAUX
+23.22:1	begins	ΤΟ ῬΗΜΑ ΤΗΣ ΦΑΡΑΓΓΟΣ ΣΙΩΝ.	23.21:17	witnesses: BRENTON GLAUX SWETE
+23.23:1	begins	ΤΟ ῬΗΜΑ ΤΥΡΟΥ.	23.22:25	witnesses: BRENTON GLAUX SWETE
+23.28:20	ends	Μάθετε ἀκούειν	23.28:19	witnesses: BRENTON GLAUX SWETE
+23.30:6	begins	Ἡ ὍΡΑΣΙΣ ΤΩΝ ΤΕΤΡΑΠΟΔΩΝ ΤΩΝ ἘΝ ΤΗ ἘΡΗΜΩ.	23.30:5	witnesses: BRENTON GLAUX
+23.40:10	begins	ἰδοὺ Κύριος·	23.40:9	witnesses: BRENTON GLAUX
+23.41:7	ends	καὶ ἐρεῖ,	23.41:6	witnesses: BRENTON GLAUX SWETE
+23.52:7	begins	ὡς ὥρα ἐπὶ τῶν ὀρέων,	23.52:6	witnesses: BRENTON GLAUX SWETE
+24.13:9	ends	Τάδε λέγει Κύριος,	24.13:8	witnesses: BRENTON GLAUX SWETE
+24.26:23	ends	ὡς κόπτοντες ξύλα	24.26:22	witnesses: BRENTON GLAUX
+24.37:8	ends	καὶ ἀπὸ τούτου σωθήσεται.	24.37:7	witnesses: BRENTON GLAUX
+24.39:22	ends	καὶ ἐν βραχίονι ὑψηλῷ,	24.39:21	witnesses: GLAUX SWETE. Brenton's English ends verse 21 four words later still
+26.9:4	ends	Καὶ ἐκάλεσε τὸν ἄνδρα τὸν ἐνδεδυκότα τὸν ποδήρη, ὃς εἶχεν ἐπὶ τῆς ὀσφύος αὐτοῦ τὴν ζώνην,	26.9:3	witnesses: BRENTON GLAUX SWETE
+26.22:5	begins	ταῖς ἐγγιζούσαις πρὸς σὲ,	26.22:4	witnesses: BRENTON GLAUX SWETE
+26.27:4	ends	Σὺ εἶπας, ἐγὼ περιέθηκα ἐμαυτῇ κάλλος μου,	26.27:3	witnesses: BRENTON GLAUX SWETE
+26.27:24	ends	Ἀσσοὺρ καὶ Χαρμὰν ἔμποροί σου,	26.27:23	witnesses: BRENTON GLAUX
+26.28:13	ends	καὶ στέφανος κάλλους	26.28:12	witnesses: BRENTON GLAUX SWETE
+26.38:4	ends	Ἰδοὺ ἐγὼ ἐπὶ σὲ ἄρχοντα Ῥὼς Μεσὸχ, καὶ Θοβὲλ,	26.38:3	witnesses: BRENTON GLAUX SWETE
+26.40:2	ends	καὶ ἤγαγέ με	26.40:1	witnesses: BRENTON GLAUX SWETE
+26.47:20	ends	τοῦτο τὸ μέρος Νότος καὶ λίψ.	26.47:19	witnesses: BRENTON SWETE-BRACKETED. GLAUx divides as the file does
+28.6:2	ends	καὶ μοτώσει ἡμᾶς,	28.6:1	witnesses: BRENTON GLAUX
+28.6:3	ends	καὶ ζησόμεθα ἐνώπιον αὐτοῦ,	28.6:2	witnesses: GLAUX SWETE. Brenton's English ends verse 2 two words later still
+28.6:8	begins	Γαλαὰδ πόλις,	28.6:7	witnesses: GLAUX SWETE. Brenton's English begins verse 8 three words earlier still
+28.6:10	begins	εἶδον φρικώδη ἐκεῖ,	28.6:9	witnesses: BRENTON. GLAUx and Swete begin verse 10 five words earlier still
+28.8:6	ends	ἐν τῷ Ἰσραήλ;	28.8:5	witnesses: BRENTON GLAUX
+30.5:2	ends	ἔπεσεν, οὐκέτι μὴ προσθήσει τοῦ ἀναστῆναι.	30.5:1	witnesses: BRENTON GLAUX
+30.6:10	begins	καὶ ὑπολειφθήσονται οἱ κατάλοιποι,	30.6:9	witnesses: BRENTON GLAUX
+30.8:2	begins	Καὶ εἶπε, τί σὺ βλέπεις Ἀμώς; καὶ εἶπα, ἄγγος ἰξευτοῦ·	30.8:1	witnesses: BRENTON GLAUX. Swete divides as the file does
+32.2:4	begins	ἀπέῤῥιψάς με εἰς βάθη καρδίας θαλάσσης,	32.2:3	witnesses: BRENTON GLAUX SWETE
+70.2:12	begins	καὶ ἀπέστελλε τοῖς κυρίοις.	70.2:11	witnesses: BRENTON GLAUX SWETE
+70.3:2	begins	Δίκαιος εἶ Κύριε,	70.3:1	witnesses: BRENTON GLAUX SWETE
+70.14:2	begins	Καὶ ἦν ἐτῶν πεντηκονταοκτὼ,	70.14:1	witnesses: BRENTON GLAUX SWETE
+71.1:2	ends	ὃς ἐβασίλευσε Μήδων ἐν Ἐκβατάνοις,	71.1:1	witnesses: BRENTON GLAUX SWETE
+71.1:10	ends	καὶ πᾶσαν γῆν Γεσὲμ	71.1:9	witnesses: BRENTON GLAUX SWETE
+17.9:8	begins	καὶ Φαραδαθὰ,	17.9:7	witnesses: BRENTON GLAUX SWETE
+75.2:22	begins	καὶ οὐκ ἔγνωσαν μυστήρια	75.2:21	witnesses: BRENTON GLAUX SWETE
+75.3:3	ends	καὶ ἐλογίσθη κάκωσις ἡ ἔξοδος αὐτῶν,	75.3:2	witnesses: BRENTON GLAUX SWETE
+75.14:17	ends	καὶ τυράννων ἐπιταγαῖς ἐθρησκεύετο τὰ γλυπτά·	75.14:16	witnesses: BRENTON GLAUX SWETE
+67.2:2	ends	καὶ ἐπὶ ἄνθρωπον Ἰσραὴλ καὶ Ἰούδα,	67.2:1	witnesses: BRENTON GLAUX SWETE
+67.4:18	begins	Ὁ γὰρ ἐπαγαγὼν τὰ κακὰ, ἐξελεῖται ὑμᾶς ἐκ χειρὸς ἐχθρῶν ὑμῶν.	67.4:17	witnesses: BRENTON GLAUX SWETE
+67.4:19	begins	Βαδίζετε τέκνα, βαδίζετε, ἐγὼ γὰρ κατελείφθην ἔρημος.	67.4:18	witnesses: BRENTON GLAUX SWETE
+67.4:20	begins	Ἐξεδυσάμην τὴν στολὴν τῆς εἰρήνης,	67.4:19	witnesses: BRENTON GLAUX SWETE
+73.8:2	begins	καὶ ὅτι εἰσὶ δυνατοὶ ἰσχύϊ·	73.8:1	witnesses: BRENTON GLAUX SWETE
+73.8:12	begins	μετὰ δὲ τῶν φίλων αὐτῶν καὶ τῶν ἐπαναπαυομένων αὐτοῖς συνετήρησαν φιλίαν,	73.8:11	witnesses: BRENTON GLAUX SWETE
+73.9:13	begins	Καὶ ἐσάλπισαν οἱ παρὰ Ἰούδα καὶ αὐτοὶ ταῖς σάλπιγξι,	73.9:12	witnesses: BRENTON GLAUX
+73.10:70	ends	καὶ ἀπέστειλε πρὸς Ἰωνάθαν τὸν ἀρχιερέα, λέγων,	73.10:69	witnesses: BRENTON GLAUX SWETE
+73.15:36	ends	Καὶ οὐκ ἀπεκρίθη αὐτῷ Ἀθηνόβιος λόγον.	73.15:35	witnesses: BRENTON GLAUX
+74.1:21	ends	ὡς δὲ διεσάφησαν ἡμῖν μὴ εὑρηκέναι πῦρ, ἀλλὰ ὕδωρ παχύ,	74.1:20	witnesses: BRENTON GLAUX
+74.4:28	ends	ποιουμένου δὲ τὴν ἀπαίτησιν Σωστράτου τοῦ τῆς ἀκροπόλεως ἐπάρχου·	74.4:27	witnesses: BRENTON GLAUX
+74.6:15	ends	εἶναι,	74.6:14	witnesses: BRENTON GLAUX SWETE
+74.6:20	ends	προπτύσας δέ,	74.6:19	witnesses: BRENTON GLAUX
+74.7:9	ends	οὗτος τὴν ἑξῆς ἔλαβε βάσανον, ὡς ὁ πρῶτος.	74.7:8	witnesses: BRENTON GLAUX SWETE
+74.11:14	ends	προσαποστείλας	74.11:13	witnesses: BRENTON GLAUX SWETE
+74.13:8	ends	πάνυ δικαίως.	74.13:7	witnesses: BRENTON GLAUX
+68.1:11	ends	ἔχοντες τὰ ἄζυμα κατὰ τὰς φυλὰς	68.1:10	witnesses: BRENTON SWETE-BRACKETED
+68.1:13	begins	καὶ ἀπήνεγκαν πᾶσι τοῖς ἐκ τοῦ λαοῦ·	68.1:12	witnesses: BRENTON SWETE-BRACKETED
+68.2:23	ends	καὶ βασιλεῖς καὶ πόλεις ἐνοχλοῦσα,	68.2:22	witnesses: BRENTON SWETE-BRACKETED
+68.3:5	ends	εἶπαν ἕτερος πρὸς τὸν ἕτερον,	68.3:4	witnesses: BRENTON GLAUX SWETE
+68.3:18	ends	Καὶ ἤρξατο ὁ πρῶτος ὁ εἴπας περὶ τῆς ἰσχύος τοῦ οἴνου,	68.3:17	witnesses: BRENTON SWETE-BRACKETED. GLAUx divides as the file does
+68.3:19	ends	πῶς ὑπερισχύει ὁ οἶνος; πάντας τοὺς ἀνθρώπους τοὺς πιόντας αὐτὸν πλανᾷ,	68.3:18	witnesses: BRENTON. GLAUx and Swete begin verse 19 two words later still
+68.4:59	begins	λέγων,	68.4:58	witnesses: BRENTON SWETE-BRACKETED. GLAUx divides as the file does
+68.5:60	ends	καὶ οἱ Λευῖται υἱοὶ Ἀσὰφ ἔχοντες τὰ κύμβαλα	68.5:59	witnesses: BRENTON SWETE-BRACKETED
+68.6:4	ends	καὶ εἶπαν αὐτοῖς,	68.6:3	witnesses: BRENTON GLAUX
+68.6:25	begins	οὗ τὸ ὕψος πηχῶν ἑξήκοντα,	68.6:24	witnesses: BRENTON GLAUX SWETE. GLAUx and Swete number the verse 24
+68.8:87	ends	σὺ γὰρ Κύριε ὁ κουφίσας τὰς ἁμαρτίας ἡμῶν,	68.8:86	witnesses: BRENTON SWETE. Swete numbers the verse 84
+81.1:6	ends	γελοῖον ἐπιχειροῦντες λέγειν·	81.1:5	witnesses: BRENTON GLAUX
+81.3:18	begins	καὶ τὰς τῶν σωμάτων ἀλγηδόνας καθʼ ὑπερβολὴν οὔσας καταπαλαῖσαι,	81.3:17	witnesses: BRENTON SWETE. GLAUx begins verse 18 five words earlier still
+81.4:17	ends	Ἰάσονα τὸν ἀδελφὸν αὐτοῦ κατέστησεν ἀρχιερέα,	81.4:16	witnesses: BRENTON SWETE. GLAUx ends verse 16 two words later still
+81.5:2	ends	καὶ τῶν στρατευμάτων αὐτῶν ἐνόπλων κυκλόθεν παρεστηκότων	81.5:1	witnesses: BRENTON SWETE. GLAUx ends verse 1 three words later still
+81.6:13	begins	τὰ δὲ ἐν συμπαθείᾳ τῆς συνηθείας ὄντες,	81.6:12	witnesses: BRENTON GLAUX SWETE
+81.6:21	ends	καὶ τοῦτον καταγελώμενοι πρὸς ἁπάντων ἐπὶ δειλίᾳ·	81.6:20	witnesses: BRENTON GLAUX SWETE
+81.6:27	begins	σὺ οἶσθα, Θεὲ, παρόν μοι σώζεσθαι,	81.6:26	witnesses: BRENTON GLAUX
+81.10:10	ends	ἔφη,	81.10:9	witnesses: BRENTON GLAUX
+81.11:12	begins	καλὰς, ἔλεγεν, ἄκων,	81.11:11	witnesses: BRENTON GLAUX SWETE
+81.12:11	begins	ἀνόσιε,	81.12:10	witnesses: BRENTON GLAUX SWETE
+81.17:14	ends	οἱ δὲ ἀδελφοὶ ἠγωνίζοντο·	81.17:13	witnesses: BRENTON GLAUX SWETE
+27.4:3	ends	ἤρεσεν ἐναντίον ἐμοῦ ἀναγγεῖλαι ὑμῖν,	27.4:2	witnesses: BRENTON GLAUX
+27.7:18	begins	αἳ ἀρθήσονται·	27.7:17	witnesses: BRENTON GLAUX
+27.7:28	begins	Ἕως ὧδε τὸ πέρας τοῦ λόγου·	27.7:27	witnesses: BRENTON GLAUX
+2.33:10	words	καὶ ἐλάλει Μωυσῇ. Καὶ	Καὶ	33:9 already ends with καὶ ἐλάλει Μωσῇ; Swete and GLAUx print the clause once, at the end of 33:9, and Brenton's English renders it once
+18.3:14	words	Νῦν ἂν κοιμηθεὶς ἡσύχασα, ὑπνώσας δὲ ἀνεπαυσάμην μετὰ	μετὰ	3:13 is these seven words; Swete and GLAUx print them once, and Brenton's English begins 3:14 with "with kings and councillors"
+68.8:17	words	Θεοῦ σου,	Θεοῦ σου τοῦ ἐν Ἱερουσαλὴμ,	GLAUx ends 8:17 τοῦ Θεοῦ σου τοῦ ἐν Ἱερουσαλὴμ, Swete reads τοῦ ἐν Ἰερουσαλήμ there, and Brenton's English 8:17 reads "which is in Jerusalem"
+68.8:18	words	δώσεις	Καὶ τὰ λοιπὰ ὅσα ἂν ὑποπίπτῃ σοι εἰς τὴν χρείαν τοῦ ἱεροῦ τοῦ Θεοῦ σου, δώσεις	GLAUx opens 8:18 with these words, Swete prints them in his own spelling, and Brenton's English 8:18 opens "And whatsoever thing else thou shalt remember for the use of the temple of thy God"

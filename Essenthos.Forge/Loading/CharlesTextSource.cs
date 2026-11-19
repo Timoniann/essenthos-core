@@ -1,3 +1,5 @@
+using Essenthos.Core.Conversion;
+using Essenthos.Core.Products;
 using System.Net;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
@@ -35,7 +37,7 @@ namespace Essenthos.Core.Loading;
 /// </para>
 ///
 /// <para>
-/// **Two verse breaks of the Jubilees module are repaired.** Its scan of the margin numbers runs two verses into
+/// **Two verse breaks of the Jubilees module are repaired** (the <c>split</c> rows of the text's corrections file). Its scan of the margin numbers runs two verses into
 /// one twice: its 1:8 is Charles's 1:8 and 1:9, and its 11:3 his 11:3 and 11:4, so the module's later verses of both
 /// chapters stand a number low. Checked against the 1913 volume (archive.org, apocryphapseudep02charuoft).
 /// </para>
@@ -56,11 +58,6 @@ internal static partial class CharlesTextSource
 
     /// <summary>The Ethiopic, the one version Charles prints in parentheses that is read.</summary>
     private const string Ethiopic = "E";
-
-    /// <summary>The module's one stray before Enoch 75:1, which is no word of the book.</summary>
-    private const string Stray = "yyy";
-
-    private const int StrayChapter = 75;
 
     /// <summary>What became of every word the two modules hold, for the test that accounts for each of them.</summary>
     internal sealed class Tally
@@ -105,11 +102,26 @@ internal static partial class CharlesTextSource
     /// <param name="Opening">The words the second verse opens with, found once in the module's verse.</param>
     private sealed record VerseSplit(int Chapter, int Number, string Opening);
 
-    private static readonly VerseSplit[] JubileesSplits =
+    /// <summary>The <c>split</c> rows of the text's corrections file, which are Jubilees'.</summary>
+    private static IReadOnlyList<VerseSplit> Splits(TextCorrections corrections) =>
     [
-        new(1, 8, "For they will forget all My commandments"),
-        new(11, 3, "And they made for themselves molten images"),
+        .. corrections.Of(TextCorrection.Split).Select(row => Plain(row, Jubilees) is var key && row.Before is { Length: > 0 } opening
+            ? new VerseSplit(key.Chapter, key.Verse, opening)
+            : throw new FormatException($"The split row at {row.Own} needs the words the second verse opens with in before.")),
     ];
+
+    /// <summary>The <c>stray</c> rows, which are Enoch's: what a chapter's node holds before its first verse that is no word of the book.</summary>
+    private static IReadOnlyList<(int Chapter, string Text)> Strays(TextCorrections corrections) =>
+    [
+        .. corrections.Of(TextCorrection.Stray).Select(row => Plain(row, Enoch) is var key && row.Before is { Length: > 0 } text
+            ? (key.Chapter, text)
+            : throw new FormatException($"The stray row at {row.Own} needs what the node holds in before.")),
+    ];
+
+    private static VerseKey Plain(TextCorrection row, int book) =>
+        VerseKey.Parse(row.Own) is var key && key.Book == book && key.ChapterLabel.Length + key.VerseLabel.Length == 0
+            ? key
+            : throw new FormatException($"The {row.Kind} row at {row.Own} is not a verse of {BookReferences.Name(book)}.");
 
     public static TextDefinition Definition => new(
         Slug: Slug,
@@ -164,16 +176,17 @@ internal static partial class CharlesTextSource
         ],
     };
 
-    public static TextSource Read(string folder) => Read(folder, new Tally());
+    /// <param name="corrections">The text's corrections file: its <c>split</c> and <c>stray</c> rows.</param>
+    public static TextSource Read(string folder, TextCorrections corrections) => Read(folder, corrections, new Tally());
 
-    public static TextSource Read(string folder, Tally tally)
+    public static TextSource Read(string folder, TextCorrections corrections, Tally tally)
     {
         var enoch = Nodes(folder, EnochModule);
         var jubilees = Nodes(folder, JubileesModule);
         return new TextSource(Definition,
         [
-            Book(Enoch, 1, ReadEnoch(enoch, tally)),
-            Book(Jubilees, 2, ReadJubilees(jubilees, tally)),
+            Book(Enoch, 1, ReadEnoch(enoch, Strays(corrections), tally)),
+            Book(Jubilees, 2, ReadJubilees(jubilees, Splits(corrections), tally)),
         ]);
     }
 
@@ -207,8 +220,10 @@ internal static partial class CharlesTextSource
     /// and 91:12-17 after it. A verse is opened by its number, or by a letter alone where Charles divides it, which
     /// continues the number before; its pieces are joined in letter order.
     /// </summary>
-    private static SortedDictionary<int, SortedDictionary<int, string>> ReadEnoch(IReadOnlyList<SwordNode> nodes, Tally tally)
+    private static SortedDictionary<int, SortedDictionary<int, string>> ReadEnoch(
+        IReadOnlyList<SwordNode> nodes, IReadOnlyList<(int Chapter, string Text)> strays, Tally tally)
     {
+        var met = new HashSet<(int, string)>();
         var pieces = new SortedDictionary<int, SortedDictionary<int, List<(string Letter, string Text)>>>();
         foreach (var node in nodes)
         {
@@ -230,7 +245,7 @@ internal static partial class CharlesTextSource
             var before = Clean(parts[0]);
             if (before.Length > 0)
             {
-                if (chapter != StrayChapter || before != Stray)
+                if (!strays.Contains((chapter, before)) || !met.Add((chapter, before)))
                 {
                     throw new InvalidDataException(
                         $"{EnochModule} \"{node.Name}\" holds \"{before}\" before its first verse number. Read the node: a "
@@ -258,6 +273,13 @@ internal static partial class CharlesTextSource
 
                 (verses.TryGetValue(verse, out var list) ? list : verses[verse] = new()).Add((marker.Groups[2].Value, Clean(parts[i + 1])));
             }
+        }
+
+        if (strays.FirstOrDefault(stray => !met.Contains(stray)) is { Text: not null } unmet)
+        {
+            throw new InvalidDataException(
+                $"{EnochModule} {unmet.Chapter} no longer holds \"{unmet.Text}\" before its first verse number, as the stray row of "
+                + "the corrections file says. Read the node, and drop the row if the module has been corrected.");
         }
 
         return Chapters(pieces, pieceList => string.Join(' ',
@@ -313,7 +335,8 @@ internal static partial class CharlesTextSource
     /// Jubilees' chapters, one node each, every verse an item with its number as its label. The prologue and each
     /// chapter's summary are titles; the dates go wherever they stand in a verse.
     /// </summary>
-    private static SortedDictionary<int, SortedDictionary<int, string>> ReadJubilees(IReadOnlyList<SwordNode> nodes, Tally tally)
+    private static SortedDictionary<int, SortedDictionary<int, string>> ReadJubilees(
+        IReadOnlyList<SwordNode> nodes, IReadOnlyList<VerseSplit> splits, Tally tally)
     {
         var chapters = new SortedDictionary<int, SortedDictionary<int, string>>();
         foreach (var node in nodes)
@@ -358,7 +381,7 @@ internal static partial class CharlesTextSource
                 }
             }
 
-            foreach (var split in JubileesSplits.Where(split => split.Chapter == chapter))
+            foreach (var split in splits.Where(split => split.Chapter == chapter))
             {
                 Split(verses, split);
             }

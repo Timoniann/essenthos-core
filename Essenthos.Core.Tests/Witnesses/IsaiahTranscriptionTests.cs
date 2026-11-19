@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
@@ -112,25 +113,38 @@ public class EditionRepairTests
         "48.38.15 Κύριε,", "48.38.16 εἵλου",
     ];
 
+    private static TextCorrection Row(string own, string kind, string? before, string? after, string why) =>
+        new(own, kind, before, after, why);
+
     [Fact]
     public void ADivisionOpensAVerseAtTheWordsItNamesAndDropsTheFigure() =>
         EditionRepairs.Apply("test", Lines[..5],
-            [EditionRepair.Divide(9, "9", "10 Πλίνθοι", "Πλίνθοι", "10", "figure")])
+            [Row("48.9.9", TextCorrection.Opens, "10 Πλίνθοι", "48.9.10 Πλίνθοι", "figure")])
             .Should().Equal("48.9.9 λέγοντες", "48.9.10 Πλίνθοι", "48.9.10 πεπτώκασιν,", "48.9.11 καὶ");
+
+    /// <summary>Words a division opens a verse with join the verse's own words where these stand next, as one stretch.</summary>
+    [Fact]
+    public void ADivisionIntoAVerseThatFollowsJoinsItsWords() =>
+        EditionRepairs.Apply("test", ["48.9.9 λέγοντες", "48.9.9 Πλίνθοι", "48.9.10 πεπτώκασιν,"],
+            [
+                Row("48.9.9", TextCorrection.Opens, "Πλίνθοι", "48.9.10 Πλίνθοι", "figure"),
+                Row("48.9.10", TextCorrection.Tokens, "Πλίνθοι πεπτώκασιν,", "πεπτώκασιν,", "one stretch"),
+            ])
+            .Should().Equal("48.9.9 λέγοντες", "48.9.10 πεπτώκασιν,");
 
     /// <summary>Renumbered in the order listed, so a run of misnumbered verses is moved from its end.</summary>
     [Fact]
     public void ARenumberingMovesEveryWordAtTheAddress() =>
         EditionRepairs.Apply("test", Lines[5..],
             [
-                EditionRepair.Renumber(38, "16", 38, "17", "one"),
-                EditionRepair.Renumber(38, "15", 38, "16", "two"),
+                Row("48.38.16", TextCorrection.Moves, null, "48.38.17", "one"),
+                Row("48.38.15", TextCorrection.Moves, null, "48.38.16", "two"),
             ])
             .Should().Equal("48.38.16 Κύριε,", "48.38.17 εἵλου");
 
     [Fact]
     public void AReplacementWithNothingTakesTheWordsOut() =>
-        EditionRepairs.Apply("test", Lines[..4], [EditionRepair.Replace(9, "9", "10", "", "figure")])
+        EditionRepairs.Apply("test", Lines[..4], [Row("48.9.9", TextCorrection.Tokens, "10", null, "figure")])
             .Should().Equal("48.9.9 λέγοντες", "48.9.9 Πλίνθοι", "48.9.9 πεπτώκασιν,");
 
     /// <summary>A repair that no longer finds what it was written against stops the read and names itself.</summary>
@@ -140,9 +154,9 @@ public class EditionRepairTests
     public void ARepairThatFindsNothingStopsTheRead(string verse)
     {
         var act = () => EditionRepairs.Apply("test", Lines[..5],
-            [EditionRepair.Replace(9, verse, "πεπτώκασιν,", "x", "gone")]);
+            [Row($"48.9.{verse}", TextCorrection.Tokens, "πεπτώκασιν,", "x", "gone")]);
 
-        act.Should().Throw<InvalidOperationException>().WithMessage($"*9:{verse}*gone*");
+        act.Should().Throw<InvalidOperationException>().WithMessage($"*48.9.{verse}*gone*");
     }
 }
 
@@ -244,7 +258,7 @@ public class OttleyTests
 {
     private const int Isaiah = 23;
 
-    private static readonly Lazy<TextSource> Source = new(() => OttleyTextSource.Read(TestResources.SweteFolder));
+    private static readonly Lazy<TextSource> Source = new(() => OttleyTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Of(OttleyTextSource.Slug)));
 
     private static BookDraft Book => Source.Value.Books.Single();
 

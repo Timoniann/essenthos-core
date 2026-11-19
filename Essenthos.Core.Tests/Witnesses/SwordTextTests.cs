@@ -183,7 +183,7 @@ public partial class SwordTextTests
     [Fact]
     public void TheKoreanBenedictionStandsWhereTheKingJamesPrintsIt()
     {
-        var chapter = SwordTextSource.Read(Module("KorRV"), ShippedStrongNumbers.Lists).Books[46].Chapters[12].Verses;
+        var chapter = SwordTextSource.Read(Module("KorRV"), ShippedStrongNumbers.Lists, ShippedCorrections.Of("KRV")).Books[46].Chapters[12].Verses;
 
         chapter.Select(verse => verse.Number).Should().EndWith([11, 13, 14]);
         chapter[^1].Stated.Should().Equal(new StatedNumberDraft(13, 13));

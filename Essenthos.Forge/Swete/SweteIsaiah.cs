@@ -1,3 +1,5 @@
+using Essenthos.Core.Conversion;
+
 namespace Essenthos.Core.Swete;
 
 /// <summary>
@@ -16,8 +18,8 @@ namespace Essenthos.Core.Swete;
 /// </para>
 ///
 /// <para>
-/// Letters are left as the transcription reads them — ΙΙλίνθοι, εὐφρρσύνην, κἵλου — for the reason
-/// <see cref="SweteRestorations"/> gives. What is changed is a Latin letter standing for the Greek
+/// Letters are left as the transcription reads them — ΙΙλίνθοι, εὐφρρσύνην, κἵλου — since correcting spelling
+/// against another edition is how a second witness stops being one. What is changed is a Latin letter standing for the Greek
 /// one it looks exactly like, <c>Aἴγυπτον</c> for Αἴγυπτον: the page shows the same glyph either
 /// way, and the Latin one makes the word unsearchable and unlinkable while changing nothing a reader
 /// sees.
@@ -44,56 +46,7 @@ internal static class SweteIsaiah
         + "letters standing for the Greek ones they look like are written as Greek; a verse number standing in "
         + "the text at 11:16 is taken out, and a figure written for the breathing of Ἀμὼς at 13:1 is the breathing.";
 
-    private const string Figure = "Swete's own verse number stands in the text before the word that opens the verse";
-
-    private const string BothBegin = "No number is left; Brenton and Ottley both begin the verse at these words";
-
-    private const string Latin = "A Latin letter for the Greek one it looks exactly like";
-
-    public static IReadOnlyList<string> Lines(string folder) =>
-        EditionRepairs.Apply(File, First1KGreekReader.Lines(Path.Combine(folder, Folder, File), Work), Repairs);
-
-    public static readonly IReadOnlyList<EditionRepair> Repairs =
-    [
-        EditionRepair.Replace(1, "1", "OPAΣΙΣ", "ΟΡΑΣΙΣ", Latin),
-        EditionRepair.Replace(5, "8", "Oὑαὶ", "Οὑαὶ", Latin),
-        EditionRepair.Replace(5, "20", "Oὑαὶ", "Οὑαὶ", Latin),
-        EditionRepair.Replace(7, "11", "Aἴτησαι", "Αἴτησαι", Latin),
-        EditionRepair.Replace(9, "1", "Nεφιθαλείμ,", "Νεφιθαλείμ,", Latin),
-        EditionRepair.Divide(9, "9", "10 ΙΙλίνθοι", "ΙΙλίνθοι", "10", Figure),
-        EditionRepair.Replace(10, "26", "Aἴγυπτον.", "Αἴγυπτον.", Latin),
-        EditionRepair.Replace(11, "16", "¹6", "", "Swete's own number for the verse, standing in the text before it"),
-        EditionRepair.Replace(13, "1", "¹Αμὼς", "Ἀμὼς",
-            "A figure where the name's breathing stands; the book prints Ἀμὼς five times"),
-        EditionRepair.Divide(13, "19", "20oὐ", "οὐ", "20", $"{Figure}, whose omicron is a Latin o"),
-        EditionRepair.Replace(19, "1", "Aἴγυπτον,", "Αἴγυπτον,", Latin),
-        EditionRepair.Replace(19, "4", "Aἴγυπτον", "Αἴγυπτον", Latin),
-        EditionRepair.Replace(19, "13", "Aἴγυπτον", "Αἴγυπτον", Latin),
-        EditionRepair.Replace(19, "14", "Aἴγυπτον", "Αἴγυπτον", Latin),
-        EditionRepair.Replace(19, "23", "Tῇ", "Τῇ", Latin),
-        EditionRepair.Divide(22, "23", "24καὶ", "καὶ", "24", Figure),
-        EditionRepair.Divide(22, "24", "²⁵τῇ", "τῇ", "25", Figure),
-        EditionRepair.Renumber(32, "head", 31, "9",
-            "The transcription heads chapter 32 with an unnumbered division that is the end of 31:9, "
-            + "as Brenton and Ottley print it; the 1 of 32:1 is glued to its last word"),
-        EditionRepair.Replace(31, "9", "1Ἰερουσαλήμ.", "Ἰερουσαλήμ.",
-            "The number of 32:1, glued to the last word of 31:9"),
-        EditionRepair.Divide(35, "3", "παρακαλέσατε,", "παρακαλέσατε,", "4", BothBegin),
-        EditionRepair.Replace(36, "6", "Aἴγυπτον·", "Αἴγυπτον·", Latin),
-        EditionRepair.Divide(37, "10", "¹¹σὺ", "σὺ", "11", Figure),
-        EditionRepair.Divide(37, "14", "15καὶ", "καὶ", "15", Figure),
-        EditionRepair.Renumber(38, "16", 38, "17",
-            "The transcription numbers 38:14, 15, 16, 18: its 16 is the verse Brenton and Ottley number 17"),
-        EditionRepair.Renumber(38, "15", 38, "16",
-            "Its 15 is the verse Brenton and Ottley number 16; Ottley, printed at Cambridge in the same "
-            + "years, gives 15 no verse, its words standing at the end of 14 as they do here"),
-        EditionRepair.Divide(43, "18", "¹9ἰδοὺ", "ἰδοὺ", "19", Figure),
-        EditionRepair.Divide(47, "7", "8Νῦν", "Νῦν", "8", Figure),
-        EditionRepair.Replace(48, "20", "20Ἔξελθε", "Ἔξελθε", "The verse's own number, glued to its first word"),
-        EditionRepair.Divide(49, "12", "¹³εὐφραίνεσθε,", "εὐφραίνεσθε,", "13", Figure),
-        EditionRepair.Divide(52, "2", "ὅτι τάδε", "ὅτι τάδε", "3", BothBegin),
-        EditionRepair.Replace(60, "8", "oἵδε", "οἵδε", Latin),
-        EditionRepair.Divide(65, "20", "²¹καὶ", "καὶ", "21", Figure),
-        EditionRepair.Divide(65, "21", "²²οὐ", "οὐ", "22", Figure),
-    ];
+    /// <summary>The book's lines, with the <c>tokens</c>, <c>opens</c> and <c>moves</c> rows of Swete's corrections file addressed to them made.</summary>
+    public static IEnumerable<string> Lines(string folder, TextCorrections corrections) =>
+        EditionRepairs.Apply(File, Work, First1KGreekReader.Lines(Path.Combine(folder, Folder, File), Work), corrections);
 }

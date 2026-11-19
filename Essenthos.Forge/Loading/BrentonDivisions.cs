@@ -1,12 +1,13 @@
-using System.Reflection;
-using System.Text.Json;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Loading;
 
 /// <summary>
 /// The verses eBible's Brenton Greek begins at another word than Brenton's own English does, begun
-/// again where the English begins them, one by one as <c>BrentonDivisions.json</c> lists them.
+/// again where the English begins them, one by one as the <c>begins</c> and <c>ends</c> rows of the text's corrections
+/// file list them.
 ///
 /// <para>
 /// The Greek is the page Brenton translated and the English stands beside it with the same verse
@@ -29,8 +30,6 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class BrentonDivisions
 {
-    private const string Resource = "Essenthos.Core.Loading.BrentonDivisions.json";
-
     /// <summary>What the text's row says about the divisions, on a cold load and on a warm one.</summary>
     public const string Note =
         "Modified: 235 verses eBible's file begins at another word than Brenton's English are begun by "
@@ -38,17 +37,38 @@ internal static class BrentonDivisions
         + "text GLAUx annotates, Swete's division, or the English numbering Swete prints in brackets; the words "
         + "are the file's.";
 
-    private static readonly JsonSerializerOptions Shape = new() { PropertyNameCaseInsensitive = true };
+    /// <summary>The <c>begins</c> and <c>ends</c> rows of the text's corrections file, in its order.</summary>
+    public static IReadOnlyList<BrentonDivision> Of(TextCorrections corrections) =>
+    [
+        .. corrections.Of(TextCorrection.Begins, TextCorrection.Ends).Select(row =>
+        {
+            var key = VerseKey.Parse(row.Own);
+            var previous = VerseKey.Parse(row.After ?? string.Empty);
+            return key.ChapterLabel.Length == 0 && previous.ChapterLabel.Length == 0 && previous.Book == key.Book && row.Before is { Length: > 0 } words
+                ? new BrentonDivision(key.Book, key.Chapter, $"{key.Verse}{key.VerseLabel}", $"{previous.Chapter}:{previous.Verse}{previous.VerseLabel}",
+                    row.Kind == TextCorrection.Begins ? words : null, row.Kind == TextCorrection.Ends ? words : null, row.Why)
+                : throw new FormatException(
+                    $"The {row.Kind} row at {row.Own} needs the words it moves in before and the verse before it, of the same book, in after.");
+        }),
+    ];
 
-    public static readonly IReadOnlyList<BrentonDivision> All = ReadList();
+    /// <summary>The divisions and edits whose book the file has none of, which would otherwise be left out without a word.</summary>
+    public static void CheckBooks(IReadOnlyList<BrentonDivision> divisions, IReadOnlyList<BrentonEdit> edits, IReadOnlySet<int> books)
+    {
+        if (divisions.Select(d => d.Book).Concat(edits.Select(e => e.Book)).FirstOrDefault(book => !books.Contains(book)) is > 0 and var missing)
+        {
+            throw new InvalidOperationException(
+                $"Brenton's Greek corrections name book {missing}, which the file does not hold: read the rows against the file again.");
+        }
+    }
 
     /// <summary>A book's chapters with its divisions made, in the order the list gives them.</summary>
     public static IReadOnlyList<ChapterDraft> Apply(
         int canonical,
         IReadOnlyList<ChapterDraft> chapters,
-        IReadOnlyList<BrentonDivision>? list = null)
+        IReadOnlyList<BrentonDivision> list)
     {
-        var divisions = (list ?? All).Where(d => d.Book == canonical).ToList();
+        var divisions = list.Where(d => d.Book == canonical).ToList();
         if (divisions.Count == 0)
         {
             return chapters;
@@ -127,17 +147,8 @@ internal static class BrentonDivisions
 
     private static InvalidOperationException Unread(BrentonDivision division, string what) =>
         new($"Brenton's Greek {BookReferences.Name(division.Book)} {division.Chapter}:{division.Verse} {what}. The "
-            + "file is not the one BrentonDivisions.json was drawn up against: read the verses against Brenton's "
-            + "English again and correct the list before loading.");
-
-    private static IReadOnlyList<BrentonDivision> ReadList()
-    {
-        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resource)
-                           ?? throw new InvalidOperationException($"{Resource} is not embedded in the Forge assembly.");
-        return JsonSerializer.Deserialize<BrentonDivisionList>(stream, Shape)?.Divisions ?? [];
-    }
-
-    private sealed record BrentonDivisionList(IReadOnlyList<BrentonDivision> Divisions);
+            + "file is not the one the corrections file's rows were drawn up against: read the verses against Brenton's "
+            + "English again and correct the rows before loading.");
 }
 
 /// <summary>
@@ -147,7 +158,7 @@ internal static class BrentonDivisions
 /// <param name="Book">The book, by its canonical ordinal.</param>
 /// <param name="Verse">The verse as the file numbers it, with its letter where it has one.</param>
 /// <param name="Previous">The verse before it, <c>chapter:verse</c>, which is another chapter's last verse at a chapter's head.</param>
-/// <param name="Witnesses">What else begins the verse at exactly that word.</param>
+/// <param name="Why">What else begins the verse at exactly that word.</param>
 internal sealed record BrentonDivision(
     int Book,
     int Chapter,
@@ -155,8 +166,7 @@ internal sealed record BrentonDivision(
     string Previous,
     string? Begins,
     string? Ends,
-    IReadOnlyList<string> Witnesses,
-    string? Note)
+    string Why)
 {
     public (int Chapter, int Number, string Label) Address => At(Chapter, Verse);
 

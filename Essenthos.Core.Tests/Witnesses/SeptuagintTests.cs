@@ -125,7 +125,7 @@ public class SeptuagintCanonTests
 /// <summary>Read once; fifty-two USFM files is about a second.</summary>
 public sealed class Brenton
 {
-    internal TextSource Source { get; } = SeptuagintTextSource.Read(TestResources.SeptuagintFolder);
+    internal TextSource Source { get; } = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton);
 
     internal BookDraft Book(int canonical) => Source.Books.Single(book => book.CanonicalOrdinal == canonical);
 }

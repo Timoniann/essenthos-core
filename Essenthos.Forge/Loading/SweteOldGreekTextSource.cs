@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Swete;
@@ -83,8 +84,10 @@ internal static class SweteOldGreekTextSource
                    + "from the Open Greek and Latin First1KGreek transcription (tlg0527), CC BY-SA 4.0.",
     };
 
-    public static TextSource Read(string folder)
+    /// <param name="corrections">The text's corrections file, whose transcription rows are made as in Swete's own books.</param>
+    public static TextSource Read(string folder, TextCorrections corrections)
     {
+        EditionRepairs.CheckBooks(Slug, corrections, Canon.Select(entry => SweteTextSource.Number(entry.File)).ToHashSet());
         var books = new List<BookDraft>(Canon.Length);
         foreach (var (file, canonical) in Canon)
         {
@@ -96,7 +99,7 @@ internal static class SweteOldGreekTextSource
                     + "fetches the Old Greek with the rest of Swete's edition.");
             }
 
-            var read = SweteReader.Read(SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path))));
+            var read = SweteReader.Read(EditionRepairs.Apply(file, SweteTextSource.Number(file), File.ReadLines(path), corrections));
             books.Add(new BookDraft(
                 CanonicalOrdinal: canonical,
                 Position: books.Count + 1,

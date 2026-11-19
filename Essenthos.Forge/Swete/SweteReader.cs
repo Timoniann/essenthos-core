@@ -67,8 +67,8 @@ internal sealed record SweteChapterMarker(string Chapter, string Verse, string T
 /// chapter after it, or in a chapter's first verse and names that chapter; a numeral run into the
 /// front of a chapter's first word, naming the chapter the one before closes with, is taken off the
 /// word, which stays. Nothing
-/// else is touched: a Latin letter elsewhere is a misreading <see cref="SweteCorrections"/> settles
-/// or leaves, or a letter of the margin the page settles (<see cref="SweteSettled"/>), and a numeral
+/// else is touched: a Latin letter elsewhere is a misreading the text's corrections file settles
+/// or leaves, or a letter of the margin the page settles, and a numeral
 /// that names no chapter beside it is not a chapter's number. A verse whose
 /// only token was the numeral stays, empty: the edition numbers it, and the transcription has none
 /// of its words.

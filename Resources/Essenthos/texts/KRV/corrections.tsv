@@ -1,0 +1,6 @@
+# product    Essenthos/texts/KRV/corrections.tsv
+# producer   by hand
+# kinds      renumber: the verse the module stores at own stands at after, which the module leaves empty, and states its stored number; rows apply in this file's order
+own	kind	before	after	why
+47.13:13	renumber	\N	47.13:14	The Korean prints 2 Corinthians 13 in thirteen verses, the holy kiss inside verse 11, and the module keeps its numbers in a fourteen-verse chapter: its 13:13 is the benediction, the King James's 13:14, with the last slot empty
+47.13:12	renumber	\N	47.13:13	The Korean prints 2 Corinthians 13 in thirteen verses, the holy kiss inside verse 11: the module's 13:12 is the King James's 13:13

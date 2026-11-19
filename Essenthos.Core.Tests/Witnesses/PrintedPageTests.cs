@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -53,40 +54,21 @@ public class SweteMarginTests(Swete swete) : IClassFixture<Swete>
         Swete.Text(swete.Verse(book, chapter, verse)).Should().Be(printed);
 
     /// <summary>
-    /// Every entry still finds the transcription's text it was read against, once, in the verse as the
-    /// entries before it leave it: a First1KGreek fetched again with the fault corrected upstream stops
-    /// here rather than being corrected twice.
+    /// Every row still finds the transcription's text it was read against, once, in the verse as the rows
+    /// before it leave it (the reader refuses a row that does not): a First1KGreek fetched again with the
+    /// fault corrected upstream stops here rather than being corrected twice.
     /// </summary>
     [Fact]
     public void EveryEntryStillFindsWhatTheTranscriptionHas()
     {
-        var margin = SweteSettled.All.Except(SweteSettled.First).ToList();
-        margin.Should().HaveCount(15);
-        foreach (var book in margin.Select(r => r.Book).Distinct())
-        {
-            var lines = SweteDivisions.Lines(book,
-                File.ReadLines(Path.Combine(TestResources.SweteFolder, SweteTextSource.FileName(book)))).ToList();
-            var earlier = SweteRestorations.Apply(book, lines, SweteRestorations.Earlier[^1]).ToList();
-            foreach (var entry in margin.Where(r => r.Book == book))
-            {
-                var tokens = earlier.Where(line => line.Split(' ')[0].EndsWith($".{entry.Chapter}.{entry.Verse}", StringComparison.Ordinal))
-                    .Select(line => line[(line.IndexOf(' ') + 1)..]).ToList();
-                var digitised = entry.Digitised.Split(' ');
-                Enumerable.Range(0, tokens.Count - digitised.Length + 1)
-                    .Count(at => tokens.Skip(at).Take(digitised.Length).SequenceEqual(digitised))
-                    .Should().Be(1, $"{book} {entry.Chapter}:{entry.Verse} \"{entry.Digitised}\"");
-            }
-
-            var applying = () => SweteRestorations.Apply(book, lines).ToList();
-            applying.Should().NotThrow();
-        }
+        var reading = () => SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
+        reading.Should().NotThrow();
     }
 
     [Fact]
     public void EveryEntryCitesItsPageAndScan() =>
-        SweteSettled.All.Except(SweteSettled.First).Should().OnlyContain(r =>
-            r.Why.StartsWith("Printed in Swete, vol. ", StringComparison.Ordinal)
-            && r.Why.Contains("swetuoft", StringComparison.Ordinal));
+        ShippedCorrections.Swete.Of(TextCorrection.Tokens).Where(r => r.Why.Contains("swetuoft", StringComparison.Ordinal))
+            .Should().HaveCount(15).And.OnlyContain(r => r.Why.StartsWith("Printed in Swete, vol. ", StringComparison.Ordinal));
 }
 
 /// <summary>Ottley's Isaiah read against his printed page, page by page.</summary>
@@ -96,7 +78,7 @@ public class OttleyPageTests
     private const string Pipeline = "pages-ottley-2026-10-09";
 
     private static readonly Lazy<BookDraft> Book =
-        new(() => OttleyTextSource.Read(TestResources.SweteFolder).Books.Single());
+        new(() => OttleyTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Of(OttleyTextSource.Slug)).Books.Single());
 
     private static string Text(int chapter, int verse) =>
         Swete.Text(Book.Value.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse));
@@ -154,45 +136,39 @@ public class OttleyPageTests
     [Fact]
     public void EveryEntryStillFindsWhatItWasReadAgainstAndCitesItsPage()
     {
-        var verses = new Dictionary<(int, string), List<string>>();
-        foreach (var line in OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription))
+        var verses = new Dictionary<string, List<string>>();
+        foreach (var line in Transcribed())
         {
-            var reference = line[..line.IndexOf(' ')].Split('.');
-            var key = (int.Parse(reference[1]), reference[2]);
+            var key = line[..line.IndexOf(' ')];
             (verses.TryGetValue(key, out var tokens) ? tokens : verses[key] = []).Add(line[(line.IndexOf(' ') + 1)..]);
         }
 
-        OttleyIsaiah.PageEntries.Should().NotBeEmpty();
-        OttleyIsaiah.PageEntries.Select(e => e.Round).Should().BeInAscendingOrder();
-        OttleyIsaiah.PageEntries.Select(e => e.Source).Should().OnlyHaveUniqueItems();
-        foreach (var entry in OttleyIsaiah.Page)
+        var page = Rows().SkipWhile(row => !Page(row)).ToList();
+        page.Should().HaveCount(1380).And.OnlyContain(row => Page(row) && row.Kind == TextCorrection.Tokens);
+        foreach (var entry in page)
         {
-            var tokens = verses[(entry.Chapter, entry.Verse)];
-            var digitised = entry.Digitised.Split(' ');
+            var tokens = verses[entry.Own];
+            var digitised = entry.Before!.Split(' ');
             var found = Enumerable.Range(0, tokens.Count - digitised.Length + 1)
                 .Where(at => tokens.Skip(at).Take(digitised.Length).SequenceEqual(digitised)).ToList();
-            found.Should().ContainSingle($"{entry.Chapter}:{entry.Verse} \"{entry.Digitised}\"");
-            entry.Why.Should().StartWith("Printed in Ottley, vol. 2").And.Contain("scan leaf");
+            found.Should().ContainSingle($"{entry.Own} \"{entry.Before}\"");
+            entry.Why.Should().Contain("scan leaf");
 
             tokens.RemoveRange(found[0], digitised.Length);
-            tokens.InsertRange(found[0], entry.Printed.Length == 0 ? [] : entry.Printed.Split(' '));
+            tokens.InsertRange(found[0], entry.After is null ? [] : entry.After.Split(' '));
         }
     }
 
-    /// <summary>A corpus loaded after any round reads; the reading after the last is the converter's.</summary>
-    [Fact]
-    public void EveryRoundReads()
-    {
-        var last = OttleyIsaiah.PageEntries.Max(e => e.Round);
-        foreach (var round in Enumerable.Range(0, last + 1))
-        {
-            var reading = () => OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Through(round));
-            reading.Should().NotThrow();
-        }
+    /// <summary>A row of Ottley's corrections file read off the printed page; these follow the rows the file settles about itself.</summary>
+    private static bool Page(TextCorrection row) => row.Why.StartsWith("Printed in Ottley, vol. 2", StringComparison.Ordinal);
 
-        OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Through(last))
-            .Should().Equal(OttleyIsaiah.Lines(TestResources.SweteFolder));
-    }
+    private static IReadOnlyList<TextCorrection> Rows() => ShippedCorrections.Of(OttleyTextSource.Slug).Of(EditionRepairs.Kinds);
+
+    /// <summary>The book's lines with only the rows the file settles about itself made, before the page's.</summary>
+    private static IReadOnlyList<string> Transcribed() =>
+        EditionRepairs.Apply(OttleyIsaiah.File,
+            First1KGreekReader.Lines(Path.Combine(TestResources.SweteFolder, SweteIsaiah.Folder, OttleyIsaiah.File), SweteIsaiah.Work),
+            [.. Rows().TakeWhile(row => !Page(row))]);
 
     /// <summary>
     /// The script that writes the table places Codex's corrections in the tokens it keeps beside it, which
@@ -204,7 +180,7 @@ public class OttleyPageTests
     {
         var kept = Path.Combine(Checkout(), "Resources", "Essenthos", "page-readings", Pipeline, "transcribed.txt");
 
-        File.ReadAllLines(kept).Should().Equal(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription));
+        File.ReadAllLines(kept).Should().Equal(Transcribed());
     }
 
     private static string Checkout()

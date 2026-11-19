@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Swete;
@@ -72,8 +73,10 @@ internal static class OttleyTextSource
                    + "First1KGreek transcription (tlg0527.tlg048.1st1K-grc2), CC BY-SA 4.0.",
     };
 
-    public static TextSource Read(string sweteFolder)
+    /// <param name="corrections">OTTLEY's corrections file, whose transcription rows are made on the book's lines.</param>
+    public static TextSource Read(string sweteFolder, TextCorrections corrections)
     {
+        EditionRepairs.CheckBooks(Slug, corrections, new HashSet<int> { SweteIsaiah.Work });
         var path = Path.Combine(sweteFolder, SweteIsaiah.Folder, OttleyIsaiah.File);
         if (!File.Exists(path))
         {
@@ -82,7 +85,7 @@ internal static class OttleyTextSource
                 + "Isaiah from the same transcription.");
         }
 
-        var read = SweteReader.Read(OttleyIsaiah.Lines(sweteFolder));
+        var read = SweteReader.Read(OttleyIsaiah.Lines(sweteFolder, corrections));
         return new TextSource(Definition,
         [
             new BookDraft(

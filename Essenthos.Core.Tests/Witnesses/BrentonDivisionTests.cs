@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -25,7 +26,7 @@ public class BrentonDivisionTests
         new(number, [.. verses.Select(v => new VerseDraft(v.Verse, v.Words))]);
 
     private static BrentonDivision Division(int chapter, string verse, string previous, string? begins = null, string? ends = null) =>
-        new(Nehemiah, chapter, verse, previous, begins, ends, ["BRENTON"], null);
+        new(Nehemiah, chapter, verse, previous, begins, ends, "witnesses: BRENTON");
 
     private static string Read(IReadOnlyList<ChapterDraft> chapters, int chapter, int verse) =>
         BrentonDivisions.Printed(chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse).Words);
@@ -105,7 +106,7 @@ public class BrentonDivisionTests
     [Fact]
     public void AMarkStandingAloneIsNotAWord()
     {
-        new BrentonDivision(Nehemiah, 1, "2", "1:1", "ἐπιλάθῃ —", null, [], null).Count.Should().Be(1);
+        new BrentonDivision(Nehemiah, 1, "2", "1:1", "ἐπιλάθῃ —", null, "").Count.Should().Be(1);
     }
 
     [Fact]
@@ -115,17 +116,37 @@ public class BrentonDivisionTests
 
         var read = () => BrentonDivisions.Apply(Nehemiah, chapters, [Division(12, "18", "12:17", begins: "Σαμουέ·")]);
 
-        read.Should().Throw<InvalidOperationException>().WithMessage("*Nehemiah 12:18*BrentonDivisions.json*");
+        read.Should().Throw<InvalidOperationException>().WithMessage("*Nehemiah 12:18*corrections file*");
     }
 
     [Fact]
     public void TheListSaysWhatItMovesAndWhoDividesSo()
     {
-        BrentonDivisions.All.Should().HaveCount(235);
-        BrentonDivisions.Note.Should().Contain($"{BrentonDivisions.All.Count} verses");
-        BrentonDivisions.All.Should().OnlyContain(d => (d.Begins == null) != (d.Ends == null) && d.Count > 0);
-        BrentonDivisions.All.Should().OnlyContain(d => d.Witnesses.Count > 0);
-        BrentonDivisions.All.Select(d => (d.Book, d.Address)).Should().OnlyHaveUniqueItems();
+        var all = BrentonDivisions.Of(ShippedCorrections.Brenton);
+        all.Should().HaveCount(235);
+        BrentonDivisions.Note.Should().Contain($"{all.Count} verses");
+        all.Should().OnlyContain(d => (d.Begins == null) != (d.Ends == null) && d.Count > 0);
+        all.Should().OnlyContain(d => d.Why.StartsWith("witnesses: ", StringComparison.Ordinal) && d.Why.Length > "witnesses: ".Length);
+        all.Select(d => (d.Book, d.Address)).Should().OnlyHaveUniqueItems();
+    }
+
+    [Fact]
+    public void ARowNamingAVerseBeforeInAnotherBookIsRefused()
+    {
+        var rows = Rows("16.12:18	begins	τῷ βαλγὰς,	15.12:17	witnesses: BRENTON");
+        var read = () => BrentonDivisions.Of(rows);
+
+        read.Should().Throw<FormatException>().WithMessage("*16.12:18*");
+    }
+
+    private static TextCorrections Rows(params string[] rows)
+    {
+        var root = Directory.CreateTempSubdirectory("brenton-rows").FullName;
+        var folder = Path.Combine(root, "Essenthos", "texts", "GRCBRENT");
+        Directory.CreateDirectory(folder);
+        File.WriteAllLines(Path.Combine(folder, "corrections.tsv"),
+            ["# product    Essenthos/texts/GRCBRENT/corrections.tsv", "# producer   by hand", "own	kind	before	after	why", .. rows]);
+        return TextCorrections.Read(root, "GRCBRENT");
     }
 }
 
@@ -169,7 +190,7 @@ public class BrentonDividedReadTests(Brenton brenton) : IClassFixture<Brenton>
             .ToDictionary(book => book.Book);
 
         // The words the file repeats or lost are BrentonEdits', and read here as the file prints them.
-        var unedited = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, edited: false);
+        var unedited = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton, edited: false);
         foreach (var code in (string[])["NUM", "PSA", "ISA", "1ES"])
         {
             var printed = files[code].Chapters.SelectMany(c => c.Verses).SelectMany(v => v.Words).Select(w => w.Surface + w.Trailer);

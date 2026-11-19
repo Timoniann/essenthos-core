@@ -28,7 +28,7 @@ public class AlexandrinusTests
     private const int ThirdJohn = 64;
 
     private static readonly Lazy<TextSource> Source =
-        new(() => AlexandrinusTextSource.Read(TestResources.Folder(".")));
+        new(() => AlexandrinusTextSource.Read(TestResources.Folder("."), ShippedCorrections.Of(OttleyTextSource.Slug)));
 
     private static string Folder => TestResources.Folder(AlexandrinusTextSource.Folder);
 

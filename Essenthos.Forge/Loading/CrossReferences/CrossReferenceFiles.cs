@@ -69,8 +69,10 @@ internal static class CrossReferenceFiles
             () => OpenBibleCrossReferences.Read(store.FullPath($"{OpenBibleCrossReferences.Folder}/{OpenBibleCrossReferences.FileName}")));
 
     internal static CrossReferenceOutcome Treasury(ProductStore store, bool force, ILogger logger) =>
-        WriteSet(store, CrossReferenceSets.Treasury, TreasuryProduct, [TreasuryReferences.Folder], force, logger,
-            () => TreasuryReferences.Read(store.FullPath(TreasuryReferences.Folder)));
+        WriteSet(store, CrossReferenceSets.Treasury, TreasuryProduct,
+            [TreasuryReferences.Folder, .. store.Find(TreasuryReferences.CorrectionsProduct) is { } corrections ? [corrections] : Array.Empty<string>()],
+            force, logger,
+            () => TreasuryReferences.Read(store.FullPath(TreasuryReferences.Folder), TreasuryReferences.Corrections(store)));
 
     /// <summary>The parallel passages as they would be written, one line each, for reading before they are; writes nothing.</summary>
     public static List<string> MeasureParallels(ProductStore store, ILogger logger)

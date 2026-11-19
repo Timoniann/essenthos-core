@@ -1,3 +1,5 @@
+using Essenthos.Core.Conversion;
+using Essenthos.Core.Products;
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.Corpus;
@@ -27,15 +29,10 @@ internal enum SwordSegmentation
 }
 
 /// <param name="Folder">Where the module's root is, under the corpus sources.</param>
-/// <param name="Renumbered">
-/// Verses the module stores at the edition's own number where the English frame numbers the same
-/// words otherwise: each is moved to the English address and records the edition's.
-/// </param>
 internal sealed record SwordText(
     string Folder,
     SwordSegmentation Segmentation,
-    TextDefinition Definition,
-    IReadOnlyList<((int Book, int Chapter, int Verse) Stored, (int Book, int Chapter, int Verse) English)>? Renumbered = null)
+    TextDefinition Definition)
 {
     /// <summary>
     /// Whether the module writes the Faith Hope Love foundation's own numbers for the Hebrew
@@ -206,17 +203,7 @@ internal static class SwordTextSource
             Citation =
                 "성경전서 개역한글판, 대한성서공회 1961, in the transcription of Korean Wikisource as "
                 + "CrossWire publishes it in the SWORD module KorRV.",
-        })
-        {
-            // The Korean prints 2 Corinthians 13 in thirteen verses, the holy kiss inside verse 11,
-            // and the module keeps its numbers in a fourteen-verse chapter: its 13:12 is the King
-            // James's 13:13 and its 13:13 the benediction, 13:14, with the last slot empty.
-            Renumbered =
-            [
-                ((47, 13, 13), (47, 13, 14)),
-                ((47, 13, 12), (47, 13, 13)),
-            ],
-        },
+        }),
 
         ["FreJND"] = new(Path.Combine("DarbyFrench", "FreJND"), SwordSegmentation.Spaced, new TextDefinition(
             Slug: DarbyFrench,
@@ -406,9 +393,13 @@ internal static class SwordTextSource
 
     /// <param name="folder">The module's root: the folder holding <c>mods.d</c>.</param>
     /// <param name="lists">The Strong number lists, for a module that writes FHL's prefix numbers.</param>
-    public static TextSource Read(string folder, StrongNumberLists? lists = null)
+    /// <param name="corrections">
+    /// The text's corrections file, whose <c>renumber</c> rows move a verse the module stores at the edition's own number
+    /// to the address the English frame numbers the same words at, recording the edition's.
+    /// </param>
+    public static TextSource Read(string folder, StrongNumberLists? lists = null, TextCorrections? corrections = null)
     {
-        var (text, verses) = Verses(folder, lists);
+        var (text, verses) = Verses(folder, lists, corrections);
         var chapters = verses
             .GroupBy(verse => (verse.Key.Book, verse.Key.Chapter))
             .ToDictionary(
@@ -509,7 +500,8 @@ internal static class SwordTextSource
         public List<IReadOnlyList<StatedPosition>> Unrendered { get; init; } = [];
     }
 
-    private static (SwordText Text, Dictionary<(int Book, int Chapter, int Verse), ReadVerse> Verses) Verses(string folder, StrongNumberLists? lists = null)
+    private static (SwordText Text, Dictionary<(int Book, int Chapter, int Verse), ReadVerse> Verses) Verses(
+        string folder, StrongNumberLists? lists = null, TextCorrections? corrections = null)
     {
         var configuration = SwordModule.Configuration(folder);
         if (!Known.TryGetValue(configuration.Name, out var text)
@@ -551,8 +543,9 @@ internal static class SwordTextSource
             };
         }
 
-        foreach (var (stored, english) in text.Renumbered ?? [])
+        foreach (var row in corrections?.Of(TextCorrection.Renumber) ?? [])
         {
+            var (stored, english) = (Address(row.Own), Address(row.After));
             if (verses.Remove(stored, out var moved) && !verses.ContainsKey(english))
             {
                 verses[english] = moved with { Stated = [new StatedNumberDraft(stored.Chapter, stored.Verse)] };
@@ -578,6 +571,11 @@ internal static class SwordTextSource
     /// Moves the two verses the King James does not number into the verse it prints them in, and
     /// records both addresses on it, the way the Ukrainian's Revelation 13:1 records 12:18 and 13:1.
     /// </summary>
+    private static (int Book, int Chapter, int Verse) Address(string? key) =>
+        VerseKey.TryParse(key, out var verse) && verse.ChapterLabel.Length + verse.VerseLabel.Length == 0
+            ? (verse.Book, verse.Chapter, verse.Verse)
+            : throw new FormatException($"\"{key}\" is not a verse key without letters, which a renumber row names in own and after.");
+
     private static void JoinWhatTheKingJamesJoins(Dictionary<(int, int, int), ReadVerse> verses)
     {
         foreach (var (book, chapter, verse, intoChapter, intoVerse, atEnd) in Joined)

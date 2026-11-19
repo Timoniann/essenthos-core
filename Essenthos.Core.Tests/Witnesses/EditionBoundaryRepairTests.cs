@@ -49,7 +49,7 @@ public class EditionBoundaryRepairTests
     [Fact]
     public void SwetesLastVerseOfSecondSamuelNineteenHasItsOwnAddress()
     {
-        var source = SweteTextSource.Read(TestResources.SweteFolder);
+        var source = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
         var book = source.Books.Single(b => b.CanonicalOrdinal == 10);
         book.CanonicalOrdinal.Should().Be(10);
         var chapter = book.Chapters.Single(c => c.Number == 19);

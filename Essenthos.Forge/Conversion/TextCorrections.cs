@@ -36,6 +36,26 @@ namespace Essenthos.Core.Conversion;
 /// <c>unsupplied</c>: the source marks words of the verse as supplied that are the edition's own text (a passage the
 /// translator took from another manuscript, which the source sets in the same markup), so none of them is supplied;
 /// <see cref="Before"/> is how many of its words the source marks so.
+/// <para>
+/// The other kinds are applied by the text's own reader, to the source as it reads it (<see cref="TextCorrections.Of"/>).
+/// In a one-token-per-line transcription (Swete, Ottley), whose <see cref="Own"/> is the transcription's own reference
+/// <c>book.chapter.verse</c> as its lines print it, the rows apply in the file's order, each to the tokens as the rows
+/// before it left them: <c>tokens</c>: the tokens <see cref="Before"/>, space-separated and standing in the verse exactly
+/// once, become those of <see cref="After"/>, or none; <c>opens</c>: from the tokens <see cref="Before"/> to the verse's
+/// end the words open the verse <see cref="After"/> names first, a reference, with the tokens after it in place of
+/// <see cref="Before"/>; <c>moves</c>: every token of the verse moves to the reference <see cref="After"/>.
+/// In Brenton's Greek, by verse key: <c>begins</c>: the words <see cref="Before"/>, which end the verse before it
+/// (<see cref="After"/>), begin the verse; <c>ends</c>: the words <see cref="Before"/>, which begin the verse, end the
+/// verse before it (<see cref="After"/>); <c>words</c>: the words <see cref="Before"/>, as the file prints them and once
+/// in the verse, are the words of <see cref="After"/>, read as the file's reader reads a line.
+/// <c>line</c> (Ge'ez): the source's line numbered as <see cref="Own"/>, the last of its chapter to open with
+/// <see cref="Before"/>, is numbered as <see cref="After"/>; in another book, it opens that chapter of the book.
+/// <c>split</c> (Charles): the verse is divided where <see cref="Before"/> opens, once and not at its start, and the
+/// second part and every later verse of the chapter are numbered one on. <c>stray</c> (Charles): the source holds
+/// <see cref="Before"/> before the verse's number, which is no word of the book.
+/// <c>renumber</c> (SWORD): the verse the module stores at <see cref="Own"/> stands at <see cref="After"/>, which the
+/// module leaves empty, and states its stored number.
+/// </para>
 /// </param>
 internal sealed record TextCorrection(string Own, string Kind, string? Before, string? After, string Why)
 {
@@ -48,6 +68,20 @@ internal sealed record TextCorrection(string Own, string Kind, string? Before, s
     public const string Strong = "strong";
     public const string Divide = "divide";
     public const string Unsupplied = "unsupplied";
+    public const string Tokens = "tokens";
+    public const string Opens = "opens";
+    public const string Moves = "moves";
+    public const string Begins = "begins";
+    public const string Ends = "ends";
+    public const string Words = "words";
+    public const string Line = "line";
+    public const string Split = "split";
+    public const string Stray = "stray";
+    public const string Renumber = "renumber";
+
+    /// <summary>The kinds a text's own reader applies to its source, which the converter's word pass leaves alone.</summary>
+    public static readonly IReadOnlySet<string> ReaderKinds =
+        new HashSet<string>(StringComparer.Ordinal) { Verse, Tokens, Opens, Moves, Begins, Ends, Words, Line, Split, Stray, Renumber };
 
     public static readonly ProductSchema<TextCorrection> Schema = new ProductSchema<TextCorrection>()
         .Text("own", c => c.Own)
@@ -94,9 +128,9 @@ internal sealed class TextCorrections
         var rows = reader.ReadAll();
         foreach (var row in rows)
         {
-            if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append
+            if (row.Kind is not (TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append
                 or TextCorrection.Drop or TextCorrection.Block or TextCorrection.Strong or TextCorrection.Divide
-                or TextCorrection.Unsupplied))
+                or TextCorrection.Unsupplied) && !TextCorrection.ReaderKinds.Contains(row.Kind))
             {
                 throw new FormatException($"{slug} corrections: \"{row.Kind}\" at {row.Own} is not a kind of correction.");
             }
@@ -104,6 +138,12 @@ internal sealed class TextCorrections
 
         return new TextCorrections(slug, rows);
     }
+
+    /// <summary>A text's repairs read from the corrections file under a <c>Resources/</c> folder, for a reader that applies another text's.</summary>
+    public static TextCorrections Read(string resources, string slug) => Read(new ProductStore(resources), slug);
+
+    /// <summary>The rows of the given kinds, in the file's order, for the text's reader to apply.</summary>
+    public IReadOnlyList<TextCorrection> Of(params string[] kinds) => [.. _rows.Where(row => kinds.Contains(row.Kind))];
 
     /// <summary>The <c>verse</c> rows, as the repairs a reader applies to its source's verses before it divides them.</summary>
     public TextRepairs SourceRepairs()
@@ -144,7 +184,7 @@ internal sealed class TextCorrections
         }
 
         var byVerse = _rows
-            .Where(row => row.Kind is not (TextCorrection.Verse or TextCorrection.Block or TextCorrection.Strong))
+            .Where(row => row.Kind is not (TextCorrection.Block or TextCorrection.Strong) && !TextCorrection.ReaderKinds.Contains(row.Kind))
             .GroupBy(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop or TextCorrection.Divide
                 ? WordKey.Parse(row.Own, _slug).Verse
                 : VerseKey.Parse(row.Own))

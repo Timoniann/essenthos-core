@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -30,9 +31,10 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void ARestorationThatNoLongerFindsItsWordsStopsTheRead()
     {
-        var act = () => SweteRestorations.Apply("01.Genesis", ["1.9.28 τριακόσια", "1.9.28 πεντήκοντα"]).ToList();
+        var rows = ShippedCorrections.Swete.Of(TextCorrection.Tokens).Where(row => row.Own == "1.9.28").ToList();
+        var act = () => EditionRepairs.Apply("01.Genesis", ["1.9.28 τριακόσια", "1.9.28 πεντήκοντα"], rows);
 
-        act.Should().Throw<InvalidOperationException>().WithMessage("*9:28*");
+        act.Should().Throw<InvalidOperationException>().WithMessage("*1.9.28*");
     }
 
     [Fact]
@@ -40,7 +42,7 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     {
         string[] lines = ["40.1.1 Ὅρασις", "40.1.1 Ἀβδειού.", "40.1.2 ἰδοὺ"];
 
-        SweteRestorations.Apply("40.Abdias", lines).Should().Equal(lines);
+        EditionRepairs.Apply("40.Abdias", 40, lines, ShippedCorrections.Swete).Should().Equal(lines);
     }
 
     /// <summary>
@@ -48,7 +50,7 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     /// </summary>
     private Func<int, int, int, string?> Genesis5To12()
     {
-        var brenton = SeptuagintTextSource.Read(TestResources.SeptuagintFolder);
+        var brenton = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton);
         return (book, chapter, verse) =>
         {
             var source = book == Genesis ? swete.Source : brenton;
@@ -95,20 +97,41 @@ public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
     public void AMisreadLetterIsLeftAsItIs() =>
         Words(19, 63, 1, "")[0].Should().Be("Bἰς");
 
+    /// <summary>The reasons of the corrections a rule settles from the token itself, one per kind.</summary>
+    private static readonly HashSet<string> RuleReasons =
+    [
+        "A Latin letter for the Greek one it looks exactly like",
+        "The chapter or verse number Swete prints in the margin, run into the verse's first word",
+        "Two words run together; Brenton's Greek and GLAUx both read them apart, and Swete prints each",
+        "The verse number Swete prints in figures, let into the text",
+        "The verse number Swete prints in figures, over the first letters of the word the verses beside it print",
+        "A figure inside a word: the letter it looks like, or a stray mark, where Swete prints the word it leaves",
+        "The lunate sigma, which the conversion wrote as its code point",
+    ];
+
+    private static IReadOnlyList<TextCorrection> Rows =>
+    [
+        .. ShippedCorrections.Swete.Of(TextCorrection.Tokens).Where(row => !row.Own.StartsWith("48.", StringComparison.Ordinal)),
+        .. ShippedCorrections.Of(SweteOldGreekTextSource.Slug).Of(TextCorrection.Tokens),
+    ];
+
     [Fact]
     public void EveryCorrectionChangesSomethingAndSaysWhy()
     {
-        SweteCorrections.All.Should().NotBeEmpty();
-        SweteCorrections.All.Should().OnlyContain(c => c.Digitised != c.Printed && c.Why.Length > 0);
+        Rows.Count(row => RuleReasons.Contains(row.Why)).Should().Be(1001);
+        Rows.Should().OnlyContain(row => row.Before != row.After && row.Why.Length > 0);
     }
 
     [Fact]
     public void NoCorrectionIsMadeInAVerseRestoredByHand()
     {
-        var byHand = SweteRestorations.All.Except(SweteCorrections.All).Except(SwetePage.All).Except(SweteSettled.All)
-            .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).ToHashSet();
+        var byHand = Rows.Where(row => row.Why.StartsWith("Brenton's Greek and GLAUx's both read", StringComparison.Ordinal)
+                                       || row.Why.StartsWith("Two words run together, the article misread", StringComparison.Ordinal)
+                                       || row.Why.StartsWith("Printed in Swete, vol. 1 (Cambridge, 1901), p. 143, beside", StringComparison.Ordinal))
+            .Select(row => row.Own).ToHashSet();
 
-        SweteCorrections.All.Should().NotContain(c => byHand.Contains(ValueTuple.Create(c.Book, c.Chapter, c.Verse, c.Label)));
+        byHand.Should().HaveCount(16);
+        Rows.Where(row => RuleReasons.Contains(row.Why)).Should().NotContain(row => byHand.Contains(row.Own));
     }
 
     private IReadOnlyList<string> Words(int book, int chapter, int verse, string label) =>
@@ -151,10 +174,12 @@ public class SwetePageTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryRestorationAddsWordsAndCitesItsPage()
     {
-        SwetePage.All.Should().NotBeEmpty();
-        SwetePage.All.Where(r => Words(r.Printed) <= Words(r.Digitised) || !r.Why.Contains("vol.", StringComparison.Ordinal))
+        var page = ShippedCorrections.Swete.Of(TextCorrection.Tokens)
+            .Where(row => row.Why.EndsWith("; the transcription lost it", StringComparison.Ordinal)).ToList();
+        page.Should().HaveCount(834);
+        page.Where(r => Words(r.After) <= Words(r.Before) || !r.Why.StartsWith("Printed in Swete, vol. ", StringComparison.Ordinal))
             .Should().BeEmpty();
     }
 
-    private static int Words(string tokens) => tokens.Split(' ').Length;
+    private static int Words(string? tokens) => tokens is null ? 0 : tokens.Split(' ').Length;
 }

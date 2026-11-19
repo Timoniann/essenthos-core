@@ -31,7 +31,7 @@ public sealed class ReferencesInTheFrameTests
         const string entry = "he promised.<br /><scripRef>Ge 12:7; De 6:10,11</scripRef><br />" +
                              "<scripRef>9:5; 10:11; 11:9; 34:4; Ne 9:8</scripRef>";
 
-        var (rows, unread) = TreasuryReferences.Entry(new VerseAddress(Acts, 7, 5), entry);
+        var (rows, unread) = TreasuryReferences.Entry(new VerseAddress(Acts, 7, 5), entry, ShippedCorrections.Treasury);
 
         unread.Should().Be(0);
         rows.Select(r => r.To).Should().Equal(
@@ -49,7 +49,7 @@ public sealed class ReferencesInTheFrameTests
     {
         const string entry = "the princes.<br /><scripRef>Ho 1:1</scripRef><br /><scripRef>40:2; 41:1</scripRef>";
 
-        var (rows, _) = TreasuryReferences.Entry(new VerseAddress(Genesis, 12, 15), entry);
+        var (rows, _) = TreasuryReferences.Entry(new VerseAddress(Genesis, 12, 15), entry, ShippedCorrections.Treasury);
 
         rows.Select(r => r.To).Should().Equal(
             new VerseAddress(Hosea, 1, 1), new VerseAddress(Genesis, 40, 2), new VerseAddress(Genesis, 41, 1));
@@ -59,7 +59,7 @@ public sealed class ReferencesInTheFrameTests
     public void APlainSlipIsReadAsTheVersesItCanOnlyMean()
     {
         var (rows, _) = TreasuryReferences.Entry(new VerseAddress(Genesis, 49, 8),
-            "thy father's.<br /><scripRef>Isa 9:7; Phm 2:10,11; Heb 7:14</scripRef>");
+            "thy father's.<br /><scripRef>Isa 9:7; Phm 2:10,11; Heb 7:14</scripRef>", ShippedCorrections.Treasury);
 
         rows.Select(r => r.To).Should().Contain(new VerseAddress(Philippians, 2, 10))
             .And.Contain(new VerseAddress(Philippians, 2, 11))
@@ -71,7 +71,7 @@ public sealed class ReferencesInTheFrameTests
     public void AReferenceNoBookHasIsReadAsWrittenAndTheLoaderLeavesItOut()
     {
         var (rows, _) = TreasuryReferences.Entry(new VerseAddress(Deuteronomy, 23, 15),
-            "<scripRef>1Sa 30:15; Ob 1:14; Phm 10:19</scripRef>");
+            "<scripRef>1Sa 30:15; Ob 1:14; Phm 10:19</scripRef>", ShippedCorrections.Treasury);
 
         var philemon = rows.Single(r => r.To.Book == Philemon);
         philemon.To.Should().Be(new VerseAddress(Philemon, 10, 19));

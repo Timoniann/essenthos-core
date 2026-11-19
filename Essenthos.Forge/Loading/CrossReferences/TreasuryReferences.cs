@@ -1,3 +1,5 @@
+using Essenthos.Core.Conversion;
+using Essenthos.Core.Products;
 using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -49,18 +51,33 @@ internal static partial class TreasuryReferences
     internal sealed record Correction(VerseAddress Entry, string Written, string Read);
 
     /// <summary>
-    /// Slips in the module's references where what they name cannot be a verse and what they mean is plain: Philemon
-    /// has one chapter, so <c>Phm 2:10,11</c> under the knee that bows (Genesis 49:8) and <c>Phm 2:12,13</c> between
-    /// Ephesians and Colossians (Leviticus 20:7) are Philippians; <c>Isa 58:2:4,7-9</c> is Isaiah 58:2-4 and 7-9.
+    /// Slips in the module's references where what they name cannot be a verse and what they mean is plain, kept by hand
+    /// as <c>reference</c> rows (own, the entry's verse key; before, the reference as written; after, as read; why).
     /// </summary>
-    public static readonly IReadOnlyList<Correction> Corrections =
-    [
-        new(new VerseAddress(1, 49, 8), "Phm 2:10,11", "Php 2:10,11"),
-        new(new VerseAddress(3, 20, 7), "Phm 2:12,13", "Php 2:12,13"),
-        new(new VerseAddress(22, 5, 6), "Isa 58:2:4,7-9", "Isa 58:2-4,7-9"),
-    ];
+    public const string CorrectionsProduct = "cross-references/tsk-corrections";
 
-    public static (List<CrossReferenceRow> Rows, int Unread) Read(string folder)
+    public const string ReferenceKind = "reference";
+
+    /// <summary>The store's corrections of the module's references; none where the store has no such file.</summary>
+    public static IReadOnlyList<Correction> Corrections(ProductStore store)
+    {
+        if (!store.Exists(CorrectionsProduct))
+        {
+            return [];
+        }
+
+        using var reader = store.Open(CorrectionsProduct, TextCorrection.Schema);
+        return
+        [
+            .. reader.ReadAll().Select(row => row.Kind == ReferenceKind && VerseKey.TryParse(row.Own, out var entry)
+                && entry.ChapterLabel.Length + entry.VerseLabel.Length == 0 && row.Before is { Length: > 0 } written && row.After is { } read
+                ? new Correction(new VerseAddress(entry.Book, entry.Chapter, entry.Verse), written, read)
+                : throw new FormatException(
+                    $"{CorrectionsProduct}: the row at {row.Own} is not a reference row naming the entry's verse, the reference as written and as read.")),
+        ];
+    }
+
+    public static (List<CrossReferenceRow> Rows, int Unread) Read(string folder, IReadOnlyList<Correction> corrections)
     {
         if (!Directory.Exists(folder))
         {
@@ -75,7 +92,7 @@ internal static partial class TreasuryReferences
                      .OrderBy(entry => entry.Key))
         {
             var from = new VerseAddress(book, chapter, verse);
-            var (read, missed) = Entry(from, markup);
+            var (read, missed) = Entry(from, markup, corrections);
             unread += missed;
             rows.AddRange(read.Select((row, index) => row with { Rank = index + 1 }));
         }
@@ -84,7 +101,7 @@ internal static partial class TreasuryReferences
     }
 
     /// <summary>One verse's entry: its references in printed order, each under its catchword, and the pieces that did not read.</summary>
-    internal static (List<CrossReferenceRow> Rows, int Unread) Entry(VerseAddress from, string markup)
+    internal static (List<CrossReferenceRow> Rows, int Unread) Entry(VerseAddress from, string markup, IReadOnlyList<Correction> corrections)
     {
         var rows = new List<CrossReferenceRow>();
         var unread = 0;
@@ -108,7 +125,7 @@ internal static partial class TreasuryReferences
 
             foreach (Match reference in references)
             {
-                var body = Corrected(from, WebUtility.HtmlDecode(reference.Groups["body"].Value));
+                var body = Corrected(from, WebUtility.HtmlDecode(reference.Groups["body"].Value), corrections);
                 var (targets, missed) = Targets(from, body);
 
                 // A line the module broke out of the one before it (Acts 7:5's "9:5; 10:11; 11:9; 34:4" after
@@ -140,9 +157,9 @@ internal static partial class TreasuryReferences
         return (rows, unread);
     }
 
-    private static string Corrected(VerseAddress from, string body)
+    private static string Corrected(VerseAddress from, string body, IReadOnlyList<Correction> corrections)
     {
-        foreach (var correction in Corrections)
+        foreach (var correction in corrections)
         {
             if (correction.Entry == from)
             {

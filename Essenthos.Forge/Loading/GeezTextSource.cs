@@ -1,3 +1,5 @@
+using Essenthos.Core.Conversion;
+using Essenthos.Core.Products;
 using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
@@ -217,8 +219,8 @@ internal static class GeezTextSource
 
     /// <summary>
     /// A line the file puts in the wrong place, moved or renumbered where the file's own neighbours
-    /// say where it belongs. Each is checked against the words it opens with, so a file that has
-    /// changed is refused rather than repaired in the wrong place.
+    /// say where it belongs: a <c>line</c> row of the text's corrections file. Each is checked against
+    /// the words it opens with, so a file that has changed is refused rather than repaired in the wrong place.
     /// </summary>
     /// <param name="ToFile">The book the line belongs to, where it is not the one it stands in.</param>
     private sealed record LineRepair(
@@ -230,14 +232,27 @@ internal static class GeezTextSource
         string? ToFile = null,
         int? ToChapter = null);
 
-    private static readonly LineRepair[] Repairs =
+    private static IReadOnlyList<LineRepair> Repairs(TextCorrections corrections) =>
     [
-        // The last line of 1 Samuel is numbered 1 and is the first verse of 2 Samuel, which the next
-        // file lacks: it opens at 1:2.
-        new("LIT2697Sam.xml", 31, 1, "ወእምዝ፡ እምድኅረ፡ ሞተ፡ ሳኦል", 1, ToFile: "LIT2698Sam.xml", ToChapter: 1),
+        .. corrections.Of(TextCorrection.Line).Select(row =>
+        {
+            var own = VerseKey.Parse(row.Own);
+            var to = VerseKey.Parse(row.After ?? string.Empty);
+            var file = Books.SingleOrDefault(book => book.Canonical == own.Book)?.File;
+            var toFile = Books.SingleOrDefault(book => book.Canonical == to.Book)?.File;
+            if (file is null || toFile is null || row.Before is not { Length: > 0 } opening
+                || own.ChapterLabel.Length + own.VerseLabel.Length + to.ChapterLabel.Length + to.VerseLabel.Length > 0
+                || (file == toFile && to.Chapter != own.Chapter))
+            {
+                throw new FormatException(
+                    $"The line row at {row.Own} needs a line of one file's book, the words it opens with in before, and in after "
+                    + "its number in the same chapter or its place in another book.");
+            }
 
-        // Matthew 7 runs 1 to 28 and ends on a line numbered 24, which is the chapter's last verse.
-        new("LIT2709Matthew.xml", 7, 24, "እስመ፡ ከመ፡ መኰንን፡ ይሜህሮሙ", 29),
+            return file == toFile
+                ? new LineRepair(file, own.Chapter, own.Verse, opening, to.Verse)
+                : new LineRepair(file, own.Chapter, own.Verse, opening, to.Verse, toFile, to.Chapter);
+        }),
     ];
 
     /// <summary>
@@ -296,7 +311,8 @@ internal static class GeezTextSource
                    + "(tau.ac.il/~hacohen/Biblia.html) and Michal Jerabek's Library of Ethiopian Texts (1995).",
     };
 
-    public static TextSource Read(string folder)
+    /// <param name="corrections">The text's corrections file, whose <c>line</c> rows move lines before the verses are read.</param>
+    public static TextSource Read(string folder, TextCorrections corrections)
     {
         var raw = new Dictionary<string, List<GeezRawChapter>>(StringComparer.Ordinal);
         foreach (var book in Books)
@@ -313,7 +329,7 @@ internal static class GeezTextSource
             raw[book.File] = [.. GeezReader.Read(path, book.Edition, book.Layout, out _)];
         }
 
-        Repair(raw);
+        Repair(raw, Repairs(corrections));
 
         var books = new List<BookDraft>(Books.Count);
         for (var i = 0; i < Books.Count; i++)
@@ -368,9 +384,9 @@ internal static class GeezTextSource
         ]);
     }
 
-    private static void Repair(Dictionary<string, List<GeezRawChapter>> raw)
+    private static void Repair(Dictionary<string, List<GeezRawChapter>> raw, IReadOnlyList<LineRepair> repairs)
     {
-        foreach (var repair in Repairs)
+        foreach (var repair in repairs)
         {
             var chapters = raw[repair.File];
             var at = chapters.FindIndex(chapter => chapter.Number == repair.Chapter);
@@ -382,8 +398,8 @@ internal static class GeezTextSource
             {
                 throw new InvalidOperationException(
                     $"{repair.File} {repair.Chapter} has no line numbered {repair.Number} opening \"{repair.Opening}\". "
-                    + "The file has changed since this repair was written; read the chapter again and repair it "
-                    + "as it now stands, or drop the repair if the file has been corrected.");
+                    + "The file has changed since this line row was written; read the chapter again and correct the row "
+                    + "as it now stands, or drop it if the file has been corrected.");
             }
 
             var moved = line with { Number = repair.ToNumber };

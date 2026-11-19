@@ -284,7 +284,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
     [Fact]
     public void BrentonsEnglishIsDividedAsHisGreekIs()
     {
-        var greek = SeptuagintTextSource.Read(TestResources.SeptuagintFolder);
+        var greek = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton);
 
         read.Brenton.Books.Should().HaveCount(53);
         read.Brenton.Books.Sum(Deuterocanon.Verses).Should().Be(29_005);
@@ -374,7 +374,7 @@ public class MaccabeesFrameTests(Deuterocanon read) : IClassFixture<Deuterocanon
     {
         TextSource[] sources =
         [
-            SeptuagintTextSource.Read(TestResources.SeptuagintFolder), SweteTextSource.Read(TestResources.SweteFolder),
+            SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton), SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete),
             read.Brenton, read.KingJames, read.WorldEnglish,
         ];
 
@@ -399,7 +399,7 @@ public class MaccabeesFrameTests(Deuterocanon read) : IClassFixture<Deuterocanon
     public void BrentonsNehemiahMeetsHisGreekInTheFrame()
     {
         const int nehemiah = 16;
-        var greek = Deuterocanon.Frame(SeptuagintTextSource.Read(TestResources.SeptuagintFolder), Rules);
+        var greek = Deuterocanon.Frame(SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton), Rules);
         var english = Deuterocanon.Frame(read.Brenton, Rules);
 
         english.Resolve(nehemiah, 4, 1)[0].Should().Be(greek.Resolve(nehemiah, 3, 33)[0]);

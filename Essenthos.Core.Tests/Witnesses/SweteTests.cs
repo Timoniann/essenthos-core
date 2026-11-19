@@ -132,7 +132,7 @@ public class SweteUnnumberedTests
 /// <summary>Read once; fifty-two books of half a million tokens is a few seconds.</summary>
 public sealed class Swete
 {
-    internal TextSource Source { get; } = SweteTextSource.Read(TestResources.SweteFolder);
+    internal TextSource Source { get; } = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
 
     internal BookDraft Book(int canonical) => Source.Books.Single(book => book.CanonicalOrdinal == canonical);
 
@@ -348,7 +348,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
 
         try
         {
-            var act = () => SweteTextSource.Read(empty.FullName);
+            var act = () => SweteTextSource.Read(empty.FullName, ShippedCorrections.Swete);
 
             act.Should().Throw<InvalidOperationException>().WithMessage("*01.Genesis*");
         }
@@ -363,7 +363,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteNumberingTests
 {
-    private static readonly IReadOnlyList<BookDraft> Books = SweteTextSource.Read(TestResources.SweteFolder).Books;
+    private static readonly IReadOnlyList<BookDraft> Books = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete).Books;
 
     [Fact]
     public void WisdomRunsFromOneToNineteenWithTheLordIsKindAtFifteen()
@@ -479,7 +479,7 @@ public class SweteOldGreekTests
 
     private const int Bel = 78;
 
-    private static readonly TextSource Source = SweteOldGreekTextSource.Read(TestResources.SweteFolder);
+    private static readonly TextSource Source = SweteOldGreekTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Of(SweteOldGreekTextSource.Slug));
 
     private static readonly Lazy<VersificationFrame> Frame = new(() => TestResources.Rules.Frame(
         Versification.Septuagint,
