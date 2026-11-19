@@ -91,6 +91,15 @@ internal sealed class StrongNumberSource : IPairSource
     /// </param>
     internal sealed record LaidRules(bool OneOccurrence, Func<string, bool>? FunctionWord);
 
+    private static readonly string[] SupportingPrefixes = [.. All.Where(source => source._rules is not null).SelectMany(source => source._prefixes)];
+
+    /// <summary>
+    /// Whether a row is a supporting numbering's (<see cref="LaidRules"/>): ranked below the pair's composed links, it is not a
+    /// link the producers after it yield to. A translation's supplied words stay stated absent beside it, and a name is still
+    /// placed on a word it alone links; the merge then settles it against those as against any link.
+    /// </summary>
+    public static bool Supporting(string source) => SupportingPrefixes.Any(prefix => source.StartsWith(prefix, StringComparison.Ordinal));
+
     public string Method => MappingMethods.Strong;
 
     public string Name => _translation.ToLowerInvariant();

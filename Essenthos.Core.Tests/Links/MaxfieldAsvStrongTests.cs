@@ -114,6 +114,18 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
         StrongNumberSource.All.Should().NotContain(source => source.States(Asv + "-TR1894"));
     }
 
+    /// <summary>
+    /// The ASV's rows are a supporting numbering's: the italics' absences and the names pass do not yield to them, as they do
+    /// to a composition or to another laid numbering.
+    /// </summary>
+    [Fact]
+    public void Only_the_ASV_s_numbering_is_one_the_producers_after_it_do_not_yield_to()
+    {
+        StrongNumberSource.Supporting(MaxfieldAsvEdition.Credit + ", matched within the verse against BHSA").Should().BeTrue();
+        StrongNumberSource.Supporting(ReinaValeraStrongLinkLoader.Credit + ", matched within the verse against BHSA").Should().BeFalse();
+        StrongNumberSource.Supporting("SIL.Machine, aligned through KJV and through BSB").Should().BeFalse();
+    }
+
     [Fact]
     public void A_content_word_s_number_naming_one_Greek_word_is_a_link_at_nine_tenths_credited_to_Maxfield()
     {

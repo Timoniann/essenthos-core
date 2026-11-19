@@ -78,7 +78,9 @@ internal sealed class KingJamesItalicsSource : IPairSource
 /// <para>
 /// **A run gives way to a rendering.** A marked word another link of the pair renders is left rendered and not stated
 /// absent, whatever method draws that link, except the aligner's own guess when every word it names on the edition's side is
-/// marked: the loader withdrew those, and the merge's stated absence outranks them. The renderings are read from the pair's
+/// marked: the loader withdrew those, and the merge's stated absence outranks them. Nor does it give way to a supporting
+/// numbering's rows (<see cref="StrongNumberSource.Supporting"/>, the ASV's): the merge's stated absence outranks them too.
+/// The renderings are read from the pair's
 /// other method files and from the rows the other stated sources make. EVIDENTIA's file is not read: it is made from the
 /// stated file (the build would have a cycle), so a marked word only an EVIDENTIA verdict renders is stated absent here.
 /// </para>
@@ -258,7 +260,7 @@ internal sealed class SuppliedWordSource : IPairSource
     private IReadOnlySet<string> Rendered(ProductTexts texts, string pair, IReadOnlySet<string> absent, out int withdrawn)
     {
         var rows = PairStanding.Rows(texts.Store, pair, Renderings)
-            .Where(row => row.Relation is "renders" or "equals")
+            .Where(row => row.Relation is "renders" or "equals" && !StrongNumberSource.Supporting(row.Source))
             .ToList();
         var claims = rows.GroupBy(row => row.Shape, StringComparer.Ordinal)
             .ToDictionary(group => group.Key, group => group.All(Guess), StringComparer.Ordinal);

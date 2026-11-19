@@ -26,7 +26,8 @@ namespace Essenthos.Core.Mapping;
 ///
 /// <para>
 /// <strong>A name is placed only where neither word is linked yet</strong>, as the database's pass wrote it after every
-/// other step of the recipe: by the pair's stated, Strong, aligner, composed, lexical and possessive files.
+/// other step of the recipe: by the pair's stated, Strong, aligner, composed, lexical and possessive files, a supporting
+/// numbering's rows aside (<see cref="StrongNumberSource.Supporting"/>).
 /// EVIDENTIA's file and the laid stated rows read this one, so they are not read here; the merge ranks EVIDENTIA above the
 /// names where both claim a word. A ruling's refused rendering is the merge's to suppress, as for every method.
 /// </para>
@@ -407,7 +408,7 @@ internal sealed class NamesFirstSource : IPairSource
             }
 
             using var reader = store.Open(product, MappingRow.Schema);
-            foreach (var row in reader.Rows())
+            foreach (var row in reader.Rows().Where(row => !StrongNumberSource.Supporting(row.Source)))
             {
                 sources.UnionWith(PairLinkFiles.Words(row.From, fromIds).Select(id => (long)id));
                 targets.UnionWith(PairLinkFiles.Words(row.To, toIds).Select(id => (long)id));
