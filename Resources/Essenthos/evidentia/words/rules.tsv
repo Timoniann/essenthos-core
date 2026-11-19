@@ -7,4 +7,3 @@ language	original	rule	tier	reason
 ukr	grc	preposition-before-noun	attached_preposition	TSK-1910 stretch 2 (332ce9f9): held 97.3% judged (uk_ubio Luke 1:1-54 15/0, book projects 168/173), 93.6% by the book key; hand-read 39/40 in unstated verses
 ukr	grc	subject-pronoun	attached_pronoun	TSK-1910 stretch 2 (332ce9f9): held 118/118 judged on the book projects (111/118 by their key); hand-read 38/40 in unstated verses
 rus	grc	subject-pronoun	attached_pronoun	TSK-1910 stretch 2 (332ce9f9): 100/100 hand-judged on held verses, 40/40 on dev; the silver Strong key cannot measure it (the tagged pronouns are the ones Greek writes)
-rus	grc	preposition-before-noun	attached_preposition	TSK-1910 stretch 2 (332ce9f9): silver Strong key held 5,089/62 (98.8%); hand-read 38/40 in unstated verses
