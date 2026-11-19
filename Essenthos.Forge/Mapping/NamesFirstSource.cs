@@ -130,6 +130,30 @@ internal sealed class NamesFirstSource : IPairSource
     }
 
     /// <summary>
+    /// Every name the pass places in a pair, linked or not: the second witness to the pair's other methods
+    /// (<see cref="EvidentiaSecondWitness"/>), where <see cref="Rows"/> keeps only the words no method joins yet.
+    /// Ids are the texts' product ids.
+    /// </summary>
+    internal static IReadOnlyList<NamePlacing> All(ProductTexts texts, string pair)
+    {
+        var (fromText, toText) = MappingProducts.Split(pair);
+        var store = texts.Store;
+        var from = texts[fromText];
+        var to = texts[toText];
+        var policy = NamePolicy.Default.For(from.Language);
+        var lettered = Versification(store, fromText) == Versification(store, toText);
+        var source = NamedWords.Read(from, lettered);
+        var target = NamedWords.Read(to, lettered);
+        var records = Records.Read(store);
+        var (fromIds, toIds) = (PairLinkFiles.Ids(from), PairLinkFiles.Ids(to));
+        var originals = Originals(store, to, records, toIds);
+        var folded = new HashSet<long>();
+        var named = Named(store, from, records, fromIds, folded);
+        var verses = Verses(source, target, from, to, originals, named, Capitalised(from), folded);
+        return [.. NamePlacement.Place(verses).Where(policy.Places)];
+    }
+
+    /// <summary>
     /// The placed pairs as the database's pass wrote them: only where neither word is linked in the pair yet, one link per
     /// word of the translation with every original word placed on it, named by the first placing's signals.
     /// </summary>

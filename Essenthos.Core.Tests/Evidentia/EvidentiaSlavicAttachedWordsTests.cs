@@ -160,6 +160,62 @@ public class EvidentiaSlavicAttachedWordsTests
         Place([who, loves], [who], [every, article, participle], (2, 102)).Should().BeEmpty();
     }
 
+    [Fact]
+    public void TheShippedRuleListIsWellFormedAndNamesNoHebrewRule()
+    {
+        var store = new ProductStore(TestResources.Shipped("."));
+
+        EvidentiaSlavicRuleRow.Read(store, "ukr").Keys.Should().OnlyContain(key => key.Original == "grc");
+        EvidentiaSlavicRuleRow.Read(store, "rus").Keys.Should().OnlyContain(key => key.Original == "grc");
+    }
+
+    [Theory]
+    [InlineData("pol", "grc", "subject-pronoun", "attached_pronoun", "x", "language 'pol'")]
+    [InlineData("ukr", "lat", "subject-pronoun", "attached_pronoun", "x", "original 'lat'")]
+    [InlineData("ukr", "grc", "possessive", "attached_pronoun", "x", "rule 'possessive'")]
+    [InlineData("ukr", "grc", "subject-pronoun", "attached-pronoun", "x", "tier 'attached-pronoun'")]
+    [InlineData("ukr", "grc", "subject-pronoun", "safe", "x", "tiers already use")]
+    [InlineData("ukr", "grc", "subject-pronoun", "attached_pronoun", " ", "reason is empty")]
+    public void AMalformedRuleLineIsRefusedWithItsFault(string language, string original, string rule, string tier, string reason, string fault)
+    {
+        var act = () => EvidentiaSlavicRuleRow.Checked([new EvidentiaSlavicRuleRow(language, original, rule, tier, reason)], "ukr");
+
+        act.Should().Throw<FormatException>().WithMessage($"*row 1*{fault}*");
+    }
+
+    [Fact]
+    public void ARunPlacesOnlyTheRulesListedForTheOriginalsLanguageUnderTheirTierBesideItsOwnHead()
+    {
+        // ми говоримо over λαλοῦμεν, the verb placed by the run; не is listed in the word file but not in the rules.
+        var we = Word(1, "ми", head: 2, relation: "nsubj");
+        var speak = Word(2, "говоримо");
+        var not = Word(3, "не", head: 2, relation: "advmod");
+        var negation = Greek(100, "οὐ", "G3756", ("pos", "adv"));
+        var verb = Greek(101, "λαλοῦμεν", "G2980", ("pos", "verb"), ("mood", "indicative"), ("person", "first"), ("number", "plural"));
+        var head = new EvidentiaProposal(Analysis(speak), Analysis(verb), EvidentiaProposalKind.GlobalStableKnownRendering, 0.9,
+            new EvidentiaDecisionTrace("safe", "learned", []));
+        var run = new EvidentiaSlavicRun(Ukrainian, new Dictionary<(string Original, string Rule), string>
+        {
+            [("grc", EvidentiaWordKinds.SubjectPronoun)] = "attached_pronoun",
+            [("hbo", EvidentiaWordKinds.Negation)] = "attached_negation",
+        });
+
+        var proposals = EvidentiaSlavicAttachedWords.Proposals(run, [Analysis(we), Analysis(speak), Analysis(not)],
+            [Analysis(negation), Analysis(verb)], [head]);
+
+        var pronoun = proposals.Should().ContainSingle().Which;
+        pronoun.Source.Token.Id.Should().Be(1);
+        pronoun.Target.Token.Id.Should().Be(101);
+        pronoun.Kind.Should().Be(EvidentiaProposalKind.AttachedWord);
+        pronoun.Trace!.Tier.Should().Be("attached_pronoun");
+        pronoun.Head.Should().Be(head);
+        EvidentiaAttachedWords.Attachment(pronoun).Should().Be(EvidentiaAttachment.SubjectPronoun);
+        EvidentiaAttachedWords.Safe([head], proposals).Should().NotContain((1, 101));
+    }
+
+    private static EvidentiaAnalysis Analysis(EvidentiaToken token) =>
+        new(token, token.Surface, token.Lemma, token.PartOfSpeech, EvidentiaWordClass.Content, LanguagePackCapability.None);
+
     private static List<EvidentiaSlavicPlacement> Place(
         IReadOnlyList<EvidentiaToken> verse,
         IReadOnlyList<EvidentiaToken> unplaced,

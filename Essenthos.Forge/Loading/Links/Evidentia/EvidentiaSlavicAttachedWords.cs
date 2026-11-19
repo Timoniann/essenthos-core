@@ -42,6 +42,66 @@ internal static class EvidentiaSlavicAttachedWords
     /// <summary>The UD relations by which a pronoun is the subject of its head.</summary>
     private static readonly HashSet<string> SubjectRelations = new(StringComparer.Ordinal) { "nsubj", "nsubj:pass" };
 
+    /// <summary>How far below its head's confidence an attached word's placement is stored.</summary>
+    private const double ConfidenceBelowHead = 0.05;
+
+    /// <summary>
+    /// The placements of a stored run: in every verse, the rules the language's rule list names, applied to the words no proposal
+    /// placed, with the run's own proposals as their heads. Each is an attached word under its rule's tier, never the safe one.
+    /// </summary>
+    public static IReadOnlyList<EvidentiaProposal> Proposals(
+        EvidentiaSlavicRun run,
+        IReadOnlyList<EvidentiaAnalysis> source,
+        IReadOnlyList<EvidentiaAnalysis> target,
+        IReadOnlyList<EvidentiaProposal> proposals)
+    {
+        var heads = proposals.GroupBy(proposal => proposal.Source.Token.Id).ToDictionary(group => group.Key, group => group.First());
+        var placed = proposals.GroupBy(proposal => proposal.Source.Token.Id)
+            .ToDictionary(group => group.Key, group => (IReadOnlyList<long>)[.. group.Select(proposal => proposal.Target.Token.Id).Distinct()]);
+        var analyses = source.DistinctBy(word => word.Token.Id).ToDictionary(word => word.Token.Id);
+        var originals = target.DistinctBy(word => word.Token.Id).ToDictionary(word => word.Token.Id);
+        List<EvidentiaToken> originalTokens = [.. originals.Values.Select(word => word.Token)];
+        var result = new List<EvidentiaProposal>();
+        foreach (var verse in analyses.Values.GroupBy(word => word.Token.Address))
+        {
+            List<EvidentiaToken> words = [.. verse.Select(word => word.Token).OrderBy(token => token.Position)];
+            List<EvidentiaToken> unplaced = [.. words.Where(token => !placed.ContainsKey(token.Id))];
+            if (unplaced.Count == 0)
+            {
+                continue;
+            }
+
+            foreach (var placement in Place(run.Words, words, unplaced, originalTokens, placed))
+            {
+                if (!originals.TryGetValue(placement.Original, out var original) || !heads.TryGetValue(placement.Head, out var head)
+                    || !run.Tiers.TryGetValue((original.Token.Language, placement.Rule), out var tier))
+                {
+                    continue;
+                }
+
+                var attachment = placement.Rule == EvidentiaWordKinds.SubjectPronoun ? EvidentiaAttachment.SubjectPronoun
+                    : placement.Rule.StartsWith("preposition", StringComparison.Ordinal) ? EvidentiaAttachment.Preposition
+                    : placement.Rule == EvidentiaWordKinds.Conjunction ? EvidentiaAttachment.Conjunction
+                    : placement.Rule == EvidentiaWordKinds.Copula ? EvidentiaAttachment.Copula
+                    : (EvidentiaAttachment?)null;
+                var word = analyses[placement.Word];
+                result.Add(new EvidentiaProposal(
+                    word,
+                    original,
+                    EvidentiaProposalKind.AttachedWord,
+                    Math.Max(0, head.Confidence - ConfidenceBelowHead),
+                    new EvidentiaDecisionTrace(
+                        tier,
+                        $"{attachment?.ToString() ?? placement.Rule} of '{head.Source.Token.Surface}' by the {run.Words.Language} rule " +
+                        $"{placement.Rule} (evidentia/words/rules), on '{original.Token.Surface}'",
+                        head.Trace?.Evidence ?? []),
+                    head));
+            }
+        }
+
+        return result;
+    }
+
     public static IEnumerable<EvidentiaSlavicPlacement> Place(
         IEvidentiaSlavicWords language,
         IReadOnlyList<EvidentiaToken> verse,

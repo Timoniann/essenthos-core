@@ -1,3 +1,4 @@
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Loading.Links.Evidentia;
@@ -160,4 +161,97 @@ internal static class EvidentiaSlavicLanguages
         RussianWords.Code => new RussianWords(EvidentiaWordList.Read(store, language)),
         _ => null,
     };
+}
+
+/// <summary>
+/// A line of <c>evidentia/words/rules</c>, kept by hand: one attached-word rule a stored run applies for one Slavic language,
+/// and the tier its placements are stored under, so that a measured rule is switched on, or taken back, by editing the file.
+/// </summary>
+internal sealed record EvidentiaSlavicRuleRow(string Language, string Original, string Rule, string Tier, string Reason)
+{
+    public const string Product = "evidentia/words/rules";
+
+    /// <summary>The rules <see cref="EvidentiaSlavicAttachedWords"/> names.</summary>
+    public static readonly IReadOnlySet<string> Rules = new HashSet<string>(StringComparer.Ordinal)
+    {
+        EvidentiaWordKinds.SubjectPronoun, "preposition-before-noun", "preposition-for-case", EvidentiaWordKinds.Negation,
+        EvidentiaWordKinds.Conjunction, EvidentiaWordKinds.Copula, EvidentiaWordKinds.Relative,
+    };
+
+    public static readonly ProductSchema<EvidentiaSlavicRuleRow> Schema = new ProductSchema<EvidentiaSlavicRuleRow>()
+        .Text("language", r => r.Language)
+        .Text("original", r => r.Original)
+        .Text("rule", r => r.Rule)
+        .Text("tier", r => r.Tier)
+        .Text("reason", r => r.Reason)
+        .Reads(row => new EvidentiaSlavicRuleRow(row.Text(0), row.Text(1), row.Text(2), row.Text(3), row.Text(4)));
+
+    /// <summary>The rules listed for a language, by rule, with their tiers; a malformed line is refused.</summary>
+    public static IReadOnlyDictionary<(string Original, string Rule), string> Read(ProductStore store, string language)
+    {
+        using var reader = store.Open(Product, Schema);
+        return Checked([.. reader.Rows()], language);
+    }
+
+    public static IReadOnlyDictionary<(string Original, string Rule), string> Checked(IReadOnlyList<EvidentiaSlavicRuleRow> rows, string language)
+    {
+        var tiers = new Dictionary<(string Original, string Rule), string>();
+        var seen = new HashSet<(string, string, string)>();
+        for (var index = 0; index < rows.Count; index++)
+        {
+            var row = rows[index];
+            string? fault = row.Language is not (UkrainianWords.Code or RussianWords.Code) ? $"language '{row.Language}' is neither ukr nor rus"
+                : row.Original is not ("grc" or "hbo") ? $"original '{row.Original}' is neither grc nor hbo"
+                : !Rules.Contains(row.Rule) ? $"rule '{row.Rule}' is none of {string.Join(", ", Rules.Order(StringComparer.Ordinal))}"
+                : row.Tier.Length == 0 || !row.Tier.All(c => char.IsAsciiLetterLower(c) || char.IsAsciiDigit(c) || c == '_') ? $"tier '{row.Tier}' is not lower-case letters, digits and _"
+                : row.Tier is "safe" or "review" or "attached" ? $"tier '{row.Tier}' is one the run's own tiers already use"
+                : string.IsNullOrWhiteSpace(row.Reason) ? "the reason is empty"
+                : !seen.Add((row.Language, row.Original, row.Rule)) ? "the line repeats an earlier one"
+                : null;
+            if (fault is not null)
+            {
+                throw new FormatException($"{Product}, row {index + 1} ({row.Language} {row.Rule}): {fault}.");
+            }
+
+            if (row.Language == language)
+            {
+                tiers[(row.Original, row.Rule)] = row.Tier;
+            }
+        }
+
+        return tiers;
+    }
+}
+
+/// <summary>A Slavic language's words and the rules a stored run applies for it.</summary>
+internal sealed record EvidentiaSlavicRun(IEvidentiaSlavicWords Words, IReadOnlyDictionary<(string Original, string Rule), string> Tiers);
+
+/// <summary>
+/// The word lists and rule lists of the Slavic languages, read once from the configured resources' store for the runs and
+/// measurements that place their small words.
+/// </summary>
+internal sealed class EvidentiaSlavicRules(IConfiguration configuration, IHostEnvironment environment)
+{
+    private readonly Dictionary<string, EvidentiaSlavicRun?> byLanguage = new(StringComparer.Ordinal);
+
+    private readonly Lock gate = new();
+
+    /// <summary>The language's words and rules, or null for a language the rules do not speak or one with no rule listed.</summary>
+    public EvidentiaSlavicRun? For(string language)
+    {
+        lock (gate)
+        {
+            if (!byLanguage.TryGetValue(language, out var run))
+            {
+                var store = new ProductStore(ResourcePaths.Read(configuration, environment.ContentRootPath));
+                run = EvidentiaSlavicLanguages.For(store, language) is { } words
+                    && EvidentiaSlavicRuleRow.Read(store, language) is { Count: > 0 } tiers
+                    ? new EvidentiaSlavicRun(words, tiers)
+                    : null;
+                byLanguage[language] = run;
+            }
+
+            return run;
+        }
+    }
 }

@@ -26,7 +26,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     EvidentiaKnownRenderingIndex knownRenderingIndex,
     LanguagePackRegistry languagePacks,
     EvidentiaFileSourceTexts fileSources,
-    EvidentiaContextGlossIndex contextGlossIndex)
+    EvidentiaContextGlossIndex contextGlossIndex,
+    EvidentiaSlavicRules? slavicRules = null)
 {
     private readonly Dictionary<string, SyntaxPrior> syntaxByTargetText = new(StringComparer.Ordinal);
     private readonly Dictionary<(string From, string To, int Book), EvidentiaChapterLengths> chapterLengths = [];
@@ -393,6 +394,13 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var attachedWords = EvidentiaAttachedWords.Resolve(
             markedSource, targetAnalyses, lexicalProposals, options.DefiniteNouns, options.FunctionWords, clauses);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
+        // Kept out of the attached words the safe tier counts: each Slavic rule is stored under its own tier, so it is
+        // accepted or refused by the measurement that admitted it (evidentia/words/rules).
+        if (source.FirstOrDefault()?.Language is { } slavic && slavicRules?.For(slavic) is { } slavicRun)
+        {
+            finalProposals.AddRange(EvidentiaSlavicAttachedWords.Proposals(slavicRun, markedSource, targetAnalyses, finalProposals));
+        }
+
         finalProposals.AddRange(frame.Near(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals)));
 
         var absences = EvidentiaAbsences.Resolve(sourceAnalyses, targetAnalyses, finalProposals);
