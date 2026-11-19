@@ -9,8 +9,9 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// Which word of a translation renders which Hebrew or Greek word, as its translators tied them in Door43's USFM 3
 /// alignments: unfoldingWord's Ukrainian interlinear of the Ohienko, the Russian Synodal's three books, the unfoldingWord
-/// Literal Text and every <see cref="Door43AlignedBible"/>. Read from <c>Door43/&lt;folder&gt;/*.usfm</c> and both texts'
-/// words and frames; the join is the loader's own (<see cref="InterlinearLinkLoader.Book"/>, <see cref="InterlinearJoin"/>).
+/// Literal Text and every <see cref="Door43AlignedBible"/>, and the books people aligned in projects of their own
+/// (<see cref="Door43BookAlignment"/>). Read from <c>Door43/&lt;folder&gt;/*.usfm</c> and both texts' words and frames; the join
+/// is the loader's own (<see cref="InterlinearLinkLoader.Book"/>, <see cref="InterlinearJoin"/>).
 ///
 /// <para>
 /// **An interlinear numbers a verse as its translation prints it**, so a verse of the file is the translation's own
@@ -40,7 +41,11 @@ internal sealed class Door43AlignmentSource : IPairSource
         Bible4uTextSource.Ohienko, Bible4uTextSource.Synodal, UnfoldingWordTextSource.Slug, .. Door43AlignedBible.All.Select(bible => bible.Slug),
     ];
 
-    private static readonly HashSet<string> Lines = Translations.Select(slug => Line(InterlinearLinkLoader.Interlinear(slug).Source)).ToHashSet(StringComparer.Ordinal);
+    private static readonly HashSet<string> Lines =
+    [
+        .. Translations.Select(slug => Line(InterlinearLinkLoader.Interlinear(slug).Source)),
+        .. Door43BookAlignment.All.Select(book => Line(book.Source)),
+    ];
 
     public string Method => MappingMethods.Stated;
 
@@ -57,15 +62,21 @@ internal sealed class Door43AlignmentSource : IPairSource
     /// </summary>
     public bool Makes(string source) => Lines.Contains(Line(source));
 
-    /// <summary>A source without the release it names: the text up to <c>, release </c>, or the whole source where it names none.</summary>
+    /// <summary>
+    /// A source without the release or commit it names: the text up to <c>, release </c> or <c>, commit </c>, or the whole
+    /// source where it names neither.
+    /// </summary>
     internal static string Line(string source) =>
-        source.IndexOf(", release ", StringComparison.Ordinal) is var at and >= 0 ? source[..at] : source;
+        source.IndexOf(", release ", StringComparison.Ordinal) is var release and >= 0 ? source[..release]
+        : source.IndexOf(", commit ", StringComparison.Ordinal) is var commit and >= 0 ? source[..commit]
+        : source;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair)
     {
         var (from, to) = MappingProducts.Split(pair);
         var folder = InterlinearLinkLoader.Interlinear(from).Folder;
-        return Books(store, folder, to).Select(book => $"{Folder}/{folder}/{Path.GetFileName(book.File)}");
+        return Books(store, folder, to).Select(book => $"{Folder}/{folder}/{Path.GetFileName(book.File)}")
+            .Concat(Projects(store, from, to).Select(project => $"{Folder}/{Door43BookAlignment.Folder}/{project.Book.File}"));
     }
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
@@ -78,26 +89,61 @@ internal sealed class Door43AlignmentSource : IPairSource
 
         var rows = new Dictionary<string, MappingRow>(StringComparer.Ordinal);
         var total = new InterlinearJoinAccount();
-        foreach (var (file, ordinal) in Books(texts.Store, folder, to))
+        var released = Books(texts.Store, folder, to).ToDictionary(book => book.Ordinal, book => book.File);
+        var projects = Projects(texts.Store, from, to).ToDictionary(project => project.Ordinal, project => project.Book);
+        foreach (var missing in Door43BookAlignment.Of(from).Where(book => Against(book, to) is not null && !File.Exists(texts.Store.FullPath(Stored(book)))))
         {
-            var read = Usfm3AlignmentReader.Read(File.ReadAllText(file), unnumbered);
-            var (pairs, account) = InterlinearLinkLoader.Book(
-                Path.GetFileNameWithoutExtension(file),
-                read,
-                Translated(translation, ordinal),
-                Witness(witness, ordinal),
-                address => translation.Primary(new VerseKey(ordinal, address.Chapter, address.Number)) is var (book, chapter, verse)
-                           && book == ordinal
-                    ? (chapter, verse)
-                    : address);
-            total.Add(account);
-            foreach (var joined in pairs)
+            log($"{missing.Repository} is declared and not in the store at {Stored(missing)}: run scripts/fetch-door43-ohienko-books.ps1");
+        }
+
+        void Add(Joined joined, string stating)
+        {
+            foreach (var pair in joined.Pairs)
             {
-                var row = new MappingRow(MappingText.Keys(joined.From.Select(translation.Key)),
-                    MappingText.Keys(joined.To.Select(witness.Key)),
-                    Renders, Method, null, source, null, null, null);
+                var row = new MappingRow(MappingText.Keys(pair.From.Select(translation.Key)),
+                    MappingText.Keys(pair.To.Select(witness.Key)),
+                    Renders, Method, null, stating, null, null, null);
                 rows.TryAdd(row.Shape, row);
             }
+
+            total.Add(joined.Account);
+        }
+
+        foreach (var ordinal in released.Keys.Union(projects.Keys).Order())
+        {
+            var here = Translated(translation, ordinal);
+            var there = Witness(witness, ordinal);
+            (int, int) Frame((int Chapter, int Number) address) =>
+                translation.Primary(new VerseKey(ordinal, address.Chapter, address.Number)) is var (book, chapter, verse) && book == ordinal
+                    ? (chapter, verse)
+                    : address;
+
+            var stated = released.TryGetValue(ordinal, out var file)
+                ? Usfm3AlignmentReader.Read(File.ReadAllText(file), unnumbered)
+                : [];
+            if (!projects.TryGetValue(ordinal, out var project))
+            {
+                Add(new Joined(InterlinearLinkLoader.Book(Path.GetFileNameWithoutExtension(file!), stated, here, there, Frame)), source);
+                continue;
+            }
+
+            var read = Usfm3AlignmentReader.Read(Door43BookAlignment.Spelling(File.ReadAllText(texts.Store.FullPath(Stored(project)))), unnumbered);
+            var theirs = read.Where(verse => SpelledAlike(verse, here)).ToList();
+            var combined = Combined(stated, theirs,
+                verses => InterlinearLinkLoader.Book(Path.GetFileNameWithoutExtension(project.File), verses, here, there, Frame));
+            Add(combined.Kept, source);
+            Add(combined.Project, project.Source);
+            log($"{project.Repository}: {combined.Project.Account.SpansJoined} of {combined.Project.Account.Spans} spans joined, "
+                + $"{combined.Project.Account.TranslatedWordsJoined} of {combined.Project.Account.TranslatedWords} translated words in spans, "
+                + $"{combined.Project.Pairs.Count} links in {combined.Project.Account.VersesJoined} verses; "
+                + $"{read.Count - theirs.Count} of its {read.Count} verses left out, their words not ours"
+                + (read.Count > theirs.Count
+                    ? $" ({string.Join(", ", read.Except(theirs).Take(8).Select(verse => $"{verse.Chapter}:{verse.Number}"))})"
+                    : string.Empty)
+                + (stated.Count > 0
+                    ? $"; of the {stated.Count} verses {folder} aligns, {combined.Agreed} it states alike stay its own and {combined.Replaced} "
+                      + "the project states otherwise are read from the project"
+                    : string.Empty));
         }
 
         log($"{total.VersesJoined} of {total.VersesRead} verses joined, {total.TranslatedWordsJoined} translated words, {rows.Count} links; "
@@ -123,6 +169,105 @@ internal sealed class Door43AlignmentSource : IPairSource
             {
                 yield return (file, ordinal);
             }
+        }
+    }
+
+    /// <summary>The translation's books aligned in a project of its own on Door43 that the store holds, for the witness's testament.</summary>
+    private static IEnumerable<(int Ordinal, Door43BookAlignment Book)> Projects(ProductStore store, string translation, string witness)
+    {
+        foreach (var book in Door43BookAlignment.Of(translation))
+        {
+            if (Against(book, witness) is { } ordinal && File.Exists(store.FullPath(Stored(book))))
+            {
+                yield return (ordinal, book);
+            }
+        }
+    }
+
+    /// <summary>The project's book, where the witness is the original of its testament; null where it is not.</summary>
+    private static int? Against(Door43BookAlignment book, string witness) =>
+        InterlinearLinkLoader.Ordinal(book.File) is { } ordinal
+        && (ordinal <= BookReferences.OldTestamentBookCount ? BhsaTextSource.Slug : NestleTextSource.Slug) == witness
+            ? ordinal
+            : null;
+
+    private static string Stored(Door43BookAlignment book) => $"{Folder}/{Door43BookAlignment.Folder}/{book.File}";
+
+    /// <summary>
+    /// Whether a project's verse aligns the words the corpus prints in that verse, letter for letter, case, apostrophes and
+    /// punctuation aside. A project's base text is another copy of the Ohienko: in about one verse in a hundred a few words
+    /// stand in the next verse, or another printing reads <c>зі</c> for <c>зо</c>, and the join's cursor would put such a
+    /// span on another word that happens to be spelled alike (Rev 2:28's «і Я» on the «і» and «Я» of «і дам Я»).
+    /// </summary>
+    internal static bool SpelledAlike(AlignedVerse verse, Dictionary<(int, int), List<InterlinearWord>> translated) =>
+        verse.Printed is { } printed
+        && translated.TryGetValue((verse.Chapter, verse.Number), out var ours)
+        && Letters(printed) == Letters(ours.Select(word => word.Written));
+
+    private static string Letters(IEnumerable<string> words) =>
+        string.Concat(words.SelectMany(word => word.ToLowerInvariant()).Where(character => char.IsLetterOrDigit(character) && character != 'ʼ'));
+
+    /// <summary>
+    /// A book the release aligns a part of and a person's project aligns again, verse by verse. The project is the later
+    /// state of the same kind of work over the same words, so where it aligns a verse it is read, but a verse whose links come
+    /// out exactly as the release's stays the release's: what the release states is not credited to somebody else for having
+    /// been stated again. Where the project's verse joins nothing, the release's stands. No verse is linked from both.
+    /// </summary>
+    internal static (Joined Kept, Joined Project, int Agreed, int Replaced) Combined(
+        IReadOnlyList<AlignedVerse> release,
+        IReadOnlyList<AlignedVerse> project,
+        Func<IReadOnlyList<AlignedVerse>, (List<InterlinearPair> Pairs, InterlinearJoinAccount Account)> join)
+    {
+        var kept = new Joined();
+        var theirs = new Joined();
+        var later = project.ToDictionary(verse => (verse.Chapter, verse.Number));
+        var (agreed, replaced) = (0, 0);
+        foreach (var verse in release)
+        {
+            var ours = join([verse]);
+            if (!later.Remove((verse.Chapter, verse.Number), out var again))
+            {
+                kept.Add(ours);
+                continue;
+            }
+
+            var other = join([again]);
+            if (other.Pairs.Count == 0 || Same(ours.Pairs, other.Pairs))
+            {
+                kept.Add(ours);
+                agreed += other.Pairs.Count == 0 ? 0 : 1;
+            }
+            else
+            {
+                theirs.Add(other);
+                replaced++;
+            }
+        }
+
+        theirs.Add(join([.. project.Where(verse => later.ContainsKey((verse.Chapter, verse.Number)))]));
+        return (kept, theirs, agreed, replaced);
+    }
+
+    private static bool Same(List<InterlinearPair> one, List<InterlinearPair> other) =>
+        one.Select(Shape).ToHashSet(StringComparer.Ordinal).SetEquals(other.Select(Shape));
+
+    private static string Shape(InterlinearPair pair) => $"{string.Join(' ', pair.From)}|{string.Join(' ', pair.To)}";
+
+    /// <summary>The links a join made and its account of them, gathered over verses.</summary>
+    internal sealed class Joined
+    {
+        public List<InterlinearPair> Pairs { get; } = [];
+
+        public InterlinearJoinAccount Account { get; } = new();
+
+        public Joined() { }
+
+        public Joined((List<InterlinearPair> Pairs, InterlinearJoinAccount Account) joined) => Add(joined);
+
+        public void Add((List<InterlinearPair> Pairs, InterlinearJoinAccount Account) joined)
+        {
+            Pairs.AddRange(joined.Pairs);
+            Account.Add(joined.Account);
         }
     }
 

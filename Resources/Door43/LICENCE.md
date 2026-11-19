@@ -1,6 +1,6 @@
 # Door43 — unfoldingWord USFM 3.0 word alignment
 
-Eighteen sources live here, all translations with each of their words tied by hand to the original
+Nineteen sources live here, all translations with each of their words tied by hand to the original
 word it renders, all fetched from `git.door43.org`. They arrive in the same format and are read
 by the same reader, and their terms are **not** the same. Read every section.
 
@@ -45,6 +45,96 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   head every book `\rem Copyright British and Foreign Bible Society`, while `LICENSE.md` says
   CC BY-SA 4.0 and our own copy of the Ohienko text asserts public domain. Ohienko died in 1972.
   The `text` row for `ukr` carries this in its `rights_note`; it is not settled either.
+
+---
+
+## `uk_ubio_books` — the Ohienko aligned in seven personal translationCore projects
+
+- **Where** seven repositories on `git.door43.org`, each pinned to a commit and each file to its SHA-256, fetched
+  by `scripts/fetch-door43-ohienko-books.ps1` on 2026-11-19 with the owner's approval of that day (TSK-1905). The
+  book is the aligned USFM translationCore exports on upload, `<repository>.usfm`, never the unaligned `<book>.usfm`
+  beside it; it is kept as `<NN>-<BOOK>.usfm` beside the project's own `LICENSE-<NN>-<BOOK>.md` and
+  `manifest-<NN>-<BOOK>.json`, read on 2026-11-19 at the commit below.
+
+  | file | repository (the person who aligned it) | commit | last commit | licence | words aligned | taken |
+  |---|---|---|---|---|---:|---|
+  | `67-REV.usfm` | `ViraVlasiuk/uk_ogi_rev_book` | `324455619b1e` | 2025-01-25 | CC BY-SA 4.0 | 89.9% | yes |
+  | `46-ROM.usfm` | `ViraVlasiuk/uk_ubio_rom_book` | `10f17542785e` | 2024-08-31 | CC0 1.0 | 88.5% | yes |
+  | `51-PHP.usfm` | `ViraVlasiuk/uk_ubio_php_book` | `07959c15f22a` | 2025-07-02 | CC BY-SA 4.0 | 87.9% | yes |
+  | `44-JHN.usfm` | `davidmax/uk_ubi_jhn_book` | `356181788046` | 2024-10-10 | CC0 1.0 | 28.7% | yes |
+  | `61-1PE.usfm` | `AndreyParf/uk_ubio_1pe_book` | `241510b52609` | 2026-09-11 | CC BY-SA 4.0 | 22.7% | yes |
+  | `59-HEB.usfm` | `IlliaTs/uk_ubio_heb_book` | `a4cdbb27d5c6` | 2024-09-17 | CC0 1.0 | 98.2% | no |
+  | `43-LUK.usfm` | `AndreyParf/uk_ubio_luk_book` | `c76126f181b7` | 2026-08-24 | CC BY-SA 4.0 | 11.7% | no |
+
+  `Samuel_Kim/uk_ubio_rom_book` is a near copy of ViraVlasiuk's Romans and is not taken.
+- **What** books of the Ohienko 1962 text, the same base text as `uk_ubio` and as the corpus's `UBIO`, aligned in
+  translationCore to unfoldingWord's Greek New Testament (`el-x-koine/ugnt` 0.30 or 0.34, as each manifest's
+  `tsv_relation` says) through the English ULT. These are personal projects: every manifest lists no translators and
+  no checkers, and the Door43 catalogue shows them only with `stage=latest`. Nobody but us has read them.
+- **Licence, as each project states it.** Two licence files, each byte for byte the same in every project that
+  carries it.
+  - **CC0 1.0** (Romans, John, Hebrews). Each `manifest.json` states `"license": "CC0 1.0 Public Domain"`, and
+    `LICENSE.md` (SHA-256 `a1693173…`) reads, verbatim:
+
+    > # CC0 License
+    > ## Creative Commons CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+    > […]
+    > The person who associated a work with this deed has **dedicated** the work to the public domain by waiving all
+    > of his or her rights to the work worldwide under copyright law, including all related and neighboring rights,
+    > to the extent allowed by law.
+    >
+    > You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking
+    > permission.
+
+  - **CC BY-SA 4.0** (Revelation, Philippians, 1 Peter, Luke). Each `manifest.json` states
+    `"license": "CC BY-SA 4.0"`, and `LICENSE.md` (SHA-256 `818d8dec…`) reads, verbatim:
+
+    > ## Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+    > […]
+    > * **Attribution** — You must attribute the work as follows: "Original work available at
+    > https://door43.org/." Attribution statements in derivative works should not in any way suggest that we endorse
+    > you or your use of this work.
+    > * **ShareAlike** — If you remix, transform, or build upon the material, you must distribute your contributions
+    > under the same license as the original.
+
+    Unlike `uk_ubio`'s, this file names no unfoldingWord trademark condition.
+  - The licence is translationCore's default choice for a new project, so it says what the person accepted, not
+    necessarily what they weighed. It is still the statement attached to these bytes (RUL-0105).
+- **What that obliges.** For the CC0 projects nothing; they are credited anyway (RUL-0181): `Datasets.cs`
+  `door43-ubio-cc0`, and every link's source names the book, the person and the commit. For the CC BY-SA projects
+  the position is `uk_ubio`'s: re-serialising the alignment is a derivative work, so the corpus's own form of these
+  links is offered under CC BY-SA 4.0 with the credit "Original work available at https://door43.org/."
+  (`door43-ubio-by-sa`). `build/licences.tsv` declares each file taken on its own row.
+- **The text under the alignment.** Luke and 1 Peter head their file `\rem Copyright British and Foreign Bible
+  Society`, as sixteen of `uk_ubio`'s files do; the other five projects carry no such line. Nothing of these files'
+  text is loaded: the corpus reads the Ohienko from bible4u, and takes from these files only which of its own words
+  renders which Greek word, so the projects' licences speak for the alignment work and nothing else. Whether the text
+  itself is free is the question `uk_ubio`'s entry leaves on the owner's desk, unchanged here.
+- **Luke and 1 Peter overlap `uk_ubio`.** AndreyParf's projects are the later state of the same translationCore work
+  `uk_ts` exported on 2023-10-07 (the same `\id` line; the projects were created on 2023-10-06). Of the 54 verses of
+  Luke `uk_ubio` aligns, the project states all 54 alike; of its 15 of 1 Peter, 11 alike and 4 otherwise, each time
+  adding words or correcting one (1 Pet 1:6, where `uk_ubio` puts «засмучені трохи» on ὀλίγον and the project
+  «засмучені» on λυπηθέντες). So a verse both align whose links come out the same stays `uk_ubio`'s and keeps its
+  credit; a verse the project states otherwise is read from the project alone; no verse is linked from both. A verse
+  only the project aligns is the project's. EVIDENTIA's gold interlinear (`--gold-interlinear`) still reads
+  `uk_ubio` alone.
+- **The base text, checked against ours.** Verse by verse, letters compared with case, apostrophes and punctuation
+  set aside: Revelation 402 of 405 verses alike, Romans 429 of 433, Philippians 104 of 104, John 856 of 879 (another
+  printing: «зі» for «зо», «у» for «в», «і» for «й», «динаріїв»), 1 Peter 105 of 105, Hebrews 298 of 303, Luke 1,151
+  of 1,151. The rest are words standing one verse over (Rev 2:28 opens with «як і Я одержав владу від Свого Отця»,
+  which our 2:27 prints; Rev 12:18 and 13:1; Rom 1:29-30 and 6:1-2; Heb 3:9-10 and 7:20-21) and one misprint of ours
+  (Heb 10:16 «вої» for «Свої»). A verse that differs is left out, because the join would put its words on others
+  spelled alike. Romans, Philippians and Hebrews print the apostrophe as U+0185 («Імƅя», 49 words), which is read as
+  an apostrophe.
+- **Joined**, as the producer reports it (spans joined / spans): Revelation 7,620 / 7,680, Romans 5,657 / 5,693,
+  Philippians 1,388 / 1,393, John 4,233 / 4,275, 1 Peter 193 / 195 (16 verses read from the project). Hebrews
+  4,193 / 4,222 and Luke 1,405 / 1,411 before they were left out.
+- **Read by hand before taking** (TSK-1905; strict: any word on the wrong Greek word counts wrong). Revelation 40 of
+  40, 1 Peter 40 of 40, Romans 76 of 80, John 74 of 78, Philippians 75 of 80 (78 with two adjacent words swapped
+  counted as half right) — taken. Hebrews 34 of 40 and Luke 35 of 40 — not taken: their errors are mostly a small
+  word tied to the next Greek word in order (Heb 2:14 «став» on παραπλησίως, Luke 2:37 «що» on ἕως), the mark of an
+  alignment made by walking both texts word by word. Their files stay here so the reading can be repeated on the same
+  bytes; `Door43BookAlignment` does not list them, so no product reads them.
 
 ---
 

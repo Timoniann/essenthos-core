@@ -439,6 +439,33 @@ public static class Datasets
             + "Russian link a model proposed is right.",
             "Door43 Russian Synodal alignment", Links: true),
 
+        // Books of the Ohienko that people aligned in translationCore projects of their own, outside uk_ts/uk_ubio:
+        // two entries because the projects carry two sets of terms, each stated in the project's LICENSE.md and
+        // manifest at the commit taken, and one entry would put the wrong terms on half of them. Every link names
+        // its project and the person in its source (Door43BookAlignment).
+        new("door43-ubio-cc0", "Ohienko word alignment: Romans and John",
+            "ViraVlasiuk and davidmax, on Door43", "CC0 1.0",
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+            "https://git.door43.org/ViraVlasiuk/uk_ubio_rom_book",
+            "Which Ukrainian word of the Ohienko renders which Greek word, stated by the people who tied them in "
+            + "translationCore: Romans (ViraVlasiuk) and about a quarter of John's words (davidmax), each dedicated to "
+            + "the public domain by the person who made it. Nobody checked these projects; their links were read by hand "
+            + "before they were taken.",
+            "Door43 Ohienko alignment, CC0 1.0", Links: true),
+
+        new("door43-ubio-by-sa", "Ohienko word alignment: Revelation, Philippians and 1 Peter",
+            "ViraVlasiuk and AndreyParf, on Door43", "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://git.door43.org/ViraVlasiuk/uk_ogi_rev_book",
+            "Which Ukrainian word of the Ohienko renders which Greek word, stated by the people who tied them in "
+            + "translationCore: Revelation and Philippians (ViraVlasiuk), and the verses of 1 Peter that AndreyParf "
+            + "aligned beyond unfoldingWord's Ukrainian interlinear. Nobody checked these projects; their links were read "
+            + "by hand before they were taken.",
+            "Door43 Ohienko alignment, CC BY-SA 4.0", Links: true,
+            Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's own form of "
+                + "these links is offered under CC BY-SA 4.0 in turn, with the credit \"Original work available at "
+                + "https://door43.org/.\" that the projects' licence asks for."),
+
         // The Van Dyck's ties to the Hebrew and Greek as BSOJ made them, beside Clear Bible's: a second
         // statement about the same Arabic words by a different team. The release's LICENSE.md is the
         // unfoldingWord Literal Text's, copied with the template; its manifest says CC BY-SA 4.0, and the

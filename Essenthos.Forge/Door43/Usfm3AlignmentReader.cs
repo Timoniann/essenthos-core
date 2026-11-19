@@ -74,12 +74,14 @@ internal sealed record AlignmentSpan(
 /// Every original word the verse's milestones name, nested or not, once each: its Strong code, its
 /// spelling and its occurrence. It is what says whether a lemma stands in the source verse once.
 /// </param>
+/// <param name="Printed">Every translated word of the verse, aligned or not, in order: the text the source aligned.</param>
 internal sealed record AlignedVerse(
     int Chapter,
     int Number,
     IReadOnlyList<AlignmentSpan> Spans,
     int UnalignedWords = 0,
-    IReadOnlyList<(string Strong, string Content, int Occurrence)>? Originals = null);
+    IReadOnlyList<(string Strong, string Content, int Occurrence)>? Originals = null,
+    IReadOnlyList<string>? Printed = null);
 
 /// <summary>
 /// unfoldingWord's USFM 3 word alignment, which is a translation with each of its words tied to
@@ -112,6 +114,7 @@ internal static partial class Usfm3AlignmentReader
         var unaligned = 0;
         var originals = new List<(string Strong, string Content, int Occurrence)>();
         var wordsInVerse = 0;
+        var printed = new List<string>();
         var run = new List<(OpenSpan? Span, int Index)>();
         var lastWordEnd = -1;
         var lastTokenEnd = 0;
@@ -133,11 +136,13 @@ internal static partial class Usfm3AlignmentReader
             if (closed.Count > 0)
             {
                 verses.Add(new AlignedVerse(chapter, number,
-                    [.. closed.OrderBy(span => span.First).Select(span => span.Span())], unaligned, [.. originals.Distinct()]));
+                    [.. closed.OrderBy(span => span.First).Select(span => span.Span())], unaligned, [.. originals.Distinct()],
+                    [.. printed]));
             }
 
             closed.Clear();
             originals.Clear();
+            printed.Clear();
             unaligned = 0;
             wordsInVerse = 0;
             number = 0;
@@ -157,6 +162,7 @@ internal static partial class Usfm3AlignmentReader
                 CloseVerse();
                 closed.Clear();
                 originals.Clear();
+                printed.Clear();
                 wordsInVerse = 0;
                 chapter = int.Parse(token.Groups["chapter"].Value);
             }
@@ -229,6 +235,7 @@ internal static partial class Usfm3AlignmentReader
 
                 run.Add((into, into?.Words.Count - 1 ?? -1));
                 wordsInVerse++;
+                printed.Add(word);
                 lastWordEnd = token.Index + token.Length;
             }
         }

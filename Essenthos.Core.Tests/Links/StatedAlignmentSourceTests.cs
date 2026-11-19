@@ -1,5 +1,6 @@
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Door43;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
@@ -90,6 +91,88 @@ public sealed class StatedAlignmentSourceTests : IDisposable
 
     private static MappingRow Stated(string from, string to, string source) =>
         new(from, to, "renders", MappingMethods.Stated, null, source, null, null, null);
+
+    private static Door43BookAlignment Philippians => Door43BookAlignment.All.Single(book => book.File == "51-PHP.usfm");
+
+    private const string Release = """
+        \id PHP
+        \c 1
+        \v 16 \zaln-s |x-strong="G00260" x-lemma="ἀγάπη" x-occurrence="1" x-occurrences="1" x-content="ἀγάπης"\*\w любов|x-occurrence="1" x-occurrences="1"\w*\zaln-e\* \w знаючи|x-occurrence="1" x-occurrences="1"\w*
+        \v 17 \w інші|x-occurrence="1" x-occurrences="1"\w* \zaln-s |x-strong="G35880" x-lemma="ὁ" x-occurrence="1" x-occurrences="1" x-content="οἱ"\*\w суперечкою|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+        """;
+
+    [Fact]
+    public void A_book_aligned_in_a_persons_own_project_is_read_beside_the_release_and_credited_to_the_project()
+    {
+        var store = Store("UBIO", "ukr", ["Ім'я", "знаючи"], ["інші", "суперечкою"]);
+        Write("Door43/uk_ubio_books/51-PHP.usfm",
+            """
+            \id PHP
+            \c 1
+            \v 16 \zaln-s |x-strong="G00260" x-lemma="ἀγάπη" x-occurrence="1" x-occurrences="1" x-content="ἀγάπης"\*\w Імƅя|x-occurrence="1" x-occurrences="1"\w*\zaln-e\* \w знаючи|x-occurrence="1" x-occurrences="1"\w*
+            """);
+
+        var source = new Door43AlignmentSource();
+        var rows = source.Rows(new ProductTexts(store), "UBIO-NESTLE1904", _ => { }).ToList();
+
+        rows.Select(row => (row.Shape, row.Source)).Should().Equal(("50.1:16.1|50.1:16.4", Philippians.Source));
+        source.Inputs(store, "UBIO-NESTLE1904").Should().Equal("Door43/uk_ubio_books/51-PHP.usfm");
+        Door43BookAlignment.Spelling("Імƅя").Should().Be("Ім’я", "the project prints the apostrophe as U+0185");
+    }
+
+    [Fact]
+    public void Where_the_release_aligns_the_book_too_a_verse_it_states_alike_stays_its_own_and_one_stated_otherwise_is_the_projects()
+    {
+        var store = Store("UBIO", "ukr", ["любов", "знаючи"], ["інші", "суперечкою"]);
+        Write("Door43/uk_ubio/51-PHP.usfm", Release);
+        Write("Door43/uk_ubio_books/51-PHP.usfm",
+            """
+            \id PHP
+            \c 1
+            \v 16 \zaln-s |x-strong="G00260" x-lemma="ἀγάπη" x-occurrence="1" x-occurrences="1" x-content="ἀγάπης"\*\w любов|x-occurrence="1" x-occurrences="1"\w*\zaln-e\* \w знаючи|x-occurrence="1" x-occurrences="1"\w*
+            \v 17 \w інші|x-occurrence="1" x-occurrences="1"\w* \zaln-s |x-strong="G20520" x-lemma="ἐριθεία" x-occurrence="1" x-occurrences="1" x-content="ἐριθείας"\*\w суперечкою|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """);
+
+        var rows = new Door43AlignmentSource().Rows(new ProductTexts(store), "UBIO-NESTLE1904", _ => { }).ToList();
+
+        var release = InterlinearLinkLoader.Interlinear(Bible4uTextSource.Ohienko).Source;
+        rows.Select(row => (row.Shape, row.Source)).Should().BeEquivalentTo(
+            [("50.1:16.1|50.1:16.4", release), ("50.1:17.2|50.1:17.4", Philippians.Source)],
+            "the release's 1:17 put the word on οἱ, and no verse is linked from both");
+    }
+
+    [Fact]
+    public void A_project_verse_whose_words_are_not_the_corpus_words_is_left_out_and_the_releases_stands()
+    {
+        var store = Store("UBIO", "ukr", ["любов", "знаючи"], ["інші", "суперечкою"]);
+        Write("Door43/uk_ubio/51-PHP.usfm", Release);
+        Write("Door43/uk_ubio_books/51-PHP.usfm",
+            """
+            \id PHP
+            \c 1
+            \v 17 \w а|x-occurrence="1" x-occurrences="1"\w* \w інші|x-occurrence="1" x-occurrences="1"\w* \zaln-s |x-strong="G20520" x-lemma="ἐριθεία" x-occurrence="1" x-occurrences="1" x-content="ἐριθείας"\*\w суперечкою|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """);
+        var log = new List<string>();
+
+        var rows = new Door43AlignmentSource().Rows(new ProductTexts(store), "UBIO-NESTLE1904", log.Add).ToList();
+
+        rows.Select(row => row.Shape).Should().BeEquivalentTo("50.1:16.1|50.1:16.4", "50.1:17.2|50.1:17.1");
+        rows.Should().OnlyContain(row => row.Source == InterlinearLinkLoader.Interlinear(Bible4uTextSource.Ohienko).Source);
+        log.Should().Contain(line => line.Contains("1 of its 1 verses left out, their words not ours (1:17)", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void A_project_taken_again_at_a_later_commit_is_the_same_producers_and_each_set_of_terms_has_its_credit()
+    {
+        var source = new Door43AlignmentSource();
+        var romans = Door43BookAlignment.All.Single(book => book.File == "46-ROM.usfm");
+
+        source.Makes(Philippians.Source.Replace(Philippians.Commit[..8], "0123abcd", StringComparison.Ordinal)).Should().BeTrue();
+        source.Makes(Philippians.Source.Replace("Philippians by", "Colossians by", StringComparison.Ordinal)).Should().BeFalse();
+        Datasets.Of(Philippians.Source).Should().Be("door43-ubio-by-sa");
+        Datasets.Of(romans.Source).Should().Be("door43-ubio-cc0");
+        Door43BookAlignment.All.Should().OnlyContain(book => book.Slug == Bible4uTextSource.Ohienko && book.Commit.Length == 40);
+    }
 
     [Fact]
     public void The_Berean_set_lays_its_Greek_verse_on_the_witness_words_of_the_Bereans_verse_of_that_number()
