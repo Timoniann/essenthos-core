@@ -34,8 +34,9 @@ layer is not loaded. What was measured, on 2026-09-06:
   does not use H430 (God) anywhere in the verse.
 - Across the Old Testament it puts **23.26 tags on an average verse drawn from a pool of only 8.44
   distinct numbers**. Luther 1912, whose tagging was made by hand, puts 10.73 tags from 9.53 distinct
-  numbers on the same verses. So each Hebrew word's number is smeared over about three English
-  tokens.
+  numbers on the same verses. Each English word carries one of the verse's numbers, chosen as if by
+  frequency rather than by phrase: "a" is H3068 throughout Genesis 1 (TSK-1890), so no phrase
+  boundary can be recovered from it.
 - **59.1% of the tags stand on an English function word.** *and* carries H1121 (*son*) 7,038 times;
   *the* carries H5921 (*upon*) 7,079 times. In Luther the figure is 1.8%.
 - The verse-level pool is broadly right — 80.2% of these tags name a number Luther also uses
@@ -96,9 +97,10 @@ That is four statements about the text and none about the tagging.
 A 1901 copyright registered in the United States expired long before the 1929 line that settles the
 question there, and every member of the American Revision Committee has been dead for more than a
 century. CrossWire distributes the same edition as `ASV` with `DistributionLicense=Public Domain`,
-and its module also carries `Feature=StrongsNumbers` — a *different* tagging from this one, which is
-worth noting only so that a later pass does not read CrossWire's public-domain line as covering
-eBible's layer or the reverse.
+and its module also carries `Feature=StrongsNumbers`. Its config names eBible as the text's source,
+so that tagging is almost certainly this same refused layer, not a different one (TSK-1890, from the
+config alone; the module was not downloaded). CrossWire's public-domain line covers the text, not a
+tagging nobody is named for.
 
 ## Attribution
 
