@@ -250,7 +250,6 @@ public sealed class EvidentiaPrimaryChapterTests : IDisposable
             new EvidentiaTargetGlossProposalResolver(), new EvidentiaDictionaryProposalResolver(), new EvidentiaSyntaxReviewGate(),
             new UdpipeAnnotator(configuration, environment), new EvidentiaDictionarySenseIndex(db, packs),
             new EvidentiaKnownRenderingIndex(db, packs), packs,
-            new InterlinearLinkLoader(db, NullLogger<InterlinearLinkLoader>.Instance),
             new EvidentiaFileSourceTexts(configuration, environment), new EvidentiaContextGlossIndex(configuration, environment));
     }
 

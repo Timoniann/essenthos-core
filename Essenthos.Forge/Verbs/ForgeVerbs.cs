@@ -343,12 +343,6 @@ internal static partial class ForgeVerbs
             new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
     }
 
-    // A Door43 interlinear, by the text it aligns.
-    private static string InterlinearFolder(string resourcesPath, string slug) => Path.Combine(
-        resourcesPath,
-        "Door43",
-        InterlinearLinkLoader.Interlinear(slug).Folder);
-
     // A measurement is only worth the isolation it can state, so every one of these is a way of saying
     // which evidence the run was allowed to see and which answer key it was scored against.
     private static EvidentiaMeasurementOptions EvidentiaOptions(string[] arguments, string resourcesPath) => new(
@@ -363,9 +357,7 @@ internal static partial class ForgeVerbs
         RecordDisagreements: OptionalText(arguments, "--disagreements") is not null,
         RecordWords: OptionalText(arguments, "--words") is not null,
         RecordKeyDoubts: OptionalText(arguments, "--key-doubts") is not null,
-        GoldInterlinear: arguments.Contains("--gold-interlinear")
-            ? InterlinearFolder(resourcesPath, Identifier(arguments[1]))
-            : null,
+        GoldInterlinear: arguments.Contains("--gold-interlinear") ? resourcesPath : null,
         LearnAcrossLanguages: arguments.Contains("--learn-across-languages"),
         SourceFromFiles: arguments.Contains("--source-from-files"),
         RouteTexts: OptionalText(arguments, "--routes") is { } routes

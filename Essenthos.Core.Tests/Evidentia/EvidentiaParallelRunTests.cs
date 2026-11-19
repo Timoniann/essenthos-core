@@ -241,7 +241,6 @@ public sealed class EvidentiaParallelRunTests : IDisposable
             new EvidentiaDictionarySenseIndex(db, packs),
             new EvidentiaKnownRenderingIndex(db, packs),
             packs,
-            new InterlinearLinkLoader(db, NullLogger<InterlinearLinkLoader>.Instance),
             new EvidentiaFileSourceTexts(Configuration(), new Environment(_resources)),
             new EvidentiaContextGlossIndex(Configuration(), new Environment(_resources)));
     }

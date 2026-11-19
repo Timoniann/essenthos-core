@@ -1,6 +1,8 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Text.Json;
@@ -23,16 +25,13 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     EvidentiaDictionarySenseIndex dictionarySenseIndex,
     EvidentiaKnownRenderingIndex knownRenderingIndex,
     LanguagePackRegistry languagePacks,
-    InterlinearLinkLoader interlinear,
     EvidentiaFileSourceTexts fileSources,
     EvidentiaContextGlossIndex contextGlossIndex)
 {
-    private const string InterlinearGoldSource = "Door43 interlinear, joined in memory";
-
     private readonly Dictionary<string, SyntaxPrior> syntaxByTargetText = new(StringComparer.Ordinal);
     private readonly Dictionary<(string From, string To, int Book), EvidentiaChapterLengths> chapterLengths = [];
     private IReadOnlyDictionary<string, string>? greekGlosses;
-    private IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>? interlinearPairs;
+    private IReadOnlyList<EvidentiaGoldLink>? handGold;
     private (string Path, Dictionary<(int Book, int Chapter, int Verse, int Position), HashSet<int>> Names)? consensusNames;
     private (EvidentiaConfirmedRenderings Renderings, string Language, EvidentiaConfirmedIndex Index)? confirmedIndex;
 
@@ -228,8 +227,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         // A text read from its files has no link in the corpus, so it has no answer key of its own.
         var goldAnnotation = options.SourceFromFiles
             ? Annotated([], sourceIds, targetIds)
-            : options.GoldInterlinear is { } interlinearFolder
-                ? await InterlinearGold(fromSlug, interlinearFolder, sourceIds, targetIds, cancellationToken)
+            : options.GoldInterlinear is { } resources
+                ? InterlinearGold(fromSlug, toSlug, resources, sourceIds, targetIds)
                 : await Gold(fromSlug, toSlug, sourceIds, targetIds, options.GoldSource, cancellationToken);
         var gold = goldAnnotation.Pairs;
         var covered = goldAnnotation.CoveredSourceWords;
@@ -1313,26 +1312,32 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     }
 
     /// <summary>
-    /// The answer key made from a Door43 interlinear by the join as it stands, read into memory and
-    /// written nowhere. The rows the corpus holds came from an earlier join that dropped every span
-    /// whose original word stood before an earlier span's, so scoring against them scores mostly the
-    /// stretches that do not reorder.
+    /// The answer key made from the pair's Door43 interlinear as the merge settled it (<see cref="Mapping.HandAlignment"/>): the
+    /// interlinear's stated links the pair's rulings leave, and the links they pin in its verses, read from the store and
+    /// resolved to the words the database holds at their keys.
     /// </summary>
-    private async Task<EvidentiaGold> InterlinearGold(
+    private EvidentiaGold InterlinearGold(
         string fromSlug,
-        string folder,
+        string toSlug,
+        string resources,
         IReadOnlySet<long> sourceIds,
-        IReadOnlySet<long> targetIds,
-        CancellationToken cancellationToken)
+        IReadOnlySet<long> targetIds)
     {
-        interlinearPairs ??= await interlinear.Pairs(folder, fromSlug, cancellationToken);
-        var links = interlinearPairs
-            .Select((pair, index) => (Pair: pair, Index: index))
-            .Where(item => item.Pair.From.Any(sourceIds.Contains))
-            .Select(item => new EvidentiaGoldLink(
-                -1 - item.Index, LinkMethod.StatedBySource, InterlinearGoldSource, item.Pair.From, item.Pair.To))
-            .ToList();
-        return Annotated(links, sourceIds, targetIds);
+        handGold ??= HandGold(new ProductStore(resources), fromSlug, toSlug);
+        return Annotated([.. handGold.Where(link => link.SourceWords.Any(sourceIds.Contains) || link.TargetWords.Any(targetIds.Contains))],
+            sourceIds, targetIds);
+    }
+
+    private static List<EvidentiaGoldLink> HandGold(ProductStore store, string fromSlug, string toSlug)
+    {
+        var words = ProductWords.Read(store, [fromSlug, toSlug]);
+        var fromText = words.TextId(fromSlug) ?? throw new InvalidOperationException($"The store has no words of {fromSlug}.");
+        var toText = words.TextId(toSlug) ?? throw new InvalidOperationException($"The store has no words of {toSlug}.");
+        List<long> Ids(int text, IEnumerable<WordKey> keys) =>
+            [.. keys.Select(key => words.Id(text, key)).OfType<long>()];
+        return [.. HandAlignment.Read(store, $"{fromSlug}-{toSlug}", InterlinearLinkLoader.Interlinear(fromSlug).Source)
+            .Select((link, index) => new EvidentiaGoldLink(
+                -1 - index, LinkMethod.StatedBySource, link.Source, Ids(fromText, link.From), Ids(toText, link.To), link.Absence))];
     }
 
     private static EvidentiaGold Annotated(
@@ -1824,8 +1829,8 @@ internal sealed record EvidentiaChapterMeasurement(
 /// Let <paramref name="LearnRenderingsFrom"/> be a text in another language than the measured one.
 /// </param>
 /// <param name="GoldInterlinear">
-/// A Door43 interlinear folder whose join, made in memory, is the answer key instead of the stored
-/// links.
+/// The Resources folder whose store holds the pair's files: the text's Door43 interlinear as the merge settled it
+/// (<see cref="Mapping.HandAlignment"/>) is the answer key instead of the stored links.
 /// </param>
 /// <param name="RecordDisagreements">
 /// Keep every contradicted proposal, so a classification pass reads the same rows the aggregate

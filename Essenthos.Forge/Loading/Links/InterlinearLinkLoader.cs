@@ -1,7 +1,5 @@
-using Essenthos.Core.Database;
 using Essenthos.Core.Door43;
 using Essenthos.Core.Corpus;
-using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -29,11 +27,10 @@ namespace Essenthos.Core.Loading.Links;
 ///
 /// <para>
 /// The links are the build's (<see cref="Mapping.Door43AlignmentSource"/>, from the store's files, by
-/// <see cref="Book"/>); here the join is made over a database's words for EVIDENTIA's measurements
-/// (<see cref="Pairs"/>), and nothing is written.
+/// <see cref="Book"/>); here are the pieces of the join that do not depend on where the words are read.
 /// </para>
 /// </summary>
-internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<InterlinearLinkLoader> logger)
+internal static class InterlinearLinkLoader
 {
     /// <summary>
     /// The folder under <c>Resources/Door43</c> and the source recorded on the links, for each text
@@ -64,77 +61,10 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         + "release 92, git.door43.org/unfoldingWord/en_ult, CC BY-SA 4.0";
 
     /// <summary>
-    /// The links this join makes, as word ids, without writing them: an answer key a measurement can
-    /// read when the rows the corpus holds were written by an older join.
-    /// </summary>
-    public async Task<IReadOnlyList<(IReadOnlyList<long> From, IReadOnlyList<long> To)>> Pairs(
-        string folder,
-        string translationSlug,
-        CancellationToken cancellationToken = default)
-    {
-        if (!Directory.Exists(folder))
-        {
-            throw new DirectoryNotFoundException(
-                $"No interlinear at {folder}. Point Dataset:ResourcesPath at the Resources folder that holds Door43/.");
-        }
-
-        var join = await Join(
-            folder, await Text(translationSlug, cancellationToken), Unnumbered(translationSlug), cancellationToken);
-        return [.. join.Drafts.Select(draft => ((IReadOnlyList<long>)draft.From, (IReadOnlyList<long>)draft.To))];
-    }
-
-    /// <summary>
     /// Whether the interlinear names some original words by spelling alone, as the releases exported by
     /// older translationCore do. See <see cref="Door43AlignedBible"/>.
     /// </summary>
     internal static bool Unnumbered(string translationSlug) => Door43AlignedBible.Of(translationSlug) is not null;
-
-    private async Task<InterlinearJoinResult> Join(
-        string folder,
-        int translation,
-        bool unnumbered,
-        CancellationToken cancellationToken)
-    {
-        var witnesses = new Dictionary<string, int>();
-        foreach (var slug in (string[])[BhsaTextSource.Slug, NestleTextSource.Slug])
-        {
-            witnesses[slug] = await Text(slug, cancellationToken);
-        }
-
-        var drafts = new List<InterlinearDraft>(40_000);
-        var books = new List<(string Book, InterlinearJoinAccount Account)>();
-        var total = new InterlinearJoinAccount();
-
-        foreach (var file in Directory.GetFiles(folder, "*.usfm").OrderBy(path => path))
-        {
-            var name = Path.GetFileNameWithoutExtension(file);
-            var ordinal = Ordinal(Path.GetFileName(file));
-            if (ordinal is null)
-            {
-                // Said out loud, because it used to be said to nobody. A file named for a book the
-                // abbreviation table does not answer to is skipped whole, and skipping a book of a
-                // stated source in silence is indistinguishable from the source not covering it.
-                logger.LogWarning(
-                    "{File} names no book this corpus knows, so nothing in it was read. Add the " +
-                    "name it uses to BibleBookAbbreviation", file);
-                continue;
-            }
-
-            var witness = witnesses[ordinal <= BookReferences.OldTestamentBookCount
-                ? BhsaTextSource.Slug
-                : NestleTextSource.Slug];
-            var read = Usfm3AlignmentReader.Read(await File.ReadAllTextAsync(file, cancellationToken), unnumbered);
-            var here = await Words(translation, ordinal.Value, cancellationToken);
-            var there = await Words(witness, ordinal.Value, cancellationToken);
-            var (pairs, account) = Book(name, read, here, there, address => address);
-
-            drafts.AddRange(pairs.Select(pair => new InterlinearDraft(translation, witness, pair.From, pair.To)));
-            books.Add((name, account));
-            total.Add(account);
-        }
-
-        return new InterlinearJoinResult(drafts, books, total);
-    }
 
     /// <summary>
     /// One book of the interlinear joined, verse by verse: <paramref name="here"/> holds the translation's words by the
@@ -184,48 +114,4 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     /// </summary>
     internal static int? Ordinal(string fileName) =>
         BookReferences.ResolveOrdinal(Path.GetFileNameWithoutExtension(fileName)[(fileName.IndexOf('-') + 1)..]);
-
-    private async Task<Dictionary<(int, int), List<InterlinearWord>>> Words(
-        int textId,
-        int ordinal,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.VerseReferences
-            .Where(r => r.IsPrimary && r.Verse!.TextId == textId && r.CanonicalBook == ordinal)
-            .SelectMany(r => r.Verse!.Words.Select(w => new
-            {
-                r.CanonicalChapter,
-                r.CanonicalVerse,
-                w.Id,
-                w.Position,
-                w.NormalisedText,
-                Written = w.Surface,
-                w.StrongNumber,
-                w.Trailer,
-                Language = w.Text!.Language,
-            }))
-            .ToListAsync(cancellationToken);
-
-        return rows
-            .GroupBy(r => (r.CanonicalChapter, r.CanonicalVerse))
-            .ToDictionary(
-                group => group.Key,
-                group => group.OrderBy(r => r.Position)
-                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written, r.StrongNumber, r.Trailer.Length == 0))
-                    .ToList());
-    }
-
-    private async Task<int> Text(string slug, CancellationToken cancellationToken) =>
-        await db.Texts.Where(t => t.Slug == slug).Select(t => t.Id).FirstOrDefaultAsync(cancellationToken)
-            is var id and not 0
-            ? id
-            : throw new InvalidOperationException($"The text \"{slug}\" must be loaded before it can be linked.");
-
-    private sealed record InterlinearJoinResult(
-        List<InterlinearDraft> Drafts,
-        List<(string Book, InterlinearJoinAccount Account)> Books,
-        InterlinearJoinAccount Total);
 }
-
-/// <summary>One link of the join: the translation's words and the witness's they render.</summary>
-internal sealed record InterlinearDraft(int FromTextId, int ToTextId, List<long> From, List<long> To);

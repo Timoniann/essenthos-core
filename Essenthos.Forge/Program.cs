@@ -93,7 +93,6 @@ var verifySessions = builder.Configuration.GetValue("Verification:Sessions", 1);
 builder.Services.AddScoped(services => new CorpusCheck(
     services.GetRequiredService<AppDbContext>(), services.GetRequiredService<ILogger<CorpusCheck>>(), verifySessions));
 builder.Services.AddScoped<GeezLexiconMeasure>();
-builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<ReinaValeraStrongLinkLoader>();
 builder.Services.AddScoped<ModelPictures>();

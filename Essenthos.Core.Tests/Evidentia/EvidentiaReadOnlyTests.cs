@@ -210,7 +210,6 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             new EvidentiaDictionarySenseIndex(_db, packs),
             new EvidentiaKnownRenderingIndex(_db, packs),
             packs,
-            new InterlinearLinkLoader(_db, Microsoft.Extensions.Logging.Abstractions.NullLogger<InterlinearLinkLoader>.Instance),
             files ?? new EvidentiaFileSourceTexts(Configuration(), new Environment(_resources)),
             new EvidentiaContextGlossIndex(Configuration(), new Environment(_resources)));
     }
