@@ -8,9 +8,10 @@ using Essenthos.Core.Products;
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
-/// The links a composition reads, from the mapping's finals (DOC-0224 §6, generators read files): each pair's settled
-/// claims, their words by their place in their own text (<see cref="ProductText"/>). What a composition writes goes to a
-/// method file, and the merge decides what of it becomes a link.
+/// The links a composition reads, from the mapping's finals (DOC-0224 §6, generators read files): each pair's links, their
+/// words by their place in their own text (<see cref="ProductText"/>), each read as the final would hold it without the
+/// compositions (<see cref="Read"/>). What a composition writes goes to a method file, and the merge decides what of it
+/// becomes a link.
 /// </summary>
 internal sealed class MappingLinks(ProductTexts texts)
 {
@@ -20,12 +21,16 @@ internal sealed class MappingLinks(ProductTexts texts)
     private readonly ConcurrentDictionary<string, Lazy<List<FinalLink>>> _finals = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, Lazy<Dictionary<string, int>>> _ids = new(StringComparer.Ordinal);
 
-    /// <summary>The finals a composition of the pair may read, relative to Resources: its own, its middle texts', and its proxies'.</summary>
+    /// <summary>
+    /// The finals a composition of the pair may read, and their statuses, relative to Resources: its own, its middle texts', and
+    /// its proxies'.
+    /// </summary>
     public static IEnumerable<string> Inputs(ProductStore store, string fromSlug, IEnumerable<string> viaSlugs, string toSlug) =>
         viaSlugs.Append(fromSlug).Select(slug => MappingProducts.Pair(slug, toSlug))
             .Concat(ProxyPairs(store, fromSlug, toSlug))
             .Distinct(StringComparer.Ordinal)
-            .Select(pair => store.Find(MappingProducts.Of(pair, MappingProducts.Final))).OfType<string>();
+            .SelectMany(pair => new[] { MappingProducts.Final, MappingProducts.Statuses }.Select(file => MappingProducts.Of(pair, file)))
+            .Select(store.Find).OfType<string>();
 
     /// <summary>The links of a pair's final; empty where the pair has none.</summary>
     public List<FinalLink> Links(string fromSlug, string toSlug) =>
@@ -163,6 +168,16 @@ internal sealed class MappingLinks(ProductTexts texts)
 
     private static string Language(ProductStore store, string slug) => IndexContext.Declared(store, slug).Language;
 
+    /// <summary>
+    /// A pair's links as its final would hold them without the compositions. A link a composition also claims is read as its
+    /// best other claim, which the final lists next; and a row the merge withdrew for a composed claim stands as a link of its
+    /// own. A composition reads its own pair's final, which is made from the file it writes: read as settled, its last answers
+    /// would outrank the Strong pairings under them (<see cref="MappingMethods.Rank"/>) and hide them as statements, and each run
+    /// would measure and agree with another set of them than the run before (PRB-1914). A link only compositions claim stays
+    /// theirs, which every reading but a daughter version's leaves out as the aligner's. An EVIDENTIA row a composed claim
+    /// withdrew stays withdrawn: its absence gives way to a composition (<see cref="MappingMethods.EvidentiaAbsence"/>), and read
+    /// back it would keep the composition off its words instead.
+    /// </summary>
     private List<FinalLink> Read(string pair, string fromSlug, string toSlug)
     {
         var links = new List<FinalLink>();
@@ -174,16 +189,61 @@ internal sealed class MappingLinks(ProductTexts texts)
 
         var fromIds = Ids(fromSlug);
         var toIds = Ids(toSlug);
-        using var reader = texts.Store.Open(product, FinalRow.Schema);
-        foreach (var row in reader.Rows().Where(r => r.Settled))
+        using (var reader = texts.Store.Open(product, FinalRow.Schema))
         {
-            if (Words(row.From, fromIds) is { } from && Words(row.To, toIds) is { } to)
+            foreach (var claims in Runs(reader.Rows()))
             {
-                links.Add(new FinalLink(row.Id, row.Relation, MappingMethods.DatabaseMethod(row.Method), row.Confidence, from, to));
+                var settled = claims.FirstOrDefault(r => r.Settled) ?? claims[0];
+                var read = settled.Method == MappingMethods.Composed ? claims.FirstOrDefault(r => r.Method != MappingMethods.Composed) ?? settled : settled;
+                if (Words(settled.From, fromIds) is { } from && Words(settled.To, toIds) is { } to)
+                {
+                    links.Add(new FinalLink(settled.Id, settled.Relation, MappingMethods.DatabaseMethod(read.Method), read.Confidence, from, to));
+                }
+            }
+        }
+
+        var statuses = MappingProducts.Of(pair, MappingProducts.Statuses);
+        if (texts.Store.Exists(statuses))
+        {
+            using var reader = texts.Store.Open(statuses, MappingRow.Schema);
+            var id = 0L;
+            foreach (var row in reader.Rows().Where(r => r.Status is { } status && WithdrawnForComposition(status)
+                         && MappingMethods.DatabaseMethod(r.Method) != LinkMethod.RuleBased))
+            {
+                if (Words(row.From, fromIds) is { } from && Words(row.To, toIds) is { } to)
+                {
+                    links.Add(new FinalLink(--id, row.Relation, MappingMethods.DatabaseMethod(row.Method), row.Confidence, from, to));
+                }
             }
         }
 
         return links;
+    }
+
+    private static readonly string WithdrawnByComposed = MappingStatus.WithdrawnBy(MappingMethods.Composed);
+
+    private static bool WithdrawnForComposition(string status) =>
+        status == WithdrawnByComposed || status.StartsWith(WithdrawnByComposed + " in ", StringComparison.Ordinal);
+
+    /// <summary>A final's rows, one list per link: the run of rows with one id, its claims from the top-ranked down.</summary>
+    private static IEnumerable<List<FinalRow>> Runs(IEnumerable<FinalRow> rows)
+    {
+        var run = new List<FinalRow>();
+        foreach (var row in rows)
+        {
+            if (run.Count > 0 && run[0].Id != row.Id)
+            {
+                yield return run;
+                run = [];
+            }
+
+            run.Add(row);
+        }
+
+        if (run.Count > 0)
+        {
+            yield return run;
+        }
     }
 
     private Dictionary<string, int> Ids(string slug) =>

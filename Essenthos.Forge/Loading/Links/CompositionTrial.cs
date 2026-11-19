@@ -88,8 +88,8 @@ internal sealed class CompositionTrial
             }
         }
 
-        // Every final the source text is in, on either side: a word any settled link names is linked, and kept unless only
-        // this pair's own aligner links name it.
+        // Every final the source text is in, on either side: a word any link names is linked, and kept unless only this
+        // pair's own aligner claims name it.
         var linked = new HashSet<long>(words.Count);
         var kept = new HashSet<long>(words.Count);
         var ids = Mapping.PairLinkFiles.Ids(from);
@@ -103,7 +103,7 @@ internal sealed class CompositionTrial
             }
 
             using var reader = texts.Store.Open(product, Mapping.FinalRow.Schema);
-            foreach (var row in reader.Rows().Where(row => row.Settled))
+            foreach (var row in reader.Rows())
             {
                 var mine = pair == Mapping.MappingProducts.Pair(fromSlug, toSlug)
                            && Mapping.MappingMethods.DatabaseMethod(row.Method) == Database.Entities.Enums.LinkMethod.Aligner;
