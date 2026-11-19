@@ -58,6 +58,13 @@ internal enum ClearBibleNumbering
     /// <see cref="Loading.Links.ClearBibleLinks.Unglossed"/>).
     /// </summary>
     Revised,
+
+    /// <summary>
+    /// The token file the release ships, with a verse here and there whose records were counted over another division of
+    /// the text. A verse is refused whole where a record names a mark or a number past it, as in <see cref="Revised"/>;
+    /// the glosses cannot tell the rest, because they are English and the translation is not.
+    /// </summary>
+    Redivided,
 }
 
 /// <param name="From">The translation the alignment is about, as the corpus slugs it.</param>
@@ -229,6 +236,9 @@ internal sealed record ClearBibleSet(
     /// word of both token files falls on a word of eBible's text, with a psalm's title — which the
     /// files number as a verse 0 — laid at the head of its first verse, and 408 of the two sets'
     /// 348,102 records name a Hebrew or Greek word this corpus could not place.
+    ///
+    /// One verse of the Old Testament's was counted over another division: in 1 Kings 13:23 הֵשִׁיב names the comma after
+    /// أَرْجَعَهُ, אֲשֶׁר names أَرْجَعَهُ and the prophet takes ٱلَّذِي, each one word late.
     /// </summary>
     public static ClearBibleSet VanDyckOldTestament(string arabicSlug, string hebrewSlug) => new(
         arabicSlug,
@@ -237,7 +247,8 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "arb", "targets", "AVD", "ot_AVD.tsv"),
         Path.Combine("data", "sources", "WLCM.tsv"),
         ClearBibleJoin.Letters,
-        $"Clear Bible Alignments WLCM-AVD-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand");
+        $"Clear Bible Alignments WLCM-AVD-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand",
+        Numbering: ClearBibleNumbering.Redivided);
 
     /// <inheritdoc cref="VanDyckOldTestament"/>
     public static ClearBibleSet VanDyckNewTestament(string arabicSlug, string greekSlug) => new(
@@ -379,6 +390,10 @@ internal sealed record ClearBibleSet(
     /// Testament. The release also ships a <c>WLCM-OHCB-manual.json</c> for the Old Testament, and it is
     /// this file byte for byte — the same 63,852 records, every one naming a Greek word — so there is no
     /// Hausa alignment to the Hebrew to load.
+    ///
+    /// In 26 verses a record names a mark of punctuation, and none of them is misnumbered: the team put a Greek word the
+    /// Hausa does not render on the mark nearest its place, ἰδοὺ on the comma of Mark 3:32, ἐστιν on the full stop of
+    /// Matthew 26:18, and every number after it names its word. Such a record places nothing, and the verse stands.
     /// </summary>
     public static ClearBibleSet OpenHausaNewTestament(string hausaSlug, string greekSlug) => new(
         hausaSlug,

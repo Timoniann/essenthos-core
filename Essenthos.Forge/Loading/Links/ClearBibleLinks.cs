@@ -156,7 +156,7 @@ internal static partial class ClearBibleLinks
         var early = set.Early is { } before ? EarlyNames.Of(tokens, before, source, all) : null;
         var misnumbered = set.Numbering switch
         {
-            ClearBibleNumbering.Retokenised => Misnumbered(all, tokens),
+            ClearBibleNumbering.Retokenised or ClearBibleNumbering.Redivided => Misnumbered(all, tokens),
             ClearBibleNumbering.Revised => [.. Misnumbered(all, tokens), .. Unglossed(all, tokens, sourceTokens)],
             _ => [],
         };
