@@ -102,13 +102,26 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
             // pipe buffer.
             var output = process.StandardOutput.ReadToEndAsync(cancellationToken);
             var error = process.StandardError.ReadToEndAsync(cancellationToken);
-            await process.StandardInput.WriteAsync(Sentences(tokens));
-            await process.StandardInput.DisposeAsync();
+            var broken = false;
+            try
+            {
+                await process.StandardInput.WriteAsync(Sentences(tokens));
+                await process.StandardInput.DisposeAsync();
+            }
+            catch (IOException)
+            {
+                // The process stopped reading before the passage was all written: it died. Its exit
+                // code and stderr say why; "the pipe has been ended" alone did not (TSK-1910).
+                broken = true;
+            }
+
             await Task.WhenAll(output, error);
             await process.WaitForExitAsync(cancellationToken);
-            return process.ExitCode == 0
+            return process.ExitCode == 0 && !broken
                 ? output.Result
-                : throw new InvalidOperationException($"Local UDPipe exited {process.ExitCode}: {error.Result.Trim()}");
+                : throw new InvalidOperationException(
+                    $"Local UDPipe {(broken ? "stopped reading its input and " : "")}exited {process.ExitCode} on " +
+                    $"{tokens[0].Address.Book}:{tokens[0].Address.Chapter} ({tokens.Count} tokens): {error.Result.Trim()}");
         }
         finally
         {
