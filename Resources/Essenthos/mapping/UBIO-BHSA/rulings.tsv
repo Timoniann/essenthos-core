@@ -84,3 +84,198 @@ refuse	26.9:5.15	26.9:5.15			Ezekiel 9:5: drawn from the Strong numbers the Open
 accept	26.9:5.15	26.9:5.14	renders		Ezekiel 9:5: drawn from the Strong numbers the Open Hebrew Bible prints one word along, where it joins the relative שֶׁ with the next word, so the links after it stand one word early; 'нехай ... не' renders the ketiv על, read אַל (read by hand)
 refuse	21.1:7.13	21.1:7.15			Ecclesiastes 1:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (הַ (H9009) נְּחָלִים֙ (H5158) beside שֶׁ֤ (H7945))
 accept	21.1:7.13	21.1:7.15 21.1:7.16 21.1:7.17	renders		Ecclesiastes 1:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (הַ (H9009) נְּחָלִים֙ (H5158) beside שֶׁ֤ (H7945))
+refuse	17.1:1.19	17.1:1.20			Esth 1:1: uk_ubio's link of «і» to מְדִינָֽה is wrong, read by hand against BHSA: і has no word in the Hebrew numeral (שֶׁבַע וְעֶשְׂרִים וּמֵאָה, whose two וְ are in the links of сто й and двадцять), not the noun מְדִינָה (округ)
+refuse	17.1:2.1 17.1:2.2 17.1:2.3	17.1:2.1 17.1:2.2 17.1:2.3			Esth 1:2: uk_ubio's link of «за тих днів» to בַּיָּמִ֖ים is wrong, read by hand against BHSA: тих is הָהֵם, not part of בַּיָּמִים; the link leaves its own partner out
+accept	17.1:2.1 17.1:2.3	17.1:2.1 17.1:2.2 17.1:2.3	renders		Esth 1:2: «за днів» renders בַּיָּמִ֖ים, read by hand against BHSA where uk_ubio's link is wrong: за днів = בַּיָּמִים
+accept	17.1:2.2	17.1:2.4 17.1:2.5	renders		Esth 1:2: «тих» renders הָהֵ֑ם, read by hand against BHSA where uk_ubio's link is wrong: тих = הָהֵם
+refuse	17.1:2.4	17.1:2.4 17.1:2.5			Esth 1:2: uk_ubio's link of «коли» to הָהֵ֑ם is wrong, read by hand against BHSA: коли is the כְּ of כְּשֶׁבֶת (засів), not the demonstrative הָהֵם (тих)
+accept	17.1:2.4	17.1:2.6	renders		Esth 1:2: «коли» renders כְּ, read by hand against BHSA where uk_ubio's link is wrong: коли = the כְּ of כְּשֶׁבֶת
+refuse	17.1:2.12	17.1:2.14			Esth 1:2: uk_ubio's link of «на» to אֲשֶׁ֖ר is wrong, read by hand against BHSA: на (на замку) is the בְּ of בְּשׁוּשַׁן; the relative אֲשֶׁר is not translated
+accept	17.1:2.12	17.1:2.15	renders		Esth 1:2: «на» renders בְּ, read by hand against BHSA where uk_ubio's link is wrong: на = בְּ
+refuse	17.1:3.14	17.1:3.23 17.1:3.24			Esth 1:3: uk_ubio's link of «своїх» to לְפָנָֽיו is wrong, read by hand against BHSA: своїх is the suffix of עֲבָדָיו (своїх слуг), not לְפָנָיו (before him), which the Ohienko leaves unrendered
+accept	17.1:3.14	17.1:3.11 17.1:3.12	renders		Esth 1:3: «своїх» renders וַעֲבָדָ֑יו, read by hand against BHSA where uk_ubio's link is wrong: своїх слуг = עֲבָדָיו with its suffix
+refuse	17.1:7.4	17.1:7.6 17.1:7.7 17.1:7.8 17.1:7.9			Esth 1:7: uk_ubio's link of «в» to וְכֵלִ֖ים מִכֵּלִ֣ים is wrong, read by hand against BHSA: this в is the first one (в золотому посуді = בִּכְלֵי זָהָב); the occurrences of в are swapped
+refuse	17.1:7.6 17.1:7.7	17.1:7.3 17.1:7.4			Esth 1:7: uk_ubio's link of «посуді в» to בִּכְלֵ֣י is wrong, read by hand against BHSA: посуді в pairs the first посуді with the second в; the occurrences of в are swapped
+accept	17.1:7.4 17.1:7.6	17.1:7.3 17.1:7.4	renders		Esth 1:7: «в посуді» renders בִּכְלֵ֣י, read by hand against BHSA where uk_ubio's link is wrong: в золотому посуді: в посуді = בִּכְלֵי
+accept	17.1:7.7	17.1:7.6 17.1:7.7 17.1:7.8 17.1:7.9	renders		Esth 1:7: «в» renders וְכֵלִ֖ים מִכֵּלִ֣ים, read by hand against BHSA where uk_ubio's link is wrong: the second в belongs to в посуді все різному = וְכֵלִים מִכֵּלִים שׁוֹנִים
+refuse	17.1:11.18	17.1:11.24			Esth 1:11: uk_ubio's link of «була» to טֹובַ֥ת is wrong, read by hand against BHSA: була is the copula of the nominal clause and has no word in the Hebrew; טוֹבַת (good) is вродливого
+refuse	17.1:11.20 17.1:11.21	17.1:11.25			Esth 1:11: uk_ubio's link of «вродливого вигляду» to מַרְאֶ֖ה is wrong, read by hand against BHSA: вродливого is טוֹבַת, which the link leaves out; only вигляду is מַרְאֶה
+accept	17.1:11.20	17.1:11.24	renders		Esth 1:11: «вродливого» renders טֹובַ֥ת, read by hand against BHSA where uk_ubio's link is wrong: вродливого = טוֹבַת
+accept	17.1:11.21	17.1:11.25	renders		Esth 1:11: «вигляду» renders מַרְאֶ֖ה, read by hand against BHSA where uk_ubio's link is wrong: вигляду = מַרְאֶה
+refuse	17.1:12.15 17.1:12.16 17.1:12.17	17.1:12.17 17.1:12.18			Esth 1:12: uk_ubio's link of «І сильно загнівався» to וַיִּקְצֹ֤ף is wrong, read by hand against BHSA: сильно is מְאֹד, not part of וַיִּקְצֹף
+accept	17.1:12.15 17.1:12.17	17.1:12.17 17.1:12.18	renders		Esth 1:12: «І загнівався» renders וַיִּקְצֹ֤ף, read by hand against BHSA where uk_ubio's link is wrong: І загнівався = וַיִּקְצֹף
+accept	17.1:12.16	17.1:12.21	renders		Esth 1:12: «сильно» renders מְאֹ֔ד, read by hand against BHSA where uk_ubio's link is wrong: сильно = מְאֹד
+refuse	17.1:12.19 17.1:12.20 17.1:12.21	17.1:12.21			Esth 1:12: uk_ubio's link of «і в ньому» to מְאֹ֔ד is wrong, read by hand against BHSA: і в ньому is the וַ of וַחֲמָתוֹ and בּוֹ, not מְאֹד (сильно)
+refuse	17.1:12.23	17.1:12.25			Esth 1:12: uk_ubio's link of «його» to בֹֽו is wrong, read by hand against BHSA: його is the suffix of חֲמָתוֹ (його лютість); в ньому is בּוֹ
+accept	17.1:12.20 17.1:12.21	17.1:12.25	renders		Esth 1:12: «в ньому» renders בֹֽו, read by hand against BHSA where uk_ubio's link is wrong: в ньому = בּוֹ
+accept	17.1:12.19 17.1:12.23 17.1:12.24	17.1:12.22 17.1:12.23	renders		Esth 1:12: «і його лютість» renders וַחֲמָתֹ֖ו, read by hand against BHSA where uk_ubio's link is wrong: і ... його лютість = וַחֲמָתוֹ
+refuse	17.1:17.8 17.1:17.9 17.1:17.10	17.1:17.10 17.1:17.11			Esth 1:17: uk_ubio's link of «і спричиниться до» to לְהַבְזֹ֥ות is wrong, read by hand against BHSA: погордження is the verb הַבְזוֹת itself, which the link gives to чоловіків instead
+refuse	17.1:17.11 17.1:17.12 17.1:17.13	17.1:17.12			Esth 1:17: uk_ubio's link of «погордження їхніх чоловіків» to בַּעְלֵיהֶ֖ן is wrong, read by hand against BHSA: погордження is לְהַבְזוֹת (despise), not בַּעְלֵיהֶן (їхніх чоловіків)
+accept	17.1:17.8 17.1:17.9 17.1:17.10 17.1:17.11	17.1:17.10 17.1:17.11	renders		Esth 1:17: «і спричиниться до погордження» renders לְהַבְזֹ֥ות, read by hand against BHSA where uk_ubio's link is wrong: і спричиниться до погордження = לְהַבְזוֹת
+accept	17.1:17.12 17.1:17.13	17.1:17.12	renders		Esth 1:17: «їхніх чоловіків» renders בַּעְלֵיהֶ֖ן, read by hand against BHSA where uk_ubio's link is wrong: їхніх чоловіків = בַּעְלֵיהֶן
+refuse	17.1:19.26	17.1:19.22			Esth 1:19: uk_ubio's link of «більш» to אֲשֶׁ֨ר is wrong, read by hand against BHSA: більш (більш не приходила) has no word in the Hebrew; אֲשֶׁר is щоб
+refuse	17.1:20.9	17.1:20.8 17.1:20.9			Esth 1:20: uk_ubio's link of «відомим» to בְּכָל is wrong, read by hand against BHSA: відомим (зробить відомим) has no word in the Hebrew; בְּכָל is у всім
+refuse	17.1:20.10	17.1:20.10			Esth 1:20: uk_ubio's link of «у» to מַלְכוּתֹ֔ו is wrong, read by hand against BHSA: у is the בְּ of בְּכָל (у всім), not מַלְכוּתוֹ (своїм царстві)
+accept	17.1:20.10 17.1:20.11	17.1:20.8 17.1:20.9	renders		Esth 1:20: «у всім» renders בְּכָל, read by hand against BHSA where uk_ubio's link is wrong: у всім = בְּכָל
+refuse	17.1:22.13	17.1:22.15 17.1:22.16			Esth 1:22: uk_ubio's link of «її» to וְאֶל is wrong, read by hand against BHSA: її is the suffix of כִּכְתָבָהּ (письмом її), not וְאֶל, which is і до
+accept	17.1:22.12 17.1:22.13	17.1:22.13 17.1:22.14	renders		Esth 1:22: «письмом її» renders כִּכְתָבָ֔הּ, read by hand against BHSA where uk_ubio's link is wrong: письмом її = כִּכְתָבָהּ
+accept	17.1:22.14 17.1:22.15 17.1:22.16 17.1:22.17	17.1:22.15 17.1:22.16 17.1:22.17 17.1:22.18 17.1:22.19	renders		Esth 1:22: «і до кожного народу» renders וְאֶל־עַ֥ם וָעָ֖ם, read by hand against BHSA where uk_ubio's link is wrong: і до кожного народу = וְאֶל עַם וָעָם
+refuse	17.2:2.4 17.2:2.5	17.2:2.3			Esth 2:2: uk_ubio's link of «отроки його» to נַעֲרֵֽי is wrong, read by hand against BHSA: його is the suffix of מְשָׁרְתָיו (його слуги), not part of נַעֲרֵי
+accept	17.2:2.4	17.2:2.3	renders		Esth 2:2: «отроки» renders נַעֲרֵֽי, read by hand against BHSA where uk_ubio's link is wrong: отроки = נַעֲרֵי
+accept	17.2:2.5 17.2:2.6	17.2:2.6	renders		Esth 2:2: «його слуги» renders מְשָׁרְתָ֑יו, read by hand against BHSA where uk_ubio's link is wrong: його слуги = מְשָׁרְתָיו
+refuse	17.2:4.6	17.2:4.6 17.2:4.7			Esth 2:4: uk_ubio's link of «найкраща» to בְּעֵינֵ֣י is wrong, read by hand against BHSA: найкраща is the verb תִּיטַב (be good), not בְּעֵינֵי (в очах)
+refuse	17.2:4.7 17.2:4.8 17.2:4.9	17.2:4.8 17.2:4.9			Esth 2:4: uk_ubio's link of «в царських очах» to הַמֶּ֔לֶךְ is wrong, read by hand against BHSA: в ... очах is בְּעֵינֵי, which the link leaves out; only царських is הַמֶּלֶךְ
+accept	17.2:4.5 17.2:4.6	17.2:4.5	renders		Esth 2:4: «буде найкраща» renders תִּיטַב֙, read by hand against BHSA where uk_ubio's link is wrong: буде найкраща = תִּיטַב
+accept	17.2:4.7 17.2:4.9	17.2:4.6 17.2:4.7	renders		Esth 2:4: «в очах» renders בְּעֵינֵ֣י, read by hand against BHSA where uk_ubio's link is wrong: в очах = בְּעֵינֵי
+accept	17.2:4.8	17.2:4.8 17.2:4.9	renders		Esth 2:4: «царських» renders הַמֶּ֔לֶךְ, read by hand against BHSA where uk_ubio's link is wrong: царських = הַמֶּלֶךְ
+refuse	17.2:9.26	17.2:9.19 17.2:9.20			Esth 2:9: uk_ubio's link of «та» to לָתֵ֣ת is wrong, read by hand against BHSA: та (та дати їй сімох) is the וְ of וְאֵת שֶׁבַע, not the earlier לָתֵת (видати)
+accept	17.2:9.26	17.2:9.22 17.2:9.23	renders		Esth 2:9: «та» renders וְאֵת֙, read by hand against BHSA where uk_ubio's link is wrong: та = וְאֵת before שֶׁבַע
+refuse	17.2:9.35	17.2:9.22 17.2:9.23			Esth 2:9: uk_ubio's link of «І» to וְאֵת֙ is wrong, read by hand against BHSA: І (І він перемістив) is the וַ of וַיְשַׁנֶּהָ, not the וְאֵת before שֶׁבַע (та)
+accept	17.2:9.35 17.2:9.36 17.2:9.37 17.2:9.38	17.2:9.36 17.2:9.37	renders		Esth 2:9: «І він перемістив її» renders וַיְשַׁנֶּ֧הָ, read by hand against BHSA where uk_ubio's link is wrong: І він перемістив її = וַיְשַׁנֶּהָ
+refuse	17.2:10.7	17.2:10.6 17.2:10.7			Esth 2:10: uk_ubio's link of «свій» to וְאֶת is wrong, read by hand against BHSA: свій is the suffix of עַמָּהּ (народ свій); וְאֶת is the second ні про
+accept	17.2:10.4 17.2:10.5 17.2:10.6 17.2:10.7	17.2:10.5	renders		Esth 2:10: «ні про народ свій» renders עַמָּ֖הּ, read by hand against BHSA where uk_ubio's link is wrong: ні про народ свій = עַמָּהּ
+accept	17.2:10.8 17.2:10.9 17.2:10.10 17.2:10.11 17.2:10.12	17.2:10.6 17.2:10.7 17.2:10.8	renders		Esth 2:10: «ні про місце свого народження» renders וְאֶת־מֹֽולַדְתָּ֑הּ, read by hand against BHSA where uk_ubio's link is wrong: ні про місце свого народження = וְאֶת מוֹלַדְתָּהּ
+refuse	17.2:10.16 17.2:10.17	17.2:10.12			Esth 2:10: uk_ubio's link of «їй щоб» to עָלֶ֖יהָ is wrong, read by hand against BHSA: щоб is אֲשֶׁר, not part of עָלֶיהָ (їй)
+refuse	17.2:10.18 17.2:10.19	17.2:10.13			Esth 2:10: uk_ubio's link of «цього вона» to אֲשֶׁ֥ר is wrong, read by hand against BHSA: אֲשֶׁר is щоб; цього has no word in the Hebrew and вона is the person of תַגִּיד
+accept	17.2:10.16	17.2:10.12	renders		Esth 2:10: «їй» renders עָלֶ֖יהָ, read by hand against BHSA where uk_ubio's link is wrong: їй = עָלֶיהָ
+accept	17.2:10.17	17.2:10.13	renders		Esth 2:10: «щоб» renders אֲשֶׁ֥ר, read by hand against BHSA where uk_ubio's link is wrong: щоб = אֲשֶׁר
+refuse	17.2:13.8 17.2:13.9	17.2:13.14			Esth 2:13: uk_ubio's link of «давалося їй» to יִנָּ֤תֵֽן is wrong, read by hand against BHSA: їй is לָהּ, not part of יִנָּתֵן (давалося)
+refuse	17.2:13.14 17.2:13.15 17.2:13.16	17.2:13.15 17.2:13.16 17.2:13.17			Esth 2:13: uk_ubio's link of «щоб воно йшло» to לָהּ֙ לָבֹ֣וא is wrong, read by hand against BHSA: לָהּ is їй (давалося їй); щоб воно йшло is לָבוֹא
+accept	17.2:13.8	17.2:13.14	renders		Esth 2:13: «давалося» renders יִנָּ֤תֵֽן, read by hand against BHSA where uk_ubio's link is wrong: давалося = יִנָּתֵן
+accept	17.2:13.9	17.2:13.15	renders		Esth 2:13: «їй» renders לָהּ֙, read by hand against BHSA where uk_ubio's link is wrong: їй = לָהּ
+accept	17.2:13.14 17.2:13.15 17.2:13.16	17.2:13.16 17.2:13.17	renders		Esth 2:13: «щоб воно йшло» renders לָבֹ֣וא, read by hand against BHSA where uk_ubio's link is wrong: щоб воно йшло = לָבוֹא
+refuse	17.2:13.19	17.2:13.23			Esth 2:13: uk_ubio's link of «з» to עַד is wrong, read by hand against BHSA: з (з дому жінок) is the מִ of מִבֵּית; עַד is до; the two prepositions are swapped
+refuse	17.2:13.22	17.2:13.19 17.2:13.20			Esth 2:13: uk_ubio's link of «до» to מִבֵּ֥ית is wrong, read by hand against BHSA: до (до дому царського) is עַד, not מִבֵּית; the two prepositions are swapped
+accept	17.2:13.19 17.2:13.20	17.2:13.19 17.2:13.20	renders		Esth 2:13: «з дому» renders מִבֵּ֥ית, read by hand against BHSA where uk_ubio's link is wrong: з дому = מִבֵּית
+accept	17.2:13.22	17.2:13.23	renders		Esth 2:13: «до» renders עַד, read by hand against BHSA where uk_ubio's link is wrong: до = עַד
+refuse	17.2:14.19 17.2:14.20	17.2:14.28			Esth 2:14: uk_ubio's link of «Вона вже» to עֹוד֙ is wrong, read by hand against BHSA: Вона is the subject of תָבוֹא (входила); only вже is עוֹד
+accept	17.2:14.20	17.2:14.28	renders		Esth 2:14: «вже» renders עֹוד֙, read by hand against BHSA where uk_ubio's link is wrong: вже = עוֹד
+refuse	17.2:15.21 17.2:15.22	17.2:15.22			Esth 2:15: uk_ubio's link of «вона нічого» to דָּבָ֔ר is wrong, read by hand against BHSA: вона is the subject of בִקְשָׁה (жадала); only нічого is דָּבָר
+accept	17.2:15.22	17.2:15.22	renders		Esth 2:15: «нічого» renders דָּבָ֔ר, read by hand against BHSA where uk_ubio's link is wrong: нічого = דָּבָר
+refuse	17.2:15.27	17.2:15.23			Esth 2:15: uk_ubio's link of «того» to כִּ֠י is wrong, read by hand against BHSA: того is the object of жадала (the אֶת אֲשֶׁר), not כִּי, which is як
+refuse	17.2:18.21 17.2:18.22	17.2:18.20			Esth 2:18: uk_ubio's link of «і дав» to עָשָׂ֔ה is wrong, read by hand against BHSA: і дав is וַיִּתֵּן; עָשָׂה is the зробив of зробив полегшення
+refuse	17.2:18.23	17.2:18.21 17.2:18.22			Esth 2:18: uk_ubio's link of «дарунка» to וַיִּתֵּ֥ן is wrong, read by hand against BHSA: дарунка is מַשְׂאֵת, not וַיִּתֵּן (і дав)
+accept	17.2:18.16 17.2:18.18	17.2:18.15 17.2:18.16	renders		Esth 2:18: «і полегшення» renders וַהֲנָחָ֤ה, read by hand against BHSA where uk_ubio's link is wrong: і полегшення = וַהֲנָחָה
+accept	17.2:18.17	17.2:18.20	renders		Esth 2:18: «зробив» renders עָשָׂ֔ה, read by hand against BHSA where uk_ubio's link is wrong: зробив = עָשָׂה
+accept	17.2:18.21 17.2:18.22	17.2:18.21 17.2:18.22	renders		Esth 2:18: «і дав» renders וַיִּתֵּ֥ן, read by hand against BHSA where uk_ubio's link is wrong: і дав = וַיִּתֵּן
+accept	17.2:18.23	17.2:18.23	renders		Esth 2:18: «дарунка» renders מַשְׂאֵ֖ת, read by hand against BHSA where uk_ubio's link is wrong: дарунка = מַשְׂאֵת
+accept	17.2:18.24 17.2:18.26	17.2:18.24 17.2:18.25	renders		Esth 2:18: «за спроможністю» renders כְּיַ֥ד, read by hand against BHSA where uk_ubio's link is wrong: за спроможністю = כְּיַד
+refuse	17.2:19.10 17.2:19.11	17.2:19.9 17.2:19.10			Esth 2:19: uk_ubio's link of «при царській» to בְּשַֽׁעַר is wrong, read by hand against BHSA: царській is הַמֶּלֶךְ, not שַׁעַר; the two nouns are swapped
+refuse	17.2:19.12	17.2:19.11 17.2:19.12			Esth 2:19: uk_ubio's link of «брамі» to הַמֶּֽלֶךְ is wrong, read by hand against BHSA: брамі is שַׁעַר, not הַמֶּלֶךְ; the two nouns are swapped
+accept	17.2:19.10 17.2:19.12	17.2:19.9 17.2:19.10	renders		Esth 2:19: «при брамі» renders בְּשַֽׁעַר, read by hand against BHSA where uk_ubio's link is wrong: при брамі = בְּשַׁעַר
+accept	17.2:19.11	17.2:19.11 17.2:19.12	renders		Esth 2:19: «царській» renders הַמֶּֽלֶךְ, read by hand against BHSA where uk_ubio's link is wrong: царській = הַמֶּלֶךְ
+refuse	17.2:20.16	17.2:20.15			Esth 2:20: uk_ubio's link of «бо» to מַאֲמַ֤ר is wrong, read by hand against BHSA: бо has no word in the Hebrew; מַאֲמַר is слово
+refuse	17.3:4.10	17.3:4.27			Esth 3:4: uk_ubio's link of «він» to ה֥וּא is wrong, read by hand against BHSA: він (а він не слухався) is the subject of שָׁמַע; הוּא is the він of що він юдеянин, which the link leaves out
+accept	17.3:4.31	17.3:4.27	renders		Esth 3:4: «він» renders ה֥וּא, read by hand against BHSA where uk_ubio's link is wrong: він (що він юдеянин) = הוּא
+refuse	17.3:4.12 17.3:4.13	17.3:4.11			Esth 3:4: uk_ubio's link of «слухався їх» to שָׁמַ֖ע is wrong, read by hand against BHSA: їх is אֲלֵיהֶם, not part of שָׁמַע
+refuse	17.3:4.14	17.3:4.12			Esth 3:4: uk_ubio's link of «то» to אֲלֵיהֶ֑ם is wrong, read by hand against BHSA: то has no word in the Hebrew (the וַ of וַיַּגִּידוּ is in вони донесли); אֲלֵיהֶם is їх
+accept	17.3:4.12	17.3:4.11	renders		Esth 3:4: «слухався» renders שָׁמַ֖ע, read by hand against BHSA where uk_ubio's link is wrong: слухався = שָׁמַע
+accept	17.3:4.13	17.3:4.12	renders		Esth 3:4: «їх» renders אֲלֵיהֶ֑ם, read by hand against BHSA where uk_ubio's link is wrong: їх = אֲלֵיהֶם
+refuse	17.3:7.17 17.3:7.18	17.3:7.27 17.3:7.28			Esth 3:7: uk_ubio's link of «дня на» to לְיֹ֛ום is wrong, read by hand against BHSA: дня belongs to із дня (מִיּוֹם); לְיוֹם is на день; дня and день are swapped
+refuse	17.3:7.19	17.3:7.25 17.3:7.26			Esth 3:7: uk_ubio's link of «день» to מִיֹּ֧ום is wrong, read by hand against BHSA: день belongs to на день (לְיוֹם), not מִיּוֹם; дня and день are swapped
+accept	17.3:7.16 17.3:7.17	17.3:7.25 17.3:7.26	renders		Esth 3:7: «із дня» renders מִיֹּ֧ום, read by hand against BHSA where uk_ubio's link is wrong: із дня = מִיּוֹם
+accept	17.3:7.18 17.3:7.19	17.3:7.27 17.3:7.28	renders		Esth 3:7: «на день» renders לְיֹ֛ום, read by hand against BHSA where uk_ubio's link is wrong: на день = לְיוֹם
+refuse	17.3:15.19	17.3:15.25 17.3:15.26 17.3:15.27			Esth 3:15: uk_ubio's link of «пиття» to וְהָעִ֥יר is wrong, read by hand against BHSA: пиття is שְׁתּוֹת (до пиття = לִשְׁתּוֹת), not וְהָעִיר, which is а місто
+accept	17.3:15.18 17.3:15.19	17.3:15.23 17.3:15.24	renders		Esth 3:15: «до пиття» renders לִשְׁתֹּ֔ות, read by hand against BHSA where uk_ubio's link is wrong: до пиття = לִשְׁתּוֹת
+accept	17.3:15.20 17.3:15.21	17.3:15.25 17.3:15.26 17.3:15.27	renders		Esth 3:15: «а місто» renders וְהָעִ֥יר, read by hand against BHSA where uk_ubio's link is wrong: а місто = וְהָעִיר
+refuse	17.4:3.5 17.4:3.6	17.4:3.5 17.4:3.6			Esth 4:3: uk_ubio's link of «та місці» to וּמְדִינָ֗ה is wrong, read by hand against BHSA: місці is מְקוֹם; וּמְדִינָה is the repeated noun of the distributive מְדִינָה וּמְדִינָה (кожній окрузі)
+refuse	17.4:3.8	17.4:3.7			Esth 4:3: uk_ubio's link of «доходило» to מְקֹום֙ is wrong, read by hand against BHSA: доходило is the participle מַגִּיעַ, not מְקוֹם (місці)
+refuse	17.4:3.14	17.4:3.14			Esth 4:3: uk_ubio's link of «були» to מַגִּ֔יעַ is wrong, read by hand against BHSA: були has no word in the Hebrew; מַגִּיעַ is доходило
+accept	17.4:3.4	17.4:3.4 17.4:3.5 17.4:3.6	renders		Esth 4:3: «окрузі» renders מְדִינָ֣ה וּמְדִינָ֗ה, read by hand against BHSA where uk_ubio's link is wrong: окрузі = the distributive מְדִינָה וּמְדִינָה (в кожній окрузі)
+accept	17.4:3.6	17.4:3.7	renders		Esth 4:3: «місці» renders מְקֹום֙, read by hand against BHSA where uk_ubio's link is wrong: місці = מְקוֹם
+accept	17.4:3.8	17.4:3.14	renders		Esth 4:3: «доходило» renders מַגִּ֔יעַ, read by hand against BHSA where uk_ubio's link is wrong: доходило = מַגִּיעַ
+refuse	17.4:4.11	17.4:4.26 17.4:4.27 17.4:4.28 17.4:4.29 17.4:4.30			Esth 4:4: uk_ubio's link of «їй» to מֵעָלָ֖יו וְלֹ֥א קִבֵּֽל is wrong, read by hand against BHSA: їй (донесли їй) is לָהּ, not מֵעָלָיו וְלֹא קִבֵּל at the end of the verse
+accept	17.4:4.11	17.4:4.9	renders		Esth 4:4: «їй» renders לָ֔הּ, read by hand against BHSA where uk_ubio's link is wrong: їй = לָהּ
+refuse	17.4:4.14	17.4:4.9 17.4:4.10 17.4:4.11			Esth 4:4: uk_ubio's link of «І» to לָ֔הּ וַתִּתְחַלְחַ֥ל is wrong, read by hand against BHSA: לָהּ belongs to донесли їй; І затремтіла is וַתִּתְחַלְחַל alone
+refuse	17.4:4.16	17.4:4.9 17.4:4.10 17.4:4.11			Esth 4:4: uk_ubio's link of «затремтіла» to לָ֔הּ וַתִּתְחַלְחַ֥ל is wrong, read by hand against BHSA: לָהּ belongs to донесли їй; І затремтіла is וַתִּתְחַלְחַל alone
+accept	17.4:4.14 17.4:4.16	17.4:4.10 17.4:4.11	renders		Esth 4:4: «І затремтіла» renders וַתִּתְחַלְחַ֥ל, read by hand against BHSA where uk_ubio's link is wrong: І затремтіла = וַתִּתְחַלְחַל
+refuse	17.4:4.29 17.4:4.30 17.4:4.31 17.4:4.32	17.4:4.26 17.4:4.27 17.4:4.28 17.4:4.29 17.4:4.30			Esth 4:4: uk_ubio's link of «та він не прийняв» to מֵעָלָ֖יו וְלֹ֥א קִבֵּֽל is wrong, read by hand against BHSA: מֵעָלָיו is з нього (зняти з нього); та він не прийняв is וְלֹא קִבֵּל
+accept	17.4:4.29 17.4:4.30 17.4:4.31 17.4:4.32	17.4:4.28 17.4:4.29 17.4:4.30	renders		Esth 4:4: «та він не прийняв» renders וְלֹ֥א קִבֵּֽל, read by hand against BHSA where uk_ubio's link is wrong: та він не прийняв = וְלֹא קִבֵּל
+accept	17.4:4.23 17.4:4.24 17.4:4.25 17.4:4.26	17.4:4.22 17.4:4.23 17.4:4.24 17.4:4.26 17.4:4.27	renders		Esth 4:4: «та зняти з нього» renders וּלְהָסִ֥יר מֵעָלָ֖יו, read by hand against BHSA where uk_ubio's link is wrong: та зняти з нього = וּלְהָסִיר ... מֵעָלָיו
+refuse	17.4:8.2 17.4:8.3 17.4:8.4 17.4:8.5	17.4:8.3			Esth 4:8: uk_ubio's link of «він дав йому відписа» to פַּתְשֶׁ֣גֶן is wrong, read by hand against BHSA: він дав йому is נָתַן לוֹ, which the link leaves out; only відписа is פַּתְשֶׁגֶן
+refuse	17.4:8.19 17.4:8.20	17.4:8.22			Esth 4:8: uk_ubio's link of «та щоб» to לָ֑הּ is wrong, read by hand against BHSA: та щоб is the וּלְ of וּלְהַגִּיד, not לָהּ (їй)
+refuse	17.4:8.22	17.4:8.14			Esth 4:8: uk_ubio's link of «їй» to לֹ֔ו is wrong, read by hand against BHSA: їй (доніс їй) is לָהּ; לוֹ is the йому of дав йому
+refuse	17.4:8.23 17.4:8.24	17.4:8.27 17.4:8.28			Esth 4:8: uk_ubio's link of «і щоб» to לָבֹ֨וא is wrong, read by hand against BHSA: і щоб is the וּלְ of וּלְצַוּוֹת, not לָבוֹא (піти)
+accept	17.4:8.2 17.4:8.3	17.4:8.13	renders		Esth 4:8: «він дав» renders נָ֣תַן, read by hand against BHSA where uk_ubio's link is wrong: він дав = נָתַן
+accept	17.4:8.4	17.4:8.14	renders		Esth 4:8: «йому» renders לֹ֔ו, read by hand against BHSA where uk_ubio's link is wrong: йому = לוֹ
+accept	17.4:8.5	17.4:8.3	renders		Esth 4:8: «відписа» renders פַּתְשֶׁ֣גֶן, read by hand against BHSA where uk_ubio's link is wrong: відписа = פַּתְשֶׁגֶן
+accept	17.4:8.19 17.4:8.20 17.4:8.21	17.4:8.19 17.4:8.20 17.4:8.21	renders		Esth 4:8: «та щоб доніс» renders וּלְהַגִּ֣יד, read by hand against BHSA where uk_ubio's link is wrong: та щоб доніс = וּלְהַגִּיד
+accept	17.4:8.22	17.4:8.22	renders		Esth 4:8: «їй» renders לָ֑הּ, read by hand against BHSA where uk_ubio's link is wrong: їй = לָהּ
+accept	17.4:8.23 17.4:8.24 17.4:8.25	17.4:8.23 17.4:8.24 17.4:8.25	renders		Esth 4:8: «і щоб наказав» renders וּלְצַוֹּ֣ות, read by hand against BHSA where uk_ubio's link is wrong: і щоб наказав = וּלְצַוּוֹת
+refuse	17.4:10.8	17.4:10.8			Esth 4:10: uk_ubio's link of «йому» to אֶֽל is wrong, read by hand against BHSA: йому is the suffix of וַתְּצַוֵּהוּ (наказала йому); אֶל belongs to Мордехаєві (אֶל מָרְדֳּכָי)
+accept	17.4:10.8	17.4:10.6 17.4:10.7	renders		Esth 4:10: «йому» renders וַתְּצַוֵּ֖הוּ, read by hand against BHSA where uk_ubio's link is wrong: йому = the suffix of וַתְּצַוֵּהוּ
+accept	17.4:10.10	17.4:10.8 17.4:10.9	renders		Esth 4:10: «Мордехаєві» renders אֶֽל־מָרְדֳּכָֽי, read by hand against BHSA where uk_ubio's link is wrong: Мордехаєві = אֶל מָרְדֳּכָי
+refuse	17.4:11.2	17.4:11.8 17.4:11.9			Esth 4:11: uk_ubio's link of «царські» to הַמֶּ֜לֶךְ is wrong, read by hand against BHSA: царські раби is עַבְדֵי הַמֶּלֶךְ; this הַמֶּלֶךְ is the one of царських округ; the occurrences are swapped
+refuse	17.4:11.6	17.4:11.3 17.4:11.4			Esth 4:11: uk_ubio's link of «царських» to הַמֶּ֡לֶךְ is wrong, read by hand against BHSA: царських округ is מְדִינוֹת הַמֶּלֶךְ; this הַמֶּלֶךְ is the one of царські раби; the occurrences are swapped
+accept	17.4:11.2	17.4:11.3 17.4:11.4	renders		Esth 4:11: «царські» renders הַמֶּ֡לֶךְ, read by hand against BHSA where uk_ubio's link is wrong: царські раби = עַבְדֵי הַמֶּלֶךְ
+accept	17.4:11.6	17.4:11.8 17.4:11.9	renders		Esth 4:11: «царських» renders הַמֶּ֜לֶךְ, read by hand against BHSA where uk_ubio's link is wrong: царських округ = מְדִינוֹת הַמֶּלֶךְ
+refuse	17.4:11.14	17.4:11.26			Esth 4:11: uk_ubio's link of «що» to אֲשֶׁ֣ר is wrong, read by hand against BHSA: що (що прийде) is the אֲשֶׁר of אֲשֶׁר יָבוֹא; this אֲשֶׁר is the one of אֲשֶׁר לֹא יִקָּרֵא (непокликаний)
+refuse	17.4:11.15	17.4:11.16 17.4:11.17			Esth 4:11: uk_ubio's link of «прийде» to אֲשֶׁ֣ר יָבֹֽוא is wrong, read by hand against BHSA: אֲשֶׁר is що; прийде is יָבוֹא
+accept	17.4:11.14	17.4:11.16	renders		Esth 4:11: «що» renders אֲשֶׁ֣ר, read by hand against BHSA where uk_ubio's link is wrong: що = אֲשֶׁר before יָבוֹא
+accept	17.4:11.15	17.4:11.17	renders		Esth 4:11: «прийде» renders יָבֹֽוא, read by hand against BHSA where uk_ubio's link is wrong: прийде = יָבוֹא
+refuse	17.4:11.36	17.4:11.47 17.4:11.48			Esth 4:11: uk_ubio's link of «він» to וַאֲנִ֗י is wrong, read by hand against BHSA: він (і буде він жити) is the subject of חָיָה; וַאֲנִי is А мене
+refuse	17.4:11.38	17.4:11.49			Esth 4:11: uk_ubio's link of «А» to לֹ֤א is wrong, read by hand against BHSA: А is the וַ of וַאֲנִי, not לֹא, which is не
+refuse	17.4:11.39	17.4:11.50			Esth 4:11: uk_ubio's link of «мене» to נִקְרֵ֨אתִי֙ is wrong, read by hand against BHSA: мене is אֲנִי (וַאֲנִי לֹא נִקְרֵאתִי); кличуть is נִקְרֵאתִי
+accept	17.4:11.38 17.4:11.39	17.4:11.47 17.4:11.48	renders		Esth 4:11: «А мене» renders וַאֲנִ֗י, read by hand against BHSA where uk_ubio's link is wrong: А мене = וַאֲנִי
+refuse	17.4:14.29 17.4:14.30 17.4:14.31	17.4:14.29			Esth 4:14: uk_ubio's link of «чи не на» to אִם is wrong, read by hand against BHSA: на (на час) is the לְ of לְעֵת, not part of אִם (чи не)
+accept	17.4:14.29 17.4:14.30	17.4:14.29	renders		Esth 4:14: «чи не» renders אִם, read by hand against BHSA where uk_ubio's link is wrong: чи не = אִם
+accept	17.4:14.31 17.4:14.32	17.4:14.30 17.4:14.31	renders		Esth 4:14: «на час» renders לְעֵ֣ת, read by hand against BHSA where uk_ubio's link is wrong: на час = לְעֵת
+refuse	17.5:9.18	17.5:9.7 17.5:9.8			Esth 5:9: uk_ubio's link of «він» to הַה֔וּא is wrong, read by hand against BHSA: він (і він не встав) is the subject of קָם; הַהוּא is the того of того дня
+accept	17.5:9.4 17.5:9.5	17.5:9.4 17.5:9.5 17.5:9.6 17.5:9.7 17.5:9.8	renders		Esth 5:9: «того дня» renders בַּיֹּ֣ום הַה֔וּא, read by hand against BHSA where uk_ubio's link is wrong: того дня = בַּיּוֹם הַהוּא
+refuse	17.6:1.15 17.6:1.16 17.6:1.17	17.6:1.21 17.6:1.22			Esth 6:1: uk_ubio's link of «і вони читалися» to וַיִּהְי֥וּ is wrong, read by hand against BHSA: читалися is the participle נִקְרָאִים of וַיִּהְיוּ נִקְרָאִים, which the link leaves out
+refuse	17.6:1.18	17.6:1.23			Esth 6:1: uk_ubio's link of «перед» to נִקְרָאִ֖ים is wrong, read by hand against BHSA: перед is the לִפְנֵי of לִפְנֵי הַמֶּלֶךְ, not נִקְרָאִים (читалися)
+accept	17.6:1.15 17.6:1.16 17.6:1.17	17.6:1.21 17.6:1.22 17.6:1.23	renders		Esth 6:1: «і вони читалися» renders וַיִּהְי֥וּ נִקְרָאִ֖ים, read by hand against BHSA where uk_ubio's link is wrong: і вони читалися = וַיִּהְיוּ נִקְרָאִים
+accept	17.6:1.18 17.6:1.19	17.6:1.24 17.6:1.25	renders		Esth 6:1: «перед обличчям» renders לִפְנֵ֥י, read by hand against BHSA where uk_ubio's link is wrong: перед обличчям = לִפְנֵי
+refuse	17.6:3.16	17.6:3.5			Esth 6:3: uk_ubio's link of «що» to מַֽה is wrong, read by hand against BHSA: що (отроки, що прислуговували) belongs to the participle מְשָׁרְתָיו; מַה is the Яка of the king's question
+accept	17.6:3.4	17.6:3.5	renders		Esth 6:3: «Яка» renders מַֽה, read by hand against BHSA where uk_ubio's link is wrong: Яка = מַה
+refuse	17.7:5.11	17.7:5.13			Esth 7:5: uk_ubio's link of «то» to ה֥וּא is wrong, read by hand against BHSA: то (Хто то він) is the demonstrative זֶה; הוּא is він; the two are swapped
+refuse	17.7:5.12	17.7:5.14			Esth 7:5: uk_ubio's link of «він» to זֶה֙ is wrong, read by hand against BHSA: він is the pronoun הוּא, not the demonstrative זֶה (то); the two are swapped
+accept	17.7:5.11	17.7:5.14	renders		Esth 7:5: «то» renders זֶה֙, read by hand against BHSA where uk_ubio's link is wrong: то = זֶה
+accept	17.7:5.12	17.7:5.13	renders		Esth 7:5: «він» renders ה֥וּא, read by hand against BHSA where uk_ubio's link is wrong: він = הוּא
+refuse	17.7:5.17	17.7:5.18			Esth 7:5: uk_ubio's link of «його» to ה֔וּא is wrong, read by hand against BHSA: його (його серце) is the suffix of לִבּוֹ; הוּא belongs with זֶה to той
+refuse	17.7:5.20	17.7:5.21			Esth 7:5: uk_ubio's link of «його» to לִבֹּ֖ו is wrong, read by hand against BHSA: the second його (наповнило його) is the suffix of מְלָאוֹ, not לִבּוֹ
+accept	17.7:5.15	17.7:5.17 17.7:5.18	renders		Esth 7:5: «той» renders זֶ֣ה ה֔וּא, read by hand against BHSA where uk_ubio's link is wrong: той = זֶה הוּא
+accept	17.7:5.17 17.7:5.18	17.7:5.21	renders		Esth 7:5: «його серце» renders לִבֹּ֖ו, read by hand against BHSA where uk_ubio's link is wrong: його серце = לִבּוֹ
+accept	17.7:5.19 17.7:5.20	17.7:5.20	renders		Esth 7:5: «наповнило його» renders מְלָאֹ֥ו, read by hand against BHSA where uk_ubio's link is wrong: наповнило його = מְלָאוֹ
+refuse	17.7:6.4 17.7:6.5	17.7:6.6 17.7:6.7			Esth 7:6: uk_ubio's link of «Ненависник та» to וְאֹויֵ֔ב is wrong, read by hand against BHSA: Ненависник is אִישׁ צַר; וְאוֹיֵב is та ворог; the two nouns are swapped
+refuse	17.7:6.6	17.7:6.4 17.7:6.5			Esth 7:6: uk_ubio's link of «ворог» to אִ֚ישׁ צַ֣ר is wrong, read by hand against BHSA: ворог is אוֹיֵב, not אִישׁ צַר (Ненависник); the two nouns are swapped
+accept	17.7:6.4	17.7:6.4 17.7:6.5	renders		Esth 7:6: «Ненависник» renders אִ֚ישׁ צַ֣ר, read by hand against BHSA where uk_ubio's link is wrong: Ненависник = אִישׁ צַר
+accept	17.7:6.5 17.7:6.6	17.7:6.6 17.7:6.7	renders		Esth 7:6: «та ворог» renders וְאֹויֵ֔ב, read by hand against BHSA where uk_ubio's link is wrong: та ворог = וְאוֹיֵב
+refuse	17.7:6.7	17.7:6.8			Esth 7:6: uk_ubio's link of «це» to הָמָ֥ן is wrong, read by hand against BHSA: це is the demonstrative הַזֶּה (הָמָן הָרָע הַזֶּה), not the name הָמָן
+accept	17.7:6.7	17.7:6.11 17.7:6.12	renders		Esth 7:6: «це» renders הַזֶּ֑ה, read by hand against BHSA where uk_ubio's link is wrong: це = הַזֶּה
+refuse	17.8:3.11 17.8:3.12	17.8:3.12 17.8:3.13			Esth 8:3: uk_ubio's link of «перед його» to לִפְנֵ֣י is wrong, read by hand against BHSA: його is the suffix of רַגְלָיו (його ногами), not part of לִפְנֵי
+accept	17.8:3.11	17.8:3.12 17.8:3.13	renders		Esth 8:3: «перед» renders לִפְנֵ֣י, read by hand against BHSA where uk_ubio's link is wrong: перед = לִפְנֵי
+accept	17.8:3.12 17.8:3.13	17.8:3.14	renders		Esth 8:3: «його ногами» renders רַגְלָ֑יו, read by hand against BHSA where uk_ubio's link is wrong: його ногами = רַגְלָיו
+refuse	17.8:8.17	17.8:8.32 17.8:8.33			Esth 8:8: uk_ubio's link of «перснем» to בְּטַבַּ֥עַת is wrong, read by hand against BHSA: this перснем (припечатайте царським перснем) is the first בְּטַבַּעַת; the occurrences are swapped
+refuse	17.8:8.30	17.8:8.18 17.8:8.19			Esth 8:8: uk_ubio's link of «перснем» to בְּטַבַּ֣עַת is wrong, read by hand against BHSA: this перснем (був припечатаний царським перснем) is the second בְּטַבַּעַת; the occurrences are swapped
+accept	17.8:8.17	17.8:8.18 17.8:8.19	renders		Esth 8:8: «перснем» renders בְּטַבַּ֣עַת, read by hand against BHSA where uk_ubio's link is wrong: перснем (припечатайте) = the first בְּטַבַּעַת
+accept	17.8:8.30	17.8:8.32 17.8:8.33	renders		Esth 8:8: «перснем» renders בְּטַבַּ֥עַת, read by hand against BHSA where uk_ubio's link is wrong: перснем (був припечатаний) = the second בְּטַבַּעַת
+refuse	17.8:10.3 17.8:10.4	17.8:10.16			Esth 8:10: uk_ubio's link of «він листи» to סְפָרִ֡ים is wrong, read by hand against BHSA: він is the subject of וַיִּכְתֹּב (понаписував); only листи is סְפָרִים
+accept	17.8:10.1 17.8:10.2 17.8:10.3	17.8:10.1 17.8:10.2	renders		Esth 8:10: «І понаписував він» renders וַיִּכְתֹּ֗ב, read by hand against BHSA where uk_ubio's link is wrong: І понаписував він = וַיִּכְתֹּב
+accept	17.8:10.4	17.8:10.16	renders		Esth 8:10: «листи» renders סְפָרִ֡ים, read by hand against BHSA where uk_ubio's link is wrong: листи = סְפָרִים
+refuse	17.8:15.19 17.8:15.20	17.8:15.19 17.8:15.20			Esth 8:15: uk_ubio's link of «та віссонний» to וְתַכְרִ֥יךְ is wrong, read by hand against BHSA: віссонний is בּוּץ (byssus); תַכְרִיךְ is завій; the two are swapped
+refuse	17.8:15.23	17.8:15.21			Esth 8:15: uk_ubio's link of «завій» to בּ֖וּץ is wrong, read by hand against BHSA: завій (robe) is תַכְרִיךְ, not בּוּץ (віссонний); the two are swapped
+accept	17.8:15.19 17.8:15.23	17.8:15.19 17.8:15.20	renders		Esth 8:15: «та завій» renders וְתַכְרִ֥יךְ, read by hand against BHSA where uk_ubio's link is wrong: та ... завій = וְתַכְרִיךְ
+accept	17.8:15.20	17.8:15.21	renders		Esth 8:15: «віссонний» renders בּ֖וּץ, read by hand against BHSA where uk_ubio's link is wrong: віссонний = בּוּץ
+refuse	17.8:17.9 17.8:17.10	17.8:17.14			Esth 8:17: uk_ubio's link of «куди досягає» to אֲשֶׁ֨ר is wrong, read by hand against BHSA: досягає is the participle מַגִּיעַ; only куди is אֲשֶׁר
+refuse	17.8:17.16	17.8:17.20			Esth 8:17: uk_ubio's link of «була» to מַגִּ֔יעַ is wrong, read by hand against BHSA: була has no word in the Hebrew; מַגִּיעַ is досягає
+accept	17.8:17.9	17.8:17.14	renders		Esth 8:17: «куди» renders אֲשֶׁ֨ר, read by hand against BHSA where uk_ubio's link is wrong: куди = אֲשֶׁר
+accept	17.8:17.10	17.8:17.20	renders		Esth 8:17: «досягає» renders מַגִּ֔יעַ, read by hand against BHSA where uk_ubio's link is wrong: досягає = מַגִּיעַ
+refuse	17.9:4.3	17.9:4.2			Esth 9:4: uk_ubio's link of «став» to גָ֤דֹול is wrong, read by hand against BHSA: став is the copula of став великим; the adjective גָדוֹל is великим
+refuse	17.9:4.4	17.9:4.3			Esth 9:4: uk_ubio's link of «великим» to מָרְדֳּכַי֙ is wrong, read by hand against BHSA: великим is גָדוֹל, not the name מָרְדֳּכַי, which is already Мордехай
+accept	17.9:4.3 17.9:4.4	17.9:4.2	renders		Esth 9:4: «став великим» renders גָ֤דֹול, read by hand against BHSA where uk_ubio's link is wrong: став великим = גָדוֹל
+refuse	17.9:18.8	17.9:18.12 17.9:18.13 17.9:18.14 17.9:18.15			Esth 9:18: uk_ubio's link of «дня» to וּבְאַרְבָּעָ֥ה עָשָׂ֖ר is wrong, read by hand against BHSA: дня belongs to тринадцятого дня (בִּשְׁלֹשָׁה עָשָׂר), not to the fourteenth (та чотирнадцятого)
+accept	17.9:18.7 17.9:18.8	17.9:18.8 17.9:18.9 17.9:18.10	renders		Esth 9:18: «тринадцятого дня» renders בִּשְׁלֹשָׁ֤ה עָשָׂר֙, read by hand against BHSA where uk_ubio's link is wrong: тринадцятого дня = בִּשְׁלֹשָׁה עָשָׂר
+refuse	17.9:19.23	17.9:19.24 17.9:19.25 17.9:19.26			Esth 9:19: uk_ubio's link of «днем» to וְיֹ֣ום טֹ֑וב is wrong, read by hand against BHSA: днем (та днем посилання) has no word in the Hebrew; וְיוֹם טוֹב is та свята
+refuse	17.9:22.11 17.9:22.12	17.9:22.14			Esth 9:22: uk_ubio's link of «як той» to אֲשֶׁר֩ is wrong, read by hand against BHSA: אֲשֶׁר is коли (той місяць, коли = הַחֹדֶשׁ אֲשֶׁר); як той has no word of its own
+refuse	17.9:22.14	17.9:22.15			Esth 9:22: uk_ubio's link of «коли» to נֶהְפַּ֨ךְ is wrong, read by hand against BHSA: коли is the relative אֲשֶׁר, not the verb נֶהְפַּךְ, which is обернувся
+accept	17.9:22.14	17.9:22.14	renders		Esth 9:22: «коли» renders אֲשֶׁר֩, read by hand against BHSA where uk_ubio's link is wrong: коли = אֲשֶׁר
+refuse	17.9:27.10	17.9:27.7 17.9:27.8			Esth 9:27: uk_ubio's link of «своїх» to וְעַל is wrong, read by hand against BHSA: своїх is the suffix of זַרְעָם (нащадків своїх), not the וְעַל of й на
+accept	17.9:27.9 17.9:27.10	17.9:27.9	renders		Esth 9:27: «нащадків своїх» renders זַרְעָ֜ם, read by hand against BHSA where uk_ubio's link is wrong: нащадків своїх = זַרְעָם
+refuse	17.9:29.15 17.9:29.16	17.9:29.21 17.9:29.22			Esth 9:29: uk_ubio's link of «про те» to הַזֹּ֖את is wrong, read by hand against BHSA: про те has no word in the Hebrew; הַזֹּאת is the цього of цього листа
+refuse	17.9:29.19 17.9:29.20	17.9:29.18			Esth 9:29: uk_ubio's link of «цього листа» to אִגֶּ֧רֶת is wrong, read by hand against BHSA: цього is הַזֹּאת (אִגֶּרֶת הַפּוּרִים הַזֹּאת), which the link leaves out; only листа is אִגֶּרֶת
+accept	17.9:29.19	17.9:29.21 17.9:29.22	renders		Esth 9:29: «цього» renders הַזֹּ֖את, read by hand against BHSA where uk_ubio's link is wrong: цього = הַזֹּאת
+accept	17.9:29.20	17.9:29.18	renders		Esth 9:29: «листа» renders אִגֶּ֧רֶת, read by hand against BHSA where uk_ubio's link is wrong: листа = אִגֶּרֶת
+refuse	17.9:30.3 17.9:30.4	17.9:30.3			Esth 9:30: uk_ubio's link of «він листи» to סְפָרִ֜ים is wrong, read by hand against BHSA: він is the subject of וַיִּשְׁלַח (порозсилав); only листи is סְפָרִים
+accept	17.9:30.1 17.9:30.2 17.9:30.3	17.9:30.1 17.9:30.2	renders		Esth 9:30: «І порозсилав він» renders וַיִּשְׁלַ֨ח, read by hand against BHSA where uk_ubio's link is wrong: І порозсилав він = וַיִּשְׁלַח
+accept	17.9:30.4	17.9:30.3	renders		Esth 9:30: «листи» renders סְפָרִ֜ים, read by hand against BHSA where uk_ubio's link is wrong: листи = סְפָרִים
