@@ -147,7 +147,7 @@ internal sealed class Door43AlignmentSource : IPairSource
         }
 
         log($"{total.VersesJoined} of {total.VersesRead} verses joined, {total.TranslatedWordsJoined} translated words, {rows.Count} links; "
-            + $"{total.SpansOverANestJoined} of {total.SpansOverANest} spans over a nest joined ({total.NestsJoinedAsOneWord} as one word of the witness, {total.NestWordsPlacedBeside} words placed beside their nest, {total.NestWordsTheWitnessLacks} Greek words the witness lacks left out), {total.CompoundsJoined} words the witness prints whole joined to the spans over their parts, "
+            + $"{total.SpansOverANestJoined} of {total.SpansOverANest} spans over a nest joined ({total.NestsJoinedAsOneWord} as one word of the witness, {total.NestWordsPlacedBeside} words placed beside their nest, {total.NestWordsTheWitnessLacks} Greek words the witness lacks left out), {total.SpansJoinedByTheOnePlaceLeft} spans on the one word of their lemma the others' spellings leave, {total.CompoundsJoined} words the witness prints whole joined to the spans over their parts, "
             + $"{total.TranslatedPiecesJoined} pieces of a word the corpus prints whole joined to it, {total.TranslatedFragments} left; "
             + $"{total.SuppliedWordsLeftOut} words the translators supplied in braces left unlinked ({total.SpansOnlySupplied} spans of nothing else)");
         return rows.Values;

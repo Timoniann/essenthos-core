@@ -482,6 +482,75 @@ public class InterlinearJoinTests
         pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((1L, 101L), (2L, 103L), (3L, 104L), (4L, 105L));
     }
 
+    [Fact]
+    public void ASpanRefusedForItsOriginalWordKeepsItsTranslatedWordsFromTheNextSpan()
+    {
+        // Matthew 14:29 in the ULT: «to go» is ἐλθεῖν, which this witness does not print; «to» of «to Jesus» is πρὸς.
+        var (pairs, account) = Join(
+            [English("to"), English("go"), English("to"), English("Jesus")],
+            [Greek("καὶ"), Greek("ἦλθεν"), Greek("πρὸς"), Greek("τὸν"), Greek("Ἰησοῦν")],
+            Span("ἐλθεῖν", "to", "go"),
+            Span("πρὸς", "to"),
+            Span("Ἰησοῦν", "Jesus"));
+
+        pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((3L, 103L), (4L, 105L));
+        account.SpanFailures[InterlinearSpanFailure.OriginalWordAbsent].Should().Be(1);
+    }
+
+    [Fact]
+    public void AWordTheEditionsSpellDifferentlyIsTheOneOfItsLemmaTheOthersLeave()
+    {
+        // 1 Corinthians 7:9 in the ULT: the source reads γαμησάτωσαν and γαμῆσαι, Nestle 1904 γαμησάτωσαν and γαμεῖν.
+        var (pairs, account) = Join(
+            [English("they"), English("should"), English("marry"), English("For"), English("it"), English("is"), English("better"),
+                English("to"), English("marry"), English("than"), English("to"), English("burn")],
+            [Greek("εἰ", "G1487"), Greek("δὲ", "G1161"), Greek("οὐκ", "G3756"), Greek("ἐγκρατεύονται", "G1467"),
+                Greek("γαμησάτωσαν", "G1060"), Greek("κρεῖττον", "G2909"), Greek("γάρ", "G1063"), Greek("ἐστιν", "G1510"),
+                Greek("γαμεῖν", "G1060"), Greek("ἢ", "G2228"), Greek("πυροῦσθαι", "G4448")],
+            Numbered("G10600", "γαμησάτωσαν", "they", "should", "marry"),
+            Numbered("G10630", "γάρ", "For"),
+            Numbered("G15100", "ἐστιν", "it", "is"),
+            Numbered("G29090", "κρεῖττον", "better"),
+            Numbered("G10600", "γαμῆσαι", "to", "marry"),
+            Numbered("G22280", "ἢ", "than"),
+            Numbered("G44480", "πυροῦσθαι", "to", "burn"));
+
+        pairs.Single(pair => pair.From.SequenceEqual([8L, 9L])).To.Should().Equal(109);
+        pairs.Single(pair => pair.From.SequenceEqual([1L, 2L, 3L])).To.Should().Equal(105);
+        account.SpansJoinedByTheOnePlaceLeft.Should().Be(1);
+    }
+
+    [Fact]
+    public void AWordTheSourceDoesNotAlignStillCountsAgainstTheOnePlaceLeft()
+    {
+        // Matthew 13:4 in the UST: the source counts three καὶ and aligns the second and third; Nestle 1904 prints two,
+        // having ἐλθόντα where the source has καὶ ἦλθεν. Counting only the aligned two put «and» on the first καὶ.
+        var (pairs, account) = Join(
+            [English("Then"), English("and")],
+            [Greek("καὶ", "G2532"), Greek("ἐν", "G1722"), Greek("τῷ", "G3588"), Greek("σπείρειν", "G4687"), Greek("αὐτὸν", "G846"),
+                Greek("ἃ", "G3739"), Greek("μὲν", "G3303"), Greek("ἔπεσεν", "G4098"), Greek("καὶ", "G2532"),
+                Greek("ἐλθόντα", "G2064"), Greek("τὰ", "G3588"), Greek("πετεινὰ", "G4071"), Greek("κατέφαγεν", "G2719")],
+            Numbered("G25320", "καὶ", "Then", occurrence: 2, occurrences: 3),
+            Numbered("G25320", "καὶ", "and", occurrence: 3, occurrences: 3));
+
+        pairs.Should().BeEmpty();
+        account.SpansJoinedByTheOnePlaceLeft.Should().Be(0);
+    }
+
+    [Fact]
+    public void APronounTheEditionsReadInAnotherCaseIsNotTheOnePlaceLeft()
+    {
+        // Mark 14:46 in the ULT: «their» is the source's αὐτῶν (their hands); Nestle 1904 has αὐτῷ (on him) there.
+        var (pairs, _) = Join(
+            [English("they"), English("laid"), English("their"), English("hands"), English("and"), English("seized"), English("him")],
+            [Greek("οἱ", "G3588"), Greek("δὲ", "G1161"), Greek("ἐπέβαλαν", "G1911"), Greek("τὰς", "G3588"), Greek("χεῖρας", "G5495"),
+                Greek("αὐτῷ", "G846"), Greek("καὶ", "G2532"), Greek("ἐκράτησαν", "G2902"), Greek("αὐτόν", "G846")],
+            Numbered("G08460", "αὐτῶν", "their"),
+            Numbered("G08460", "αὐτόν", "him"));
+
+        pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((7L, 109L));
+    }
+
     private static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Join(
         IReadOnlyList<string> translated,
         IReadOnlyList<string> original,
@@ -509,7 +578,16 @@ public class InterlinearJoinTests
 
     private static string English(string word) => $"eng|{word}";
 
+    private static AlignmentSpan Numbered(string strong, string content, params string[] words) =>
+        new(strong, content, words, 1, 1);
+
+    private static AlignmentSpan Numbered(string strong, string content, string word, int occurrence, int occurrences) =>
+        new(strong, content, [word], occurrence, occurrences);
+
     private static string Greek(string word) => $"grc|{word}";
+
+    /// <summary>A Nestle word with the Strong number the corpus gives it.</summary>
+    private static string Greek(string word, string strong) => $"grc|{word}#{strong}";
 
     private static string Hebrew(string word) => $"hbo|{word}";
 
@@ -519,8 +597,11 @@ public class InterlinearJoinTests
     private static InterlinearWord Word(long id, string tagged)
     {
         var language = tagged[..3];
+        var mark = tagged.IndexOf('#');
+        var strong = mark > 0 ? tagged[(mark + 1)..] : null;
+        tagged = mark > 0 ? tagged[..mark] : tagged;
         var attached = tagged.EndsWith('+');
         var written = attached ? tagged[4..^1] : tagged[4..];
-        return new InterlinearWord(id, WordFolding.Fold(written, language), language, written, Attached: attached);
+        return new InterlinearWord(id, WordFolding.Fold(written, language), language, written, strong, attached);
     }
 }

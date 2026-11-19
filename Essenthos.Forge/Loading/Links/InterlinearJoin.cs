@@ -66,6 +66,7 @@ internal sealed class InterlinearJoinAccount
     public Dictionary<InterlinearSpanFailure, int> SpanFailures { get; } = [];
     public int SpansJoinedOnTheLooseFold { get; set; }
     public int SpansJoinedByNumber { get; set; }
+    public int SpansJoinedByTheOnePlaceLeft { get; set; }
     public int SpansSharingAnOriginal { get; set; }
     public int SpansOverANest { get; set; }
     public int SpansOverANestJoined { get; set; }
@@ -115,6 +116,7 @@ internal sealed class InterlinearJoinAccount
 
         SpansJoinedOnTheLooseFold += other.SpansJoinedOnTheLooseFold;
         SpansJoinedByNumber += other.SpansJoinedByNumber;
+        SpansJoinedByTheOnePlaceLeft += other.SpansJoinedByTheOnePlaceLeft;
         SpansSharingAnOriginal += other.SpansSharingAnOriginal;
         SpansOverANest += other.SpansOverANest;
         SpansOverANestJoined += other.SpansOverANestJoined;
@@ -152,6 +154,7 @@ internal sealed class InterlinearJoinAccount
             .Append($"spans: {SpansJoined:N0}/{Spans:N0} joined ({Share(SpansJoined, Spans)}), ")
             .Append($"{SpansJoinedOnTheLooseFold:N0} of them told apart only by the bare letters, ")
             .Append($"{SpansJoinedByNumber:N0} by a Strong number the verse holds once on each side, ")
+            .Append($"{SpansJoinedByTheOnePlaceLeft:N0} on the one word of their lemma the others' spellings leave, ")
             .Append($"{SpansSharingAnOriginal:N0} on an original word another span also stands on; ")
             .Append($"{SpansOverANestJoined:N0}/{SpansOverANest:N0} over a nest of several original words joined, {NestsJoinedAsOneWord:N0} of them as one word of the witness, {NestWordsPlacedBeside:N0} nest words placed beside the rest of their nest, and {NestWordsTheWitnessLacks:N0} words of a Greek nest the witness verse does not print left out; ")
             .Append($"{CompoundsJoined:N0} words the witness prints whole joined to the spans over their parts; ")
@@ -257,12 +260,13 @@ internal static class InterlinearJoin
             var theirs = new List<int>();
             var loose = false;
             var byNumber = false;
+            var left = false;
             AlignedOriginal? missing = null;
             IReadOnlyList<AlignedOriginal> lacking = [];
             if (failure == InterlinearSpanFailure.None)
             {
-                (theirs, loose, byNumber, failure, missing, lacking, var asOne, var beside) =
-                    FindOriginals(original, writings, span, verse.Originals, language);
+                (theirs, loose, byNumber, failure, missing, lacking, var asOne, var beside, left) =
+                    FindOriginals(original, writings, span, verse, language);
                 if (asOne)
                 {
                     account.NestsJoinedAsOneWord++;
@@ -298,9 +302,14 @@ internal static class InterlinearJoin
                     $"{where} {string.Join(' ', span.Words)} = {failed.Content} ({failed.Strong}, " +
                     $"occurrence {failed.Occurrence}/{failed.Occurrences})"
                     + (nested ? $" in the nest {string.Join(" + ", span.Originals.Select(one => one.Content))}" : string.Empty));
-                // The words of a span that failed stand between the last word found and the next span,
-                // so the next span's first piece cannot be the rest of that word.
-                here = here with { Rest = string.Empty };
+                // A span refused for its original word still found its translated words, and they are its own: the next
+                // span is looked for after them, or it takes a word of theirs that it spells too (Matthew 14:29 in the ULT,
+                // «to» of «to Jesus» on the «to» of «to go», whose ἐλθεῖν Nestle reads ἦλθεν). A span whose translated
+                // words were not found leaves the cursor where it was. Either way the next span's first piece cannot be the
+                // rest of a word of the refused span.
+                here = failure is InterlinearSpanFailure.OriginalWordAbsent or InterlinearSpanFailure.OriginalOccurrenceUnresolved
+                    ? afterOurs with { Rest = string.Empty }
+                    : here with { Rest = string.Empty };
                 continue;
             }
 
@@ -354,7 +363,13 @@ internal static class InterlinearJoin
                 account.SpansJoinedOnTheLooseFold++;
             }
 
-            if (byNumber)
+            if (left)
+            {
+                account.SpansJoinedByTheOnePlaceLeft++;
+                account.Example("joined on the one place left", $"{where} {string.Join(' ', span.Words)} = {span.Content} ({span.Strong}) "
+                    + $"on {string.Join(' ', theirs.Select(index => original[index].Written))}");
+            }
+            else if (byNumber)
             {
                 account.SpansJoinedByNumber++;
                 account.Example("joined by number", $"{where} {string.Join(' ', span.Words)} = {span.Content} ({span.Strong}) "
@@ -399,7 +414,7 @@ internal static class InterlinearJoin
         InterlinearJoinAccount account)
     {
         if (spans is [{ Nest: null or { Count: 0 } }]
-            || spans.Skip(1).Any(span => FindOriginals(original, writings, span, verse.Originals, language) is { Failure: InterlinearSpanFailure.None, Loose: false })
+            || spans.Skip(1).Any(span => FindOriginals(original, writings, span, verse, language) is { Failure: InterlinearSpanFailure.None, Loose: false })
             || Compound(original, [.. spans.Select(span => span.Originals)], language) is not { } theirs)
         {
             return null;
@@ -570,17 +585,19 @@ internal static class InterlinearJoin
     /// </list>
     /// </summary>
     private static (List<int> Words, bool Loose, bool ByNumber, InterlinearSpanFailure Failure, AlignedOriginal? Missing,
-        IReadOnlyList<AlignedOriginal> Lacking, bool AsOneWord, int Beside) FindOriginals(
+        IReadOnlyList<AlignedOriginal> Lacking, bool AsOneWord, int Beside, bool Left) FindOriginals(
         IReadOnlyList<InterlinearWord> original,
         string[] writings,
         AlignmentSpan span,
-        IReadOnlyList<(string Strong, string Content, int Occurrence)>? originals,
+        AlignedVerse verse,
         string language)
     {
+        var originals = verse.Originals;
         var all = span.Originals;
         var theirs = new List<int>();
         var loose = false;
         var byNumber = false;
+        var left = false;
         var failed = new List<(AlignedOriginal Original, InterlinearSpanFailure Failure)>();
         foreach (var one in all)
         {
@@ -603,12 +620,7 @@ internal static class InterlinearJoin
 
         if (failed.Count == 0)
         {
-            return ([.. theirs.Distinct().Order()], loose, byNumber, InterlinearSpanFailure.None, null, [], false, 0);
-        }
-
-        if (all.Count == 1)
-        {
-            return ([], false, false, failed[0].Failure, failed[0].Original, [], false, 0);
+            return ([.. theirs.Distinct().Order()], loose, byNumber, InterlinearSpanFailure.None, null, [], false, 0, false);
         }
 
         var beside = 0;
@@ -623,6 +635,26 @@ internal static class InterlinearJoin
             }
         }
 
+        foreach (var (one, failure) in failed.ToList())
+        {
+            if (OnePlaceLeft(original, writings, one, verse, language) is { Count: > 0 } remaining)
+            {
+                theirs.AddRange(remaining);
+                failed.Remove((one, failure));
+                (byNumber, left) = (true, true);
+            }
+        }
+
+        if (failed.Count == 0)
+        {
+            return ([.. theirs.Distinct().Order()], loose, byNumber, InterlinearSpanFailure.None, null, [], false, beside, left);
+        }
+
+        if (all.Count == 1)
+        {
+            return ([], false, false, failed[0].Failure, failed[0].Original, [], false, 0, false);
+        }
+
         if (failed.Count > 0 && failed.Any(one => one.Failure == InterlinearSpanFailure.OriginalWordAbsent))
         {
             // BHSA prints some names as one word with a space inside: נֹּא אָמֹון, Thebes.
@@ -635,17 +667,17 @@ internal static class InterlinearJoin
                 unspaced, [.. unspaced.Select(word => Written(word.Written, language))], together, language);
             if (wholeFailure == InterlinearSpanFailure.None && whole.Count > 0)
             {
-                return (whole, wholeLoose, false, InterlinearSpanFailure.None, null, [], true, 0);
+                return (whole, wholeLoose, false, InterlinearSpanFailure.None, null, [], true, 0, false);
             }
         }
 
         if (failed.Count > 0 && (language != "grc" || failed.Any(one => one.Original == all[^1]) || theirs.Count == 0))
         {
-            return ([], false, false, failed[0].Failure, failed[0].Original, [], false, 0);
+            return ([], false, false, failed[0].Failure, failed[0].Original, [], false, 0, false);
         }
 
         return ([.. theirs.Distinct().Order()], loose, byNumber, InterlinearSpanFailure.None, null,
-            [.. failed.Select(one => one.Original)], false, beside);
+            [.. failed.Select(one => one.Original)], false, beside, left);
     }
 
     /// <summary>
@@ -805,6 +837,73 @@ internal static class InterlinearJoin
 
         return before == spelled ? used : [];
     }
+
+    /// <summary>
+    /// The witness word a Greek original word stands on where the two editions spell it differently and its lemma stands
+    /// more than once: the source verse holds the lemma, every spelling of it counted as often as the source counts it, as
+    /// many times as the witness verse holds it, and every other one of those is found by its own spelling and count on a
+    /// word of the lemma, each on another one, so one word of the lemma is left in the witness and it is this one.
+    /// 1 Corinthians 7:9 has γαμησάτωσαν and γαμῆσαι in the source and γαμησάτωσαν and γαμεῖν in Nestle 1904: «to marry»
+    /// is γαμεῖν. A spelling counts the words the source does not align too (Matthew 13:4's first καὶ in the UST), so a
+    /// lemma the two editions hold a different number of times places nothing. αὐτός is never placed so: its case and
+    /// number say who is meant, and where the editions differ they differ in that (Mark 14:46, «their» hands against
+    /// Nestle's αὐτῷ, on him).
+    /// </summary>
+    private static List<int> OnePlaceLeft(
+        IReadOnlyList<InterlinearWord> words,
+        string[] writings,
+        AlignedOriginal span,
+        AlignedVerse verse,
+        string language)
+    {
+        if (language != "grc" || span.Strong.Contains(':') || Lemma(span.Strong) is not { } number || number == Autos
+            || span.Occurrence < 1 || span.Occurrences < span.Occurrence)
+        {
+            return [];
+        }
+
+        var spellings = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var named in verse.Spans.SelectMany(one => one.Originals))
+        {
+            if (!named.Strong.Contains(':') && Lemma(named.Strong) == number)
+            {
+                if (named.Occurrences < 1 || spellings.GetValueOrDefault(named.Content, named.Occurrences) != named.Occurrences)
+                {
+                    return [];
+                }
+
+                spellings[named.Content] = named.Occurrences;
+            }
+        }
+
+        var held = Enumerable.Range(0, words.Count).Where(at => words[at].Strong == number).ToList();
+        if (held.Count < 2 || held.Count != spellings.Values.Sum())
+        {
+            return [];
+        }
+
+        var placed = new HashSet<int>();
+        foreach (var (content, occurrences) in spellings)
+        {
+            for (var occurrence = 1; occurrence <= occurrences; occurrence++)
+            {
+                if (content == span.Content && occurrence == span.Occurrence)
+                {
+                    continue;
+                }
+
+                var (place, loose, failure) = FindOriginal(words, writings, new AlignedOriginal(span.Strong, content, occurrence, occurrences), language);
+                if (failure != InterlinearSpanFailure.None || loose || place is not [var at] || !held.Contains(at) || !placed.Add(at))
+                {
+                    return [];
+                }
+            }
+        }
+
+        return held.Where(at => !placed.Contains(at)).ToList() is [var left] ? [left] : [];
+    }
+
+    private const string Autos = "G846";
 
     /// <summary>
     /// The lemma a Strong code names, as the corpus writes it: unfoldingWord's <c>c:d:H0776</c> is H776
