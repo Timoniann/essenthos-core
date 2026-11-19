@@ -1,0 +1,82 @@
+# product    Essenthos/evidentia/words/rus.tsv
+# producer   by hand: the Russian small words EVIDENTIA's attached-word rules read (EvidentiaSlavicAttachedWords), and what each form says
+# A form is lower-case. person 1|2|3, number sg|pl, gender m|f|n; case: the Greek case(s) a preposition stands for; original: the Strong
+# numbers of the original words the form renders (a subject pronoun: the pronouns that take it where written beside the verb; a relative: the words that take it where written before the participle's article); | between several, \N for none.
+kind	form	person	number	gender	case	original	reason
+subject-pronoun	я	1	sg	\N	\N	G1473|H589|H595	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	ты	2	sg	\N	\N	G4771|H859	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	он	3	sg	m	\N	G846|G3778|G1565|G3739|G3748|G2548|H1931	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	она	3	sg	f	\N	G846|G3778|G1565|G3739|G3748|G2548|H1931	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	оно	3	sg	n	\N	G846|G3778|G1565|G3739|G3748|G2548	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	мы	1	pl	\N	\N	G1473|H587|H5168	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	вы	2	pl	\N	\N	G4771|H859	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	они	3	pl	\N	\N	G846|G3778|G1565|G3739|G3748|G2548|H1992|H1993	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+case-preposition	к	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	ко	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	для	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	на	\N	\N	\N	dative|accusative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	в	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	во	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	с	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	со	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	от	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	за	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	о	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	об	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	обо	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	по	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	через	\N	\N	\N	genitive|dative|accusative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	при	\N	\N	\N	dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	над	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	пред	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	перед	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	между	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	среди	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	без	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	под	\N	\N	\N	genitive|dative|accusative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	из	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	у	\N	\N	\N	genitive|dative	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+case-preposition	до	\N	\N	\N	genitive	\N	a preposition Russian writes for what Greek says by the case of its noun alone, or for the Greek preposition before the noun
+negation	не	\N	\N	\N	\N	G3756|G3361|G3780|G3761|G3366|G3777|G3383|G3364|H3808|H408|H369|H1077|H1097	the original negation written before the word the negation belongs to
+negation	ни	\N	\N	\N	\N	G3756|G3361|G3780|G3761|G3366|G3777|G3383|G3364|H3808|H408|H369|H1077|H1097	the original negation written before the word the negation belongs to
+conjunction	и	\N	\N	\N	\N	G2532|H9000	the original conjunction written before the word that opens its clause
+conjunction	а	\N	\N	\N	\N	G1161|G2532|G235|H9000	the original conjunction written before the word that opens its clause
+conjunction	но	\N	\N	\N	\N	G235|G1161|G4133	the original conjunction written before the word that opens its clause
+conjunction	ибо	\N	\N	\N	\N	G1063|H3588	the original conjunction written before the word that opens its clause
+conjunction	же	\N	\N	\N	\N	G1161|G3767|G1063	the original conjunction written before the word that opens its clause
+conjunction	итак	\N	\N	\N	\N	G3767	the original conjunction written before the word that opens its clause
+conjunction	что	\N	\N	\N	\N	G3754|H3588|H834	the original conjunction written before the word that opens its clause
+conjunction	чтобы	\N	\N	\N	\N	G2443|G3704	the original conjunction written before the word that opens its clause
+conjunction	дабы	\N	\N	\N	\N	G2443|G3704	the original conjunction written before the word that opens its clause
+conjunction	если	\N	\N	\N	\N	G1437|G1487	the original conjunction written before the word that opens its clause
+conjunction	когда	\N	\N	\N	\N	G3752|G3753|G1437|G1487	the original conjunction written before the word that opens its clause
+conjunction	как	\N	\N	\N	\N	G5613|G2531|G5618|G5616	the original conjunction written before the word that opens its clause
+conjunction	доколе	\N	\N	\N	\N	G2193	the original conjunction written before the word that opens its clause
+conjunction	или	\N	\N	\N	\N	G2228	the original conjunction written before the word that opens its clause
+conjunction	ли	\N	\N	\N	\N	G1487	the original conjunction written before the word that opens its clause
+copula	был	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	была	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	было	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	были	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	есть	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будет	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будут	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	быть	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будь	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будьте	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	суть	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будем	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будете	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	будешь	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	буду	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+copula	быв	\N	\N	\N	\N	G1510|G1096|H1961	the original verb be written beside the predicate the copula goes with
+relative	кто	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	что	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	который	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	которая	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	которое	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	которые	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	какой	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	какая	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	какое	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
+relative	какие	\N	\N	\N	\N	G3956	a relative clause Russian writes for an articular participle goes on the participle; the original words listed, written before the article, take it instead
