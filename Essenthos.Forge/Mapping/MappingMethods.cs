@@ -49,9 +49,27 @@ internal static partial class MappingMethods
     /// The evidence of a row that may only add a claim to a link another method proposes in exactly its shape: the merge
     /// withdraws it where no such row stands beside it (<see cref="MappingStatus.Unsupported"/>), so it never makes a
     /// link of its own, not even on a word nothing else links. The ASV's laid numbers on English function words
-    /// (<see cref="StrongNumberSource.LaidRules"/>).
+    /// (<see cref="StrongNumberSource.LaidRules"/>); the evidences below say why for the ASV's other such rows, and
+    /// <see cref="OnlySupports"/> knows them all.
     /// </summary>
-    public const string SupportOnly = "supports only: a laid number on a function word, never a link of its own";
+    public const string SupportOnly = SupportsOnlyPrefix + "a laid number on a function word, never a link of its own";
+
+    /// <summary>A laid number on a word the translation prints as its translators' own (the ASV's italics): it only supports.</summary>
+    public const string SupportOnlySupplied = SupportsOnlyPrefix + "a laid number on a word the translation prints as supplied, never a link of its own";
+
+    /// <summary>
+    /// A laid number on a noun the translator adds to an adjective, pronoun or particle (<em>all things</em>, <em>no man</em>,
+    /// <em>one to another</em>): it only supports.
+    /// </summary>
+    public const string SupportOnlyAdded = SupportsOnlyPrefix + "a laid number on a noun the translator added, never a link of its own";
+
+    /// <summary>One Hebrew word's laid number on several separate phrases of the translation: it only supports.</summary>
+    public const string SupportOnlyPhrases = SupportsOnlyPrefix + "one Hebrew word's laid number on several phrases, never a link of its own";
+
+    private const string SupportsOnlyPrefix = "supports only: ";
+
+    /// <summary>Whether a row's evidence says it may only support another method's link (<see cref="SupportOnly"/> and its kin).</summary>
+    public static bool OnlySupports(string? evidence) => evidence is not null && evidence.StartsWith(SupportsOnlyPrefix, StringComparison.Ordinal);
 
     /// <summary>Whether every claim of a link is the aligner's own, the only kind an EVIDENTIA absence withdraws.</summary>
     public static bool OnlyTheAligner(IEnumerable<string> methods) => methods.All(m => m == Aligner);

@@ -562,14 +562,14 @@ internal static class MappingMerge
     }
 
     /// <summary>
-    /// A link every claim of which may only support another method's (<see cref="MappingMethods.SupportOnly"/>) is
+    /// A link every claim of which may only support another method's (<see cref="MappingMethods.OnlySupports"/>) is
     /// withdrawn before the competition, so it neither takes a word nor is kept for one the competition leaves bare.
     /// </summary>
     private static void WithdrawUnsupported(List<Candidate> candidates, HashSet<string> pinned, List<ReportRow> report)
     {
         var withdrawn = candidates.RemoveAll(candidate =>
         {
-            if (pinned.Contains(candidate.Shape) || !candidate.Rows.All(r => r.Row.Evidence == MappingMethods.SupportOnly))
+            if (pinned.Contains(candidate.Shape) || !candidate.Rows.All(r => MappingMethods.OnlySupports(r.Row.Evidence)))
             {
                 return false;
             }

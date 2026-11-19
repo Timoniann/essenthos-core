@@ -73,7 +73,8 @@ internal sealed class StrongNumberSource : IPairSource
         new(EbibleTextSource.ReinaValera, ReinaValeraStrongLinkLoader.Witnesses, ReinaValeraStrongLinkLoader.Credit),
         .. CrossWireNumberings.All.Select(numbering => new StrongNumberSource(numbering.Slug, numbering.Witnesses, numbering.Credit)),
         new(EnglishTextSource.AmericanStandard, MaxfieldAsvEdition.Witnesses, MaxfieldAsvEdition.Credit,
-            new LaidRules(OneOccurrence: true, FunctionWord: EnglishFunctionWords.Contains)),
+            new LaidRules(OneOccurrence: true, FunctionWord: EnglishFunctionWords.Contains, Supplied: true,
+                AddedNoun: EnglishAddedNouns.Contains, SeveralPhrases: StrongNumbers.Hebrew)),
     ];
 
     /// <summary>
@@ -89,7 +90,30 @@ internal sealed class StrongNumberSource : IPairSource
     /// (<see cref="MappingMethods.SupportOnly"/>): measured on their disagreements, the ASV's function words' numbers are
     /// no better than its composed links.
     /// </param>
-    internal sealed record LaidRules(bool OneOccurrence, Func<string, bool>? FunctionWord);
+    /// <param name="Supplied">
+    /// A match naming a word the translation marks as its translators' own (<see cref="TextWord.Supplied"/>, the ASV's italics)
+    /// only supports (<see cref="MappingMethods.SupportOnlySupplied"/>): the owner's ruling of 2026-11-19 (TSK-1890) that the
+    /// layer never fills a word the translator added.
+    /// </param>
+    /// <param name="AddedNoun">
+    /// The translation's nouns a translator adds to an adjective, pronoun or particle that has no noun of its own (<em>all
+    /// things</em>, <em>no man</em>, <em>one to another</em>). A match all of whose words are such nouns only supports
+    /// (<see cref="MappingMethods.SupportOnlyAdded"/>) unless a witness word it names is a noun or the numeral one: the same
+    /// ruling, for the added words no italics mark. In the ASV's New Testament the numbering puts the adjective's number on
+    /// <em>things</em> and the preposition's on <em>one</em> (Philippians 2:4, John 13:35).
+    /// </param>
+    /// <param name="SeveralPhrases">
+    /// The witnesses' series (<see cref="StrongNumbers.Hebrew"/>) in which a match of several separate phrases of the
+    /// translation on one witness word only supports (<see cref="MappingMethods.SupportOnlyPhrases"/>). The ASV's Old Testament
+    /// numbers are the King James's carried over, and where the ASV reworded a verse one number lands on words that render
+    /// different Hebrew words (Isaiah 32:19 <em>utterly … low</em>): of the 15 such links the layer filled, 6 were right.
+    /// </param>
+    internal sealed record LaidRules(
+        bool OneOccurrence,
+        Func<string, bool>? FunctionWord,
+        bool Supplied = false,
+        Func<string, bool>? AddedNoun = null,
+        char? SeveralPhrases = null);
 
     private static readonly string[] SupportingPrefixes = [.. All.Where(source => source._rules is not null).SelectMany(source => source._prefixes)];
 
@@ -205,7 +229,7 @@ internal sealed class StrongNumberSource : IPairSource
         var resolution = series == StrongNumbers.Greek ? Resolution(store, verses.Select(v => (v.Tagged, v.Against))) : [];
         var (absent, testimony) = Others(store, pair);
         var rows = new List<MappingRow>(300_000);
-        int matched = 0, testified = 0, regained = 0, several = 0, severalWords = 0, supporting = 0;
+        int matched = 0, testified = 0, regained = 0, several = 0, severalWords = 0, supporting = 0, supplied = 0, added = 0, phrases = 0;
         var kinds = new int[3];
         var moved = Laid || !Placed(_translation) ? null : _moved.GetValue(texts, t => new Lazy<Dictionary<long, long>>(() => Moved(t, _translation, log))).Value;
         foreach (var (units, members, against) in verses)
@@ -269,6 +293,22 @@ internal sealed class StrongNumberSource : IPairSource
                     row = row with { Evidence = MappingMethods.SupportOnly };
                     supporting++;
                 }
+                else if (_rules is { Supplied: true } && ids.Any(id => translation.Words[(int)id].Supplied is not null))
+                {
+                    row = row with { Evidence = MappingMethods.SupportOnlySupplied };
+                    supplied++;
+                }
+                else if (_rules?.AddedNoun is { } addedNoun && ids.All(id => addedNoun(translation.Words[(int)id].Surface))
+                    && !draft.To.Any(id => OwnNoun(witness.Text.Words[(int)against[(int)(id - offset)].Id])))
+                {
+                    row = row with { Evidence = MappingMethods.SupportOnlyAdded };
+                    added++;
+                }
+                else if (_rules?.SeveralPhrases == series && draft.From.Count > 1 && draft.To.Count == 1)
+                {
+                    row = row with { Evidence = MappingMethods.SupportOnlyPhrases };
+                    phrases++;
+                }
 
                 kinds[(int)draft.Kind]++;
                 rows.Add(row);
@@ -279,8 +319,31 @@ internal sealed class StrongNumberSource : IPairSource
             + $"({kinds[(int)StrongMatchKind.Unambiguous]} unambiguous, {kinds[(int)StrongMatchKind.Paired]} paired, "
             + $"{kinds[(int)StrongMatchKind.Contended]} contended), {testified} left to a stated link"
             + (moved is null ? string.Empty : $"; {regained} auxiliaries or pronouns attached to the verb their number moved to")
-            + (_rules is null ? string.Empty : $"; {several} matches ({severalWords} words) left out for naming several occurrences, {supporting} rows on function words that only support another method's link"));
+            + (_rules is null ? string.Empty : $"; {several} matches ({severalWords} words) left out for naming several occurrences, {supporting} rows on function words, {supplied} on supplied words, {added} on added nouns and {phrases} of several phrases on one word that only support another method's link"));
         return rows;
+    }
+
+    /// <summary>
+    /// Whether a witness word is one an English noun can render as a word of its own (<see cref="LaidRules.AddedNoun"/>): a noun or
+    /// a proper noun by its morphology, or the numeral one (<em>one</em> for אֶחָד, חַד or εἷς).
+    /// </summary>
+    internal static bool OwnNoun(TextWord word)
+    {
+        if (word.Strong is "H259" or "H2298" or "G1520")
+        {
+            return true;
+        }
+
+        if (word.Morphology is null)
+        {
+            return false;
+        }
+
+        using var document = JsonDocument.Parse(word.Morphology);
+        return document.RootElement.ValueKind == JsonValueKind.Object
+            && document.RootElement.TryGetProperty("pos", out var pos)
+            && pos.ValueKind == JsonValueKind.String
+            && pos.GetString() is "subs" or "nmpr" or "noun";
     }
 
     /// <summary>Whether the conversion moves a verb's number off an auxiliary or pronoun of the text (<see cref="MisplacedNumbers"/>).</summary>

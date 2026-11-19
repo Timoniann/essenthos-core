@@ -626,15 +626,20 @@ public sealed class MappingMergeTests
 
     /// <summary>
     /// A function word's laid number may only add a claim: beside the aligner's row of the same shape it is one, and the link
-    /// ranks as the number does; alone, on a word nothing else links, it is withdrawn and the word stays bare.
+    /// ranks as the number does; alone, on a word nothing else links, it is withdrawn and the word stays bare. So does a number
+    /// on a supplied word, on a noun the translator added, or one Hebrew word's number on several phrases.
     /// </summary>
-    [Fact]
-    public void A_row_that_only_supports_is_a_claim_beside_another_method_and_never_a_link_alone()
+    [Theory]
+    [InlineData(MappingMethods.SupportOnly)]
+    [InlineData(MappingMethods.SupportOnlySupplied)]
+    [InlineData(MappingMethods.SupportOnlyAdded)]
+    [InlineData(MappingMethods.SupportOnlyPhrases)]
+    public void A_row_that_only_supports_is_a_claim_beside_another_method_and_never_a_link_alone(string evidence)
     {
         var output = Merge([
             Row(MappingMethods.Aligner, "1.1:1.1", "1.1:1.1", confidence: 0.8, source: "SIL.Machine ibm4", link: 1),
-            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1, evidence: MappingMethods.SupportOnly),
-            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.2", confidence: 0.9, link: 2, evidence: MappingMethods.SupportOnly),
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1, evidence: evidence),
+            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.2", confidence: 0.9, link: 2, evidence: evidence),
         ], pair: "ASV-BHSA");
 
         output.Final.Select(Link).Should().Equal(1, 1);
