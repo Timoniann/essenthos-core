@@ -68,7 +68,7 @@ internal sealed class BereanTableSource : IPairSource
 
         var drafts = new List<BereanLinks.Draft>(150_000);
         var silences = new BereanLinks.Silences();
-        int verses = 0, divided = 0, drifted = 0, disputed = 0, unframed = 0;
+        int verses = 0, uneven = 0, divided = 0, drifted = 0, disputed = 0, unframed = 0;
         foreach (var (reference, rows) in BereanTable.Verses(texts.Store.FullPath(Tables)))
         {
             if (!BereanTextSource.Address(reference, out var book, out var chapter, out var number) || rows[0].IsGreek != greekWitness)
@@ -95,16 +95,15 @@ internal sealed class BereanTableSource : IPairSource
             HashSet<int>? unprinted = null;
             if (rows[0].IsGreek)
             {
-                if (rows.Count != witness.Count)
-                {
-                    divided++;
-                    continue;
-                }
-
                 if (BereanLinks.Counterparts(rows, witness) is not { } counterparts)
                 {
                     disputed++;
                     continue;
+                }
+
+                if (rows.Count != witness.Count)
+                {
+                    uneven++;
                 }
 
                 run = [.. counterparts.Select(at => at < 0 ? [] : new List<long> { witness[at].Id })];
@@ -157,7 +156,7 @@ internal sealed class BereanTableSource : IPairSource
         drafts = [.. drafts
             .Select(draft => draft.Bracketed ? draft : draft with { From = [.. draft.From.Where(id => !Bracketed(english, id))] })
             .Where(draft => draft.Relation != LinkRelation.Renders || draft.From.Count > 0)];
-        log($"{verses} verses, {drafts.Count} links; {silences.Absent} absent, {silences.Moved} moved, {silences.Joined} joined, "
+        log($"{verses} verses ({uneven} of a word count the witness does not share), {drafts.Count} links; {silences.Absent} absent, {silences.Moved} moved, {silences.Joined} joined, "
             + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled, {silences.Unprinted} over a word the witness does not print there; {divided} divided, {drifted} drifted, {disputed} disputed, "
             + $"{unframed} at an address the witness lacks; {supplied} bracketed words left unlinked, {onlySupplied} renderings of nothing else; "
             + $"{silences.ConjunctionsMoved + silences.ConjunctionsUnlinked} words rendered by bracketed words beside a conjunction, "

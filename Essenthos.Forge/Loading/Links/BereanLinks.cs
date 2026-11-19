@@ -25,12 +25,13 @@ namespace Essenthos.Core.Loading.Links;
 /// <para>
 /// The count is not the word order, though. In some fifty of those verses the Berean reads another word in the same
 /// place or the same words in another order, and the table marks the row (<c>Καὶ*</c>): Matthew 20:9 has <em>Καὶ
-/// ἐλθόντες</em> where Nestle has <em>ἐλθόντες δὲ</em>, and laid by position its «came» stood on δὲ. So inside a verse of
-/// the same count each row is placed with <see cref="ClearBibleLinks.Counterparts"/>, the join Clear Bible's Berean set
-/// uses against the same edition, and a row whose word Nestle does not print there renders nothing of Nestle's. A verse is
-/// refused whole where the counts differ, and again where fewer than half its rows find their word. Everything that
-/// survives is written as <c>stated-by-source</c> with no confidence, because it is what the file says and not what we
-/// worked out.
+/// ἐλθόντες</em> where Nestle has <em>ἐλθόντες δὲ</em>, and laid by position its «came» stood on δὲ. So each row is placed
+/// with <see cref="ClearBibleLinks.Counterparts"/>, the join Clear Bible's Berean set uses against the same edition, and a
+/// row whose word Nestle does not print there renders nothing of Nestle's. That needs no equal count: in the 450 verses
+/// where the counts differ, the Berean mostly reads a word more or fewer (Matthew 3:2's καὶ λέγων against Nestle's λέγων)
+/// or begins or ends its verse a few words from where Nestle does. A verse is refused where its rows do not clearly find
+/// their words (<see cref="Counterparts"/>). Everything that survives is written as <c>stated-by-source</c> with no
+/// confidence, because it is what the file says and not what we worked out.
 /// </para>
 /// </summary>
 internal static class BereanLinks
@@ -43,15 +44,34 @@ internal static class BereanLinks
     private const string Together = "vvv";
 
     /// <summary>
-    /// Which of the witness's words each row is, or -1 where it is none of them; null where fewer than half the rows are
-    /// one, which says the two sides are not the same verse.
+    /// Which of the witness's words each row is, or -1 where it is none of them or could as well be another; null where
+    /// fewer than half the rows are one, or fewer than three quarters of the rows and of the witness's words alike, which
+    /// says the two sides are not the same verse.
     /// </summary>
     internal static int[]? Counterparts(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
     {
-        var counterparts = ClearBibleLinks.Counterparts(
-            [.. rows.Select(row => ClearBibleLinks.Form(ClearBibleLinks.Comparable(row.Original, Greek), row.StrongNumber))],
-            [.. witness.Select(word => ClearBibleLinks.Form(ClearBibleLinks.Comparable(word.Surface, Greek), word.Strong))]);
-        return counterparts.Count(at => at >= 0) * 2 < rows.Count ? null : counterparts;
+        WitnessForm[] theirs = [.. rows.Select(row => ClearBibleLinks.Form(ClearBibleLinks.Comparable(row.Original, Greek), row.StrongNumber))];
+        WitnessForm[] ours = [.. witness.Select(word => ClearBibleLinks.Form(ClearBibleLinks.Comparable(word.Surface, Greek), word.Strong))];
+        var counterparts = ClearBibleLinks.Counterparts(theirs, ours);
+
+        // Where one side has a word twice and the other once, an alignment may take either of the two equally well: Galatians
+        // 1:15's table reads ὁ θεὸς ὁ ἀφορίσας where Nestle reads ὁ ἀφορίσας. Walked from the other end, the alignment takes the
+        // other one, so a row placed differently the two ways is placed on nothing.
+        var backwards = ClearBibleLinks.Counterparts([.. theirs.Reverse()], [.. ours.Reverse()]);
+        for (var at = 0; at < counterparts.Length; at++)
+        {
+            var reversed = backwards[rows.Count - 1 - at];
+            if (counterparts[at] != (reversed < 0 ? -1 : witness.Count - 1 - reversed))
+            {
+                counterparts[at] = -1;
+            }
+        }
+
+        // Fewer than half the rows placed says the two are not the same verse. Where the table's verse runs on into the next
+        // or stops short of Nestle's, one side's words are nearly all placed; where neither is, the two read another clause,
+        // as Matthew 21:29 does: the son who will not go and then goes, against Nestle's son who says he goes and does not.
+        var placed = counterparts.Count(at => at >= 0);
+        return placed * 2 < rows.Count || (placed * 4 < rows.Count * 3 && placed * 4 < witness.Count * 3) ? null : counterparts;
     }
 
     private const string Greek = "grc";
@@ -220,12 +240,14 @@ internal static class BereanLinks
             }
         }
 
+        var beside = unprinted is null ? [] : Beside(rows, claimed, into, unprinted);
         var omitted = new HashSet<long>();
         for (var i = 0; i < rows.Count; i++)
         {
             var mine = claimed[i] ?? [];
             if (mine.Count > 0 && unprinted is not null
-                && (unprinted.Contains(i) || Enumerable.Range(0, rows.Count).Any(j => into[j] == i && unprinted.Contains(j))))
+                && (unprinted.Contains(i) || beside.Contains(i)
+                    || Enumerable.Range(0, rows.Count).Any(j => into[j] == i && unprinted.Contains(j))))
             {
                 silences.Unprinted++;
                 continue;
@@ -304,6 +326,44 @@ internal static class BereanLinks
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// The rows whose rendering may carry the English of an unprinted row marked with an ellipsis, which the table renders
+    /// somewhere else without saying where: the nearest rendering on each side of it. Luke 10:1's «seventy-two» stands over
+    /// ἑβδομήκοντα, and the Berean's δύο after it is «. . .»; Nestle reads ἑβδομήκοντα alone, and «seventy-two» on it would be
+    /// a number it does not print. Mark 4:40's «Do you still have no» over ἔχετε carries οὔπω before it, where Nestle reads πῶς οὐκ.
+    /// </summary>
+    private static HashSet<int> Beside(IReadOnlyList<BereanRow> rows, List<long>[] claimed, int?[] into, IReadOnlySet<int> unprinted)
+    {
+        var beside = new HashSet<int>();
+        foreach (var j in unprinted)
+        {
+            if (claimed[j] is { Count: > 0 } || into[j] is not null || !rows[j].English.Contains('.', StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            for (var i = j - 1; i >= 0; i--)
+            {
+                if (claimed[i] is { Count: > 0 })
+                {
+                    beside.Add(i);
+                    break;
+                }
+            }
+
+            for (var i = j + 1; i < rows.Count; i++)
+            {
+                if (claimed[i] is { Count: > 0 })
+                {
+                    beside.Add(i);
+                    break;
+                }
+            }
+        }
+
+        return beside;
     }
 
     /// <summary>
@@ -581,9 +641,9 @@ internal static class BereanLinks
         public int Overruled { get; set; }
 
         /// <summary>
-        /// Renderings over a row whose word the witness does not print there, whether the row holds the English or is joined
-        /// into the one that does: the English renders the words together, and laid on the others alone it would claim of them
-        /// what the table says of all.
+        /// Renderings over a row whose word the witness does not print there, whether the row holds the English, is joined
+        /// into the one that does, or is rendered somewhere beside it (<see cref="Beside"/>): the English renders the words
+        /// together, and laid on the others alone it would claim of them what the table says of all.
         /// </summary>
         public int Unprinted { get; set; }
 

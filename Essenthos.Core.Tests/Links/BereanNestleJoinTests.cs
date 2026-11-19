@@ -64,6 +64,114 @@ public class BereanNestleJoinTests
     }
 
     /// <summary>
+    /// The counts need not agree. Matthew 3:2: the table reads καὶ λέγων where Nestle reads λέγων, and its καὶ meets
+    /// nothing. Hebrews 11:37: Nestle reads ἐπειράσθησαν between the stoning and the sawing, which the table lacks, and
+    /// nothing meets it.
+    /// </summary>
+    [Fact]
+    public void AVerseOfAnotherCountIsLaidWordAgainstWord()
+    {
+        var matthew = new[]
+        {
+            Row(1399, "καὶ", "G2532", " and "), Row(1400, "λέγων", "G3004", " saying "), Row(1401, "Μετανοεῖτε", "G3340", " Repent "),
+            Row(1402, "ἤγγικεν", "G1448", " is near "), Row(1403, "γὰρ", "G1063", " for "), Row(1404, "ἡ", "G3588", " the "),
+            Row(1405, "βασιλεία", "G932", " kingdom "), Row(1406, "τῶν", "G3588", " of "), Row(1407, "οὐρανῶν", "G3772", " heaven "),
+        };
+        BereanLinks.Counterparts(matthew, Words(
+                ("λέγων", "G3004"), ("Μετανοεῖτε", "G3340"), ("ἤγγικεν", "G1448"), ("γὰρ", "G1063"), ("ἡ", "G3588"),
+                ("βασιλεία", "G932"), ("τῶν", "G3588"), ("οὐρανῶν", "G3772")))
+            .Should().Equal(-1, 0, 1, 2, 3, 4, 5, 6, 7);
+
+        var hebrews = new[]
+        {
+            Row(190412, "Ἐλιθάσθησαν", "G3034", " They were stoned "), Row(190413, "ἐπρίσθησαν", "G4249", " they were sawed in two "),
+            Row(190414, "ἐν", "G1722", " by "), Row(190415, "φόνῳ", "G5408", " - "), Row(190416, "μαχαίρης", "G3162", " [the] sword "),
+            Row(190417, "ἀπέθανον", "G599", " they were put to death "), Row(190418, "περιῆλθον", "G4022", " They went around "),
+        };
+        BereanLinks.Counterparts(hebrews, Words(
+                ("ἐλιθάσθησαν", "G3034"), ("ἐπειράσθησαν", "G3985"), ("ἐπρίσθησαν", "G4249"), ("ἐν", "G1722"), ("φόνῳ", "G5408"),
+                ("μαχαίρης", "G3162"), ("ἀπέθανον", "G599"), ("περιῆλθον", "G4022")))
+            .Should().Equal(0, 2, 3, 4, 5, 6, 7);
+    }
+
+    /// <summary>
+    /// Galatians 1:15: the table reads ὁ θεὸς ὁ ἀφορίσας where Nestle reads ὁ ἀφορίσας, and Nestle's ὁ is either of the
+    /// table's equally well, so neither is placed on it.
+    /// </summary>
+    [Fact]
+    public void ARowThatCouldAsWellBeAnotherIsPlacedOnNothing()
+    {
+        var rows = new[]
+        {
+            Row(161219, "Ὅτε", "G3753", " when "), Row(161220, "δὲ", "G1161", " But "), Row(161221, "εὐδόκησεν", "G2106", " was pleased "),
+            Row(161222, "ὁ", "G3588", " - "), Row(161223, "θεὸς", "G2316", " God "), Row(161224, "ὁ", "G3588", " who "),
+            Row(161225, "ἀφορίσας", "G873", " set me apart "), Row(161226, "με", "G1473", " . . . "), Row(161227, "ἐκ", "G1537", " from "),
+            Row(161228, "κοιλίας", "G2836", " womb "), Row(161229, "μητρός", "G3384", " mother’s "), Row(161230, "μου", "G1473", " my "),
+        };
+        var nestle = Words(
+            ("Ὅτε", "G3753"), ("δὲ", "G1161"), ("εὐδόκησεν", "G2106"), ("ὁ", "G3588"), ("ἀφορίσας", "G873"), ("με", "G1473"),
+            ("ἐκ", "G1537"), ("κοιλίας", "G2836"), ("μητρός", "G3384"), ("μου", "G1473"));
+
+        BereanLinks.Counterparts(rows, nestle).Should().Equal(0, 1, 2, -1, -1, -1, 4, 5, 6, 7, 8, 9);
+    }
+
+    /// <summary>
+    /// Matthew 21:29: the table's son says he will not go and later goes; Nestle's says he goes and does not. Six of the
+    /// ten rows find a word, ὁ δὲ ἀποκριθεὶς εἶπεν, οὐ and ἀπῆλθεν, which is more than half, but neither side is three
+    /// quarters placed: the two read another clause, and the verse is refused.
+    /// </summary>
+    [Fact]
+    public void AVerseWhoseTwoSidesReadAnotherClauseIsRefused()
+    {
+        var rows = new[]
+        {
+            Row(19675, "Ὁ", "G3588", " - "), Row(19676, "δὲ", "G1161", " - "), Row(19677, "ἀποκριθεὶς", "G611", " he replied "),
+            Row(19678, "εἶπεν", "G2036", " - "), Row(19679, "Οὐ", "G3756", " vvv "), Row(19680, "θέλω", "G2309", " I will not "),
+            Row(19681, "ὕστερον", "G5305", " later "), Row(19682, "δὲ", "G1161", " But "),
+            Row(19683, "μεταμεληθεὶς", "G3338", " he changed his mind "), Row(19684, "ἀπῆλθεν", "G565", " [and] went "),
+        };
+        var nestle = Words(
+            ("ὁ", "G3588"), ("δὲ", "G1161"), ("ἀποκριθεὶς", "G611"), ("εἶπεν", "G3004"), ("Ἐγὼ", "G1473"), ("κύριε", "G2962"),
+            ("καὶ", "G2532"), ("οὐκ", "G3756"), ("ἀπῆλθεν", "G565"));
+
+        BereanLinks.Counterparts(rows, nestle).Should().BeNull();
+    }
+
+    /// <summary>
+    /// Luke 10:1: «seventy-two» stands over ἑβδομήκοντα and the table's δύο after it is «. . .», rendered with it; Nestle
+    /// reads ἑβδομήκοντα alone. Which rendering carries the δύο the table does not say, so neither beside it is written,
+    /// and the rest of the verse is.
+    /// </summary>
+    [Fact]
+    public void TheRenderingsBesideAnUnprintedWordRenderedElsewhereAreNotWritten()
+    {
+        var rows = new[]
+        {
+            Row(60051, "Μετὰ", "G3326", " After ", 1), Row(60052, "δὲ", "G1161", " - ", 20), Row(60053, "ταῦτα", "G3778", " this ", 2),
+            Row(60054, "ἀνέδειξεν", "G322", " appointed ", 5), Row(60055, "ὁ", "G3588", " the ", 3),
+            Row(60056, "Κύριος", "G2962", " Lord ", 4), Row(60057, "καὶ", "G2532", " - ", 21),
+            Row(60058, "ἑτέρους", "G2087", " others ", 7), Row(60059, "ἑβδομήκοντα", "G1440", " seventy-two ", 6),
+            Row(60060, "δύο", "G1417", " . . . ", 22), Row(60061, "καὶ", "G2532", " and ", 8), Row(60062, "ἀπέστειλεν", "G649", " sent ", 9),
+        };
+        var nestle = Words(
+            ("Μετὰ", "G3326"), ("δὲ", "G1161"), ("ταῦτα", "G3778"), ("ἀνέδειξεν", "G322"), ("ὁ", "G3588"), ("Κύριος", "G2962"),
+            ("ἑτέρους", "G2087"), ("ἑβδομήκοντα", "G1440"), ("καὶ", "G2532"), ("ἀπέστειλεν", "G649"));
+        var counterparts = BereanLinks.Counterparts(rows, nestle)!;
+        counterparts.Should().Equal(0, 1, 2, 3, 4, 5, -1, 6, 7, -1, 8, 9);
+
+        var english = "After this the Lord appointed seventy-two others and sent".Split(' ')
+            .Select((word, at) => new BereanLinks.Word(100 + at, 1, word, null)).ToList();
+        List<List<long>> witness = [.. counterparts.Select(at => at < 0 ? [] : new List<long> { nestle[at].Id })];
+        var drafts = new List<BereanLinks.Draft>();
+        var silences = new BereanLinks.Silences();
+        BereanLinks.Pair(rows, english, witness, drafts, silences, unprinted: new HashSet<int> { 6, 9 }).Should().BeTrue();
+
+        drafts.Where(draft => draft.Relation == LinkRelation.Renders).SelectMany(draft => draft.To)
+            .Should().BeEquivalentTo([nestle[0].Id, nestle[2].Id, nestle[3].Id, nestle[4].Id, nestle[5].Id, nestle[6].Id, nestle[9].Id]);
+        silences.Unprinted.Should().Be(2);
+    }
+
+    /// <summary>
     /// Matthew 26:51: the token file makes the apostrophe of <em>Jesus’</em> a token of its own, and the records count
     /// <em>Jesus’</em> as one word, so μετὰ («companions») names the apostrophe and every number after it the word before
     /// the one meant. The verse is refused.
