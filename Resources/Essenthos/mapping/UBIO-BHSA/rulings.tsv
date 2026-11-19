@@ -277,3 +277,217 @@ accept	17.9:29.20	17.9:29.18	renders		Esth 9:29: «листа» renders אִגּ
 refuse	17.9:30.3 17.9:30.4	17.9:30.3			Esth 9:30: uk_ubio's link of «він листи» to סְפָרִ֜ים is wrong, read by hand against BHSA: він is the subject of וַיִּשְׁלַח (порозсилав); only листи is סְפָרִים
 accept	17.9:30.1 17.9:30.2 17.9:30.3	17.9:30.1 17.9:30.2	renders		Esth 9:30: «І порозсилав він» renders וַיִּשְׁלַ֨ח, read by hand against BHSA where uk_ubio's link is wrong: І порозсилав він = וַיִּשְׁלַח
 accept	17.9:30.4	17.9:30.3	renders		Esth 9:30: «листи» renders סְפָרִ֜ים, read by hand against BHSA where uk_ubio's link is wrong: листи = סְפָרִים
+refuse	10.18:12.37	10.18:12.30			2 Samuel 18:12: the aligner's link of «Авішаєві» to אֶת is wrong, read by hand against BHSA: Авішаєві is the name Abishai; אֶת is the object marker before it
+accept	10.18:12.37	10.18:12.31	renders		2 Samuel 18:12: «Авішаєві» renders אֲבִישַׁ֤י, read by hand against BHSA: тобі й Авішаєві та Іттаєві = וְאֶת אֲבִישַׁי וְאֶת אִתַּי
+refuse	12.9:21.30	12.9:21.31			2 Kings 9:21: the aligner's link of «Навота» to יִּזְרְעֵאלִֽי is wrong, read by hand against BHSA: Навота is the name Naboth (נָבֹ֥ות); יִּזְרְעֵאלִֽי (Jezreelite) is the gentilic beside it
+accept	12.9:21.30	12.9:21.29	renders		2 Kings 9:21: «Навота» renders נָבֹ֥ות, read by hand against BHSA: Навота is the name Naboth, not the gentilic יִּזְרְעֵאלִֽי beside it
+refuse	12.9:21.29	12.9:21.29			2 Kings 9:21: the aligner's link of «їзреелянина» to נָבֹ֥ות is wrong, read by hand against BHSA: їзреелянина is the gentilic יִּזְרְעֵאלִֽי (Jezreelite), not the name נָבֹ֥ות (Naboth) beside it, which «Навота» renders
+accept	12.9:21.29	12.9:21.31	renders		2 Kings 9:21: «їзреелянина» renders יִּזְרְעֵאלִֽי, read by hand against BHSA: їзреелянина renders the gentilic יִּזְרְעֵאלִֽי, not the name נָבֹ֥ות beside it
+refuse	10.21:18.14	10.21:18.18			2 Samuel 21:18: the aligner's link of «Сіббехай» to חֻ֣שָׁתִ֔י is wrong, read by hand against BHSA: Сіббехай is the name Sibbecai (סִבְּכַי֙); חֻ֣שָׁתִ֔י (Hushathite) is the gentilic beside it
+accept	10.21:18.14	10.21:18.16	renders		2 Samuel 21:18: «Сіббехай» renders סִבְּכַי֙, read by hand against BHSA: Сіббехай is the name Sibbecai, not the gentilic חֻ֣שָׁתִ֔י beside it
+refuse	10.21:18.13	10.21:18.16			2 Samuel 21:18: the aligner's link of «хушанин» to סִבְּכַי֙ is wrong, read by hand against BHSA: хушанин is the gentilic חֻ֣שָׁתִ֔י (Hushathite), not the name סִבְּכַי֙ (Sibbecai) beside it, which «Сіббехай» renders
+accept	10.21:18.13	10.21:18.18	renders		2 Samuel 21:18: «хушанин» renders חֻ֣שָׁתִ֔י, read by hand against BHSA: хушанин renders the gentilic חֻ֣שָׁתִ֔י, not the name סִבְּכַי֙ beside it
+refuse	11.1:15.15	11.1:15.17			1 Kings 1:15: the aligner's link of «Авішаґ» to שּׁ֣וּנַמִּ֔ית is wrong, read by hand against BHSA: Авішаґ is the name Abishag (אֲבִישַׁג֙); שּׁ֣וּנַמִּ֔ית (Shunammite) is the gentilic beside it
+accept	11.1:15.15	11.1:15.15	renders		1 Kings 1:15: «Авішаґ» renders אֲבִישַׁג֙, read by hand against BHSA: Авішаґ is the name Abishag, not the gentilic שּׁ֣וּנַמִּ֔ית beside it
+refuse	11.1:15.14	11.1:15.15			1 Kings 1:15: the aligner's link of «шунаммітка» to אֲבִישַׁג֙ is wrong, read by hand against BHSA: шунаммітка is the gentilic שּׁ֣וּנַמִּ֔ית (Shunammite), not the name אֲבִישַׁג֙ (Abishag) beside it, which «Авішаґ» renders
+accept	11.1:15.14	11.1:15.17	renders		1 Kings 1:15: «шунаммітка» renders שּׁ֣וּנַמִּ֔ית, read by hand against BHSA: шунаммітка renders the gentilic שּׁ֣וּנַמִּ֔ית, not the name אֲבִישַׁג֙ beside it
+refuse	14.10:15.22	14.10:15.24			2 Chronicles 10:15: the aligner's link of «шілонянина» to יַד֙ is wrong, read by hand against BHSA: шілонянина is the gentilic הַשִּׁלֹונִי (Shilonite); בְּיַד is через
+accept	14.10:15.22	14.10:15.27	renders		2 Chronicles 10:15: «шілонянина» renders שִּֽׁלֹונִ֔י, read by hand against BHSA: через шілонянина Ахійю = בְּיַד אֲחִיָּהוּ הַשִּׁלֹונִי
+refuse	11.1:3.13	11.1:3.14			1 Kings 1:3: the aligner's link of «Авішаґ» to שּׁ֣וּנַמִּ֔ית is wrong, read by hand against BHSA: Авішаґ is the name Abishag (אֲבִישַׁג֙); שּׁ֣וּנַמִּ֔ית (Shunammite) is the gentilic beside it
+accept	11.1:3.13	11.1:3.12	renders		1 Kings 1:3: «Авішаґ» renders אֲבִישַׁג֙, read by hand against BHSA: Авішаґ is the name Abishag, not the gentilic שּׁ֣וּנַמִּ֔ית beside it
+refuse	11.1:3.12	11.1:3.12			1 Kings 1:3: the aligner's link of «шунаммітку» to אֲבִישַׁג֙ is wrong, read by hand against BHSA: шунаммітку is the gentilic שּׁ֣וּנַמִּ֔ית (Shunammite), not the name אֲבִישַׁג֙ (Abishag) beside it, which «Авішаґ» renders
+accept	11.1:3.12	11.1:3.14	renders		1 Kings 1:3: «шунаммітку» renders שּׁ֣וּנַמִּ֔ית, read by hand against BHSA: шунаммітку renders the gentilic שּׁ֣וּנַמִּ֔ית, not the name אֲבִישַׁג֙ beside it
+refuse	13.11:39.4	13.11:39.6			1 Chronicles 11:39: the aligner's link of «Нахрай» to בֵּ֣רֹתִ֔י is wrong, read by hand against BHSA: Нахрай is the name Naharai (נַחְרַי֙); בֵּ֣רֹתִ֔י (Beerothite) is the gentilic beside it
+accept	13.11:39.4	13.11:39.4	renders		1 Chronicles 11:39: «Нахрай» renders נַחְרַי֙, read by hand against BHSA: Нахрай is the name Naharai, not the gentilic בֵּ֣רֹתִ֔י beside it
+refuse	13.11:39.3	13.11:39.4			1 Chronicles 11:39: the aligner's link of «беротянин» to נַחְרַי֙ is wrong, read by hand against BHSA: беротянин is the gentilic בֵּ֣רֹתִ֔י (Beerothite), not the name נַחְרַי֙ (Naharai) beside it, which «Нахрай» renders
+accept	13.11:39.3	13.11:39.6	renders		1 Chronicles 11:39: «беротянин» renders בֵּ֣רֹתִ֔י, read by hand against BHSA: беротянин renders the gentilic בֵּ֣רֹתִ֔י, not the name נַחְרַי֙ beside it
+refuse	12.9:10.6	12.9:10.8			2 Kings 9:10: the aligner's link of «Їзреелевій» to חֵ֥לֶק is wrong, read by hand against BHSA: Їзреелевій is the town name Jezreel; חֵלֶק is ділянці
+accept	12.9:10.6	12.9:10.9	renders		2 Kings 9:10: «Їзреелевій» renders יִזְרְעֶ֖אל, read by hand against BHSA: в Їзреелевій ділянці = בְּחֵלֶק יִזְרְעֶאל
+refuse	12.9:10.7	12.9:10.9			2 Kings 9:10: the aligner's link of «ділянці» to יִזְרְעֶ֖אל is wrong, read by hand against BHSA: ділянці is חֵלֶק, not the town name יִזְרְעֶאל, which Їзреелевій renders
+accept	12.9:10.7	12.9:10.8	renders		2 Kings 9:10: «ділянці» renders חֵ֥לֶק, read by hand against BHSA: ділянці = חֵלֶק (в Їзреелевій ділянці)
+refuse	8.2:23.5	8.2:23.4			Ruth 2:23: the aligner's link of «Боазових» to נַעֲרֹ֥ות is wrong, read by hand against BHSA: Боазових is the name Boaz; נַעֲרֹות is служниць
+accept	8.2:23.5	8.2:23.5	renders		Ruth 2:23: «Боазових» renders בֹּ֨עַז֙, read by hand against BHSA: до Боазових служниць = בְּנַעֲרֹות בֹּעַז
+refuse	23.10:31.1	23.10:31.1			Isaiah 10:31: the aligner's link of «Мадмена» to נָדְדָ֖ה is wrong, read by hand against BHSA: Мадмена is the town Madmenah; נָדְדָה is розбіглась
+accept	23.10:31.1	23.10:31.2	renders		Isaiah 10:31: «Мадмена» renders מַדְמֵנָ֑ה, read by hand against BHSA: Мадмена розбіглась = נָדְדָה מַדְמֵנָה
+refuse	23.10:31.2	23.10:31.2			Isaiah 10:31: the aligner's link of «розбіглась» to מַדְמֵנָ֑ה is wrong, read by hand against BHSA: розбіглась is נָדְדָה, not the town name מַדְמֵנָה, which Мадмена renders
+accept	23.10:31.2	23.10:31.1	renders		Isaiah 10:31: «розбіглась» renders נָדְדָ֖ה, read by hand against BHSA: розбіглась = נָדְדָה (Мадмена розбіглась)
+refuse	18.8:1.4	18.8:1.5			Job 8:1: the aligner's link of «Білдад» to שּׁוּחִ֗י is wrong, read by hand against BHSA: Білдад is the name Bildad (בִּלְדַּ֥ד); שּׁוּחִ֗י (Shuhite) is the gentilic beside it
+accept	18.8:1.4	18.8:1.3	renders		Job 8:1: «Білдад» renders בִּלְדַּ֥ד, read by hand against BHSA: Білдад is the name Bildad, not the gentilic שּׁוּחִ֗י beside it
+refuse	18.8:1.3	18.8:1.3			Job 8:1: the aligner's link of «шух'янин» to בִּלְדַּ֥ד is wrong, read by hand against BHSA: шух'янин is the gentilic שּׁוּחִ֗י (Shuhite), not the name בִּלְדַּ֥ד (Bildad) beside it, which «Білдад» renders
+accept	18.8:1.3	18.8:1.5	renders		Job 8:1: «шух'янин» renders שּׁוּחִ֗י, read by hand against BHSA: шух'янин renders the gentilic שּׁוּחִ֗י, not the name בִּלְדַּ֥ד beside it
+refuse	18.18:1.4	18.18:1.5			Job 18:1: the aligner's link of «Білдад» to שֻּׁחִ֗י is wrong, read by hand against BHSA: Білдад is the name Bildad (בִּלְדַּ֥ד); שֻּׁחִ֗י (Shuhite) is the gentilic beside it
+accept	18.18:1.4	18.18:1.3	renders		Job 18:1: «Білдад» renders בִּלְדַּ֥ד, read by hand against BHSA: Білдад is the name Bildad, not the gentilic שֻּׁחִ֗י beside it
+refuse	18.18:1.3	18.18:1.3			Job 18:1: the aligner's link of «шух'янин» to בִּלְדַּ֥ד is wrong, read by hand against BHSA: шух'янин is the gentilic שֻּׁחִ֗י (Shuhite), not the name בִּלְדַּ֥ד (Bildad) beside it, which «Білдад» renders
+accept	18.18:1.3	18.18:1.5	renders		Job 18:1: «шух'янин» renders שֻּׁחִ֗י, read by hand against BHSA: шух'янин renders the gentilic שֻּׁחִ֗י, not the name בִּלְדַּ֥ד beside it
+refuse	10.10:2.7	10.10:2.6			2 Samuel 10:2: the aligner's link of «Ганунові» to עִם is wrong, read by hand against BHSA: Ганунові is the name Hanun; עִם is the preposition before it
+accept	10.10:2.7	10.10:2.7	renders		2 Samuel 10:2: «Ганунові» renders חָנ֣וּן, read by hand against BHSA: Зроблю я ласку Ганунові = אֶעֱשֶׂה חֶסֶד עִם חָנוּן
+refuse	13.27:9.8	13.27:9.12			1 Chronicles 27:9: the aligner's link of «Іккеша» to תְּקֹועִ֑י is wrong, read by hand against BHSA: Іккеша is the name Ikkesh (עִקֵּ֖שׁ); תְּקֹועִ֑י (Tekoite) is the gentilic beside it
+accept	13.27:9.8	13.27:9.10	renders		1 Chronicles 27:9: «Іккеша» renders עִקֵּ֖שׁ, read by hand against BHSA: Іккеша is the name Ikkesh, not the gentilic תְּקֹועִ֑י beside it
+refuse	13.27:9.7	13.27:9.10			1 Chronicles 27:9: the aligner's link of «текоянина» to עִקֵּ֖שׁ is wrong, read by hand against BHSA: текоянина is the gentilic תְּקֹועִ֑י (Tekoite), not the name עִקֵּ֖שׁ (Ikkesh) beside it, which «Іккеша» renders
+accept	13.27:9.7	13.27:9.12	renders		1 Chronicles 27:9: «текоянина» renders תְּקֹועִ֑י, read by hand against BHSA: текоянина renders the gentilic תְּקֹועִ֑י, not the name עִקֵּ֖שׁ beside it
+refuse	11.2:21.6	11.2:21.7			1 Kings 2:21: the aligner's link of «Авішаґ» to שֻּׁנַמִּ֑ית is wrong, read by hand against BHSA: Авішаґ is the name Abishag (אֲבִישַׁ֣ג); שֻּׁנַמִּ֑ית (Shunammite) is the gentilic beside it
+accept	11.2:21.6	11.2:21.5	renders		1 Kings 2:21: «Авішаґ» renders אֲבִישַׁ֣ג, read by hand against BHSA: Авішаґ is the name Abishag, not the gentilic שֻּׁנַמִּ֑ית beside it
+refuse	11.2:21.5	11.2:21.5			1 Kings 2:21: the aligner's link of «шунаммітка» to אֲבִישַׁ֣ג is wrong, read by hand against BHSA: шунаммітка is the gentilic שֻּׁנַמִּ֑ית (Shunammite), not the name אֲבִישַׁ֣ג (Abishag) beside it, which «Авішаґ» renders
+accept	11.2:21.5	11.2:21.7	renders		1 Kings 2:21: «шунаммітка» renders שֻּׁנַמִּ֑ית, read by hand against BHSA: шунаммітка renders the gentilic שֻּׁנַמִּ֑ית, not the name אֲבִישַׁ֣ג beside it
+refuse	11.2:17.17	11.2:17.20			1 Kings 2:17: the aligner's link of «Авішаґ» to שּׁוּנַמִּ֖ית is wrong, read by hand against BHSA: Авішаґ is the name Abishag (אֲבִישַׁ֥ג); שּׁוּנַמִּ֖ית (Shunammite) is the gentilic beside it
+accept	11.2:17.17	11.2:17.18	renders		1 Kings 2:17: «Авішаґ» renders אֲבִישַׁ֥ג, read by hand against BHSA: Авішаґ is the name Abishag, not the gentilic שּׁוּנַמִּ֖ית beside it
+refuse	11.2:17.16	11.2:17.18			1 Kings 2:17: the aligner's link of «шунаммітку» to אֲבִישַׁ֥ג is wrong, read by hand against BHSA: шунаммітку is the gentilic שּׁוּנַמִּ֖ית (Shunammite), not the name אֲבִישַׁ֥ג (Abishag) beside it, which «Авішаґ» renders
+accept	11.2:17.16	11.2:17.20	renders		1 Kings 2:17: «шунаммітку» renders שּׁוּנַמִּ֖ית, read by hand against BHSA: шунаммітку renders the gentilic שּׁוּנַמִּ֖ית, not the name אֲבִישַׁ֥ג beside it
+refuse	16.3:7.6	16.3:7.7			Nehemiah 3:7: the aligner's link of «Мелатія» to גִּבְעֹנִ֗י is wrong, read by hand against BHSA: Мелатія is the name Melatiah (מְלַטְיָ֣ה); גִּבְעֹנִ֗י (Gibeonite) is the gentilic beside it
+accept	16.3:7.6	16.3:7.5	renders		Nehemiah 3:7: «Мелатія» renders מְלַטְיָ֣ה, read by hand against BHSA: Мелатія is the name Melatiah, not the gentilic גִּבְעֹנִ֗י beside it
+refuse	16.3:7.5	16.3:7.5			Nehemiah 3:7: the aligner's link of «ґів'онеянин» to מְלַטְיָ֣ה is wrong, read by hand against BHSA: ґів'онеянин is the gentilic גִּבְעֹנִ֗י (Gibeonite), not the name מְלַטְיָ֣ה (Melatiah) beside it, which «Мелатія» renders
+accept	16.3:7.5	16.3:7.7	renders		Nehemiah 3:7: «ґів'онеянин» renders גִּבְעֹנִ֗י, read by hand against BHSA: ґів'онеянин renders the gentilic גִּבְעֹנִ֗י, not the name מְלַטְיָ֣ה beside it
+refuse	11.14:31.22	11.14:31.18			1 Kings 14:31: the aligner's link of «Наама» to עַמֹּנִ֑ית is wrong, read by hand against BHSA: Наама is the name Naamah (נַעֲמָ֖ה); עַמֹּנִ֑ית (Ammonite) is the gentilic beside it
+accept	11.14:31.22	11.14:31.16	renders		1 Kings 14:31: «Наама» renders נַעֲמָ֖ה, read by hand against BHSA: Наама is the name Naamah, not the gentilic עַמֹּנִ֑ית beside it
+refuse	11.14:31.21	11.14:31.16			1 Kings 14:31: the aligner's link of «аммонітянка» to נַעֲמָ֖ה is wrong, read by hand against BHSA: аммонітянка is the gentilic עַמֹּנִ֑ית (Ammonite), not the name נַעֲמָ֖ה (Naamah) beside it, which «Наама» renders
+accept	11.14:31.21	11.14:31.18	renders		1 Kings 14:31: «аммонітянка» renders עַמֹּנִ֑ית, read by hand against BHSA: аммонітянка renders the gentilic עַמֹּנִ֑ית, not the name נַעֲמָ֖ה beside it
+refuse	23.28:3.6	23.28:3.6			Isaiah 28:3: the aligner's link of «Єфремлян» to שִׁכֹּורֵ֥י is wrong, read by hand against BHSA: Єфремлян is Ephraim; שִׁכֹּורֵי is п'яних
+accept	23.28:3.6	23.28:3.7	renders		Isaiah 28:3: «Єфремлян» renders אֶפְרָֽיִם, read by hand against BHSA: корона пишноти Єфремлян п'яних = עֲטֶרֶת גֵּאוּת שִׁכֹּורֵי אֶפְרָיִם
+refuse	13.2:7.2	13.2:7.2			1 Chronicles 2:7: the aligner's link of «Кармієві» to בְנֵ֖י is wrong, read by hand against BHSA: Кармієві is the name Carmi; בְנֵי is сини, which already renders it
+accept	13.2:7.2	13.2:7.3	renders		1 Chronicles 2:7: «Кармієві» renders כַּרְמִ֑י, read by hand against BHSA: Кармієві сини = בְנֵי כַּרְמִי
+refuse	23.26:1.5	23.26:1.6			Isaiah 26:1: the aligner's link of «Юдинім» to יוּשַׁ֥ר is wrong, read by hand against BHSA: Юдинім is Judah; יוּשַׁר is заспівають
+accept	23.26:1.5	23.26:1.13	renders		Isaiah 26:1: «Юдинім» renders יְהוּדָ֑ה, read by hand against BHSA: у Юдинім краї = בְּאֶרֶץ יְהוּדָה
+refuse	9.18:19.18	9.18:19.18			1 Samuel 18:19: the aligner's link of «Адріїлові» to מְּחֹלָתִ֖י is wrong, read by hand against BHSA: Адріїлові is the name Adriel (עַדְרִיאֵ֥ל); מְּחֹלָתִ֖י (Meholathite) is the gentilic beside it
+accept	9.18:19.18	9.18:19.16	renders		1 Samuel 18:19: «Адріїлові» renders עַדְרִיאֵ֥ל, read by hand against BHSA: Адріїлові is the name Adriel, not the gentilic מְּחֹלָתִ֖י beside it
+refuse	18.42:9.4	18.42:9.5			Job 42:9: the aligner's link of «Еліфаз» to תֵּֽימָנִ֜י is wrong, read by hand against BHSA: Еліфаз is the name Eliphaz (אֱלִיפַ֨ז); תֵּֽימָנִ֜י (Temanite) is the gentilic beside it
+accept	18.42:9.4	18.42:9.3	renders		Job 42:9: «Еліфаз» renders אֱלִיפַ֨ז, read by hand against BHSA: Еліфаз is the name Eliphaz, not the gentilic תֵּֽימָנִ֜י beside it
+refuse	18.42:9.3	18.42:9.3			Job 42:9: the aligner's link of «теманянин» to אֱלִיפַ֨ז is wrong, read by hand against BHSA: теманянин is the gentilic תֵּֽימָנִ֜י (Temanite), not the name אֱלִיפַ֨ז (Eliphaz) beside it, which «Еліфаз» renders
+accept	18.42:9.3	18.42:9.5	renders		Job 42:9: «теманянин» renders תֵּֽימָנִ֜י, read by hand against BHSA: теманянин renders the gentilic תֵּֽימָנִ֜י, not the name אֱלִיפַ֨ז beside it
+refuse	13.11:28.3	13.11:28.5			1 Chronicles 11:28: the aligner's link of «Іккешів» to תְּקֹועִ֔י is wrong, read by hand against BHSA: Іккешів is the name Ikkesh (עִקֵּשׁ֙); תְּקֹועִ֔י (Tekoite) is the gentilic beside it
+accept	13.11:28.3	13.11:28.3	renders		1 Chronicles 11:28: «Іккешів» renders עִקֵּשׁ֙, read by hand against BHSA: Іккешів is the name Ikkesh, not the gentilic תְּקֹועִ֔י beside it
+refuse	13.11:28.4	13.11:28.3			1 Chronicles 11:28: the aligner's link of «текоянин» to עִקֵּשׁ֙ is wrong, read by hand against BHSA: текоянин is the gentilic תְּקֹועִ֔י (Tekoite), not the name עִקֵּשׁ֙ (Ikkesh) beside it, which «Іккешів» renders
+accept	13.11:28.4	13.11:28.5	renders		1 Chronicles 11:28: «текоянин» renders תְּקֹועִ֔י, read by hand against BHSA: текоянин renders the gentilic תְּקֹועִ֔י, not the name עִקֵּשׁ֙ beside it
+refuse	12.9:25.15	12.9:25.13			2 Kings 9:25: the aligner's link of «Навота» to יִּזְרְעֵאלִ֑י is wrong, read by hand against BHSA: Навота is the name Naboth (נָבֹ֣ות); יִּזְרְעֵאלִ֑י (Jezreelite) is the gentilic beside it
+accept	12.9:25.15	12.9:25.11	renders		2 Kings 9:25: «Навота» renders נָבֹ֣ות, read by hand against BHSA: Навота is the name Naboth, not the gentilic יִּזְרְעֵאלִ֑י beside it
+refuse	12.9:25.14	12.9:25.11			2 Kings 9:25: the aligner's link of «їзреелянина» to נָבֹ֣ות is wrong, read by hand against BHSA: їзреелянина is the gentilic יִּזְרְעֵאלִ֑י (Jezreelite), not the name נָבֹ֣ות (Naboth) beside it, which «Навота» renders
+accept	12.9:25.14	12.9:25.13	renders		2 Kings 9:25: «їзреелянина» renders יִּזְרְעֵאלִ֑י, read by hand against BHSA: їзреелянина renders the gentilic יִּזְרְעֵאלִ֑י, not the name נָבֹ֣ות beside it
+refuse	10.4:9.11	10.4:9.13			2 Samuel 4:9: the aligner's link of «Ріммона» to בְּאֵֽרֹתִ֖י is wrong, read by hand against BHSA: Ріммона is the name Rimmon (רִמֹּ֥ון); בְּאֵֽרֹתִ֖י (Beerothite) is the gentilic beside it
+accept	10.4:9.11	10.4:9.11	renders		2 Samuel 4:9: «Ріммона» renders רִמֹּ֥ון, read by hand against BHSA: Ріммона is the name Rimmon, not the gentilic בְּאֵֽרֹתִ֖י beside it
+refuse	10.4:9.10	10.4:9.11			2 Samuel 4:9: the aligner's link of «бееротеянина» to רִמֹּ֥ון is wrong, read by hand against BHSA: бееротеянина is the gentilic בְּאֵֽרֹתִ֖י (Beerothite), not the name רִמֹּ֥ון (Rimmon) beside it, which «Ріммона» renders
+accept	10.4:9.10	10.4:9.13	renders		2 Samuel 4:9: «бееротеянина» renders בְּאֵֽרֹתִ֖י, read by hand against BHSA: бееротеянина renders the gentilic בְּאֵֽרֹתִ֖י, not the name רִמֹּ֥ון beside it
+refuse	4.20:25.12	4.20:25.13			Numbers 20:25: the aligner's link of «Гор-гору» to הָֽר is wrong, read by hand against BHSA: Гор-гору is the name and the noun together, הֹר הָהָר; הָר alone leaves out the name הֹר
+accept	4.20:25.12	4.20:25.11 4.20:25.13	renders		Numbers 20:25: «Гор-гору» renders הֹ֥ר הָֽר, read by hand against BHSA: Гор-гору is the name and the noun together, הֹר הָהָר; הָר alone leaves out the name הֹר
+refuse	15.10:15.16	15.10:15.18			Ezra 10:15: the aligner's link of «Шеббетай» to עֲזָרֻֽם is wrong, read by hand against BHSA: Шеббетай is the name Shabbethai; עֲזָרֻם is допомагали їм
+accept	15.10:15.16	15.10:15.15	renders		Ezra 10:15: «Шеббетай» renders שַׁבְּתַ֥י, read by hand against BHSA: та Левит Шеббетай = וְשַׁבְּתַי הַלֵּוִי
+refuse	12.9:36.25	12.9:36.22			2 Kings 9:36: the aligner's link of «Їзреелевій» to חֵ֣לֶק is wrong, read by hand against BHSA: Їзреелевій is the town name Jezreel; חֵלֶק is ділянці
+accept	12.9:36.25	12.9:36.23	renders		2 Kings 9:36: «Їзреелевій» renders יִזְרְעֶ֔אל, read by hand against BHSA: В Їзреелевій ділянці = בְּחֵלֶק יִזְרְעֶאל
+refuse	12.9:36.26	12.9:36.23			2 Kings 9:36: the aligner's link of «ділянці» to יִזְרְעֶ֔אל is wrong, read by hand against BHSA: ділянці is חֵלֶק, not the town name יִזְרְעֶאל, which Їзреелевій renders
+accept	12.9:36.26	12.9:36.22	renders		2 Kings 9:36: «ділянці» renders חֵ֣לֶק, read by hand against BHSA: ділянці = חֵלֶק (В Їзреелевій ділянці)
+refuse	16.3:7.9	16.3:7.11			Nehemiah 3:7: the aligner's link of «Ядон» to מֵּרֹ֣נֹתִ֔י is wrong, read by hand against BHSA: Ядон is the name Jadon (יָדֹון֙); מֵּרֹ֣נֹתִ֔י (Meronothite) is the gentilic beside it
+accept	16.3:7.9	16.3:7.9	renders		Nehemiah 3:7: «Ядон» renders יָדֹון֙, read by hand against BHSA: Ядон is the name Jadon, not the gentilic מֵּרֹ֣נֹתִ֔י beside it
+refuse	16.3:7.8	16.3:7.9			Nehemiah 3:7: the aligner's link of «меронотеянин» to יָדֹון֙ is wrong, read by hand against BHSA: меронотеянин is the gentilic מֵּרֹ֣נֹתִ֔י (Meronothite), not the name יָדֹון֙ (Jadon) beside it, which «Ядон» renders
+accept	16.3:7.8	16.3:7.11	renders		Nehemiah 3:7: «меронотеянин» renders מֵּרֹ֣נֹתִ֔י, read by hand against BHSA: меронотеянин renders the gentilic מֵּרֹ֣נֹתִ֔י, not the name יָדֹון֙ beside it
+refuse	11.21:7.26	11.21:7.25			1 Kings 21:7: the aligner's link of «Навота» to יִּזְרְעֵאלִֽי is wrong, read by hand against BHSA: Навота is the name Naboth (נָבֹ֥ות); יִּזְרְעֵאלִֽי (Jezreelite) is the gentilic beside it
+accept	11.21:7.26	11.21:7.23	renders		1 Kings 21:7: «Навота» renders נָבֹ֥ות, read by hand against BHSA: Навота is the name Naboth, not the gentilic יִּזְרְעֵאלִֽי beside it
+refuse	11.21:7.25	11.21:7.23			1 Kings 21:7: the aligner's link of «їзреелянина» to נָבֹ֥ות is wrong, read by hand against BHSA: їзреелянина is the gentilic יִּזְרְעֵאלִֽי (Jezreelite), not the name נָבֹ֥ות (Naboth) beside it, which «Навота» renders
+accept	11.21:7.25	11.21:7.25	renders		1 Kings 21:7: «їзреелянина» renders יִּזְרְעֵאלִֽי, read by hand against BHSA: їзреелянина renders the gentilic יִּזְרְעֵאלִֽי, not the name נָבֹ֥ות beside it
+refuse	18.2:11.23	18.2:11.26			Job 2:11: the aligner's link of «Біддад» to שּׁוּחִ֔י is wrong, read by hand against BHSA: Біддад is the name Bildad (בִלְדַּ֣ד); שּׁוּחִ֔י (Shuhite) is the gentilic beside it
+accept	18.2:11.23	18.2:11.24	renders		Job 2:11: «Біддад» renders בִלְדַּ֣ד, read by hand against BHSA: Біддад is the name Bildad, not the gentilic שּׁוּחִ֔י beside it
+refuse	18.2:11.22	18.2:11.24			Job 2:11: the aligner's link of «шух'янин» to בִלְדַּ֣ד is wrong, read by hand against BHSA: шух'янин is the gentilic שּׁוּחִ֔י (Shuhite), not the name בִלְדַּ֣ד (Bildad) beside it, which «Біддад» renders
+accept	18.2:11.22	18.2:11.26	renders		Job 2:11: «шух'янин» renders שּׁוּחִ֔י, read by hand against BHSA: шух'янин renders the gentilic שּׁוּחִ֔י, not the name בִלְדַּ֣ד beside it
+refuse	16.1:1.17	16.1:1.18			Nehemiah 1:1: the aligner's link of «Шушан» to בִּירָֽה is wrong, read by hand against BHSA: Шушан is the name Susa; הַבִּירָה is замку
+accept	16.1:1.17	16.1:1.16	renders		Nehemiah 1:1: «Шушан» renders שׁוּשַׁ֥ן, read by hand against BHSA: в замку Шушан = בְּשׁוּשַׁן הַבִּירָה
+refuse	16.1:1.16	16.1:1.16			Nehemiah 1:1: the aligner's link of «замку» to שׁוּשַׁ֥ן is wrong, read by hand against BHSA: замку is הַבִּירָה, not the name שׁוּשַׁן, which Шушан renders
+accept	16.1:1.16	16.1:1.18	renders		Nehemiah 1:1: «замку» renders בִּירָֽה, read by hand against BHSA: замку = בִּירָה (в замку Шушан)
+refuse	16.10:24.2	16.10:25.2			Nehemiah 10:24: the aligner's link of «Пілха» to לֹּוחֵ֥שׁ is wrong, read by hand against BHSA: Пілха is the name Pilha; הַלֹּוחֵשׁ is Галлохеш (BHSA 10:25)
+accept	16.10:24.2	16.10:25.3	renders		Nehemiah 10:24: «Пілха» renders פִּלְחָ֖א, read by hand against BHSA: Галлохеш Пілха Шовек = הַלֹּוחֵשׁ פִּלְחָא שֹׁובֵק (BHSA 10:25)
+refuse	13.27:11.6	13.27:11.10			1 Chronicles 27:11: the aligner's link of «Сіббехай» to חֻשָׁתִ֖י is wrong, read by hand against BHSA: Сіббехай is the name Sibbecai (סִבְּכַ֥י); חֻשָׁתִ֖י (Hushathite) is the gentilic beside it
+accept	13.27:11.6	13.27:11.8	renders		1 Chronicles 27:11: «Сіббехай» renders סִבְּכַ֥י, read by hand against BHSA: Сіббехай is the name Sibbecai, not the gentilic חֻשָׁתִ֖י beside it
+refuse	13.27:11.5	13.27:11.8			1 Chronicles 27:11: the aligner's link of «хушанин» to סִבְּכַ֥י is wrong, read by hand against BHSA: хушанин is the gentilic חֻשָׁתִ֖י (Hushathite), not the name סִבְּכַ֥י (Sibbecai) beside it, which «Сіббехай» renders
+accept	13.27:11.5	13.27:11.10	renders		1 Chronicles 27:11: «хушанин» renders חֻשָׁתִ֖י, read by hand against BHSA: хушанин renders the gentilic חֻשָׁתִ֖י, not the name סִבְּכַ֥י beside it
+refuse	1.22:22.8	1.22:22.11			Genesis 22:22: the aligner's link of «Їдлафа» to אֶת is wrong, read by hand against BHSA: Їдлафа is the name Jidlaph; אֶת is the object marker before it
+accept	1.22:22.8	1.22:22.12	renders		Genesis 22:22: «Їдлафа» renders יִדְלָ֑ף, read by hand against BHSA: і Їдлафа = וְאֶת יִדְלָף
+refuse	11.2:22.15	11.2:22.17			1 Kings 2:22: the aligner's link of «Авішаґ» to שֻּׁנַמִּית֙ is wrong, read by hand against BHSA: Авішаґ is the name Abishag (אֲבִישַׁ֤ג); שֻּׁנַמִּית֙ (Shunammite) is the gentilic beside it
+accept	11.2:22.15	11.2:22.15	renders		1 Kings 2:22: «Авішаґ» renders אֲבִישַׁ֤ג, read by hand against BHSA: Авішаґ is the name Abishag, not the gentilic שֻּׁנַמִּית֙ beside it
+refuse	11.2:22.14	11.2:22.15			1 Kings 2:22: the aligner's link of «шунаммітку» to אֲבִישַׁ֤ג is wrong, read by hand against BHSA: шунаммітку is the gentilic שֻּׁנַמִּית֙ (Shunammite), not the name אֲבִישַׁ֤ג (Abishag) beside it, which «Авішаґ» renders
+accept	11.2:22.14	11.2:22.17	renders		1 Kings 2:22: «шунаммітку» renders שֻּׁנַמִּית֙, read by hand against BHSA: шунаммітку renders the gentilic שֻּׁנַמִּית֙, not the name אֲבִישַׁ֤ג beside it
+refuse	11.21:6.11	11.21:6.9			1 Kings 21:6: the aligner's link of «Навота» to יִּזְרְעֵאלִ֜י is wrong, read by hand against BHSA: Навота is the name Naboth (נָבֹ֨ות); יִּזְרְעֵאלִ֜י (Jezreelite) is the gentilic beside it
+accept	11.21:6.11	11.21:6.7	renders		1 Kings 21:6: «Навота» renders נָבֹ֨ות, read by hand against BHSA: Навота is the name Naboth, not the gentilic יִּזְרְעֵאלִ֜י beside it
+refuse	11.21:6.10	11.21:6.7			1 Kings 21:6: the aligner's link of «їзреелянина» to נָבֹ֨ות is wrong, read by hand against BHSA: їзреелянина is the gentilic יִּזְרְעֵאלִ֜י (Jezreelite), not the name נָבֹ֨ות (Naboth) beside it, which «Навота» renders
+accept	11.21:6.10	11.21:6.9	renders		1 Kings 21:6: «їзреелянина» renders יִּזְרְעֵאלִ֜י, read by hand against BHSA: їзреелянина renders the gentilic יִּזְרְעֵאלִ֜י, not the name נָבֹ֨ות beside it
+refuse	18.25:1.4	18.25:1.5			Job 25:1: the aligner's link of «Білдад» to שֻּׁחִ֗י is wrong, read by hand against BHSA: Білдад is the name Bildad (בִּלְדַּ֥ד); שֻּׁחִ֗י (Shuhite) is the gentilic beside it
+accept	18.25:1.4	18.25:1.3	renders		Job 25:1: «Білдад» renders בִּלְדַּ֥ד, read by hand against BHSA: Білдад is the name Bildad, not the gentilic שֻּׁחִ֗י beside it
+refuse	18.25:1.3	18.25:1.3			Job 25:1: the aligner's link of «шух'янин» to בִּלְדַּ֥ד is wrong, read by hand against BHSA: шух'янин is the gentilic שֻּׁחִ֗י (Shuhite), not the name בִּלְדַּ֥ד (Bildad) beside it, which «Білдад» renders
+accept	18.25:1.3	18.25:1.5	renders		Job 25:1: «шух'янин» renders שֻּׁחִ֗י, read by hand against BHSA: шух'янин renders the gentilic שֻּׁחִ֗י, not the name בִּלְדַּ֥ד beside it
+refuse	10.4:5.5	10.4:5.6			2 Samuel 4:5: the aligner's link of «Ріммона» to בְּאֵֽרֹתִי֙ is wrong, read by hand against BHSA: Ріммона is the name Rimmon (רִמֹּ֤ון); בְּאֵֽרֹתִי֙ (Beerothite) is the gentilic beside it
+accept	10.4:5.5	10.4:5.4	renders		2 Samuel 4:5: «Ріммона» renders רִמֹּ֤ון, read by hand against BHSA: Ріммона is the name Rimmon, not the gentilic בְּאֵֽרֹתִי֙ beside it
+refuse	10.4:5.4	10.4:5.4			2 Samuel 4:5: the aligner's link of «бееротянина» to רִמֹּ֤ון is wrong, read by hand against BHSA: бееротянина is the gentilic בְּאֵֽרֹתִי֙ (Beerothite), not the name רִמֹּ֤ון (Rimmon) beside it, which «Ріммона» renders
+accept	10.4:5.4	10.4:5.6	renders		2 Samuel 4:5: «бееротянина» renders בְּאֵֽרֹתִי֙, read by hand against BHSA: бееротянина renders the gentilic בְּאֵֽרֹתִי֙, not the name רִמֹּ֤ון beside it
+refuse	13.27:30.5	13.27:30.7			1 Chronicles 27:30: the aligner's link of «Овіл» to יִּשְׁמְעֵלִ֑י is wrong, read by hand against BHSA: Овіл is the name Obil (אֹובִ֖יל); יִּשְׁמְעֵלִ֑י (Ishmaelite) is the gentilic beside it
+accept	13.27:30.5	13.27:30.5	renders		1 Chronicles 27:30: «Овіл» renders אֹובִ֖יל, read by hand against BHSA: Овіл is the name Obil, not the gentilic יִּשְׁמְעֵלִ֑י beside it
+refuse	13.27:30.4	13.27:30.5			1 Chronicles 27:30: the aligner's link of «їзмаїльтянин» to אֹובִ֖יל is wrong, read by hand against BHSA: їзмаїльтянин is the gentilic יִּשְׁמְעֵלִ֑י (Ishmaelite), not the name אֹובִ֖יל (Obil) beside it, which «Овіл» renders
+accept	13.27:30.4	13.27:30.7	renders		1 Chronicles 27:30: «їзмаїльтянин» renders יִּשְׁמְעֵלִ֑י, read by hand against BHSA: їзмаїльтянин renders the gentilic יִּשְׁמְעֵלִ֑י, not the name אֹובִ֖יל beside it
+refuse	13.27:32.3	13.27:32.3			1 Chronicles 27:32: the aligner's link of «Давидів» to דֹּוד is wrong, read by hand against BHSA: Давидів is the name David (דָּוִיד); דֹּוד is дядько
+accept	13.27:32.3	13.27:32.4	renders		1 Chronicles 27:32: «Давидів» renders דָּוִיד֙, read by hand against BHSA: Давидів дядько = דֹּוד דָּוִיד
+refuse	4.33:39.15	4.33:39.15			Numbers 33:39: the aligner's link of «Гор-горі» to הָֽר is wrong, read by hand against BHSA: Гор-горі is the name and the noun together, הֹר הָהָר; הָר alone leaves out the name הֹר
+accept	4.33:39.15	4.33:39.13 4.33:39.15	renders		Numbers 33:39: «Гор-горі» renders הֹ֥ר הָֽר, read by hand against BHSA: Гор-горі is the name and the noun together, הֹר הָהָר; הָר alone leaves out the name הֹר
+refuse	13.20:4.14	13.20:4.16			1 Chronicles 20:4: the aligner's link of «Сіббехай» to חֻֽשָׁתִ֗י is wrong, read by hand against BHSA: Сіббехай is the name Sibbecai (סִבְּכַ֣י); חֻֽשָׁתִ֗י (Hushathite) is the gentilic beside it
+accept	13.20:4.14	13.20:4.14	renders		1 Chronicles 20:4: «Сіббехай» renders סִבְּכַ֣י, read by hand against BHSA: Сіббехай is the name Sibbecai, not the gentilic חֻֽשָׁתִ֗י beside it
+refuse	13.20:4.13	13.20:4.14			1 Chronicles 20:4: the aligner's link of «хушанин» to סִבְּכַ֣י is wrong, read by hand against BHSA: хушанин is the gentilic חֻֽשָׁתִ֗י (Hushathite), not the name סִבְּכַ֣י (Sibbecai) beside it, which «Сіббехай» renders
+accept	13.20:4.13	13.20:4.16	renders		1 Chronicles 20:4: «хушанин» renders חֻֽשָׁתִ֗י, read by hand against BHSA: хушанин renders the gentilic חֻֽשָׁתִ֗י, not the name סִבְּכַ֣י beside it
+refuse	18.42:9.7	18.42:9.9			Job 42:9: the aligner's link of «Білдад» to שּׁוּחִ֗י is wrong, read by hand against BHSA: Білдад is the name Bildad (בִלְדַּ֣ד); שּׁוּחִ֗י (Shuhite) is the gentilic beside it
+accept	18.42:9.7	18.42:9.7	renders		Job 42:9: «Білдад» renders בִלְדַּ֣ד, read by hand against BHSA: Білдад is the name Bildad, not the gentilic שּׁוּחִ֗י beside it
+refuse	18.42:9.6	18.42:9.7			Job 42:9: the aligner's link of «шух'янин» to בִלְדַּ֣ד is wrong, read by hand against BHSA: шух'янин is the gentilic שּׁוּחִ֗י (Shuhite), not the name בִלְדַּ֣ד (Bildad) beside it, which «Білдад» renders
+accept	18.42:9.6	18.42:9.9	renders		Job 42:9: «шух'янин» renders שּׁוּחִ֗י, read by hand against BHSA: шух'янин renders the gentilic שּׁוּחִ֗י, not the name בִלְדַּ֣ד beside it
+refuse	18.42:9.10	18.42:9.12			Job 42:9: the aligner's link of «Цофар» to נַּ֣עֲמָתִ֔י is wrong, read by hand against BHSA: Цофар is the name Zophar (צֹפַר֙); נַּ֣עֲמָתִ֔י (Naamathite) is the gentilic beside it
+accept	18.42:9.10	18.42:9.10	renders		Job 42:9: «Цофар» renders צֹפַר֙, read by hand against BHSA: Цофар is the name Zophar, not the gentilic נַּ֣עֲמָתִ֔י beside it
+refuse	18.42:9.9	18.42:9.10			Job 42:9: the aligner's link of «нааматянин» to צֹפַר֙ is wrong, read by hand against BHSA: нааматянин is the gentilic נַּ֣עֲמָתִ֔י (Naamathite), not the name צֹפַר֙ (Zophar) beside it, which «Цофар» renders
+accept	18.42:9.9	18.42:9.12	renders		Job 42:9: «нааматянин» renders נַּ֣עֲמָתִ֔י, read by hand against BHSA: нааматянин renders the gentilic נַּ֣עֲמָתִ֔י, not the name צֹפַר֙ beside it
+refuse	34.1:1.7	34.1:1.7			Nahum 1:1: the aligner's link of «Наума» to אֶלְקֹשִֽׁי is wrong, read by hand against BHSA: Наума is the name Nahum (נַח֖וּם); אֶלְקֹשִֽׁי (Elkoshite) is the gentilic beside it
+accept	34.1:1.7	34.1:1.5	renders		Nahum 1:1: «Наума» renders נַח֖וּם, read by hand against BHSA: Наума is the name Nahum, not the gentilic אֶלְקֹשִֽׁי beside it
+refuse	34.1:1.6	34.1:1.5			Nahum 1:1: the aligner's link of «елкошейця» to נַח֖וּם is wrong, read by hand against BHSA: елкошейця is the gentilic אֶלְקֹשִֽׁי (Elkoshite), not the name נַח֖וּם (Nahum) beside it, which «Наума» renders
+accept	34.1:1.6	34.1:1.7	renders		Nahum 1:1: «елкошейця» renders אֶלְקֹשִֽׁי, read by hand against BHSA: елкошейця renders the gentilic אֶלְקֹשִֽׁי, not the name נַח֖וּם beside it
+refuse	13.27:13.6	13.27:13.10			1 Chronicles 27:13: the aligner's link of «Магарай» to נְּטֹֽופָתִ֖י is wrong, read by hand against BHSA: Магарай is the name Maharai (מַהְרַ֥י); נְּטֹֽופָתִ֖י (Netophathite) is the gentilic beside it
+accept	13.27:13.6	13.27:13.8	renders		1 Chronicles 27:13: «Магарай» renders מַהְרַ֥י, read by hand against BHSA: Магарай is the name Maharai, not the gentilic נְּטֹֽופָתִ֖י beside it
+refuse	13.11:46.4	13.11:46.3			1 Chronicles 11:46: the aligner's link of «Єрівай» to מַּחֲוִ֔ים is wrong, read by hand against BHSA: Єрівай is the name Jeribai; הַמַּחֲוִים is махав'янин
+accept	13.11:46.4	13.11:46.5	renders		1 Chronicles 11:46: «Єрівай» renders ירִיבַ֥י, read by hand against BHSA: і Єрівай = וִירִיבַי
+refuse	13.11:46.1	13.11:46.1			1 Chronicles 11:46: the aligner's link of «махав'янин» to אֱלִיאֵל֙ is wrong, read by hand against BHSA: махав'янин is the gentilic הַמַּחֲוִים (Mahavite), not the name אֱלִיאֵל, which Еліїл renders
+accept	13.11:46.1	13.11:46.3	renders		1 Chronicles 11:46: «махав'янин» renders מַּחֲוִ֔ים, read by hand against BHSA: махав'янин Еліїл = אֱלִיאֵל הַמַּחֲוִים
+refuse	7.20:15.2	7.20:15.2			Judges 20:15: the aligner's link of «Веніяминові» to יִּתְפָּֽקְדוּ֩ is wrong, read by hand against BHSA: Веніяминові is Benjamin; יִּתְפָּקְדוּ is були перелічені
+accept	7.20:15.2	7.20:15.4	renders		Judges 20:15: «Веніяминові» renders בִנְיָמִ֜ן, read by hand against BHSA: Веніяминові сини = בְנֵי בִנְיָמִן
+refuse	18.42:15.6	18.42:15.5			Job 42:15: the aligner's link of «Йовові» to יָפֹ֛ות is wrong, read by hand against BHSA: Йовові is the name Job; יָפֹות is вродливих
+accept	18.42:15.6	18.42:15.8	renders		Job 42:15: «Йовові» renders אִיֹּ֖וב, read by hand against BHSA: як Йовові дочки = כִּבְנֹות אִיֹּוב
+refuse	18.20:1.4	18.20:1.5			Job 20:1: the aligner's link of «Цофар» to נַּֽעֲמָתִ֗י is wrong, read by hand against BHSA: Цофар is the name Zophar (צֹפַ֥ר); נַּֽעֲמָתִ֗י (Naamathite) is the gentilic beside it
+accept	18.20:1.4	18.20:1.3	renders		Job 20:1: «Цофар» renders צֹפַ֥ר, read by hand against BHSA: Цофар is the name Zophar, not the gentilic נַּֽעֲמָתִ֗י beside it
+refuse	18.20:1.3	18.20:1.3			Job 20:1: the aligner's link of «нааматянин» to צֹפַ֥ר is wrong, read by hand against BHSA: нааматянин is the gentilic נַּֽעֲמָתִ֗י (Naamathite), not the name צֹפַ֥ר (Zophar) beside it, which «Цофар» renders
+accept	18.20:1.3	18.20:1.5	renders		Job 20:1: «нааматянин» renders נַּֽעֲמָתִ֗י, read by hand against BHSA: нааматянин renders the gentilic נַּֽעֲמָתִ֗י, not the name צֹפַ֥ר beside it
+refuse	10.6:8.17	10.6:8.7			2 Samuel 6:8: the aligner's link of «Перец-Узза» to פָּרַ֧ץ is wrong, read by hand against BHSA: Перец-Узза is the place name פֶּרֶץ עֻזָּה; פָּרַץ is the verb покарав
+accept	10.6:8.17	10.6:8.19	renders		2 Samuel 6:8: «Перец-Узза» renders פֶּ֣רֶץ עֻזָּ֔ה, read by hand against BHSA: назвав ім'я тому місцю Перец-Узза = וַיִּקְרָא לַמָּקֹום הַהוּא פֶּרֶץ עֻזָּה
+refuse	10.6:8.19	10.6:8.19			2 Samuel 6:8: the aligner's link of «так» to פֶּ֣רֶץ עֻזָּ֔ה is wrong, read by hand against BHSA: так has no counterpart; פֶּרֶץ עֻזָּה is the name Перец-Узза
+refuse	10.6:8.21	10.6:8.19			2 Samuel 6:8: the aligner's link of «зветься» to פֶּ֣רֶץ עֻזָּ֔ה is wrong, read by hand against BHSA: зветься is supplied; פֶּרֶץ עֻזָּה is the name Перец-Узза
+refuse	12.9:37.11	12.9:37.12			2 Kings 9:37: the aligner's link of «Їзреелевій» to חֵ֣לֶק is wrong, read by hand against BHSA: Їзреелевій is the town name Jezreel; חֵלֶק is ділянці
+accept	12.9:37.11	12.9:37.13	renders		2 Kings 9:37: «Їзреелевій» renders יִזְרְעֶ֑אל, read by hand against BHSA: в Їзреелевій ділянці = בְּחֵלֶק יִזְרְעֶאל
+refuse	12.9:37.12	12.9:37.13			2 Kings 9:37: the aligner's link of «ділянці» to יִזְרְעֶ֑אל is wrong, read by hand against BHSA: ділянці is חֵלֶק, not the town name יִזְרְעֶאל, which Їзреелевій renders
+accept	12.9:37.12	12.9:37.12	renders		2 Kings 9:37: «ділянці» renders חֵ֣לֶק, read by hand against BHSA: ділянці = חֵלֶק (в Їзреелевій ділянці)
+refuse	13.11:30.2	13.11:30.3			1 Chronicles 11:30: the aligner's link of «Магарай» to נְּטֹ֣פָתִ֔י is wrong, read by hand against BHSA: Магарай is the name Maharai (מַהְרַי֙); נְּטֹ֣פָתִ֔י (Netophathite) is the gentilic beside it
+accept	13.11:30.2	13.11:30.1	renders		1 Chronicles 11:30: «Магарай» renders מַהְרַי֙, read by hand against BHSA: Магарай is the name Maharai, not the gentilic נְּטֹ֣פָתִ֔י beside it
+refuse	13.11:30.1	13.11:30.1			1 Chronicles 11:30: the aligner's link of «нетофатянин» to מַהְרַי֙ is wrong, read by hand against BHSA: нетофатянин is the gentilic נְּטֹ֣פָתִ֔י (Netophathite), not the name מַהְרַי֙ (Maharai) beside it, which «Магарай» renders
+accept	13.11:30.1	13.11:30.3	renders		1 Chronicles 11:30: «нетофатянин» renders נְּטֹ֣פָתִ֔י, read by hand against BHSA: нетофатянин renders the gentilic נְּטֹ֣פָתִ֔י, not the name מַהְרַי֙ beside it
+refuse	28.10:14.14	28.10:14.11			Hosea 10:14: the aligner's link of «Шалман» to שֹׁ֧ד is wrong, read by hand against BHSA: Шалман is the name Shalman; שֹׁד is зруйнував
+accept	28.10:14.14	28.10:14.12	renders		Hosea 10:14: «Шалман» renders שַֽׁלְמַ֛ן, read by hand against BHSA: як Шалман зруйнував = כְּשֹׁד שַׁלְמַן
+refuse	28.10:14.15	28.10:14.12			Hosea 10:14: the aligner's link of «зруйнував» to שַֽׁלְמַ֛ן is wrong, read by hand against BHSA: зруйнував is שֹׁד, not the name שַׁלְמַן, which Шалман renders
+accept	28.10:14.15	28.10:14.11	renders		Hosea 10:14: «зруйнував» renders שֹׁ֧ד, read by hand against BHSA: як Шалман зруйнував = כְּשֹׁד שַׁלְמַן
+refuse	11.21:1.9	11.21:1.13			1 Kings 21:1: the aligner's link of «Навота» to יִּזְרְעֵאלִ֖י is wrong, read by hand against BHSA: Навота is the name Naboth (נָבֹ֥ות); יִּזְרְעֵאלִ֖י (Jezreelite) is the gentilic beside it
+accept	11.21:1.9	11.21:1.11	renders		1 Kings 21:1: «Навота» renders נָבֹ֥ות, read by hand against BHSA: Навота is the name Naboth, not the gentilic יִּזְרְעֵאלִ֖י beside it
+refuse	11.21:1.8	11.21:1.11			1 Kings 21:1: the aligner's link of «їзреелянина» to נָבֹ֥ות is wrong, read by hand against BHSA: їзреелянина is the gentilic יִּזְרְעֵאלִ֖י (Jezreelite), not the name נָבֹ֥ות (Naboth) beside it, which «Навота» renders
+accept	11.21:1.8	11.21:1.13	renders		1 Kings 21:1: «їзреелянина» renders יִּזְרְעֵאלִ֖י, read by hand against BHSA: їзреелянина renders the gentilic יִּזְרְעֵאלִ֖י, not the name נָבֹ֥ות beside it
+refuse	10.4:2.18	10.4:2.21			2 Samuel 4:2: the aligner's link of «Ріммона» to בְּאֶֽרֹתִ֖י is wrong, read by hand against BHSA: Ріммона is the name Rimmon (רִמֹּ֥ון); בְּאֶֽרֹתִ֖י (Beerothite) is the gentilic beside it
+accept	10.4:2.18	10.4:2.19	renders		2 Samuel 4:2: «Ріммона» renders רִמֹּ֥ון, read by hand against BHSA: Ріммона is the name Rimmon, not the gentilic בְּאֶֽרֹתִ֖י beside it
+refuse	18.11:1.4	18.11:1.5			Job 11:1: the aligner's link of «Цофар» to נַּעֲמָתִ֗י is wrong, read by hand against BHSA: Цофар is the name Zophar (צֹפַ֥ר); נַּעֲמָתִ֗י (Naamathite) is the gentilic beside it
+accept	18.11:1.4	18.11:1.3	renders		Job 11:1: «Цофар» renders צֹפַ֥ר, read by hand against BHSA: Цофар is the name Zophar, not the gentilic נַּעֲמָתִ֗י beside it
+refuse	18.11:1.3	18.11:1.3			Job 11:1: the aligner's link of «нааматянин» to צֹפַ֥ר is wrong, read by hand against BHSA: нааматянин is the gentilic נַּעֲמָתִ֗י (Naamathite), not the name צֹפַ֥ר (Zophar) beside it, which «Цофар» renders
+accept	18.11:1.3	18.11:1.5	renders		Job 11:1: «нааматянин» renders נַּעֲמָתִ֗י, read by hand against BHSA: нааматянин renders the gentilic נַּעֲמָתִ֗י, not the name צֹפַ֥ר beside it
+refuse	10.18:5.6	10.18:5.8			2 Samuel 18:5: the aligner's link of «Авішаєві» to אֶת is wrong, read by hand against BHSA: Авішаєві is the name Abishai; אֶת is the object marker before it
+accept	10.18:5.6	10.18:5.9	renders		2 Samuel 18:5: «Авішаєві» renders אֲבִישַׁ֤י, read by hand against BHSA: Йоавові й Авішаєві та Іттаєві = אֶת יֹואָב וְאֶת אֲבִישַׁי וְאֶת אִתַּי
+refuse	13.11:27.2	13.11:27.3			1 Chronicles 11:27: the aligner's link of «Шаммот» to הֲרֹורִ֔י is wrong, read by hand against BHSA: Шаммот is the name Shammoth (שַׁמֹּות֙); הֲרֹורִ֔י (Harorite) is the gentilic beside it
+accept	13.11:27.2	13.11:27.1	renders		1 Chronicles 11:27: «Шаммот» renders שַׁמֹּות֙, read by hand against BHSA: Шаммот is the name Shammoth, not the gentilic הֲרֹורִ֔י beside it
+refuse	13.11:27.1	13.11:27.1			1 Chronicles 11:27: the aligner's link of «гарор'янин» to שַׁמֹּות֙ is wrong, read by hand against BHSA: гарор'янин is the gentilic הֲרֹורִ֔י (Harorite), not the name שַׁמֹּות֙ (Shammoth) beside it, which «Шаммот» renders
+accept	13.11:27.1	13.11:27.3	renders		1 Chronicles 11:27: «гарор'янин» renders הֲרֹורִ֔י, read by hand against BHSA: гарор'янин renders the gentilic הֲרֹורִ֔י, not the name שַׁמֹּות֙ beside it
+refuse	13.11:29.2	13.11:29.3			1 Chronicles 11:29: the aligner's link of «Сіббехай» to חֻ֣שָׁתִ֔י is wrong, read by hand against BHSA: Сіббехай is the name Sibbecai (סִבְּכַי֙); חֻ֣שָׁתִ֔י (Hushathite) is the gentilic beside it
+accept	13.11:29.2	13.11:29.1	renders		1 Chronicles 11:29: «Сіббехай» renders סִבְּכַי֙, read by hand against BHSA: Сіббехай is the name Sibbecai, not the gentilic חֻ֣שָׁתִ֔י beside it
+refuse	13.11:29.1	13.11:29.1			1 Chronicles 11:29: the aligner's link of «хушатянин» to סִבְּכַי֙ is wrong, read by hand against BHSA: хушатянин is the gentilic חֻ֣שָׁתִ֔י (Hushathite), not the name סִבְּכַי֙ (Sibbecai) beside it, which «Сіббехай» renders
+accept	13.11:29.1	13.11:29.3	renders		1 Chronicles 11:29: «хушатянин» renders חֻ֣שָׁתִ֔י, read by hand against BHSA: хушатянин renders the gentilic חֻ֣שָׁתִ֔י, not the name סִבְּכַי֙ beside it
+refuse	7.5:28.6	7.5:28.6			Judges 5:28: the aligner's link of «Сісерина» to תְּיַבֵּ֛ב is wrong, read by hand against BHSA: Сісерина is the name Sisera; תְּיַבֵּב is голосила
+accept	7.5:28.6	7.5:28.8	renders		Judges 5:28: «Сісерина» renders סִֽיסְרָ֖א, read by hand against BHSA: Сісерина мати = אֵם סִיסְרָא
+refuse	18.2:11.26	18.2:11.30			Job 2:11: the aligner's link of «Цофар» to נַּֽעֲמָתִ֑י is wrong, read by hand against BHSA: Цофар is the name Zophar (צֹופַ֖ר); נַּֽעֲמָתִ֑י (Naamathite) is the gentilic beside it
+accept	18.2:11.26	18.2:11.28	renders		Job 2:11: «Цофар» renders צֹופַ֖ר, read by hand against BHSA: Цофар is the name Zophar, not the gentilic נַּֽעֲמָתִ֑י beside it
