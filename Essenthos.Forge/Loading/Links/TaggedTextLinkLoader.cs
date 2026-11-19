@@ -69,10 +69,11 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         string fromSlug,
         string toSlug,
         EditionNumbers? edition,
+        IReadOnlyDictionary<string, string> suppletions,
         CancellationToken cancellationToken = default)
     {
         var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
-        var (drafts, _, _, _, _, _, _) = await Match(from, to, edition, cancellationToken);
+        var (drafts, _, _, _, _, _, _) = await Match(from, to, edition, suppletions, cancellationToken);
         var stated = new Dictionary<long, HashSet<long>>();
         foreach (var (named, targets) in await Stated(from.Id, to.Id, cancellationToken))
         {
@@ -137,6 +138,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             Database.Entities.Text from,
             Database.Entities.Text to,
             EditionNumbers? edition,
+            IReadOnlyDictionary<string, string> suppletions,
             CancellationToken cancellationToken)
     {
         var series = to.Language == Greek ? StrongNumbers.Greek : StrongNumbers.Hebrew;
@@ -145,7 +147,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         var (pairs, tagged, unplaced) = Paired(translation, witness);
 
         var resolution = series == StrongNumbers.Greek
-            ? await Resolution(pairs, cancellationToken)
+            ? await Resolution(pairs, suppletions, cancellationToken)
             : [];
 
         var (drafts, matched, resolved) = Drafted(pairs, resolution);
@@ -222,6 +224,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     /// </summary>
     private async Task<Dictionary<string, NumberRedirect>> Resolution(
         List<VersePair> pairs,
+        IReadOnlyDictionary<string, string> suppletions,
         CancellationToken cancellationToken)
     {
         var dictionary = await db.StrongEntries
@@ -235,7 +238,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             attested.Add(word.Strong!);
         }
 
-        return GreekNumberResolution.Admit(dictionary, attested, Occurrences(pairs));
+        return GreekNumberResolution.Admit(dictionary, attested, Occurrences(pairs), suppletions);
     }
 
     private static IEnumerable<NumberOccurrence> Occurrences(List<VersePair> pairs)

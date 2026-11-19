@@ -201,7 +201,7 @@ internal static partial class TableProducts
 
     private static List<StrongParsedEntry> StrongEntries(ProductStore store)
     {
-        var parser = new StrongXmlParser();
+        var parser = new StrongXmlParser(StrongReferences.Read(store));
         return
         [
             .. parser.ParseHebrew(File.ReadAllText(store.FullPath(StrongHebrew))),

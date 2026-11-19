@@ -25,7 +25,7 @@ namespace Essenthos.Core.Loading.Links;
 /// at a lower confidence. By order alone, an edition lacking one occurrence shifted every later one:
 /// at John 3:16 Scrivener's αὐτοῦ took Nestle's only αὐτόν and Scrivener's αὐτόν got nothing.
 ///
-/// The one thing done to a number before it is compared is <see cref="GreekLemmaNumbers"/>, which
+/// The one thing done to a number before it is compared is <see cref="StrongNumberLists.Lemma"/>, which
 /// is not a heuristic: Strong gave ὑμεῖς an entry beside σύ and most digital editions tag the lemma
 /// where Tischendorf's tags the form. Without it 2,729 words of that edition pair with nothing and
 /// are then written out as textual variants, which is a stated difference between two editions that
@@ -74,11 +74,11 @@ internal static class GreekWitnessLinks
     /// side only is written positively as an absence rather than left as a hole — that is the
     /// variant, and recording it is the whole point.
     /// </summary>
-    internal static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
+    internal static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts, StrongNumberLists lists)
     {
-        var mine = left.Where(w => w.Strong is not null).GroupBy(w => GreekLemmaNumbers.Of(w.Strong)!)
+        var mine = left.Where(w => w.Strong is not null).GroupBy(w => lists.Lemma(w.Strong)!)
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
-        var yours = right.Where(w => w.Strong is not null).GroupBy(w => GreekLemmaNumbers.Of(w.Strong)!)
+        var yours = right.Where(w => w.Strong is not null).GroupBy(w => lists.Lemma(w.Strong)!)
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
 
         var hereOnly = new List<Leftover>();

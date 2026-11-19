@@ -99,7 +99,7 @@ public sealed class ReinaValeraStrongLinkTests : IDisposable
         _db.Links.AddRange(stated, wrong);
         _db.SaveChanges();
 
-        var score = (await _loader.Score(_folder, [_hebrew.Slug])).Single(s => s.To == _hebrew.Slug);
+        var score = (await _loader.Score(_folder, ShippedStrongNumbers.Lists, [_hebrew.Slug])).Single(s => s.To == _hebrew.Slug);
         score.Should().BeEquivalentTo(new { StatedWords = 2, AgreedWords = 1, Pairs = 2, AgreedPairs = 1 });
     }
 }

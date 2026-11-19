@@ -2,6 +2,7 @@ using Essenthos.Core.Berean;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Utils;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -48,10 +49,10 @@ internal static class BereanLinks
     /// fewer than half the rows are one, or fewer than three quarters of the rows and of the witness's words alike, which
     /// says the two sides are not the same verse.
     /// </summary>
-    internal static int[]? Counterparts(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
+    internal static int[]? Counterparts(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness, StrongNumberLists lists)
     {
-        WitnessForm[] theirs = [.. rows.Select(row => ClearBibleLinks.Form(ClearBibleLinks.Comparable(row.Original, Greek), row.StrongNumber))];
-        WitnessForm[] ours = [.. witness.Select(word => ClearBibleLinks.Form(ClearBibleLinks.Comparable(word.Surface, Greek), word.Strong))];
+        WitnessForm[] theirs = [.. rows.Select(row => ClearBibleLinks.Form(ClearBibleLinks.Comparable(row.Original, Greek), row.StrongNumber, lists))];
+        WitnessForm[] ours = [.. witness.Select(word => ClearBibleLinks.Form(ClearBibleLinks.Comparable(word.Surface, Greek), word.Strong, lists))];
         var counterparts = ClearBibleLinks.Counterparts(theirs, ours);
 
         // Where one side has a word twice and the other once, an alignment may take either of the two equally well: Galatians

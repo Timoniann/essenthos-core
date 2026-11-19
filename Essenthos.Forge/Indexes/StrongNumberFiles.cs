@@ -1,3 +1,4 @@
+using Essenthos.Core.Strong;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
@@ -112,6 +113,7 @@ internal static class StrongNumberFiles
     {
         var clock = Stopwatch.StartNew();
         var store = context.Store;
+        var lists = StrongNumberLists.Of(store);
         var product = Product(text);
         var pairs = context.PairsOf(text).OrderBy(p => p.Pair, StringComparer.Ordinal).ToList();
         var others = pairs.Select(p => p.Other).Distinct().Order(StringComparer.Ordinal).ToList();
@@ -136,6 +138,7 @@ internal static class StrongNumberFiles
         }
 
         inputs.AddRange(pairs.Select(p => store.ProductInput(MappingProducts.Of(p.Pair, MappingProducts.Final))));
+        inputs.Add(store.ProductInput(StrongNumberLists.Product));
         if (!force && !NeedsBuild(store, product, inputs))
         {
             return new IndexOutcome(text, "numbers", false, 0, clock.Elapsed);
@@ -147,8 +150,8 @@ internal static class StrongNumberFiles
                 ? Numbers(store, key.Item1)
                 : (context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal), null);
             return Original(key.Item1)
-                ? new ChainedNumbers.Lender(true, numbers, classes.Value.Classes, Finite(store, key.Item1), classes.Value.Names, also)
-                : new ChainedNumbers.Lender(false, numbers, also: also);
+                ? new ChainedNumbers.Lender(lists, true, numbers, classes.Value.Classes, Finite(store, key.Item1), classes.Value.Names, also)
+                : new ChainedNumbers.Lender(lists, false, numbers, also: also);
         })).Value, StringComparer.Ordinal);
         var words = new List<(WordKey Key, string? Own, string Form)>();
         var supplied = new HashSet<string>(StringComparer.Ordinal);
@@ -167,7 +170,7 @@ internal static class StrongNumberFiles
 
         var keys = words.ToDictionary(w => w.Key.Own, w => w.Key, StringComparer.Ordinal);
         var numbered = ChainedNumbers.Resolve(words.Select(w => (w.Key.Own, w.Own, w.Form)).ToList(), Links(store, pairs, lending), lending,
-            translation ? new GroupNumbers(context.Texts[text].Language) : null, translation ? supplied : null);
+            lists, translation ? new GroupNumbers(context.Texts[text].Language, lists) : null, translation ? supplied : null);
         var disagreeing = numbered.Where(n => n.Linked is not null).ToList();
         var examples = Enumerable.Range(0, Math.Min(Examples, disagreeing.Count))
             .Select(i => disagreeing[(int)((long)i * disagreeing.Count / Math.Min(Examples, disagreeing.Count))])

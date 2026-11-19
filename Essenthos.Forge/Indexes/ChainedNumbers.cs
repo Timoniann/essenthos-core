@@ -1,3 +1,4 @@
+using Essenthos.Core.Strong;
 namespace Essenthos.Core.Indexes;
 
 /// <summary>
@@ -16,7 +17,7 @@ namespace Essenthos.Core.Indexes;
 /// where it carries one number alone (a source joining 神 to אֱלֹהִים מִן הָעֲבֹדָה gives it God's number, as 神 takes everywhere
 /// else), then the number fewer words of the lending text carry (of an article and the noun it governs, joined in one link to
 /// one word, the noun's), then the number and the word lending it in ordinal order. The relative שֶׁ is counted with אֲשֶׁר in
-/// both counts (<see cref="CountedAs"/>).
+/// both counts (<c>strong/numbers.tsv</c>, list <c>counted-as</c>: <see cref="StrongNumberLists.CountedWith"/>).
 /// </para>
 /// <para>
 /// A translation's word joined to an original takes only what the group rules (<see cref="GroupNumbers"/>, PRB-1869) give it over
@@ -32,21 +33,21 @@ internal static class ChainedNumbers
     public const double Reliable = 0.9;
 
     /// <summary>
-    /// Numbers counted with another's for the tie-breaks: the relative שֶׁ (H7945) is the short form of אֲשֶׁר (H834), so a form
-    /// whose most usual number is אֲשֶׁר's takes it, and against a content word joined with it in one link it counts as common as
-    /// אֲשֶׁר.
+    /// A number's count with the count of the number it is counted with for the tie-breaks: the relative שֶׁ (H7945) is the short
+    /// form of אֲשֶׁר (H834), so a form whose most usual number is אֲשֶׁר's takes it, and against a content word joined with it in one
+    /// link it counts as common as אֲשֶׁר.
     /// </summary>
-    private static readonly Dictionary<string, string> CountedAs = new(StringComparer.Ordinal) { ["H7945"] = "H834" };
-
-    private static int Counted(string number, Func<string, int> count) =>
-        count(number) + (CountedAs.TryGetValue(number, out var with) ? count(with) : 0);
+    private static int Counted(StrongNumberLists lists, string number, Func<string, int> count) =>
+        count(number) + (lists.CountedWith(number) is { } with ? count(with) : 0);
 
     /// <summary>A text whose words a text's links reach, with the numbers it lends: by own key, the number and the links it took to reach it.</summary>
     /// <param name="classes">The class of each number of the originals (<see cref="OriginalWords"/>); a number it lacks is a content word's.</param>
     /// <param name="finite">The keys of the text's words that are finite verbs.</param>
     /// <param name="names">The numbers of the originals that are proper names'.</param>
     /// <param name="also">By own key, the further numbers a word carries with its first, rendering several words as one (P7).</param>
+    /// <param name="lists">The Strong number lists, for the numbers counted as one and counted with another's.</param>
     internal sealed class Lender(
+        StrongNumberLists lists,
         bool original,
         IReadOnlyDictionary<string, (string Number, int Hops)> numbers,
         IReadOnlyDictionary<string, WordClass>? classes = null,
@@ -62,7 +63,7 @@ internal static class ChainedNumbers
 
         private readonly Lazy<Dictionary<string, HashSet<string>>> _verses = new(() => numbers
             .GroupBy(n => VerseOf(n.Key), StringComparer.Ordinal)
-            .ToDictionary(g => g.Key, g => g.Select(n => StrongSynonyms.Canonical(n.Value.Number)).ToHashSet(StringComparer.Ordinal), StringComparer.Ordinal));
+            .ToDictionary(g => g.Key, g => g.Select(n => lists.Canonical(n.Value.Number)).ToHashSet(StringComparer.Ordinal), StringComparer.Ordinal));
 
         /// <summary>The numbers of the words of the verses the keys stand in, synonyms counted as one.</summary>
         public IReadOnlySet<string> NumbersOfTheVerses(IEnumerable<string> keys)
@@ -89,7 +90,7 @@ internal static class ChainedNumbers
 
         public bool TryGet(string key, out (string Number, int Hops) lent) => numbers.TryGetValue(key, out lent);
 
-        public int Occurrences(string number) => Counted(number, n => _occurrences.Value.GetValueOrDefault(n));
+        public int Occurrences(string number) => Counted(lists, number, n => _occurrences.Value.GetValueOrDefault(n));
     }
 
     /// <summary>A renders or equals link of the text: its words in it, the other text and the other text's words in it.</summary>
@@ -126,7 +127,7 @@ internal static class ChainedNumbers
     /// <param name="supplied">The keys of the words the translation marks as its translators' own, which take no number.</param>
     public static List<Numbered> Resolve(
         IEnumerable<(string Key, string? Own, string Form)> words, IEnumerable<Joined> links, IReadOnlyDictionary<string, Lender> lenders,
-        GroupNumbers? rules = null, IReadOnlySet<string>? supplied = null)
+        StrongNumberLists lists, GroupNumbers? rules = null, IReadOnlySet<string>? supplied = null)
     {
         var listed = words as IReadOnlyList<(string Key, string? Own, string Form)> ?? [.. words];
         var joined = links as IReadOnlyList<Joined> ?? [.. links];
@@ -182,12 +183,12 @@ internal static class ChainedNumbers
 
             var reached = ruled is not null && own is null && ruled.TryGetValue(key, out var given) ? given : candidates.GetValueOrDefault(key);
             int Usual(Candidate c) =>
-                CountedAs.TryGetValue(c.Number, out var with) && usual.GetValueOrDefault((form, with)) == most.GetValueOrDefault(form, -1)
-                    ? Counted(c.Number, n => usual.GetValueOrDefault((form, n)))
+                lists.CountedWith(c.Number) is { } with && usual.GetValueOrDefault((form, with)) == most.GetValueOrDefault(form, -1)
+                    ? Counted(lists, c.Number, n => usual.GetValueOrDefault((form, n)))
                     : usual.GetValueOrDefault((form, c.Number));
             if (own is not null)
             {
-                var disagreeing = reached is null ? null : Disagreeing(own, reached, Usual);
+                var disagreeing = reached is null ? null : Disagreeing(lists, own, reached, Usual);
                 numbered.Add(new Numbered(key, own, 0, null, null, disagreeing?.Number, disagreeing?.Source));
             }
             else if (reached is not null && Best(reached, Usual) is { } best)
@@ -200,11 +201,11 @@ internal static class ChainedNumbers
     }
 
     /// <summary>The number the sure links give a word that has its own, where none of them gives its own: those of originals first, else of translations.</summary>
-    private static Candidate? Disagreeing(string own, List<Candidate> reached, Func<Candidate, int> usual)
+    private static Candidate? Disagreeing(StrongNumberLists lists, string own, List<Candidate> reached, Func<Candidate, int> usual)
     {
         var sure = reached.Where(c => c.Sure).ToList();
         var level = sure.Any(c => c.Original) ? sure.Where(c => c.Original).ToList() : sure;
-        return level.Count == 0 || level.Any(c => StrongSynonyms.Same(c.Number, own)) ? null : Best(level, usual);
+        return level.Count == 0 || level.Any(c => lists.Same(c.Number, own)) ? null : Best(level, usual);
     }
 
     /// <summary>

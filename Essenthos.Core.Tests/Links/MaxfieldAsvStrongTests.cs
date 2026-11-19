@@ -45,6 +45,7 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
 
     public MaxfieldAsvStrongTests()
     {
+        ShippedStrongNumbers.CopyInto(_root);
         _store = new ProductStore(_root);
 
         // Genesis 1:1 as the file writes it: the head word numbered, the language now and then with a return after it,
@@ -83,7 +84,7 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
     [Fact]
     public void Each_word_takes_its_own_number_and_a_footnote_or_a_title_fragment_none()
     {
-        var verses = MaxfieldAsvEdition.Read(Path.Combine([_root, .. MaxfieldAsvEdition.EditionFile]));
+        var verses = MaxfieldAsvEdition.Read(Path.Combine([_root, .. MaxfieldAsvEdition.EditionFile]), ShippedStrongNumbers.Lists.ClauseParticles);
 
         verses.Keys.Should().BeEquivalentTo([(1, 1, 1), (42, 4, 12), (42, 4, 13), (42, 11, 21), (23, 32, 19), (40, 14, 22), (43, 9, 25),
             (44, 5, 32), (50, 2, 4), (40, 9, 35), (41, 12, 24), (44, 28, 18)], "chapter 0 is the book's title, not a verse");
@@ -100,13 +101,13 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
     [Fact]
     public void A_clause_particle_s_number_on_a_content_word_is_dropped_and_on_a_function_word_kept()
     {
-        var verse = MaxfieldAsvEdition.Read(Path.Combine([_root, .. MaxfieldAsvEdition.EditionFile]), out var dropped)[(42, 4, 12)];
+        var verse = MaxfieldAsvEdition.Read(Path.Combine([_root, .. MaxfieldAsvEdition.EditionFile]), ShippedStrongNumbers.Lists.ClauseParticles, out var dropped)[(42, 4, 12)];
 
         verse.Single(word => word.Text == "God").Numbers.Should().BeEmpty();
         verse.Single(word => word.Text == "that").Numbers.Should().Equal("G3754");
         verse.Single(word => word.Text == "but").Numbers.Should().Equal("G1161");
         dropped.Should().Be(1);
-        MaxfieldAsvEdition.ClauseParticles.Should().Contain(["G3754", "G2443", "G1161", "G1352", "G1063", "G3767"]);
+        ShippedStrongNumbers.Lists.ClauseParticles.Should().Contain(["G3754", "G2443", "G1161", "G1352", "G1063", "G3767"]);
     }
 
     [Fact]
@@ -115,7 +116,7 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
         var other = Path.Combine(_root, "other", "ASV.bbl");
         Edition(other, "Copyright Wade Maxfield, all rights reserved.", ("Genesis", [(1, 1, "God", "H", 430)]));
 
-        var read = () => MaxfieldAsvEdition.Read(other);
+        var read = () => MaxfieldAsvEdition.Read(other, ShippedStrongNumbers.Lists.ClauseParticles);
 
         read.Should().Throw<InvalidDataException>().WithMessage("*released by him for any purpose*");
     }

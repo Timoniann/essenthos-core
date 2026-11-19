@@ -105,7 +105,7 @@ editions, and that is what the corpus loads them for.
 The port was not blind. The plural pronouns were left on Strong's own numbering — **G5210** ὑμεῖς
 and **G2249** ἡμεῖς where every other Greek text here writes G4771 and G1473 — along with a dozen
 comparatives and adverbs Strong entered separately from their positive. That is 2,760 words whose
-number nothing else in the corpus states; `Strong/GreekLemmaNumbers.cs` records the twelve pairs the
+number nothing else in the corpus states; the `lemmatised` list of `Essenthos/strong/numbers.tsv` records the twelve pairs the
 corpus itself corroborated and deliberately leaves three unmapped.
 
 ## Why it is attributed anyway

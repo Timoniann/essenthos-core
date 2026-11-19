@@ -2,6 +2,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Products;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.XmlBible;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Conversion;
 
@@ -16,7 +17,9 @@ namespace Essenthos.Core.Conversion;
 /// </summary>
 internal sealed class SideStrongNumbers : ITextStage
 {
-    private sealed record Layer(string Source, Func<string, Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>>> Read, bool Stated = false);
+    /// <param name="Lists">Whether the edition is read with the Strong number lists (<see cref="StrongNumberLists"/>).</param>
+    private sealed record Layer(
+        string Source, Func<string, Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>>> Read, bool Stated = false, bool Lists = false);
 
     private static readonly Dictionary<string, Layer> Layers = Build();
 
@@ -29,7 +32,8 @@ internal sealed class SideStrongNumbers : ITextStage
             [EbibleTextSource.ReinaValera] = new(string.Join('/', ReinaValeraStrongLinkLoader.EditionFolder),
                 resources => EbibleTextSource.Numbers(Path.Combine([resources, .. ReinaValeraStrongLinkLoader.EditionFolder]))),
             [EnglishTextSource.AmericanStandard] = new(string.Join('/', MaxfieldAsvEdition.EditionFile),
-                resources => MaxfieldAsvEdition.Read(Path.Combine([resources, .. MaxfieldAsvEdition.EditionFile]))),
+                resources => MaxfieldAsvEdition.Read(Path.Combine([resources, .. MaxfieldAsvEdition.EditionFile]), StrongNumberLists.Of(resources).ClauseParticles),
+                Lists: true),
         };
 
         foreach (var numbering in CrossWireNumberings.All)
@@ -41,7 +45,7 @@ internal sealed class SideStrongNumbers : ITextStage
         foreach (var union in (string[])[SwordTextSource.ChineseUnion, SwordTextSource.ChineseUnionSimplified])
         {
             var folder = SwordTextSource.Texts.Values.Single(t => t.Definition.Slug == union).Folder;
-            layers[union] = new(folder, resources => SwordTextSource.Numbers(Path.Combine(resources, folder)));
+            layers[union] = new(folder, resources => SwordTextSource.Numbers(Path.Combine(resources, folder), StrongNumberLists.Of(resources)), Lists: true);
         }
 
         return layers;
@@ -65,7 +69,11 @@ internal sealed class SideStrongNumbers : ITextStage
     public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> ReadEdition(string slug, string resources) =>
         Layers[slug].Read(resources);
 
-    public IReadOnlyList<string> Sources(string slug) => [Layers[slug].Source, StrongTerms.Source];
+    /// <summary>Whether a laid text's edition is read with the Strong number lists, which its products then name as an input.</summary>
+    public static bool ReadsLists(string slug) => Layers[slug].Lists;
+
+    public IReadOnlyList<string> Sources(string slug) =>
+        [Layers[slug].Source, StrongTerms.Source, .. Layers[slug].Lists ? [StrongNumberLists.Source] : Array.Empty<string>()];
 
     public void Apply(ConvertedText text, string resources)
     {

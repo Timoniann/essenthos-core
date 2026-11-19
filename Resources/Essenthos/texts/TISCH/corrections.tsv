@@ -1,0 +1,5 @@
+# product    Essenthos/texts/TISCH/corrections.tsv
+# producer   by hand
+# kinds      strong: the word's Strong number becomes after; before is the word as it reads and the number it carries until the row applies
+own	kind	before	after	why
+42.3:26.10	strong	Ἰωδὰ G2448	G2455	Joda, a man of Luke's genealogy. Nestle, Tischendorf and Westcott-Hort print Ἰωδά and tag it G2448, Ἰουδά, the region of Judah that Luke 1:39 names. Strong's files the man of Luke 3:26 under G2455, Ἰούδας, the number the Textus Receptus and the Byzantine Textform write on the Ἰούδα they print at the same place. This project's reading, not the edition's.

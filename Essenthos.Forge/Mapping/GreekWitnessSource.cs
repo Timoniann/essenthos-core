@@ -1,6 +1,7 @@
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Mapping;
 
@@ -27,12 +28,12 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
         ? source is GreekWitnessLinks.Source or GreekWitnessLinks.LemmatisedSource
         : source == GreekWitnessLinks.SubstitutionSource;
 
-    public IEnumerable<string> Inputs(ProductStore store, string pair) => [];
+    public IEnumerable<string> Inputs(ProductStore store, string pair) => [StrongNumberLists.Source];
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
         var (fromText, toText) = MappingProducts.Split(pair);
-        var drafts = Drafts(texts[fromText], texts[toText], out var verses);
+        var drafts = Drafts(texts[fromText], texts[toText], StrongNumberLists.Of(texts.Store), out var verses);
         var database = MappingMethods.DatabaseMethod(method);
         var mine = drafts.Where(draft => draft.Method == database).ToList();
         log($"{verses} addresses, {drafts.Count} pairings, {mine.Count} of them {method}");
@@ -45,7 +46,7 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
     /// Every address both editions fill, paired as the database's loader paired it. A word's id is its place in its text's
     /// words, plus <see cref="Second"/> for the second edition's, its position the one its key gives.
     /// </summary>
-    internal static List<GreekWitnessLinks.GreekDraft> Drafts(ProductText from, ProductText to, out int verses)
+    internal static List<GreekWitnessLinks.GreekDraft> Drafts(ProductText from, ProductText to, StrongNumberLists lists, out int verses)
     {
         var drafts = new List<GreekWitnessLinks.GreekDraft>(150_000);
         verses = 0;
@@ -57,7 +58,7 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
             }
 
             verses++;
-            GreekWitnessLinks.Pair(Words(from, left, 0), Words(to, right, Second), drafts);
+            GreekWitnessLinks.Pair(Words(from, left, 0), Words(to, right, Second), drafts, lists);
         }
 
         return drafts;

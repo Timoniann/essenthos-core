@@ -26,6 +26,7 @@ public sealed class WitnessPairSourceTests : IDisposable
     [Fact]
     public void Numbers_pair_as_strong_the_leftovers_by_place_as_lexical_and_every_absence_is_written()
     {
+        ShippedStrongNumbers.CopyInto(_root);
         var store = new ProductStore(_root);
         Words(store, "WH1881", "grc", ("40.1:10", [("ὁ", "G3588"), ("δὲ", "G1161"), ("αμως", "G301")]));
         Words(store, "TR1894", "grc", ("40.1:10", [("ὁ", "G3588"), ("αμων", "G300"), ("γαρ", "G1063"), ("δε", "G1161")]));
@@ -47,6 +48,7 @@ public sealed class WitnessPairSourceTests : IDisposable
     [Fact]
     public void An_address_holding_two_verses_of_one_number_is_read_verse_after_verse()
     {
+        ShippedStrongNumbers.CopyInto(_root);
         var store = new ProductStore(_root);
         Words(store, "SWETEOG", "grc", ("27.6:12", [("Μήδων", null), ("καὶ", null)]), ("27.6:12a", [("Περσῶν", null), ("οὐ", null)]));
         Words(store, "SWETE", "grc", ("27.6:12", [("Μήδων", null), ("καὶ", null), ("Περσῶν", null), ("οὐ", null)]));

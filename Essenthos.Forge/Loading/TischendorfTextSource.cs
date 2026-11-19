@@ -145,7 +145,7 @@ internal static class TischendorfTextSource
                         [.. chapter.OrderBy(verse => verse.Number).Select(Verse)]))]));
         }
 
-        return GreekWitnessNumbers.Apply(new TextSource(Definition, books));
+        return new TextSource(Definition, books);
     }
 
     /// <summary>

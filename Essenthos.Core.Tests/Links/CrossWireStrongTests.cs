@@ -89,7 +89,7 @@ public sealed class CrossWireStrongTests : IDisposable
             SwordSegmentation.Spaced,
             ref unit,
             out _,
-            fhlPrefixes: false);
+            fhlPrefixes: null);
 
         words.Select(w => w.Surface).Should().Equal("afin", "que", "quiconque", "croit");
         words[0].Unit.Should().Be(words[1].Unit);
@@ -109,7 +109,7 @@ public sealed class CrossWireStrongTests : IDisposable
     [InlineData("strong:505", new string[0])]
     [InlineData("strong:G3588 lemma.TR:ο", new[] { "G3588" })]
     public void OnlyFhlsPrefixNumbersAreTranslated(string lemma, string[] expected) =>
-        UnionStrongNumbers.Read(lemma, fhlPrefixes: false).Should().Equal(expected);
+        UnionStrongNumbers.Read(lemma, fhlPrefixes: null).Should().Equal(expected);
 
     /// <summary>
     /// Every numbering is credited by a prefix no other dataset claims, because the credit is the

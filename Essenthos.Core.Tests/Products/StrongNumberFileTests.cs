@@ -52,6 +52,7 @@ public sealed class StrongNumberFileTests : IDisposable
     /// </summary>
     private ProductStore Corpus()
     {
+        ShippedStrongNumbers.CopyInto(_resources);
         var store = new ProductStore(_resources);
         Declare(store, "HEB", "hbo", "critical-edition");
         Declare(store, "TAG", "eng", "translation");
@@ -133,7 +134,7 @@ public sealed class StrongNumberFileTests : IDisposable
     [Fact]
     public void AWordJoinedToSeveralNumberedWordsTakesTheNumberItsFormUsuallyCarriesElseTheRarest()
     {
-        var lender = new ChainedNumbers.Lender(true, new Dictionary<string, (string, int)>
+        var lender = new ChainedNumbers.Lender(ShippedStrongNumbers.Lists, true, new Dictionary<string, (string, int)>
         {
             ["1"] = ("G3588", 0), ["2"] = ("G2316", 0), ["3"] = ("G3588", 0), ["4"] = ("H430", 0), ["5"] = ("H5656", 0), ["6"] = ("H430", 0),
         });
@@ -142,7 +143,7 @@ public sealed class StrongNumberFileTests : IDisposable
             [new ChainedNumbers.Joined(["a"], "GRC", ["1", "2"], 0.7), new ChainedNumbers.Joined(["b"], "GRC", ["2"], 0.6),
              new ChainedNumbers.Joined(["b"], "GRC", ["3"], 0.9), new ChainedNumbers.Joined(["c"], "GRC", ["2"], 0.8),
              new ChainedNumbers.Joined(["d"], "GRC", ["4", "5"], null), new ChainedNumbers.Joined(["e"], "GRC", ["6"], null)],
-            new Dictionary<string, ChainedNumbers.Lender> { ["GRC"] = lender });
+            new Dictionary<string, ChainedNumbers.Lender> { ["GRC"] = lender }, ShippedStrongNumbers.Lists);
 
         numbered.Should().Equal(
             new ChainedNumbers.Numbered("a", "G2316", 1, "GRC 2", 0.7, null, null),
@@ -160,7 +161,7 @@ public sealed class StrongNumberFileTests : IDisposable
     [Fact]
     public void TheRelativeParticleIsCountedWithAsherWhenAWordIsJoinedToItAndAVerb()
     {
-        var lender = new ChainedNumbers.Lender(true, new Dictionary<string, (string, int)>
+        var lender = new ChainedNumbers.Lender(ShippedStrongNumbers.Lists, true, new Dictionary<string, (string, int)>
         {
             ["1"] = ("H7945", 0), ["2"] = ("H1961", 0), ["3"] = ("H834", 0), ["4"] = ("H834", 0), ["5"] = ("H834", 0), ["6"] = ("H1961", 0),
             ["7"] = ("H2654", 0), ["8"] = ("H7945", 0),
@@ -172,7 +173,7 @@ public sealed class StrongNumberFileTests : IDisposable
              new ChainedNumbers.Joined(["d"], "HEB", ["4"], null), new ChainedNumbers.Joined(["e"], "HEB", ["8", "7"], null),
              new ChainedNumbers.Joined(["f"], "HEB", ["5"], null), new ChainedNumbers.Joined(["g"], "HEB", ["2"], null),
              new ChainedNumbers.Joined(["h"], "HEB", ["6"], null)],
-            new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender });
+            new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender }, ShippedStrongNumbers.Lists);
 
         numbered.Should().Equal(
             new ChainedNumbers.Numbered("a", "H1961", 1, "HEB 2", null, null, null),
@@ -193,7 +194,7 @@ public sealed class StrongNumberFileTests : IDisposable
     };
 
     private static ChainedNumbers.Lender Hebrew(params (string Key, string Number)[] words) =>
-        new(true, words.ToDictionary(w => w.Key, w => (w.Number, 0), StringComparer.Ordinal), Classes, new HashSet<string>(["v"], StringComparer.Ordinal));
+        new(ShippedStrongNumbers.Lists, true, words.ToDictionary(w => w.Key, w => (w.Number, 0), StringComparer.Ordinal), Classes, new HashSet<string>(["v"], StringComparer.Ordinal));
 
     /// <summary>
     /// PRB-1869, the owner's rules inside a group link: «Now the snake» over ו + ה + נחש gives «Now» the conjunction, «the» the
@@ -212,8 +213,8 @@ public sealed class StrongNumberFileTests : IDisposable
              new ChainedNumbers.Joined(["d", "e", "f", "j"], "HEB", ["4"], null),
              new ChainedNumbers.Joined(["g"], "HEB", ["5", "6"], null), new ChainedNumbers.Joined(["h"], "HEB", ["7", "8"], null),
              new ChainedNumbers.Joined(["i"], "HEB", ["9", "10"], null)],
-            new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender },
-            new GroupNumbers("eng"), new HashSet<string>(["j"], StringComparer.Ordinal));
+            new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender }, ShippedStrongNumbers.Lists,
+            new GroupNumbers("eng", ShippedStrongNumbers.Lists), new HashSet<string>(["j"], StringComparer.Ordinal));
 
         numbered.Select(n => (n.Key, n.Number)).Should().Equal(
             ("a", "H9000"), ("b", "H9009"), ("c", "H5175"), ("e", "H6086"), ("f", "H6086"), ("g", "H6440"), ("h", "H6440"), ("i", "H6440"));
@@ -252,10 +253,10 @@ public sealed class StrongNumberFileTests : IDisposable
         var lenders = new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender };
         string[] read = ["a", "b", "c", "d", "e", "f", "g", "h", "l", "m", "s", "t", "x"];
 
-        ChainedNumbers.Resolve(words, links, lenders, new GroupNumbers("eng")).Where(n => read.Contains(n.Key))
+        ChainedNumbers.Resolve(words, links, lenders, ShippedStrongNumbers.Lists, new GroupNumbers("eng", ShippedStrongNumbers.Lists)).Where(n => read.Contains(n.Key))
             .Select(n => (n.Key, n.Number)).Should().Equal(("a", "H559"), ("b", "H559"), ("c", "G435"), ("d", "G435"), ("e", "G435"),
                 ("f", "G435"), ("g", "G435"), ("h", "G846"), ("m", "G1510"), ("s", "H559"), ("t", "H559"), ("x", "G2501"));
-        ChainedNumbers.Resolve(words, links, lenders, new GroupNumbers("eng", leftovers: false)).Where(n => n.Key is "a" or "b" or "m")
+        ChainedNumbers.Resolve(words, links, lenders, ShippedStrongNumbers.Lists, new GroupNumbers("eng", ShippedStrongNumbers.Lists, leftovers: false)).Where(n => n.Key is "a" or "b" or "m")
             .Select(n => (n.Key, n.Number)).Should().Equal(("a", "H559"));
     }
 
@@ -281,7 +282,7 @@ public sealed class StrongNumberFileTests : IDisposable
             new(["e", "f", "g"], "HEB", ["1.3:1.1"], null), new(["h", "i"], "HEB", ["1.4:1.1", "1.4:1.2"], null),
         ];
 
-        ChainedNumbers.Resolve(words, links, new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender }, new GroupNumbers("eng"))
+        ChainedNumbers.Resolve(words, links, new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender }, ShippedStrongNumbers.Lists, new GroupNumbers("eng", ShippedStrongNumbers.Lists))
             .Where(n => !n.Key.StartsWith('p')).Select(n => (n.Key, n.Number)).Should().Equal(
                 ("a", "H1961"), ("b", "H1961"), ("c", "H1961"), ("d", "H1961"), ("e", "H1961"), ("f", "H1961"), ("h", "H9005"), ("i", "H1732"));
     }
@@ -302,7 +303,7 @@ public sealed class StrongNumberFileTests : IDisposable
             ("1.8:1.1", "H8147"), ("1.8:1.2", "H776"), ("1.8:1.3", "H6240"), ("1.9:1.1", "H8147"), ("1.9:1.2", "H6240"),
             ("1.10:1.1", "H8147"), ("1.10:1.2", "H6240"),
         ];
-        var lender = new ChainedNumbers.Lender(true, words.ToDictionary(w => w.Item1, w => (w.Item2, 0), StringComparer.Ordinal),
+        var lender = new ChainedNumbers.Lender(ShippedStrongNumbers.Lists, true, words.ToDictionary(w => w.Item1, w => (w.Item2, 0), StringComparer.Ordinal),
             names: new HashSet<string>(["H5617", "H2574", "H3478"], StringComparer.Ordinal));
         List<ChainedNumbers.Joined> links =
         [
@@ -319,11 +320,11 @@ public sealed class StrongNumberFileTests : IDisposable
         ];
         var lenders = new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender };
 
-        ChainedNumbers.Resolve(english, links, lenders, new GroupNumbers("eng")).Where(n => n.Key is "a" or "b" or "c" or "d" or "g" or "i" or "j" or "k")
+        ChainedNumbers.Resolve(english, links, lenders, ShippedStrongNumbers.Lists, new GroupNumbers("eng", ShippedStrongNumbers.Lists)).Where(n => n.Key is "a" or "b" or "c" or "d" or "g" or "i" or "j" or "k")
             .Select(n => (n.Key, n.Number, Also: string.Join(" ", n.Also?.Select(a => $"{a.Number} {a.Source}") ?? [])))
             .Should().Equal(("a", "H8147", "H6240 HEB 1.1:1.2"), ("b", "H5617", ""), ("c", "H9005", ""), ("d", "H935", "H2574 HEB 1.3:1.3"),
                 ("k", "H8147", "H6240 HEB 1.10:1.2"));
-        ChainedNumbers.Resolve(english, links, lenders, new GroupNumbers("eng", byMeaning: false)).Where(n => n.Key is "a" or "b" or "d")
+        ChainedNumbers.Resolve(english, links, lenders, ShippedStrongNumbers.Lists, new GroupNumbers("eng", ShippedStrongNumbers.Lists, byMeaning: false)).Where(n => n.Key is "a" or "b" or "d")
             .Should().BeEmpty();
     }
 
@@ -331,6 +332,7 @@ public sealed class StrongNumberFileTests : IDisposable
     [Fact]
     public void AWordCarryingTwoNumbersHasARowForEachAndLendsBoth()
     {
+        ShippedStrongNumbers.CopyInto(_resources);
         var store = new ProductStore(_resources);
         Declare(store, "HEB", "hbo", "critical-edition");
         Declare(store, "ENG", "eng", "translation");
@@ -355,14 +357,14 @@ public sealed class StrongNumberFileTests : IDisposable
     [Fact]
     public void SynonymNumbersAreTheSameNumberInChecks()
     {
-        StrongSynonyms.Same("G5210", "G4771").Should().BeTrue();
-        StrongSynonyms.Same("G3361", "G3756").Should().BeTrue();
-        StrongSynonyms.Same("G2248", "G1473").Should().BeTrue();
-        StrongSynonyms.Same("G846", "G1473").Should().BeFalse();
+        ShippedStrongNumbers.Lists.Same("G5210", "G4771").Should().BeTrue();
+        ShippedStrongNumbers.Lists.Same("G3361", "G3756").Should().BeTrue();
+        ShippedStrongNumbers.Lists.Same("G2248", "G1473").Should().BeTrue();
+        ShippedStrongNumbers.Lists.Same("G846", "G1473").Should().BeFalse();
 
-        var lender = new ChainedNumbers.Lender(true, new Dictionary<string, (string, int)> { ["1"] = ("G5210", 0) });
+        var lender = new ChainedNumbers.Lender(ShippedStrongNumbers.Lists, true, new Dictionary<string, (string, int)> { ["1"] = ("G5210", 0) });
         ChainedNumbers.Resolve([("a", "G4771", "ὑμῶν")], [new ChainedNumbers.Joined(["a"], "TIS", ["1"], null)],
-                new Dictionary<string, ChainedNumbers.Lender> { ["TIS"] = lender })
+                new Dictionary<string, ChainedNumbers.Lender> { ["TIS"] = lender }, ShippedStrongNumbers.Lists)
             .Should().Equal(new ChainedNumbers.Numbered("a", "G4771", 0, null, null, null, null));
     }
 

@@ -209,7 +209,7 @@ public sealed class TischendorfTests
 
     /// <summary>
     /// The numbers this edition writes that no Robinson-tagged text in the corpus does, which is
-    /// the whole of what <see cref="GreekLemmaNumbers"/> is for. Asserted from the file rather than
+    /// the whole of what the <c>lemmatised</c> list of <c>strong/numbers.tsv</c> is for. Asserted from the file rather than
     /// from the list, so a release that started numbering something else the old way is caught here
     /// instead of turning up as 2,729 invented textual variants.
     /// </summary>
@@ -241,9 +241,9 @@ public sealed class TischendorfTests
         string[] unmapped = ["G1302", "G2444", "G2067", "G2534"];
 
         mine.Except(theirs).Except(unmapped).Should()
-            .OnlyContain(number => GreekLemmaNumbers.Lemmatised.ContainsKey(number));
+            .OnlyContain(number => ShippedStrongNumbers.Lists.Lemmatises(number));
 
-        GreekLemmaNumbers.Lemmatised.Values.Should().OnlyContain(number => theirs.Contains(number));
+        ShippedStrongNumbers.Lists.Lemmas.Should().OnlyContain(number => theirs.Contains(number));
     }
 
     /// <summary>

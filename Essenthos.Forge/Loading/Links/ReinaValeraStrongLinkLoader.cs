@@ -2,6 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.TextusReceptus;
 using Microsoft.EntityFrameworkCore;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -52,6 +53,7 @@ internal sealed class ReinaValeraStrongLinkLoader(
     /// <summary>What the numbers would draw, scored against Clear Bible's links; nothing is written.</summary>
     public async Task<IReadOnlyList<TaggedTextScore>> Score(
         string folder,
+        StrongNumberLists lists,
         IReadOnlyList<string>? witnesses = null,
         CancellationToken cancellationToken = default)
     {
@@ -59,7 +61,7 @@ internal sealed class ReinaValeraStrongLinkLoader(
         var scores = new List<TaggedTextScore>();
         foreach (var witness in witnesses ?? Scored)
         {
-            scores.Add(await tagged.Score(EbibleTextSource.ReinaValera, witness, numbers, cancellationToken));
+            scores.Add(await tagged.Score(EbibleTextSource.ReinaValera, witness, numbers, lists.Suppletions, cancellationToken));
         }
 
         return scores;

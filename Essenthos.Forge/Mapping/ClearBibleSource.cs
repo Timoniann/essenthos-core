@@ -2,6 +2,7 @@ using Essenthos.Core.ClearBible;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Mapping;
 
@@ -52,6 +53,7 @@ internal sealed class ClearBibleSource : IPairSource
         [
             .. new[] { set.Alignment, set.Target, set.Source }.Where(path => path.Length > 0).Select(Relative),
             .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(),
+            StrongNumberLists.Source,
             .. set.Edited ? ProductText.Products(Sources.ScrivenerSlug).Select(store.Find).OfType<string>() : [],
         ];
     }
@@ -84,6 +86,7 @@ internal sealed class ClearBibleSource : IPairSource
                 Frame(translation)),
             new ClearBibleSide(witness.Language, edition ? Placed(witness, translation) : Printed(witness), null, edition ? null : Frame(witness)),
             overruled,
+            StrongNumberLists.Of(texts.Store),
             set.Edited ? Editions(texts, witness) : null);
 
         log($"{joined.Records} records, {joined.Drafts.Count} resolved; {joined.Unresolved} unresolved ({joined.WithoutCounterpart} "

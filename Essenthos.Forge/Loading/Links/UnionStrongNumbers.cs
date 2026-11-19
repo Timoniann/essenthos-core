@@ -21,7 +21,8 @@ namespace Essenthos.Core.Loading.Links;
 /// verses both texts hold at one address, FHL's H9001 stands in a verse holding BHSA's לְ 1.85 times as often as chance
 /// would put it there and beside no other prefix above 1.16; H9002 beside בְּ at 2.16, the rest at
 /// most 1.18; H9003 beside כְּ at 8.95, the rest at most 1.25. Taken as written, H9003 would have
-/// sent every Chinese rendering of כְּ to a בְּ. So the three are translated, and the one H9004
+/// sent every Chinese rendering of כְּ to a בְּ. So the three are translated (<c>strong/numbers.tsv</c>, list
+/// <c>fhl-prefix</c>: <see cref="StrongNumberLists.FhlPrefixes"/>), and the one H9004
 /// the file writes, in a single verse, is read as nothing: one place is no evidence of a meaning.
 /// </para>
 /// </summary>
@@ -34,27 +35,20 @@ internal static class UnionStrongNumbers
 
     private const int LastGreek = 5624;
 
-    /// <summary>FHL's prefix numbers, as the numbers the corpus's Hebrew writes for the same prefix.</summary>
-    private static readonly Dictionary<int, string> Prefixes = new()
-    {
-        [9001] = "H9005",
-        [9002] = "H9003",
-        [9003] = "H9004",
-    };
-
     /// <summary>The lexemes a <c>lemma</c> attribute names, in the order written, each once.</summary>
     /// <param name="fhlPrefixes">
-    /// Whether numbers above the Hebrew dictionary are FHL's prefixes. In any other module they name
-    /// no lexeme the corpus's Hebrew writes, and are read as nothing.
+    /// FHL's prefix numbers by their value, as the numbers the corpus's Hebrew writes for the same prefix, where the module
+    /// writes them; null in any other module, where numbers above the Hebrew dictionary name no lexeme the corpus's Hebrew
+    /// writes, and are read as nothing.
     /// </param>
-    public static IReadOnlyList<string> Read(string? lemma, bool fhlPrefixes = true) => Read(lemma, null, fhlPrefixes).Numbers;
+    public static IReadOnlyList<string> Read(string? lemma, IReadOnlyDictionary<int, string>? fhlPrefixes) => Read(lemma, null, fhlPrefixes).Numbers;
 
     /// <summary>
     /// The lexemes a <c>lemma</c> attribute names, each once, with the code the <c>morph</c> attribute writes at the first
     /// place each is named: CrossWire's King James writes one of Robinson's codes per number, in the same order
     /// (<c>robinson:T-NSM robinson:N-NSM</c>). Null where it writes none.
     /// </summary>
-    public static (IReadOnlyList<string> Numbers, IReadOnlyList<string?> Morphology) Read(string? lemma, string? morph, bool fhlPrefixes = true)
+    public static (IReadOnlyList<string> Numbers, IReadOnlyList<string?> Morphology) Read(string? lemma, string? morph, IReadOnlyDictionary<int, string>? fhlPrefixes)
     {
         if (string.IsNullOrWhiteSpace(lemma))
         {
@@ -84,7 +78,7 @@ internal static class UnionStrongNumbers
             var read = number[0] switch
             {
                 StrongNumbers.Hebrew when value <= LastHebrew => number,
-                StrongNumbers.Hebrew when fhlPrefixes => Prefixes.GetValueOrDefault(value),
+                StrongNumbers.Hebrew when fhlPrefixes is not null => fhlPrefixes.GetValueOrDefault(value),
                 StrongNumbers.Hebrew => null,
                 _ => value <= LastGreek ? number : null,
             };

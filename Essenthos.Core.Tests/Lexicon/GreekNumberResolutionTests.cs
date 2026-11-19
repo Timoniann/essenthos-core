@@ -23,7 +23,7 @@ public class GreekNumberResolutionTests
     [Fact]
     public void AdmitsTheRedirectTheVersesBearOut()
     {
-        var admitted = GreekNumberResolution.Admit(Dictionary, Attested, Verses("G2076", "G1510", 19, 1));
+        var admitted = GreekNumberResolution.Admit(Dictionary, Attested, Verses("G2076", "G1510", 19, 1), ShippedStrongNumbers.Lists.Suppletions);
 
         admitted["G2076"].Numbers.Should().Equal("G1510");
         admitted["G2076"].Corroborated.Should().BeApproximately(0.95, 0.001);
@@ -37,7 +37,7 @@ public class GreekNumberResolutionTests
     [Fact]
     public void RefusesTheRedirectNoVerseBearsOut()
     {
-        var admitted = GreekNumberResolution.Admit(Dictionary, Attested, Verses("G3450", "G3449", 0, 20));
+        var admitted = GreekNumberResolution.Admit(Dictionary, Attested, Verses("G3450", "G3449", 0, 20), ShippedStrongNumbers.Lists.Suppletions);
 
         admitted.Should().NotContainKey("G3450");
     }
@@ -53,7 +53,7 @@ public class GreekNumberResolutionTests
         var occurrences = Enumerable.Repeat(new NumberOccurrence("G2076", withItsOwn), 100)
             .Concat(Verses("G2076", "G1510", 3, 0));
 
-        GreekNumberResolution.Admit(Dictionary, Attested, occurrences)["G2076"]
+        GreekNumberResolution.Admit(Dictionary, Attested, occurrences, ShippedStrongNumbers.Lists.Suppletions)["G2076"]
             .Corroborated.Should().Be(1);
     }
 

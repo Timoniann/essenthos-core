@@ -23,8 +23,14 @@ public class StrongParsedEntry
     public IReadOnlyList<StatedRelation> Relations { get; init; } = [];
 }
 
-public partial class StrongXmlParser
+/// <param name="bareReferences">
+/// The Greek entries whose text cites another entry by a bare number where every other entry writes <c>G3004</c> and lists it
+/// in <c>see_also</c> (<c>strong/references.tsv</c>, <see cref="StrongReferences"/>): the number as written and the entry it names.
+/// </param>
+public partial class StrongXmlParser(IReadOnlyDictionary<string, (string Written, string Number)[]> bareReferences)
 {
+    private readonly IReadOnlyDictionary<string, (string Written, string Number)[]> _bareReferences = bareReferences;
+
     /// <summary>
     /// What Strong's printed text puts between a definition and the King James renderings that
     /// follow it. It belongs to neither, and the Greek file leaves it in the renderings.
@@ -105,7 +111,7 @@ public partial class StrongXmlParser
                 if (refs.Count > 0) seeAlso = string.Join(",", refs);
             }
 
-            if (BareReferences.TryGetValue(strongNumber, out var bare))
+            if (_bareReferences.TryGetValue(strongNumber, out var bare))
             {
                 var all = (seeAlso?.Split(',') ?? []).ToList();
                 all.AddRange(bare.Select(b => b.Number).Where(n => !all.Contains(n)));
@@ -369,7 +375,7 @@ public partial class StrongXmlParser
     /// A Greek derivation as words and references, the way <see cref="GetInnerTextWithRefs"/> writes
     /// it, with the few references the file leaves as bare numbers read as references too.
     /// </summary>
-    private static List<EtymologyPart> GreekParts(string number, XElement? element)
+    private List<EtymologyPart> GreekParts(string number, XElement? element)
     {
         var parts = new List<EtymologyPart>();
         if (element is null)
@@ -377,7 +383,7 @@ public partial class StrongXmlParser
             return parts;
         }
 
-        BareReferences.TryGetValue(number, out var bare);
+        _bareReferences.TryGetValue(number, out var bare);
         foreach (var node in element.Nodes())
         {
             switch (node)
@@ -572,40 +578,18 @@ public partial class StrongXmlParser
     }
 
     /// <summary>
-    /// The Greek entries whose text cites another entry by a bare number where every other entry
-    /// writes <c>G3004</c> and lists it in <c>see_also</c>: the XML has them as plain text rather than
-    /// as a reference, so no reader could follow them. Named one by one because a bare number is
-    /// not always a reference — G5516 is <em>666 as a numeral</em>, and the number is the entry.
-    /// G3318's is Strong's Hebrew 763, Aram of the two rivers, which its own reference list names.
-    /// </summary>
-    internal static readonly Dictionary<string, (string Written, string Number)[]> BareReferences = new()
-    {
-        ["G1548"] = [("1547", "G1547")],
-        ["G2705"] = [("2596", "G2596"), ("5368", "G5368")],
-        ["G2799"] = [("1145", "G1145")],
-        ["G2866"] = [("2865", "G2865")],
-        ["G3318"] = [("0763", "H763")],
-        ["G4337"] = [("3563", "G3563")],
-        ["G4556"] = [("3037", "G3037")],
-        ["G5112"] = [("5111", "G5111")],
-        ["G5333"] = [("5332", "G5332")],
-        ["G5494"] = [("5490", "G5490")],
-        ["G5521"] = [("5514", "G5514")],
-    };
-
-    /// <summary>
     /// An entry's bare cross-references written as references, and a definition the split left
     /// opening on the comma that joined it to its derivation — G5494's <em>, meaning a storm</em> —
     /// without it.
     /// </summary>
-    internal static string? Refer(string number, string? text)
+    internal string? Refer(string number, string? text)
     {
         if (text is null)
         {
             return null;
         }
 
-        if (BareReferences.TryGetValue(number, out var bare))
+        if (_bareReferences.TryGetValue(number, out var bare))
         {
             foreach (var (written, reference) in bare)
             {

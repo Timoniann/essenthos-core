@@ -107,10 +107,10 @@ internal static class StoredStrongAnswers
                 .Where(l => l.Mine == text)
                 .Select(l => new ChainedNumbers.Joined(l.Words, l.Other, l.Theirs, l.Confidence))
                 .ToList();
-            var lenders = links.Select(l => l.Other).Distinct().ToDictionary(other => other, other => new ChainedNumbers.Lender(
+            var lenders = links.Select(l => l.Other).Distinct().ToDictionary(other => other, other => new ChainedNumbers.Lender(ShippedStrongNumbers.Lists,
                 !translations[other], place[other] < place[text] ? given[other] : own.GetValueOrDefault(other) ?? new Dictionary<string, (string, int)>()),
                 StringComparer.Ordinal);
-            var numbered = ChainedNumbers.Resolve(words[text], links, lenders);
+            var numbered = ChainedNumbers.Resolve(words[text], links, lenders, ShippedStrongNumbers.Lists);
             given[text] = numbered.ToDictionary(n => n.Key, n => (n.Number, n.Hops), StringComparer.Ordinal);
             rows.AddRange(numbered.Select(n => (verses[n.Key], long.Parse(n.Key), n.Number)));
         }

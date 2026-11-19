@@ -7,6 +7,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
 using Essenthos.Core.TextusReceptus;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Mapping;
 
@@ -98,7 +99,8 @@ internal sealed class KingJamesGreekSource : IPairSource
     };
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
-        [CrossWireKingJames.Folder, .. store.Find(TextCorrections.ProductOf(KingJames)) is { } corrections ? [corrections] : Array.Empty<string>()];
+        [CrossWireKingJames.Folder, .. store.Find(TextCorrections.ProductOf(KingJames)) is { } corrections ? [corrections] : Array.Empty<string>(),
+            StrongNumberLists.Source];
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
@@ -410,7 +412,7 @@ internal sealed class KingJamesGreekSource : IPairSource
         private static Links Carried(ProductTexts texts, string witness, Action<string> log)
         {
             var hub = Of(texts, Scrivener, log);
-            var drafts = GreekWitnessSource.Drafts(texts[witness], texts[Scrivener], out _);
+            var drafts = GreekWitnessSource.Drafts(texts[witness], texts[Scrivener], StrongNumberLists.Of(texts.Store), out _);
             var over = new Dictionary<long, (long Word, double Confidence)>(150_000);
             foreach (var draft in drafts)
             {

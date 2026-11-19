@@ -158,12 +158,19 @@ internal sealed class StrongNumberSource : IPairSource
         if (IndexContext.Declared(store, to).Language == "grc")
         {
             inputs.Add(GreekDictionary);
+            inputs.Add(StrongReferences.Source);
+            inputs.Add(StrongNumberLists.Source);
         }
 
         if (Laid)
         {
             var (edition, stated) = SideStrongNumbers.Edition(_translation);
             inputs.Add(edition);
+            if (SideStrongNumbers.ReadsLists(_translation) && !inputs.Contains(StrongNumberLists.Source))
+            {
+                inputs.Add(StrongNumberLists.Source);
+            }
+
             if (stated && store.Find(TextNote.ProductOf(_translation)) is { } notes)
             {
                 inputs.Add(notes);
@@ -595,7 +602,7 @@ internal sealed class StrongNumberSource : IPairSource
 
     /// <summary>Strong's Greek dictionary's entries, as the database's <c>strong_entry</c> holds them for the redirects.</summary>
     internal static List<GreekEntry> GreekEntries(ProductStore store) =>
-        [.. new StrongXmlParser().ParseGreek(File.ReadAllText(store.FullPath(GreekDictionary)))
+        [.. new StrongXmlParser(StrongReferences.Read(store)).ParseGreek(File.ReadAllText(store.FullPath(GreekDictionary)))
             .Select(entry => new GreekEntry(entry.StrongNumber, entry.Lemma, entry.Derivation))];
 
     /// <summary>Whether a source names this witness last, under its slug or an old name, in any case.</summary>
@@ -613,7 +620,7 @@ internal sealed class StrongNumberSource : IPairSource
         var dictionary = GreekEntries(store);
         var list = verses.ToList();
         var attested = list.SelectMany(v => v.Against).Where(w => w.Word.Strong is not null).Select(w => w.Word.Strong!).ToHashSet(StringComparer.Ordinal);
-        return GreekNumberResolution.Admit(dictionary, attested, Occurrences(list));
+        return GreekNumberResolution.Admit(dictionary, attested, Occurrences(list), StrongNumberLists.Of(store).Suppletions);
 
         static IEnumerable<NumberOccurrence> Occurrences(List<(List<StrongNumberMatch.TaggedWord> Tagged, List<(long Id, StrongNumberMatch.WitnessWord Word)> Against)> verses)
         {

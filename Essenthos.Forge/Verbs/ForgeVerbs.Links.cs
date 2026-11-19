@@ -5,6 +5,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Verbs;
 
@@ -203,7 +204,7 @@ internal static partial class ForgeVerbs
     {
         using var scope = forge.Scope();
         foreach (var score in await scope.ServiceProvider.GetRequiredService<ReinaValeraStrongLinkLoader>()
-                     .Score(Path.Combine([forge.Resources, .. ReinaValeraStrongLinkLoader.EditionFolder])))
+                     .Score(Path.Combine([forge.Resources, .. ReinaValeraStrongLinkLoader.EditionFolder]), StrongNumberLists.Of(forge.Resources)))
         {
             forge.Logger.LogInformation("{Score}", score);
         }

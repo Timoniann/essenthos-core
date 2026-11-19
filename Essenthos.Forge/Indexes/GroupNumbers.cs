@@ -1,3 +1,4 @@
+using Essenthos.Core.Strong;
 using System.Text.Json;
 
 namespace Essenthos.Core.Indexes;
@@ -16,34 +17,6 @@ internal enum WordClass
     /// ב H9003, כ H9004, ל H9005, the interrogative הֲ H9008 and the article ה H9009.
     /// </summary>
     Prefix,
-}
-
-/// <summary>
-/// Strong numbers the dictionary splits by form where a reader sees one word: the two Greek negatives, and the case and
-/// number forms of the personal and demonstrative pronouns (Strong relates most of the pronoun forms by its form-of
-/// relations, not the negatives, and not G1691/G3165 to G1473). Checks and reports count them as one; a word keeps the
-/// number of the word its source linked.
-/// </summary>
-internal static class StrongSynonyms
-{
-    private static readonly string[][] Groups =
-    [
-        ["G3756", "G3361"],
-        ["G1473", "G1691", "G1698", "G1700", "G3165", "G3427", "G3450", "G2248", "G2249", "G2254", "G2257"],
-        ["G4771", "G4571", "G4671", "G4675", "G5209", "G5210", "G5213", "G5216"],
-        ["G3778", "G5023", "G5025", "G5026", "G5124", "G5125", "G5126", "G5127", "G5128", "G5129", "G5130"],
-        ["H589", "H595"],
-        ["H587", "H5168"],
-    ];
-
-    private static readonly Dictionary<string, string> First = Groups
-        .SelectMany(group => group.Select(number => (number, group[0])))
-        .ToDictionary(p => p.number, p => p.Item2, StringComparer.Ordinal);
-
-    /// <summary>The number a number is counted as: the first of its group, else itself.</summary>
-    public static string Canonical(string number) => First.GetValueOrDefault(number, number);
-
-    public static bool Same(string a, string b) => string.Equals(Canonical(a), Canonical(b), StringComparison.Ordinal);
 }
 
 /// <summary>The classes of the numbers of the originals, and whether a verb of an original is finite.</summary>
@@ -267,14 +240,21 @@ internal sealed class GroupNumbers
             Key.LastIndexOf('.') is var dot and > 0 && int.TryParse(Key.AsSpan(dot + 1), out var position) ? (Key[..dot], position) : null;
     }
 
+    private readonly StrongNumberLists _lists;
+
     /// <summary>A translation's word of a link: its key, its form, and its own number if it has one.</summary>
     internal readonly record struct Translated(string Key, string Form, string? Own);
 
     /// <param name="pronounTakesTheVerb">P3 for this run; <see cref="SubjectPronounTakesTheVerb"/> where not given.</param>
     /// <param name="leftovers">P5 for this run; <see cref="LeftoverTakesTheOneContentWord"/> where not given.</param>
     /// <param name="byMeaning">P7 for this run; <see cref="OneWordOverSeveralByMeaning"/> where not given.</param>
-    public GroupNumbers(string language, bool? pronounTakesTheVerb = null, bool? leftovers = null, bool? byMeaning = null)
+    /// <param name="lists">
+    /// The Strong number lists: numbers the dictionary splits by form where a reader sees one word (the two Greek negatives, the
+    /// case and number forms of the personal and demonstrative pronouns) are counted as one (<see cref="StrongNumberLists.Canonical"/>).
+    /// </param>
+    public GroupNumbers(string language, StrongNumberLists lists, bool? pronounTakesTheVerb = null, bool? leftovers = null, bool? byMeaning = null)
     {
+        _lists = lists;
         _english = language == English;
         _pronounTakesTheVerb = pronounTakesTheVerb ?? SubjectPronounTakesTheVerb;
         _leftovers = leftovers ?? LeftoverTakesTheOneContentWord;
@@ -284,7 +264,7 @@ internal sealed class GroupNumbers
     /// <summary>Counts what each form renders in the links of one of its words to the originals (<see cref="Learn"/> per link).</summary>
     public void Learn(string form, IReadOnlyList<Original> originals)
     {
-        var core = originals.Where(o => o.Core).Select(o => StrongSynonyms.Canonical(o.Number)).Distinct(StringComparer.Ordinal).ToList();
+        var core = originals.Where(o => o.Core).Select(o => _lists.Canonical(o.Number)).Distinct(StringComparer.Ordinal).ToList();
         string? rendered = null;
         var function = false;
         if (core.Count == 1)
@@ -325,7 +305,7 @@ internal sealed class GroupNumbers
             return 0;
         }
 
-        var count = numbers.GetValueOrDefault(Prefixes(number) ? number : StrongSynonyms.Canonical(number));
+        var count = numbers.GetValueOrDefault(Prefixes(number) ? number : _lists.Canonical(number));
         return count >= ConfidentAtLeast && count >= ConfidentShare * _rendered[form] ? count : 0;
     }
 
@@ -366,7 +346,7 @@ internal sealed class GroupNumbers
     private bool UsuallyElse(string form, Original given, IReadOnlyList<Original> originals, IReadOnlySet<string>? verse)
     {
         if (!_renders.TryGetValue(form, out var numbers)
-            || numbers.GetValueOrDefault(Prefixes(given.Number) ? given.Number : StrongSynonyms.Canonical(given.Number)) >= ConfidentAtLeast)
+            || numbers.GetValueOrDefault(Prefixes(given.Number) ? given.Number : _lists.Canonical(given.Number)) >= ConfidentAtLeast)
         {
             return false;
         }
@@ -382,7 +362,7 @@ internal sealed class GroupNumbers
         var (usual, count) = same.MaxBy(n => n.Value);
         return count >= UsualAtLeast && count >= UsualShare * same.Sum(n => n.Value)
             && (verse is null || verse.Contains(usual))
-            && !originals.Any(o => string.Equals(Prefixes(o.Number) ? o.Number : StrongSynonyms.Canonical(o.Number), usual, StringComparison.Ordinal));
+            && !originals.Any(o => string.Equals(Prefixes(o.Number) ? o.Number : _lists.Canonical(o.Number), usual, StringComparison.Ordinal));
     }
 
     /// <summary>
@@ -404,7 +384,7 @@ internal sealed class GroupNumbers
         {
             if (word.Own is not null)
             {
-                used.UnionWith(originals.Where(o => StrongSynonyms.Same(o.Number, word.Own)).Select(o => o.Key));
+                used.UnionWith(originals.Where(o => _lists.Same(o.Number, word.Own)).Select(o => o.Key));
                 continue;
             }
 
@@ -445,13 +425,13 @@ internal sealed class GroupNumbers
         var anyContent = originals.Any(o => o.Class == WordClass.Content);
         var group = words.Count > 1 || originals.Count(o => o.Core) > 1;
         Original? One(List<Original> candidates) =>
-            candidates.Select(o => StrongSynonyms.Canonical(o.Number)).Distinct(StringComparer.Ordinal).Count() == 1 ? candidates[0] : null;
+            candidates.Select(o => _lists.Canonical(o.Number)).Distinct(StringComparer.Ordinal).Count() == 1 ? candidates[0] : null;
 
         var decided = taken.ToDictionary(t => t.Key, t => (IReadOnlyList<Original>)[t.Value], StringComparer.Ordinal);
 
         // One word left over two or more content words renders, by its meaning, one of them or all of them as one unit (P7); the
         // function words left beside it take none.
-        if (_byMeaning && anyContent && content.Select(o => StrongSynonyms.Canonical(o.Number)).Distinct(StringComparer.Ordinal).Count() > 1
+        if (_byMeaning && anyContent && content.Select(o => _lists.Canonical(o.Number)).Distinct(StringComparer.Ordinal).Count() > 1
             && left.Where(w => !Function(w.Form)).ToList() is [var single])
         {
             if (Rendered(single, content, originals) is { } unit)
@@ -538,7 +518,7 @@ internal sealed class GroupNumbers
                 : null;
         }
 
-        return names.Select(n => StrongSynonyms.Canonical(n.Number)).Distinct(StringComparer.Ordinal).Count() == 1
+        return names.Select(n => _lists.Canonical(n.Number)).Distinct(StringComparer.Ordinal).Count() == 1
             && Usual(names[0].Number) == word.Form
             && ordered.Where(o => !o.Name).All(o => RendersAlone(word.Form, o.Number) == 0)
             ? [names[0]]
@@ -546,8 +526,8 @@ internal sealed class GroupNumbers
     }
 
     /// <summary>Each number once, in the order given.</summary>
-    private static List<Original> Distinct(List<Original> ordered) =>
-        [.. ordered.DistinctBy(o => StrongSynonyms.Canonical(o.Number), StringComparer.Ordinal)];
+    private List<Original> Distinct(List<Original> ordered) =>
+        [.. ordered.DistinctBy(o => _lists.Canonical(o.Number), StringComparer.Ordinal)];
 
     /// <summary>
     /// Whether the words stand together in one verse, only prefixes of the link between them (and its conjunctions, where allowed):
@@ -601,12 +581,12 @@ internal sealed class GroupNumbers
             .SelectMany(f => f.Value.Select(n => (Form: f.Key, Number: n.Key, Count: n.Value)))
             .GroupBy(r => r.Number, StringComparer.Ordinal)
             .ToDictionary(g => g.Key, g => g.OrderByDescending(r => r.Count).ThenBy(r => r.Form, StringComparer.Ordinal).First().Form, StringComparer.Ordinal);
-        return _usual.GetValueOrDefault(Prefixes(number) ? number : StrongSynonyms.Canonical(number));
+        return _usual.GetValueOrDefault(Prefixes(number) ? number : _lists.Canonical(number));
     }
 
     /// <summary>How often the form renders the number alone (synonyms counted as one).</summary>
     private int RendersAlone(string form, string number) =>
-        _renders.TryGetValue(form, out var numbers) ? numbers.GetValueOrDefault(StrongSynonyms.Canonical(number)) : 0;
+        _renders.TryGetValue(form, out var numbers) ? numbers.GetValueOrDefault(_lists.Canonical(number)) : 0;
 
     /// <summary>
     /// The value a word stands for: digits (12, 1,000), an English number word, cardinal or ordinal, alone or as tens and unit

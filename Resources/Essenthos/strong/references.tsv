@@ -1,0 +1,20 @@
+# product    Essenthos/strong/references.tsv
+# producer   by hand
+# Strong's Greek dictionary entries whose text cites another entry by a bare number, where every other entry writes G3004 and
+#   lists it in see_also: the XML leaves these as plain text, so no reader could follow them. Named one by one, because a
+#   bare number is not always a reference (G5516 is 666 as a numeral, and the number is the entry). Read with the dictionary
+#   (StrongXmlParser): the Strong tables and strong-pairs' Greek redirects declare this file as an input.
+# Columns: number (the entry), written (the bare number as the entry's text writes it), reads (the entry it names), reason.
+number	written	reads	reason
+G1548	1547	G1547	the entry's text cites it by its bare number
+G2705	2596	G2596	the entry's text cites it by its bare number
+G2705	5368	G5368	the entry's text cites it by its bare number
+G2799	1145	G1145	the entry's text cites it by its bare number
+G2866	2865	G2865	the entry's text cites it by its bare number
+G3318	0763	H763	Strong's Hebrew 763, Aram of the two rivers, which the entry's own reference list names
+G4337	3563	G3563	the entry's text cites it by its bare number
+G4556	3037	G3037	the entry's text cites it by its bare number
+G5112	5111	G5111	the entry's text cites it by its bare number
+G5333	5332	G5332	the entry's text cites it by its bare number
+G5494	5490	G5490	the entry's text cites it by its bare number
+G5521	5514	G5514	the entry's text cites it by its bare number

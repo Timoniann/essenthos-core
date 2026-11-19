@@ -22,7 +22,7 @@ public partial class SwordTextTests
     private static List<SwordWord> Words(string markup, SwordSegmentation segmentation, out List<VerseNoteDraft> notes)
     {
         var unit = 0;
-        return SwordTextSource.Segment(OsisVerse.Parse(markup), segmentation, ref unit, out notes);
+        return SwordTextSource.Segment(OsisVerse.Parse(markup), segmentation, ref unit, out notes, ShippedStrongNumbers.Lists.FhlPrefixes);
     }
 
     private static string Printed(IEnumerable<WordDraft> words) => string.Concat(words.Select(w => w.Surface + w.Trailer));
@@ -78,7 +78,7 @@ public partial class SwordTextTests
     [InlineData("strong:H09003", new[] { "H9004" })]
     [InlineData("strong:H09004", new string[0])]
     public void FhlsNumbersAreReadInTheSeriesTheHebrewWrites(string lemma, string[] expected) =>
-        UnionStrongNumbers.Read(lemma).Should().Equal(expected);
+        UnionStrongNumbers.Read(lemma, ShippedStrongNumbers.Lists.FhlPrefixes).Should().Equal(expected);
 
     [Fact]
     public void TheUnionVersionSaysWhichCharactersItIsPrintedIn()
@@ -119,7 +119,7 @@ public partial class SwordTextTests
     [InlineData("KorRV")]
     public void TheTextIsPlacedInTheEnglishFrame(string module)
     {
-        var text = SwordTextSource.Read(Module(module));
+        var text = SwordTextSource.Read(Module(module), ShippedStrongNumbers.Lists);
         var thirdJohn = text.Books[63].Chapters.Single().Verses;
 
         text.Books.Should().HaveCount(66);
@@ -130,7 +130,7 @@ public partial class SwordTextTests
     [Fact]
     public void RevelationTwelveEighteenOpensThirteenOne()
     {
-        var revelation = SwordTextSource.Read(Module("ChiUn")).Books[65];
+        var revelation = SwordTextSource.Read(Module("ChiUn"), ShippedStrongNumbers.Lists).Books[65];
 
         revelation.Chapters[11].Verses.Should().HaveCount(17);
         var first = revelation.Chapters[12].Verses[0];
@@ -156,7 +156,7 @@ public partial class SwordTextTests
         var printed = SwordModule.Verses(folder).ToDictionary(
             verse => verse.Key,
             verse => Plain(verse.Value, chinese));
-        var text = SwordTextSource.Read(folder);
+        var text = SwordTextSource.Read(folder, ShippedStrongNumbers.Lists);
 
         var read = 0;
         foreach (var book in text.Books)
@@ -183,7 +183,7 @@ public partial class SwordTextTests
     [Fact]
     public void TheKoreanBenedictionStandsWhereTheKingJamesPrintsIt()
     {
-        var chapter = SwordTextSource.Read(Module("KorRV")).Books[46].Chapters[12].Verses;
+        var chapter = SwordTextSource.Read(Module("KorRV"), ShippedStrongNumbers.Lists).Books[46].Chapters[12].Verses;
 
         chapter.Select(verse => verse.Number).Should().EndWith([11, 13, 14]);
         chapter[^1].Stated.Should().Equal(new StatedNumberDraft(13, 13));
@@ -195,7 +195,7 @@ public partial class SwordTextTests
     [Fact]
     public void APsalmTitleInParenthesesIsASuperscription()
     {
-        var psalms = SwordTextSource.Read(Module("ChiUn")).Books[18].Chapters;
+        var psalms = SwordTextSource.Read(Module("ChiUn"), ShippedStrongNumbers.Lists).Books[18].Chapters;
 
         psalms[2].Verses[0].MarksASuperscription.Should().BeTrue();
         psalms[0].Verses[0].MarksASuperscription.Should().BeFalse();

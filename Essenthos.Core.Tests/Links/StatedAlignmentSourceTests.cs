@@ -61,6 +61,7 @@ public sealed class StatedAlignmentSourceTests : IDisposable
     [Fact]
     public void A_file_written_from_an_earlier_release_is_made_again_and_keeps_only_the_rows_of_other_sources()
     {
+        ShippedStrongNumbers.CopyInto(_root);
         var store = new ProductStore(_root);
         var now = InterlinearLinkLoader.UnfoldingWordSource;
         var before = now.Replace(", release 92,", ", release 90,", StringComparison.Ordinal);
@@ -216,6 +217,7 @@ public sealed class StatedAlignmentSourceTests : IDisposable
     /// <summary>A translation and Nestle 1904, each with Philippians 1:16 and 1:17 at each other's frame addresses.</summary>
     private ProductStore Store(string translation, string language, string[] sixteen, string[] seventeen)
     {
+        ShippedStrongNumbers.CopyInto(_root);
         var store = new ProductStore(_root);
         Text(store, translation, language, sixteen, seventeen);
         Text(store, "NESTLE1904", "grc", ["οἱ", "μὲν", "ἐξ", "ἀγάπης"], ["οἱ", "δὲ", "ἐξ", "ἐριθείας"]);

@@ -12,7 +12,7 @@ namespace Essenthos.Core.Tests.Lexicon;
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public class StrongXmlParserTests
 {
-    private readonly StrongXmlParser _parser = new();
+    private readonly StrongXmlParser _parser = new(ShippedStrongNumbers.References);
 
     // ────────────────────────────────────────────────────────────────
     //  Greek tests

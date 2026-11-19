@@ -3,6 +3,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Bhsa;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.XmlBible;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Conversion;
 
@@ -104,7 +105,8 @@ internal static class TextCatalogue
             .. EbibleTextSource.Definitions.Select(text => Text(text.Value.Slug,
                 resources => EbibleTextSource.Read(Path.Combine(resources, text.Key)), text.Key)),
             .. SwordTextSource.Texts.Values.Select(text => Text(text.Definition.Slug,
-                resources => SwordTextSource.Read(Path.Combine(resources, text.Folder)), text.Folder)),
+                resources => SwordTextSource.Read(Path.Combine(resources, text.Folder), text.FhlPrefixes ? StrongNumberLists.Of(resources) : null),
+                text.Folder)),
             .. EnglishTextSource.Definitions.Select(text => Text(text.Value.Slug,
                 resources => DeuterocanonTextSource.Extend(EnglishTextSource.Read(Path.Combine(resources, text.Key)), resources),
                 [text.Key, .. Bible4uExtended])),

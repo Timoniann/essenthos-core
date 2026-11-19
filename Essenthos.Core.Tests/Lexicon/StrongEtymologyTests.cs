@@ -122,7 +122,7 @@ public class StrongEtymologyCorpusTests(ITestOutputHelper output)
 {
     private static readonly Lazy<List<StrongParsedEntry>> Entries = new(() =>
     {
-        var parser = new StrongXmlParser();
+        var parser = new StrongXmlParser(ShippedStrongNumbers.References);
         return
         [
             .. parser.ParseHebrew(File.ReadAllText(TestResources.Path("Strong", "StrongHebrew.xml"))),

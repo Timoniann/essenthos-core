@@ -62,7 +62,7 @@ public class GreekWitnessTests
         GreekWitnessLinks.Pair(
             [new(1, 19, "αὐτόν", "G846")],
             [new(101, 11, "αυτου", "G846"), new(102, 20, "αυτον", "G846")],
-            drafts);
+            drafts, ShippedStrongNumbers.Lists);
 
         drafts.Should().ContainSingle(d => d.Relation == LinkRelation.Equals)
             .Which.Should().Match<GreekWitnessLinks.GreekDraft>(d => d.From.Single() == 1 && d.To.Single() == 102);
@@ -78,7 +78,7 @@ public class GreekWitnessTests
         GreekWitnessLinks.Pair(
             [new(1, 3, "αὐτοῖς", "G846"), new(2, 7, "τοῦ", "G3588"), new(3, 9, "αὐτοῦ", "G846")],
             [new(101, 3, "αυτους", "G846"), new(102, 5, "του", "G3588"), new(103, 6, "του", "G3588"), new(104, 9, "αυτου", "G846")],
-            drafts);
+            drafts, ShippedStrongNumbers.Lists);
 
         drafts.Where(d => d.From.Count == 1 && d.To.Count == 1).Select(d => (d.From[0], d.To[0])).Should()
             .BeEquivalentTo([(1L, 101L), (3L, 104L), (2L, 102L)]);

@@ -1,0 +1,92 @@
+# product    Essenthos/strong/numbers.tsv
+# producer   by hand
+# Readings of Strong numbers that no source writes: where one numbering writes for a word a number another writes otherwise,
+#   which numbers count as one, and which numbers a source misplaces. Ours, measured on the corpus; each row says why.
+#   Edit a row and run forge build: every product made with a list declares this file as an input.
+# Columns: list, number, reads (the number it is read as; \N where the list names numbers only), reason.
+# Lists:
+#   fhl-prefix       a Hebrew prefix number the Faith Hope Love foundation writes on the Chinese Union Version, read as the
+#                    number BHSA writes for the same prefix (UnionStrongNumbers)
+#   lemmatised       a Greek form's own number read as its lemma's, where the Greek editions' tagging traditions disagree
+#                    (GreekLemmaNumbers: the Clear Bible, Berean and Greek-witness links)
+#   suppletion       a Greek number the dictionary's derivations cannot resolve: the number tried instead where the tagged
+#                    number matches nothing in the verse, still measured against the verses before it is used (GreekNumberResolution)
+#   counted-as       a number counted with another's in the tie-breaks of the Strong numbers per text (ChainedNumbers)
+#   synonym          a number counted as one with reads, the first of its group, by the Strong numbers per text (StrongSynonyms)
+#   clause-particle  a Greek conjunction or particle whose number Maxfield's ASV puts on an English content word, where it is
+#                    dropped (MaxfieldAsvEdition)
+list	number	reads	reason
+fhl-prefix	H9001	H9005	FHL writes this number for a Hebrew prefix Strong gave none; established by counting over the Old Testament verses both texts hold at one address, not read anywhere: beside BHSA's לְ 1.85 times as often as chance, beside no other prefix above 1.16
+fhl-prefix	H9002	H9003	FHL writes this number for a Hebrew prefix Strong gave none; established by counting over the Old Testament verses both texts hold at one address, not read anywhere: beside בְּ at 2.16, the rest at most 1.18
+fhl-prefix	H9003	H9004	FHL writes this number for a Hebrew prefix Strong gave none; established by counting over the Old Testament verses both texts hold at one address, not read anywhere: beside כְּ at 8.95, the rest at most 1.25; taken as written it would send every Chinese rendering of כְּ to a בְּ
+lemmatised	G5210	G4771	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: ὑμεῖς → σύ, 1,829 words of Tischendorf
+lemmatised	G2249	G1473	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: ἡμεῖς → ἐγώ, 862 words
+lemmatised	G4056	G4057	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: περισσοτέρως → περισσῶς, 12 words; a comparative Strong entered beside the positive
+lemmatised	G4055	G4053	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: περισσότερος → περισσός, 9 words
+lemmatised	G4054	G4053	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: περισσότερον → περισσός, 3 words
+lemmatised	G197	G199	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: ἀκριβέστερον → ἀκριβῶς, 4 words
+lemmatised	G3397	G3398	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: μικρόν → μικρός, 4 words
+lemmatised	G4119	G4183	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: πλείων → πολύς, 1 word
+lemmatised	G4191	G4190	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: πονηρότερος → πονηρός, 1 word
+lemmatised	G4208	G4206	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: πορρωτέρω → πόρρω, 1 word
+lemmatised	G1400	G1401	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: δοῦλον → δοῦλος, 2 words; a neuter singular Strong gave its own entry
+lemmatised	G3063	G3062	Robinson's tagging (WH, both TR editions, the Byzantine Textform, Nestle 1904) writes the lemma's number where Tischendorf keeps Strong's own, and every one of them answered with this single number: λοιπόν → λοιπός, 1 word; a substantive Strong gave its own entry
+suppletion	G2036	G3004	εἶπον, the aorist of 'say': Strong's own cross-references name G3004 and the printed editions lemmatise every form of it under λέγω
+suppletion	G1492	G3708	εἴδω: its entry borrows the missing tenses from G3700 and G3708; the editions keep οἶδα under G1492 and put εἶδον under ὁράω, so this fires only where G1492 itself is not in the verse
+suppletion	G2400	G3708	ἰδού, which the dictionary derives from G1492 and the editions tag as the imperative of ὁράω it is
+suppletion	G2396	G3708	ἴδε, which the dictionary derives from G1492 and the editions tag as the imperative of ὁράω it is
+suppletion	G3700	G3708	ὀπτάνομαι, the same paradigm; its derivation names the alternation in prose, so the vocabulary test refuses it
+suppletion	G848	G846	αὑτοῦ, the aspirated contraction the tagged edition writes; both Greek editions read αὐτοῦ and tag αὐτός (the dictionary's G1438 is what the word is, not what the page says: 30 verses of 835 bear it out)
+suppletion	G3450	G1473	μοῦ, an oblique case of the first person singular; Strong derived each form from its neighbour, so no chain reaches the nominative
+suppletion	G3427	G1473	μοί, an oblique case of the first person singular; no derivation chain reaches the nominative
+suppletion	G3165	G1473	μέ, an oblique case of the first person singular; no derivation chain reaches the nominative
+suppletion	G1700	G1473	ἐμοῦ: its printed derivation, G3449 μόχθος, is an error for G3450 and sends the paradigm to a noun meaning toil, which no verse corroborates
+suppletion	G1698	G1473	ἐμοί, an oblique case of the first person singular; no derivation chain reaches the nominative
+suppletion	G1691	G1473	ἐμέ, an oblique case of the first person singular; no derivation chain reaches the nominative
+counted-as	H7945	H834	the relative שֶׁ is the short form of אֲשֶׁר: a form whose most usual number is its takes it, and against a content word joined with it in one link it counts as common as it
+synonym	G3361	G3756	Strong splits by form where a reader sees one word: the two Greek negatives, οὐ and μή
+synonym	G1691	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G1698	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G1700	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G3165	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G3427	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G3450	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G2248	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G2249	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G2254	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G2257	G1473	Strong splits by form where a reader sees one word: a case or number form of the first person pronoun ἐγώ
+synonym	G4571	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G4671	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G4675	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G5209	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G5210	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G5213	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G5216	G4771	Strong splits by form where a reader sees one word: a case or number form of the second person pronoun σύ
+synonym	G5023	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5025	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5026	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5124	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5125	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5126	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5127	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5128	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5129	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	G5130	G3778	Strong splits by form where a reader sees one word: a case or number form of the demonstrative οὗτος
+synonym	H595	H589	Strong splits by form where a reader sees one word: the two forms of the first person pronoun
+synonym	H5168	H587	Strong splits by form where a reader sees one word: the two forms of 'we'
+clause-particle	G3754	\N	ὅτι: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; one of the six the measurement found first (TSK-1890)
+clause-particle	G2443	\N	ἵνα: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; one of the six the measurement found first (TSK-1890)
+clause-particle	G1161	\N	δέ: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; one of the six the measurement found first (TSK-1890)
+clause-particle	G1352	\N	διό: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; one of the six the measurement found first (TSK-1890)
+clause-particle	G1063	\N	γάρ: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; one of the six the measurement found first (TSK-1890)
+clause-particle	G3767	\N	οὖν: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; one of the six the measurement found first (TSK-1890)
+clause-particle	G2532	\N	καί: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G235	\N	ἀλλά: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G3303	\N	μέν: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G5037	\N	τέ: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G1487	\N	εἰ: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G1437	\N	ἐάν: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G302	\N	ἄν: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G2228	\N	ἤ: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G1065	\N	γέ: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)
+clause-particle	G5620	\N	ὥστε: Maxfield's ASV puts its number on the last English word of a clause where the Greek word has no English word of its own; behaves as the six the measurement found first: on English content words its number is the defect in every sample read (TSK-1890)

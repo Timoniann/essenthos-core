@@ -1,5 +1,6 @@
 using Essenthos.Core.Corpus;
 using Microsoft.Data.Sqlite;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -20,7 +21,9 @@ namespace Essenthos.Core.Loading.Links;
 /// has no English word of its own lands on the last English word of its clause, and that word's own number is lost:
 /// Luke 4:12 <em>the Lord thy God</em> numbers <em>God</em> G3754 (ὅτι), Hebrews 11:28 <em>blood</em> G2443 (ἵνα).
 /// Such a number on an English word that is not itself a conjunction, particle or other function word is dropped
-/// (<see cref="ClauseParticles"/>): 288 of the file's 120,176 Greek numbers, 100 of them ὅτι's.
+/// (<c>strong/numbers.tsv</c>, list <c>clause-particle</c>: ὅτι, ἵνα, δέ, διό, γάρ, οὖν, the six the measurement found first,
+/// and ten more that behave the same, TSK-1890; negations, ἄρα, ἐπεί and οὕτως are right where they stand): 288 of the file's
+/// 120,176 Greek numbers, 100 of them ὅτι's.
 /// </para>
 /// </summary>
 internal static class MaxfieldAsvEdition
@@ -40,19 +43,6 @@ internal static class MaxfieldAsvEdition
     /// <summary>The words of the file's terms the layer is taken under; a file whose <c>copyright</c> table lacks them is refused.</summary>
     public const string Terms = "copyright Wade Maxfield and released by him for any purpose";
 
-    /// <summary>
-    /// Greek conjunctions and particles whose number the file puts on the last English word of a clause where the Greek
-    /// word is not rendered by a word of its own: ὅτι, ἵνα, δέ, διό, γάρ, οὖν, the six the measurement found first,
-    /// and καί, ἀλλά, μέν, τέ, εἰ, ἐάν, ἄν, ἤ, γέ and ὥστε, which behave the same (TSK-1890: on English content words
-    /// their numbers are the defect in every sample read). Negations (οὐ, μή), ἄρα, ἐπεί and οὕτως are not here: on
-    /// <em>cannot</em>, <em>nothing</em>, <em>haply</em>, <em>seeing</em> or <em>on this wise</em> they are right.
-    /// </summary>
-    public static readonly IReadOnlySet<string> ClauseParticles = new HashSet<string>(StringComparer.Ordinal)
-    {
-        "G3754", "G2443", "G1161", "G1352", "G1063", "G3767",
-        "G2532", "G235", "G3303", "G5037", "G1487", "G1437", "G302", "G2228", "G1065", "G5620",
-    };
-
     /// <summary>The file's tables in canonical order, one per book.</summary>
     private static readonly string[] Tables =
     [
@@ -66,10 +56,12 @@ internal static class MaxfieldAsvEdition
     ];
 
     /// <summary>The file read verse by verse, with the clause particles' misplaced numbers left out.</summary>
-    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(string path) => Read(path, out _);
+    /// <param name="clauseParticles">The numbers dropped from an English content word (<see cref="StrongNumberLists.ClauseParticles"/>).</param>
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(string path, IReadOnlySet<string> clauseParticles) =>
+        Read(path, clauseParticles, out _);
 
-    /// <param name="dropped">How many numbers <see cref="ClauseParticles"/> left out.</param>
-    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(string path, out int dropped)
+    /// <param name="dropped">How many numbers the clause particles left out.</param>
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(string path, IReadOnlySet<string> clauseParticles, out int dropped)
     {
         if (!File.Exists(path))
         {
@@ -102,7 +94,7 @@ internal static class MaxfieldAsvEdition
                 }
 
                 var number = Number(reader.IsDBNull(3) ? null : reader.GetString(3), reader.IsDBNull(4) ? 0 : reader.GetInt64(4));
-                if (number is not null && ClauseParticles.Contains(number) && !tokens.All(EnglishFunctionWords.Contains))
+                if (number is not null && clauseParticles.Contains(number) && !tokens.All(EnglishFunctionWords.Contains))
                 {
                     number = null;
                     dropped++;

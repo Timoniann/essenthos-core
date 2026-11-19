@@ -5,6 +5,7 @@ using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
 using Essenthos.Core.Utils;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Mapping;
 
@@ -47,11 +48,12 @@ internal sealed class BereanTableSource : IPairSource
     public bool Makes(string source) => source == Source;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
-        [Tables, .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>()];
+        [Tables, .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(), StrongNumberLists.Source];
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
         var (fromText, toText) = MappingProducts.Split(pair);
+        var lists = StrongNumberLists.Of(texts.Store);
         var english = texts[fromText];
         var witnessText = texts[toText];
         var greekWitness = witnessText.Language == "grc";
@@ -94,7 +96,7 @@ internal sealed class BereanTableSource : IPairSource
             HashSet<int>? unprinted = null;
             if (rows[0].IsGreek)
             {
-                if (BereanLinks.Counterparts(rows, witness) is not { } counterparts)
+                if (BereanLinks.Counterparts(rows, witness, lists) is not { } counterparts)
                 {
                     disputed++;
                     continue;

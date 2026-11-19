@@ -4,6 +4,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Sword;
+using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Loading;
 
@@ -38,8 +39,8 @@ internal sealed record SwordText(
 {
     /// <summary>
     /// Whether the module writes the Faith Hope Love foundation's own numbers for the Hebrew
-    /// prefixes, which are read as the corpus's (<see cref="UnionStrongNumbers"/>). Every other
-    /// module numbers only what Strong's dictionaries hold.
+    /// prefixes, which are read as the corpus's (<see cref="UnionStrongNumbers"/>, <see cref="StrongNumberLists.FhlPrefixes"/>).
+    /// Every other module numbers only what Strong's dictionaries hold.
     /// </summary>
     public bool FhlPrefixes { get; init; }
 }
@@ -404,9 +405,10 @@ internal static class SwordTextSource
         Known.ToDictionary(text => text.Key, text => text.Value.Definition, StringComparer.OrdinalIgnoreCase);
 
     /// <param name="folder">The module's root: the folder holding <c>mods.d</c>.</param>
-    public static TextSource Read(string folder)
+    /// <param name="lists">The Strong number lists, for a module that writes FHL's prefix numbers.</param>
+    public static TextSource Read(string folder, StrongNumberLists? lists = null)
     {
-        var (text, verses) = Verses(folder);
+        var (text, verses) = Verses(folder, lists);
         var chapters = verses
             .GroupBy(verse => (verse.Key.Book, verse.Key.Chapter))
             .ToDictionary(
@@ -454,8 +456,8 @@ internal static class SwordTextSource
     /// The words of every verse with the numbers the edition writes on them, at the address the
     /// corpus stores the verse under — which is what <see cref="Read"/> loads, word for word.
     /// </summary>
-    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Numbers(string folder) =>
-        Verses(folder).Verses.ToDictionary(
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Numbers(string folder, StrongNumberLists? lists = null) =>
+        Verses(folder, lists).Verses.ToDictionary(
             verse => verse.Key,
             verse => verse.Value.Words.Select(word => new EditionWord(word.Surface, word.Numbers, word.Unit)).ToList());
 
@@ -507,7 +509,7 @@ internal static class SwordTextSource
         public List<IReadOnlyList<StatedPosition>> Unrendered { get; init; } = [];
     }
 
-    private static (SwordText Text, Dictionary<(int Book, int Chapter, int Verse), ReadVerse> Verses) Verses(string folder)
+    private static (SwordText Text, Dictionary<(int Book, int Chapter, int Verse), ReadVerse> Verses) Verses(string folder, StrongNumberLists? lists = null)
     {
         var configuration = SwordModule.Configuration(folder);
         if (!Known.TryGetValue(configuration.Name, out var text)
@@ -520,12 +522,15 @@ internal static class SwordTextSource
                 nameof(folder));
         }
 
+        var prefixes = text.FhlPrefixes
+            ? (lists ?? throw new ArgumentException($"The SWORD module \"{configuration.Name}\" writes FHL's prefix numbers: read it with the Strong number lists.", nameof(lists))).FhlPrefixes
+            : null;
         var unit = 0;
         var verses = new Dictionary<(int, int, int), ReadVerse>(32_000);
         foreach (var (address, markup) in SwordModule.Verses(folder))
         {
             var pieces = OsisVerse.Parse(markup);
-            var words = Segment(pieces, text.Segmentation, ref unit, out var notes, text.FhlPrefixes);
+            var words = Segment(pieces, text.Segmentation, ref unit, out var notes, prefixes);
             if (words.Count == 0)
             {
                 continue;
@@ -612,7 +617,7 @@ internal static class SwordTextSource
         SwordSegmentation segmentation,
         ref int unit,
         out List<VerseNoteDraft> notes,
-        bool fhlPrefixes = true)
+        IReadOnlyDictionary<int, string>? fhlPrefixes = null)
     {
         var words = new List<SwordWord>();
         var splits = new Dictionary<string, int>(StringComparer.Ordinal);

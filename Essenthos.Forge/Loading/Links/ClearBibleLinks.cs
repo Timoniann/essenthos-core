@@ -123,6 +123,7 @@ internal static partial class ClearBibleLinks
         ClearBibleSide translation,
         ClearBibleSide witness,
         IReadOnlySet<long> overruled,
+        StrongNumberLists lists,
         IReadOnlyList<ClearBibleSourceEdits.Edition>? editions = null)
     {
         var alignment = Path.Combine(directory, set.Alignment);
@@ -139,12 +140,12 @@ internal static partial class ClearBibleLinks
         else
         {
             tokens = [.. ClearBibleAlignment.Tokens(target)];
-            theirTarget = Placed(
+            theirTarget = Placed(lists, 
                 ClearBibleJoin.Letters, translation, tokens, ClearBibleAlignment.Word, placement.Target);
         }
 
         var sourceTokens = ClearBibleAlignment.Tokens(source).ToList();
-        var theirSource = Placed(set.Join, witness, sourceTokens, ClearBibleAlignment.Unit, placement.Source);
+        var theirSource = Placed(lists, set.Join, witness, sourceTokens, ClearBibleAlignment.Unit, placement.Source);
 
         var renders = Renders(tokens);
         var all = ClearBibleAlignment.Records(alignment).ToList();
@@ -838,6 +839,7 @@ internal static partial class ClearBibleLinks
     /// about that one.
     /// </summary>
     private static Dictionary<string, List<long>> Placed(
+        StrongNumberLists lists,
         ClearBibleJoin join,
         ClearBibleSide text,
         IReadOnlyList<ClearBibleToken> tokens,
@@ -846,7 +848,7 @@ internal static partial class ClearBibleLinks
     {
         if (join == ClearBibleJoin.Edition)
         {
-            return Edition(text, tokens, key, counter);
+            return Edition(lists, text, tokens, key, counter);
         }
 
         var ours = text.Words!;
@@ -936,6 +938,7 @@ internal static partial class ClearBibleLinks
     /// against it word for word inside each canonical verse. See <see cref="ClearBibleJoin.Edition"/>.
     /// </summary>
     private static Dictionary<string, List<long>> Edition(
+        StrongNumberLists lists,
         ClearBibleSide text,
         IReadOnlyList<ClearBibleToken> tokens,
         Func<string, string> key,
@@ -954,8 +957,8 @@ internal static partial class ClearBibleLinks
 
             counter.Verses++;
             var counterparts = Counterparts(
-                [.. theirs.Select(token => Form(token.Folded, token.Strong))],
-                [.. mine.Select(word => Form(word.Folded, word.Strong))]);
+                [.. theirs.Select(token => Form(token.Folded, token.Strong, lists))],
+                [.. mine.Select(word => Form(word.Folded, word.Strong, lists))]);
 
             var realigned = theirs.Count != mine.Count;
             for (var at = 0; at < theirs.Count; at++)
@@ -1017,8 +1020,8 @@ internal static partial class ClearBibleLinks
         return counterparts;
     }
 
-    internal static WitnessForm Form(string folded, string? strong) =>
-        new(folded, GreekLemmaNumbers.Of(StrongNumbers.Normalize(strong)) ?? string.Empty);
+    internal static WitnessForm Form(string folded, string? strong, StrongNumberLists lists) =>
+        new(folded, lists.Lemma(StrongNumbers.Normalize(strong)) ?? string.Empty);
 
     /// <summary>
     /// Their token file as verses, each in the order its identifiers number it, with the punctuation

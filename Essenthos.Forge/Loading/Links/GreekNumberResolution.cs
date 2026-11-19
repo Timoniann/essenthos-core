@@ -59,10 +59,11 @@ internal static class GreekNumberResolution
     public static Dictionary<string, NumberRedirect> Admit(
         IReadOnlyCollection<GreekEntry> dictionary,
         IReadOnlySet<string> attested,
-        IEnumerable<NumberOccurrence> occurrences)
+        IEnumerable<NumberOccurrence> occurrences,
+        IReadOnlyDictionary<string, string> suppletions)
     {
         var proposed = GreekFormDerivations.Resolve(dictionary, attested.Contains);
-        foreach (var (number, lemma) in GreekSuppletion.Lemmas)
+        foreach (var (number, lemma) in suppletions)
         {
             if (attested.Contains(lemma))
             {
