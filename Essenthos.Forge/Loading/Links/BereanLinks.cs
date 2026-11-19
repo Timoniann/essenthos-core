@@ -14,22 +14,23 @@ namespace Essenthos.Core.Loading.Links;
 /// answer, and it is the only thing the New Testament's methods can be calibrated against.
 ///
 /// <para>
-/// **The join is order, and the check is the number.** Their Greek is the Berean Greek Bible, which
-/// is Nestle 1904 with modernised spelling, so the surface forms do not match — Nestle writes
-/// Δαυείδ where they write Δαυίδ — and matching on the form would throw away most of the file. What
-/// does hold is the word order, and both sides state a Strong number independently of each other and
-/// of the spelling. Measured over the New Testament before this was written: 7,488 of 7,939 verses
-/// have the same number of Greek words, and inside those, 128,029 of 129,491 Strong numbers agree —
-/// **98.87%**. The 1.13% are two dictionaries disposing of the same suppletive verbs differently,
-/// λέγω against εἶπον 992 times and ὁράω against ἰδού 212, which is a disagreement about lexicography
-/// and not about which word is which.
+/// **The Greek is joined word against word, and the count is the check.** Their Greek is the Berean Greek Bible, which
+/// is Nestle 1904 with modernised spelling and a few dozen other readings, so the surface forms do not match — Nestle
+/// writes Δαυείδ where they write Δαυίδ — and matching on the form alone would throw away most of the file. Measured
+/// over the New Testament before this was written: 7,488 of 7,939 verses have the same number of Greek words, and
+/// inside those, 128,029 of 129,491 Strong numbers agree — **98.87%**. The 1.13% are mostly two dictionaries disposing
+/// of the same suppletive verbs differently, λέγω against εἶπον 992 times and ὁράω against ἰδού 212.
 /// </para>
 ///
 /// <para>
-/// So a verse is refused whole where the counts differ, and refused again where the numbers agree on
-/// fewer than half its words — the second is the net that catches a verse whose counts match by
-/// accident. Everything that survives is written as <c>stated-by-source</c> with no confidence,
-/// because it is what the file says and not what we worked out.
+/// The count is not the word order, though. In some fifty of those verses the Berean reads another word in the same
+/// place or the same words in another order, and the table marks the row (<c>Καὶ*</c>): Matthew 20:9 has <em>Καὶ
+/// ἐλθόντες</em> where Nestle has <em>ἐλθόντες δὲ</em>, and laid by position its «came» stood on δὲ. So inside a verse of
+/// the same count each row is placed with <see cref="ClearBibleLinks.Counterparts"/>, the join Clear Bible's Berean set
+/// uses against the same edition, and a row whose word Nestle does not print there renders nothing of Nestle's. A verse is
+/// refused whole where the counts differ, and again where fewer than half its rows find their word. Everything that
+/// survives is written as <c>stated-by-source</c> with no confidence, because it is what the file says and not what we
+/// worked out.
 /// </para>
 /// </summary>
 internal static class BereanLinks
@@ -42,28 +43,18 @@ internal static class BereanLinks
     private const string Together = "vvv";
 
     /// <summary>
-    /// How many of the verse's Strong numbers the two sides state the same way, and how many either
-    /// of them states at all.
+    /// Which of the witness's words each row is, or -1 where it is none of them; null where fewer than half the rows are
+    /// one, which says the two sides are not the same verse.
     /// </summary>
-    internal static (int Agreed, int Of) Agreement(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
+    internal static int[]? Counterparts(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
     {
-        int agreed = 0, of = 0;
-        for (var i = 0; i < rows.Count; i++)
-        {
-            if (rows[i].StrongNumber.Length == 0 || witness[i].Strong is not { Length: > 0 } theirs)
-            {
-                continue;
-            }
-
-            of++;
-            if (string.Equals(rows[i].StrongNumber, theirs, StringComparison.Ordinal))
-            {
-                agreed++;
-            }
-        }
-
-        return (agreed, of);
+        var counterparts = ClearBibleLinks.Counterparts(
+            [.. rows.Select(row => ClearBibleLinks.Form(ClearBibleLinks.Comparable(row.Original, Greek), row.StrongNumber))],
+            [.. witness.Select(word => ClearBibleLinks.Form(ClearBibleLinks.Comparable(word.Surface, Greek), word.Strong))]);
+        return counterparts.Count(at => at >= 0) * 2 < rows.Count ? null : counterparts;
     }
+
+    private const string Greek = "grc";
 
     /// <summary>
     /// The Hebrew, which does not join by order and cannot join by number.
@@ -187,7 +178,10 @@ internal static class BereanLinks
     /// <paramref name="conjunctions"/> are the witness's words that are the conjunction ו, which BHSA writes apart from the word
     /// it is prefixed to; given them, a row of a conjunction and bracketed words is read as <see cref="Supplied"/> says.
     /// <paramref name="prepositions"/> are its words that are a preposition, by their Strong number; given them, a row of a
-    /// preposition and bracketed words is read as <see cref="Prefixed"/> says.
+    /// preposition and bracketed words is read as <see cref="Prefixed"/> says. <paramref name="unprinted"/> are the rows whose
+    /// word the witness does not print, where it reads another; a rendering over such a row, as its head or joined into it,
+    /// is not written (Luke 18:30's «will fail to receive» over ὃς οὐχὶ μὴ and the Berean's ἀπολάβῃ, where Nestle reads
+    /// λάβῃ; Luke 12:24's «They do not sow» over the Berean's οὐ, where Nestle reads οὔτε).
     /// </para>
     /// </summary>
     internal static bool Pair(
@@ -198,7 +192,8 @@ internal static class BereanLinks
         Silences silences,
         IReadOnlySet<long>? overruled = null,
         IReadOnlySet<long>? conjunctions = null,
-        IReadOnlyDictionary<long, string>? prepositions = null)
+        IReadOnlyDictionary<long, string>? prepositions = null,
+        IReadOnlySet<int>? unprinted = null)
     {
         if (Claims(rows, ours) is not { } claimed)
         {
@@ -229,6 +224,13 @@ internal static class BereanLinks
         for (var i = 0; i < rows.Count; i++)
         {
             var mine = claimed[i] ?? [];
+            if (mine.Count > 0 && unprinted is not null
+                && (unprinted.Contains(i) || Enumerable.Range(0, rows.Count).Any(j => into[j] == i && unprinted.Contains(j))))
+            {
+                silences.Unprinted++;
+                continue;
+            }
+
             if (mine.Count > 0)
             {
                 List<long> theirs = [.. witness[i]];
@@ -577,6 +579,13 @@ internal static class BereanLinks
         public int Unmarked { get; set; }
 
         public int Overruled { get; set; }
+
+        /// <summary>
+        /// Renderings over a row whose word the witness does not print there, whether the row holds the English or is joined
+        /// into the one that does: the English renders the words together, and laid on the others alone it would claim of them
+        /// what the table says of all.
+        /// </summary>
+        public int Unprinted { get; set; }
 
         /// <summary>Conjunctions of a conjunction and bracketed words moved to the ו beside the word (<see cref="Supplied"/>).</summary>
         public int ConjunctionsMoved { get; set; }

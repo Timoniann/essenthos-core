@@ -47,6 +47,17 @@ internal enum ClearBibleNumbering
     /// <see cref="Loading.Links.ClearBibleLinks.Retokenised"/>.
     /// </summary>
     Retokenised,
+
+    /// <summary>
+    /// The token file the release ships, which is a later revision of the translation than some of the records were
+    /// numbered over. The Berean's: in Matthew 26:51 the records count <em>Jesus’</em> as one word where the file makes
+    /// the apostrophe a token of its own, so from there each number names the word before the one meant, «companions» for
+    /// «drew»; in Romans 16:12 they count the brackets of a <em>[women]</em> the file no longer prints; in Mark 8:10 every
+    /// number is one early and none falls on a mark. A verse is refused whole where a record names a mark or a number past
+    /// it, or where two of its records name English that shares no word with the glosses of their Greek words (see
+    /// <see cref="Loading.Links.ClearBibleLinks.Unglossed"/>).
+    /// </summary>
+    Revised,
 }
 
 /// <param name="From">The translation the alignment is about, as the corpus slugs it.</param>
@@ -132,7 +143,8 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "eng", "targets", "BSB", "nt_BSB.tsv"),
         Path.Combine("data", "sources", "BGNT.tsv"),
         ClearBibleJoin.Edition,
-        $"Clear Bible Alignments, BiblioNexus, {Repository}, CC BY 4.0");
+        $"Clear Bible Alignments, BiblioNexus, {Repository}, CC BY 4.0",
+        Numbering: ClearBibleNumbering.Revised);
 
     /// <summary>
     /// The Reina-Valera 1909 against the Hebrew, hand-made, whole Old Testament.

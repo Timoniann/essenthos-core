@@ -153,7 +153,12 @@ internal static partial class ClearBibleLinks
             ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
             : null;
         var early = set.Early is { } before ? EarlyNames.Of(tokens, before, source, all) : null;
-        var misnumbered = translation.InOrder is not null ? Misnumbered(all, tokens) : [];
+        var misnumbered = set.Numbering switch
+        {
+            ClearBibleNumbering.Retokenised => Misnumbered(all, tokens),
+            ClearBibleNumbering.Revised => [.. Misnumbered(all, tokens), .. Unglossed(all, tokens, sourceTokens)],
+            _ => [],
+        };
 
         var drafts = new List<Draft>();
         int records = 0, unresolved = 0, withoutCounterpart = 0;
@@ -728,6 +733,76 @@ internal static partial class ClearBibleLinks
     }
 
     /// <summary>
+    /// The verses, as <see cref="ClearBibleAlignment.Verse(string)"/> writes them, in which two or more records name
+    /// translation words that share no word with the glosses the source file gives their source words. Of the 7,122 verses
+    /// of the Berean's set where no record names a mark, 28 have one such record and 25 have two or more; read by hand, 24
+    /// of the 25 are numbered a word or more out over another revision of the translation, Mark 8:10's πλοῖον («boat»)
+    /// naming «the» and μετὰ («with») «boat», and one is not, Matthew 23:34's ἀπὸ «from» and εἰς «to», glossed «in» and
+    /// «after». That one loses a second opinion the Berean's tables state too.
+    /// </summary>
+    internal static HashSet<int> Unglossed(
+        IEnumerable<ClearBibleRecord> records,
+        IEnumerable<ClearBibleToken> tokens,
+        IEnumerable<ClearBibleToken> sources)
+    {
+        var english = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var token in tokens)
+        {
+            english[ClearBibleAlignment.Word(token.Id)] = token.Text;
+        }
+
+        var glosses = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var token in sources)
+        {
+            if (token.Gloss is { Length: > 0 } gloss)
+            {
+                glosses[ClearBibleAlignment.Unit(token.Id)] = gloss;
+            }
+        }
+
+        var misses = new Dictionary<int, int>();
+        foreach (var record in records)
+        {
+            var words = new HashSet<string>(StringComparer.Ordinal);
+            var resolved = true;
+            foreach (var id in record.Target)
+            {
+                if (!english.TryGetValue(ClearBibleAlignment.Word(id), out var text))
+                {
+                    resolved = false;
+                    break;
+                }
+
+                words.UnionWith(Stems(text));
+            }
+
+            var glossed = record.Source.Where(id => glosses.ContainsKey(ClearBibleAlignment.Unit(id)))
+                .SelectMany(id => Stems(glosses[ClearBibleAlignment.Unit(id)])).ToHashSet(StringComparer.Ordinal);
+            if (!resolved || words.Count == 0 || glossed.Count == 0 || words.Overlaps(glossed)
+                || record.Target.Count == 0 || ClearBibleAlignment.Verse(record.Target[0]) is not { } verse)
+            {
+                continue;
+            }
+
+            misses[verse] = misses.GetValueOrDefault(verse) + 1;
+        }
+
+        return [.. misses.Where(verse => verse.Value >= Unrelated).Select(verse => verse.Key)];
+    }
+
+    /// <summary>How many records of a verse must miss their glosses before the verse is taken to be numbered over another text.</summary>
+    private const int Unrelated = 2;
+
+    /// <summary>The first four letters of each word of an English text, in lower case, which is as near as a gloss and a translation agree on a word's form.</summary>
+    private static IEnumerable<string> Stems(string text) =>
+        EnglishWord().Matches(text.ToLowerInvariant()).Select(word => word.Value.Length > StemLength ? word.Value[..StemLength] : word.Value);
+
+    private const int StemLength = 4;
+
+    [GeneratedRegex("[a-z]+")]
+    private static partial Regex EnglishWord();
+
+    /// <summary>
     /// One piece of written text as the records count it: a word up to and including an elision's
     /// apostrophe, a hyphenated word whole, <em>aujourd’hui</em> whole, or a single mark.
     /// </summary>
@@ -928,7 +1003,7 @@ internal static partial class ClearBibleLinks
         return counterparts;
     }
 
-    private static WitnessForm Form(string folded, string? strong) =>
+    internal static WitnessForm Form(string folded, string? strong) =>
         new(folded, GreekLemmaNumbers.Of(StrongNumbers.Normalize(strong)) ?? string.Empty);
 
     /// <summary>

@@ -30,9 +30,6 @@ internal sealed class BereanTableSource : IPairSource
 
     private const string Source = "Berean Standard Bible translation tables, bereanbible.com, public domain";
 
-    /// <summary>How much of a verse's Strong numbers must agree before its order is believed (<see cref="BereanLinks"/>).</summary>
-    private const double Agreeing = 0.5;
-
     /// <summary>BHSA's number for the conjunction ו, which it writes as a word of its own.</summary>
     private const string Waw = "H9000";
 
@@ -95,6 +92,7 @@ internal sealed class BereanTableSource : IPairSource
             var ours = Words(english, english.InVerse(own));
             var witness = Words(witnessText, at);
             List<List<long>> run;
+            HashSet<int>? unprinted = null;
             if (rows[0].IsGreek)
             {
                 if (rows.Count != witness.Count)
@@ -103,14 +101,14 @@ internal sealed class BereanTableSource : IPairSource
                     continue;
                 }
 
-                var (agreed, of) = BereanLinks.Agreement(rows, witness);
-                if (of > 0 && (double)agreed / of < Agreeing)
+                if (BereanLinks.Counterparts(rows, witness) is not { } counterparts)
                 {
                     disputed++;
                     continue;
                 }
 
-                run = [.. witness.Select(word => new List<long> { word.Id })];
+                run = [.. counterparts.Select(at => at < 0 ? [] : new List<long> { witness[at].Id })];
+                unprinted = [.. Enumerable.Range(0, rows.Count).Where(at => counterparts[at] < 0)];
             }
             else if (BereanLinks.Letters(
                          [.. rows.Select(row => HebrewLetters.Of(row.Original))],
@@ -141,7 +139,7 @@ internal sealed class BereanTableSource : IPairSource
                 : run.SelectMany(words => words).Distinct()
                     .Where(id => witnessText.Words[(int)id].Strong is { } strong && Prepositions.Contains(strong))
                     .ToDictionary(id => id, id => witnessText.Words[(int)id].Strong!);
-            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions, prepositions))
+            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions, prepositions, unprinted))
             {
                 drifted++;
                 continue;
@@ -160,7 +158,7 @@ internal sealed class BereanTableSource : IPairSource
             .Select(draft => draft.Bracketed ? draft : draft with { From = [.. draft.From.Where(id => !Bracketed(english, id))] })
             .Where(draft => draft.Relation != LinkRelation.Renders || draft.From.Count > 0)];
         log($"{verses} verses, {drafts.Count} links; {silences.Absent} absent, {silences.Moved} moved, {silences.Joined} joined, "
-            + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled; {divided} divided, {drifted} drifted, {disputed} disputed, "
+            + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled, {silences.Unprinted} over a word the witness does not print there; {divided} divided, {drifted} drifted, {disputed} disputed, "
             + $"{unframed} at an address the witness lacks; {supplied} bracketed words left unlinked, {onlySupplied} renderings of nothing else; "
             + $"{silences.ConjunctionsMoved + silences.ConjunctionsUnlinked} words rendered by bracketed words beside a conjunction, "
             + $"{silences.ConjunctionsMoved} of the conjunctions moved to the waw beside, {silences.ConjunctionsUnlinked} left unlinked; "
