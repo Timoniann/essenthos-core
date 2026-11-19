@@ -1,7 +1,7 @@
 # product    Essenthos/texts/UBIO/corrections.tsv
 # inputs     bible4u/UKR.xml@4db37788c4170ec48279ac63fa6072833aa7ceadbf35cb808f3d2527e3d1eab4
 # producer   forge texts corrections UBIO   (Essenthos.Forge 1.0.0+8aa731d0dc56-dirty)
-# rows                 11
+# rows                 12
 # kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes
 # note       written once from the repairs the load computed in code; edit this file, not the code
 own	kind	before	after	why
@@ -16,3 +16,4 @@ own	kind	before	after	why
 18.2:2	append	\N	Я мандрував по землі та й перейшов її.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
 23.50:9	append	\N	Вони всі розпадуться, немов та одежа, їх міль пожере!	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
 35.1:8	append	\N	І розлетяться його верхівці, а їздці його здалека прийдуть, вони будуть летіти, неначе орел, що на їжу поспішає.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+58.10:16.15	letters	вої	Свої	the source file drops the capital letter (Закони вої Я дам); the printed Ohienko and the Door43 project of the same text read Закони Свої (PRB-1906)
