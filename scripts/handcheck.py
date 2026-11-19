@@ -9,6 +9,7 @@ suspicious rendering.
     python scripts/handcheck.py pass BSB --target NESTLE1904 --other ULT --run BSB-NT
     python scripts/handcheck.py estimate BSB-OT                     # requests and upper-bound cost, nothing sent
     python scripts/handcheck.py score BSB-OT [--limit N]            # one batch through claude_api.py, capped
+    python scripts/handcheck.py score UST-NT --via cli [--workers 4]  # the same through claude -p (subscription)
     python scripts/handcheck.py report BSB-OT                       # flagged, crossing and missing TSVs, summary
     python scripts/handcheck.py sample BSB-OT --kind low --count 40 [--skip-books Gen]
     python scripts/handcheck.py evaluate --key key.json --runs BSB,ULT [--scores v1|ab]   # precision/recall
@@ -910,6 +911,59 @@ def estimate(args):
           f"spent so far under {LABEL}: ${api.spent(LABEL):.2f} of ${CAP_USD:.2f}")
 
 
+# ------------------------------------------------------------------------------------- subscription
+
+def run_cli(requests, workers=4):
+    """
+    The same requests through the Claude Code CLI (`claude -p`) on the owner's subscription instead
+    of the paid Batches API: one process per request, no tools, no MCP servers or skills, the
+    request's own system prompt, schema and effort. Nothing is written to the API ledger. Answers
+    are the structured output as JSON text, so parse_answer and the verse parser read them unchanged.
+    """
+    import concurrent.futures, shutil
+    exe = shutil.which('claude') or 'claude'
+
+    def one(item):
+        custom, params = item
+        system = '\n\n'.join(b['text'] for b in params.get('system', []))
+        prompt = '\n\n'.join(c['text'] for c in params['messages'][0]['content'])
+        config = params.get('output_config', {})
+        cmd = [exe, '-p', '--model', params['model'], '--system-prompt', system, '--tools', '',
+               '--no-session-persistence', '--strict-mcp-config', '--disable-slash-commands',
+               '--output-format', 'json', '--effort', config.get('effort', 'low')]
+        if 'format' in config:
+            cmd += ['--json-schema', json.dumps(config['format']['schema'])]
+        for attempt in range(2):
+            try:
+                done = subprocess.run(cmd, input=prompt, capture_output=True, text=True, encoding='utf-8', timeout=600)
+                lines = [l for l in done.stdout.splitlines() if l.startswith('{')]
+                out = json.loads(lines[-1]) if lines else {}
+                if not out.get('is_error') and out.get('structured_output') is not None:
+                    return custom, json.dumps(out['structured_output'], ensure_ascii=False), None
+                error = str(out.get('result') or done.stderr[-300:] or 'no answer')
+            except (subprocess.TimeoutExpired, ValueError) as e:
+                error = repr(e)
+        return custom, None, error
+
+    answers, failures = {}, {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+        for n, (custom, text, error) in enumerate(pool.map(one, requests), 1):
+            if text is None:
+                failures[custom] = error
+            else:
+                answers[custom] = text
+            if n % 50 == 0:
+                print(f'  {n}/{len(requests)} answered by the CLI, {len(failures)} failed', flush=True)
+    return answers, failures
+
+
+def dispatch(api, requests, args):
+    """The paid batch (capped, ledgered) or, with --via cli, the subscription CLI."""
+    if getattr(args, 'via', 'batch') == 'cli':
+        return run_cli(requests, args.workers)
+    return api.run_batch(requests, label=LABEL, cap_usd=CAP_USD, poll=30)
+
+
 def parse_answer(text):
     out = {}
     for e in json.loads(text)['scores']:
@@ -917,8 +971,8 @@ def parse_answer(text):
     return out
 
 
-def send(api, requests, path):
-    answers, failures = api.run_batch(requests, label=LABEL, cap_usd=CAP_USD, poll=30)
+def send(api, requests, path, args=None):
+    answers, failures = dispatch(api, requests, args)
     scores = load_json(path)
     for custom, text in answers.items():
         try:
@@ -936,7 +990,7 @@ def score(args):
     if not requests:
         print('nothing left to score')
         return
-    send(api, requests, work_dir(args) / f'{args.run}-{args.scores}.json')
+    send(api, requests, work_dir(args) / f'{args.run}-{args.scores}.json', args)
 
 
 def score_of(got, n):
@@ -1208,7 +1262,7 @@ def verse_score(args):
         print(f"stage {args.stage}: {len(requests)} requests over {sum(len(index[c]) for c, _ in requests)} occurrences, "
               f"reserve ${plan['reserve_usd']:.2f}; spent so far under {LABEL}: ${api.spent(LABEL):.2f} of ${CAP_USD:.2f}")
         return
-    answers, failures = api.run_batch(requests, label=LABEL, cap_usd=CAP_USD, poll=30)
+    answers, failures = dispatch(api, requests, args)
     path = work_dir(args) / f'{args.run}-v{args.stage}.json'
     verdicts = load_json(path)
     for custom, text in answers.items():
@@ -1331,6 +1385,12 @@ def evaluate(args):
             print(f"{k['verdict']:9} {s} {c or ''} {k['run']} {k['lemma']} \"{k['raw']}\" {r or ''}")
 
 
+def add_via(p):
+    p.add_argument('--via', choices=['batch', 'cli'], default='batch',
+                   help='batch: the paid Batches API under the cap; cli: claude -p on the subscription')
+    p.add_argument('--workers', type=int, default=4, help='parallel claude -p processes with --via cli')
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--repo', default=str(HERE.parent), help='the checkout holding .env, the ledger and Resources')
@@ -1343,6 +1403,7 @@ def main():
     for name, go in (('estimate', estimate), ('score', score)):
         p = sub.add_parser(name); p.add_argument('run'); p.add_argument('--limit', type=int)
         p.add_argument('--scores', default='scores'); p.set_defaults(go=go)
+        add_via(p)
     p = sub.add_parser('report'); p.add_argument('run'); p.add_argument('--scores', default='scores')
     p.set_defaults(go=report)
     p = sub.add_parser('sample'); p.add_argument('run'); p.add_argument('--count', type=int, default=40)
@@ -1355,6 +1416,7 @@ def main():
     p.add_argument('run'); p.add_argument('--stage', type=int, choices=[2, 3], default=2)
     p.add_argument('--limit', type=int); p.add_argument('--estimate', action='store_true')
     p.add_argument('--scores', default='scores'); p.set_defaults(go=verse_score)
+    add_via(p)
     p = sub.add_parser('vreport'); p.add_argument('run'); p.add_argument('--stage', type=int, choices=[2, 3], default=2)
     p.add_argument('--scores', default='scores'); p.set_defaults(go=verse_report)
     for name, go in (('evaluate', evaluate), ('abscore', abscore)):
