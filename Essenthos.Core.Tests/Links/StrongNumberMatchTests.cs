@@ -77,6 +77,20 @@ public class StrongNumberMatchTests
         links[0].Kind.Should().Be(StrongMatchKind.Contended);
     }
 
+    /// <summary>
+    /// Whether the witness's side is the guess is said apart, for a numbering that leaves such links out (the ASV's,
+    /// TSK-1890): several witness words of one number are; several translated words over one witness word are not, nor is
+    /// a number paired off in order.
+    /// </summary>
+    [Fact]
+    public void A_link_naming_several_occurrences_of_a_witness_number_says_so()
+    {
+        Match([(1, ["H1121"])], [(11, "H1121"), (12, "H1121")]).Single().SeveralOccurrences.Should().BeTrue();
+        Match([(1, ["H7225"]), (2, ["H7225"])], [(11, "H7225")]).Single().SeveralOccurrences.Should().BeFalse();
+        Match([(1, ["G1161"]), (2, ["G1161"])], [(11, "G1161"), (12, "G1161")]).Should().OnlyContain(link => !link.SeveralOccurrences);
+        Match([(1, ["G1223", "G5124"])], [(11, "G1223"), (12, "G5124")]).Single().SeveralOccurrences.Should().BeFalse();
+    }
+
     [Fact]
     public void MoreThanOneCandidateOnBothSidesIsTheWeakestShapeOfAll()
     {

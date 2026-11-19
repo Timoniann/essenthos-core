@@ -38,11 +38,16 @@ internal readonly record struct StrongMatchTally(int Unmatched, int Resolved, in
 /// How sure the pairing is. Never null: a Strong number is a lemma and not a token, so every match
 /// built here is an inference and has to carry one.
 /// </param>
+/// <param name="SeveralOccurrences">
+/// The witness writes a number of the tag more than once in the verse and the order does not pair them off, so the
+/// link names every occurrence and nothing says which one the translated words render.
+/// </param>
 internal sealed record StrongMatchDraft(
     List<long> From,
     List<long> To,
     double Confidence,
-    StrongMatchKind Kind);
+    StrongMatchKind Kind,
+    bool SeveralOccurrences = false);
 
 /// <summary>
 /// One translated word and one witness word carry the same Strong number inside one verse,
@@ -262,7 +267,8 @@ internal static class StrongNumberMatch
                 group.From,
                 witnessed,
                 Confidence(settled, group.From.Count, witnessed.Count, group.Resolved),
-                settled ? StrongMatchKind.Unambiguous : StrongMatchKind.Contended));
+                settled ? StrongMatchKind.Unambiguous : StrongMatchKind.Contended,
+                witnessed.Count > group.Numbers));
         }
 
         return drafts;

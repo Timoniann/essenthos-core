@@ -598,9 +598,50 @@ public sealed class MappingMergeTests
 
         Link(Merge(rows, pair: "LSG1910-BHSA").Final.Should().ContainSingle().Which).Should().Be(2);
         Link(Merge(rows, pair: "KJV-BHSA").Final.Should().ContainSingle().Which).Should().Be(1);
-        string[] laid = ["RUSV", "LSG1910", "JND2024", "SCH1951", "RLT2018", "CUV", "CUVS", "RV1909"];
+        string[] laid = ["RUSV", "LSG1910", "JND2024", "SCH1951", "RLT2018", "CUV", "CUVS", "RV1909", "ASV"];
         laid.Should().OnlyContain(slug => Essenthos.Core.Conversion.SideStrongNumbers.Layered(slug));
         ((string[])["KJV", "LUTH1912", "UBIO", "BHSA"]).Should().NotContain(slug => Essenthos.Core.Conversion.SideStrongNumbers.Layered(slug));
+    }
+
+    /// <summary>
+    /// Maxfield's numbers on the ASV are a supporting layer (owner, 2026-11-19, TSK-1890): agreeing with the composition they
+    /// are a second claim on its link, against it they lose the word, and on a word nothing else links they are its link.
+    /// </summary>
+    [Fact]
+    public void The_ASV_s_laid_numbers_support_its_composition_never_override_it_and_fill_a_bare_word()
+    {
+        var output = Merge([
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.1", confidence: 0.95, source: Machine, link: 1),
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Composed, "1.1:1.2", "1.1:1.2", confidence: 0.6, source: Machine, link: 2),
+            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.3", confidence: 0.9, link: 3),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.4", confidence: 0.9, link: 4),
+        ], pair: "ASV-BHSA");
+
+        output.Final.Where(r => r.Settled).Select(r => (Link(r), r.Method)).Should().Equal(
+            (1L, MappingMethods.Composed), (2L, MappingMethods.Composed), (4L, MappingMethods.Strong));
+        output.Final.Count(r => Link(r) == 1).Should().Be(2, "the agreeing number is the link's second claim");
+        Status(output, MappingMethods.Strong, 1).Should().Be("withdrawn-by composed");
+    }
+
+    /// <summary>
+    /// A function word's laid number may only add a claim: beside the aligner's row of the same shape it is one, and the link
+    /// ranks as the number does; alone, on a word nothing else links, it is withdrawn and the word stays bare.
+    /// </summary>
+    [Fact]
+    public void A_row_that_only_supports_is_a_claim_beside_another_method_and_never_a_link_alone()
+    {
+        var output = Merge([
+            Row(MappingMethods.Aligner, "1.1:1.1", "1.1:1.1", confidence: 0.8, source: "SIL.Machine ibm4", link: 1),
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1, evidence: MappingMethods.SupportOnly),
+            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.2", confidence: 0.9, link: 2, evidence: MappingMethods.SupportOnly),
+        ], pair: "ASV-BHSA");
+
+        output.Final.Select(Link).Should().Equal(1, 1);
+        output.Final.Single(r => r.Settled).Method.Should().Be(MappingMethods.Strong);
+        Status(output, MappingMethods.Strong, 1).Should().Be(MappingStatus.Unsupported);
+        output.Report.Should().Contain(r => r.Kind == "unsupported" && r.Rows == 1);
+        output.Report.Should().Contain(r => r.Kind == "bare-words" && r.Rows == 0, "a withdrawn supporting row is not kept as an orphan");
     }
 
     [Fact]

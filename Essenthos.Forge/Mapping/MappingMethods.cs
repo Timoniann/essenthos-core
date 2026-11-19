@@ -45,6 +45,14 @@ internal static partial class MappingMethods
     /// <summary>The rank of an EVIDENTIA absence that a link of another method than the aligner contests: below every link.</summary>
     public const int GivesWay = 0;
 
+    /// <summary>
+    /// The evidence of a row that may only add a claim to a link another method proposes in exactly its shape: the merge
+    /// withdraws it where no such row stands beside it (<see cref="MappingStatus.Unsupported"/>), so it never makes a
+    /// link of its own, not even on a word nothing else links. The ASV's laid numbers on English function words
+    /// (<see cref="StrongNumberSource.LaidRules"/>).
+    /// </summary>
+    public const string SupportOnly = "supports only: a laid number on a function word, never a link of its own";
+
     /// <summary>Whether every claim of a link is the aligner's own, the only kind an EVIDENTIA absence withdraws.</summary>
     public static bool OnlyTheAligner(IEnumerable<string> methods) => methods.All(m => m == Aligner);
 

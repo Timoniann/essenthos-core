@@ -22,6 +22,7 @@ Alignments	alignment	derived	this project's own statistical alignment models	own
 Almeida1911	text	content	Public Domain	public-domain	text:ALM1911	Almeida1911/LICENCE.md	-	-
 AmericanStandard1901	text	content	Public Domain	public-domain	text:ASV	AmericanStandard1901/LICENCE.md	-	-
 AmericanStandard1901	strong	never	No licence stated	unknown	-	AmericanStandard1901/LICENCE.md	-	The tags name no tagger and are not word level; the reader refuses them.
+AmericanStandard1901Strong	strong	derived	Copyright Wade Maxfield, released by him for any purpose	permitted	dataset:maxfield-asv-strong	AmericanStandard1901Strong/LICENCE.md	-	Wade Maxfield's Strong numbers on the ASV (Cross Word Project), laid onto the eBible ASV as a supporting layer below its composed links (owner, 2026-11-19, TSK-1890). The terms would let them be served; the words product keeps them to the mapping (texts/strong-terms), so only the links drawn from them are served.
 BasicEnglish	text	content	Public Domain	public-domain	text:BBE	BasicEnglish/LICENCE.md	-	Public domain in the United States only; the owner chose to serve it on 2026-09-24.
 BasicEnglish	strong	never	No licence stated	unknown	-	BasicEnglish/LICENCE.md	-	The reader refuses the tags (StrongTagging.IsWordLevel).
 Berean	text	content	Public Domain	public-domain	text:BSB dataset:berean dataset:berean-interlinear	Berean/LICENCE.md	-	bsb.txt and bsb_tables.tsv, dedicated to the public domain on 2023-04-30.

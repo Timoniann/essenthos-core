@@ -207,6 +207,12 @@ internal static class MappingStatus
     /// </summary>
     public const string YieldsToStated = "yields-to stated";
 
+    /// <summary>
+    /// A row that may only support another method's link (<see cref="MappingMethods.SupportOnly"/>) and found no row of
+    /// another method in its shape.
+    /// </summary>
+    public const string Unsupported = "withdrawn-by unsupported";
+
     public const string Stale = "stale";
 
     public static string SupersededBy(int run) => $"superseded-by evidentia run {run}";

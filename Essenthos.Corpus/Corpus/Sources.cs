@@ -83,6 +83,13 @@ internal static class Sources
         "the Bob Jones University Strong numbering of the Synodal (1996), read from swmail/RST";
 
     /// <summary>
+    /// What every link drawn from Wade Maxfield's Strong numbers on the American Standard Version begins with: his
+    /// numbering, made for the Cross Word Project, read from the file his own repository ships.
+    /// </summary>
+    public const string MaxfieldAsvStrongCredit =
+        "Wade Maxfield's Strong numbering of the American Standard Version (Cross Word Project), read from CWP-Desktop-QT's ASV.bbl";
+
+    /// <summary>
     /// What every link drawn from the Chinese Union Version's Strong numbers begins with. It names
     /// whose numbers they are and the copy they were read from.
     /// </summary>

@@ -9,7 +9,8 @@ namespace Essenthos.Core.Conversion;
 /// Strong numbers laid onto a translation from a numbered edition of the same translation, as the load's
 /// strong verbs lay them before drawing links from them (<see cref="SynodalStrongLayer.Lay"/>): the Synodal by
 /// the Strong-tagged digitisation swmail/RST, the Chinese Union by FHL's module, the Segond, Darby, Schlachter
-/// and the Revised Literal by their CrossWire modules, the Reina-Valera by Rubén Gómez's numbering. A word takes
+/// and the Revised Literal by their CrossWire modules, the Reina-Valera by Rubén Gómez's numbering, the American
+/// Standard Version by Wade Maxfield's (<see cref="MaxfieldAsvEdition"/>). A word takes
 /// the first number its tag names. The load reads these for the run and stores no number on a word; here the
 /// number is the word's <c>strong</c> column, and the header names the edition it came from.
 /// </summary>
@@ -27,6 +28,8 @@ internal sealed class SideStrongNumbers : ITextStage
                 resources => SynodalStrongEdition.Read(Path.Combine([resources, .. SynodalStrongLinks.EditionFile])), Stated: true),
             [EbibleTextSource.ReinaValera] = new(string.Join('/', ReinaValeraStrongLinkLoader.EditionFolder),
                 resources => EbibleTextSource.Numbers(Path.Combine([resources, .. ReinaValeraStrongLinkLoader.EditionFolder]))),
+            [EnglishTextSource.AmericanStandard] = new(string.Join('/', MaxfieldAsvEdition.EditionFile),
+                resources => MaxfieldAsvEdition.Read(Path.Combine([resources, .. MaxfieldAsvEdition.EditionFile]))),
         };
 
         foreach (var numbering in CrossWireNumberings.All)

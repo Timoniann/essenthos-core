@@ -52,6 +52,9 @@ claim to be — RUL-0024. eBible names no tagger and states no terms for it anyw
 same silence the Spanish tagging came under and where the layer turned out to be a named third
 party's; here it fails on its merits before the question of whose it is arises.
 
+The Strong numbers the corpus does lay onto these words are Wade Maxfield's, a different, per-word tagging
+whose author and terms are stated: `../AmericanStandard1901Strong/LICENCE.md` (TSK-1890).
+
 ## The licence, in three statements that agree
 
 **1. `copr.htm`, which ships inside the archive and is kept beside this file** — the same page eBible

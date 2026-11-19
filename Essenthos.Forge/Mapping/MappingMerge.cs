@@ -202,6 +202,7 @@ internal static class MappingMerge
             candidate.Sort = MappingText.SortKey(candidate.Top.Row.From, candidate.Top.Row.To, input.FromText, input.ToText);
         }
 
+        WithdrawUnsupported(candidates, pinned, report);
         GiveWay(candidates, pinned);
 
         candidates.Sort((a, b) =>
@@ -558,6 +559,34 @@ internal static class MappingMerge
             return equals > 0 && from.Contains(role[..equals]) && (at < 0 || from.Contains(role[(at + 1)..]));
         }).ToList();
         return kept.Count == 0 ? null : string.Join(' ', kept);
+    }
+
+    /// <summary>
+    /// A link every claim of which may only support another method's (<see cref="MappingMethods.SupportOnly"/>) is
+    /// withdrawn before the competition, so it neither takes a word nor is kept for one the competition leaves bare.
+    /// </summary>
+    private static void WithdrawUnsupported(List<Candidate> candidates, HashSet<string> pinned, List<ReportRow> report)
+    {
+        var withdrawn = candidates.RemoveAll(candidate =>
+        {
+            if (pinned.Contains(candidate.Shape) || !candidate.Rows.All(r => r.Row.Evidence == MappingMethods.SupportOnly))
+            {
+                return false;
+            }
+
+            foreach (var row in candidate.Rows)
+            {
+                row.Status = MappingStatus.Unsupported;
+            }
+
+            return true;
+        });
+
+        if (withdrawn > 0)
+        {
+            report.Add(new ReportRow("unsupported", string.Empty, string.Empty, withdrawn,
+                "links whose every claim may only support another method's link, and no other method's row stands in their shape"));
+        }
     }
 
     /// <summary>

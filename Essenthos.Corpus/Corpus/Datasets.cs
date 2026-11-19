@@ -729,6 +729,21 @@ public static class Datasets
             Sources.RevisedLiteralStrongCredit, Links: true,
             Obliges: RevisedLiteralTerms),
 
+        // Laid onto the eBible ASV as a supporting layer below its composed links (owner, 2026-11-19, TSK-1890);
+        // Resources/AmericanStandard1901Strong/LICENCE.md has the terms as the file states them and the commit read.
+        new("maxfield-asv-strong", "Strong numbering of the American Standard Version",
+            "Wade Maxfield, for the Cross Word Project; the copy read is ASV.bbl in his repository CWP-Desktop-QT, "
+            + "commit efd6ffc8",
+            "Copyright Wade Maxfield, released by him for any purpose",
+            "https://github.com/wmaxfield/CWP-Desktop-QT/blob/efd6ffc8264aca410c203bf5dc175b3d01863cda/CWPfiles/Bibles/ASV.bbl",
+            "https://github.com/wmaxfield/CWP-Desktop-QT",
+            "Which words of the American Standard Version render which Hebrew or Greek word, matched within the "
+            + "verse on the Strong numbers Wade Maxfield keyed to its words. The numbering is laid onto the ASV "
+            + "the corpus loads from eBible and ranks below the ASV's composed links: it adds a claim where the "
+            + "two agree and a link where the ASV had none, never one against them, and only on content words "
+            + "whose number names one Hebrew or Greek word of the verse, or one occurrence of it in order.",
+            Sources.MaxfieldAsvStrongCredit, Links: true),
+
         new("byzantine-apparatus", "Apparatus to the Byzantine Textform",
             "Maurice A. Robinson and William G. Pierpont; the ByzTxt repository's beta-code files, release v3.3.2",
             "Public domain (the Unlicense)",

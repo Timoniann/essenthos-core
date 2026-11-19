@@ -45,16 +45,19 @@ internal sealed class StrongNumberSource : IPairSource
     private readonly string _translation;
     private readonly IReadOnlyList<string> _witnesses;
     private readonly string? _credit;
+    private readonly LaidRules? _rules;
     private readonly IReadOnlyList<string> _prefixes;
     private readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<long, WordTag>>> _tags = new();
     private readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<long, long>>> _moved = new();
 
     /// <param name="credit">Whose numbering is laid onto the translation; null for numbers the translation carries itself.</param>
-    private StrongNumberSource(string translation, IReadOnlyList<string> witnesses, string? credit)
+    /// <param name="rules">What a laid numbering may claim beyond the ordinary match, where it may claim less.</param>
+    private StrongNumberSource(string translation, IReadOnlyList<string> witnesses, string? credit, LaidRules? rules = null)
     {
         _translation = translation;
         _witnesses = witnesses;
         _credit = credit;
+        _rules = rules;
         _prefixes = credit is null
             ? [.. TextAliases.Of(translation).Append(translation).Distinct(StringComparer.Ordinal).Select(t => TaggedTextLinkLoader.Source(t, string.Empty))]
             : [credit + Against];
@@ -69,7 +72,24 @@ internal sealed class StrongNumberSource : IPairSource
         new(SwordTextSource.ChineseUnionSimplified, UnionStrongLinks.Witnesses, UnionStrongLinks.Credit),
         new(EbibleTextSource.ReinaValera, ReinaValeraStrongLinkLoader.Witnesses, ReinaValeraStrongLinkLoader.Credit),
         .. CrossWireNumberings.All.Select(numbering => new StrongNumberSource(numbering.Slug, numbering.Witnesses, numbering.Credit)),
+        new(EnglishTextSource.AmericanStandard, MaxfieldAsvEdition.Witnesses, MaxfieldAsvEdition.Credit,
+            new LaidRules(OneOccurrence: true, FunctionWord: EnglishFunctionWords.Contains)),
     ];
+
+    /// <summary>
+    /// A laid numbering held to less than the ordinary match: the American Standard Version's, a supporting layer below the
+    /// ASV's composed links (owner, 2026-11-19, TSK-1890).
+    /// </summary>
+    /// <param name="OneOccurrence">
+    /// A match whose number names several words of the witness's verse that the order does not pair off is left out, rather
+    /// than kept as one link over all of them (<see cref="StrongMatchDraft.SeveralOccurrences"/>; NOT-0228).
+    /// </param>
+    /// <param name="FunctionWord">
+    /// The translation's words whose number only supports a link another method proposes and never makes one of its own
+    /// (<see cref="MappingMethods.SupportOnly"/>): measured on their disagreements, the ASV's function words' numbers are
+    /// no better than its composed links.
+    /// </param>
+    internal sealed record LaidRules(bool OneOccurrence, Func<string, bool>? FunctionWord);
 
     public string Method => MappingMethods.Strong;
 
@@ -176,7 +196,7 @@ internal sealed class StrongNumberSource : IPairSource
         var resolution = series == StrongNumbers.Greek ? Resolution(store, verses.Select(v => (v.Tagged, v.Against))) : [];
         var (absent, testimony) = Others(store, pair);
         var rows = new List<MappingRow>(300_000);
-        int matched = 0, testified = 0, regained = 0;
+        int matched = 0, testified = 0, regained = 0, several = 0, severalWords = 0, supporting = 0;
         var kinds = new int[3];
         var moved = Laid || !Placed(_translation) ? null : _moved.GetValue(texts, t => new Lazy<Dictionary<long, long>>(() => Moved(t, _translation, log))).Value;
         foreach (var (units, members, against) in verses)
@@ -188,6 +208,13 @@ internal sealed class StrongNumberSource : IPairSource
             foreach (var draft in drafts)
             {
                 var ids = draft.From.SelectMany(id => members[id]).ToList();
+                if (_rules is { OneOccurrence: true } && draft.SeveralOccurrences)
+                {
+                    several++;
+                    severalWords += ids.Count;
+                    continue;
+                }
+
                 var from = ids.Select(translation.Key).Where(key => !absent.Contains(key.Own)).ToList();
                 if (from.Count == 0)
                 {
@@ -228,6 +255,11 @@ internal sealed class StrongNumberSource : IPairSource
                     // A match naming exactly a stated link's words is a claim on that link, as the database's loader made it.
                     row = row with { Evidence = TaggedTextLinkLoader.CorroborationNote };
                 }
+                else if (_rules?.FunctionWord is { } function && ids.All(id => function(translation.Words[(int)id].Surface)))
+                {
+                    row = row with { Evidence = MappingMethods.SupportOnly };
+                    supporting++;
+                }
 
                 kinds[(int)draft.Kind]++;
                 rows.Add(row);
@@ -237,7 +269,8 @@ internal sealed class StrongNumberSource : IPairSource
         log($"{verses.Count} verses, {matched} of {tagged} tagged words matched ({unplaced} in verses the witness lacks); {rows.Count} rows "
             + $"({kinds[(int)StrongMatchKind.Unambiguous]} unambiguous, {kinds[(int)StrongMatchKind.Paired]} paired, "
             + $"{kinds[(int)StrongMatchKind.Contended]} contended), {testified} left to a stated link"
-            + (moved is null ? string.Empty : $"; {regained} auxiliaries or pronouns attached to the verb their number moved to"));
+            + (moved is null ? string.Empty : $"; {regained} auxiliaries or pronouns attached to the verb their number moved to")
+            + (_rules is null ? string.Empty : $"; {several} matches ({severalWords} words) left out for naming several occurrences, {supporting} rows on function words that only support another method's link"));
         return rows;
     }
 

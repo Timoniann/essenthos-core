@@ -14,6 +14,11 @@
     "files": 67,
     "sha256": "58c1766ac84589cdc39568411f59b5bc4f7330016b42169775aa29e6c8752e5e"
   },
+  "AmericanStandard1901Strong": {
+    "bytes": 34420504,
+    "files": 2,
+    "sha256": "b839274cc7d7b94eb7384a01542ee238b39e340129641136a74aa01a5acff6d7"
+  },
   "BasicEnglish": {
     "bytes": 19694107,
     "files": 67,
