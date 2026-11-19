@@ -186,6 +186,8 @@ internal static class BereanLinks
     /// <para>
     /// <paramref name="conjunctions"/> are the witness's words that are the conjunction ו, which BHSA writes apart from the word
     /// it is prefixed to; given them, a row of a conjunction and bracketed words is read as <see cref="Supplied"/> says.
+    /// <paramref name="prepositions"/> are its words that are a preposition, by their Strong number; given them, a row of a
+    /// preposition and bracketed words is read as <see cref="Prefixed"/> says.
     /// </para>
     /// </summary>
     internal static bool Pair(
@@ -195,7 +197,8 @@ internal static class BereanLinks
         List<Draft> drafts,
         Silences silences,
         IReadOnlySet<long>? overruled = null,
-        IReadOnlySet<long>? conjunctions = null)
+        IReadOnlySet<long>? conjunctions = null,
+        IReadOnlyDictionary<long, string>? prepositions = null)
     {
         if (Claims(rows, ours) is not { } claimed)
         {
@@ -239,7 +242,13 @@ internal static class BereanLinks
 
                 if (theirs.Count > 0)
                 {
-                    if (conjunctions is not null && Supplied(rows, claimed, witness, conjunctions, i) is { } supplied)
+                    if (prepositions is not null && Prefixed(rows, claimed, witness, prepositions, i) is { } prefix)
+                    {
+                        drafts.Add(new Draft(LinkRelation.Renders, [.. mine.Skip(1)], theirs, Bracketed: true));
+                        drafts.Add(new Draft(LinkRelation.Renders, [mine[0]], [prefix]));
+                        silences.PrepositionsMoved++;
+                    }
+                    else if (conjunctions is not null && Supplied(rows, claimed, witness, conjunctions, i) is { } supplied)
                     {
                         drafts.Add(new Draft(LinkRelation.Renders, [.. mine.Skip(1)], theirs, Bracketed: true));
                         if (supplied.Waw is { } to)
@@ -306,7 +315,7 @@ internal static class BereanLinks
     /// joins the phrase it ends (וְאֵשֶׁת נֹחַ). Only where the word before has no ו, the one of a verb right after, which
     /// opens the next clause the bracketed words stand in (2 Kings 23:6, «and [there] ground»). A ו counts only where its
     /// word renders something and its English does not open with a conjunction of its own; otherwise the conjunction is
-    /// left unlinked. «For» renders a preposition or כִּי, never a ו, and is left unlinked too.
+    /// left unlinked. «For» renders a preposition or כִּי, never a ו, and is left unlinked too where <see cref="Prefixed"/> finds no ל.
     /// </para>
     ///
     /// <para>
@@ -323,7 +332,8 @@ internal static class BereanLinks
         IReadOnlySet<long> conjunctions,
         int at)
     {
-        if (ConjunctionAndBracketed(rows[at].English) is not { } conjunction
+        if (LeadAndBracketed(rows[at].English) is not { } conjunction
+            || !SuppliedConjunctions.Contains(conjunction)
             || Parts(rows[at].Parsing).ToList() is not { Count: > 0 } parts
             || !parts.All(SubjectPart))
         {
@@ -355,8 +365,57 @@ internal static class BereanLinks
             && !OpeningConjunctions.Contains(first);
     }
 
-    /// <summary>The conjunction of a phrase that is one conjunction and one bracketed span, «And [he]»; null for any other.</summary>
-    private static string? ConjunctionAndBracketed(string english)
+    /// <summary>
+    /// A row whose English is a preposition and bracketed words and nothing else, on a word with no preposition of its own,
+    /// where the preposition is the prefix of the word the English goes on to. 2 Samuel 23:21 gives מִיַּד הַמִּצְרִי, and
+    /// the table «hand» for מִיַּד and «from [his]» for הַמִּצְרִי: the bracketed words are what the translators wrote for
+    /// the Egyptian, so they render him, and «from» renders the מִ of מִיַּד, which BHSA writes as a word of its own.
+    ///
+    /// <para>
+    /// Only where nothing else could be meant: the word whose English comes next stands right before the row's word in the
+    /// Hebrew (the word the row's word completes, «from [his] hand» for «from the hand of the Egyptian»), the table's parsing
+    /// gives it the preposition the English names (ב for in, into, with, at, by; ל for to, for; מ for from; כ for like, as),
+    /// exactly one of its witness words is that preposition, and its own English does not open with a preposition that would
+    /// render the prefix itself. Any other row of the shape is left as the table has it.
+    /// </para>
+    /// </summary>
+    /// <returns>The witness word the preposition renders; null where the row is not of this shape.</returns>
+    private static long? Prefixed(
+        IReadOnlyList<BereanRow> rows,
+        List<long>[] claimed,
+        IReadOnlyList<List<long>> witness,
+        IReadOnlyDictionary<long, string> prepositions,
+        int at)
+    {
+        if (at == 0
+            || LeadAndBracketed(rows[at].English) is not { } preposition
+            || !Prefixes.TryGetValue(preposition, out var prefix)
+            || Parts(rows[at].Parsing).ToList() is not { Count: > 0 } parts
+            || !parts.All(SubjectPart))
+        {
+            return null;
+        }
+
+        var before = at - 1;
+        var order = rows[at].EnglishOrder;
+        var next = rows[before].EnglishOrder;
+        if (next <= order
+            || rows.Any(row => row.EnglishOrder > order && row.EnglishOrder < next)
+            || claimed[before] is not { Count: > 0 }
+            || BereanWords.Rendering(rows[before].English) is not [var first, ..]
+            || OpeningPrepositions.Contains(first)
+            || !Parts(rows[before].Parsing).Contains(prefix.Part))
+        {
+            return null;
+        }
+
+        return witness[before].Where(id => prepositions.TryGetValue(id, out var strong) && strong == prefix.Strong).ToList() is [var word]
+            ? word
+            : null;
+    }
+
+    /// <summary>The first word of a phrase that is one word and one bracketed span, «And [he]»; null for any other.</summary>
+    private static string? LeadAndBracketed(string english)
     {
         var phrase = english.Trim();
         var space = phrase.IndexOf(' ');
@@ -366,8 +425,7 @@ internal static class BereanLinks
         }
 
         var span = phrase[(space + 1)..].TrimStart();
-        return SuppliedConjunctions.Contains(phrase[..space])
-               && span.Length > 2
+        return span.Length > 2
                && span[0] == '['
                && span[^1] == ']'
                && span.AsSpan(1, span.Length - 2).IndexOfAny('[', ']') < 0
@@ -396,7 +454,28 @@ internal static class BereanLinks
     private static readonly HashSet<string> SubjectParts =
         new(["Noun", "Article", "Pronoun", "Verb", "Number", "Adjective"], StringComparer.Ordinal);
 
+    /// <summary>
+    /// The prefixed preposition each English preposition names, as the table's parsing writes it and as BHSA numbers the word
+    /// it writes for it.
+    /// </summary>
+    private static readonly Dictionary<string, Prefix> Prefixes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["in"] = new("Preposition-b", "H9003"), ["into"] = new("Preposition-b", "H9003"), ["with"] = new("Preposition-b", "H9003"),
+        ["at"] = new("Preposition-b", "H9003"), ["by"] = new("Preposition-b", "H9003"),
+        ["to"] = new("Preposition-l", "H9005"), ["for"] = new("Preposition-l", "H9005"),
+        ["from"] = new("Preposition-m", "H4480"),
+        ["like"] = new("Preposition-k", "H9004"), ["as"] = new("Preposition-k", "H9004"),
+    };
+
+    /// <summary>The English a prefixed preposition is rendered by: a row opening with one has its prefix rendered.</summary>
+    private static readonly HashSet<string> OpeningPrepositions = new(
+        ["in", "into", "with", "at", "by", "to", "for", "from", "like", "as", "on", "upon", "of", "among", "within", "through",
+         "before", "after", "against", "over", "under", "toward", "about", "according", "when", "while"],
+        StringComparer.OrdinalIgnoreCase);
+
     private readonly record struct Conjunction(long? Waw);
+
+    private readonly record struct Prefix(string Part, string Strong);
 
     /// <summary>
     /// For each row the table marks <c>vvv</c>, the row whose English renders it together with its
@@ -478,12 +557,14 @@ internal static class BereanLinks
 
     internal sealed record Word(long Id, int VerseId, string Surface, string? Strong);
 
-    /// <param name="Bracketed">Whether the words the English brackets render here, which they do nowhere else (<see cref="Supplied"/>).</param>
+    /// <param name="Bracketed">
+    /// Whether the words the English brackets render here, which they do nowhere else (<see cref="Supplied"/>, <see cref="Prefixed"/>).
+    /// </param>
     internal sealed record Draft(LinkRelation Relation, List<long> From, List<long> To, bool Bracketed = false);
 
     /// <summary>
     /// The rows with no English of their own, by what the table says about each, and where the conjunctions of the rows
-    /// <see cref="Supplied"/> reads went.
+    /// <see cref="Supplied"/> reads and the prepositions of those <see cref="Prefixed"/> reads went.
     /// </summary>
     internal sealed class Silences
     {
@@ -502,5 +583,8 @@ internal static class BereanLinks
 
         /// <summary>Conjunctions of such a row for which no ו beside the word could be told, left unlinked.</summary>
         public int ConjunctionsUnlinked { get; set; }
+
+        /// <summary>Prepositions of a preposition and bracketed words moved to the prefix of the next word (<see cref="Prefixed"/>).</summary>
+        public int PrepositionsMoved { get; set; }
     }
 }

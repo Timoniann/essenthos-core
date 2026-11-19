@@ -36,6 +36,9 @@ internal sealed class BereanTableSource : IPairSource
     /// <summary>BHSA's number for the conjunction ו, which it writes as a word of its own.</summary>
     private const string Waw = "H9000";
 
+    /// <summary>BHSA's numbers for the prepositions ב, כ, ל and מִן, which it writes as words of their own where they are prefixed.</summary>
+    private static readonly HashSet<string> Prepositions = new(["H9003", "H9004", "H9005", "H4480"], StringComparer.Ordinal);
+
     /// <summary>The verse a psalm's title stands inside where the tables print one.</summary>
     private const int FirstVerse = 1;
 
@@ -133,7 +136,12 @@ internal sealed class BereanTableSource : IPairSource
             var conjunctions = greekWitness
                 ? null
                 : run.SelectMany(words => words).Where(id => witnessText.Words[(int)id].Strong == Waw).ToHashSet();
-            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions))
+            var prepositions = greekWitness
+                ? null
+                : run.SelectMany(words => words).Distinct()
+                    .Where(id => witnessText.Words[(int)id].Strong is { } strong && Prepositions.Contains(strong))
+                    .ToDictionary(id => id, id => witnessText.Words[(int)id].Strong!);
+            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions, prepositions))
             {
                 drifted++;
                 continue;
@@ -144,7 +152,8 @@ internal sealed class BereanTableSource : IPairSource
 
         // A word the English prints in brackets is the translators' own and renders nothing, so it is not linked, and a
         // rendering of nothing else is not written: Gen 6:11's second הָאָרֶץ is «[and]» in the table. The exception is the
-        // bracketed words a conjunction leaves to a word, «And [he]» on יְהוֹשֻׁעַ (BereanLinks.Supplied).
+        // bracketed words a conjunction or a preposition leaves to a word, «And [he]» on יְהוֹשֻׁעַ (BereanLinks.Supplied) and
+        // «from [his]» on הַמִּצְרִי (BereanLinks.Prefixed).
         var supplied = drafts.Where(draft => !draft.Bracketed).Sum(draft => draft.From.Count(id => Bracketed(english, id)));
         var onlySupplied = drafts.Count(draft => !draft.Bracketed && draft.From.Count > 0 && draft.From.All(id => Bracketed(english, id)));
         drafts = [.. drafts
@@ -154,7 +163,8 @@ internal sealed class BereanTableSource : IPairSource
             + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled; {divided} divided, {drifted} drifted, {disputed} disputed, "
             + $"{unframed} at an address the witness lacks; {supplied} bracketed words left unlinked, {onlySupplied} renderings of nothing else; "
             + $"{silences.ConjunctionsMoved + silences.ConjunctionsUnlinked} words rendered by bracketed words beside a conjunction, "
-            + $"{silences.ConjunctionsMoved} of the conjunctions moved to the waw beside, {silences.ConjunctionsUnlinked} left unlinked");
+            + $"{silences.ConjunctionsMoved} of the conjunctions moved to the waw beside, {silences.ConjunctionsUnlinked} left unlinked; "
+            + $"{silences.PrepositionsMoved} words rendered by bracketed words beside a preposition, the preposition moved to the prefix of the next word");
         return drafts.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(english.Key)),
             MappingText.Keys(draft.To.Select(witnessText.Key)),
             draft.Relation.ToString().ToLowerInvariant(), Method, null, Source, null, null, null));
