@@ -77,7 +77,7 @@ public sealed class TextWordLoadTests(WitnessDatabase database) : IDisposable
     {
         var terms = StrongTerms.Read(TestResources.Shipped("."));
 
-        SideStrongNumbers.Texts.Should().BeEquivalentTo(["RUSV", "LSG1910", "JND2024", "SCH1951", "RLT2018", "CUV", "CUVS", "RV1909"]);
+        SideStrongNumbers.Texts.Should().BeEquivalentTo(["RUSV", "LSG1910", "JND2024", "SCH1951", "RLT2018", "CUV", "CUVS", "RV1909", "ASV"]);
         terms.Keys.Should().BeEquivalentTo(SideStrongNumbers.Texts);
         terms.Values.Should().OnlyContain(term => term.Quote.Length > 0 && term.File.Length > 0 && term.Why.Length > 0);
         terms.Values.Where(term => term.Served).Should().BeEmpty("the owner's answer of 2026-11-04 serves none of these until their terms allow it");
