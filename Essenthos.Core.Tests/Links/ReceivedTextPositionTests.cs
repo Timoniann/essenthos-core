@@ -60,7 +60,7 @@ public sealed class ReceivedTextPositionTests
     {
         var unit = 0;
         var words = SwordTextSource.Segment(
-            OsisVerse.Parse(John316), SwordSegmentation.Spaced, ref unit, out _, fhlPrefixes: null);
+            OsisVerse.Parse(John316), SwordSegmentation.Spaced, ref unit, out _);
 
         var gave = words.Where(word => word.Surface is "he" or "gave").ToList();
         gave.Should().HaveCount(2);
@@ -115,7 +115,7 @@ public sealed class ReceivedTextPositionTests
     {
         var unit = 0;
         var words = SwordTextSource.Segment(
-            OsisVerse.Parse(John316), SwordSegmentation.Spaced, ref unit, out _, fhlPrefixes: null);
+            OsisVerse.Parse(John316), SwordSegmentation.Spaced, ref unit, out _);
         var english = words.Select((word, at) => (Id: (long)at + 1, word)).ToList();
         var stated = words.Where(word => word.Positions is { Count: > 0 })
             .GroupBy(word => word.Unit)

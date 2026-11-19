@@ -48,7 +48,7 @@ public class ClearBibleShiftTests(ITestOutputHelper output)
             Path.Combine("spa", "alignments", "RV09", "WLCM-RV09-manual.json"),
             Path.Combine("spa", "targets", "RV09", "ot_RV09.tsv"),
             Path.Combine("sources", "WLCM.tsv"),
-            ClearBibleSet.ReinaValeraOldTestament("RV1909", "BHSA").Shift!);
+            ShippedStrongNumbers.ClearBible("RV1909-BHSA").Shift!);
         output.WriteLine($"{shifted.Count} Old Testament records on the 'and' before their word");
 
         var targets = shifted.Select(record => record.Target[0]).ToHashSet();
@@ -64,7 +64,7 @@ public class ClearBibleShiftTests(ITestOutputHelper output)
             Path.Combine("spa", "alignments", "RV09", "SBLGNT-RV09-manual.json"),
             Path.Combine("spa", "targets", "RV09", "nt_RV09.tsv"),
             Path.Combine("sources", "SBLGNT.tsv"),
-            ClearBibleSet.ReinaValeraNewTestament("RV1909", "NESTLE1904").Shift!);
+            ShippedStrongNumbers.ClearBible("RV1909-NESTLE1904").Shift!);
         output.WriteLine($"{shifted.Count} New Testament records on the 'and' before their word");
 
         shifted.Should().Contain(record => record.Target[0] == "40014028006");

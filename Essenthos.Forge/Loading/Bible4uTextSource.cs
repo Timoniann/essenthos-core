@@ -1,4 +1,5 @@
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Strong;
 ﻿using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Utils;
 using Essenthos.Core.XmlBible;
@@ -236,12 +237,6 @@ internal static class Bible4uTextSource
 
     private const int LastOldTestamentBook = 39;
 
-    /// <summary>The last number of Strong's Hebrew lexicon; a tag above it is a tense-voice-mood code.</summary>
-    private const int LastHebrewNumber = 8674;
-
-    /// <summary>The last number of Strong's Greek lexicon.</summary>
-    private const int LastGreekNumber = 5624;
-
     /// <summary>
     /// The word's Strong number from the tags printed after it: the one in the lexicon's range. The
     /// others are a tense-voice-mood code or 0, which the tagger writes where it has no number, and
@@ -254,7 +249,7 @@ internal static class Bible4uTextSource
             return null;
         }
 
-        var (language, last) = ordinal <= LastOldTestamentBook ? ('H', LastHebrewNumber) : ('G', LastGreekNumber);
+        var (language, last) = ordinal <= LastOldTestamentBook ? ('H', StrongNumbers.LastHebrew) : ('G', StrongNumbers.LastGreek);
         var numbers = tags.Where(tag => tag is > 0 && tag <= last).ToList();
         return numbers.Count switch
         {

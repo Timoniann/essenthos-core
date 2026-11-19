@@ -1,0 +1,121 @@
+# product    Essenthos/sources/words.tsv
+# producer   by hand
+# The words a source is read with: the words of a translation that one of its defects or conventions turns on, a list per
+#   source and purpose. Ours, measured on the corpus; each row says why. Edit a row and run forge build: every product made
+#   with a list names this file among its inputs. A list no reader asks for, or a word twice in a list, is refused.
+# Columns: source, list, word (as the source prints it; a Strong number where the list is of numbers), reads (what the word
+#   is read as, where the list maps; \N otherwise), reason.
+# Lists:
+#   maxfield-asv added-noun        English nouns a translator adds, which the ASV's laid Strong numbers only support (strong-pairs)
+#   berean supplied-conjunction, waw-conjunction, opening-conjunction, subject-part, prefix (reads BHSA's number),
+#     prefix-part (a number, read as the table's parsing of it), opening-preposition
+#                                  the Berean tables' conjunctions and prepositions before bracketed words (stated-pairs, BSB)
+#   clear-bible spa-and, fra-and, hin-and, heb-also, grc-also, spa-before-names
+#                                  the words a Clear Bible set's shifted and early records turn on, named by sources/clear-bible.tsv
+source	list	word	reads	reason
+maxfield-asv	added-noun	thing	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (all things), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	things	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (all things), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	one	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (one to another), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	ones	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (the holy ones), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	man	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (every man, no man), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	men	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (all men), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	manner	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (all manner of), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+maxfield-asv	added-noun	cause	\N	a noun a translator adds to give an adjective, a pronoun or a particle a head (for this cause), rendering no word of the original of its own; a laid number on it only supports (owner, 2026-11-19, TSK-1890)
+berean	supplied-conjunction	and	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	supplied-conjunction	so	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	supplied-conjunction	then	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	supplied-conjunction	but	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	supplied-conjunction	now	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	supplied-conjunction	yet	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	supplied-conjunction	for	\N	a conjunction a row of a conjunction and bracketed words is read for, on a word with no conjunction of its own: the bracketed words render the word, the conjunction a ו beside it or nothing (Joshua 3:6 «And [he]»)
+berean	waw-conjunction	and	\N	a supplied conjunction that renders a ו («for» renders a preposition or כִּי, never a ו, and is left unlinked)
+berean	waw-conjunction	so	\N	a supplied conjunction that renders a ו («for» renders a preposition or כִּי, never a ו, and is left unlinked)
+berean	waw-conjunction	then	\N	a supplied conjunction that renders a ו («for» renders a preposition or כִּי, never a ו, and is left unlinked)
+berean	waw-conjunction	but	\N	a supplied conjunction that renders a ו («for» renders a preposition or כִּי, never a ו, and is left unlinked)
+berean	waw-conjunction	now	\N	a supplied conjunction that renders a ו («for» renders a preposition or כִּי, never a ו, and is left unlinked)
+berean	waw-conjunction	yet	\N	a supplied conjunction that renders a ו («for» renders a preposition or כִּי, never a ו, and is left unlinked)
+berean	opening-conjunction	and	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	so	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	then	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	but	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	now	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	yet	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	or	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	opening-conjunction	for	\N	the English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered, so no supplied conjunction takes it
+berean	subject-part	Noun	\N	a part of a word, as the table's parsing heads it, that can stand for a person or thing the translators named with a pronoun or a name (a part naming a person counts too)
+berean	subject-part	Article	\N	a part of a word, as the table's parsing heads it, that can stand for a person or thing the translators named with a pronoun or a name (a part naming a person counts too)
+berean	subject-part	Pronoun	\N	a part of a word, as the table's parsing heads it, that can stand for a person or thing the translators named with a pronoun or a name (a part naming a person counts too)
+berean	subject-part	Verb	\N	a part of a word, as the table's parsing heads it, that can stand for a person or thing the translators named with a pronoun or a name (a part naming a person counts too)
+berean	subject-part	Number	\N	a part of a word, as the table's parsing heads it, that can stand for a person or thing the translators named with a pronoun or a name (a part naming a person counts too)
+berean	subject-part	Adjective	\N	a part of a word, as the table's parsing heads it, that can stand for a person or thing the translators named with a pronoun or a name (a part naming a person counts too)
+berean	opening-preposition	in	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	into	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	with	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	at	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	by	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	to	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	for	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	from	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	like	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	as	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	on	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	upon	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	of	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	among	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	within	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	through	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	before	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	after	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	against	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	over	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	under	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	toward	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	about	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	according	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	when	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	opening-preposition	while	\N	the English a prefixed preposition is rendered by: a row opening with one has its prefix rendered, so no supplied preposition takes it
+berean	prefix	in	H9003	an English preposition the table writes for the prefixed preposition Preposition-b (BHSA H9003): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	into	H9003	an English preposition the table writes for the prefixed preposition Preposition-b (BHSA H9003): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	with	H9003	an English preposition the table writes for the prefixed preposition Preposition-b (BHSA H9003): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	at	H9003	an English preposition the table writes for the prefixed preposition Preposition-b (BHSA H9003): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	by	H9003	an English preposition the table writes for the prefixed preposition Preposition-b (BHSA H9003): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	to	H9005	an English preposition the table writes for the prefixed preposition Preposition-l (BHSA H9005): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	for	H9005	an English preposition the table writes for the prefixed preposition Preposition-l (BHSA H9005): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	from	H4480	an English preposition the table writes for the prefixed preposition Preposition-m (BHSA H4480): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	like	H9004	an English preposition the table writes for the prefixed preposition Preposition-k (BHSA H9004): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix	as	H9004	an English preposition the table writes for the prefixed preposition Preposition-k (BHSA H9004): a row of it and bracketed words renders the prefix of the next word (2 Samuel 23:21 «from [his]»)
+berean	prefix-part	H9003	Preposition-b	the table's parsing writes the prefixed preposition BHSA numbers H9003 as Preposition-b
+berean	prefix-part	H9005	Preposition-l	the table's parsing writes the prefixed preposition BHSA numbers H9005 as Preposition-l
+berean	prefix-part	H4480	Preposition-m	the table's parsing writes the prefixed preposition BHSA numbers H4480 as Preposition-m
+berean	prefix-part	H9004	Preposition-k	the table's parsing writes the prefixed preposition BHSA numbers H9004 as Preposition-k
+clear-bible	spa-and	y	\N	the Reina-Valera's word for and, on which the set puts source words the word after it renders (ClearBibleLinks.Shifted)
+clear-bible	spa-and	e	\N	the Reina-Valera's word for and, on which the set puts source words the word after it renders (ClearBibleLinks.Shifted)
+clear-bible	spa-before-names	de	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	del	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	á	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	a	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	al	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	el	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	la	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	los	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	las	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	lo	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	en	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	con	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	por	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	para	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	sobre	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	contra	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	desde	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	hasta	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	entre	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	ante	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	tras	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	spa-before-names	sin	\N	a Spanish preposition or article a name can stand after, in lower case: the set puts the name on it and leaves the name unnamed (ClearBibleLinks.Early)
+clear-bible	fra-and	et	\N	the Segond's word for and, on which the set puts source words the word after it renders (ClearBibleLinks.Shifted)
+clear-bible	hin-and	और	\N	a word for and in the Indian Revised Version (Hindi), on which the set puts source words the word after it renders (ClearBibleLinks.Shifted)
+clear-bible	hin-and	तथा	\N	a word for and in the Indian Revised Version (Hindi), on which the set puts source words the word after it renders (ClearBibleLinks.Shifted)
+clear-bible	hin-and	एवं	\N	a word for and in the Indian Revised Version (Hindi), on which the set puts source words the word after it renders (ClearBibleLinks.Shifted)
+clear-bible	heb-also	H1571	\N	גַּם: a source word that is not a tagged conjunction and can still be rendered by the translation's and (also, even)
+clear-bible	heb-also	H637	\N	אַף: a source word that is not a tagged conjunction and can still be rendered by the translation's and (also, even)
+clear-bible	grc-also	G2532	\N	καί, which the SBLGNT tags an adverb where it means also, and the translation's and can still render

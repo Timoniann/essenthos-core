@@ -1,4 +1,6 @@
 using System.Collections.Concurrent;
+using System.Globalization;
+using Essenthos.Core.Build;
 using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Strong;
@@ -42,16 +44,21 @@ internal sealed class StrongNumberLists
     public const string CountedAs = "counted-as";
     public const string Synonym = "synonym";
     public const string ClauseParticle = "clause-particle";
+    public const string Numeral = "numeral";
 
-    private static readonly string[] Lists = [FhlPrefix, Lemmatised, Suppletion, CountedAs, Synonym, ClauseParticle];
+    /// <summary>The file whose numbers are the prefixes BHSA writes as words of their own (<see cref="Prefixes"/>).</summary>
+    public const string PrefixSource = "Essenthos/" + TableProducts.Prefixes + ".tsv";
+
+    private static readonly string[] Lists = [FhlPrefix, Lemmatised, Suppletion, CountedAs, Synonym, ClauseParticle, Numeral];
 
     private static readonly ConcurrentDictionary<string, Lazy<StrongNumberLists>> Loaded = new(StringComparer.Ordinal);
 
     private readonly Dictionary<string, string> _lemmas;
     private readonly Dictionary<string, string> _counted;
     private readonly Dictionary<string, string> _synonyms;
+    private readonly Lazy<IReadOnlySet<string>> _prefixes;
 
-    private StrongNumberLists(IReadOnlyList<StrongListRow> rows)
+    private StrongNumberLists(IReadOnlyList<StrongListRow> rows, ProductStore store)
     {
         var lists = rows.GroupBy(row => row.List, StringComparer.Ordinal).ToDictionary(g => g.Key, g => g.ToList(), StringComparer.Ordinal);
         Dictionary<string, string> Readings(string list) =>
@@ -64,6 +71,10 @@ internal sealed class StrongNumberLists
         _counted = Readings(CountedAs);
         _synonyms = Readings(Synonym);
         ClauseParticles = lists.GetValueOrDefault(ClauseParticle, []).Select(row => row.Number).ToHashSet(StringComparer.Ordinal);
+        Numerals = Readings(Numeral).ToDictionary(pair => pair.Key, pair => long.TryParse(pair.Value, NumberStyles.None, CultureInfo.InvariantCulture, out var value)
+            ? value
+            : throw new InvalidDataException($"{Source}: the numeral {pair.Key} reads \"{pair.Value}\", which is not a whole number."), StringComparer.Ordinal);
+        _prefixes = new Lazy<IReadOnlySet<string>>(() => ReadPrefixes(store));
     }
 
     /// <summary>The Faith Hope Love foundation's Hebrew prefix numbers, by their value, as the numbers BHSA writes for the same prefix.</summary>
@@ -74,6 +85,19 @@ internal sealed class StrongNumberLists
 
     /// <summary>The Greek conjunctions and particles whose number Maxfield's ASV misplaces on an English content word.</summary>
     public IReadOnlySet<string> ClauseParticles { get; }
+
+    /// <summary>
+    /// The value of each numeral of the originals (Strong's cardinals, Hebrew, Aramaic and Greek): עָשָׂר H6240 is the ten of
+    /// the teens, עַשְׁתֵּי H6249 the one of eleven.
+    /// </summary>
+    public IReadOnlyDictionary<string, long> Numerals { get; }
+
+    /// <summary>
+    /// The pseudo-numbers of the prefixes BHSA writes as words of their own (ו H9000, ב H9003, כ H9004, ל H9005, the
+    /// interrogative הֲ H9008, the article ה H9009): the numbers <c>lexicon/prefixes.tsv</c> gives an entry, read from it the
+    /// first time they are asked for, so a product that asks names that file among its inputs (<see cref="PrefixSource"/>).
+    /// </summary>
+    public IReadOnlySet<string> Prefixes => _prefixes.Value;
 
     /// <summary>
     /// The number to pair Greek editions on: the lemma's where the tagging traditions disagree, the word's own everywhere
@@ -120,7 +144,18 @@ internal sealed class StrongNumberLists
             throw new InvalidDataException($"{Source}: {twice.Key.Number} is in the {twice.Key.List} list twice.");
         }
 
-        return new StrongNumberLists(rows);
+        return new StrongNumberLists(rows, store);
+    }
+
+    private static IReadOnlySet<string> ReadPrefixes(ProductStore store)
+    {
+        if (!store.Exists(TableProducts.Prefixes))
+        {
+            throw new FileNotFoundException($"The prefixes are not at {store.FullPath(PrefixSource)}.", store.FullPath(PrefixSource));
+        }
+
+        using var reader = store.Open(TableProducts.Prefixes, TableProducts.PrefixRow.Schema);
+        return reader.Rows().Select(row => row.Number).ToHashSet(StringComparer.Ordinal);
     }
 }
 

@@ -34,7 +34,7 @@ public class BereanNestleJoinTests
             ("ἐλθόντες", "G2064"), ("δὲ", "G1161"), ("οἱ", "G3588"), ("περὶ", "G4012"), ("τὴν", "G3588"),
             ("ἑνδεκάτην", "G1734"), ("ὥραν", "G5610"), ("ἔλαβον", "G2983"), ("ἀνὰ", "G303"), ("δηνάριον", "G1220"));
 
-        BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists).Should().Equal(-1, 0, 2, 3, 4, 5, 6, 7, 8, 9);
+        BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean).Should().Equal(-1, 0, 2, 3, 4, 5, 6, 7, 8, 9);
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class BereanNestleJoinTests
             Row(69917, "ἀπολάβῃ", "G618", " will fail to receive ", 4), Row(69918, "πολλαπλασίονα", "G4179", " many times more ", 5),
         };
         var nestle = Words(("ὃς", "G3739"), ("οὐχὶ", "G3780"), ("μὴ", "G3361"), ("λάβῃ", "G2983"), ("πολλαπλασίονα", "G4179"));
-        var counterparts = BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists)!;
+        var counterparts = BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean)!;
         counterparts.Should().Equal(0, 1, 2, -1, 4);
 
         var english = "will fail to receive many times more".Split(' ').Select((word, at) => new BereanLinks.Word(100 + at, 1, word, null)).ToList();
@@ -79,7 +79,7 @@ public class BereanNestleJoinTests
         };
         BereanLinks.Counterparts(matthew, Words(
                 ("λέγων", "G3004"), ("Μετανοεῖτε", "G3340"), ("ἤγγικεν", "G1448"), ("γὰρ", "G1063"), ("ἡ", "G3588"),
-                ("βασιλεία", "G932"), ("τῶν", "G3588"), ("οὐρανῶν", "G3772")), ShippedStrongNumbers.Lists)
+                ("βασιλεία", "G932"), ("τῶν", "G3588"), ("οὐρανῶν", "G3772")), ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean)
             .Should().Equal(-1, 0, 1, 2, 3, 4, 5, 6, 7);
 
         var hebrews = new[]
@@ -90,7 +90,7 @@ public class BereanNestleJoinTests
         };
         BereanLinks.Counterparts(hebrews, Words(
                 ("ἐλιθάσθησαν", "G3034"), ("ἐπειράσθησαν", "G3985"), ("ἐπρίσθησαν", "G4249"), ("ἐν", "G1722"), ("φόνῳ", "G5408"),
-                ("μαχαίρης", "G3162"), ("ἀπέθανον", "G599"), ("περιῆλθον", "G4022")), ShippedStrongNumbers.Lists)
+                ("μαχαίρης", "G3162"), ("ἀπέθανον", "G599"), ("περιῆλθον", "G4022")), ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean)
             .Should().Equal(0, 2, 3, 4, 5, 6, 7);
     }
 
@@ -112,7 +112,7 @@ public class BereanNestleJoinTests
             ("Ὅτε", "G3753"), ("δὲ", "G1161"), ("εὐδόκησεν", "G2106"), ("ὁ", "G3588"), ("ἀφορίσας", "G873"), ("με", "G1473"),
             ("ἐκ", "G1537"), ("κοιλίας", "G2836"), ("μητρός", "G3384"), ("μου", "G1473"));
 
-        BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists).Should().Equal(0, 1, 2, -1, -1, -1, 4, 5, 6, 7, 8, 9);
+        BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean).Should().Equal(0, 1, 2, -1, -1, -1, 4, 5, 6, 7, 8, 9);
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ public class BereanNestleJoinTests
             ("ὁ", "G3588"), ("δὲ", "G1161"), ("ἀποκριθεὶς", "G611"), ("εἶπεν", "G3004"), ("Ἐγὼ", "G1473"), ("κύριε", "G2962"),
             ("καὶ", "G2532"), ("οὐκ", "G3756"), ("ἀπῆλθεν", "G565"));
 
-        BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists).Should().BeNull();
+        BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean).Should().BeNull();
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public class BereanNestleJoinTests
         var nestle = Words(
             ("Μετὰ", "G3326"), ("δὲ", "G1161"), ("ταῦτα", "G3778"), ("ἀνέδειξεν", "G322"), ("ὁ", "G3588"), ("Κύριος", "G2962"),
             ("ἑτέρους", "G2087"), ("ἑβδομήκοντα", "G1440"), ("καὶ", "G2532"), ("ἀπέστειλεν", "G649"));
-        var counterparts = BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists)!;
+        var counterparts = BereanLinks.Counterparts(rows, nestle, ShippedStrongNumbers.Lists, ShippedStrongNumbers.Berean)!;
         counterparts.Should().Equal(0, 1, 2, 3, 4, 5, -1, 6, 7, -1, 8, 9);
 
         var english = "After this the Lord appointed seventy-two others and sent".Split(' ')
@@ -229,7 +229,7 @@ public class BereanNestleJoinTests
     /// <summary>The Berean's set is the one read as numbered over a revision of its token file.</summary>
     [Fact]
     public void TheBereanSetIsReadAsRevised() =>
-        ClearBibleSet.Berean("BSB", "NESTLE1904").Numbering.Should().Be(ClearBibleNumbering.Revised);
+        ShippedStrongNumbers.ClearBible("BSB-NESTLE1904").Numbering.Should().Be(ClearBibleNumbering.Revised);
 
     private static BereanRow Row(double order, string greek, string strong, string rendering, int english = 0) =>
         new(order, english == 0 ? (int)order : english, 1, "Greek", greek, greek, strong, "Bible", rendering);

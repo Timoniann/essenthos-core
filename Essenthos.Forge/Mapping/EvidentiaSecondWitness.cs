@@ -83,7 +83,7 @@ internal sealed class EvidentiaSecondWitness(ProductStore store, Action<string> 
         var gold = new Dictionary<int, SortedSet<int>>();
         var stated = new HashSet<VerseKey>();
         var interlinear = InterlinearLinkLoader.Interlinear(fromSlug).Source;
-        foreach (var source in Door43BookAlignment.Of(fromSlug).Select(book => book.Source).Prepend(interlinear))
+        foreach (var source in Door43BookAlignment.Of(store, fromSlug).Select(book => book.Source).Prepend(interlinear))
         {
             foreach (var link in HandAlignment.Read(store, pair, source))
             {

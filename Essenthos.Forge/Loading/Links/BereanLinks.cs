@@ -46,10 +46,10 @@ internal static class BereanLinks
 
     /// <summary>
     /// Which of the witness's words each row is, or -1 where it is none of them or could as well be another; null where
-    /// fewer than half the rows are one, or fewer than three quarters of the rows and of the witness's words alike, which
-    /// says the two sides are not the same verse.
+    /// fewer than <see cref="BereanLists.PlacedRows"/> of the rows are one (half), or fewer than <see cref="BereanLists.PlacedBoth"/>
+    /// of the rows and of the witness's words alike (three quarters), which says the two sides are not the same verse.
     /// </summary>
-    internal static int[]? Counterparts(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness, StrongNumberLists lists)
+    internal static int[]? Counterparts(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness, StrongNumberLists lists, BereanLists berean)
     {
         WitnessForm[] theirs = [.. rows.Select(row => ClearBibleLinks.Form(ClearBibleLinks.Comparable(row.Original, Greek), row.StrongNumber, lists))];
         WitnessForm[] ours = [.. witness.Select(word => ClearBibleLinks.Form(ClearBibleLinks.Comparable(word.Surface, Greek), word.Strong, lists))];
@@ -72,7 +72,9 @@ internal static class BereanLinks
         // or stops short of Nestle's, one side's words are nearly all placed; where neither is, the two read another clause,
         // as Matthew 21:29 does: the son who will not go and then goes, against Nestle's son who says he goes and does not.
         var placed = counterparts.Count(at => at >= 0);
-        return placed * 2 < rows.Count || (placed * 4 < rows.Count * 3 && placed * 4 < witness.Count * 3) ? null : counterparts;
+        return placed < rows.Count * berean.PlacedRows || (placed < rows.Count * berean.PlacedBoth && placed < witness.Count * berean.PlacedBoth)
+            ? null
+            : counterparts;
     }
 
     private const string Greek = "grc";
@@ -214,8 +216,14 @@ internal static class BereanLinks
         IReadOnlySet<long>? overruled = null,
         IReadOnlySet<long>? conjunctions = null,
         IReadOnlyDictionary<long, string>? prepositions = null,
-        IReadOnlySet<int>? unprinted = null)
+        IReadOnlySet<int>? unprinted = null,
+        BereanLists? lists = null)
     {
+        if ((conjunctions is not null || prepositions is not null) && lists is null)
+        {
+            throw new ArgumentException("A row of a conjunction or a preposition and bracketed words is read with the Berean's lists.", nameof(lists));
+        }
+
         if (Claims(rows, ours) is not { } claimed)
         {
             return false;
@@ -267,13 +275,13 @@ internal static class BereanLinks
 
                 if (theirs.Count > 0)
                 {
-                    if (prepositions is not null && Prefixed(rows, claimed, witness, prepositions, i) is { } prefix)
+                    if (prepositions is not null && Prefixed(rows, claimed, witness, prepositions, lists!, i) is { } prefix)
                     {
                         drafts.Add(new Draft(LinkRelation.Renders, [.. mine.Skip(1)], theirs, Bracketed: true));
                         drafts.Add(new Draft(LinkRelation.Renders, [mine[0]], [prefix]));
                         silences.PrepositionsMoved++;
                     }
-                    else if (conjunctions is not null && Supplied(rows, claimed, witness, conjunctions, i) is { } supplied)
+                    else if (conjunctions is not null && Supplied(rows, claimed, witness, conjunctions, lists!, i) is { } supplied)
                     {
                         drafts.Add(new Draft(LinkRelation.Renders, [.. mine.Skip(1)], theirs, Bracketed: true));
                         if (supplied.Waw is { } to)
@@ -393,17 +401,18 @@ internal static class BereanLinks
         List<long>[] claimed,
         IReadOnlyList<List<long>> witness,
         IReadOnlySet<long> conjunctions,
+        BereanLists lists,
         int at)
     {
         if (LeadAndBracketed(rows[at].English) is not { } conjunction
-            || !SuppliedConjunctions.Contains(conjunction)
+            || !lists.SuppliedConjunctions.Contains(conjunction)
             || Parts(rows[at].Parsing).ToList() is not { Count: > 0 } parts
-            || !parts.All(SubjectPart))
+            || !parts.All(lists.SubjectPart))
         {
             return null;
         }
 
-        if (!WawConjunctions.Contains(conjunction))
+        if (!lists.WawConjunctions.Contains(conjunction))
         {
             return new Conjunction(null);
         }
@@ -425,7 +434,7 @@ internal static class BereanLinks
             witness[row].Count(conjunctions.Contains) == 1
             && claimed[row] is { Count: > 0 }
             && BereanWords.Rendering(rows[row].English) is [var first, ..]
-            && !OpeningConjunctions.Contains(first);
+            && !lists.OpeningConjunctions.Contains(first);
     }
 
     /// <summary>
@@ -448,13 +457,14 @@ internal static class BereanLinks
         List<long>[] claimed,
         IReadOnlyList<List<long>> witness,
         IReadOnlyDictionary<long, string> prepositions,
+        BereanLists lists,
         int at)
     {
         if (at == 0
             || LeadAndBracketed(rows[at].English) is not { } preposition
-            || !Prefixes.TryGetValue(preposition, out var prefix)
+            || !lists.Prefixes.TryGetValue(preposition, out var prefix)
             || Parts(rows[at].Parsing).ToList() is not { Count: > 0 } parts
-            || !parts.All(SubjectPart))
+            || !parts.All(lists.SubjectPart))
         {
             return null;
         }
@@ -466,7 +476,7 @@ internal static class BereanLinks
             || rows.Any(row => row.EnglishOrder > order && row.EnglishOrder < next)
             || claimed[before] is not { Count: > 0 }
             || BereanWords.Rendering(rows[before].English) is not [var first, ..]
-            || OpeningPrepositions.Contains(first)
+            || lists.OpeningPrepositions.Contains(first)
             || !Parts(rows[before].Parsing).Contains(prefix.Part))
         {
             return null;
@@ -501,44 +511,10 @@ internal static class BereanLinks
     private static IEnumerable<string> Parts(string parsing) =>
         parsing.Split('|', ',').Select(part => part.Split(" - ")[0].Trim()).Where(part => part.Length > 0);
 
-    private static bool SubjectPart(string part) => SubjectParts.Contains(part) || part.Contains(" person", StringComparison.Ordinal);
-
-    private static readonly HashSet<string> SuppliedConjunctions =
-        new(["and", "so", "then", "but", "now", "yet", "for"], StringComparer.OrdinalIgnoreCase);
-
-    private static readonly HashSet<string> WawConjunctions =
-        new(["and", "so", "then", "but", "now", "yet"], StringComparer.OrdinalIgnoreCase);
-
-    /// <summary>The English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered.</summary>
-    private static readonly HashSet<string> OpeningConjunctions =
-        new(["and", "so", "then", "but", "now", "yet", "or", "for"], StringComparer.OrdinalIgnoreCase);
-
-    /// <summary>The parts of a word that can stand for a person or thing the translators named with a pronoun or a name.</summary>
-    private static readonly HashSet<string> SubjectParts =
-        new(["Noun", "Article", "Pronoun", "Verb", "Number", "Adjective"], StringComparer.Ordinal);
-
-    /// <summary>
-    /// The prefixed preposition each English preposition names, as the table's parsing writes it and as BHSA numbers the word
-    /// it writes for it.
-    /// </summary>
-    private static readonly Dictionary<string, Prefix> Prefixes = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["in"] = new("Preposition-b", "H9003"), ["into"] = new("Preposition-b", "H9003"), ["with"] = new("Preposition-b", "H9003"),
-        ["at"] = new("Preposition-b", "H9003"), ["by"] = new("Preposition-b", "H9003"),
-        ["to"] = new("Preposition-l", "H9005"), ["for"] = new("Preposition-l", "H9005"),
-        ["from"] = new("Preposition-m", "H4480"),
-        ["like"] = new("Preposition-k", "H9004"), ["as"] = new("Preposition-k", "H9004"),
-    };
-
-    /// <summary>The English a prefixed preposition is rendered by: a row opening with one has its prefix rendered.</summary>
-    private static readonly HashSet<string> OpeningPrepositions = new(
-        ["in", "into", "with", "at", "by", "to", "for", "from", "like", "as", "on", "upon", "of", "among", "within", "through",
-         "before", "after", "against", "over", "under", "toward", "about", "according", "when", "while"],
-        StringComparer.OrdinalIgnoreCase);
-
     private readonly record struct Conjunction(long? Waw);
 
-    private readonly record struct Prefix(string Part, string Strong);
+    /// <summary>A prefixed preposition, as the table's parsing writes it and as BHSA numbers the word it writes for it.</summary>
+    internal readonly record struct Prefix(string Part, string Strong);
 
     /// <summary>
     /// For each row the table marks <c>vvv</c>, the row whose English renders it together with its

@@ -74,7 +74,7 @@ internal sealed class StrongNumberSource : IPairSource
         .. CrossWireNumberings.All.Select(numbering => new StrongNumberSource(numbering.Slug, numbering.Witnesses, numbering.Credit)),
         new(EnglishTextSource.AmericanStandard, MaxfieldAsvEdition.Witnesses, MaxfieldAsvEdition.Credit,
             new LaidRules(OneOccurrence: true, FunctionWords: true, Supplied: true,
-                AddedNoun: EnglishAddedNouns.Contains, SeveralPhrases: StrongNumbers.Hebrew)),
+                AddedNouns: true, SeveralPhrases: StrongNumbers.Hebrew)),
     ];
 
     /// <summary>
@@ -95,9 +95,9 @@ internal sealed class StrongNumberSource : IPairSource
     /// only supports (<see cref="MappingMethods.SupportOnlySupplied"/>): the owner's ruling of 2026-11-19 (TSK-1890) that the
     /// layer never fills a word the translator added.
     /// </param>
-    /// <param name="AddedNoun">
-    /// The translation's nouns a translator adds to an adjective, pronoun or particle that has no noun of its own (<em>all
-    /// things</em>, <em>no man</em>, <em>one to another</em>). A match all of whose words are such nouns only supports
+    /// <param name="AddedNouns">
+    /// Whether the nouns a translator adds to an adjective, pronoun or particle that has no noun of its own (<em>all things</em>,
+    /// <em>no man</em>, <em>one to another</em>; <see cref="EnglishAddedNouns"/>) are held back. A match all of whose words are such nouns only supports
     /// (<see cref="MappingMethods.SupportOnlyAdded"/>) unless a witness word it names is a noun or the numeral one: the same
     /// ruling, for the added words no italics mark. In the ASV's New Testament the numbering puts the adjective's number on
     /// <em>things</em> and the preposition's on <em>one</em> (Philippians 2:4, John 13:35).
@@ -112,7 +112,7 @@ internal sealed class StrongNumberSource : IPairSource
         bool OneOccurrence,
         bool FunctionWords,
         bool Supplied = false,
-        Func<string, bool>? AddedNoun = null,
+        bool AddedNouns = false,
         char? SeveralPhrases = null);
 
     private static readonly string[] SupportingPrefixes = [.. All.Where(source => source._rules is not null).SelectMany(source => source._prefixes)];
@@ -176,6 +176,11 @@ internal sealed class StrongNumberSource : IPairSource
                 inputs.Add(FunctionWords.Source);
             }
 
+            if (_rules?.AddedNouns == true)
+            {
+                inputs.Add(SourceWords.Source);
+            }
+
             if (stated && store.Find(TextNote.ProductOf(_translation)) is { } notes)
             {
                 inputs.Add(notes);
@@ -196,6 +201,7 @@ internal sealed class StrongNumberSource : IPairSource
         var tags = Laid ? _tags.GetValue(texts, t => new Lazy<Dictionary<long, WordTag>>(() => LaidTags(t, log))).Value : null;
         var german = translation.Language == "deu";
         var functions = _rules?.FunctionWords == true ? FunctionWords.Of(store) : null;
+        var addedNouns = _rules?.AddedNouns == true ? EnglishAddedNouns.Of(store) : null;
 
         var verses = new List<(List<StrongNumberMatch.TaggedWord> Tagged, Dictionary<long, List<long>> Members, List<(long Id, StrongNumberMatch.WitnessWord Word)> Against)>(32_000);
         int tagged = 0, unplaced = 0;
@@ -311,7 +317,7 @@ internal sealed class StrongNumberSource : IPairSource
                     row = row with { Evidence = MappingMethods.SupportOnlySupplied };
                     supplied++;
                 }
-                else if (_rules?.AddedNoun is { } addedNoun && ids.All(id => addedNoun(translation.Words[(int)id].Surface))
+                else if (addedNouns is not null && ids.All(id => addedNouns.Contains(translation.Words[(int)id].Surface))
                     && !draft.To.Any(id => OwnNoun(witness.Text.Words[(int)against[(int)(id - offset)].Id])))
                 {
                     row = row with { Evidence = MappingMethods.SupportOnlyAdded };
@@ -337,7 +343,7 @@ internal sealed class StrongNumberSource : IPairSource
     }
 
     /// <summary>
-    /// Whether a witness word is one an English noun can render as a word of its own (<see cref="LaidRules.AddedNoun"/>): a noun or
+    /// Whether a witness word is one an English noun can render as a word of its own (<see cref="LaidRules.AddedNouns"/>): a noun or
     /// a proper noun by its morphology, or the numeral one (<em>one</em> for אֶחָד, חַד or εἷς).
     /// </summary>
     internal static bool OwnNoun(TextWord word)

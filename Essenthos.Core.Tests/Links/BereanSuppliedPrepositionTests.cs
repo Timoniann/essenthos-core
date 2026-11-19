@@ -83,7 +83,7 @@ public class BereanSuppliedPrepositionTests
         var ours = english.Split(' ').Select((word, at) => new BereanLinks.Word(100 + at, 1, word, null)).ToList();
         var drafts = new List<BereanLinks.Draft>();
 
-        BereanLinks.Pair(rows, ours, witness, drafts, silences, conjunctions: new HashSet<long> { Waw }, prepositions: prepositions)
+        BereanLinks.Pair(rows, ours, witness, drafts, silences, conjunctions: new HashSet<long> { Waw }, prepositions: prepositions, lists: ShippedStrongNumbers.Berean)
             .Should().BeTrue();
         return drafts;
     }

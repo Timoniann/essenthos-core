@@ -41,11 +41,7 @@ internal sealed class Door43AlignmentSource : IPairSource
         Bible4uTextSource.Ohienko, Bible4uTextSource.Synodal, UnfoldingWordTextSource.Slug, .. Door43AlignedBible.All.Select(bible => bible.Slug),
     ];
 
-    private static readonly HashSet<string> Lines =
-    [
-        .. Translations.Select(slug => Line(InterlinearLinkLoader.Interlinear(slug).Source)),
-        .. Door43BookAlignment.All.Select(book => Line(book.Source)),
-    ];
+    private static readonly HashSet<string> Lines = [.. Translations.Select(slug => Line(InterlinearLinkLoader.Interlinear(slug).Source))];
 
     public string Method => MappingMethods.Stated;
 
@@ -60,7 +56,11 @@ internal sealed class Door43AlignmentSource : IPairSource
     /// A source names the release its alignment was taken from, so the rows of an earlier release of the same alignment are
     /// this producer's too: they are made again from the release the store holds, never carried beside its rows.
     /// </summary>
+    /// <summary>Whether a row is an interlinear's; a personal project's needs the store, which declares them (<see cref="Makes(ProductStore, string)"/>).</summary>
     public bool Makes(string source) => Lines.Contains(Line(source));
+
+    public bool Makes(ProductStore store, string source) =>
+        Makes(source) || Door43BookAlignment.All(store).Any(book => Line(book.Source) == Line(source));
 
     /// <summary>
     /// A source without the release or commit it names: the text up to <c>, release </c> or <c>, commit </c>, or the whole
@@ -76,7 +76,8 @@ internal sealed class Door43AlignmentSource : IPairSource
         var (from, to) = MappingProducts.Split(pair);
         var folder = InterlinearLinkLoader.Interlinear(from).Folder;
         return Books(store, folder, to).Select(book => $"{Folder}/{folder}/{Path.GetFileName(book.File)}")
-            .Concat(Projects(store, from, to).Select(project => $"{Folder}/{Door43BookAlignment.Folder}/{project.Book.File}"));
+            .Concat(Projects(store, from, to).Select(project => $"{Folder}/{Door43BookAlignment.Folder}/{project.Book.File}"))
+            .Append(Door43BookAlignment.Declared);
     }
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
@@ -91,7 +92,7 @@ internal sealed class Door43AlignmentSource : IPairSource
         var total = new InterlinearJoinAccount();
         var released = Books(texts.Store, folder, to).ToDictionary(book => book.Ordinal, book => book.File);
         var projects = Projects(texts.Store, from, to).ToDictionary(project => project.Ordinal, project => project.Book);
-        foreach (var missing in Door43BookAlignment.Of(from).Where(book => Against(book, to) is not null && !File.Exists(texts.Store.FullPath(Stored(book)))))
+        foreach (var missing in Door43BookAlignment.Of(texts.Store, from).Where(book => Against(book, to) is not null && !File.Exists(texts.Store.FullPath(Stored(book)))))
         {
             log($"{missing.Repository} is declared and not in the store at {Stored(missing)}: run scripts/fetch-door43-ohienko-books.ps1");
         }
@@ -175,7 +176,7 @@ internal sealed class Door43AlignmentSource : IPairSource
     /// <summary>The translation's books aligned in a project of its own on Door43 that the store holds, for the witness's testament.</summary>
     private static IEnumerable<(int Ordinal, Door43BookAlignment Book)> Projects(ProductStore store, string translation, string witness)
     {
-        foreach (var book in Door43BookAlignment.Of(translation))
+        foreach (var book in Door43BookAlignment.Of(store, translation))
         {
             if (Against(book, witness) is { } ordinal && File.Exists(store.FullPath(Stored(book))))
             {

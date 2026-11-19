@@ -33,9 +33,6 @@ internal sealed class BereanTableSource : IPairSource
     /// <summary>BHSA's number for the conjunction ו, which it writes as a word of its own.</summary>
     private const string Waw = "H9000";
 
-    /// <summary>BHSA's numbers for the prepositions ב, כ, ל and מִן, which it writes as words of their own where they are prefixed.</summary>
-    private static readonly HashSet<string> Prepositions = new(["H9003", "H9004", "H9005", "H4480"], StringComparer.Ordinal);
-
     /// <summary>The verse a psalm's title stands inside where the tables print one.</summary>
     private const int FirstVerse = 1;
 
@@ -48,12 +45,16 @@ internal sealed class BereanTableSource : IPairSource
     public bool Makes(string source) => source == Source;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
-        [Tables, .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(), StrongNumberLists.Source];
+        [
+            Tables, .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(), StrongNumberLists.Source,
+            SourceWords.Source, SourceParameters.Source,
+        ];
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
         var (fromText, toText) = MappingProducts.Split(pair);
         var lists = StrongNumberLists.Of(texts.Store);
+        var berean = BereanLists.Of(texts.Store);
         var english = texts[fromText];
         var witnessText = texts[toText];
         var greekWitness = witnessText.Language == "grc";
@@ -96,7 +97,7 @@ internal sealed class BereanTableSource : IPairSource
             HashSet<int>? unprinted = null;
             if (rows[0].IsGreek)
             {
-                if (BereanLinks.Counterparts(rows, witness, lists) is not { } counterparts)
+                if (BereanLinks.Counterparts(rows, witness, lists, berean) is not { } counterparts)
                 {
                     disputed++;
                     continue;
@@ -137,9 +138,9 @@ internal sealed class BereanTableSource : IPairSource
             var prepositions = greekWitness
                 ? null
                 : run.SelectMany(words => words).Distinct()
-                    .Where(id => witnessText.Words[(int)id].Strong is { } strong && Prepositions.Contains(strong))
+                    .Where(id => witnessText.Words[(int)id].Strong is { } strong && berean.PrepositionNumbers.Contains(strong))
                     .ToDictionary(id => id, id => witnessText.Words[(int)id].Strong!);
-            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions, prepositions, unprinted))
+            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions, prepositions, unprinted, berean))
             {
                 drifted++;
                 continue;

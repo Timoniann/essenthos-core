@@ -90,7 +90,7 @@ public class BereanSuppliedConjunctionTests
         var ours = english.Split(' ').Select((word, at) => new BereanLinks.Word(100 + at, 1, word, null)).ToList();
         var drafts = new List<BereanLinks.Draft>();
 
-        BereanLinks.Pair(rows, ours, witness, drafts, silences, conjunctions: new HashSet<long> { Waw }).Should().BeTrue();
+        BereanLinks.Pair(rows, ours, witness, drafts, silences, conjunctions: new HashSet<long> { Waw }, lists: ShippedStrongNumbers.Berean).Should().BeTrue();
         return drafts;
     }
 

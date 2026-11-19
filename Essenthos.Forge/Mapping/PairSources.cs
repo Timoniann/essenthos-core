@@ -29,6 +29,12 @@ internal interface IPairSource
     /// <summary>Whether a row of the method file with this source is one it makes.</summary>
     bool Makes(string source);
 
+    /// <summary>Whether it speaks about the pair, as the store declares it: a source whose pairs a file of the store names answers here.</summary>
+    bool States(ProductStore store, string pair) => States(pair);
+
+    /// <summary>Whether a row with this source is one it makes, as the store declares it.</summary>
+    bool Makes(ProductStore store, string source) => Makes(source);
+
     /// <summary>
     /// The files it reads for the pair beyond both texts' words and frames, relative to Resources; a product as
     /// <see cref="ProductStore.Find"/> gives its file.
@@ -107,8 +113,8 @@ internal static class PairSources
                 .Where(pair => only is null || only.Contains(pair))
                 .Where(pair => only is not null || graph?.Find(MappingProducts.Of(pair, file))?.Declaration.Maker != ProductMaker.Kept)
                 .Where(pair => founded.Contains(pair) || MappingProducts.Methods(texts.Store, pair).Count > 0)
-                .Where(pair => All.Any(source => source.States(pair)
-                && (source.File == file || (source.Method == file && texts.Store.Exists(MappingProducts.Of(pair, file))))))
+                .Where(pair => All.Any(source => (source.File == file || (source.Method == file && texts.Store.Exists(MappingProducts.Of(pair, file))))
+                && source.States(texts.Store, pair)))
                 .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),
         ];
     }
@@ -119,7 +125,7 @@ internal static class PairSources
     {
         registry ??= All;
         var store = texts.Store;
-        var sources = registry.Where(source => source.File == file && source.States(pair)).ToList();
+        var sources = registry.Where(source => source.File == file && source.States(store, pair)).ToList();
         var inputs = MethodFiles.TextInputs(store, pair)
             .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
             .DistinctBy(input => input.Path)
@@ -153,7 +159,7 @@ internal static class PairSources
 
         // A row of a source that writes another file of the pair is not carried into this one: that file holds it.
         var written = MethodFiles.Write(store, pair, file, rows, Producer(file), inputs,
-            made => registry.Any(source => source.States(pair) && source.Makes(made)));
+            made => registry.Any(source => source.States(store, pair) && source.Makes(store, made)));
         var side = MappingProducts.Of(pair, MappingProducts.StrongYielded);
         if (file == MappingMethods.Strong && (yielded.Count > 0 || store.Exists(side)))
         {
@@ -173,7 +179,7 @@ internal static class PairSources
         ProductTexts texts, string file, string pair, IReadOnlyList<VerseRange> verses, string producer, Action<string> log, IReadOnlyList<IPairSource> registry)
     {
         var store = texts.Store;
-        var sources = registry.Where(source => source.File == file && source.States(pair)).ToList();
+        var sources = registry.Where(source => source.File == file && source.States(store, pair)).ToList();
         var inputs = MethodFiles.TextInputs(store, pair)
             .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
             .DistinctBy(input => input.Path)

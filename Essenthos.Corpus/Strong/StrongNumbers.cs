@@ -9,6 +9,12 @@ public static class StrongNumbers
     public const char Hebrew = 'H';
     public const char Greek = 'G';
 
+    /// <summary>The last entry of Strong's Hebrew dictionary; a source's number above it is a tense-voice-mood code or its own, not an entry.</summary>
+    public const int LastHebrew = 8674;
+
+    /// <summary>The last entry of Strong's Greek dictionary.</summary>
+    public const int LastGreek = 5624;
+
     /// <summary>
     /// Returns the canonical form of a Strong's number, or null when the input is not one.
     /// </summary>

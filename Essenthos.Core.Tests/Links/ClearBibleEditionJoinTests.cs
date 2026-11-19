@@ -63,7 +63,7 @@ public class ClearBibleEditionJoinTests
     [Fact]
     public void JoinsTheBereanSetOnItsOwnGreekEdition()
     {
-        var berean = ClearBibleSet.All().Single(set => set.From == "BSB");
+        var berean = ShippedStrongNumbers.ClearBible("BSB-NESTLE1904");
 
         berean.Join.Should().Be(ClearBibleJoin.Edition);
         berean.Source.Should().EndWith("BGNT.tsv");

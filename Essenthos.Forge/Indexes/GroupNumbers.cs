@@ -22,28 +22,8 @@ internal enum WordClass
 /// <summary>The classes of the numbers of the originals, and whether a verb of an original is finite.</summary>
 internal static class OriginalWords
 {
-    public static readonly IReadOnlySet<string> Prefixes = new HashSet<string>(["H9000", "H9003", "H9004", "H9005", "H9008", "H9009"], StringComparer.Ordinal);
-
     private static readonly HashSet<string> FunctionParts = new(
         ["prep", "conj", "art", "prps", "prde", "prin", "nega", "inrg", "intj", "advb", "det", "pron", "ptcl"], StringComparer.Ordinal);
-
-    /// <summary>
-    /// The value of each numeral of the originals (Strong's cardinals, Hebrew, Aramaic and Greek): עָשָׂר H6240 is the ten of
-    /// the teens, עַשְׁתֵּי H6249 the one of eleven.
-    /// </summary>
-    public static readonly IReadOnlyDictionary<string, long> Values = new Dictionary<string, long>(StringComparer.Ordinal)
-    {
-        ["H259"] = 1, ["H6249"] = 1, ["H8147"] = 2, ["H7969"] = 3, ["H702"] = 4, ["H2568"] = 5, ["H8337"] = 6, ["H7651"] = 7, ["H8083"] = 8,
-        ["H8672"] = 9, ["H6235"] = 10, ["H6240"] = 10, ["H6242"] = 20, ["H7970"] = 30, ["H705"] = 40, ["H2572"] = 50, ["H8346"] = 60,
-        ["H7657"] = 70, ["H8084"] = 80, ["H8673"] = 90, ["H3967"] = 100, ["H505"] = 1000, ["H7233"] = 10000, ["H7239"] = 10000,
-        ["H2298"] = 1, ["H8648"] = 2, ["H8532"] = 3, ["H703"] = 4, ["H8353"] = 6, ["H7655"] = 7, ["H6236"] = 10, ["H6243"] = 20,
-        ["H8533"] = 30, ["H3969"] = 100, ["H506"] = 1000, ["H7240"] = 10000,
-        ["G1520"] = 1, ["G1417"] = 2, ["G5140"] = 3, ["G5064"] = 4, ["G4002"] = 5, ["G1803"] = 6, ["G2033"] = 7, ["G3638"] = 8, ["G1767"] = 9,
-        ["G1176"] = 10, ["G1733"] = 11, ["G1427"] = 12, ["G1180"] = 14, ["G1178"] = 15, ["G1501"] = 20, ["G5144"] = 30, ["G5062"] = 40,
-        ["G4004"] = 50, ["G1835"] = 60, ["G1440"] = 70, ["G3589"] = 80, ["G1540"] = 100, ["G1250"] = 200, ["G5145"] = 300, ["G4001"] = 500,
-        ["G1812"] = 600, ["G5507"] = 1000, ["G1367"] = 2000, ["G5153"] = 3000, ["G5070"] = 4000, ["G4000"] = 5000, ["G2035"] = 7000,
-        ["G3463"] = 10000, ["G3461"] = 10000,
-    };
 
     /// <summary>
     /// The number numerals written in this order stand for, each with whether a conjunction stands before it. A hundred multiplies
@@ -83,8 +63,9 @@ internal static class OriginalWords
         part == "nmpr" || (part == "noun" && surface.FirstOrDefault(char.IsLetter) is var first && char.IsUpper(first));
 
     /// <summary>The class a part of speech puts a word in.</summary>
-    public static WordClass Of(string number, string? part) =>
-        Prefixes.Contains(number) ? WordClass.Prefix : part is not null && FunctionParts.Contains(part) ? WordClass.Function : WordClass.Content;
+    /// <param name="prefixes">The prefixes' pseudo-numbers (<see cref="StrongNumberLists.Prefixes"/>).</param>
+    public static WordClass Of(string number, string? part, IReadOnlySet<string> prefixes) =>
+        prefixes.Contains(number) ? WordClass.Prefix : part is not null && FunctionParts.Contains(part) ? WordClass.Function : WordClass.Content;
 
     /// <summary>
     /// Whether a word's morphology makes it a finite verb, whose ending holds its subject: BHSA's perfect, imperfect, wayyiqtol and
@@ -309,7 +290,7 @@ internal sealed class GroupNumbers
         return count >= ConfidentAtLeast && count >= ConfidentShare * _rendered[form] ? count : 0;
     }
 
-    private static bool Prefixes(string number) => OriginalWords.Prefixes.Contains(number);
+    private bool Prefixes(string number) => _lists.Prefixes.Contains(number);
 
     private bool Function(string form) =>
         _english
@@ -494,10 +475,10 @@ internal sealed class GroupNumbers
     private IReadOnlyList<Original>? Rendered(Translated word, List<Original> content, IReadOnlyList<Original> originals)
     {
         var ordered = content.OrderBy(o => o.Place?.Position ?? int.MaxValue).ToList();
-        if (ordered.All(o => OriginalWords.Values.ContainsKey(o.Number)))
+        if (ordered.All(o => _lists.Numerals.ContainsKey(o.Number)))
         {
             return Value(word.Form) is { } value && Together(ordered, originals, conjunctions: true) is { } added
-                && OriginalWords.Compose(ordered.Select((o, at) => (OriginalWords.Values[o.Number], added[at]))) == value
+                && OriginalWords.Compose(ordered.Select((o, at) => (_lists.Numerals[o.Number], added[at]))) == value
                 ? Distinct(ordered)
                 : null;
         }
@@ -613,7 +594,7 @@ internal sealed class GroupNumbers
         }
 
         var (number, count) = numbers.MaxBy(n => n.Value);
-        return count >= ConfidentAtLeast && count * 2 >= _rendered[form] && OriginalWords.Values.TryGetValue(number, out var learned) ? learned : null;
+        return count >= ConfidentAtLeast && count * 2 >= _rendered[form] && _lists.Numerals.TryGetValue(number, out var learned) ? learned : null;
     }
 
     private static readonly Dictionary<string, long> EnglishNumbers = new(StringComparer.Ordinal)

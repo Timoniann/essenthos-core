@@ -9,7 +9,7 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// Which word of a translation renders which Hebrew or Greek word, as Clear Bible's hand-made alignments state it
 /// (<see cref="ClearBibleLinks"/> has the measurements and the reasons, <see cref="ClearBibleSet"/> each set's
-/// files and join), read from <c>ClearBible/data/</c> and both texts' words and frames. The join is the loader's own
+/// files and join, as <c>sources/clear-bible.tsv</c> declares them), read from <c>ClearBible/data/</c> and both texts' words and frames. The join is the loader's own
 /// (<see cref="ClearBibleLinks.Join"/>); only the words come from the products instead of the database.
 ///
 /// <para>
@@ -36,22 +36,28 @@ internal sealed class ClearBibleSource : IPairSource
     /// <summary>What a row says of itself where its record named the word before the name (<see cref="ClearBibleLinks.Early"/>).</summary>
     internal const string MovedNote = "the set's record names the preposition or article before this name and leaves the name unnamed; moved onto the name";
 
-    private static readonly IReadOnlyList<ClearBibleSet> Sets = ClearBibleSet.All();
-
     public string Method => MappingMethods.Stated;
 
     public string Name => "clearbible";
 
-    public bool States(string pair) => Set(pair) is not null;
+    /// <summary>Never without the store: the sets are the store's file's (<see cref="States(ProductStore, string)"/>).</summary>
+    public bool States(string pair) => false;
 
-    public bool Makes(string source) => Sets.Any(set => set.Statement == source);
+    /// <summary>Never without the store: the sets are the store's file's (<see cref="Makes(ProductStore, string)"/>).</summary>
+    public bool Makes(string source) => false;
+
+    public bool States(ProductStore store, string pair) => Set(store, pair) is not null;
+
+    public bool Makes(ProductStore store, string source) => ClearBibleSet.All(store).Any(set => set.Statement == source);
 
     public IEnumerable<string> Inputs(ProductStore store, string pair)
     {
-        var set = Set(pair)!;
+        var set = Set(store, pair)!;
         return
         [
             .. new[] { set.Alignment, set.Target, set.Source }.Where(path => path.Length > 0).Select(Relative),
+            ClearBibleSet.File,
+            .. set.Shift is not null || set.Early is not null ? [SourceWords.Source] : Array.Empty<string>(),
             .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(),
             StrongNumberLists.Source,
             .. set.Edited ? ProductText.Products(Sources.ScrivenerSlug).Select(store.Find).OfType<string>() : [],
@@ -60,7 +66,7 @@ internal sealed class ClearBibleSource : IPairSource
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
-        var set = Set(pair)!;
+        var set = Set(texts.Store, pair)!;
         var translation = texts[set.From];
         var witness = texts[set.To];
         var retokenised = set.Numbering == ClearBibleNumbering.Retokenised;
@@ -125,7 +131,8 @@ internal sealed class ClearBibleSource : IPairSource
             verse => ClearBibleAlignment.Verse(verse.Key.Item1, verse.Key.Item2, verse.Key.Item3),
             verse => verse.Value.Select(word => new ClearBibleSourceEdits.Reading(word.Folded, word.Strong)).ToList());
 
-    private static ClearBibleSet? Set(string pair) => Sets.FirstOrDefault(set => $"{set.From}-{set.To}" == pair);
+    private static ClearBibleSet? Set(ProductStore store, string pair) =>
+        ClearBibleSet.All(store).FirstOrDefault(set => set.Pair == pair);
 
     private static string Relative(string path) => $"{Folder}/{path.Replace('\\', '/')}";
 

@@ -22,6 +22,8 @@ public sealed class SuppliedWordSourceTests : IDisposable
 
     private readonly string _root = Path.Combine(Path.GetTempPath(), "essenthos-products", Guid.NewGuid().ToString("N"));
 
+    public SuppliedWordSourceTests() => ShippedStrongNumbers.CopyInto(_root);
+
     public void Dispose()
     {
         if (Directory.Exists(_root))

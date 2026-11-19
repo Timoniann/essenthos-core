@@ -94,7 +94,7 @@ internal static class StrongNumberFiles
         }
 
         var lenders = new ConcurrentDictionary<(string Text, bool Numbered), Lazy<ChainedNumbers.Lender>>();
-        var classes = new Lazy<(Dictionary<string, WordClass> Classes, HashSet<string> Names)>(() => Classes(context.Store));
+        var classes = new Lazy<(Dictionary<string, WordClass> Classes, HashSet<string> Names)>(() => Classes(context.Store, StrongNumberLists.Of(context.Store)));
         var outcomes = new ConcurrentBag<IndexOutcome>();
         foreach (var texts in order.GroupBy(text => wave[text]).OrderBy(g => g.Key))
         {
@@ -139,6 +139,7 @@ internal static class StrongNumberFiles
 
         inputs.AddRange(pairs.Select(p => store.ProductInput(MappingProducts.Of(p.Pair, MappingProducts.Final))));
         inputs.Add(store.ProductInput(StrongNumberLists.Product));
+        inputs.Add(store.ProductInput(TableProducts.Prefixes));
         if (!force && !NeedsBuild(store, product, inputs))
         {
             return new IndexOutcome(text, "numbers", false, 0, clock.Elapsed);
@@ -232,7 +233,7 @@ internal static class StrongNumberFiles
     /// The class of every number of the originals, by the part of speech most of its words in BHSA and Nestle 1904 have, and the
     /// numbers most of whose words are proper names.
     /// </summary>
-    private static (Dictionary<string, WordClass> Classes, HashSet<string> Names) Classes(ProductStore store)
+    private static (Dictionary<string, WordClass> Classes, HashSet<string> Names) Classes(ProductStore store, StrongNumberLists lists)
     {
         var parts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
         var named = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -255,7 +256,7 @@ internal static class StrongNumberFiles
             }
         }
 
-        return (parts.ToDictionary(p => p.Key, p => OriginalWords.Of(p.Key, p.Value.MaxBy(c => c.Value).Key), StringComparer.Ordinal),
+        return (parts.ToDictionary(p => p.Key, p => OriginalWords.Of(p.Key, p.Value.MaxBy(c => c.Value).Key, lists.Prefixes), StringComparer.Ordinal),
             parts.Where(p => named.GetValueOrDefault(p.Key) * 2 > p.Value.Values.Sum()).Select(p => p.Key).ToHashSet(StringComparer.Ordinal));
     }
 

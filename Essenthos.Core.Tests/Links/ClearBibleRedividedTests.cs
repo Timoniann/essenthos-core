@@ -33,7 +33,7 @@ public class ClearBibleRedividedTests
         ];
 
         ClearBibleLinks.Misnumbered(records, tokens).Should().Equal(ClearBibleAlignment.Verse(11, 13, 23));
-        ClearBibleSet.VanDyckOldTestament("AVD1865", "BHSA").Numbering.Should().Be(ClearBibleNumbering.Redivided);
+        ShippedStrongNumbers.ClearBible("AVD1865-BHSA").Numbering.Should().Be(ClearBibleNumbering.Redivided);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class ClearBibleRedividedTests
         ];
 
         ClearBibleLinks.Misnumbered(records, tokens).Should().Equal(ClearBibleAlignment.Verse(41, 3, 32));
-        ClearBibleSet.OpenHausaNewTestament("OHCB", "NESTLE1904").Numbering.Should().Be(ClearBibleNumbering.TokenFile);
+        ShippedStrongNumbers.ClearBible("OHCB-NESTLE1904").Numbering.Should().Be(ClearBibleNumbering.TokenFile);
     }
 
     private static List<ClearBibleToken> Tokens(string verse, params string[] texts) =>

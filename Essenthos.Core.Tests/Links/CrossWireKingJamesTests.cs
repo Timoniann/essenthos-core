@@ -22,7 +22,7 @@ public sealed class CrossWireKingJamesTests
     public void TheReaderMarksTheWordsTheTranslatorsSupplied()
     {
         var unit = 0;
-        var words = SwordTextSource.Segment(OsisVerse.Parse(Romans1627), SwordSegmentation.Spaced, ref unit, out _, fhlPrefixes: null);
+        var words = SwordTextSource.Segment(OsisVerse.Parse(Romans1627), SwordSegmentation.Spaced, ref unit, out _);
 
         words.Where(word => word.Added).Select(word => word.Surface).Should().Equal("be");
         words.Single(word => word.Surface == "be").Numbers.Should().BeEmpty();
@@ -204,7 +204,7 @@ public sealed class CrossWireKingJamesTests
     {
         var unit = 0;
         var pieces = OsisVerse.Parse(Romans1627);
-        var words = SwordTextSource.Segment(pieces, SwordSegmentation.Spaced, ref unit, out _, fhlPrefixes: null);
+        var words = SwordTextSource.Segment(pieces, SwordSegmentation.Spaced, ref unit, out _);
         var unrendered = pieces.Where(piece => piece is { Kind: OsisPieceKind.Word, Text.Length: 0 })
             .Select(piece => ReceivedTextPositions.Read(piece.Lemma, piece.Source)).ToList();
         var elements = new Dictionary<(int, int, int), (List<SwordWord>, List<IReadOnlyList<StatedPosition>>)>

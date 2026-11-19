@@ -30,11 +30,6 @@ internal static class UnionStrongNumbers
 {
     private const string StrongPrefix = "strong:";
 
-    /// <summary>The last number of each dictionary; above it the file writes a parsing, not a word.</summary>
-    private const int LastHebrew = 8674;
-
-    private const int LastGreek = 5624;
-
     /// <summary>The lexemes a <c>lemma</c> attribute names, in the order written, each once.</summary>
     /// <param name="fhlPrefixes">
     /// FHL's prefix numbers by their value, as the numbers the corpus's Hebrew writes for the same prefix, where the module
@@ -77,10 +72,10 @@ internal static class UnionStrongNumbers
             var value = int.Parse(number.AsSpan(1));
             var read = number[0] switch
             {
-                StrongNumbers.Hebrew when value <= LastHebrew => number,
+                StrongNumbers.Hebrew when value <= StrongNumbers.LastHebrew => number,
                 StrongNumbers.Hebrew when fhlPrefixes is not null => fhlPrefixes.GetValueOrDefault(value),
                 StrongNumbers.Hebrew => null,
-                _ => value <= LastGreek ? number : null,
+                _ => value <= StrongNumbers.LastGreek ? number : null,
             };
 
             if (read is not null && !numbers.Contains(read))

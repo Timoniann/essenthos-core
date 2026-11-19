@@ -88,8 +88,7 @@ public sealed class CrossWireStrongTests : IDisposable
                 """<w lemma="strong:G2443" type="x-split-1890">afin</w> <w lemma="strong:G2443" type="x-split-1890">que</w> <w lemma="strong:G3956">quiconque</w> croit"""),
             SwordSegmentation.Spaced,
             ref unit,
-            out _,
-            fhlPrefixes: null);
+            out _);
 
         words.Select(w => w.Surface).Should().Equal("afin", "que", "quiconque", "croit");
         words[0].Unit.Should().Be(words[1].Unit);

@@ -20,7 +20,7 @@ public class ClearBibleEarlyNameTests(ITestOutputHelper output)
         var records = ClearBibleAlignment.Records(Path.Combine(Folder, "spa", "alignments", "RV09", alignment)).ToList();
         var tokens = ClearBibleAlignment.Tokens(Path.Combine(Folder, "spa", "targets", "RV09", target)).ToList();
         var early = ClearBibleLinks.EarlyNames.Of(
-            tokens, ClearBibleSet.ReinaValeraOldTestament("RV1909", "BHSA").Early!, Path.Combine(Folder, "sources", source), records);
+            tokens, ShippedStrongNumbers.ClearBible("RV1909-BHSA").Early!, Path.Combine(Folder, "sources", source), records);
         return
         [
             .. records

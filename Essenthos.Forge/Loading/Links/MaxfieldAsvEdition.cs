@@ -1,4 +1,6 @@
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 using Microsoft.Data.Sqlite;
 using Essenthos.Core.Strong;
 
@@ -159,15 +161,18 @@ internal static class MaxfieldAsvEdition
 /// English nouns a translator adds to give an adjective, a pronoun or a particle a head (<em>all things</em>, <em>every man</em>,
 /// <em>the holy ones</em>, <em>one to another</em>, <em>all manner of</em>, <em>for this cause</em>), which then render no Hebrew or Greek word of their own; the owner's
 /// ruling of 2026-11-19 (TSK-1890) keeps the ASV's laid numbers from filling them (<see cref="Mapping.StrongNumberSource.LaidRules"/>).
+/// The words are the list <c>added-noun</c> of <c>maxfield-asv</c> in <c>sources/words.tsv</c>.
 /// </summary>
-internal static class EnglishAddedNouns
+internal sealed class EnglishAddedNouns(IReadOnlySet<string> words)
 {
-    private static readonly HashSet<string> Words = new(["thing", "things", "one", "ones", "man", "men", "manner", "cause"], StringComparer.OrdinalIgnoreCase);
+    /// <summary>The store's list (<see cref="SourceWords"/>).</summary>
+    public static EnglishAddedNouns Of(ProductStore store) =>
+        new(SourceWords.Of(store).Set(SourceWords.MaxfieldAsv, SourceWords.AddedNoun, StringComparer.OrdinalIgnoreCase));
 
     /// <summary>Whether a word, as printed (its case, a possessive ending and any apostrophe aside), is one of them.</summary>
-    public static bool Contains(string word)
+    public bool Contains(string word)
     {
         var bare = word.Replace('’', '\'').Trim('\'', '‘');
-        return Words.Contains(bare.EndsWith("'s", StringComparison.OrdinalIgnoreCase) ? bare[..^2] : bare);
+        return words.Contains(bare.EndsWith("'s", StringComparison.OrdinalIgnoreCase) ? bare[..^2] : bare);
     }
 }

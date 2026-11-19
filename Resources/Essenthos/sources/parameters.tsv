@@ -1,0 +1,12 @@
+# product    Essenthos/sources/parameters.tsv
+# producer   by hand
+# The numbers a source is read with: shares and limits measured on a source, each named by its source. Ours; each row says
+#   why. Edit a row and run forge build: every product made with one names this file among its inputs. A parameter no reader
+#   asks for is refused.
+# Columns: source, parameter, value (a number; a share is a fraction of 1), reason.
+# Parameters:
+#   berean placed-rows, placed-both  the shares of a verse's table rows (and of the witness's words) placed on the witness's
+#                                    words below which the verse is refused (stated-pairs, BSB-NESTLE1904)
+source	parameter	value	reason
+berean	placed-rows	0.5	a verse whose table rows are placed on the witness's words fewer than this share of them is refused: the two are not the same verse (Matthew 21:29 reads another clause)
+berean	placed-both	0.75	a verse whose rows are placed fewer than this share of both its rows and the witness's words is refused: where one side runs on into the next verse or stops short, the other side's words are nearly all placed

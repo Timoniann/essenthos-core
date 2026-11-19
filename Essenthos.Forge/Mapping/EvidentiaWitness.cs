@@ -134,7 +134,7 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
         {
             var bookGold = new Dictionary<int, SortedSet<int>>();
             var interlinear = InterlinearLinkLoader.Interlinear(fromSlug).Source;
-            foreach (var (source, isBook) in Door43BookAlignment.Of(fromSlug).Select(book => (book.Source, true)).Prepend((interlinear, false)))
+            foreach (var (source, isBook) in Door43BookAlignment.Of(store, fromSlug).Select(book => (book.Source, true)).Prepend((interlinear, false)))
             {
                 foreach (var link in HandAlignment.Read(store, pair, source))
                 {

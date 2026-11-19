@@ -244,7 +244,7 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
     [InlineData("manner", true)]
     [InlineData("Cause", true)]
     [InlineData("mankind", false)]
-    public void The_added_nouns_are_read_as_printed(string word, bool added) => EnglishAddedNouns.Contains(word).Should().Be(added);
+    public void The_added_nouns_are_read_as_printed(string word, bool added) => ShippedStrongNumbers.AddedNouns.Contains(word).Should().Be(added);
 
     /// <summary>
     /// Isaiah 32:19, <em>utterly laid low</em>: the King James's numbering carried onto the ASV puts תִּשְׁפַּל's number on

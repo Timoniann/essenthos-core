@@ -46,7 +46,7 @@ public sealed class ClearBibleYoungNumberingTests
 {
     private static readonly string Folder = TestResources.ClearBibleFolder;
 
-    private static readonly ClearBibleSet Set = ClearBibleSet.YoungOldTestament("YLT", "BHSA");
+    private static readonly ClearBibleSet Set = ShippedStrongNumbers.ClearBible("YLT-BHSA");
 
     [Fact]
     public void EverySourceWordTheRecordsNameIsARowOfTheSetsTokenFile()
@@ -171,7 +171,7 @@ public sealed class ClearBibleYoungNewTestamentNumberingTests
 {
     private static readonly string Folder = TestResources.ClearBibleFolder;
 
-    private static readonly ClearBibleSet Set = ClearBibleSet.YoungNewTestament("YLT", "NESTLE1904");
+    private static readonly ClearBibleSet Set = ShippedStrongNumbers.ClearBible("YLT-NESTLE1904");
 
     private static readonly Lazy<(ClearBibleSourceEdits.Read Read, List<ClearBibleRecord> Records, HashSet<string> Rows)> Edits = new(() =>
     {

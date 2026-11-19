@@ -79,7 +79,7 @@ internal static class ChainedNumbers
         /// <summary>A word of the text as the group rules see it.</summary>
         public GroupNumbers.Original Word(string key, string number) =>
             new(key, number,
-                OriginalWords.Prefixes.Contains(number) ? WordClass.Prefix : classes?.GetValueOrDefault(number, WordClass.Content) ?? WordClass.Content,
+                lists.Prefixes.Contains(number) ? WordClass.Prefix : classes?.GetValueOrDefault(number, WordClass.Content) ?? WordClass.Content,
                 finite?.Contains(key) == true, names?.Contains(number) == true);
 
         /// <summary>Whether the text is an edition of an original (any text that is not a translation).</summary>

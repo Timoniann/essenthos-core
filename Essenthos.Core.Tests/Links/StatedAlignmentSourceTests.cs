@@ -44,7 +44,7 @@ public sealed class StatedAlignmentSourceTests : IDisposable
         var rows = source.Rows(new ProductTexts(store), "IRVPAN-NESTLE1904", _ => { }).ToList();
 
         rows.Select(row => row.Shape).Should().BeEquivalentTo("50.1:16.1|50.1:16.4", "50.1:17.2|50.1:17.4");
-        source.Inputs(store, "IRVPAN-NESTLE1904").Should().Equal("Door43/pa_irv/51-PHP.usfm");
+        source.Inputs(store, "IRVPAN-NESTLE1904").Should().Equal("Door43/pa_irv/51-PHP.usfm", Door43BookAlignment.Declared);
     }
 
     [Fact]
@@ -93,7 +93,9 @@ public sealed class StatedAlignmentSourceTests : IDisposable
     private static MappingRow Stated(string from, string to, string source) =>
         new(from, to, "renders", MappingMethods.Stated, null, source, null, null, null);
 
-    private static Door43BookAlignment Philippians => Door43BookAlignment.All.Single(book => book.File == "51-PHP.usfm");
+    private static ProductStore Shipped => new(TestResources.Shipped("."));
+
+    private static Door43BookAlignment Philippians => Door43BookAlignment.All(Shipped).Single(book => book.File == "51-PHP.usfm");
 
     private const string Release = """
         \id PHP
@@ -117,7 +119,7 @@ public sealed class StatedAlignmentSourceTests : IDisposable
         var rows = source.Rows(new ProductTexts(store), "UBIO-NESTLE1904", _ => { }).ToList();
 
         rows.Select(row => (row.Shape, row.Source)).Should().Equal(("50.1:16.1|50.1:16.4", Philippians.Source));
-        source.Inputs(store, "UBIO-NESTLE1904").Should().Equal("Door43/uk_ubio_books/51-PHP.usfm");
+        source.Inputs(store, "UBIO-NESTLE1904").Should().Equal("Door43/uk_ubio_books/51-PHP.usfm", Door43BookAlignment.Declared);
         Door43BookAlignment.Spelling("Імƅя").Should().Be("Ім’я", "the project prints the apostrophe as U+0185");
     }
 
@@ -166,13 +168,14 @@ public sealed class StatedAlignmentSourceTests : IDisposable
     public void A_project_taken_again_at_a_later_commit_is_the_same_producers_and_each_set_of_terms_has_its_credit()
     {
         var source = new Door43AlignmentSource();
-        var romans = Door43BookAlignment.All.Single(book => book.File == "46-ROM.usfm");
+        var romans = Door43BookAlignment.All(Shipped).Single(book => book.File == "46-ROM.usfm");
 
-        source.Makes(Philippians.Source.Replace(Philippians.Commit[..8], "0123abcd", StringComparison.Ordinal)).Should().BeTrue();
-        source.Makes(Philippians.Source.Replace("Philippians by", "Colossians by", StringComparison.Ordinal)).Should().BeFalse();
+        source.Makes(Shipped, Philippians.Source.Replace(Philippians.Commit[..8], "0123abcd", StringComparison.Ordinal)).Should().BeTrue();
+        source.Makes(Shipped, Philippians.Source.Replace("Philippians by", "Colossians by", StringComparison.Ordinal)).Should().BeFalse();
+        source.Makes(Philippians.Source).Should().BeFalse("a project is the store's to declare");
         Datasets.Of(Philippians.Source).Should().Be("door43-ubio-by-sa");
         Datasets.Of(romans.Source).Should().Be("door43-ubio-cc0");
-        Door43BookAlignment.All.Should().OnlyContain(book => book.Slug == Bible4uTextSource.Ohienko && book.Commit.Length == 40);
+        Door43BookAlignment.All(Shipped).Should().OnlyContain(book => book.Slug == Bible4uTextSource.Ohienko && book.Commit.Length == 40);
     }
 
     [Fact]
