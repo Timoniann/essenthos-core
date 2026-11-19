@@ -102,14 +102,16 @@
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes
          names no build. The commit goes into the informational version, marked dirty when the tree
-         had uncommitted changes; a build with no git, such as the container's, keeps the plain
-         version rather than failing. -->
+         had uncommitted changes to the code; a build with no git, such as the container's, keeps
+         the plain version rather than failing. Resources/ is left out of the test: the owner's
+         working files there are never committed, and a release names the resources by their own
+         manifest hash. -->
     <Target Name="StampSourceRevision" BeforeTargets="PrepareForBuild" Condition="'$(SourceRevisionId)' == ''">
         <Exec Command="git rev-parse --short=12 HEAD" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low" StandardErrorImportance="low" ContinueOnError="true">
             <Output TaskParameter="ConsoleOutput" PropertyName="StampedRevision" />
             <Output TaskParameter="ExitCode" PropertyName="StampedRevisionExit" />
         </Exec>
-        <Exec Command="git status --porcelain --untracked-files=no" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low" StandardErrorImportance="low" ContinueOnError="true" Condition="'$(StampedRevisionExit)' == '0'">
+        <Exec Command="git status --porcelain --untracked-files=no -- &quot;:/&quot; &quot;:(top,exclude)Resources&quot;" ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low" StandardErrorImportance="low" ContinueOnError="true" Condition="'$(StampedRevisionExit)' == '0'">
             <Output TaskParameter="ConsoleOutput" PropertyName="StampedChanges" />
         </Exec>
         <PropertyGroup Condition="'$(StampedRevisionExit)' == '0'">
