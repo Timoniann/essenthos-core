@@ -88,6 +88,22 @@ public class EvidentiaSlavicAttachedWordsTests
     }
 
     [Fact]
+    public void ASubjectPronounIsNotPlacedFarFromItsVerbNorWhereTheVerseWritesItsPronounOrAnotherUnrenderedVerbOfItsPerson()
+    {
+        var we = Word(1, "ми", head: 2, relation: "nsubj");
+        var speak = Word(2, "говоримо");
+        var weFar = Word(1, "ми", head: 5, relation: "nsubj");
+        var speakFar = Word(5, "говоримо");
+        var first = Greek(101, "λαλοῦμεν", "G2980", ("pos", "verb"), ("mood", "indicative"), ("person", "first"), ("number", "plural"));
+        var writtenFar = Greek(109, "ἡμεῖς", "G1473", ("pos", "pron"), ("case", "nominative"));
+        var unrendered = Greek(104, "ἐσμέν", "G1510", ("pos", "verb"), ("mood", "indicative"), ("person", "first"), ("number", "plural"));
+
+        Place([weFar, speakFar], [weFar], [first], (5, 101)).Should().BeEmpty();
+        Place([we, speak], [we], [first, writtenFar], (2, 101)).Should().BeEmpty();
+        Place([we, speak], [we], [first, unrendered], (2, 101)).Should().BeEmpty();
+    }
+
+    [Fact]
     public void APrepositionGoesOnTheFreePrepositionBeforeItsNounsRenderingButNeverOnTheObjectMarker()
     {
         // у світлі over ἐν τῷ φωτί.

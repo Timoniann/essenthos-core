@@ -2,6 +2,8 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Essenthos.Core.Door43;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Links.Evidentia;
 using Essenthos.Core.Products;
 
@@ -10,21 +12,20 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// EVIDENTIA as a second witness over a pair's links, read from files: the words the pair's links leave unplaced are given to
 /// the per-language attached-word rules (<see cref="IEvidentiaSlavicWords"/>), with the pair's other links as their heads, and
-/// every placement is scored against the hand alignment the pair states. In a verse the hand alignment covers, the heads are
-/// the links of every method but the stated ones, so a verse is measured as an unstated verse sees it.
+/// every placement is scored against a key (<see cref="Key"/>). In a verse the key covers, the heads are the links of every
+/// method but the stated ones, so a verse is measured as an unstated verse sees it.
 ///
 /// <para>
-/// The stated verses are split once into a part rules are chosen on and a sealed part they are only measured on, by a hash of
-/// the verse's key (<see cref="Held"/>); Luke's verses, whose alignment is unchecked personal work (PRB-1907), are in neither
-/// and reported apart.
+/// Each key's verses are split once into a part rules are chosen on and a sealed part they are only measured on
+/// (<see cref="Part"/>, <see cref="Sealed"/>), fixed before any figure of it was read.
 /// </para>
 /// </summary>
 internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annotator, Action<string> log)
 {
-    /// <summary>The share of stated verses in the sealed part, in tenths.</summary>
-    private const int HeldTenths = 3;
+    /// <summary>The share of verses a split leaves to choosing rules, in tenths; the rest are sealed.</summary>
+    private const int DevTenths = 3;
 
-    private const string Salt = "t1910:";
+    private const string Salt = "t1910b:";
 
     private const int Luke = 42;
 
@@ -34,17 +35,39 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
         MappingMethods.Stated, PairSources.Laid, MappingMethods.Evidentia,
     };
 
+    /// <summary>
+    /// The verses a placement is scored in. <see cref="Dev"/> and <see cref="Held"/> are the pair's interlinear: every verse
+    /// stretch 1 of TSK-1910 read is in dev, and the sealed part is Luke 1:1-54, which no rule had seen and PRB-1907 ruled
+    /// whole. <see cref="BooksDev"/> and <see cref="BooksHeld"/> are the Door43 book projects' verses the interlinear lacks
+    /// (<see cref="Door43BookAlignment"/>), a second key outside the gold; <see cref="SilverDev"/> and <see cref="SilverHeld"/>
+    /// are the verses where the Strong layer's own links of the listed small words are hidden and become the key.
+    /// </summary>
     public enum Part
     {
         Unstated,
         Dev,
         Held,
-        Luke,
+        BooksDev,
+        BooksHeld,
+        SilverDev,
+        SilverHeld,
     }
 
-    /// <summary>Whether a stated verse is in the sealed part: the first byte of SHA-256 over the salt and its key, in tenths.</summary>
-    public static bool Held(VerseKey verse) =>
-        SHA256.HashData(Encoding.UTF8.GetBytes(Salt + verse))[0] % 10 < HeldTenths;
+    /// <summary>What a placement is scored against.</summary>
+    public enum Key
+    {
+        /// <summary>The pair's hand alignment as the merge settled it (<see cref="HandAlignment"/>).</summary>
+        Stated,
+
+        /// <summary>The Strong layer's links of the words the language's lists hold, hidden from the heads.</summary>
+        Strong,
+    }
+
+    /// <summary>Whether a verse of a split is sealed: the first byte of SHA-256 over the salt and its key, in tenths.</summary>
+    public static bool Sealed(VerseKey verse) =>
+        SHA256.HashData(Encoding.UTF8.GetBytes(Salt + verse))[0] % 10 >= DevTenths;
+
+    private static bool IsHeld(Part part) => part is Part.Held or Part.BooksHeld or Part.SilverHeld;
 
     public sealed record Placement(int Word, int Original, string Rule, int Head);
 
@@ -54,6 +77,7 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
         string pair,
         IEvidentiaSlavicWords language,
         IReadOnlySet<int> books,
+        Key key,
         bool unsealHeld,
         bool goldHeads,
         string? outFolder,
@@ -69,47 +93,85 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
         var heads = new Dictionary<int, SortedSet<int>>();
         var reaching = new HashSet<int>();
         var gold = new Dictionary<int, SortedSet<int>>();
-        var goldVerses = new HashSet<VerseKey>();
+        var parts = new Dictionary<VerseKey, Part>();
         var goldSources = new Dictionary<string, int>(StringComparer.Ordinal);
+        var silver = new HashSet<int>();
         var methods = MappingProducts.Methods(store, pair);
-        foreach (var method in methods)
+        foreach (var method in methods.Where(method => !StatedMethods.Contains(method)))
         {
             using var reader = store.Open(MappingProducts.Of(pair, method), MappingRow.Schema);
-            var stated = StatedMethods.Contains(method);
             foreach (var row in reader.Rows())
             {
                 var from = PairLinkFiles.Words(row.From, translationIds);
-                if (stated)
+                var renders = row.Relation is "renders" or "equals";
+                if (key == Key.Strong && method == MappingMethods.Strong && renders)
                 {
-                    if (method != MappingMethods.Stated)
-                    {
-                        continue;
-                    }
-
-                    goldSources[row.Source] = goldSources.GetValueOrDefault(row.Source) + 1;
-                    goldVerses.UnionWith(from.Select(word => translation.Words[word].Key.Verse));
-                    if (row.Relation is "renders" or "equals")
-                    {
-                        Add(gold, from, PairLinkFiles.Words(row.To, originalIds));
-                    }
-
-                    continue;
+                    var listed = from.Where(word => language.Words.Rows.Any(entry => entry.Form == translation.Words[word].Surface.ToLowerInvariant())).ToList();
+                    Add(gold, listed, PairLinkFiles.Words(row.To, originalIds));
+                    silver.UnionWith(listed);
                 }
 
                 reaching.UnionWith(from);
-                if (row.Relation is "renders" or "equals")
+                if (renders)
                 {
                     Add(heads, from, PairLinkFiles.Words(row.To, originalIds));
                 }
             }
         }
 
-        log($"{pair}: heads from {string.Join(", ", methods.Where(method => !StatedMethods.Contains(method)))}; "
-            + $"gold {gold.Count:N0} words in {goldVerses.Count:N0} verses from {string.Join("; ", goldSources.Select(source => $"{source.Key} {source.Value:N0}"))}");
+        if (key == Key.Strong)
+        {
+            reaching.ExceptWith(silver);
+            foreach (var word in silver)
+            {
+                heads.Remove(word);
+                parts[translation.Words[word].Key.Verse] = Sealed(translation.Words[word].Key.Verse) ? Part.SilverHeld : Part.SilverDev;
+            }
 
-        Part PartOf(VerseKey verse) => !goldVerses.Contains(verse) ? Part.Unstated
-            : verse.Book == Luke ? Part.Luke
-            : Held(verse) ? Part.Held : Part.Dev;
+            goldSources[$"{MappingMethods.Strong} links of the listed words"] = silver.Count;
+        }
+        else
+        {
+            var bookGold = new Dictionary<int, SortedSet<int>>();
+            var interlinear = InterlinearLinkLoader.Interlinear(fromSlug).Source;
+            foreach (var (source, isBook) in Door43BookAlignment.Of(fromSlug).Select(book => (book.Source, true)).Prepend((interlinear, false)))
+            {
+                foreach (var link in HandAlignment.Read(store, pair, source))
+                {
+                    var name = isBook ? "Door43 book projects" : interlinear;
+                    goldSources[name] = goldSources.GetValueOrDefault(name) + 1;
+                    var from = link.From.Select(word => translationIds.TryGetValue(word.Own, out var id) ? id : -1).Where(id => id >= 0).ToList();
+                    foreach (var word in from)
+                    {
+                        var verse = translation.Words[word].Key.Verse;
+                        parts[verse] = !isBook ? verse.Book == Luke ? Part.Held : Part.Dev
+                            : parts.TryGetValue(verse, out var already) && already is Part.Dev or Part.Held ? already
+                            : Sealed(verse) ? Part.BooksHeld : Part.BooksDev;
+                    }
+
+                    if (!link.Absence)
+                    {
+                        Add(isBook ? bookGold : gold, from, [.. link.To.Select(word => originalIds.TryGetValue(word.Own, out var id) ? id : -1).Where(id => id >= 0)]);
+                    }
+                }
+            }
+
+            var shared = bookGold.Keys.Where(gold.ContainsKey).ToList();
+            log($"{pair}: the book projects and the interlinear both align {shared.Count:N0} words; the same original words for "
+                + $"{shared.Count(word => gold[word].SetEquals(bookGold[word])):N0}, overlapping for {shared.Count(word => gold[word].Overlaps(bookGold[word])):N0}");
+            foreach (var (word, targets) in bookGold)
+            {
+                if (parts[translation.Words[word].Key.Verse] is Part.BooksDev or Part.BooksHeld)
+                {
+                    gold[word] = targets;
+                }
+            }
+        }
+
+        log($"{pair}: heads from {string.Join(", ", methods.Where(method => !StatedMethods.Contains(method)))}; "
+            + $"key {key}: {gold.Count:N0} words in {parts.Count:N0} verses from {string.Join("; ", goldSources.Select(source => $"{source.Key} {source.Value:N0}"))}");
+
+        Part PartOf(VerseKey verse) => parts.GetValueOrDefault(verse, Part.Unstated);
 
         var chapters = translation.Verses
             .Where(verse => books.Contains(verse.Book))
@@ -150,13 +212,13 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
             foreach (var verse in chapter)
             {
                 var part = PartOf(verse);
-                if (part != Part.Unstated && part == Part.Held && !unsealHeld)
+                if (IsHeld(part) && !unsealHeld)
                 {
                     continue;
                 }
 
                 var verseWords = translation.InVerse(verse).Select(id => byId[id]).ToList();
-                var verseHeads = goldHeads && part != Part.Unstated ? gold : heads;
+                var verseHeads = goldHeads && key == Key.Stated && part != Part.Unstated ? gold : heads;
                 var originalVerses = verseWords.Where(word => verseHeads.ContainsKey((int)word.Id))
                     .SelectMany(word => verseHeads[(int)word.Id]).Select(id => original.Words[id].Key.Verse).Distinct().ToList();
                 var originalWords = originalVerses.SelectMany(own => original.InVerse(own)).Distinct()
@@ -171,7 +233,7 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
                     placements.Add(new Placement((int)proposal.Word, (int)proposal.Original, proposal.Rule, (int)proposal.Head));
                 }
 
-                if (part == Part.Dev && outFolder is not null)
+                if (part is Part.Dev or Part.BooksDev or Part.SilverDev && outFolder is not null)
                 {
                     foreach (var word in verseUnplaced)
                     {
@@ -191,11 +253,11 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
 
         var outcomes = placements.Select(placement => new Outcome(placement.Rule, PartOf(translation.Words[placement.Word].Key.Verse),
             Verdict(placement, gold))).ToList();
-        report.AppendLine("  by rule (unstated: words it would add; dev/held/luke: right / wrong / on a word the hand alignment leaves unaligned):");
+        report.AppendLine("  by rule (unstated: words it would add; each scored part: right / wrong / on a word the hand alignment leaves unaligned):");
         foreach (var rule in outcomes.GroupBy(outcome => outcome.Rule).OrderBy(group => group.Key, StringComparer.Ordinal))
         {
             var line = new StringBuilder(string.Create(CultureInfo.InvariantCulture, $"    {rule.Key}: unstated {rule.Count(outcome => outcome.Part == Part.Unstated):N0}"));
-            foreach (var part in new[] { Part.Dev, Part.Held, Part.Luke })
+            foreach (var part in Enum.GetValues<Part>().Where(part => part != Part.Unstated))
             {
                 var scored = rule.Where(outcome => outcome.Part == part).ToList();
                 if (scored.Count == 0)
@@ -221,7 +283,7 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
             var random = new Random(1910);
             await File.WriteAllLinesAsync(Path.Combine(outFolder, $"{pair}-placements.tsv"),
                 ["rule\tpart\tverdict\tverse\tcontext\tword\thead\toriginal\toriginal_parse\tgold",
-                 .. placements.Zip(outcomes).Where(pair2 => pair2.Second.Part != Part.Held)
+                 .. placements.Zip(outcomes).Where(pair2 => !IsHeld(pair2.Second.Part))
                      .OrderBy(_ => random.Next())
                      .Select(pair2 => Line(translation, original, pair2.First, pair2.Second, gold))],
                 cancellationToken);
@@ -229,7 +291,7 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
             {
                 await File.WriteAllLinesAsync(Path.Combine(outFolder, $"{pair}-placements-held.tsv"),
                     ["rule	part	verdict	verse	context	word	head	original	original_parse	gold",
-                     .. placements.Zip(outcomes).Where(pair2 => pair2.Second.Part == Part.Held)
+                     .. placements.Zip(outcomes).Where(pair2 => IsHeld(pair2.Second.Part))
                          .Select(pair2 => Line(translation, original, pair2.First, pair2.Second, gold))],
                     cancellationToken);
             }

@@ -18,6 +18,12 @@ internal static class EvidentiaSlavicAttachedWords
     /// <summary>How far from a verb the original may write the pronoun that is its subject.</summary>
     private const int PronounReach = 5;
 
+    /// <summary>
+    /// How far apart, in the translation's order, a subject pronoun and its verb may stand: the parse's head is taken only where
+    /// the words' order says the same, a second signal against a pronoun the parse hangs on another clause's verb.
+    /// </summary>
+    private const int SubjectReach = 3;
+
     private const string GreekArticle = "G3588";
 
     private const string GreekDe = "G1161";
@@ -84,13 +90,18 @@ internal static class EvidentiaSlavicAttachedWords
             EvidentiaSlavicPlacement? placement = null;
             foreach (var row in words.Of(EvidentiaWordKinds.SubjectPronoun, form))
             {
-                if (word.Relation is null || !SubjectRelations.Contains(word.Relation))
+                if (word.Relation is null || !SubjectRelations.Contains(word.Relation)
+                    || Math.Abs(word.Position - head.Position) > SubjectReach)
                 {
                     break;
                 }
 
                 var verbs = renderings.Where(rendering => IsFinite(rendering) && Agrees(row, rendering)).ToList();
-                if (verbs.Count == 1 && !Writes(row, Around(verbs[0]), verbs[0]))
+
+                // A finite verb of the same person and number that no word renders may be the one the pronoun's own clause
+                // leaves unwritten (що ми з правди, ὅτι ἐκ τῆς ἀληθείας ἐσμέν), so it bars the placement.
+                if (verbs.Count == 1 && !Writes(row, Around(verbs[0]), verbs[0])
+                    && !Around(verbs[0]).Any(other => other.Id != verbs[0].Id && IsFinite(other) && Agrees(row, other) && !reachedBy.ContainsKey(other.Id)))
                 {
                     placement = new(word.Id, verbs[0].Id, EvidentiaWordKinds.SubjectPronoun, head.Id);
                     break;
@@ -198,14 +209,16 @@ internal static class EvidentiaSlavicAttachedWords
     }
 
     /// <summary>
-    /// Whether the original writes, within <see cref="PronounReach"/> of the verb, a pronoun that takes the subject pronoun
-    /// instead (<em>οἵτινες περὶ τὴν ἀλήθειαν ἠστόχησαν</em>), or before it the article that serves as one with δέ or μέν
+    /// Whether the original writes a pronoun that takes the subject pronoun instead: in any case within
+    /// <see cref="PronounReach"/> of the verb (<em>οἵτινες περὶ τὴν ἀλήθειαν ἠστόχησαν</em>), in the nominative anywhere in the
+    /// verse (<em>Σὺ δέ, ὦ ἄνθρωπε θεοῦ, ταῦτα φεῦγε</em>), or before the verb the article that serves as one with δέ or μέν
     /// (<em>ὁ δὲ εἶπεν</em>, <em>он же сказал</em>).
     /// </summary>
     private static bool Writes(EvidentiaWordRow row, List<EvidentiaToken> around, EvidentiaToken verb)
     {
         var at = around.FindIndex(token => token.Id == verb.Id);
         return Near(around, at, PronounReach).Any(token => Renders(row, token))
+            || around.Any(token => Renders(row, token) && Case(token) == "nominative")
             || Enumerable.Range(Math.Max(0, at - PronounReach), Math.Min(PronounReach, at)).Any(index =>
                 around[index].StrongNumber == GreekArticle && Case(around[index]) == "nominative"
                 && index + 1 < around.Count && around[index + 1].StrongNumber is GreekDe or GreekMen);

@@ -3,7 +3,7 @@
 # A form is lower-case. person 1|2|3, number sg|pl, gender m|f|n; case: the Greek case(s) a preposition stands for; original: the Strong
 # numbers of the original words the form renders (a subject pronoun: the pronouns that take it where written beside the verb; a relative: the words that take it where written before the participle's article); | between several, \N for none.
 kind	form	person	number	gender	case	original	reason
-subject-pronoun	я	1	sg	\N	\N	G1473|H589|H595	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
+subject-pronoun	я	1	sg	\N	\N	G1473|G2504|H589|H595	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
 subject-pronoun	ты	2	sg	\N	\N	G4771|H859	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
 subject-pronoun	он	3	sg	m	\N	G846|G3778|G1565|G3739|G3748|G2548|H1931	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb
 subject-pronoun	она	3	sg	f	\N	G846|G3778|G1565|G3739|G3748|G2548|H1931	the person and number a finite verb carries in its ending; the original pronouns listed take it instead where written free beside the verb

@@ -24,7 +24,8 @@ internal static partial class ForgeVerbs
             .ToHashSet();
         using var scope = forge.Scope();
         var witness = new EvidentiaWitness(store, scope.ServiceProvider.GetRequiredService<UdpipeAnnotator>(), line => forge.Logger.LogInformation("{Line}", line));
-        var report = await witness.Run(pair, language, books, args.Contains("--held"), Option(args, "--heads") == "gold", Option(args, "--out"), Parallelism(args, 2), CancellationToken.None);
+        var report = await witness.Run(pair, language, books,
+            Option(args, "--gold") == "strong" ? EvidentiaWitness.Key.Strong : EvidentiaWitness.Key.Stated, args.Contains("--held"), Option(args, "--heads") == "gold", Option(args, "--out"), Parallelism(args, 2), CancellationToken.None);
         Console.Write(report);
         return 0;
     }
