@@ -185,12 +185,12 @@ internal static class EnglishFunctionWords
 
 /// <summary>
 /// English nouns a translator adds to give an adjective, a pronoun or a particle a head (<em>all things</em>, <em>every man</em>,
-/// <em>the holy ones</em>, <em>one to another</em>), which then render no Hebrew or Greek word of their own; the owner's
+/// <em>the holy ones</em>, <em>one to another</em>, <em>all manner of</em>, <em>for this cause</em>), which then render no Hebrew or Greek word of their own; the owner's
 /// ruling of 2026-11-19 (TSK-1890) keeps the ASV's laid numbers from filling them (<see cref="Mapping.StrongNumberSource.LaidRules"/>).
 /// </summary>
 internal static class EnglishAddedNouns
 {
-    private static readonly HashSet<string> Words = new(["thing", "things", "one", "ones", "man", "men"], StringComparer.OrdinalIgnoreCase);
+    private static readonly HashSet<string> Words = new(["thing", "things", "one", "ones", "man", "men", "manner", "cause"], StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Whether a word, as printed (its case, a possessive ending and any apostrophe aside), is one of them.</summary>
     public static bool Contains(string word)

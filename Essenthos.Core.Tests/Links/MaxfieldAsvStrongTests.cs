@@ -60,10 +60,13 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
                 (11, 21, "armed", "G", 2528), (11, 21, "guardeth", "G", 5442), (11, 21, "his", "G", 1438), (11, 21, "court", "G", 833)]),
             ("Isaiah", [(32, 19, "and", "", 0), (32, 19, "the", "", 0), (32, 19, "city", "H", 5892), (32, 19, "shall", "", 0),
                 (32, 19, "be", "", 0), (32, 19, "utterly", "H", 8213), (32, 19, "laid", "", 0), (32, 19, "low", "H", 8213)]),
-            ("Matthew", [(14, 22, "till", "G", 2193), (14, 22, "he", "G", 3739), (14, 22, "should", "", 0), (14, 22, "send", "G", 630),
+            ("Matthew", [(9, 35, "all", "", 0), (9, 35, "manner", "G", 3956), (9, 35, "of", "", 0), (9, 35, "disease", "G", 3554),
+                (14, 22, "till", "G", 2193), (14, 22, "he", "G", 3739), (14, 22, "should", "", 0), (14, 22, "send", "G", 630),
                 (14, 22, "the", "", 0), (14, 22, "multitudes", "G", 3793), (14, 22, "away", "G", 630)]),
+            ("Mark", [(12, 24, "for", "", 0), (12, 24, "this", "", 0), (12, 24, "cause", "G", 3778), (12, 24, "ye", "", 0), (12, 24, "err", "G", 4105)]),
             ("John", [(9, 25, "one thing", "G", 1520), (9, 25, "I", "", 0), (9, 25, "know", "G", 1492)]),
-            ("Acts", [(5, 32, "witnesses", "G", 3144), (5, 32, "of", "", 0), (5, 32, "these", "", 0), (5, 32, "things", "G", 4487)]),
+            ("Acts", [(5, 32, "witnesses", "G", 3144), (5, 32, "of", "", 0), (5, 32, "these", "", 0), (5, 32, "things", "G", 4487),
+                (28, 18, "no", "", 0), (28, 18, "cause", "G", 156), (28, 18, "of", "", 0), (28, 18, "death", "G", 2288)]),
             ("Philippians", [(2, 4, "not", "G", 3361), (2, 4, "looking", "G", 4648), (2, 4, "each", "G", 1538), (2, 4, "of", "", 0),
                 (2, 4, "you", "", 0), (2, 4, "to", "", 0), (2, 4, "his", "", 0), (2, 4, "own", "", 0), (2, 4, "things", "G", 1438)]));
     }
@@ -83,7 +86,7 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
         var verses = MaxfieldAsvEdition.Read(Path.Combine([_root, .. MaxfieldAsvEdition.EditionFile]));
 
         verses.Keys.Should().BeEquivalentTo([(1, 1, 1), (42, 4, 12), (42, 4, 13), (42, 11, 21), (23, 32, 19), (40, 14, 22), (43, 9, 25),
-            (44, 5, 32), (50, 2, 4)], "chapter 0 is the book's title, not a verse");
+            (44, 5, 32), (50, 2, 4), (40, 9, 35), (41, 12, 24), (44, 28, 18)], "chapter 0 is the book's title, not a verse");
         verses[(1, 1, 1)].Select(word => (word.Text, string.Join(' ', word.Numbers))).Should().Equal(
             ("In", ""), ("the", ""), ("beginning", "H7225"), ("God", "H430"), ("created", ""));
         verses[(1, 1, 1)].Select(word => word.Unit).Should().OnlyHaveUniqueItems("every word is a rendering of its own");
@@ -210,13 +213,35 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
         one.Evidence.Should().BeNull();
     }
 
+    /// <summary>
+    /// Matthew 9:35 <em>all manner of disease</em> puts πᾶσαν's number on <em>manner</em>, Mark 12:24 <em>for this cause</em>
+    /// τοῦτο's on <em>cause</em>: both only support. In Acts 28:18 <em>no cause of death</em>, <em>cause</em> renders αἰτίαν, a
+    /// noun, and stays a link of its own (coordinator, 2026-11-19).
+    /// </summary>
+    [Fact]
+    public void Manner_and_cause_only_support_over_a_word_that_is_not_a_noun()
+    {
+        var rows = Rows();
+
+        var manner = rows.Single(row => row.From == "40.9:35.2");
+        manner.To.Should().Be("40.9:35.1");
+        manner.Evidence.Should().Be(MappingMethods.SupportOnlyAdded);
+        var cause = rows.Single(row => row.From == "41.12:24.3");
+        cause.To.Should().Be("41.12:24.2");
+        cause.Evidence.Should().Be(MappingMethods.SupportOnlyAdded);
+        var reason = rows.Single(row => row.From == "44.28:18.2");
+        reason.To.Should().Be("44.28:18.2");
+        reason.Evidence.Should().BeNull();
+    }
+
     [Theory]
     [InlineData("things", true)]
     [InlineData("One", true)]
     [InlineData("man’s", true)]
     [InlineData("men's", true)]
     [InlineData("ones’", true)]
-    [InlineData("manner", false)]
+    [InlineData("manner", true)]
+    [InlineData("Cause", true)]
     [InlineData("mankind", false)]
     public void The_added_nouns_are_read_as_printed(string word, bool added) => EnglishAddedNouns.Contains(word).Should().Be(added);
 
@@ -246,6 +271,7 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
             [
                 ("23.32:19", [("and", null), ("the", null), ("city", "H5892"), ("shall", null), ("be", null), ("utterly", "H8213"), ("laid", null),
                     ("low", "H8213")]),
+                ("40.9:35", [("all", null), ("manner", "G3956"), ("of", null), ("disease", "G3554")]),
                 ("40.14:22", [("till", "G2193"), ("he", "G3739"), ("should", null), ("send", "G630"), ("the", null), ("multitudes", "G3793"),
                     ("away", "G630")]),
                 ("42.4:12", [("Jesus", "G2424"), ("said", "G2036"), ("that", "G3754"), ("but", "G1161"), ("the", null), ("Lord", "G2962"),
@@ -253,21 +279,26 @@ public sealed class MaxfieldAsvStrongTests : IDisposable
                 ("42.4:13", [("God", "G2316"), ("spake", "G2980")]),
                 ("42.11:21", [("When", "G3752"), ("the", null), ("strong", null), new Word("man", "G2478", Supplied: 1), ("armed", "G2528"),
                     ("guardeth", "G5442"), ("his", "G1438"), ("court", "G833")]),
+                ("41.12:24", [("for", null), ("this", null), ("cause", "G3778"), ("ye", null), ("err", "G4105")]),
                 ("43.9:25", [("one", "G1520"), ("thing", "G1520"), ("I", null), ("know", "G1492")]),
                 ("44.5:32", [("witnesses", "G3144"), ("of", null), ("these", null), ("things", "G4487")]),
+                ("44.28:18", [("no", null), ("cause", "G156"), ("of", null), ("death", "G2288")]),
                 ("50.2:4", [("not", "G3361"), ("looking", "G4648"), ("each", "G1538"), ("of", null), ("you", null), ("to", null), ("his", null),
                     ("own", null), ("things", "G1438")]),
             ]);
         Text(NestleTextSource.Slug, "grc", "critical-edition",
             [
+                ("40.9:35", [new Word("πᾶσαν", "G3956", "adj"), new Word("νόσον", "G3554", "noun")]),
                 ("40.14:22", [("ἕως", "G2193"), ("οὗ", "G3739"), new Word("ἀπολύσῃ", "G630", "verb"), ("τοὺς", "G3588"), new Word("ὄχλους", "G3793", "noun")]),
                 ("42.4:12", [("Ἰησοῦς", "G2424"), ("εἶπεν", "G2036"), ("αὐτῷ", "G846"), ("ὅτι", "G3754"), ("δέ", "G1161"), ("κύριον", "G2962"),
                     ("τὸν", "G3588"), ("θεόν", "G2316"), ("σου", "G4675")]),
                 ("42.4:13", [("θεός", "G2316"), ("ἐλάλησεν", "G2980"), ("θεοῦ", "G2316")]),
                 ("42.11:21", [("ὅταν", "G3752"), ("ὁ", "G3588"), new Word("ἰσχυρὸς", "G2478", "adj"), new Word("καθωπλισμένος", "G2528", "verb"),
                     new Word("φυλάσσῃ", "G5442", "verb"), ("τὴν", "G3588"), new Word("ἑαυτοῦ", "G1438", "pron"), new Word("αὐλήν", "G833", "noun")]),
+                ("41.12:24", [new Word("διὰ", "G1223", "prep"), new Word("τοῦτο", "G3778", "pron"), new Word("πλανᾶσθε", "G4105", "verb")]),
                 ("43.9:25", [new Word("ἓν", "G1520", "adj"), new Word("οἶδα", "G1492", "verb")]),
                 ("44.5:32", [new Word("μάρτυρες", "G3144", "noun"), ("τῶν", "G3588"), new Word("ῥημάτων", "G4487", "noun"), new Word("τούτων", "G3778", "pron")]),
+                ("44.28:18", [new Word("μηδεμίαν", "G3367", "adj"), new Word("αἰτίαν", "G156", "noun"), new Word("θανάτου", "G2288", "noun")]),
                 ("50.2:4", [("μὴ", "G3361"), ("τὰ", "G3588"), new Word("ἑαυτῶν", "G1438", "pron"), new Word("ἕκαστοι", "G1538", "adj"),
                     new Word("σκοποῦντες", "G4648", "verb")]),
             ]);
