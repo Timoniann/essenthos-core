@@ -130,8 +130,8 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   Philippians 1,388 / 1,393, John 4,233 / 4,275, 1 Peter 193 / 195 (16 verses read from the project). Hebrews
   4,193 / 4,222 and Luke 1,405 / 1,411 before they were left out.
 - **Read by hand before taking** (TSK-1905; strict: any word on the wrong Greek word counts wrong). Revelation 40 of
-  40, 1 Peter 40 of 40, Romans 76 of 80, John 74 of 78, Philippians 75 of 80 (78 with two adjacent words swapped
-  counted as half right) — taken. Hebrews 34 of 40 and Luke 35 of 40 — not taken: their errors are mostly a small
+  40, 1 Peter 40 of 40, Romans 76 of 80, John 74 of 78, Philippians 75 of 80 (78 counting three half right: a
+  preposition on the noun of its phrase, and two neighbouring adjectives swapped) — taken. Hebrews 34 of 40 and Luke 35 of 40 — not taken: their errors are mostly a small
   word tied to the next Greek word in order (Heb 2:14 «став» on παραπλησίως, Luke 2:37 «що» on ἕως), the mark of an
   alignment made by walking both texts word by word. Their files stay here so the reading can be repeated on the same
   bytes; `Door43BookAlignment` does not list them, so no product reads them.
