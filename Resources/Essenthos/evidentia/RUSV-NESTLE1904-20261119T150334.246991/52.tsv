@@ -1,0 +1,13 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+2:1	1	Вы		3	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+2:2	10	вы		6	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+2:5	13	вы		9	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+2:8	20	вы		21	ἐγενήθητε		attached-word	attached_pronoun	0.35	approved	0				SubjectPronoun of 'стали' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐγενήθητε'
+3:1	6	мы		4	ηὐδοκήσαμεν		attached-word	attached_pronoun	0.375	approved	0				SubjectPronoun of 'восхотели' by the rus rule subject-pronoun (evidentia/words/rules), on 'ηὐδοκήσαμεν'
+3:3	9	вы		10	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+3:4	18	вы		16	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+3:8	3	мы		3	ζῶμεν		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'живы' by the rus rule subject-pronoun (evidentia/words/rules), on 'ζῶμεν'
+4:2	5	мы		5	ἐδώκαμεν		attached-word	attached_pronoun	0.4125	approved	0				SubjectPronoun of 'дали' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐδώκαμεν'
+4:10	2	вы		3	ποιεῖτε		attached-word	attached_pronoun	0.4539	approved	0				SubjectPronoun of 'поступаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'ποιεῖτε'
+4:14	3	мы		3	πιστεύομεν		attached-word	attached_pronoun	0.345	approved	0				SubjectPronoun of 'веруем' by the rus rule subject-pronoun (evidentia/words/rules), on 'πιστεύομεν'
+5:2	3	вы		4	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'

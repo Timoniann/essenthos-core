@@ -1,0 +1,7 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:14	3	мы		3	ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'
+2:1	8	я		7	ἔχω		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'имею' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχω'
+2:4	3	я		2	λέγω		attached-word	attached_pronoun	0.48	approved	0				SubjectPronoun of 'говорю' by the rus rule subject-pronoun (evidentia/words/rules), on 'λέγω'
+2:5	3	я		6	ἄπειμι		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'отсутствую' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἄπειμι'
+2:7	12	вы		11	ἐδιδάχθητε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'научены' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐδιδάχθητε'
+4:3	18	я		22	δέδεμαι		attached-word	attached_pronoun	0.4	approved	0				SubjectPronoun of 'узах' by the rus rule subject-pronoun (evidentia/words/rules), on 'δέδεμαι'

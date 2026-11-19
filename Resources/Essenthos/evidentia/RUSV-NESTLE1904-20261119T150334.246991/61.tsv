@@ -1,0 +1,4 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:4	9	вы		13	γένησθε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'соделались' by the rus rule subject-pronoun (evidentia/words/rules), on 'γένησθε'
+1:19	3	мы		2	ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'
+1:19	9	вы		9	ποιεῖτε		attached-word	attached_pronoun	0.5571	approved	0				SubjectPronoun of 'делаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'ποιεῖτε'

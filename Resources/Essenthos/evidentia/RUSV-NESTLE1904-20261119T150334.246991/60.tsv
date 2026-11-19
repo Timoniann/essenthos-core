@@ -1,0 +1,7 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+2:3	2	вы		2	ἐγεύσασθε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'вкусили' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐγεύσασθε'
+2:6	6	Я		6	τίθημι		attached-word	attached_pronoun	0.4125	approved	0				SubjectPronoun of 'полагаю' by the rus rule subject-pronoun (evidentia/words/rules), on 'τίθημι'
+2:24	20	вы		24	ἰάθητε		attached-word	attached_pronoun	0.4059	approved	0				SubjectPronoun of 'исцелились' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἰάθητε'
+3:9	14	вы		16	ἐκλήθητε		attached-word	attached_pronoun	0.42	approved	0				SubjectPronoun of 'призваны' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐκλήθητε'
+5:1	4	я		5	παρακαλῶ		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'умоляю' by the rus rule subject-pronoun (evidentia/words/rules), on 'παρακαλῶ'
+5:12	4	я		11	ἔγραψα		attached-word	attached_pronoun	0.6	approved	0				SubjectPronoun of 'написал' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔγραψα'

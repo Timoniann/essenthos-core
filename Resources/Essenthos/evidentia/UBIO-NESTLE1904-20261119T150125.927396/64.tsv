@@ -1,0 +1,11 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:2	2	я		4	εὔχομαί		attached-word	attached_pronoun	0.35	approved	1				SubjectPronoun of 'молюся' by the ukr rule subject-pronoun (evidentia/words/rules), on 'εὔχομαί'
+1:2	7	в		2	περὶ		attached-word	attached_preposition	0.7167	approved	0				Preposition of 'тобі' by the ukr rule preposition-before-noun (evidentia/words/rules), on 'περὶ'
+1:3	16	у		13	ἐν		attached-word	attached_preposition	0.75	approved	0				Preposition of 'правді' by the ukr rule preposition-before-noun (evidentia/words/rules), on 'ἐν'
+1:4	1	Я		4	ἔχω		attached-word	attached_pronoun	0.525	approved	1				SubjectPronoun of 'маю' by the ukr rule subject-pronoun (evidentia/words/rules), on 'ἔχω'
+1:4	14	у		11	ἐν		attached-word	attached_preposition	0.75	approved	0				Preposition of 'правді' by the ukr rule preposition-before-noun (evidentia/words/rules), on 'ἐν'
+1:7	3	вони		5	ἐξῆλθαν		attached-word	attached_pronoun	0.6	approved	1				SubjectPronoun of 'вийшли' by the ukr rule subject-pronoun (evidentia/words/rules), on 'ἐξῆλθαν'
+1:9	1	Я		1	Ἔγραψά		attached-word	attached_pronoun	0.75	approved	1				SubjectPronoun of 'писав' by the ukr rule subject-pronoun (evidentia/words/rules), on 'Ἔγραψά'
+1:10	37	із		30	ἐκ		attached-word	attached_preposition	0.75	approved	0				Preposition of 'Церкви' by the ukr rule preposition-before-noun (evidentia/words/rules), on 'ἐκ'
+1:11	11	від		11	ἐκ		attached-word	attached_preposition	0.7098	approved	0				Preposition of 'Бога' by the ukr rule preposition-before-noun (evidentia/words/rules), on 'ἐκ'
+1:14	10	до		8	πρὸς		attached-word	attached_preposition	0.75	approved	0				Preposition of 'уст' by the ukr rule preposition-before-noun (evidentia/words/rules), on 'πρὸς'

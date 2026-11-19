@@ -1,0 +1,2 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:5	1	Я		4	βούλομαι		attached-word	attached_pronoun	0.3818	approved	0				SubjectPronoun of 'хочу' by the rus rule subject-pronoun (evidentia/words/rules), on 'βούλομαι'

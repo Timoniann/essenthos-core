@@ -1,0 +1,11 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:7	3	мы		3	ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'
+3:2	2	вы		3	ἠκούσατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'слышали' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἠκούσατε'
+3:4	2	вы		3	δύνασθε		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'можете' by the rus rule subject-pronoun (evidentia/words/rules), on 'δύνασθε'
+3:7	4	я		2	ἐγενήθην		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'сделался' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐγενήθην'
+3:12	3	мы		3	ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'
+4:1	13	вы		14	ἐκλήθητε		attached-word	attached_pronoun	0.42	approved	0				SubjectPronoun of 'призваны' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐκλήθητε'
+4:4	7	вы		8	ἐκλήθητε		attached-word	attached_pronoun	0.42	approved	0				SubjectPronoun of 'призваны' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐκλήθητε'
+4:21	3	вы		4	ἠκούσατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'слышали' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἠκούσατε'
+6:9	2	вы		6	ποιεῖτε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'поступайте' by the rus rule subject-pronoun (evidentia/words/rules), on 'ποιεῖτε'
+6:22	17	он		14	παρακαλέσῃ		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'утешил' by the rus rule subject-pronoun (evidentia/words/rules), on 'παρακαλέσῃ'

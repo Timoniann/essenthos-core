@@ -1,0 +1,6 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+2:6	3	вы		5	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+3:4	1	Мы		1	πεποίθαμεν		attached-word	attached_pronoun	0.6	approved	0				SubjectPronoun of 'уверены' by the rus rule subject-pronoun (evidentia/words/rules), on 'πεποίθαμεν'
+3:4	15	мы		9	παραγγέλλομεν		attached-word	attached_pronoun	0.4125	approved	0				SubjectPronoun of 'повелеваем' by the rus rule subject-pronoun (evidentia/words/rules), on 'παραγγέλλομεν'
+3:7	2	вы		3	οἴδατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'οἴδατε'
+3:9	4	мы		4	ἔχομεν		attached-word	attached_pronoun	0.5571	approved	0				SubjectPronoun of 'имели' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'

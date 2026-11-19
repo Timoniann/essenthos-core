@@ -1,0 +1,4 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:21	5	я		5	ἔγραψά		attached-word	attached_pronoun	0.57	approved	0				SubjectPronoun of 'написал' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔγραψά'
+1:21	11	ты		13	ποιήσεις		attached-word	attached_pronoun	0.3696	approved	0				SubjectPronoun of 'сделаешь' by the rus rule subject-pronoun (evidentia/words/rules), on 'ποιήσεις'
+1:22	14	я		14	χαρισθήσομαι		attached-word	attached_pronoun	0.3562	approved	0				SubjectPronoun of 'дарован' by the rus rule subject-pronoun (evidentia/words/rules), on 'χαρισθήσομαι'

@@ -1,0 +1,2 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:5	19	мы		18	ἀγαπῶμεν		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'любили' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀγαπῶμεν'

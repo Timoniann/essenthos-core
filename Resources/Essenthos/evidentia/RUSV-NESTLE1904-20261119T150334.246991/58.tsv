@@ -1,0 +1,12 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+3:19	4	они		5	ἠδυνήθησαν		attached-word	attached_pronoun	0.39	approved	0				SubjectPronoun of 'могли' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἠδυνήθησαν'
+4:15	2	мы		3	ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'
+5:11	13	вы		12	γεγόνατε		attached-word	attached_pronoun	0.6375	approved	0				SubjectPronoun of 'сделались' by the rus rule subject-pronoun (evidentia/words/rules), on 'γεγόνατε'
+6:18	14	мы		13	ἔχωμεν		attached-word	attached_pronoun	0.5571	approved	0				SubjectPronoun of 'имели' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχωμεν'
+7:8	14	он		12	ζῇ		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'живет' by the rus rule subject-pronoun (evidentia/words/rules), on 'ζῇ'
+7:19	14	мы		12	ἐγγίζομεν		attached-word	attached_pronoun	0.3321	approved	0				SubjectPronoun of 'приближаемся' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐγγίζομεν'
+8:1	10	мы		7	ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχομεν'
+12:17	2	вы		1	ἴστε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'знаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἴστε'
+12:18	1	Вы		3	προσεληλύθατε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'приступили' by the rus rule subject-pronoun (evidentia/words/rules), on 'προσεληλύθατε'
+12:22	2	вы		2	προσεληλύθατε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'приступили' by the rus rule subject-pronoun (evidentia/words/rules), on 'προσεληλύθατε'
+13:10	1	Мы		1	Ἔχομεν		attached-word	attached_pronoun	0.6938	approved	0				SubjectPronoun of 'имеем' by the rus rule subject-pronoun (evidentia/words/rules), on 'Ἔχομεν'

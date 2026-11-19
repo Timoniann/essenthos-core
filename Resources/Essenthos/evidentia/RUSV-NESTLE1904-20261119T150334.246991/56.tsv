@@ -1,0 +1,3 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+3:7	5	мы		7	γενηθῶμεν		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'соделались' by the rus rule subject-pronoun (evidentia/words/rules), on 'γενηθῶμεν'
+3:8	5	я		7	βούλομαί		attached-word	attached_pronoun	0.435	approved	0				SubjectPronoun of 'желаю' by the rus rule subject-pronoun (evidentia/words/rules), on 'βούλομαί'

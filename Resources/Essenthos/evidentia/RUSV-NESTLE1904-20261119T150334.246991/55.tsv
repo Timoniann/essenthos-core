@@ -1,0 +1,8 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:18	14	он		17	διηκόνησεν		attached-word	attached_pronoun	0.3692	approved	0				SubjectPronoun of 'служил' by the rus rule subject-pronoun (evidentia/words/rules), on 'διηκόνησεν'
+2:7	3	я		3	λέγω		attached-word	attached_pronoun	0.48	approved	0				SubjectPronoun of 'говорю' by the rus rule subject-pronoun (evidentia/words/rules), on 'λέγω'
+2:13	2	мы		2	ἀπιστοῦμεν		attached-word	attached_pronoun	0.375	approved	0				SubjectPronoun of 'неверны' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀπιστοῦμεν'
+4:13	6	я		4	ἀπέλιπον		attached-word	attached_pronoun	0.39	approved	0				SubjectPronoun of 'оставил' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀπέλιπον'
+4:15	6	он		7	ἀντέστη		attached-word	attached_pronoun	0.3562	approved	0				SubjectPronoun of 'противился' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀντέστη'
+4:17	18	я		21	ἐρύσθην		attached-word	attached_pronoun	0.3643	approved	0				SubjectPronoun of 'избавился' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐρύσθην'
+4:20	7	я		7	ἀπέλιπον		attached-word	attached_pronoun	0.39	approved	0				SubjectPronoun of 'оставил' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀπέλιπον'

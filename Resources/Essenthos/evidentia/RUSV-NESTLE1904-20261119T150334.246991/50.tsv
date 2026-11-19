@@ -1,0 +1,8 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:30	5	вы		6	εἴδετε		attached-word	attached_pronoun	0.4125	approved	0				SubjectPronoun of 'видели' by the rus rule subject-pronoun (evidentia/words/rules), on 'εἴδετε'
+2:16	11	я		14	ἔδραμον		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'подвизался' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔδραμον'
+2:20	2	я		3	ἔχω		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'имею' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔχω'
+2:25	2	я		3	ἡγησάμην		attached-word	attached_pronoun	0.6	approved	0				SubjectPronoun of 'почел' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἡγησάμην'
+2:27	2	он		3	ἠσθένησεν		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'болен' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἠσθένησεν'
+3:18	5	я		6	ἔλεγον		attached-word	attached_pronoun	0.4184	approved	0				SubjectPronoun of 'говорил' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔλεγον'
+4:14	2	вы		3	ἐποιήσατε		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'поступили' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐποιήσατε'

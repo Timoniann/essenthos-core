@@ -1,0 +1,13 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:13	1	Вы		1	Ἠκούσατε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'слышали' by the rus rule subject-pronoun (evidentia/words/rules), on 'Ἠκούσατε'
+1:19	5	я		6	εἶδον		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'видел' by the rus rule subject-pronoun (evidentia/words/rules), on 'εἶδον'
+2:1	7	я		6	ἀνέβην		attached-word	attached_pronoun	0.4125	approved	0				SubjectPronoun of 'ходил' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀνέβην'
+2:14	3	я		3	εἶδον		attached-word	attached_pronoun	0.5	approved	0				SubjectPronoun of 'увидел' by the rus rule subject-pronoun (evidentia/words/rules), on 'εἶδον'
+3:2	11	вы		12	ἐλάβετε		attached-word	attached_pronoun	0.3643	approved	0				SubjectPronoun of 'получили' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐλάβετε'
+3:4	4	вы		2	ἐπάθετε		attached-word	attached_pronoun	0.525	approved	0				SubjectPronoun of 'потерпели' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἐπάθετε'
+3:17	1	Я		3	λέγω		attached-word	attached_pronoun	0.48	approved	0				SubjectPronoun of 'говорю' by the rus rule subject-pronoun (evidentia/words/rules), on 'λέγω'
+4:16	3	я		4	γέγονα		attached-word	attached_pronoun	0.75	approved	0				SubjectPronoun of 'сделался' by the rus rule subject-pronoun (evidentia/words/rules), on 'γέγονα'
+4:21	3	вы		1	Λέγετέ		attached-word	attached_pronoun	0.45	approved	0				SubjectPronoun of 'Скажите' by the rus rule subject-pronoun (evidentia/words/rules), on 'Λέγετέ'
+4:21	9	вы		11	ἀκούετε		attached-word	attached_pronoun	0.5942	approved	0				SubjectPronoun of 'слушаете' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἀκούετε'
+5:16	1	Я		1	Λέγω		attached-word	attached_pronoun	0.48	approved	0				SubjectPronoun of 'говорю' by the rus rule subject-pronoun (evidentia/words/rules), on 'Λέγω'
+6:11	5	я		5	ἔγραψα		attached-word	attached_pronoun	0.6	approved	0				SubjectPronoun of 'написал' by the rus rule subject-pronoun (evidentia/words/rules), on 'ἔγραψα'
