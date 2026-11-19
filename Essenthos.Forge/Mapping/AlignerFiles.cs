@@ -8,7 +8,6 @@ using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading;
-using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
@@ -522,23 +521,28 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
     }
 
     /// <summary>
-    /// The word pairs of the two texts <see cref="RejectedRenderings"/> rules out, by their ids in each text, either way round:
-    /// specific statistical pairings the held editions' wording contradicts, which no run writes.
+    /// The word pairs of the two texts their pair's rulings refuse to the aligner (<c>mapping/&lt;pair&gt;/rulings</c>: a
+    /// <c>refuse</c> of one word on each side whose source the aligner's begins with), by their ids in each text: statistical
+    /// pairings the held editions' wording contradicts, which no run writes, not even as a claim on a stated link. A refusal
+    /// of every source is the merge's to apply, and a word the text lacks names nothing.
     /// </summary>
     public HashSet<(long From, long To)> Rejected(string fromSlug, string toSlug)
     {
         var found = new HashSet<(long, long)>();
-        foreach (var ruling in RejectedRenderings.All)
+        var product = MappingProducts.Of(MappingProducts.Pair(fromSlug, toSlug), MappingProducts.Rulings);
+        if (!texts.Store.Exists(product))
         {
-            var (one, other) = (ruling.From, ruling.To);
-            if ((one.Text, other.Text) == (toSlug, fromSlug))
-            {
-                (one, other) = (other, one);
-            }
+            return found;
+        }
 
-            if ((one.Text, other.Text) != (fromSlug, toSlug)
-                || Locate(texts[fromSlug], one) is not { } from
-                || Locate(texts[toSlug], other) is not { } to)
+        using var reader = texts.Store.Open(product, RulingRow.Schema);
+        foreach (var ruling in reader.Rows())
+        {
+            if (ruling.Action != RulingRow.Refuse || ruling.Source.Length == 0
+                || !CompositionPipeline.Machine.StartsWith(ruling.Source, StringComparison.Ordinal)
+                || MappingText.Split(ruling.From).Count() != 1 || MappingText.Split(ruling.To).Count() != 1
+                || Locate(texts[fromSlug], fromSlug, ruling.From) is not { } from
+                || Locate(texts[toSlug], toSlug, ruling.To) is not { } to)
             {
                 continue;
             }
@@ -549,27 +553,23 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         return found;
     }
 
-    /// <summary>The ruled word's id in its text; null where the text lacks the verse, and a refusal where the verse holds other words.</summary>
-    private static long? Locate(ProductText text, RuledWord word)
+    private static long? Locate(ProductText text, string slug, string own)
     {
-        var address = word.Address() ?? throw new InvalidDataException($"The rejected rendering names no verse: {word}.");
-        var verse = new VerseKey(address.Book, address.Chapter, address.Verse, address.Label);
-        if (!text.Has(verse))
+        var key = WordKey.Parse(own, slug);
+        if (!text.Has(key.Verse))
         {
             return null;
         }
 
-        foreach (var id in text.InVerse(verse))
+        foreach (var id in text.InVerse(key.Verse))
         {
-            if (text.Words[id].Key.Position == word.Position)
+            if (text.Words[id].Key.Position == key.Position)
             {
-                return text.Words[id].Surface == word.Surface
-                    ? id
-                    : throw new InvalidDataException($"The rejected rendering no longer names its ruled words: {word}.");
+                return id;
             }
         }
 
-        throw new InvalidDataException($"The rejected rendering no longer names its ruled words: {word}.");
+        return null;
     }
 }
 

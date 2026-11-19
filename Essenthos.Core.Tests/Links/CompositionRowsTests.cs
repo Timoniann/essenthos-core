@@ -82,6 +82,14 @@ public sealed class CompositionRowsTests : IDisposable
         russian[14] = "Христа";
         ProductCorpus.Text(_store, "RUSV", "rus", [("46.5:5", russian)]);
         ProductCorpus.Text(_store, "NESTLE1904", "grc", [("46.5:5", ["παραδοῦναι", "τὸν", "τοιοῦτον", "τῷ", "Σατανᾷ"])]);
+        var rulings = Path.Combine(_store.ResourcesPath, "Essenthos", "mapping", "RUSV-NESTLE1904", "rulings.tsv");
+        Directory.CreateDirectory(Path.GetDirectoryName(rulings)!);
+        File.WriteAllLines(rulings,
+        [
+            "# producer   by hand",
+            "action	from	to	relation	source	reason",
+            "refuse	46.5:5.15	46.5:5.5	renders	SIL.Machine	the Synodal adds Christ after Jesus; Satan is named at position 2",
+        ]);
 
         var (rows, fresh, _) = Composer().Rows("RUSV", "NESTLE1904", ["KJV"],
             [new RoutedLink(14, 4, 0.98, Route.Written | Route.Composed), new RoutedLink(1, 4, 0.99, Route.Written)], null);

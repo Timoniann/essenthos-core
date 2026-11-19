@@ -39,7 +39,7 @@ internal static partial class ForgeVerbs
             Parallelism(args, 3), forge.Logger, CancellationToken.None);
         foreach (var pair in pairs)
         {
-            Console.WriteLine($"{pair.Pair,-24} {pair.Links,9} links  {string.Join("  ", pair.Rows.Select(r => $"{r.Key} {r.Value}"))}{(pair.Rulings > 0 ? $"  rulings {pair.Rulings}" : "")}");
+            Console.WriteLine($"{pair.Pair,-24} {pair.Links,9} links  {string.Join("  ", pair.Rows.Select(r => $"{r.Key} {r.Value}"))}");
         }
 
         Console.WriteLine($"{pairs.Count} pairs, {pairs.Sum(p => p.Links)} links, {pairs.Sum(p => p.Rows.Values.Sum())} rows in {clock.Elapsed}");

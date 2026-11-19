@@ -549,7 +549,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     /// A pair onto a word of the target that something other than the aligner says the translation does not render is not
     /// written either. That is the answer standing on the word, as an empty answer on a source word is; and a guess put
     /// back would show the word as unrendered and rendered at once. Nor is a pair the held editions' wording rules out
-    /// (<see cref="RejectedRenderings"/>).
+    /// (<see cref="AlignerFiles.Rejected"/>).
     /// </para>
     /// </summary>
     internal (List<MappingRow> Rows, int Fresh, int Corroborated) Rows(

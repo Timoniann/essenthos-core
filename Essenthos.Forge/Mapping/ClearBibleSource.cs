@@ -23,8 +23,7 @@ namespace Essenthos.Core.Mapping;
 ///
 /// <para>
 /// A witness word a ruling takes out of this source's rows (<c>mapping/&lt;pair&gt;/rulings</c>) is left out of the record,
-/// which is withheld where it was its only witness word, as the database's loader did with what
-/// <see cref="LinkRulings"/> overruled.
+/// which is withheld where it was its only witness word.
 /// </para>
 /// </summary>
 internal sealed class ClearBibleSource : IPairSource

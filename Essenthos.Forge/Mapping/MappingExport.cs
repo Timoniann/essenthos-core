@@ -12,14 +12,13 @@ namespace Essenthos.Core.Mapping;
 /// The links of a database written out as the mapping's method files, one folder per pair of texts and one file per
 /// method the caller asks for (DOC-0224 §6.1, §15.3): each claim of each link a row, its words by key. The build's
 /// producers make the other methods from files, so only what none of them makes is exported (the aligner's, the
-/// compositions'). It also seeds a pair's rulings from the rulings held in code and in <c>link-rulings.json</c>, where
-/// the pair has no rulings file yet.
+/// compositions').
 /// </summary>
 internal static class MappingExport
 {
     public const string Producer = "forge mapping-export";
 
-    public sealed record PairExport(string Pair, IReadOnlyDictionary<string, long> Rows, long Links, int Rulings);
+    public sealed record PairExport(string Pair, IReadOnlyDictionary<string, long> Rows, long Links);
 
     public static async Task<List<PairExport>> Run(
         string connection, ProductStore store, IReadOnlySet<string>? only, Func<string, string, bool> exports, int parallel, ILogger logger,
@@ -35,7 +34,6 @@ internal static class MappingExport
         logger.LogInformation("Provenances read in {Elapsed}", clock.Elapsed);
         var hashes = await VerseTextHashes(db, keys, cancellationToken);
         logger.LogInformation("Verse hashes computed in {Elapsed}", clock.Elapsed);
-        var seeds = await RulingSeeds(db, keys, store.ResourcesPath, cancellationToken);
 
         var pairs = (await PairSnapshot.Pairs(db, cancellationToken))
             .Select(p => (p.From, p.To, Name: MappingProducts.Pair(keys.Slug(p.From), keys.Slug(p.To))))
@@ -51,8 +49,7 @@ internal static class MappingExport
             await own.OpenAsync(token);
             var links = await PairSnapshot.Read(own, pair.From, pair.To, token);
             var written = Write(store, pair.Name, keys.Slug(pair.From), keys.Slug(pair.To), links, keys, provenances, hashes, database, exports);
-            var rulings = SeedRulings(store, pair.Name, seeds.GetValueOrDefault(pair.Name) ?? []);
-            done.Add(new PairExport(pair.Name, written, links.Count, rulings));
+            done.Add(new PairExport(pair.Name, written, links.Count));
             logger.LogInformation("{Pair}: {Links} links, {Rows} rows, at {Elapsed}", pair.Name, links.Count, written.Values.Sum(), clock.Elapsed);
         });
 
@@ -224,109 +221,6 @@ internal static class MappingExport
         }
 
         return (hashes, folds);
-    }
-
-    /// <summary>
-    /// The rulings the corpus applies today, as rows of the pairs they rule on: the statistical pairings held
-    /// in <see cref="RejectedRenderings"/>, which no aligner may draw, and <c>link-rulings.json</c>, where one
-    /// stated source's statement about one word is set aside for another's.
-    /// </summary>
-    private static async Task<Dictionary<string, List<RulingRow>>> RulingSeeds(
-        NpgsqlConnection db, WordKeys keys, string resources, CancellationToken cancellationToken)
-    {
-        var seeds = new Dictionary<string, List<RulingRow>>(StringComparer.Ordinal);
-        void Add(string pair, RulingRow row)
-        {
-            if (!seeds.TryGetValue(pair, out var list))
-            {
-                seeds[pair] = list = [];
-            }
-
-            list.Add(row);
-        }
-
-        foreach (var ruling in RejectedRenderings.All)
-        {
-            foreach (var (fromWord, toWord) in await RejectedRenderings.Locate(db, [ruling], cancellationToken))
-            {
-                var (from, to) = (keys.Key(fromWord), keys.Key(toWord));
-                var why = $"{ruling.From.Surface} / {ruling.To.Surface}: {ruling.Reason}";
-                Add(MappingProducts.Pair(from.Text, to.Text), new RulingRow(RulingRow.Refuse, from.Own, to.Own, "renders", CompositionPipeline.Machine, why));
-                Add(MappingProducts.Pair(to.Text, from.Text), new RulingRow(RulingRow.Refuse, to.Own, from.Own, "renders", CompositionPipeline.Machine, why));
-            }
-        }
-
-        foreach (var ruling in LinkRulings.Read(resources).All)
-        {
-            if (!LinkRulings.Address(ruling.Reference, out var book, out var chapter, out var verse))
-            {
-                continue;
-            }
-
-            await using var command = new NpgsqlCommand(
-                """
-                SELECT w.id, w.text, t.language FROM verse_reference r
-                JOIN verse v ON v.id = r.verse_id JOIN text t ON t.id = v.text_id JOIN word w ON w.verse_id = v.id
-                WHERE r.is_primary AND t.slug = @witness AND r.canonical_book = @book AND r.canonical_chapter = @chapter AND r.canonical_verse = @verse
-                ORDER BY v.chapter_number, v.number, w.position
-                """, db);
-            command.Parameters.AddWithValue("witness", ruling.Witness);
-            command.Parameters.AddWithValue("book", book);
-            command.Parameters.AddWithValue("chapter", chapter);
-            command.Parameters.AddWithValue("verse", verse);
-            var words = new List<(long Id, string Surface)>();
-            string? language = null;
-            await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
-            {
-                while (await reader.ReadAsync(cancellationToken))
-                {
-                    words.Add((reader.GetInt64(0), reader.GetString(1)));
-                    language = reader.IsDBNull(2) ? null : reader.GetString(2);
-                }
-            }
-
-            if (LinkRulings.Locate([.. words.Select(w => w.Surface)], ruling.Word, ruling.Occurrence, language) is not { } at)
-            {
-                continue;
-            }
-
-            var source = ruling.Over switch
-            {
-                LinkRulings.Berean => BereanSource,
-                LinkRulings.ClearBible => ClearBibleSource,
-                _ => ruling.Over,
-            };
-            Add(MappingProducts.Pair(ruling.Text, ruling.Witness), new RulingRow(RulingRow.Refuse, string.Empty, keys.Own(words[at].Id), string.Empty, source,
-                $"{ruling.Reference} {ruling.Word} ({ruling.Occurrence}): {ruling.Stands} stands over {ruling.Over}. {ruling.Reason}"));
-        }
-
-        return seeds;
-    }
-
-    private const string BereanSource = "Berean Standard Bible translation tables";
-
-    private const string ClearBibleSource = "Clear Bible Alignments";
-
-    /// <summary>Writes the pair's rulings file from the seeds, unless one is there: it is kept by hand from then on.</summary>
-    private static int SeedRulings(ProductStore store, string pair, List<RulingRow> seeds)
-    {
-        var product = MappingProducts.Of(pair, MappingProducts.Rulings);
-        if (seeds.Count == 0 || store.Exists(product))
-        {
-            return 0;
-        }
-
-        using var writer = store.Create(product, ProductKind.Hand, RulingRow.Schema, ProductHeader.DescribeProducer(Producer), [],
-            header => header.Comments.Add(
-                "Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). " +
-                "refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition."));
-        foreach (var row in seeds.OrderBy(r => r.From, StringComparer.Ordinal).ThenBy(r => r.To, StringComparer.Ordinal))
-        {
-            writer.Write(row);
-        }
-
-        writer.Complete();
-        return seeds.Count;
     }
 }
 

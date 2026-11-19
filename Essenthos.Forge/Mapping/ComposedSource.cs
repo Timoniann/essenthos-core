@@ -98,6 +98,7 @@ internal sealed class ComposedSource : IPairSource
         var composed = Declared(pair);
         var proxies = MappingLinks.Inputs(store, composed.From, composed.Vias, composed.To).ToList();
         var floors = store.Find(MappingProducts.Of(pair, HandFloors.Name));
+        var rulings = store.Find(MappingProducts.Of(pair, MappingProducts.Rulings));
         var readers = proxies.Select(final => MappingProducts.Split(final.Split('/')[2]).From).Append(composed.From).Distinct().ToList();
         var hops = readers.SelectMany(reader => new[]
         {
@@ -112,6 +113,7 @@ internal sealed class ComposedSource : IPairSource
             .. hops.Distinct().SelectMany(workspace => AlignerFiles.StoredAnswers(store, workspace)),
             .. composed.To == AlignerFiles.Analysed ? AlignerFiles.SyntaxInputs(store) : [],
             .. floors is null ? [] : new[] { floors },
+            .. rulings is null ? [] : new[] { rulings },
         ];
     }
 

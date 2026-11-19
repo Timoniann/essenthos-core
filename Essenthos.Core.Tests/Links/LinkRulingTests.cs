@@ -1,68 +1,92 @@
 using Essenthos.Core.Berean;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Links;
 
 /// <summary>
-/// The words where the Berean tables and Clear Bible disagree and this project read the English to
-/// settle it: the file names each word canonically and by its letters, and each loader leaves out
-/// what it said about a word ruled against it and nothing else.
+/// The pairs' rulings (<c>mapping/&lt;pair&gt;/rulings</c>) that reach a producer before the merge: the words where the
+/// Berean tables and Clear Bible disagree and this project read the English to settle it, which each source leaves out of
+/// what it says and nothing else, and the statistical pairings the held editions' wording rules out, which no composition
+/// writes.
 /// </summary>
-public class LinkRulingTests
+public sealed class LinkRulingTests : IDisposable
 {
     private const string SolutionFile = "Essenthos.Core.sln";
 
-    [Fact]
-    public void EveryRulingNamesItsWordCanonicallyAndSaysWhatTheEnglishReads()
-    {
-        var rulings = LinkRulings.Read(Path.Combine(Repository(), "Resources")).All;
+    private const string Berean = "Berean Standard Bible translation tables";
 
-        rulings.Should().HaveCount(18);
-        rulings.Count(ruling => ruling.Over == LinkRulings.Berean).Should().Be(3);
-        rulings.Count(ruling => ruling.Over == LinkRulings.ClearBible).Should().Be(15);
-        rulings.Should().OnlyContain(ruling =>
-            ruling.Text == "BSB" && ruling.Witness == "NESTLE1904"
-            && ruling.Stands != ruling.Over
-            && (ruling.Stands == LinkRulings.Berean || ruling.Stands == LinkRulings.ClearBible)
-            && ruling.Occurrence >= 1
-            && ruling.Reason.StartsWith("BSB English reads ", StringComparison.Ordinal));
-        rulings.Where(ruling => !LinkRulings.Address(ruling.Reference, out _, out _, out _))
-            .Should().BeEmpty("every ruling names a verse by its canonical book, chapter and verse");
-        rulings.Select(ruling => (ruling.Reference, ruling.Word, ruling.Occurrence))
-            .Should().OnlyHaveUniqueItems();
+    private const string ClearBible = "Clear Bible Alignments";
+
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "essenthos-rulings-test", Guid.NewGuid().ToString("N"));
+
+    public void Dispose()
+    {
+        if (Directory.Exists(_root))
+        {
+            Directory.Delete(_root, recursive: true);
+        }
     }
 
     [Fact]
-    public void AReferenceIsReadAsTheCanonicalBookChapterAndVerse()
+    public void TheBereanAndClearBibleRulingsSetOneWitnessWordAsideEachAndSayWhatTheEnglishReads()
     {
-        LinkRulings.Address("2 Corinthians 13:5", out var book, out var chapter, out var verse).Should().BeTrue();
-        (book, chapter, verse).Should().Be((47, 13, 5));
+        var rulings = Rulings(new ProductStore(Path.Combine(Repository(), "Resources")), "BSB-NESTLE1904")
+            .Where(ruling => ruling.From.Length == 0).ToList();
 
-        LinkRulings.Address("Revelation 8:5", out book, out chapter, out verse).Should().BeTrue();
-        (book, chapter, verse).Should().Be((66, 8, 5));
-
-        LinkRulings.Address("Nowhere 1:1", out _, out _, out _).Should().BeFalse();
+        rulings.Should().HaveCount(18);
+        rulings.Count(ruling => ruling.Source == Berean).Should().Be(3);
+        rulings.Count(ruling => ruling.Source == ClearBible).Should().Be(15);
+        rulings.Should().OnlyContain(ruling => ruling.Action == RulingRow.Refuse
+            && MappingText.Split(ruling.To).Count() == 1
+            && ruling.Reason.Contains(" stands over ", StringComparison.Ordinal)
+            && ruling.Reason.Contains("BSB English reads ", StringComparison.Ordinal));
+        rulings.Select(ruling => ruling.To).Should().OnlyHaveUniqueItems();
     }
 
     /// <summary>
-    /// 2 Corinthians 13:5 prints the verse's first <em>ἑαυτοὺς</em> with a capital; the one after
-    /// <em>ἐπιγινώσκετε</em> is still the third.
+    /// Genesis 14:5 in the Septuagint: the Zuzim are rendered "strong nations", and the aligner paired the names after them
+    /// one place off, the Emim's Ὀμμαίους with the Zuzim and Shaveh's Σαυῇ with Ham.
     /// </summary>
     [Fact]
-    public void AnOccurrenceIsCountedOnTheLettersWithoutAccentsOrCase()
+    public void TheSeptuagintsGenesisFourteenFivePairingsAreRefusedToTheAligner()
     {
-        string[] verse =
-        [
-            "Ἑαυτοὺς", "πειράζετε", "εἰ", "ἐστὲ", "ἐν", "τῇ", "πίστει", "ἑαυτοὺς", "δοκιμάζετε", "ἢ", "οὐκ",
-            "ἐπιγινώσκετε", "ἑαυτοὺς", "ὅτι",
-        ];
+        var refused = Rulings(new ProductStore(Path.Combine(Repository(), "Resources")), "GRCBRENT-BHSA")
+            .Where(ruling => ruling.Action == RulingRow.Refuse && ruling.Source == CompositionPipeline.Machine)
+            .Select(ruling => (ruling.From, ruling.To));
 
-        LinkRulings.Locate(verse, "ἑαυτοὺς", 3, "grc").Should().Be(12);
-        LinkRulings.Locate(verse, "ἑαυτούς", 1, "grc").Should().Be(0);
-        LinkRulings.Locate(verse, "ἑαυτοὺς", 4, "grc").Should().BeNull();
+        refused.Should().Contain([("1.14:5.29", "1.14:5.22"), ("1.14:5.32", "1.14:5.24")]);
+    }
+
+    [Fact]
+    public void ACompositionLeavesOutOnlyTheWordPairsItsPairsRulingsRefuseToTheAligner()
+    {
+        var store = new ProductStore(_root);
+        ProductCorpus.Text(store, "RUSV", "rus", [("46.5:5", ["предать", "сатане", "Иисуса", "Христа"])]);
+        ProductCorpus.Text(store, "NESTLE1904", "grc", [("46.5:5", ["παραδοῦναι", "τῷ", "Σατανᾷ", "Ἰησοῦ"])]);
+        var file = Path.Combine(_root, "Essenthos", "mapping", "RUSV-NESTLE1904", "rulings.tsv");
+        Directory.CreateDirectory(Path.GetDirectoryName(file)!);
+        File.WriteAllLines(file,
+        [
+            "# producer   by hand",
+            "action	from	to	relation	source	reason",
+            "refuse	46.5:5.4	46.5:5.3	renders	SIL.Machine	Christ is not Satan",
+            "refuse	46.5:5.1	46.5:5.1	renders		a refusal of every source is the merge's",
+            "refuse	46.5:5.2	46.5:5.2	renders	Berean Standard Bible translation tables	another source's",
+            "refuse	46.5:5.3	46.5:5.3 46.5:5.4	renders	SIL.Machine	a phrase, not a word pair",
+            "accept	46.5:5.2	46.5:5.3	renders	SIL.Machine	an accepted shape",
+            "refuse	46.5:5.4	46.5:5.9	renders	SIL.Machine	a word the text lacks",
+            "refuse		46.5:5.4		SIL.Machine	one side only",
+        ]);
+        var aligner = new AlignerFiles(new ProductTexts(store), new AlignmentPipeline(null, NullLogger<AlignmentPipeline>.Instance) { Trains = false });
+
+        aligner.Rejected("RUSV", "NESTLE1904").Should().Equal((3L, 2L));
+        aligner.Rejected("NESTLE1904", "RUSV").Should().BeEmpty();
     }
 
     /// <summary>
@@ -107,15 +131,21 @@ public class LinkRulingTests
         var overruled = new HashSet<long> { 7 };
 
         List<long> alone = [7];
-        LinkRulings.Trim(alone, overruled).Should().Be((false, true));
+        ClearBibleLinks.Trim(alone, overruled).Should().Be((false, true));
 
         List<long> beside = [7, 8, 9];
-        LinkRulings.Trim(beside, overruled).Should().Be((true, true));
+        ClearBibleLinks.Trim(beside, overruled).Should().Be((true, true));
         beside.Should().Equal(8, 9);
 
         List<long> untouched = [8];
-        LinkRulings.Trim(untouched, overruled).Should().Be((true, false));
+        ClearBibleLinks.Trim(untouched, overruled).Should().Be((true, false));
         untouched.Should().Equal(8);
+    }
+
+    private static List<RulingRow> Rulings(ProductStore store, string pair)
+    {
+        using var reader = store.Open(MappingProducts.Of(pair, MappingProducts.Rulings), RulingRow.Schema);
+        return [.. reader.Rows()];
     }
 
     private static BereanRow Row(double order, int english, string greek, string rendering) =>
@@ -131,7 +161,7 @@ public class LinkRulingTests
 
         return directory?.FullName
                ?? throw new DirectoryNotFoundException(
-                   $"No {SolutionFile} above {AppContext.BaseDirectory}, so the link rulings cannot be found. "
+                   $"No {SolutionFile} above {AppContext.BaseDirectory}, so the rulings cannot be found. "
                    + "Run the tests from inside the essenthos-core checkout.");
     }
 }

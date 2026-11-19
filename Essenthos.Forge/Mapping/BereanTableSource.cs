@@ -20,8 +20,7 @@ namespace Essenthos.Core.Mapping;
 /// </para>
 ///
 /// <para>
-/// A witness word a ruling takes out of this source's rows (<c>mapping/&lt;pair&gt;/rulings</c>) is left out, as the
-/// database's loader left out what <see cref="LinkRulings"/> overruled.
+/// A witness word a ruling takes out of this source's rows (<c>mapping/&lt;pair&gt;/rulings</c>) is left out.
 /// </para>
 /// </summary>
 internal sealed class BereanTableSource : IPairSource

@@ -223,7 +223,7 @@ internal static partial class ClearBibleLinks
                 continue;
             }
 
-            var (kept, lost) = LinkRulings.Trim(ours, overruled);
+            var (kept, lost) = Trim(ours, overruled);
             if (lost)
             {
                 overruledRecords++;
@@ -241,6 +241,20 @@ internal static partial class ClearBibleLinks
         return new ClearBibleJoined(
             drafts, records, unresolved, withoutCounterpart, astray, shifted, moved, refused, overruledRecords, trimmed,
             placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0);
+    }
+
+    /// <summary>
+    /// A record's witness words without the ones a ruling sets aside (<c>mapping/&lt;pair&gt;/rulings</c>): whether it still
+    /// names any, and whether it lost one.
+    /// </summary>
+    internal static (bool Kept, bool Trimmed) Trim(List<long> witness, IReadOnlySet<long> overruled)
+    {
+        if (overruled.Count == 0 || witness.RemoveAll(overruled.Contains) == 0)
+        {
+            return (true, false);
+        }
+
+        return (witness.Count > 0, true);
     }
 
     /// <summary>
