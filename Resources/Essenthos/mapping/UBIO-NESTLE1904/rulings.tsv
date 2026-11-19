@@ -36,7 +36,7 @@ accept	42.1:22.14 42.1:22.15	42.1:22.11	renders		Luke 1:22: «він бачив�
 accept	42.1:22.19	42.1:22.16	renders		Luke 1:22: «він» renders αὐτὸς, read by hand against Nestle 1904 where uk_ubio's link is wrong: А він = καὶ αὐτὸς
 refuse	42.1:26.10	42.1:26.1			Luke 1:26: uk_ubio's link of «у» to Ἐν is wrong, read by hand against Nestle 1904: у галілейське місто is εἰς πόλιν; Ἐν δὲ τῷ μηνὶ is the bare genitive шостого місяця
 refuse	42.1:26.13	42.1:26.16			Luke 1:26: uk_ubio's link of «що» to τῆς is wrong, read by hand against Nestle 1904: що is the relative ᾗ, not the article of Γαλιλαίας
-refuse	42.1:26.14	42.1:26.19			Luke 1:26: uk_ubio's link of «йому» to ὄνομα is wrong, read by hand against Nestle 1904: йому is the dative of ᾗ (що йому), not ὄνομα
+refuse	42.1:26.14			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Luke 1:26: uk_ubio's link of «йому» to ὄνομα is wrong, read by hand against Nestle 1904: йому is the dative of ᾗ (що йому), not ὄνομα
 refuse	42.1:26.15	42.1:26.14			Luke 1:26: uk_ubio's link of «на» to εἰς is wrong, read by hand against Nestle 1904: на belongs to на ім'я (ὄνομα); εἰς is у
 accept	42.1:26.10	42.1:26.14	renders		Luke 1:26: «у» renders εἰς, read by hand against Nestle 1904 where uk_ubio's link is wrong: у = εἰς
 accept	42.1:26.13 42.1:26.14	42.1:26.18	renders		Luke 1:26: «що йому» renders ᾗ, read by hand against Nestle 1904 where uk_ubio's link is wrong: що йому = ᾗ
@@ -44,7 +44,7 @@ accept	42.1:26.15 42.1:26.16	42.1:26.19	renders		Luke 1:26: «на ім'я» ren
 refuse	42.1:31.2 42.1:31.3	42.1:31.2			Luke 1:31: uk_ubio's link of «ось ти» to ἰδοὺ is wrong, read by hand against Nestle 1904: ти is the subject of зачнеш (συλλήμψῃ), not part of ἰδοὺ
 accept	42.1:31.2	42.1:31.2	renders		Luke 1:31: «ось» renders ἰδοὺ, read by hand against Nestle 1904 where uk_ubio's link is wrong: ось = ἰδοὺ
 accept	42.1:31.3 42.1:31.6	42.1:31.3	renders		Luke 1:31: «ти зачнеш» renders συλλήμψῃ, read by hand against Nestle 1904 where uk_ubio's link is wrong: ти ... зачнеш = συλλήμψῃ
-refuse	42.1:35.19	42.1:35.20			Luke 1:35: uk_ubio's link of «то» to γεννώμενον is wrong, read by hand against Nestle 1904: то (через те то й) is a particle with no word in the Greek, not γεννώμενον (що народиться)
+refuse	42.1:35.19			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Luke 1:35: uk_ubio's link of «то» to γεννώμενον is wrong, read by hand against Nestle 1904: то (через те то й) is a particle with no word in the Greek, not γεννώμενον (що народиться)
 refuse	42.1:38.5	42.1:38.2			Luke 1:38: uk_ubio's link of «ж» to δὲ is wrong, read by hand against Nestle 1904: ж (Я ж Господня раба) is inside the speech; δὲ is the narrative А of А Марія промовила
 refuse	42.1:38.12 42.1:38.13	42.1:38.12			Luke 1:38: uk_ubio's link of «з словом» to ῥῆμά is wrong, read by hand against Nestle 1904: з belongs to згідно з (κατὰ), not to ῥῆμά
 accept	42.1:38.1	42.1:38.2	renders		Luke 1:38: «А» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = δὲ
@@ -80,7 +80,7 @@ refuse	51.2:1.3	51.2:1.2			Colossians 2:1: uk_ubio's link of «щоб» to γὰ
 refuse	51.2:1.14	51.2:1.21			Colossians 2:1: uk_ubio's link of «за» to ἐν is wrong, read by hand against Nestle 1904: за тих is the genitive τῶν under ὑπὲρ; ἐν of ἐν σαρκί is тілесного
 accept	51.2:1.3 51.2:1.5	51.2:1.4	renders		Colossians 2:1: «щоб знали» renders εἰδέναι, read by hand against Nestle 1904 where uk_ubio's link is wrong: щоб ... знали = εἰδέναι
 accept	51.2:1.26	51.2:1.21 51.2:1.22	renders		Colossians 2:1: «тілесного» renders ἐν σαρκί, read by hand against Nestle 1904 where uk_ubio's link is wrong: тілесного = ἐν σαρκί
-refuse	51.2:23.11	51.2:23.12			Colossians 2:23: uk_ubio's link of «та» to ἀφειδίᾳ is wrong, read by hand against Nestle 1904: та is the καὶ before ἀφειδίᾳ, not ἀφειδίᾳ
+refuse	51.2:23.11			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Colossians 2:23: uk_ubio's link of «та» to ἀφειδίᾳ is wrong, read by hand against Nestle 1904: та is the καὶ before ἀφειδίᾳ, not ἀφειδίᾳ
 refuse	51.2:23.12	51.2:23.15			Colossians 2:23: uk_ubio's link of «в» to ἐν is wrong, read by hand against Nestle 1904: в знесилюванні renders the dative ἀφειδίᾳ; ἐν (15) is of οὐκ ἐν τιμῇ τινι
 accept	51.2:23.9	51.2:23.9	renders		Colossians 2:23: «й» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: й = καὶ (9)
 accept	51.2:23.11	51.2:23.11	renders		Colossians 2:23: «та» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: та = καὶ (11)
@@ -113,8 +113,8 @@ refuse	52.2:13.2	52.2:13.4			1 Thessalonians 2:13: uk_ubio's link of «то» to
 refuse	52.2:13.3	52.2:13.1			1 Thessalonians 2:13: uk_ubio's link of «й» to Καὶ is wrong, read by hand against Nestle 1904: й (й ми) is the καὶ of καὶ ἡμεῖς; the first Καὶ is unrendered
 accept	52.2:13.1 52.2:13.2	52.2:13.2 52.2:13.3	renders		1 Thessalonians 2:13: «Тому то» renders διὰ τοῦτο, read by hand against Nestle 1904 where uk_ubio's link is wrong: Тому то = διὰ τοῦτο
 accept	52.2:13.3	52.2:13.4	renders		1 Thessalonians 2:13: «й» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: й = καὶ of καὶ ἡμεῖς
-refuse	52.3:5.4	52.3:5.13 52.3:5.14			1 Thessalonians 3:5: uk_ubio's link of «не» to μή πως is wrong, read by hand against Nestle 1904: не (не стерпівши більше) is the μη- of μηκέτι, not μή πως
-refuse	52.3:5.16	52.3:5.20 52.3:5.21			1 Thessalonians 3:5: uk_ubio's link of «не» to εἰς κενὸν is wrong, read by hand against Nestle 1904: не (вас не спокусив) is the μή of μή πως, not εἰς κενὸν (даремний)
+refuse	52.3:5.4			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Thessalonians 3:5: uk_ubio's link of «не» to μή πως is wrong, read by hand against Nestle 1904: не (не стерпівши більше) is the μη- of μηκέτι, not μή πως
+refuse	52.3:5.16			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Thessalonians 3:5: uk_ubio's link of «не» to εἰς κενὸν is wrong, read by hand against Nestle 1904: не (вас не спокусив) is the μή of μή πως, not εἰς κενὸν (даремний)
 accept	52.3:5.4 52.3:5.6	52.3:5.4	renders		1 Thessalonians 3:5: «не більше» renders μηκέτι, read by hand against Nestle 1904 where uk_ubio's link is wrong: не ... більше = μηκέτι
 accept	52.3:5.12 52.3:5.13 52.3:5.16	52.3:5.13 52.3:5.14	renders		1 Thessalonians 3:5: «щоб часом не» renders μή πως, read by hand against Nestle 1904 where uk_ubio's link is wrong: щоб часом ... не = μή πως
 refuse	52.4:17.14	52.4:17.17			1 Thessalonians 4:17: uk_ubio's link of «на» to εἰς is wrong, read by hand against Nestle 1904: на зустріч is εἰς ἀπάντησιν (the first εἰς)
@@ -126,7 +126,7 @@ refuse	54.4:12.19	54.4:12.17			1 Timothy 4:12: uk_ubio's link of «у» to ἐν
 refuse	54.4:12.21	54.4:12.19			1 Timothy 4:12: uk_ubio's link of «у» to ἐν is wrong, read by hand against Nestle 1904: у вірі is ἐν πίστει (17); ἐν (19) is у чистості
 accept	54.4:12.21	54.4:12.17	renders		1 Timothy 4:12: «у» renders ἐν, read by hand against Nestle 1904 where uk_ubio's link is wrong: у вірі = ἐν πίστει
 accept	54.4:12.23	54.4:12.19	renders		1 Timothy 4:12: «у» renders ἐν, read by hand against Nestle 1904 where uk_ubio's link is wrong: у чистості = ἐν ἁγνείᾳ
-refuse	60.1:10.8	60.1:10.9			1 Peter 1:10: uk_ubio's link of «що» to περὶ is wrong, read by hand against Nestle 1904: що (пророки, що звіщали) is the article οἱ, not περὶ (про)
+refuse	60.1:10.8			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Peter 1:10: uk_ubio's link of «що» to περὶ is wrong, read by hand against Nestle 1904: що (пророки, що звіщали) is the article οἱ, not περὶ (про)
 accept	60.1:10.8	60.1:10.8	renders		1 Peter 1:10: «що» renders οἱ, read by hand against Nestle 1904 where uk_ubio's link is wrong: що = οἱ
 refuse	60.1:11.6	60.1:11.15			1 Peter 1:11: uk_ubio's link of «на» to εἰς is wrong, read by hand against Nestle 1904: на (чи на який час) repeats εἰς τίνα ἢ ποῖον; εἰς (15) is of τὰ εἰς Χριστὸν παθήματα
 accept	60.1:11.20	60.1:11.15 60.1:11.16	renders		1 Peter 1:11: «Христові» renders εἰς Χριστὸν, read by hand against Nestle 1904 where uk_ubio's link is wrong: Христові = εἰς Χριστὸν
@@ -140,10 +140,10 @@ refuse	62.2:6.8	62.2:6.8			1 John 2:6: uk_ubio's link of «той» to ἐκε�
 refuse	62.2:6.14	62.2:6.11			1 John 2:6: uk_ubio's link of «Він» to αὐτὸς is wrong, read by hand against Nestle 1904: Він (як поводився Він) is ἐκεῖνος
 accept	62.2:6.8	62.2:6.11	renders		1 John 2:6: «той» renders αὐτὸς, read by hand against Nestle 1904 where uk_ubio's link is wrong: той = αὐτὸς
 accept	62.2:6.14	62.2:6.8	renders		1 John 2:6: «Він» renders ἐκεῖνος, read by hand against Nestle 1904 where uk_ubio's link is wrong: Він = ἐκεῖνος
-refuse	62.3:24.24 62.3:24.25	62.3:24.25			1 John 3:24: uk_ubio's link of «що Він» to οὗ is wrong, read by hand against Nestle 1904: Він is the subject of дав (ἔδωκεν), not the relative οὗ
+refuse	62.3:24.24 62.3:24.25			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 3:24: uk_ubio's link of «що Він» to οὗ is wrong, read by hand against Nestle 1904: Він is the subject of дав (ἔδωκεν), not the relative οὗ
 accept	62.3:24.24 62.3:24.27	62.3:24.25	renders		1 John 3:24: «що Його» renders οὗ, read by hand against Nestle 1904 where uk_ubio's link is wrong: що ... Його = οὗ
 accept	62.3:24.25 62.3:24.28	62.3:24.27	renders		1 John 3:24: «Він дав» renders ἔδωκεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: Він ... дав = ἔδωκεν
-refuse	62.4:13.2	62.4:13.3			1 John 4:13: uk_ubio's link of «ми» to γινώσκομεν is wrong, read by hand against Nestle 1904: ми is the subject of пробуваємо (μένομεν), not γινώσκομεν (пізнаємо)
+refuse	62.4:13.2			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 4:13: uk_ubio's link of «ми» to γινώσκομεν is wrong, read by hand against Nestle 1904: ми is the subject of пробуваємо (μένομεν), not γινώσκομεν (пізнаємо)
 accept	62.4:13.2 62.4:13.3	62.4:13.7	renders		1 John 4:13: «ми пробуваємо» renders μένομεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: ми пробуваємо = μένομεν
 refuse	62.4:16.24	62.4:16.31			1 John 4:16: uk_ubio's link of «в» to ἐν is wrong, read by hand against Nestle 1904: в Бозі is ἐν τῷ Θεῷ (24)
 refuse	62.4:16.27	62.4:16.24			1 John 4:16: uk_ubio's link of «в» to ἐν is wrong, read by hand against Nestle 1904: в нім is ἐν αὐτῷ (31)
@@ -167,7 +167,7 @@ refuse	51.1:18.6	51.1:18.21			Colossians 1:18: uk_ubio's link of «Він» to �
 refuse	51.1:18.14	51.1:18.10			Colossians 1:18: uk_ubio's link of «Він» to ὅς is wrong, read by hand against Nestle 1904: щоб у всьому Він мав першенство is αὐτὸς πρωτεύων; ὅς is Він початок
 accept	51.1:18.6	51.1:18.10	renders		Colossians 1:18: «Він» renders ὅς, read by hand against Nestle 1904 where uk_ubio's link is wrong: Він початок = ὅς ἐστιν ἀρχή
 accept	51.1:18.14	51.1:18.21	renders		Colossians 1:18: «Він» renders αὐτὸς, read by hand against Nestle 1904 where uk_ubio's link is wrong: Він мав першенство = αὐτὸς πρωτεύων
-refuse	51.1:21.3	51.1:21.3			Colossians 1:21: uk_ubio's link of «що» to ποτε is wrong, read by hand against Nestle 1904: що були is the participle ὄντας; ποτε is колись
+refuse	51.1:21.3			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Colossians 1:21: uk_ubio's link of «що» to ποτε is wrong, read by hand against Nestle 1904: що були is the participle ὄντας; ποτε is колись
 accept	51.1:21.3 51.1:21.4	51.1:21.4	renders		Colossians 1:21: «що були» renders ὄντας, read by hand against Nestle 1904 where uk_ubio's link is wrong: що були = ὄντας
 refuse	51.1:24.2	51.1:24.19			Colossians 1:24: uk_ubio's link of «я» to μου is wrong, read by hand against Nestle 1904: я радію is χαίρω; μου is своїм (в тілі своїм)
 accept	51.1:24.2 51.1:24.3	51.1:24.2	renders		Colossians 1:24: «я радію» renders χαίρω, read by hand against Nestle 1904 where uk_ubio's link is wrong: я радію = χαίρω
@@ -176,14 +176,14 @@ refuse	51.1:27.13	51.1:27.3			Colossians 1:27: uk_ubio's link of «а» to ὁ i
 refuse	51.2:14.5 51.2:14.6	51.2:14.7			Colossians 2:14: uk_ubio's link of «що наказами» to δόγμασιν is wrong, read by hand against Nestle 1904: що is the relative ὃ (ὃ ἦν ὑπεναντίον ἡμῖν); only наказами is τοῖς δόγμασιν
 accept	51.2:14.5	51.2:14.8	renders		Colossians 2:14: «що» renders ὃ, read by hand against Nestle 1904 where uk_ubio's link is wrong: що ... було проти нас = ὃ ἦν ὑπεναντίον ἡμῖν
 accept	51.2:14.6	51.2:14.7	renders		Colossians 2:14: «наказами» renders δόγμασιν, read by hand against Nestle 1904 where uk_ubio's link is wrong: наказами = τοῖς δόγμασιν
-refuse	51.2:15.5	51.2:15.7			Colossians 2:15: uk_ubio's link of «сміливо» to ἐδειγμάτισεν is wrong, read by hand against Nestle 1904: сміливо is ἐν παρρησίᾳ; ἐδειγμάτισεν is вивів на посміховисько
+refuse	51.2:15.5			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Colossians 2:15: uk_ubio's link of «сміливо» to ἐδειγμάτισεν is wrong, read by hand against Nestle 1904: сміливо is ἐν παρρησίᾳ; ἐδειγμάτισεν is вивів на посміховисько
 refuse	51.2:15.8	51.2:15.8			Colossians 2:15: uk_ubio's link of «на» to ἐν is wrong, read by hand against Nestle 1904: на посміховисько belongs to вивів (ἐδειγμάτισεν); ἐν παρρησίᾳ is сміливо
 refuse	51.2:15.9	51.2:15.9			Colossians 2:15: uk_ubio's link of «посміховисько» to παρρησίᾳ is wrong, read by hand against Nestle 1904: вивів на посміховисько is ἐδειγμάτισεν; παρρησίᾳ (openly) is сміливо
 refuse	51.2:15.6	51.2:15.11			Colossians 2:15: uk_ubio's link of «їх» to αὐτοὺς is wrong, read by hand against Nestle 1904: αὐτοὺς is the object of θριαμβεύσας (перемігши їх, the second їх); the first їх is added
 accept	51.2:15.5	51.2:15.8 51.2:15.9	renders		Colossians 2:15: «сміливо» renders ἐν παρρησίᾳ, read by hand against Nestle 1904 where uk_ubio's link is wrong: сміливо = ἐν παρρησίᾳ
 accept	51.2:15.7 51.2:15.8 51.2:15.9	51.2:15.7	renders		Colossians 2:15: «вивів на посміховисько» renders ἐδειγμάτισεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: вивів на посміховисько = ἐδειγμάτισεν
 accept	51.2:15.11	51.2:15.11	renders		Colossians 2:15: «їх» renders αὐτοὺς, read by hand against Nestle 1904 where uk_ubio's link is wrong: перемігши їх = θριαμβεύσας αὐτοὺς
-refuse	51.2:16.3	51.2:16.5			Colossians 2:16: uk_ubio's link of «ніхто» to κρινέτω is wrong, read by hand against Nestle 1904: хай ніхто ... не is Μὴ τις; κρινέτω is судить
+refuse	51.2:16.3			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Colossians 2:16: uk_ubio's link of «ніхто» to κρινέτω is wrong, read by hand against Nestle 1904: хай ніхто ... не is Μὴ τις; κρινέτω is судить
 accept	51.2:16.3	51.2:16.3	renders		Colossians 2:16: «ніхто» renders τις, read by hand against Nestle 1904 where uk_ubio's link is wrong: хай ніхто ... не = Μὴ τις
 refuse	51.2:16.9	51.2:16.11			Colossians 2:16: uk_ubio's link of «чи» to ἢ is wrong, read by hand against Nestle 1904: чи (за їжу чи за питво) is καὶ (ἐν βρώσει καὶ ἐν πόσει); the first ἢ is the next чи
 refuse	51.2:16.12	51.2:16.15			Colossians 2:16: uk_ubio's link of «чи» to ἢ is wrong, read by hand against Nestle 1904: чи за чергове свято is ἢ ἐν μέρει ἑορτῆς (the first ἢ)
@@ -195,7 +195,7 @@ accept	51.2:16.19	51.2:16.17	renders		Colossians 2:16: «чи» renders ἢ, rea
 refuse	51.3:11.8	51.3:11.5			Colossians 3:11: uk_ubio's link of «та» to καὶ is wrong, read by hand against Nestle 1904: обрізання та необрізання is περιτομὴ καὶ ἀκροβυστία (the second καὶ); the first καὶ is ані (ані юдея)
 accept	51.3:11.8	51.3:11.8	renders		Colossians 3:11: «та» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: обрізання та необрізання = περιτομὴ καὶ ἀκροβυστία
 accept	51.3:11.5	51.3:11.5	renders		Colossians 3:11: «ані» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: ані геллена ані юдея = Ἕλλην καὶ Ἰουδαῖος under οὐκ
-refuse	51.3:17.10	51.3:17.17			Colossians 3:17: uk_ubio's link of «робіть» to εὐχαριστοῦντες is wrong, read by hand against Nestle 1904: робіть is a supplied verb (πάντα ἐν ὀνόματι); εὐχαριστοῦντες is дякуючи
+refuse	51.3:17.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Colossians 3:17: uk_ubio's link of «робіть» to εὐχαριστοῦντες is wrong, read by hand against Nestle 1904: робіть is a supplied verb (πάντα ἐν ὀνόματι); εὐχαριστοῦντες is дякуючи
 refuse	51.4:8.2	51.4:8.1			Colossians 4:8: uk_ubio's link of «саме» to ὃν is wrong, read by hand against Nestle 1904: саме на те is εἰς αὐτὸ τοῦτο; ὃν is його
 refuse	51.4:8.5	51.4:8.6			Colossians 4:8: uk_ubio's link of «його» to αὐτὸ is wrong, read by hand against Nestle 1904: його вислав is ὃν ἔπεμψα; αὐτὸ (εἰς αὐτὸ τοῦτο) is саме
 accept	51.4:8.2	51.4:8.6	renders		Colossians 4:8: «саме» renders αὐτὸ, read by hand against Nestle 1904 where uk_ubio's link is wrong: саме на те = εἰς αὐτὸ τοῦτο
@@ -204,15 +204,15 @@ refuse	51.4:13.7	51.4:13.3			Colossians 4:13: uk_ubio's link of «він» to α
 accept	51.4:13.4 51.4:13.5	51.4:13.3	renders		Colossians 4:13: «за нього» renders αὐτῷ, read by hand against Nestle 1904 where uk_ubio's link is wrong: свідчу за нього = μαρτυρῶ αὐτῷ
 accept	51.4:13.7 51.4:13.8	51.4:13.5	renders		Colossians 4:13: «він має» renders ἔχει, read by hand against Nestle 1904 where uk_ubio's link is wrong: він має = ἔχει
 refuse	51.4:16.21	51.4:16.20			Colossians 4:16: uk_ubio's link of «що» to ἵνα is wrong, read by hand against Nestle 1904: що belongs to того, що написаний (τὴν ἐκ Λαοδικίας); the second ἵνα is unrendered before the imperative прочитайте
-refuse	51.4:17.5	51.4:17.7			Colossians 4:17: uk_ubio's link of «того» to ἣν is wrong, read by hand against Nestle 1904: того служіння is τὴν διακονίαν; ἣν is що
+refuse	51.4:17.5			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Colossians 4:17: uk_ubio's link of «того» to ἣν is wrong, read by hand against Nestle 1904: того служіння is τὴν διακονίαν; ἣν is що
 accept	51.4:17.5	51.4:17.5	renders		Colossians 4:17: «того» renders τὴν, read by hand against Nestle 1904 where uk_ubio's link is wrong: того служіння = τὴν διακονίαν
 refuse	51.4:17.9	51.4:17.12			Colossians 4:17: uk_ubio's link of «його» to αὐτὴν is wrong, read by hand against Nestle 1904: αὐτὴν is the object of πληροῖς (щоб ти його виконав, the second його); the first його is a resumptive the Greek lacks
 accept	51.4:17.14	51.4:17.12	renders		Colossians 4:17: «його» renders αὐτὴν, read by hand against Nestle 1904 where uk_ubio's link is wrong: щоб ти його виконав = ἵνα αὐτὴν πληροῖς
 refuse	52.1:4.5	52.1:4.4			1 Thessalonians 1:4: uk_ubio's link of «про» to ὑπὸ is wrong, read by hand against Nestle 1904: про ваше обрання is τὴν ἐκλογὴν ὑμῶν; ὑπὸ τοῦ Θεοῦ is the instrumental Богом
 accept	52.1:4.5	52.1:4.7	renders		1 Thessalonians 1:4: «про» renders τὴν, read by hand against Nestle 1904 where uk_ubio's link is wrong: знаючи про ваше обрання = εἰδότες τὴν ἐκλογὴν ὑμῶν
-refuse	52.1:10.10	52.1:10.16			1 Thessalonians 1:10: uk_ubio's link of «Він» to ῥυόμενον is wrong, read by hand against Nestle 1904: Він is the subject of воскресив (ὃν ἤγειρεν); ῥυόμενον is визволює
+refuse	52.1:10.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Thessalonians 1:10: uk_ubio's link of «Він» to ῥυόμενον is wrong, read by hand against Nestle 1904: Він is the subject of воскресив (ὃν ἤγειρεν); ῥυόμενον is визволює
 accept	52.1:10.9 52.1:10.10	52.1:10.10	renders		1 Thessalonians 1:10: «воскресив Він» renders ἤγειρεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: воскресив Він = ἤγειρεν
-refuse	52.2:14.19	52.2:14.11			1 Thessalonians 2:14: uk_ubio's link of «були» to οὐσῶν is wrong, read by hand against Nestle 1904: були is the auxiliary of були витерпіли (ἐπάθετε); οὐσῶν is що (що в Юдеї)
+refuse	52.2:14.19			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Thessalonians 2:14: uk_ubio's link of «були» to οὐσῶν is wrong, read by hand against Nestle 1904: були is the auxiliary of були витерпіли (ἐπάθετε); οὐσῶν is що (що в Юдеї)
 accept	52.2:14.19 52.2:14.20	52.2:14.21	renders		1 Thessalonians 2:14: «були витерпіли» renders ἐπάθετε, read by hand against Nestle 1904 where uk_ubio's link is wrong: були витерпіли = ἐπάθετε
 refuse	52.2:19.1 52.2:19.2	52.2:19.2			1 Thessalonians 2:19: uk_ubio's link of «Бо хто» to γὰρ is wrong, read by hand against Nestle 1904: хто is τίς; only Бо is γὰρ
 accept	52.2:19.1	52.2:19.2	renders		1 Thessalonians 2:19: «Бо» renders γὰρ, read by hand against Nestle 1904 where uk_ubio's link is wrong: Бо = γὰρ
@@ -240,16 +240,16 @@ accept	52.4:11.4 52.4:11.5	52.4:11.3	renders		1 Thessalonians 4:11: «жити �
 refuse	52.4:11.14	52.4:11.12			1 Thessalonians 4:11: uk_ubio's link of «ми» to ὑμῶν is wrong, read by hand against Nestle 1904: ми is the subject of наказували (παρηγγείλαμεν); ὑμῶν is своїми (своїми руками)
 accept	52.4:11.11	52.4:11.12	renders		1 Thessalonians 4:11: «своїми» renders ὑμῶν, read by hand against Nestle 1904 where uk_ubio's link is wrong: своїми руками = ταῖς χερσὶν ὑμῶν
 accept	52.4:11.14 52.4:11.16	52.4:11.15	renders		1 Thessalonians 4:11: «ми наказували» renders παρηγγείλαμεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: ми ... наказували = παρηγγείλαμεν
-refuse	52.4:13.6	52.4:13.4			1 Thessalonians 4:13: uk_ubio's link of «щоб» to ὑμᾶς is wrong, read by hand against Nestle 1904: щоб introduces the clause that renders the infinitive ἀγνοεῖν; ὑμᾶς is ви
+refuse	52.4:13.6			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Thessalonians 4:13: uk_ubio's link of «щоб» to ὑμᾶς is wrong, read by hand against Nestle 1904: щоб introduces the clause that renders the infinitive ἀγνοεῖν; ὑμᾶς is ви
 refuse	52.5:3.14 52.5:3.15	52.5:3.13			1 Thessalonians 5:3: uk_ubio's link of «мука тієї» to ὠδὶν is wrong, read by hand against Nestle 1904: тієї, що носить is τῇ ... ἐχούσῃ; only мука is ὠδὶν
 accept	52.5:3.14	52.5:3.13	renders		1 Thessalonians 5:3: «мука» renders ὠδὶν, read by hand against Nestle 1904 where uk_ubio's link is wrong: мука = ἡ ὠδὶν
 accept	52.5:3.15 52.5:3.16	52.5:3.14	renders		1 Thessalonians 5:3: «тієї що» renders τῇ, read by hand against Nestle 1904 where uk_ubio's link is wrong: тієї, що носить = τῇ ... ἐχούσῃ
-refuse	63.1:4.10	63.1:4.5			2 John 1:4: uk_ubio's link of «що» to ἐκ is wrong, read by hand against Nestle 1904: що (таких, що ходять) opens the clause of περιπατοῦντας; ἐκ is між (5)
+refuse	63.1:4.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	2 John 1:4: uk_ubio's link of «що» to ἐκ is wrong, read by hand against Nestle 1904: що (таких, що ходять) opens the clause of περιπατοῦντας; ἐκ is між (5)
 accept	63.1:4.10	63.1:4.9	renders		2 John 1:4: «що» renders περιπατοῦντας, read by hand against Nestle 1904 where uk_ubio's link is wrong: що ходять = περιπατοῦντας
 refuse	63.1:6.12	63.1:6.1			2 John 1:6: uk_ubio's link of «та» to καὶ is wrong, read by hand against Nestle 1904: та (Це та заповідь) is the demonstrative of ἡ ἐντολή, not the conjunction; καὶ (1) is А
 accept	63.1:6.1	63.1:6.1	renders		2 John 1:6: «А» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А любов = καὶ ... ἡ ἀγάπη
 accept	63.1:6.12	63.1:6.13	renders		2 John 1:6: «та» renders ἡ, read by hand against Nestle 1904 where uk_ubio's link is wrong: та заповідь = ἡ ἐντολή
-refuse	63.1:6.21	63.1:6.22			2 John 1:6: uk_ubio's link of «згідно» to αὐτῇ is wrong, read by hand against Nestle 1904: згідно з nests ἐν (21), as згідно з = κατὰ earlier in the verse; αὐτῇ is нею
+refuse	63.1:6.21			unfoldingWord's Ukrainian Bible Interlinear Ogienko	2 John 1:6: uk_ubio's link of «згідно» to αὐτῇ is wrong, read by hand against Nestle 1904: згідно з nests ἐν (21), as згідно з = κατὰ earlier in the verse; αὐτῇ is нею
 accept	63.1:6.21	63.1:6.21	renders		2 John 1:6: «згідно» renders ἐν, read by hand against Nestle 1904 where uk_ubio's link is wrong: згідно з нею = ἐν αὐτῇ
 refuse	63.1:9.11 63.1:9.12	63.1:9.12			2 John 1:9: uk_ubio's link of «той Бога» to Θεὸν is wrong, read by hand against Nestle 1904: той resumes πᾶς ὁ προάγων and has no word in the Greek
 accept	63.1:9.12	63.1:9.12	renders		2 John 1:9: «Бога» renders Θεὸν, read by hand against Nestle 1904 where uk_ubio's link is wrong: Бога = Θεὸν
@@ -262,13 +262,12 @@ accept	63.1:10.6	63.1:10.6	renders		2 John 1:10: «але» renders καὶ, rea
 accept	63.1:10.10	63.1:10.7	renders		2 John 1:10: «цієї» renders ταύτην, read by hand against Nestle 1904 where uk_ubio's link is wrong: науки цієї = ταύτην τὴν διδαχὴν
 refuse	64.1:5.11 64.1:5.12	64.1:5.11 64.1:5.12			3 John 1:5: uk_ubio's link of «для чужинців» to τοῦτο ξένους is wrong, read by hand against Nestle 1904: τοῦτο (καὶ τοῦτο ξένους) is not translated; для чужинців is the Textus Receptus's εἰς τοὺς ξένους
 accept	64.1:5.11 64.1:5.12	64.1:5.12	renders		3 John 1:5: «для чужинців» renders ξένους, read by hand against Nestle 1904 where uk_ubio's link is wrong: для чужинців = ξένους
-refuse	64.1:6.2	64.1:6.3			3 John 1:6: uk_ubio's link of «про» to σου is wrong, read by hand against Nestle 1904: про (свідчили про любов) carries the object of ἐμαρτύρησαν; σου is твою (4)
+refuse	64.1:6.2			unfoldingWord's Ukrainian Bible Interlinear Ogienko	3 John 1:6: uk_ubio's link of «про» to σου is wrong, read by hand against Nestle 1904: про (свідчили про любов) carries the object of ἐμαρτύρησαν; σου is твою (4)
 refuse	64.1:6.10	64.1:6.8			3 John 1:6: uk_ubio's link of «як» to οὓς is wrong, read by hand against Nestle 1904: οὓς is їх (11); як (як їх випровадиш) opens the participle προπέμψας
 refuse	64.1:6.11 64.1:6.12	64.1:6.11			3 John 1:6: uk_ubio's link of «їх випровадиш» to προπέμψας is wrong, read by hand against Nestle 1904: їх is the relative οὓς (8)
 accept	64.1:6.11	64.1:6.8	renders		3 John 1:6: «їх» renders οὓς, read by hand against Nestle 1904 where uk_ubio's link is wrong: їх = οὓς
 accept	64.1:6.10 64.1:6.12	64.1:6.11	renders		3 John 1:6: «як випровадиш» renders προπέμψας, read by hand against Nestle 1904 where uk_ubio's link is wrong: як випровадиш = προπέμψας
-refuse	64.1:7.1	64.1:7.1 64.1:7.2			3 John 1:7: uk_ubio's link of «бо» to ὑπὲρ γὰρ is wrong, read by hand against Nestle 1904: бо is γὰρ alone; ὑπὲρ is ради (4)
-refuse	64.1:7.4	64.1:7.1 64.1:7.2			3 John 1:7: uk_ubio's link of «ради» to ὑπὲρ γὰρ is wrong, read by hand against Nestle 1904: ради is ὑπὲρ alone; γὰρ is бо (1)
+refuse	64.1:7.1 64.1:7.4	64.1:7.1 64.1:7.2		unfoldingWord's Ukrainian Bible Interlinear Ogienko	3 John 1:7: uk_ubio's link of «бо» to ὑπὲρ γὰρ is wrong, read by hand against Nestle 1904: бо is γὰρ alone; ὑπὲρ is ради (4) 3 John 1:7: uk_ubio's link of «ради» to ὑπὲρ γὰρ is wrong, read by hand against Nestle 1904: ради is ὑπὲρ alone; γὰρ is бо (1)
 accept	64.1:7.1	64.1:7.2	renders		3 John 1:7: «бо» renders γὰρ, read by hand against Nestle 1904 where uk_ubio's link is wrong: бо = γὰρ
 accept	64.1:7.4	64.1:7.1	renders		3 John 1:7: «ради» renders ὑπὲρ, read by hand against Nestle 1904 where uk_ubio's link is wrong: ради = ὑπὲρ
 refuse	64.1:7.5 64.1:7.6	64.1:7.4			3 John 1:7: uk_ubio's link of «Ймення Його» to Ὀνόματος is wrong, read by hand against Nestle 1904: Його has no counterpart in Nestle (the Textus Receptus's αὐτοῦ)
@@ -290,7 +289,7 @@ accept	54.2:3.2	54.2:3.1	renders		1 Timothy 2:3: «це» renders τοῦτο, r
 refuse	54.2:4.3 54.2:4.4	54.2:4.2			1 Timothy 2:4: uk_ubio's link of «щоб усі» to πάντας is wrong, read by hand against Nestle 1904: щоб introduces спаслися (σωθῆναι), not πάντας
 accept	54.2:4.4	54.2:4.2	renders		1 Timothy 2:4: «усі» renders πάντας, read by hand against Nestle 1904 where uk_ubio's link is wrong: усі = πάντας
 accept	54.2:4.3	54.2:4.5	renders		1 Timothy 2:4: «щоб» renders σωθῆναι, read by hand against Nestle 1904 where uk_ubio's link is wrong: щоб ... спаслися = σωθῆναι
-refuse	54.2:6.10	54.2:6.9			1 Timothy 2:6: uk_ubio's link of «було» to καιροῖς is wrong, read by hand against Nestle 1904: було (Таке було свідоцтво) has no word in the Greek; καιροῖς is часу (12)
+refuse	54.2:6.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 2:6: uk_ubio's link of «було» to καιροῖς is wrong, read by hand against Nestle 1904: було (Таке було свідоцтво) has no word in the Greek; καιροῖς is часу (12)
 refuse	54.3:2.3 54.3:2.4	54.3:2.6			1 Timothy 3:2: uk_ubio's link of «має бути» to εἶναι is wrong, read by hand against Nestle 1904: має is δεῖ (1), which the link leaves out
 accept	54.3:2.3	54.3:2.1	renders		1 Timothy 3:2: «має» renders δεῖ, read by hand against Nestle 1904 where uk_ubio's link is wrong: має = δεῖ
 accept	54.3:2.4	54.3:2.6	renders		1 Timothy 3:2: «бути» renders εἶναι, read by hand against Nestle 1904 where uk_ubio's link is wrong: бути = εἶναι
@@ -302,12 +301,12 @@ accept	54.3:7.1	54.3:7.1	renders		1 Timothy 3:7: «Треба» renders δεῖ,
 refuse	54.3:7.15 54.3:7.16	54.3:7.15			1 Timothy 3:7: uk_ubio's link of «та в» to καὶ is wrong, read by hand against Nestle 1904: в repeats the one εἰς (12) of εἰς ὀνειδισμὸν ... καὶ παγίδα; καὶ is та alone
 accept	54.3:7.15	54.3:7.15	renders		1 Timothy 3:7: «та» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: та = καὶ
 accept	54.3:7.16	54.3:7.12	renders		1 Timothy 3:7: «в» renders εἰς, read by hand against Nestle 1904 where uk_ubio's link is wrong: в догану та в сітку = εἰς ὀνειδισμὸν καὶ παγίδα
-refuse	54.3:12.7	54.3:12.6			1 Timothy 3:12: uk_ubio's link of «що» to τέκνων is wrong, read by hand against Nestle 1904: що (що добре рядять) opens the participle προϊστάμενοι; τέκνων is дітьми (10)
+refuse	54.3:12.7			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 3:12: uk_ubio's link of «що» to τέκνων is wrong, read by hand against Nestle 1904: що (що добре рядять) opens the participle προϊστάμενοι; τέκνων is дітьми (10)
 accept	54.3:12.7	54.3:12.8	renders		1 Timothy 3:12: «що» renders προϊστάμενοι, read by hand against Nestle 1904 where uk_ubio's link is wrong: що ... рядять = προϊστάμενοι
 refuse	54.3:13.2 54.3:13.3	54.3:13.3			1 Timothy 3:13: uk_ubio's link of «хто добре» to καλῶς is wrong, read by hand against Nestle 1904: хто is the article οἱ (1) of οἱ ... διακονήσαντες, not καλῶς
 accept	54.3:13.3	54.3:13.3	renders		1 Timothy 3:13: «добре» renders καλῶς, read by hand against Nestle 1904 where uk_ubio's link is wrong: добре = καλῶς
 accept	54.3:13.2	54.3:13.1	renders		1 Timothy 3:13: «хто» renders οἱ, read by hand against Nestle 1904 where uk_ubio's link is wrong: хто = οἱ
-refuse	54.3:13.6	54.3:13.5			1 Timothy 3:13: uk_ubio's link of «той» to βαθμὸν is wrong, read by hand against Nestle 1904: той resumes хто ... виконує службу and has no word in the Greek; βαθμὸν is ступінь (8)
+refuse	54.3:13.6			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 3:13: uk_ubio's link of «той» to βαθμὸν is wrong, read by hand against Nestle 1904: той resumes хто ... виконує службу and has no word in the Greek; βαθμὸν is ступінь (8)
 refuse	54.4:7.2	54.4:7.2 54.4:7.3			1 Timothy 4:7: uk_ubio's link of «нечистих» to δὲ βεβήλους is wrong, read by hand against Nestle 1904: δὲ (τοὺς δὲ βεβήλους) is not translated; нечистих is βεβήλους alone
 accept	54.4:7.2	54.4:7.3	renders		1 Timothy 4:7: «нечистих» renders βεβήλους, read by hand against Nestle 1904 where uk_ubio's link is wrong: нечистих = βεβήλους
 refuse	54.4:16.12 54.4:16.13	54.4:16.8			1 Timothy 4:16: uk_ubio's link of «так ти» to τοῦτο is wrong, read by hand against Nestle 1904: ти is the subject of спасеш (σώσεις), not part of τοῦτο
@@ -316,12 +315,10 @@ accept	54.4:16.13	54.4:16.13	renders		1 Timothy 4:16: «ти» renders σώσε�
 refuse	54.5:4.7 54.5:4.8	54.5:4.7			1 Timothy 5:4: uk_ubio's link of «чи внучат» to ἔκγονα is wrong, read by hand against Nestle 1904: чи is ἢ (6), which the link leaves out
 accept	54.5:4.7	54.5:4.6	renders		1 Timothy 5:4: «чи» renders ἢ, read by hand against Nestle 1904 where uk_ubio's link is wrong: чи = ἢ
 accept	54.5:4.8	54.5:4.7	renders		1 Timothy 5:4: «внучат» renders ἔκγονα, read by hand against Nestle 1904 where uk_ubio's link is wrong: внучат = ἔκγονα
-refuse	54.5:5.1	54.5:5.2 54.5:5.3			1 Timothy 5:5: uk_ubio's link of «А» to δὲ ὄντως is wrong, read by hand against Nestle 1904: А is δὲ alone; ὄντως is правдива (3)
-refuse	54.5:5.3	54.5:5.2 54.5:5.3			1 Timothy 5:5: uk_ubio's link of «правдива» to δὲ ὄντως is wrong, read by hand against Nestle 1904: правдива is ὄντως alone; δὲ is А (1)
+refuse	54.5:5.1 54.5:5.3	54.5:5.2 54.5:5.3		unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 5:5: uk_ubio's link of «А» to δὲ ὄντως is wrong, read by hand against Nestle 1904: А is δὲ alone; ὄντως is правдива (3) 1 Timothy 5:5: uk_ubio's link of «правдива» to δὲ ὄντως is wrong, read by hand against Nestle 1904: правдива is ὄντως alone; δὲ is А (1)
 accept	54.5:5.1	54.5:5.2	renders		1 Timothy 5:5: «А» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = δὲ
 accept	54.5:5.3	54.5:5.3	renders		1 Timothy 5:5: «правдива» renders ὄντως, read by hand against Nestle 1904 where uk_ubio's link is wrong: вдовиця правдива = ὄντως χήρα
-refuse	54.5:8.16	54.5:8.15 54.5:8.16			1 Timothy 5:8: uk_ubio's link of «він» to ἔστιν ἀπίστου is wrong, read by hand against Nestle 1904: він is the subject of ἔστιν; ἀπίστου is від невірного (18-19)
-refuse	54.5:8.18 54.5:8.19	54.5:8.15 54.5:8.16			1 Timothy 5:8: uk_ubio's link of «від невірного» to ἔστιν ἀπίστου is wrong, read by hand against Nestle 1904: від невірного is ἀπίστου alone; ἔστιν is він (16)
+refuse	54.5:8.16 54.5:8.18 54.5:8.19	54.5:8.15 54.5:8.16		unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 5:8: uk_ubio's link of «він» to ἔστιν ἀπίστου is wrong, read by hand against Nestle 1904: він is the subject of ἔστιν; ἀπίστου is від невірного (18-19) 1 Timothy 5:8: uk_ubio's link of «від невірного» to ἔστιν ἀπίστου is wrong, read by hand against Nestle 1904: від невірного is ἀπίστου alone; ἔστιν is він (16)
 accept	54.5:8.16	54.5:8.15	renders		1 Timothy 5:8: «він» renders ἔστιν, read by hand against Nestle 1904 where uk_ubio's link is wrong: він гірший = ἔστιν ... χείρων
 accept	54.5:8.18 54.5:8.19	54.5:8.16	renders		1 Timothy 5:8: «від невірного» renders ἀπίστου, read by hand against Nestle 1904 where uk_ubio's link is wrong: від невірного = ἀπίστου
 refuse	54.5:11.4 54.5:11.5	54.5:11.4 54.5:11.5			1 Timothy 5:11: uk_ubio's link of «не приймай» to παραιτοῦ ὅταν is wrong, read by hand against Nestle 1904: ὅταν belongs to ὅταν γὰρ καταστρηνιάσωσιν (бо вони, розпалившися), not to παραιτοῦ
@@ -334,7 +331,7 @@ refuse	54.5:13.19	54.5:13.14			1 Timothy 5:13: uk_ubio's link of «і» to κα�
 refuse	54.5:13.22	54.5:13.16			1 Timothy 5:13: uk_ubio's link of «і» to καὶ is wrong, read by hand against Nestle 1904: і (22) before говорять has no word in the Greek (λαλοῦσαι is a participle); καὶ (16) is і (19)
 accept	54.5:13.17	54.5:13.14	renders		1 Timothy 5:13: «й» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: але й = ἀλλὰ καὶ
 accept	54.5:13.19	54.5:13.16	renders		1 Timothy 5:13: «і» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: і занадто цікаві = καὶ περίεργοι
-refuse	54.5:14.13 54.5:14.14	54.5:14.7			1 Timothy 5:14: uk_ubio's link of «не давали» to μηδεμίαν is wrong, read by hand against Nestle 1904: давали is διδόναι (9), which the link leaves out
+refuse	54.5:14.13 54.5:14.14			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 5:14: uk_ubio's link of «не давали» to μηδεμίαν is wrong, read by hand against Nestle 1904: давали is διδόναι (9), which the link leaves out
 refuse	54.5:14.15	54.5:14.9			1 Timothy 5:14: uk_ubio's link of «противникові» to διδόναι is wrong, read by hand against Nestle 1904: противникові is τῷ ἀντικειμένῳ; διδόναι is давали (14)
 refuse	54.5:14.19 54.5:14.20	54.5:14.11 54.5:14.12 54.5:14.13			1 Timothy 5:14: uk_ubio's link of «для лихомовства» to ἀντικειμένῳ λοιδορίας χάριν is wrong, read by hand against Nestle 1904: ἀντικειμένῳ is противникові (15)
 accept	54.5:14.13	54.5:14.7	renders		1 Timothy 5:14: «не» renders μηδεμίαν, read by hand against Nestle 1904 where uk_ubio's link is wrong: не давали ... ані жадного = μηδεμίαν ... διδόναι
@@ -344,29 +341,27 @@ accept	54.5:14.19 54.5:14.20	54.5:14.12 54.5:14.13	renders		1 Timothy 5:14: «д
 refuse	54.5:16.12 54.5:16.13 54.5:16.14	54.5:16.8 54.5:16.9 54.5:16.10			1 Timothy 5:16: uk_ubio's link of «нехай не обтяжується» to καὶ μὴ βαρείσθω is wrong, read by hand against Nestle 1904: καὶ is а (10), which stands before Церква
 accept	54.5:16.10	54.5:16.8	renders		1 Timothy 5:16: «а» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: а Церква = καὶ ... ἡ ἐκκλησία
 accept	54.5:16.12 54.5:16.13 54.5:16.14	54.5:16.9 54.5:16.10	renders		1 Timothy 5:16: «нехай не обтяжується» renders μὴ βαρείσθω, read by hand against Nestle 1904 where uk_ubio's link is wrong: нехай не обтяжується = μὴ βαρείσθω
-refuse	54.5:17.1	54.5:17.2 54.5:17.3			1 Timothy 5:17: uk_ubio's link of «А» to καλῶς προεστῶτες is wrong, read by hand against Nestle 1904: А has no word in the Greek; καλῶς προεστῶτες is які добре пильнують діла (3-6)
+refuse	54.5:17.1			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 5:17: uk_ubio's link of «А» to καλῶς προεστῶτες is wrong, read by hand against Nestle 1904: А has no word in the Greek; καλῶς προεστῶτες is які добре пильнують діла (3-6)
 refuse	54.5:19.6	54.5:19.6 54.5:19.7			1 Timothy 5:19: uk_ubio's link of «хібащо» to ἐκτὸς εἰ is wrong, read by hand against Nestle 1904: хібащо is the whole ἐκτὸς εἰ μὴ, whose μὴ (8) the link leaves out
 refuse	54.5:19.7 54.5:19.8	54.5:19.8 54.5:19.9 54.5:19.10			1 Timothy 5:19: uk_ubio's link of «при двох» to μὴ ἐπὶ δύο is wrong, read by hand against Nestle 1904: μὴ belongs to ἐκτὸς εἰ μὴ (хібащо)
 accept	54.5:19.6	54.5:19.6 54.5:19.7 54.5:19.8	renders		1 Timothy 5:19: «хібащо» renders ἐκτὸς εἰ μὴ, read by hand against Nestle 1904 where uk_ubio's link is wrong: хібащо = ἐκτὸς εἰ μὴ
 accept	54.5:19.7 54.5:19.8	54.5:19.9 54.5:19.10	renders		1 Timothy 5:19: «при двох» renders ἐπὶ δύο, read by hand against Nestle 1904 where uk_ubio's link is wrong: при двох = ἐπὶ δύο
-refuse	54.6:5.12	54.6:5.11			1 Timothy 6:5: uk_ubio's link of «ніби» to πορισμὸν is wrong, read by hand against Nestle 1904: ніби introduces what they think (πορισμὸν εἶναι); πορισμὸν is зиск (15)
-refuse	54.6:7.1 54.6:7.2	54.6:7.1 54.6:7.2			1 Timothy 6:7: uk_ubio's link of «Бо ми» to οὐδὲν γὰρ is wrong, read by hand against Nestle 1904: Бо is γὰρ alone and ми is the subject of εἰσηνέγκαμεν; οὐδὲν is нічого (7)
-refuse	54.6:7.7	54.6:7.1 54.6:7.2			1 Timothy 6:7: uk_ubio's link of «нічого» to οὐδὲν γὰρ is wrong, read by hand against Nestle 1904: нічого is οὐδὲν alone; γὰρ is Бо (1)
+refuse	54.6:5.12			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 6:5: uk_ubio's link of «ніби» to πορισμὸν is wrong, read by hand against Nestle 1904: ніби introduces what they think (πορισμὸν εἶναι); πορισμὸν is зиск (15)
+refuse	54.6:7.1 54.6:7.2 54.6:7.7	54.6:7.1 54.6:7.2		unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 6:7: uk_ubio's link of «Бо ми» to οὐδὲν γὰρ is wrong, read by hand against Nestle 1904: Бо is γὰρ alone and ми is the subject of εἰσηνέγκαμεν; οὐδὲν is нічого (7) 1 Timothy 6:7: uk_ubio's link of «нічого» to οὐδὲν γὰρ is wrong, read by hand against Nestle 1904: нічого is οὐδὲν alone; γὰρ is Бо (1)
 accept	54.6:7.1	54.6:7.2	renders		1 Timothy 6:7: «Бо» renders γὰρ, read by hand against Nestle 1904 where uk_ubio's link is wrong: Бо = γὰρ
 accept	54.6:7.7	54.6:7.1	renders		1 Timothy 6:7: «нічого» renders οὐδὲν, read by hand against Nestle 1904 where uk_ubio's link is wrong: нічого = οὐδὲν
 accept	54.6:7.2	54.6:7.3	renders		1 Timothy 6:7: «ми» renders εἰσηνέγκαμεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: ми ... принесли = εἰσηνέγκαμεν
 refuse	54.6:8.2 54.6:8.3	54.6:8.1 54.6:8.2			1 Timothy 6:8: uk_ubio's link of «як маєм» to ἔχοντες δὲ is wrong, read by hand against Nestle 1904: δὲ is А (1), which the link leaves out of its words
 accept	54.6:8.1	54.6:8.2	renders		1 Timothy 6:8: «А» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = δὲ
 accept	54.6:8.2 54.6:8.3	54.6:8.1	renders		1 Timothy 6:8: «як маєм» renders ἔχοντες, read by hand against Nestle 1904 where uk_ubio's link is wrong: як маєм = ἔχοντες
-refuse	54.6:9.1	54.6:9.2 54.6:9.3			1 Timothy 6:9: uk_ubio's link of «А» to δὲ βουλόμενοι is wrong, read by hand against Nestle 1904: А is δὲ alone; βουλόμενοι is хто хоче (3-4)
-refuse	54.6:9.3 54.6:9.4	54.6:9.2 54.6:9.3			1 Timothy 6:9: uk_ubio's link of «хто хоче» to δὲ βουλόμενοι is wrong, read by hand against Nestle 1904: хто хоче is βουλόμενοι alone; δὲ is А (1)
+refuse	54.6:9.1 54.6:9.3 54.6:9.4	54.6:9.2 54.6:9.3		unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 6:9: uk_ubio's link of «А» to δὲ βουλόμενοι is wrong, read by hand against Nestle 1904: А is δὲ alone; βουλόμενοι is хто хоче (3-4) 1 Timothy 6:9: uk_ubio's link of «хто хоче» to δὲ βουλόμενοι is wrong, read by hand against Nestle 1904: хто хоче is βουλόμενοι alone; δὲ is А (1)
 accept	54.6:9.1	54.6:9.2	renders		1 Timothy 6:9: «А» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = δὲ
 accept	54.6:9.3 54.6:9.4	54.6:9.3	renders		1 Timothy 6:9: «хто хоче» renders βουλόμενοι, read by hand against Nestle 1904 where uk_ubio's link is wrong: хто хоче = βουλόμενοι
 refuse	54.6:11.11 54.6:11.12	54.6:11.9 54.6:11.10			1 Timothy 6:11: uk_ubio's link of «за правдою» to δὲ δικαιοσύνην is wrong, read by hand against Nestle 1904: δὲ (δίωκε δὲ) is а (9), which the link leaves out
 accept	54.6:11.9	54.6:11.9	renders		1 Timothy 6:11: «а» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: а женися = δίωκε δὲ
 accept	54.6:11.11 54.6:11.12	54.6:11.10	renders		1 Timothy 6:11: «за правдою» renders δικαιοσύνην, read by hand against Nestle 1904 where uk_ubio's link is wrong: за правдою = δικαιοσύνην
-refuse	54.6:16.5	54.6:16.5			1 Timothy 6:16: uk_ubio's link of «і» to φῶς is wrong, read by hand against Nestle 1904: і (і живе) has no word in the Greek; φῶς is світлі (9)
-refuse	54.6:17.10	54.6:17.10 54.6:17.11			1 Timothy 6:17: uk_ubio's link of «і» to μηδὲ ἠλπικέναι is wrong, read by hand against Nestle 1904: і is the conjunction in μηδὲ only; ἠλπικέναι is надії ... клали (12-14)
+refuse	54.6:16.5			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 6:16: uk_ubio's link of «і» to φῶς is wrong, read by hand against Nestle 1904: і (і живе) has no word in the Greek; φῶς is світлі (9)
+refuse	54.6:17.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 Timothy 6:17: uk_ubio's link of «і» to μηδὲ ἠλπικέναι is wrong, read by hand against Nestle 1904: і is the conjunction in μηδὲ only; ἠλπικέναι is надії ... клали (12-14)
 accept	54.6:17.10	54.6:17.10	renders		1 Timothy 6:17: «і» renders μηδὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: і ... не = μηδὲ
 refuse	54.6:18.10 54.6:18.11	54.6:18.8			1 Timothy 6:18: uk_ubio's link of «та пильні» to κοινωνικούς is wrong, read by hand against Nestle 1904: та has no word in the Greek (εὐμεταδότους εἶναι κοινωνικούς is asyndetic)
 accept	54.6:18.11	54.6:18.8	renders		1 Timothy 6:18: «пильні» renders κοινωνικούς, read by hand against Nestle 1904 where uk_ubio's link is wrong: пильні = κοινωνικούς
@@ -405,7 +400,7 @@ refuse	55.1:6.7	55.1:6.16			2 Timothy 1:6: uk_ubio's link of «що» to τῆς
 refuse	55.1:10.3	55.1:10.1 55.1:10.2			2 Timothy 1:10: uk_ubio's link of «об'явилась» to φανερωθεῖσαν δὲ is wrong, read by hand against Nestle 1904: δὲ is А (А тепер), which the link takes from it; об'явилась is φανερωθεῖσαν alone
 accept	55.1:10.3	55.1:10.1	renders		2 Timothy 1:10: «об'явилась» renders φανερωθεῖσαν, read by hand against Nestle 1904 where uk_ubio's link is wrong: об'явилась = φανερωθεῖσαν
 accept	55.1:10.1	55.1:10.2	renders		2 Timothy 1:10: «А» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = δὲ
-refuse	55.2:4.6	55.2:4.6			2 Timothy 2:4: uk_ubio's link of «в» to βίου is wrong, read by hand against Nestle 1904: в (в'яжеться в справи) governs справи (ταῖς πραγματείαις); βίου is життя, already linked
+refuse	55.2:4.6			unfoldingWord's Ukrainian Bible Interlinear Ogienko	2 Timothy 2:4: uk_ubio's link of «в» to βίου is wrong, read by hand against Nestle 1904: в (в'яжеться в справи) governs справи (ταῖς πραγματείαις); βίου is життя, already linked
 refuse	55.2:5.1 55.2:5.2	55.2:5.1			2 Timothy 2:5: uk_ubio's link of «А як» to ἐὰν is wrong, read by hand against Nestle 1904: А is the δὲ of ἐὰν δὲ, which the link leaves out
 accept	55.2:5.2	55.2:5.1	renders		2 Timothy 2:5: «як» renders ἐὰν, read by hand against Nestle 1904 where uk_ubio's link is wrong: як = ἐὰν
 accept	55.2:5.1	55.2:5.2	renders		2 Timothy 2:5: «А» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = δὲ
@@ -415,9 +410,9 @@ refuse	55.2:12.4	55.2:12.3			2 Timothy 2:12: uk_ubio's link of «то» to κα�
 accept	55.2:12.7	55.2:12.3	renders		2 Timothy 2:12: «також» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: також = καὶ
 refuse	55.2:19.1	55.2:19.17			2 Timothy 2:19: uk_ubio's link of «Та» to καί is wrong, read by hand against Nestle 1904: Та opens the verse (Та однако, ὁ μέντοι); καί (17) joins the two sayings and is та (16, Його, та: Нехай)
 accept	55.2:19.16	55.2:19.17	renders		2 Timothy 2:19: «та» renders καί, read by hand against Nestle 1904 where uk_ubio's link is wrong: та (Його, та: Нехай) = καί (17)
-refuse	55.3:4.8	55.3:4.5			2 Timothy 3:4: uk_ubio's link of «аніж» to μᾶλλον is wrong, read by hand against Nestle 1904: аніж (than) is ἢ; μᾶλλον is більше, already linked
+refuse	55.3:4.8			unfoldingWord's Ukrainian Bible Interlinear Ogienko	2 Timothy 3:4: uk_ubio's link of «аніж» to μᾶλλον is wrong, read by hand against Nestle 1904: аніж (than) is ἢ; μᾶλλον is більше, already linked
 accept	55.3:4.8	55.3:4.6	renders		2 Timothy 3:4: «аніж» renders ἢ, read by hand against Nestle 1904 where uk_ubio's link is wrong: аніж = ἢ (μᾶλλον ἢ φιλόθεοι)
-refuse	55.3:6.6	55.3:6.4			2 Timothy 3:6: uk_ubio's link of «ті» to εἰσιν is wrong, read by hand against Nestle 1904: ті (ті, хто пролазить) is οἱ of οἱ ἐνδύνοντες; εἰσιν is належать, already linked
+refuse	55.3:6.6			unfoldingWord's Ukrainian Bible Interlinear Ogienko	2 Timothy 3:6: uk_ubio's link of «ті» to εἰσιν is wrong, read by hand against Nestle 1904: ті (ті, хто пролазить) is οἱ of οἱ ἐνδύνοντες; εἰσιν is належать, already linked
 accept	55.3:6.6	55.3:6.5	renders		2 Timothy 3:6: «ті» renders οἱ, read by hand against Nestle 1904 where uk_ubio's link is wrong: ті = οἱ (οἱ ἐνδύνοντες)
 refuse	55.4:11.4	55.4:11.2			2 Timothy 4:11: uk_ubio's link of «тільки» to ἐστιν is wrong, read by hand against Nestle 1904: тільки belongs to сам тільки (μόνος); ἐστιν is not translated
 accept	55.4:11.4	55.4:11.3	renders		2 Timothy 4:11: «тільки» renders μόνος, read by hand against Nestle 1904 where uk_ubio's link is wrong: сам тільки = μόνος
@@ -432,16 +427,15 @@ refuse	62.1:5.2	62.1:5.2			1 John 1:5: uk_ubio's link of «це» to ἔστιν
 accept	62.1:5.2	62.1:5.3	renders		1 John 1:5: «це» renders αὕτη, read by hand against Nestle 1904 where uk_ubio's link is wrong: це = αὕτη
 refuse	62.1:7.7	62.1:7.9			1 John 1:7: uk_ubio's link of «Сам» to ἐστιν is wrong, read by hand against Nestle 1904: Сам Він is αὐτός; ἐστιν is not translated
 accept	62.1:7.7	62.1:7.8	renders		1 John 1:7: «Сам» renders αὐτός, read by hand against Nestle 1904 where uk_ubio's link is wrong: Сам Він = αὐτός
-refuse	62.1:10.8	62.1:10.6			1 John 1:10: uk_ubio's link of «то» to ψεύστην is wrong, read by hand against Nestle 1904: то only opens the apodosis; ψεύστην is неправдомовця, already linked
-refuse	62.2:7.23 62.2:7.24	62.2:7.22			1 John 2:7: uk_ubio's link of «від початку» to ἠκούσατε is wrong, read by hand against Nestle 1904: the second від початку (чули його від початку) follows the Textus Receptus's ἀπ' ἀρχῆς, which Nestle lacks; ἠκούσατε is чули
-refuse	62.2:11.17	62.2:11.20			1 John 2:11: uk_ubio's link of «куди» to ὑπάγει is wrong, read by hand against Nestle 1904: куди is ποῦ; ὑπάγει is іде, already linked
+refuse	62.1:10.8			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 1:10: uk_ubio's link of «то» to ψεύστην is wrong, read by hand against Nestle 1904: то only opens the apodosis; ψεύστην is неправдомовця, already linked
+refuse	62.2:7.23 62.2:7.24			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 2:7: uk_ubio's link of «від початку» to ἠκούσατε is wrong, read by hand against Nestle 1904: the second від початку (чули його від початку) follows the Textus Receptus's ἀπ' ἀρχῆς, which Nestle lacks; ἠκούσατε is чули
+refuse	62.2:11.17			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 2:11: uk_ubio's link of «куди» to ὑπάγει is wrong, read by hand against Nestle 1904: куди is ποῦ; ὑπάγει is іде, already linked
 accept	62.2:11.17	62.2:11.19	renders		1 John 2:11: «куди» renders ποῦ, read by hand against Nestle 1904 where uk_ubio's link is wrong: куди = ποῦ
-refuse	62.2:16.3	62.2:16.1			1 John 2:16: uk_ubio's link of «що» to ὅτι is wrong, read by hand against Nestle 1904: що (все, що в світі) is τὸ of πᾶν τὸ ἐν τῷ κόσμῳ; ὅτι is бо, already linked
+refuse	62.2:16.3			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 2:16: uk_ubio's link of «що» to ὅτι is wrong, read by hand against Nestle 1904: що (все, що в світі) is τὸ of πᾶν τὸ ἐν τῷ κόσμῳ; ὅτι is бо, already linked
 accept	62.2:16.3	62.2:16.3	renders		1 John 2:16: «що» renders τὸ, read by hand against Nestle 1904 where uk_ubio's link is wrong: що в світі = τὸ ἐν τῷ κόσμῳ
 refuse	62.2:19.11	62.2:19.10			1 John 2:19: uk_ubio's link of «б» to γὰρ is wrong, read by hand against Nestle 1904: б (Коли б були належали) marks the unreal condition; γὰρ is not translated
-refuse	62.2:22.1	62.2:22.2			1 John 2:22: uk_ubio's link of «Хто» to ἐστιν is wrong, read by hand against Nestle 1904: Хто is Τίς; ἐστιν is not translated
+refuse	62.2:22.1 62.2:22.5	62.2:22.2		unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 2:22: uk_ubio's link of «Хто» to ἐστιν is wrong, read by hand against Nestle 1904: Хто is Τίς; ἐστιν is not translated 1 John 2:22: uk_ubio's link of «той» to ἐστιν is wrong, read by hand against Nestle 1904: той (як не той, хто відкидає) is ὁ of ὁ ἀρνούμενος
 accept	62.2:22.1	62.2:22.1	renders		1 John 2:22: «Хто» renders Τίς, read by hand against Nestle 1904 where uk_ubio's link is wrong: Хто = Τίς
-refuse	62.2:22.5	62.2:22.2			1 John 2:22: uk_ubio's link of «той» to ἐστιν is wrong, read by hand against Nestle 1904: той (як не той, хто відкидає) is ὁ of ὁ ἀρνούμενος
 accept	62.2:22.5	62.2:22.7	renders		1 John 2:22: «той» renders ὁ, read by hand against Nestle 1904 where uk_ubio's link is wrong: той = ὁ (ὁ ἀρνούμενος)
 refuse	62.2:25.3	62.2:25.3			1 John 2:25: uk_ubio's link of «та» to ἐστὶν is wrong, read by hand against Nestle 1904: та (оце та обітниця) is the article ἡ; ἐστὶν is not translated
 accept	62.2:25.3	62.2:25.4	renders		1 John 2:25: «та» renders ἡ, read by hand against Nestle 1904 where uk_ubio's link is wrong: та обітниця = ἡ ἐπαγγελία
@@ -454,9 +448,9 @@ refuse	62.3:12.14	62.3:12.25			1 John 3:12: uk_ubio's link of «А» to δὲ is
 refuse	62.3:12.25	62.3:12.13			1 John 3:12: uk_ubio's link of «а» to καὶ is wrong, read by hand against Nestle 1904: а (а брата його праведні) is δὲ (25); καὶ (13) is А (А за що)
 accept	62.3:12.14	62.3:12.13	renders		1 John 3:12: «А» renders καὶ, read by hand against Nestle 1904 where uk_ubio's link is wrong: А = καὶ (13)
 accept	62.3:12.25	62.3:12.25	renders		1 John 3:12: «а» renders δὲ, read by hand against Nestle 1904 where uk_ubio's link is wrong: а = δὲ (25)
-refuse	62.3:14.13 62.3:14.14	62.3:14.16			1 John 3:14: uk_ubio's link of «А хто» to μὴ is wrong, read by hand against Nestle 1904: хто is ὁ of ὁ μὴ ἀγαπῶν; μὴ is не, already linked
+refuse	62.3:14.13 62.3:14.14			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 3:14: uk_ubio's link of «А хто» to μὴ is wrong, read by hand against Nestle 1904: хто is ὁ of ὁ μὴ ἀγαπῶν; μὴ is не, already linked
 accept	62.3:14.14	62.3:14.15	renders		1 John 3:14: «хто» renders ὁ, read by hand against Nestle 1904 where uk_ubio's link is wrong: хто = ὁ (ὁ μὴ ἀγαπῶν)
-refuse	62.4:2.13	62.4:2.20			1 John 4:2: uk_ubio's link of «був» to ἐστιν is wrong, read by hand against Nestle 1904: був belongs to прийшов був (ἐληλυθότα); ἐστιν is той (той від Бога)
+refuse	62.4:2.13			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 4:2: uk_ubio's link of «був» to ἐστιν is wrong, read by hand against Nestle 1904: був belongs to прийшов був (ἐληλυθότα); ἐστιν is той (той від Бога)
 accept	62.4:2.13	62.4:2.16	renders		1 John 4:2: «був» renders ἐληλυθότα, read by hand against Nestle 1904 where uk_ubio's link is wrong: прийшов був = ἐληλυθότα
 refuse	62.4:2.9 62.4:2.10	62.4:2.12			1 John 4:2: uk_ubio's link of «що Ісус» to Ἰησοῦν is wrong, read by hand against Nestle 1904: що (визнає, що Ісус) renders the participle construction, not Ἰησοῦν
 accept	62.4:2.10	62.4:2.12	renders		1 John 4:2: «Ісус» renders Ἰησοῦν, read by hand against Nestle 1904 where uk_ubio's link is wrong: Ісус = Ἰησοῦν
@@ -469,7 +463,7 @@ refuse	62.4:6.4 62.4:6.5	62.4:6.5 62.4:6.6 62.4:6.7			1 John 4:6: uk_ubio's link
 accept	62.4:6.4 62.4:6.5	62.4:6.6 62.4:6.7	renders		1 John 4:6: «хто знає» renders ὁ γινώσκων, read by hand against Nestle 1904 where uk_ubio's link is wrong: хто знає = ὁ γινώσκων
 refuse	62.4:17.7	62.4:17.21			1 John 4:17: uk_ubio's link of «ми» to ἡμεῖς is wrong, read by hand against Nestle 1904: ми (так що ми маємо) is the subject of ἔχωμεν; ἡμεῖς is ми (18) of такі й ми
 accept	62.4:17.18	62.4:17.21	renders		1 John 4:17: «ми» renders ἡμεῖς, read by hand against Nestle 1904 where uk_ubio's link is wrong: ми (такі й ми) = ἡμεῖς
-refuse	62.5:2.2	62.5:2.3			1 John 5:2: uk_ubio's link of «ми» to γινώσκομεν is wrong, read by hand against Nestle 1904: ми (Що ми любимо) is the subject of ἀγαπῶμεν (5); γινώσκομεν is дізнаємося
+refuse	62.5:2.2			unfoldingWord's Ukrainian Bible Interlinear Ogienko	1 John 5:2: uk_ubio's link of «ми» to γινώσκομεν is wrong, read by hand against Nestle 1904: ми (Що ми любимо) is the subject of ἀγαπῶμεν (5); γινώσκομεν is дізнаємося
 accept	62.5:2.2	62.5:2.5	renders		1 John 5:2: «ми» renders ἀγαπῶμεν, read by hand against Nestle 1904 where uk_ubio's link is wrong: ми любимо = ἀγαπῶμεν (5)
 refuse	62.5:8.1	62.5:8.3			1 John 5:8: uk_ubio's link of «І» to καὶ is wrong, read by hand against Nestle 1904: І (І троє свідкують на землі) opens the Textus Receptus's longer text, which Nestle lacks; καὶ (3) is і (7, дух і вода)
 refuse	62.5:8.7	62.5:8.6			1 John 5:8: uk_ubio's link of «і» to καὶ is wrong, read by hand against Nestle 1904: і (дух і вода) is καὶ (3); καὶ (6) is і (9, вода і кров)

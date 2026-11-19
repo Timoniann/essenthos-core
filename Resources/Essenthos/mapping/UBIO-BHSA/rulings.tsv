@@ -84,7 +84,7 @@ refuse	26.9:5.15	26.9:5.15			Ezekiel 9:5: drawn from the Strong numbers the Open
 accept	26.9:5.15	26.9:5.14	renders		Ezekiel 9:5: drawn from the Strong numbers the Open Hebrew Bible prints one word along, where it joins the relative שֶׁ with the next word, so the links after it stand one word early; 'нехай ... не' renders the ketiv על, read אַל (read by hand)
 refuse	21.1:7.13	21.1:7.15			Ecclesiastes 1:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (הַ (H9009) נְּחָלִים֙ (H5158) beside שֶׁ֤ (H7945))
 accept	21.1:7.13	21.1:7.15 21.1:7.16 21.1:7.17	renders		Ecclesiastes 1:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (הַ (H9009) נְּחָלִים֙ (H5158) beside שֶׁ֤ (H7945))
-refuse	17.1:1.19	17.1:1.20			Esth 1:1: uk_ubio's link of «і» to מְדִינָֽה is wrong, read by hand against BHSA: і has no word in the Hebrew numeral (שֶׁבַע וְעֶשְׂרִים וּמֵאָה, whose two וְ are in the links of сто й and двадцять), not the noun מְדִינָה (округ)
+refuse	17.1:1.19			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 1:1: uk_ubio's link of «і» to מְדִינָֽה is wrong, read by hand against BHSA: і has no word in the Hebrew numeral (שֶׁבַע וְעֶשְׂרִים וּמֵאָה, whose two וְ are in the links of сто й and двадцять), not the noun מְדִינָה (округ)
 refuse	17.1:2.1 17.1:2.2 17.1:2.3	17.1:2.1 17.1:2.2 17.1:2.3			Esth 1:2: uk_ubio's link of «за тих днів» to בַּיָּמִ֖ים is wrong, read by hand against BHSA: тих is הָהֵם, not part of בַּיָּמִים; the link leaves its own partner out
 accept	17.1:2.1 17.1:2.3	17.1:2.1 17.1:2.2 17.1:2.3	renders		Esth 1:2: «за днів» renders בַּיָּמִ֖ים, read by hand against BHSA where uk_ubio's link is wrong: за днів = בַּיָּמִים
 accept	17.1:2.2	17.1:2.4 17.1:2.5	renders		Esth 1:2: «тих» renders הָהֵ֑ם, read by hand against BHSA where uk_ubio's link is wrong: тих = הָהֵם
@@ -94,7 +94,7 @@ refuse	17.1:2.12	17.1:2.14			Esth 1:2: uk_ubio's link of «на» to אֲשֶׁ�
 accept	17.1:2.12	17.1:2.15	renders		Esth 1:2: «на» renders בְּ, read by hand against BHSA where uk_ubio's link is wrong: на = בְּ
 refuse	17.1:3.14	17.1:3.23 17.1:3.24			Esth 1:3: uk_ubio's link of «своїх» to לְפָנָֽיו is wrong, read by hand against BHSA: своїх is the suffix of עֲבָדָיו (своїх слуг), not לְפָנָיו (before him), which the Ohienko leaves unrendered
 accept	17.1:3.14	17.1:3.11 17.1:3.12	renders		Esth 1:3: «своїх» renders וַעֲבָדָ֑יו, read by hand against BHSA where uk_ubio's link is wrong: своїх слуг = עֲבָדָיו with its suffix
-refuse	17.1:7.4	17.1:7.6 17.1:7.7 17.1:7.8 17.1:7.9			Esth 1:7: uk_ubio's link of «в» to וְכֵלִ֖ים מִכֵּלִ֣ים is wrong, read by hand against BHSA: this в is the first one (в золотому посуді = בִּכְלֵי זָהָב); the occurrences of в are swapped
+refuse	17.1:7.4			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 1:7: uk_ubio's link of «в» to וְכֵלִ֖ים מִכֵּלִ֣ים is wrong, read by hand against BHSA: this в is the first one (в золотому посуді = בִּכְלֵי זָהָב); the occurrences of в are swapped
 refuse	17.1:7.6 17.1:7.7	17.1:7.3 17.1:7.4			Esth 1:7: uk_ubio's link of «посуді в» to בִּכְלֵ֣י is wrong, read by hand against BHSA: посуді в pairs the first посуді with the second в; the occurrences of в are swapped
 accept	17.1:7.4 17.1:7.6	17.1:7.3 17.1:7.4	renders		Esth 1:7: «в посуді» renders בִּכְלֵ֣י, read by hand against BHSA where uk_ubio's link is wrong: в золотому посуді: в посуді = בִּכְלֵי
 accept	17.1:7.7	17.1:7.6 17.1:7.7 17.1:7.8 17.1:7.9	renders		Esth 1:7: «в» renders וְכֵלִ֖ים מִכֵּלִ֣ים, read by hand against BHSA where uk_ubio's link is wrong: the second в belongs to в посуді все різному = וְכֵלִים מִכֵּלִים שׁוֹנִים
@@ -113,9 +113,9 @@ refuse	17.1:17.8 17.1:17.9 17.1:17.10	17.1:17.10 17.1:17.11			Esth 1:17: uk_ubio
 refuse	17.1:17.11 17.1:17.12 17.1:17.13	17.1:17.12			Esth 1:17: uk_ubio's link of «погордження їхніх чоловіків» to בַּעְלֵיהֶ֖ן is wrong, read by hand against BHSA: погордження is לְהַבְזוֹת (despise), not בַּעְלֵיהֶן (їхніх чоловіків)
 accept	17.1:17.8 17.1:17.9 17.1:17.10 17.1:17.11	17.1:17.10 17.1:17.11	renders		Esth 1:17: «і спричиниться до погордження» renders לְהַבְזֹ֥ות, read by hand against BHSA where uk_ubio's link is wrong: і спричиниться до погордження = לְהַבְזוֹת
 accept	17.1:17.12 17.1:17.13	17.1:17.12	renders		Esth 1:17: «їхніх чоловіків» renders בַּעְלֵיהֶ֖ן, read by hand against BHSA where uk_ubio's link is wrong: їхніх чоловіків = בַּעְלֵיהֶן
-refuse	17.1:19.26	17.1:19.22			Esth 1:19: uk_ubio's link of «більш» to אֲשֶׁ֨ר is wrong, read by hand against BHSA: більш (більш не приходила) has no word in the Hebrew; אֲשֶׁר is щоб
-refuse	17.1:20.9	17.1:20.8 17.1:20.9			Esth 1:20: uk_ubio's link of «відомим» to בְּכָל is wrong, read by hand against BHSA: відомим (зробить відомим) has no word in the Hebrew; בְּכָל is у всім
-refuse	17.1:20.10	17.1:20.10			Esth 1:20: uk_ubio's link of «у» to מַלְכוּתֹ֔ו is wrong, read by hand against BHSA: у is the בְּ of בְּכָל (у всім), not מַלְכוּתוֹ (своїм царстві)
+refuse	17.1:19.26			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 1:19: uk_ubio's link of «більш» to אֲשֶׁ֨ר is wrong, read by hand against BHSA: більш (більш не приходила) has no word in the Hebrew; אֲשֶׁר is щоб
+refuse	17.1:20.9			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 1:20: uk_ubio's link of «відомим» to בְּכָל is wrong, read by hand against BHSA: відомим (зробить відомим) has no word in the Hebrew; בְּכָל is у всім
+refuse	17.1:20.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 1:20: uk_ubio's link of «у» to מַלְכוּתֹ֔ו is wrong, read by hand against BHSA: у is the בְּ of בְּכָל (у всім), not מַלְכוּתוֹ (своїм царстві)
 accept	17.1:20.10 17.1:20.11	17.1:20.8 17.1:20.9	renders		Esth 1:20: «у всім» renders בְּכָל, read by hand against BHSA where uk_ubio's link is wrong: у всім = בְּכָל
 refuse	17.1:22.13	17.1:22.15 17.1:22.16			Esth 1:22: uk_ubio's link of «її» to וְאֶל is wrong, read by hand against BHSA: її is the suffix of כִּכְתָבָהּ (письмом її), not וְאֶל, which is і до
 accept	17.1:22.12 17.1:22.13	17.1:22.13 17.1:22.14	renders		Esth 1:22: «письмом її» renders כִּכְתָבָ֔הּ, read by hand against BHSA where uk_ubio's link is wrong: письмом її = כִּכְתָבָהּ
@@ -128,7 +128,7 @@ refuse	17.2:4.7 17.2:4.8 17.2:4.9	17.2:4.8 17.2:4.9			Esth 2:4: uk_ubio's link o
 accept	17.2:4.5 17.2:4.6	17.2:4.5	renders		Esth 2:4: «буде найкраща» renders תִּיטַב֙, read by hand against BHSA where uk_ubio's link is wrong: буде найкраща = תִּיטַב
 accept	17.2:4.7 17.2:4.9	17.2:4.6 17.2:4.7	renders		Esth 2:4: «в очах» renders בְּעֵינֵ֣י, read by hand against BHSA where uk_ubio's link is wrong: в очах = בְּעֵינֵי
 accept	17.2:4.8	17.2:4.8 17.2:4.9	renders		Esth 2:4: «царських» renders הַמֶּ֔לֶךְ, read by hand against BHSA where uk_ubio's link is wrong: царських = הַמֶּלֶךְ
-refuse	17.2:9.26	17.2:9.19 17.2:9.20			Esth 2:9: uk_ubio's link of «та» to לָתֵ֣ת is wrong, read by hand against BHSA: та (та дати їй сімох) is the וְ of וְאֵת שֶׁבַע, not the earlier לָתֵת (видати)
+refuse	17.2:9.26			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 2:9: uk_ubio's link of «та» to לָתֵ֣ת is wrong, read by hand against BHSA: та (та дати їй сімох) is the וְ of וְאֵת שֶׁבַע, not the earlier לָתֵת (видати)
 accept	17.2:9.26	17.2:9.22 17.2:9.23	renders		Esth 2:9: «та» renders וְאֵת֙, read by hand against BHSA where uk_ubio's link is wrong: та = וְאֵת before שֶׁבַע
 refuse	17.2:9.35	17.2:9.22 17.2:9.23			Esth 2:9: uk_ubio's link of «І» to וְאֵת֙ is wrong, read by hand against BHSA: І (І він перемістив) is the וַ of וַיְשַׁנֶּהָ, not the וְאֵת before שֶׁבַע (та)
 accept	17.2:9.35 17.2:9.36 17.2:9.37 17.2:9.38	17.2:9.36 17.2:9.37	renders		Esth 2:9: «І він перемістив її» renders וַיְשַׁנֶּ֧הָ, read by hand against BHSA where uk_ubio's link is wrong: І він перемістив її = וַיְשַׁנֶּהָ
@@ -145,14 +145,14 @@ accept	17.2:13.8	17.2:13.14	renders		Esth 2:13: «давалося» renders י�
 accept	17.2:13.9	17.2:13.15	renders		Esth 2:13: «їй» renders לָהּ֙, read by hand against BHSA where uk_ubio's link is wrong: їй = לָהּ
 accept	17.2:13.14 17.2:13.15 17.2:13.16	17.2:13.16 17.2:13.17	renders		Esth 2:13: «щоб воно йшло» renders לָבֹ֣וא, read by hand against BHSA where uk_ubio's link is wrong: щоб воно йшло = לָבוֹא
 refuse	17.2:13.19	17.2:13.23			Esth 2:13: uk_ubio's link of «з» to עַד is wrong, read by hand against BHSA: з (з дому жінок) is the מִ of מִבֵּית; עַד is до; the two prepositions are swapped
-refuse	17.2:13.22	17.2:13.19 17.2:13.20			Esth 2:13: uk_ubio's link of «до» to מִבֵּ֥ית is wrong, read by hand against BHSA: до (до дому царського) is עַד, not מִבֵּית; the two prepositions are swapped
+refuse	17.2:13.22			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 2:13: uk_ubio's link of «до» to מִבֵּ֥ית is wrong, read by hand against BHSA: до (до дому царського) is עַד, not מִבֵּית; the two prepositions are swapped
 accept	17.2:13.19 17.2:13.20	17.2:13.19 17.2:13.20	renders		Esth 2:13: «з дому» renders מִבֵּ֥ית, read by hand against BHSA where uk_ubio's link is wrong: з дому = מִבֵּית
 accept	17.2:13.22	17.2:13.23	renders		Esth 2:13: «до» renders עַד, read by hand against BHSA where uk_ubio's link is wrong: до = עַד
 refuse	17.2:14.19 17.2:14.20	17.2:14.28			Esth 2:14: uk_ubio's link of «Вона вже» to עֹוד֙ is wrong, read by hand against BHSA: Вона is the subject of תָבוֹא (входила); only вже is עוֹד
 accept	17.2:14.20	17.2:14.28	renders		Esth 2:14: «вже» renders עֹוד֙, read by hand against BHSA where uk_ubio's link is wrong: вже = עוֹד
 refuse	17.2:15.21 17.2:15.22	17.2:15.22			Esth 2:15: uk_ubio's link of «вона нічого» to דָּבָ֔ר is wrong, read by hand against BHSA: вона is the subject of בִקְשָׁה (жадала); only нічого is דָּבָר
 accept	17.2:15.22	17.2:15.22	renders		Esth 2:15: «нічого» renders דָּבָ֔ר, read by hand against BHSA where uk_ubio's link is wrong: нічого = דָּבָר
-refuse	17.2:15.27	17.2:15.23			Esth 2:15: uk_ubio's link of «того» to כִּ֠י is wrong, read by hand against BHSA: того is the object of жадала (the אֶת אֲשֶׁר), not כִּי, which is як
+refuse	17.2:15.27			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 2:15: uk_ubio's link of «того» to כִּ֠י is wrong, read by hand against BHSA: того is the object of жадала (the אֶת אֲשֶׁר), not כִּי, which is як
 refuse	17.2:18.21 17.2:18.22	17.2:18.20			Esth 2:18: uk_ubio's link of «і дав» to עָשָׂ֔ה is wrong, read by hand against BHSA: і дав is וַיִּתֵּן; עָשָׂה is the зробив of зробив полегшення
 refuse	17.2:18.23	17.2:18.21 17.2:18.22			Esth 2:18: uk_ubio's link of «дарунка» to וַיִּתֵּ֥ן is wrong, read by hand against BHSA: дарунка is מַשְׂאֵת, not וַיִּתֵּן (і дав)
 accept	17.2:18.16 17.2:18.18	17.2:18.15 17.2:18.16	renders		Esth 2:18: «і полегшення» renders וַהֲנָחָ֤ה, read by hand against BHSA where uk_ubio's link is wrong: і полегшення = וַהֲנָחָה
@@ -164,7 +164,7 @@ refuse	17.2:19.10 17.2:19.11	17.2:19.9 17.2:19.10			Esth 2:19: uk_ubio's link of
 refuse	17.2:19.12	17.2:19.11 17.2:19.12			Esth 2:19: uk_ubio's link of «брамі» to הַמֶּֽלֶךְ is wrong, read by hand against BHSA: брамі is שַׁעַר, not הַמֶּלֶךְ; the two nouns are swapped
 accept	17.2:19.10 17.2:19.12	17.2:19.9 17.2:19.10	renders		Esth 2:19: «при брамі» renders בְּשַֽׁעַר, read by hand against BHSA where uk_ubio's link is wrong: при брамі = בְּשַׁעַר
 accept	17.2:19.11	17.2:19.11 17.2:19.12	renders		Esth 2:19: «царській» renders הַמֶּֽלֶךְ, read by hand against BHSA where uk_ubio's link is wrong: царській = הַמֶּלֶךְ
-refuse	17.2:20.16	17.2:20.15			Esth 2:20: uk_ubio's link of «бо» to מַאֲמַ֤ר is wrong, read by hand against BHSA: бо has no word in the Hebrew; מַאֲמַר is слово
+refuse	17.2:20.16			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 2:20: uk_ubio's link of «бо» to מַאֲמַ֤ר is wrong, read by hand against BHSA: бо has no word in the Hebrew; מַאֲמַר is слово
 refuse	17.3:4.10	17.3:4.27			Esth 3:4: uk_ubio's link of «він» to ה֥וּא is wrong, read by hand against BHSA: він (а він не слухався) is the subject of שָׁמַע; הוּא is the він of що він юдеянин, which the link leaves out
 accept	17.3:4.31	17.3:4.27	renders		Esth 3:4: «він» renders ה֥וּא, read by hand against BHSA where uk_ubio's link is wrong: він (що він юдеянин) = הוּא
 refuse	17.3:4.12 17.3:4.13	17.3:4.11			Esth 3:4: uk_ubio's link of «слухався їх» to שָׁמַ֖ע is wrong, read by hand against BHSA: їх is אֲלֵיהֶם, not part of שָׁמַע
@@ -172,7 +172,7 @@ refuse	17.3:4.14	17.3:4.12			Esth 3:4: uk_ubio's link of «то» to אֲלֵי�
 accept	17.3:4.12	17.3:4.11	renders		Esth 3:4: «слухався» renders שָׁמַ֖ע, read by hand against BHSA where uk_ubio's link is wrong: слухався = שָׁמַע
 accept	17.3:4.13	17.3:4.12	renders		Esth 3:4: «їх» renders אֲלֵיהֶ֑ם, read by hand against BHSA where uk_ubio's link is wrong: їх = אֲלֵיהֶם
 refuse	17.3:7.17 17.3:7.18	17.3:7.27 17.3:7.28			Esth 3:7: uk_ubio's link of «дня на» to לְיֹ֛ום is wrong, read by hand against BHSA: дня belongs to із дня (מִיּוֹם); לְיוֹם is на день; дня and день are swapped
-refuse	17.3:7.19	17.3:7.25 17.3:7.26			Esth 3:7: uk_ubio's link of «день» to מִיֹּ֧ום is wrong, read by hand against BHSA: день belongs to на день (לְיוֹם), not מִיּוֹם; дня and день are swapped
+refuse	17.3:7.19			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 3:7: uk_ubio's link of «день» to מִיֹּ֧ום is wrong, read by hand against BHSA: день belongs to на день (לְיוֹם), not מִיּוֹם; дня and день are swapped
 accept	17.3:7.16 17.3:7.17	17.3:7.25 17.3:7.26	renders		Esth 3:7: «із дня» renders מִיֹּ֧ום, read by hand against BHSA where uk_ubio's link is wrong: із дня = מִיּוֹם
 accept	17.3:7.18 17.3:7.19	17.3:7.27 17.3:7.28	renders		Esth 3:7: «на день» renders לְיֹ֛ום, read by hand against BHSA where uk_ubio's link is wrong: на день = לְיוֹם
 refuse	17.3:15.19	17.3:15.25 17.3:15.26 17.3:15.27			Esth 3:15: uk_ubio's link of «пиття» to וְהָעִ֥יר is wrong, read by hand against BHSA: пиття is שְׁתּוֹת (до пиття = לִשְׁתּוֹת), not וְהָעִיר, which is а місто
@@ -184,18 +184,16 @@ refuse	17.4:3.14	17.4:3.14			Esth 4:3: uk_ubio's link of «були» to מַג�
 accept	17.4:3.4	17.4:3.4 17.4:3.5 17.4:3.6	renders		Esth 4:3: «окрузі» renders מְדִינָ֣ה וּמְדִינָ֗ה, read by hand against BHSA where uk_ubio's link is wrong: окрузі = the distributive מְדִינָה וּמְדִינָה (в кожній окрузі)
 accept	17.4:3.6	17.4:3.7	renders		Esth 4:3: «місці» renders מְקֹום֙, read by hand against BHSA where uk_ubio's link is wrong: місці = מְקוֹם
 accept	17.4:3.8	17.4:3.14	renders		Esth 4:3: «доходило» renders מַגִּ֔יעַ, read by hand against BHSA where uk_ubio's link is wrong: доходило = מַגִּיעַ
-refuse	17.4:4.11	17.4:4.26 17.4:4.27 17.4:4.28 17.4:4.29 17.4:4.30			Esth 4:4: uk_ubio's link of «їй» to מֵעָלָ֖יו וְלֹ֥א קִבֵּֽל is wrong, read by hand against BHSA: їй (донесли їй) is לָהּ, not מֵעָלָיו וְלֹא קִבֵּל at the end of the verse
+refuse	17.4:4.11 17.4:4.29 17.4:4.30 17.4:4.31 17.4:4.32	17.4:4.26 17.4:4.27 17.4:4.28 17.4:4.29 17.4:4.30		unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 4:4: uk_ubio's link of «їй» to מֵעָלָ֖יו וְלֹ֥א קִבֵּֽל is wrong, read by hand against BHSA: їй (донесли їй) is לָהּ, not מֵעָלָיו וְלֹא קִבֵּל at the end of the verse Esth 4:4: uk_ubio's link of «та він не прийняв» to מֵעָלָ֖יו וְלֹ֥א קִבֵּֽל is wrong, read by hand against BHSA: מֵעָלָיו is з нього (зняти з нього); та він не прийняв is וְלֹא קִבֵּל
 accept	17.4:4.11	17.4:4.9	renders		Esth 4:4: «їй» renders לָ֔הּ, read by hand against BHSA where uk_ubio's link is wrong: їй = לָהּ
-refuse	17.4:4.14	17.4:4.9 17.4:4.10 17.4:4.11			Esth 4:4: uk_ubio's link of «І» to לָ֔הּ וַתִּתְחַלְחַ֥ל is wrong, read by hand against BHSA: לָהּ belongs to донесли їй; І затремтіла is וַתִּתְחַלְחַל alone
-refuse	17.4:4.16	17.4:4.9 17.4:4.10 17.4:4.11			Esth 4:4: uk_ubio's link of «затремтіла» to לָ֔הּ וַתִּתְחַלְחַ֥ל is wrong, read by hand against BHSA: לָהּ belongs to донесли їй; І затремтіла is וַתִּתְחַלְחַל alone
+refuse	17.4:4.14 17.4:4.16	17.4:4.9 17.4:4.10 17.4:4.11		unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 4:4: uk_ubio's link of «І» to לָ֔הּ וַתִּתְחַלְחַ֥ל is wrong, read by hand against BHSA: לָהּ belongs to донесли їй; І затремтіла is וַתִּתְחַלְחַל alone Esth 4:4: uk_ubio's link of «затремтіла» to לָ֔הּ וַתִּתְחַלְחַ֥ל is wrong, read by hand against BHSA: לָהּ belongs to донесли їй; І затремтіла is וַתִּתְחַלְחַל alone
 accept	17.4:4.14 17.4:4.16	17.4:4.10 17.4:4.11	renders		Esth 4:4: «І затремтіла» renders וַתִּתְחַלְחַ֥ל, read by hand against BHSA where uk_ubio's link is wrong: І затремтіла = וַתִּתְחַלְחַל
-refuse	17.4:4.29 17.4:4.30 17.4:4.31 17.4:4.32	17.4:4.26 17.4:4.27 17.4:4.28 17.4:4.29 17.4:4.30			Esth 4:4: uk_ubio's link of «та він не прийняв» to מֵעָלָ֖יו וְלֹ֥א קִבֵּֽל is wrong, read by hand against BHSA: מֵעָלָיו is з нього (зняти з нього); та він не прийняв is וְלֹא קִבֵּל
 accept	17.4:4.29 17.4:4.30 17.4:4.31 17.4:4.32	17.4:4.28 17.4:4.29 17.4:4.30	renders		Esth 4:4: «та він не прийняв» renders וְלֹ֥א קִבֵּֽל, read by hand against BHSA where uk_ubio's link is wrong: та він не прийняв = וְלֹא קִבֵּל
 accept	17.4:4.23 17.4:4.24 17.4:4.25 17.4:4.26	17.4:4.22 17.4:4.23 17.4:4.24 17.4:4.26 17.4:4.27	renders		Esth 4:4: «та зняти з нього» renders וּלְהָסִ֥יר מֵעָלָ֖יו, read by hand against BHSA where uk_ubio's link is wrong: та зняти з нього = וּלְהָסִיר ... מֵעָלָיו
 refuse	17.4:8.2 17.4:8.3 17.4:8.4 17.4:8.5	17.4:8.3			Esth 4:8: uk_ubio's link of «він дав йому відписа» to פַּתְשֶׁ֣גֶן is wrong, read by hand against BHSA: він дав йому is נָתַן לוֹ, which the link leaves out; only відписа is פַּתְשֶׁגֶן
 refuse	17.4:8.19 17.4:8.20	17.4:8.22			Esth 4:8: uk_ubio's link of «та щоб» to לָ֑הּ is wrong, read by hand against BHSA: та щоб is the וּלְ of וּלְהַגִּיד, not לָהּ (їй)
 refuse	17.4:8.22	17.4:8.14			Esth 4:8: uk_ubio's link of «їй» to לֹ֔ו is wrong, read by hand against BHSA: їй (доніс їй) is לָהּ; לוֹ is the йому of дав йому
-refuse	17.4:8.23 17.4:8.24	17.4:8.27 17.4:8.28			Esth 4:8: uk_ubio's link of «і щоб» to לָבֹ֨וא is wrong, read by hand against BHSA: і щоб is the וּלְ of וּלְצַוּוֹת, not לָבוֹא (піти)
+refuse	17.4:8.23 17.4:8.24			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 4:8: uk_ubio's link of «і щоб» to לָבֹ֨וא is wrong, read by hand against BHSA: і щоб is the וּלְ of וּלְצַוּוֹת, not לָבוֹא (піти)
 accept	17.4:8.2 17.4:8.3	17.4:8.13	renders		Esth 4:8: «він дав» renders נָ֣תַן, read by hand against BHSA where uk_ubio's link is wrong: він дав = נָתַן
 accept	17.4:8.4	17.4:8.14	renders		Esth 4:8: «йому» renders לֹ֔ו, read by hand against BHSA where uk_ubio's link is wrong: йому = לוֹ
 accept	17.4:8.5	17.4:8.3	renders		Esth 4:8: «відписа» renders פַּתְשֶׁ֣גֶן, read by hand against BHSA where uk_ubio's link is wrong: відписа = פַּתְשֶׁגֶן
@@ -214,8 +212,8 @@ refuse	17.4:11.15	17.4:11.16 17.4:11.17			Esth 4:11: uk_ubio's link of «при�
 accept	17.4:11.14	17.4:11.16	renders		Esth 4:11: «що» renders אֲשֶׁ֣ר, read by hand against BHSA where uk_ubio's link is wrong: що = אֲשֶׁר before יָבוֹא
 accept	17.4:11.15	17.4:11.17	renders		Esth 4:11: «прийде» renders יָבֹֽוא, read by hand against BHSA where uk_ubio's link is wrong: прийде = יָבוֹא
 refuse	17.4:11.36	17.4:11.47 17.4:11.48			Esth 4:11: uk_ubio's link of «він» to וַאֲנִ֗י is wrong, read by hand against BHSA: він (і буде він жити) is the subject of חָיָה; וַאֲנִי is А мене
-refuse	17.4:11.38	17.4:11.49			Esth 4:11: uk_ubio's link of «А» to לֹ֤א is wrong, read by hand against BHSA: А is the וַ of וַאֲנִי, not לֹא, which is не
-refuse	17.4:11.39	17.4:11.50			Esth 4:11: uk_ubio's link of «мене» to נִקְרֵ֨אתִי֙ is wrong, read by hand against BHSA: мене is אֲנִי (וַאֲנִי לֹא נִקְרֵאתִי); кличуть is נִקְרֵאתִי
+refuse	17.4:11.38			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 4:11: uk_ubio's link of «А» to לֹ֤א is wrong, read by hand against BHSA: А is the וַ of וַאֲנִי, not לֹא, which is не
+refuse	17.4:11.39			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 4:11: uk_ubio's link of «мене» to נִקְרֵ֨אתִי֙ is wrong, read by hand against BHSA: мене is אֲנִי (וַאֲנִי לֹא נִקְרֵאתִי); кличуть is נִקְרֵאתִי
 accept	17.4:11.38 17.4:11.39	17.4:11.47 17.4:11.48	renders		Esth 4:11: «А мене» renders וַאֲנִ֗י, read by hand against BHSA where uk_ubio's link is wrong: А мене = וַאֲנִי
 refuse	17.4:14.29 17.4:14.30 17.4:14.31	17.4:14.29			Esth 4:14: uk_ubio's link of «чи не на» to אִם is wrong, read by hand against BHSA: на (на час) is the לְ of לְעֵת, not part of אִם (чи не)
 accept	17.4:14.29 17.4:14.30	17.4:14.29	renders		Esth 4:14: «чи не» renders אִם, read by hand against BHSA where uk_ubio's link is wrong: чи не = אִם
@@ -233,7 +231,7 @@ refuse	17.7:5.12	17.7:5.14			Esth 7:5: uk_ubio's link of «він» to זֶה֙ 
 accept	17.7:5.11	17.7:5.14	renders		Esth 7:5: «то» renders זֶה֙, read by hand against BHSA where uk_ubio's link is wrong: то = זֶה
 accept	17.7:5.12	17.7:5.13	renders		Esth 7:5: «він» renders ה֥וּא, read by hand against BHSA where uk_ubio's link is wrong: він = הוּא
 refuse	17.7:5.17	17.7:5.18			Esth 7:5: uk_ubio's link of «його» to ה֔וּא is wrong, read by hand against BHSA: його (його серце) is the suffix of לִבּוֹ; הוּא belongs with זֶה to той
-refuse	17.7:5.20	17.7:5.21			Esth 7:5: uk_ubio's link of «його» to לִבֹּ֖ו is wrong, read by hand against BHSA: the second його (наповнило його) is the suffix of מְלָאוֹ, not לִבּוֹ
+refuse	17.7:5.20			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 7:5: uk_ubio's link of «його» to לִבֹּ֖ו is wrong, read by hand against BHSA: the second його (наповнило його) is the suffix of מְלָאוֹ, not לִבּוֹ
 accept	17.7:5.15	17.7:5.17 17.7:5.18	renders		Esth 7:5: «той» renders זֶ֣ה ה֔וּא, read by hand against BHSA where uk_ubio's link is wrong: той = זֶה הוּא
 accept	17.7:5.17 17.7:5.18	17.7:5.21	renders		Esth 7:5: «його серце» renders לִבֹּ֖ו, read by hand against BHSA where uk_ubio's link is wrong: його серце = לִבּוֹ
 accept	17.7:5.19 17.7:5.20	17.7:5.20	renders		Esth 7:5: «наповнило його» renders מְלָאֹ֥ו, read by hand against BHSA where uk_ubio's link is wrong: наповнило його = מְלָאוֹ
@@ -241,7 +239,7 @@ refuse	17.7:6.4 17.7:6.5	17.7:6.6 17.7:6.7			Esth 7:6: uk_ubio's link of «Не�
 refuse	17.7:6.6	17.7:6.4 17.7:6.5			Esth 7:6: uk_ubio's link of «ворог» to אִ֚ישׁ צַ֣ר is wrong, read by hand against BHSA: ворог is אוֹיֵב, not אִישׁ צַר (Ненависник); the two nouns are swapped
 accept	17.7:6.4	17.7:6.4 17.7:6.5	renders		Esth 7:6: «Ненависник» renders אִ֚ישׁ צַ֣ר, read by hand against BHSA where uk_ubio's link is wrong: Ненависник = אִישׁ צַר
 accept	17.7:6.5 17.7:6.6	17.7:6.6 17.7:6.7	renders		Esth 7:6: «та ворог» renders וְאֹויֵ֔ב, read by hand against BHSA where uk_ubio's link is wrong: та ворог = וְאוֹיֵב
-refuse	17.7:6.7	17.7:6.8			Esth 7:6: uk_ubio's link of «це» to הָמָ֥ן is wrong, read by hand against BHSA: це is the demonstrative הַזֶּה (הָמָן הָרָע הַזֶּה), not the name הָמָן
+refuse	17.7:6.7			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 7:6: uk_ubio's link of «це» to הָמָ֥ן is wrong, read by hand against BHSA: це is the demonstrative הַזֶּה (הָמָן הָרָע הַזֶּה), not the name הָמָן
 accept	17.7:6.7	17.7:6.11 17.7:6.12	renders		Esth 7:6: «це» renders הַזֶּ֑ה, read by hand against BHSA where uk_ubio's link is wrong: це = הַזֶּה
 refuse	17.8:3.11 17.8:3.12	17.8:3.12 17.8:3.13			Esth 8:3: uk_ubio's link of «перед його» to לִפְנֵ֣י is wrong, read by hand against BHSA: його is the suffix of רַגְלָיו (його ногами), not part of לִפְנֵי
 accept	17.8:3.11	17.8:3.12 17.8:3.13	renders		Esth 8:3: «перед» renders לִפְנֵ֣י, read by hand against BHSA where uk_ubio's link is wrong: перед = לִפְנֵי
@@ -262,15 +260,15 @@ refuse	17.8:17.16	17.8:17.20			Esth 8:17: uk_ubio's link of «була» to מַ
 accept	17.8:17.9	17.8:17.14	renders		Esth 8:17: «куди» renders אֲשֶׁ֨ר, read by hand against BHSA where uk_ubio's link is wrong: куди = אֲשֶׁר
 accept	17.8:17.10	17.8:17.20	renders		Esth 8:17: «досягає» renders מַגִּ֔יעַ, read by hand against BHSA where uk_ubio's link is wrong: досягає = מַגִּיעַ
 refuse	17.9:4.3	17.9:4.2			Esth 9:4: uk_ubio's link of «став» to גָ֤דֹול is wrong, read by hand against BHSA: став is the copula of став великим; the adjective גָדוֹל is великим
-refuse	17.9:4.4	17.9:4.3			Esth 9:4: uk_ubio's link of «великим» to מָרְדֳּכַי֙ is wrong, read by hand against BHSA: великим is גָדוֹל, not the name מָרְדֳּכַי, which is already Мордехай
+refuse	17.9:4.4			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 9:4: uk_ubio's link of «великим» to מָרְדֳּכַי֙ is wrong, read by hand against BHSA: великим is גָדוֹל, not the name מָרְדֳּכַי, which is already Мордехай
 accept	17.9:4.3 17.9:4.4	17.9:4.2	renders		Esth 9:4: «став великим» renders גָ֤דֹול, read by hand against BHSA where uk_ubio's link is wrong: став великим = גָדוֹל
-refuse	17.9:18.8	17.9:18.12 17.9:18.13 17.9:18.14 17.9:18.15			Esth 9:18: uk_ubio's link of «дня» to וּבְאַרְבָּעָ֥ה עָשָׂ֖ר is wrong, read by hand against BHSA: дня belongs to тринадцятого дня (בִּשְׁלֹשָׁה עָשָׂר), not to the fourteenth (та чотирнадцятого)
+refuse	17.9:18.8			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 9:18: uk_ubio's link of «дня» to וּבְאַרְבָּעָ֥ה עָשָׂ֖ר is wrong, read by hand against BHSA: дня belongs to тринадцятого дня (בִּשְׁלֹשָׁה עָשָׂר), not to the fourteenth (та чотирнадцятого)
 accept	17.9:18.7 17.9:18.8	17.9:18.8 17.9:18.9 17.9:18.10	renders		Esth 9:18: «тринадцятого дня» renders בִּשְׁלֹשָׁ֤ה עָשָׂר֙, read by hand against BHSA where uk_ubio's link is wrong: тринадцятого дня = בִּשְׁלֹשָׁה עָשָׂר
-refuse	17.9:19.23	17.9:19.24 17.9:19.25 17.9:19.26			Esth 9:19: uk_ubio's link of «днем» to וְיֹ֣ום טֹ֑וב is wrong, read by hand against BHSA: днем (та днем посилання) has no word in the Hebrew; וְיוֹם טוֹב is та свята
+refuse	17.9:19.23			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 9:19: uk_ubio's link of «днем» to וְיֹ֣ום טֹ֑וב is wrong, read by hand against BHSA: днем (та днем посилання) has no word in the Hebrew; וְיוֹם טוֹב is та свята
 refuse	17.9:22.11 17.9:22.12	17.9:22.14			Esth 9:22: uk_ubio's link of «як той» to אֲשֶׁר֩ is wrong, read by hand against BHSA: אֲשֶׁר is коли (той місяць, коли = הַחֹדֶשׁ אֲשֶׁר); як той has no word of its own
-refuse	17.9:22.14	17.9:22.15			Esth 9:22: uk_ubio's link of «коли» to נֶהְפַּ֨ךְ is wrong, read by hand against BHSA: коли is the relative אֲשֶׁר, not the verb נֶהְפַּךְ, which is обернувся
+refuse	17.9:22.14			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 9:22: uk_ubio's link of «коли» to נֶהְפַּ֨ךְ is wrong, read by hand against BHSA: коли is the relative אֲשֶׁר, not the verb נֶהְפַּךְ, which is обернувся
 accept	17.9:22.14	17.9:22.14	renders		Esth 9:22: «коли» renders אֲשֶׁר֩, read by hand against BHSA where uk_ubio's link is wrong: коли = אֲשֶׁר
-refuse	17.9:27.10	17.9:27.7 17.9:27.8			Esth 9:27: uk_ubio's link of «своїх» to וְעַל is wrong, read by hand against BHSA: своїх is the suffix of זַרְעָם (нащадків своїх), not the וְעַל of й на
+refuse	17.9:27.10			unfoldingWord's Ukrainian Bible Interlinear Ogienko	Esth 9:27: uk_ubio's link of «своїх» to וְעַל is wrong, read by hand against BHSA: своїх is the suffix of זַרְעָם (нащадків своїх), not the וְעַל of й на
 accept	17.9:27.9 17.9:27.10	17.9:27.9	renders		Esth 9:27: «нащадків своїх» renders זַרְעָ֜ם, read by hand against BHSA where uk_ubio's link is wrong: нащадків своїх = זַרְעָם
 refuse	17.9:29.15 17.9:29.16	17.9:29.21 17.9:29.22			Esth 9:29: uk_ubio's link of «про те» to הַזֹּ֖את is wrong, read by hand against BHSA: про те has no word in the Hebrew; הַזֹּאת is the цього of цього листа
 refuse	17.9:29.19 17.9:29.20	17.9:29.18			Esth 9:29: uk_ubio's link of «цього листа» to אִגֶּ֧רֶת is wrong, read by hand against BHSA: цього is הַזֹּאת (אִגֶּרֶת הַפּוּרִים הַזֹּאת), which the link leaves out; only листа is אִגֶּרֶת

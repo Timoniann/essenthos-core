@@ -482,6 +482,65 @@ public class InterlinearJoinTests
         pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((1L, 101L), (2L, 103L), (3L, 104L), (4L, 105L));
     }
 
+    /// <summary>
+    /// 2 Timothy 3:13 in the Ukrainian: «А люди лихі» renders πονηροὶ δὲ ἄνθρωποι, and the source ties «А» and «лихі» together
+    /// to πονηροὶ δὲ, writing the group's milestones again around each piece because «люди» stands between them.
+    /// </summary>
+    [Fact]
+    public void PiecesOfOneGroupWhoseWordsStandApartAreOneLink()
+    {
+        const string verse =
+            """
+            \c 3
+            \v 13 \zaln-s |x-strong="G41900" x-lemma="πονηρός" x-morph="Gr,AA,,,,NMP," x-occurrence="1" x-occurrences="1" x-content="πονηροὶ"\*\zaln-s |x-strong="G11610" x-lemma="δέ" x-morph="Gr,CC,,,,,,,," x-occurrence="1" x-occurrences="1" x-content="δὲ"\*\w А|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*\zaln-e\*
+            \zaln-s |x-strong="G04440" x-lemma="ἄνθρωπος" x-morph="Gr,N,,,,,NMP," x-occurrence="1" x-occurrences="1" x-content="ἄνθρωποι"\*\w люди|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            \zaln-s |x-strong="G41900" x-lemma="πονηρός" x-morph="Gr,AA,,,,NMP," x-occurrence="1" x-occurrences="1" x-content="πονηροὶ"\*\zaln-s |x-strong="G11610" x-lemma="δέ" x-morph="Gr,CC,,,,,,,," x-occurrence="1" x-occurrences="1" x-content="δὲ"\*\w лихі|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*\zaln-e\*
+            \zaln-s |x-strong="G25320" x-lemma="καί" x-morph="Gr,CC,,,,,,,," x-occurrence="1" x-occurrences="2" x-content="καὶ"\*\w та|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            \zaln-s |x-strong="G11140" x-lemma="γόης" x-morph="Gr,N,,,,,NMP," x-occurrence="1" x-occurrences="1" x-content="γόητες"\*\w дурисвіти|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+
+        var pairs = new List<InterlinearPair>();
+        var account = new InterlinearJoinAccount();
+        InterlinearJoin.Verse("2TI 3:13", Usfm3AlignmentReader.Read(verse).Single(),
+            [Word(1, Ukrainian("А")), Word(2, Ukrainian("люди")), Word(3, Ukrainian("лихі")), Word(4, Ukrainian("та")),
+             Word(5, Ukrainian("дурисвіти"))],
+            [Word(101, Greek("πονηροὶ")), Word(102, Greek("δὲ")), Word(103, Greek("ἄνθρωποι")), Word(104, Greek("καὶ")),
+             Word(105, Greek("γόητες")), Word(106, Greek("προκόψουσιν")), Word(107, Greek("καὶ"))],
+            pairs, account);
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To)))
+            .Should().Equal(("1,3", "101,102"), ("2", "103"), ("4", "104"), ("5", "105"));
+        account.GroupPiecesJoined.Should().Be(1);
+        account.SpansJoined.Should().Be(5);
+    }
+
+    /// <summary>
+    /// 1 Corinthians 1:2 in the Segond alignment counts both «à» as the first of two over the first of three ἐν. Pieces that
+    /// count one word twice state no one group, so each stays the link it was.
+    /// </summary>
+    [Fact]
+    public void PiecesThatCountOneTranslatedWordTwiceStayLinksOfTheirOwn()
+    {
+        const string verse =
+            """
+            \c 1
+            \v 2 \zaln-s |x-strong="G1722" x-lemma="ἐν" x-occurrence="1" x-occurrences="3" x-content="ἐν"\*\w à|x-occurrence="1" x-occurrences="2"\w*\zaln-e\* \zaln-s |x-strong="G1577" x-lemma="ἐκκλησία" x-occurrence="1" x-occurrences="1" x-content="ἐκκλησίᾳ"\*\w Église|x-occurrence="1" x-occurrences="1"\w*\zaln-e\* qui est \zaln-s |x-strong="G1722" x-lemma="ἐν" x-occurrence="1" x-occurrences="3" x-content="ἐν"\*\w à|x-occurrence="1" x-occurrences="2"\w*\zaln-e\* \zaln-s |x-strong="G2882" x-lemma="Κόρινθος" x-occurrence="1" x-occurrences="1" x-content="Κορίνθῳ"\*\w Corinthe|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+
+        var pairs = new List<InterlinearPair>();
+        var account = new InterlinearJoinAccount();
+        InterlinearJoin.Verse("1CO 1:2", Usfm3AlignmentReader.Read(verse).Single(),
+            [Word(1, French("à")), Word(2, French("Église")), Word(3, French("qui")), Word(4, French("est")), Word(5, French("à")),
+             Word(6, French("Corinthe"))],
+            [Word(101, Greek("τῇ")), Word(102, Greek("ἐκκλησίᾳ")), Word(103, Greek("ἐν")), Word(104, Greek("Κορίνθῳ")),
+             Word(105, Greek("ἐν")), Word(106, Greek("ἐν"))],
+            pairs, account);
+
+        pairs.Where(pair => pair.To.SequenceEqual([103L])).Select(pair => pair.From.Single()).Should().Equal(1, 5);
+        account.GroupPiecesJoined.Should().Be(0);
+        account.GroupPiecesApart.Should().Be(1);
+    }
+
     [Fact]
     public void ASpanRefusedForItsOriginalWordKeepsItsTranslatedWordsFromTheNextSpan()
     {
@@ -577,6 +636,8 @@ public class InterlinearJoinTests
     private static string Ukrainian(string word) => $"ukr|{word}";
 
     private static string English(string word) => $"eng|{word}";
+
+    private static string French(string word) => $"fra|{word}";
 
     private static AlignmentSpan Numbered(string strong, string content, params string[] words) =>
         new(strong, content, words, 1, 1);

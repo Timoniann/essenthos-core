@@ -74,6 +74,8 @@ internal sealed class InterlinearJoinAccount
     public int NestsJoinedAsOneWord { get; set; }
     public int NestWordsPlacedBeside { get; set; }
     public int CompoundsJoined { get; set; }
+    public int GroupPiecesJoined { get; set; }
+    public int GroupPiecesApart { get; set; }
     public int TranslatedPiecesJoined { get; set; }
     public int TranslatedFragments { get; set; }
     public int SuppliedWordsLeftOut { get; set; }
@@ -124,6 +126,8 @@ internal sealed class InterlinearJoinAccount
         NestsJoinedAsOneWord += other.NestsJoinedAsOneWord;
         NestWordsPlacedBeside += other.NestWordsPlacedBeside;
         CompoundsJoined += other.CompoundsJoined;
+        GroupPiecesJoined += other.GroupPiecesJoined;
+        GroupPiecesApart += other.GroupPiecesApart;
         TranslatedPiecesJoined += other.TranslatedPiecesJoined;
         TranslatedFragments += other.TranslatedFragments;
         SuppliedWordsLeftOut += other.SuppliedWordsLeftOut;
@@ -158,6 +162,7 @@ internal sealed class InterlinearJoinAccount
             .Append($"{SpansSharingAnOriginal:N0} on an original word another span also stands on; ")
             .Append($"{SpansOverANestJoined:N0}/{SpansOverANest:N0} over a nest of several original words joined, {NestsJoinedAsOneWord:N0} of them as one word of the witness, {NestWordsPlacedBeside:N0} nest words placed beside the rest of their nest, and {NestWordsTheWitnessLacks:N0} words of a Greek nest the witness verse does not print left out; ")
             .Append($"{CompoundsJoined:N0} words the witness prints whole joined to the spans over their parts; ")
+            .Append($"{GroupPiecesJoined:N0} pieces of a group joined to the link of its first piece, {GroupPiecesApart:N0} left links of their own; ")
             .Append($"{SpansInMissingVerses:N0} in a verse missing on one side; ")
             .AppendLine(string.Join("; ", Enum.GetValues<InterlinearSpanFailure>()
                 .Where(failure => failure != InterlinearSpanFailure.None)
@@ -244,6 +249,7 @@ internal static class InterlinearJoin
         var made = 0;
         var here = new TranslatedCursor(0, string.Empty);
         var taken = new HashSet<int>();
+        var groups = new Dictionary<string, (int Pair, HashSet<(string, int)> Counted)>(StringComparer.Ordinal);
         var language = original[0].Language;
         var writings = original.Select(word => Written(word.Written, language)).ToArray();
 
@@ -342,18 +348,49 @@ internal static class InterlinearJoin
                     + $"without {string.Join(" + ", lacking.Select(one => one.Content))}");
             }
 
-            // One original word over two groups of translated words that do not stand together is
-            // written as two spans with the same occurrence, so the second one landing on the same
-            // witness word is the source's statement, not a collision.
-            if (theirs.Any(taken.Contains))
+            // translationCore ties one group of original words to one group of translated words. Where the translated
+            // words do not stand together it writes the group's milestones again around each piece (2 Timothy 3:13 in the
+            // Ukrainian: {А ... лихі} = πονηροὶ δὲ), so a piece over the same original words, at the same occurrences, as an
+            // earlier piece of the verse is the rest of that group and joins its link. Pieces whose translated words repeat
+            // a spelling at an occurrence the source already counted state no one group (the Segond's copied counts), and
+            // a piece that landed on other witness words is not the same group here: each stays a link of its own.
+            var to = theirs.Select(index => original[index].Id).ToList();
+            var counted = Counted(span);
+            var group = counted is null ? null : Group(span);
+            var joinedToGroup = false;
+            if (group is not null && groups.TryGetValue(group, out var first))
             {
-                account.SpansSharingAnOriginal++;
+                if (pairs[first.Pair].To.SequenceEqual(to) && !counted!.Overlaps(first.Counted))
+                {
+                    var from = pairs[first.Pair].From;
+                    from.AddRange(ours.Select(index => translated[index].Id).Where(id => !from.Contains(id)));
+                    first.Counted.UnionWith(counted!);
+                    account.GroupPiecesJoined++;
+                    joinedToGroup = true;
+                }
+                else
+                {
+                    account.GroupPiecesApart++;
+                    account.Example("piece of a group left apart", $"{where} {string.Join(' ', span.Words)} = "
+                        + string.Join(" + ", span.Originals.Select(one => one.Content)));
+                }
             }
 
-            taken.UnionWith(theirs);
-            pairs.Add(new InterlinearPair(
-                [.. ours.Select(index => translated[index].Id)],
-                [.. theirs.Select(index => original[index].Id)]));
+            if (!joinedToGroup)
+            {
+                if (theirs.Any(taken.Contains))
+                {
+                    account.SpansSharingAnOriginal++;
+                }
+
+                taken.UnionWith(theirs);
+                pairs.Add(new InterlinearPair([.. ours.Select(index => translated[index].Id)], to));
+                if (group is not null)
+                {
+                    groups.TryAdd(group, (pairs.Count - 1, counted!));
+                }
+            }
+
             here = afterOurs;
             made += ours.Count;
             account.SpansJoined++;
@@ -1118,6 +1155,29 @@ internal static class InterlinearJoin
     /// construct state, <c>brother’s blood</c>), and the corpus word renders its stem.
     /// </summary>
     private static bool Supplied(AlignmentSpan span, int token) => span.Supplied is { } supplied && token < supplied.Count && supplied[token];
+
+    /// <summary>
+    /// The span's translated words as the source counts them, each spelling with its occurrence in the verse; null where it
+    /// leaves a word uncounted, which leaves the piece unable to say it is not another piece's word again.
+    /// </summary>
+    private static HashSet<(string, int)>? Counted(AlignmentSpan span)
+    {
+        if (span.WordOccurrences is not { } occurrences || occurrences.Count != span.Words.Count || occurrences.Any(one => one.Occurrence <= 0))
+        {
+            return null;
+        }
+
+        return [.. span.Words.Select((word, index) => (word, occurrences[index].Occurrence))];
+    }
+
+    /// <summary>
+    /// The group of original words a span renders, each at its occurrence, in one order whatever the milestones' nesting;
+    /// null where an original word's occurrence is not stated, and two pieces over it cannot be told to be over one word.
+    /// </summary>
+    private static string? Group(AlignmentSpan span) =>
+        span.Originals.Any(one => one.Occurrence <= 0)
+            ? null
+            : string.Join('\u001F', span.Originals.Select(one => $"{one.Strong}\u001E{one.Content}\u001E{one.Occurrence}").Order(StringComparer.Ordinal));
 
     private static (List<(int Token, int Word)> Words, TranslatedCursor After, int Fragments, InterlinearSpanFailure Failure) FindTranslated(
         IReadOnlyList<InterlinearWord> words,
