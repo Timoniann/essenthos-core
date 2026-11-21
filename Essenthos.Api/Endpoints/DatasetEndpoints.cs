@@ -340,27 +340,19 @@ internal sealed record DatasetTally(
     IReadOnlyList<UndeclaredResponse> Undeclared);
 
 /// <summary>
-/// The dataset counts, kept for a few minutes, or for the life of the process where
-/// <c>Datasets:KeepCountsMinutes</c> is 0. Every page that credits a source asks for them and they sweep
-/// the link table: most of a second on a workstation, half a minute on a small server. A published
-/// corpus does not change under a running API, and a corpus loaded on a workstation is counted afresh
-/// a few minutes later.
+/// The dataset counts, read once from what the build stored (<see cref="ReleaseFacts"/>), or counted where it stored none, and
+/// kept for the life of the process: a new corpus is always a restart. Every page that credits a source asks for them, and
+/// counting them sweeps the link table: most of a second on a workstation, half a minute on a small server.
 /// </summary>
-internal sealed class DatasetCountsCache(IServiceScopeFactory scopes, IConfiguration configuration)
+internal sealed class DatasetCountsCache(IServiceScopeFactory scopes)
 {
-    public const string ConfigurationKey = "Datasets:KeepCountsMinutes";
-
-    private readonly TimeSpan? _lifetime = configuration.GetValue(ConfigurationKey, 5) is > 0 and var minutes
-        ? TimeSpan.FromMinutes(minutes)
-        : null;
-
     private readonly SemaphoreSlim _gate = new(1, 1);
 
-    private (DatasetTally Tally, DateTimeOffset CountedAt)? _kept;
+    private DatasetTally? _kept;
 
     public async Task<DatasetTally> Get(CancellationToken cancellationToken)
     {
-        if (Fresh() is { } tally)
+        if (_kept is { } tally)
         {
             return tally;
         }
@@ -368,26 +360,22 @@ internal sealed class DatasetCountsCache(IServiceScopeFactory scopes, IConfigura
         await _gate.WaitAsync(cancellationToken);
         try
         {
-            if (Fresh() is { } counted)
+            if (_kept is { } counted)
             {
                 return counted;
             }
 
             await using var scope = scopes.CreateAsyncScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var fresh = await StatementTimeout.Unhurried(
-                db, () => DatasetEndpoints.Count(db, cancellationToken), cancellationToken);
-            _kept = (fresh, DateTimeOffset.UtcNow);
-            return fresh;
+            _kept = await ReleaseFacts.Read(db, ReleaseFacts.DatasetsKey, cancellationToken) is { } stored
+                    && ReleaseFacts.ReadDatasets(stored) is { } read
+                ? read
+                : await StatementTimeout.Unhurried(db, () => DatasetEndpoints.Count(db, cancellationToken), cancellationToken);
+            return _kept;
         }
         finally
         {
             _gate.Release();
         }
     }
-
-    private DatasetTally? Fresh() =>
-        _kept is { } kept && (_lifetime is not { } lifetime || DateTimeOffset.UtcNow - kept.CountedAt < lifetime)
-            ? kept.Tally
-            : null;
 }

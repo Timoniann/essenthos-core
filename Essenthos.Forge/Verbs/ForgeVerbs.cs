@@ -53,6 +53,12 @@ internal static partial class ForgeVerbs
             + "languages (context_line, context/lines/<prose>) from the configured database where their inputs moved (all with --force), "
             + "copying them from the products where not. Never writes the live corpus or the snapshot.",
             ContextVerb, Most: 1),
+        new("facts", "[--force]",
+            "Count the constants of the release the API reads instead of counting them at every start (release_fact, release-facts): "
+            + "each text's counts and links, each dataset's rows, the Chapter Context's weights, from the configured database where what "
+            + "it was built from or the counting code moved (always with --force), copying them from the product where not. Never "
+            + "writes the live corpus or the snapshot.",
+            FactsVerb, Most: 1),
         new("pages", "[--force] [--parallel <n>]",
             "Compose the document every record's, Strong number's and occupation's page is written from, in each site language (page_document, "
             + "page-documents/<kind>/<language>), from the configured database where what it was built from, the site's switches or "

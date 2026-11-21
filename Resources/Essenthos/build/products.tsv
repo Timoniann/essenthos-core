@@ -125,6 +125,7 @@ record-spellings/{text}	serve	record-words	Essenthos/texts/*/words Essenthos/nam
 record-positions/{text}	serve	record-words	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/books Essenthos/names/projected/{text} Essenthos/records/derived/kinds	record_position	text
 strength/{text}	serve	strength	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/mapping/*/verses	verse_strength	text
 page-documents/{kind}/{language}	serve	pages	Essenthos/**	page_document	all
+release-facts	serve	facts	Essenthos/**	release_fact	all
 geez/**	kept	geez-layers (by hand, from a finished model run under generation/; the store and its backup are its only copy)	-	-	none
 texts/relations	hand	by hand (seeded once by tables from the Forge's list)	-	-	none
 lexicon/prefixes	hand	by hand (the prefixes Strong's dictionary lacks; read by tables)	-	-	none

@@ -8,6 +8,7 @@ using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Reader;
@@ -39,6 +40,7 @@ public sealed class TextFactsTests : IAsyncLifetime
     /// </summary>
     public async Task DisposeAsync()
     {
+        await _db.ReleaseFacts.ExecuteDeleteAsync();
         await _db.Links.Where(l => l.FromText!.Slug.StartsWith("FACTS-")).ExecuteDeleteAsync();
         await _db.Texts.Where(t => t.Slug.StartsWith("FACTS-")).ExecuteDeleteAsync();
         await _db.DisposeAsync();
@@ -89,6 +91,52 @@ public sealed class TextFactsTests : IAsyncLifetime
         (await facts.Of(translation.Id, CancellationToken.None)).Links
             .Should().ContainSingle().Which.Text.Should().Be(Witness);
     }
+
+    /// <summary>
+    /// The facts the build stores are read back as they were counted, and only an API whose counting code stamped them reads
+    /// them: under another stamp the process counts for itself.
+    /// </summary>
+    [Fact]
+    public async Task TheReleaseFactsTheBuildStoresAreReadBackAsCountedAndOnlyUnderTheirOwnStamp()
+    {
+        var witness = Corpus.Add(_db, Witness, TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא"]));
+        var translation = Corpus.Add(_db, Translation, TextKind.Translation, "eng", (1, 1, ["In", "the"]));
+        await _db.SaveChangesAsync();
+        Link(translation, witness, 1, LinkMethod.Aligner, "an aligner");
+        await _db.SaveChangesAsync();
+
+        var scopes = Scopes();
+        var counted = await ReleaseFacts.Count(scopes, CancellationToken.None);
+        counted.Select(f => f.Key).Should().Equal(ReleaseFacts.Keys);
+        var live = Json(await new TextFacts(scopes).Of(witness.Id, CancellationToken.None));
+        var liveDatasets = ReleaseFacts.WriteDatasets(await new DatasetCountsCache(scopes).Get(CancellationToken.None));
+        var liveWeights = ReleaseFacts.WriteWeights(await new ContextWeightsCache(scopes, NullLogger<ContextWeightsCache>.Instance).Get(CancellationToken.None));
+
+        var texts = ReleaseFacts.ReadTexts(counted.Single(f => f.Key == ReleaseFacts.TextsKey).Body);
+        var doctored = new Dictionary<string, TextTally>(texts)
+        {
+            [Witness] = texts[Witness] with { Counts = new TextCountsResponse(7, 70, 700) },
+        };
+        _db.ReleaseFacts.AddRange(counted.Select(f => new ReleaseFact
+        {
+            Key = f.Key,
+            Stamp = ReleaseFacts.Stamp,
+            Body = f.Key == ReleaseFacts.TextsKey ? ReleaseFacts.WriteTexts(doctored) : f.Body,
+        }));
+        await _db.SaveChangesAsync();
+
+        (await new TextFacts(scopes).Of(witness.Id, CancellationToken.None)).Counts.Should().Be(new TextCountsResponse(7, 70, 700));
+        Json(await new TextFacts(scopes).Of(translation.Id, CancellationToken.None))
+            .Should().Be(Json(texts[Translation]));
+        ReleaseFacts.WriteDatasets(await new DatasetCountsCache(scopes).Get(CancellationToken.None)).Should().Be(liveDatasets);
+        ReleaseFacts.WriteWeights(await new ContextWeightsCache(scopes, NullLogger<ContextWeightsCache>.Instance).Get(CancellationToken.None))
+            .Should().Be(liveWeights);
+
+        await _db.ReleaseFacts.ExecuteUpdateAsync(f => f.SetProperty(x => x.Stamp, "0:another"));
+        Json(await new TextFacts(scopes).Of(witness.Id, CancellationToken.None)).Should().Be(live);
+    }
+
+    private static string Json(TextTally tally) => ReleaseFacts.WriteTexts(new Dictionary<string, TextTally> { ["t"] = tally });
 
     /// <summary>
     /// Every text the corpus loads is introduced in every language the interface speaks. Checked

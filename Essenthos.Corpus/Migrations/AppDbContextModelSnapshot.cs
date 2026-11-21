@@ -4718,6 +4718,31 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.ReleaseFact", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("text")
+                        .HasColumnName("key");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body");
+
+                    b.Property<string>("Stamp")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("stamp");
+
+                    b.HasKey("Key")
+                        .HasName("pk_release_fact");
+
+                    b.ToTable("release_fact", null, t =>
+                        {
+                            t.HasComment("Constants of the release the API would otherwise count at every start (each text's counts and links, each dataset's rows, the Chapter Context's weights), as JSON by key, with the stamp of the code that counted them. Made by the serving build (release-facts).");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.RulerReign", b =>
                 {
                     b.Property<int>("Id")

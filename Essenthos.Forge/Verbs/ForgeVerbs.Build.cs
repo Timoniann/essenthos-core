@@ -461,6 +461,16 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary><c>facts [--force]</c>: the constants of the release of the configured database.</summary>
+    private static async Task<int> FactsVerb(ForgeRun forge, string[] args)
+    {
+        ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
+        var outcome = await new ReleaseFactsBuild(forge.DatabaseConnection, new ProductStore(forge.Resources), forge.Scope().ServiceProvider, forge.Logger)
+            .Run(args.Contains("--force"), CancellationToken.None);
+        Console.WriteLine($"{(outcome.Made ? "counted" : "current")}, {outcome.Rows} rows written, in {outcome.Elapsed.TotalSeconds:0.0} s");
+        return 0;
+    }
+
     /// <summary><c>pages [--force] [--parallel n]</c>: the documents record, Strong and occupation pages are written from, for the configured database.</summary>
     private static async Task<int> PagesVerb(ForgeRun forge, string[] args)
     {
