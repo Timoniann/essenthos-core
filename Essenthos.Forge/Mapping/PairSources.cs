@@ -64,6 +64,7 @@ internal static class PairSources
         new BereanTableSource(),
         new ClearBibleSource(),
         new Door43AlignmentSource(),
+        new CatssSource(),
         .. TableSources.All,
         .. StrongNumberSource.All,
         .. KingJamesGreekSource.All,

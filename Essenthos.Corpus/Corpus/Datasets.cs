@@ -704,6 +704,22 @@ public static class Datasets
             Obliges: "The module's terms are a permission granted to CrossWire to distribute it; the corpus "
                 + "distributes neither the module nor its numbers, only correspondences derived from them."),
 
+        // Only the Oxford Text Archive's copy (item 1111): CCAT's own copy asks every recipient to register.
+        // Resources/CATSS/LICENCE.md has the terms, the hashes and the books the copy lacks.
+        new("catss", "CATSS parallel aligned Hebrew and Greek texts",
+            "Emanuel Tov, Robert A. Kraft and the Computer Assisted Tools for Septuagint Studies project; "
+            + "distributed by the Oxford Text Archive (Literary and Linguistic Data Service, University of Oxford)",
+            "CC BY-NC-SA 3.0",
+            "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+            "https://llds.ling-phil.ox.ac.uk/llds/xmlui/handle/20.500.14106/1111",
+            "Which Hebrew word of the Masoretic text each word of the Septuagint renders, word against word, "
+            + "as the CATSS project aligned BHS with Rahlfs; laid on Brenton's Greek by its letters. Stated by "
+            + "the source, including the Greek words it says the Hebrew lacks and the Hebrew words the Greek leaves out.",
+            Sources.CatssCredit, Links: true,
+            Obliges: "NonCommercial and ShareAlike: these links, and anything published from them, may not be used "
+                + "commercially, and an export of them carries CC BY-NC-SA 3.0; Tov, Kraft, CATSS and the Oxford Text "
+                + "Archive are credited."),
+
         // The same project and the same terms as the King James mapping (mapping/LICENCE.md);
         // Resources/OpenHebrewBible/LICENCE.md has the statement as read and the commit it was read at.
         new("ohb-cuv", "Open Hebrew Bible mapping of the Chinese Union Version",

@@ -143,6 +143,19 @@ internal static class Sources
     public const string RevisedLiteralPositionCredit =
         "the places of the Greek words in the KJV2003 project's Received Text, stated on the Revised Literal Translation's New Testament in CrossWire's RLT";
 
+    /// <summary>
+    /// What every link drawn from CATSS's parallel Hebrew and Greek begins with (CC BY-NC-SA 3.0: the links derived from it
+    /// carry that licence, and this prefix is how an export tells them apart).
+    /// </summary>
+    public const string CatssCredit =
+        "CATSS, the parallel aligned Hebrew and Greek texts (Tov and Kraft), Oxford Text Archive 1111";
+
+    /// <summary>A Greek word CATSS states has no counterpart in the Masoretic text.</summary>
+    public const string CatssPlusCredit = CatssCredit + ": a word of the Greek it states the Hebrew lacks";
+
+    /// <summary>A Hebrew word CATSS states the Greek leaves out, where Brenton has nothing there either.</summary>
+    public const string CatssMinusCredit = CatssCredit + ": a word of the Hebrew it states the Greek lacks";
+
     /// <summary>What every row drawn from CrossWire's King James begins with, so that one dataset claims them all.</summary>
     public const string KingJamesCredit = "CrossWire's KJV v3.1";
 

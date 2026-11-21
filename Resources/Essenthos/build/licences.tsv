@@ -35,6 +35,7 @@ BibleData2026/AlamoPolyglot.csv	data	never	each of its texts under its own terms
 BiblicaUkrainian2022	text	content	CC-BY-SA-4.0	share-alike	text:NPU2022	BiblicaUkrainian2022/LICENCE.md	-	-
 BrentonEnglish	text	content	Public Domain	public-domain	text:BRENTON	BrentonEnglish/LICENCE.md	-	-
 Byzantine	text	content	Unlicense	public-domain	text:RP2018 dataset:byzantine-apparatus	Byzantine/LICENCE.md	-	-
+CATSS	alignment	derived	CC-BY-NC-SA-3.0	non-commercial-only	dataset:catss	CATSS/LICENCE.md	-	Only the Oxford Text Archive copy (item 1111); CCAT's own copy is never read. The GRCBRENT-BHSA links drawn from it carry CC BY-NC-SA 3.0 and its source prefix.
 Charles	text	content	Public Domain	public-domain	text:CHARLES1913	Charles/LICENCE.md	-	The two SWORD modules' verses only; their notes and cross-references, Charles's chapter summaries and headings and the Greek and Latin fragments' translations are not read.
 ChineseUnion1919	text	content	Public Domain	public-domain	text:CUV text:CUVS	ChineseUnion1919/LICENCE.md	-	-
 ChineseUnion1919	strong	derived	GFDL (version not named)	share-alike	dataset:fhl-cuv-strong	ChineseUnion1919/LICENCE.md	-	The numbers feed the mapping and are never served (texts/strong-terms); whether the links are a modified version is open (FTR-0731).
