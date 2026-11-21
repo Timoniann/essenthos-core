@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
 using Microsoft.EntityFrameworkCore;
@@ -25,9 +26,7 @@ internal sealed class PageValidator(IServiceScopeFactory scopes, SiteSettingsFil
 {
     private static readonly DateTimeOffset Started = Seconds(DateTimeOffset.UtcNow);
 
-    private readonly Lock _lock = new();
-
-    private Task<string>? _release;
+    private readonly PerRelease<string> _release = new(_ => ReadRelease(scopes));
 
     /// <summary>
     /// The validator of every page written now from this shell; a record's page also names its place's picture, which is drawn
@@ -35,7 +34,7 @@ internal sealed class PageValidator(IServiceScopeFactory scopes, SiteSettingsFil
     /// </summary>
     public async Task<PageValidity> For(ShellReading shell, PlacePicture? picture, CancellationToken cancellationToken)
     {
-        var release = await Release().WaitAsync(cancellationToken);
+        var release = await _release.Get(cancellationToken);
         var settingsAt = settings.WrittenAt;
         var downloadsAt = downloads.WrittenAt;
         string[] state = [release, Built, shell.Version, settingsAt.Ticks.ToString(CultureInfo.InvariantCulture),
@@ -55,7 +54,7 @@ internal sealed class PageValidator(IServiceScopeFactory scopes, SiteSettingsFil
     /// </summary>
     public async Task<string> AnswerTag(char kind, IEnumerable<string?> parts, CancellationToken cancellationToken)
     {
-        var release = await Release().WaitAsync(cancellationToken);
+        var release = await _release.Get(cancellationToken);
         return Tag(kind, [release, Built, settings.WrittenAt.Ticks.ToString(CultureInfo.InvariantCulture), .. parts.Select(part => part is null ? "-" : "=" + part)]);
     }
 
@@ -64,21 +63,8 @@ internal sealed class PageValidator(IServiceScopeFactory scopes, SiteSettingsFil
     private static string Tag(char kind, params string[] state) =>
         $"\"{kind}{Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('|', state))))[..20]}\"";
 
-    /// <summary>The release being served, read once: it cannot change under a running process. A failed read is tried again.</summary>
-    private Task<string> Release()
-    {
-        lock (_lock)
-        {
-            if (_release is null || _release.IsFaulted || _release.IsCanceled)
-            {
-                _release = ReadRelease();
-            }
-
-            return _release;
-        }
-    }
-
-    private async Task<string> ReadRelease()
+    /// <summary>The release being served, read once: it cannot change under a running process.</summary>
+    private static async Task<string> ReadRelease(IServiceScopeFactory scopes)
     {
         using var scope = scopes.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

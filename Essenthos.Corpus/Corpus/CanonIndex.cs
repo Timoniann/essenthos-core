@@ -59,10 +59,12 @@ internal interface ICanonIndex
 
 internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
 {
-    private readonly SemaphoreSlim _gate = new(1, 1);
-    private IReadOnlyList<TextEntry>? _texts;
-    private IReadOnlyDictionary<(int Text, int Book), int>? _frameChapterCounts;
-    private IReadOnlyDictionary<(int Text, int Book), int>? _chapterCountsByText;
+    private sealed record Index(
+        IReadOnlyList<TextEntry> Texts,
+        IReadOnlyDictionary<(int Text, int Book), int> FrameChapterCounts,
+        IReadOnlyDictionary<(int Text, int Book), int> ChapterCountsByText);
+
+    private readonly PerRelease<Index> _index = new(token => Read(scopes, token));
 
     public async Task<TextEntry?> Text(string slug, CancellationToken cancellationToken) =>
         Resolve(await Texts(cancellationToken), slug);
@@ -84,14 +86,12 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
 
     public async Task<IReadOnlyList<TextEntry>> Texts(CancellationToken cancellationToken)
     {
-        await Ensure(cancellationToken);
-        return _texts!;
+        return (await _index.Get(cancellationToken)).Texts;
     }
 
     public async Task<int> ChapterCount(int canonicalBook, CancellationToken cancellationToken)
     {
-        await Ensure(cancellationToken);
-        return _frameChapterCounts!
+        return (await _index.Get(cancellationToken)).FrameChapterCounts
             .Where(pair => pair.Key.Book == canonicalBook)
             .Select(pair => pair.Value)
             .DefaultIfEmpty()
@@ -101,8 +101,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
     public async Task<int> ChapterCountAcross(
         IEnumerable<int> textIds, int canonicalBook, CancellationToken cancellationToken)
     {
-        await Ensure(cancellationToken);
-        return WidestReach(_frameChapterCounts!, textIds, canonicalBook);
+        return WidestReach((await _index.Get(cancellationToken)).FrameChapterCounts, textIds, canonicalBook);
     }
 
     public static int WidestReach(
@@ -135,79 +134,56 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
 
     public async Task<int> ChapterCountIn(int textId, int canonicalBook, CancellationToken cancellationToken)
     {
-        await Ensure(cancellationToken);
-        return _chapterCountsByText!.GetValueOrDefault((textId, canonicalBook));
+        return (await _index.Get(cancellationToken)).ChapterCountsByText.GetValueOrDefault((textId, canonicalBook));
     }
 
     /// <summary>Called when the dataset load finishes, because until then the answers are wrong.</summary>
-    public void Forget()
+    public void Forget() => _index.Forget();
+
+    private static async Task<Index> Read(IServiceScopeFactory scopes, CancellationToken cancellationToken)
     {
-        _texts = null;
-        _frameChapterCounts = null;
-        _chapterCountsByText = null;
-    }
+        using var scope = scopes.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    private async Task Ensure(CancellationToken cancellationToken)
-    {
-        if (_texts is not null)
-        {
-            return;
-        }
-
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            if (_texts is not null)
-            {
-                return;
-            }
-
-            using var scope = scopes.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-            // Whether a text has any links at all is asked of the texts as a set, one direction at a
-            // time. Inside the projection below it is evaluated once per book of every text, and
-            // with the two columns ORed it can use neither index. A probe per text is no better:
-            // for a text with many links the planner chooses a scan of the link table and expects a
-            // match in the first rows. As a semi-join from the few rows of text, each direction is
-            // an index probe per text.
-            var linked = (await db.Texts
-                    .Where(t => db.Links.Any(l => l.FromTextId == t.Id))
-                    .Select(t => t.Id)
-                    .ToListAsync(cancellationToken))
-                .ToHashSet();
-            linked.UnionWith(await db.Texts
-                .Where(t => db.Links.Any(l => l.ToTextId == t.Id))
+        // Whether a text has any links at all is asked of the texts as a set, one direction at a
+        // time. Inside the projection below it is evaluated once per book of every text, and
+        // with the two columns ORed it can use neither index. A probe per text is no better:
+        // for a text with many links the planner chooses a scan of the link table and expects a
+        // match in the first rows. As a semi-join from the few rows of text, each direction is
+        // an index probe per text.
+        var linked = (await db.Texts
+                .Where(t => db.Links.Any(l => l.FromTextId == t.Id))
                 .Select(t => t.Id)
-                .ToListAsync(cancellationToken));
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+        linked.UnionWith(await db.Texts
+            .Where(t => db.Links.Any(l => l.ToTextId == t.Id))
+            .Select(t => t.Id)
+            .ToListAsync(cancellationToken));
 
-            var texts = (await db.Texts
-                    .OrderBy(t => t.Slug)
-                    .Select(t => new
-                    {
-                        t.Id,
-                        t.Slug,
-                        Books = t.Books.Select(b => b.CanonicalOrdinal).OrderBy(ordinal => ordinal).ToList(),
-                    })
-                    .ToListAsync(cancellationToken))
-                .Select(t => new { t.Id, t.Slug, t.Books, Linked = linked.Contains(t.Id) })
-                .ToList();
+        var texts = (await db.Texts
+                .OrderBy(t => t.Slug)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Slug,
+                    Books = t.Books.Select(b => b.CanonicalOrdinal).OrderBy(ordinal => ordinal).ToList(),
+                })
+                .ToListAsync(cancellationToken))
+            .Select(t => new { t.Id, t.Slug, t.Books, Linked = linked.Contains(t.Id) })
+            .ToList();
 
-            _frameChapterCounts = await FrameChapterCounts(db, cancellationToken);
+        var frameChapterCounts = await FrameChapterCounts(db, cancellationToken);
 
-            _chapterCountsByText = (await db.Chapters
-                    .GroupBy(c => new { c.TextId, c.Book!.CanonicalOrdinal })
-                    .Select(g => new { g.Key.TextId, g.Key.CanonicalOrdinal, Chapters = g.Max(c => c.Number) })
-                    .ToListAsync(cancellationToken))
-                .ToDictionary(row => (row.TextId, row.CanonicalOrdinal), row => row.Chapters);
+        var chapterCountsByText = (await db.Chapters
+                .GroupBy(c => new { c.TextId, c.Book!.CanonicalOrdinal })
+                .Select(g => new { g.Key.TextId, g.Key.CanonicalOrdinal, Chapters = g.Max(c => c.Number) })
+                .ToListAsync(cancellationToken))
+            .ToDictionary(row => (row.TextId, row.CanonicalOrdinal), row => row.Chapters);
 
-            _texts = texts
-                .Select(t => new TextEntry(t.Id, t.Slug, Covered(t.Id, t.Books, _frameChapterCounts), t.Linked))
-                .ToList();
-        }
-        finally
-        {
-            _gate.Release();
-        }
+        return new Index(
+            [.. texts.Select(t => new TextEntry(t.Id, t.Slug, Covered(t.Id, t.Books, frameChapterCounts), t.Linked))],
+            frameChapterCounts,
+            chapterCountsByText);
     }
 }

@@ -346,36 +346,14 @@ internal sealed record DatasetTally(
 /// </summary>
 internal sealed class DatasetCountsCache(IServiceScopeFactory scopes)
 {
-    private readonly SemaphoreSlim _gate = new(1, 1);
-
-    private DatasetTally? _kept;
-
-    public async Task<DatasetTally> Get(CancellationToken cancellationToken)
+    private readonly PerRelease<DatasetTally> _tally = new(async token =>
     {
-        if (_kept is { } tally)
-        {
-            return tally;
-        }
+        await using var scope = scopes.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        return await ReleaseFacts.Read(db, ReleaseFacts.DatasetsKey, token) is { } stored && ReleaseFacts.ReadDatasets(stored) is { } read
+            ? read
+            : await StatementTimeout.Unhurried(db, () => DatasetEndpoints.Count(db, token), token);
+    });
 
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            if (_kept is { } counted)
-            {
-                return counted;
-            }
-
-            await using var scope = scopes.CreateAsyncScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            _kept = await ReleaseFacts.Read(db, ReleaseFacts.DatasetsKey, cancellationToken) is { } stored
-                    && ReleaseFacts.ReadDatasets(stored) is { } read
-                ? read
-                : await StatementTimeout.Unhurried(db, () => DatasetEndpoints.Count(db, cancellationToken), cancellationToken);
-            return _kept;
-        }
-        finally
-        {
-            _gate.Release();
-        }
-    }
+    public Task<DatasetTally> Get(CancellationToken cancellationToken) => _tally.Get(cancellationToken);
 }

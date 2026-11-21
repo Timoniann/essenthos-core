@@ -24,34 +24,15 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
 {
     private const int AtOnce = 2;
 
-    private readonly SemaphoreSlim _gate = new(1, 1);
-    private IReadOnlyDictionary<int, TextTally>? _tallies;
+    private readonly PerRelease<IReadOnlyDictionary<int, TextTally>> _tallies = new(token => Read(scopes, token));
 
     public async Task<TextTally> Of(int textId, CancellationToken cancellationToken) =>
-        (await Tallies(cancellationToken)).GetValueOrDefault(textId) ?? TextTally.Empty;
+        (await _tallies.Get(cancellationToken)).GetValueOrDefault(textId) ?? TextTally.Empty;
 
-    /// <summary>Counts every text now, if nothing has asked yet: what the start of the process does.</summary>
-    public Task Load(CancellationToken cancellationToken) => Tallies(cancellationToken);
+    /// <summary>Reads or counts every text now, if nothing has asked yet: what the start of the process does.</summary>
+    public Task Load(CancellationToken cancellationToken) => _tallies.Get(cancellationToken);
 
-    private async Task<IReadOnlyDictionary<int, TextTally>> Tallies(CancellationToken cancellationToken)
-    {
-        if (_tallies is { } tallies)
-        {
-            return tallies;
-        }
-
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            return _tallies ??= await Read(cancellationToken);
-        }
-        finally
-        {
-            _gate.Release();
-        }
-    }
-
-    private async Task<IReadOnlyDictionary<int, TextTally>> Read(CancellationToken cancellationToken)
+    private static async Task<IReadOnlyDictionary<int, TextTally>> Read(IServiceScopeFactory scopes, CancellationToken cancellationToken)
     {
         await using var scope = scopes.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

@@ -185,30 +185,13 @@ internal static class PaneEndpoints
 /// </summary>
 internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOptions> json)
 {
-    private readonly ConcurrentDictionary<string, Lazy<Task<(byte[] Body, string Tag)>>> _made = new(StringComparer.Ordinal);
+    private readonly PerRelease<string, (byte[] Body, string Tag)> _made = new((language, token) => Make(scopes, json, language, token), StringComparer.Ordinal);
 
-    public Task<(byte[] Body, string Tag)> Of(string? language, CancellationToken cancellationToken)
-    {
-        var key = EntityNames.Local(language) ?? "eng";
-        var made = _made.GetOrAdd(key, _ => new Lazy<Task<(byte[], string)>>(() => Make(key, CancellationToken.None)));
-        return Wait(key, made, cancellationToken);
-    }
+    public Task<(byte[] Body, string Tag)> Of(string? language, CancellationToken cancellationToken) =>
+        _made.Get(EntityNames.Local(language) ?? "eng", cancellationToken);
 
-    /// <summary>A dictionary that failed to be made is forgotten, so the next request tries again.</summary>
-    private async Task<(byte[] Body, string Tag)> Wait(string key, Lazy<Task<(byte[] Body, string Tag)>> made, CancellationToken cancellationToken)
-    {
-        try
-        {
-            return await made.Value.WaitAsync(cancellationToken);
-        }
-        catch when (made.Value.IsFaulted)
-        {
-            _made.TryRemove(new KeyValuePair<string, Lazy<Task<(byte[] Body, string Tag)>>>(key, made));
-            throw;
-        }
-    }
-
-    private async Task<(byte[] Body, string Tag)> Make(string language, CancellationToken cancellationToken)
+    private static async Task<(byte[] Body, string Tag)> Make(
+        IServiceScopeFactory scopes, IOptions<JsonOptions> json, string language, CancellationToken cancellationToken)
     {
         using var scope = scopes.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

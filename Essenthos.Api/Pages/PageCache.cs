@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Essenthos.Core.Pages;
@@ -35,12 +36,19 @@ internal sealed class PageCache : IDisposable
 
     private readonly MemoryCache _cache;
 
+    private readonly ConcurrentDictionary<string, Task<object?>> _making = new(StringComparer.Ordinal);
+
     public PageCache(IConfiguration? configuration = null)
     {
         _budget = Math.Max(1, configuration?.GetValue(BudgetKey, DefaultMegabytes) ?? DefaultMegabytes) * 1024 * 1024;
         _cache = new MemoryCache(new MemoryCacheOptions { SizeLimit = _budget });
     }
 
+    /// <summary>
+    /// What is kept under <paramref name="key"/>, made where nothing is. Callers that miss together wait for the one making it,
+    /// so a crawl that asks for one page many times at once composes it once. A making whose caller stopped waiting is made
+    /// again by the next caller; one that failed fails its waiters too and is forgotten.
+    /// </summary>
     public async Task<T> Remember<T>(
         string key, TimeSpan lifetime, Func<Task<T>> make, Func<T, long>? size = null,
         CacheItemPriority priority = CacheItemPriority.High)
@@ -50,14 +58,47 @@ internal sealed class PageCache : IDisposable
             return kept;
         }
 
-        var made = await make();
-        _cache.Set(key, made, new MemoryCacheEntryOptions
+        var mine = new TaskCompletionSource<object?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var making = _making.GetOrAdd(key, mine.Task);
+        if (making != mine.Task)
         {
-            AbsoluteExpirationRelativeToNow = lifetime,
-            Size = Math.Min(size?.Invoke(made) ?? ObjectSize, _budget),
-            Priority = priority,
-        });
-        return made;
+            try
+            {
+                return (T)(await making)!;
+            }
+            catch (OperationCanceledException)
+            {
+                return await Remember(key, lifetime, make, size, priority);
+            }
+        }
+
+        try
+        {
+            var made = await make();
+            _cache.Set(key, made, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = lifetime,
+                Size = Math.Min(size?.Invoke(made) ?? ObjectSize, _budget),
+                Priority = priority,
+            });
+            mine.SetResult(made);
+            return made;
+        }
+        catch (OperationCanceledException)
+        {
+            mine.SetCanceled();
+            throw;
+        }
+        catch (Exception exception)
+        {
+            mine.SetException(exception);
+            _ = mine.Task.Exception;
+            throw;
+        }
+        finally
+        {
+            _making.TryRemove(new KeyValuePair<string, Task<object?>>(key, mine.Task));
+        }
     }
 
     public void Dispose() => _cache.Dispose();

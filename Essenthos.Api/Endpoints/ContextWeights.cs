@@ -242,40 +242,20 @@ internal sealed class ContextWeights
 /// </summary>
 internal sealed class ContextWeightsCache(IServiceScopeFactory scopes, ILogger<ContextWeightsCache> logger)
 {
-    private readonly SemaphoreSlim _gate = new(1, 1);
-    private ContextWeights? _weights;
-
-    public async Task<ContextWeights> Get(CancellationToken cancellationToken)
+    private readonly PerRelease<ContextWeights> _weights = new(async token =>
     {
-        if (_weights is { } weights)
+        var started = Stopwatch.StartNew();
+        await using var scope = scopes.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        if (await ReleaseFacts.Read(db, ReleaseFacts.ContextWeightsKey, token) is { } stored)
         {
-            return weights;
+            return ReleaseFacts.ReadWeights(stored);
         }
 
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            if (_weights is null)
-            {
-                var started = Stopwatch.StartNew();
-                await using var scope = scopes.CreateAsyncScope();
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                if (await ReleaseFacts.Read(db, ReleaseFacts.ContextWeightsKey, cancellationToken) is { } stored)
-                {
-                    _weights = ReleaseFacts.ReadWeights(stored);
-                }
-                else
-                {
-                    _weights = await ContextWeights.Count(db, cancellationToken);
-                    logger.LogInformation("The Chapter Context's weights were counted in {Elapsed}", started.Elapsed);
-                }
-            }
+        var weights = await ContextWeights.Count(db, token);
+        logger.LogInformation("The Chapter Context's weights were counted in {Elapsed}", started.Elapsed);
+        return weights;
+    });
 
-            return _weights;
-        }
-        finally
-        {
-            _gate.Release();
-        }
-    }
+    public Task<ContextWeights> Get(CancellationToken cancellationToken) => _weights.Get(cancellationToken);
 }
