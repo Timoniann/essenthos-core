@@ -106,6 +106,7 @@ internal static partial class Usfm3AlignmentReader
     /// </param>
     public static IReadOnlyList<AlignedVerse> Read(string content, bool unnumbered = false)
     {
+        content = NumbersRejoined(content);
         var verses = new List<AlignedVerse>(64);
         var chapter = 0;
         var number = 0;
@@ -243,6 +244,27 @@ internal static partial class Usfm3AlignmentReader
         CloseVerse();
         return verses;
     }
+
+    /// <summary>
+    /// A number the release writes in pieces, one <c>\w</c> word to a line, put back on one line: <c>\w 2|…\w*,</c>
+    /// and <c>\w 000|…\w*</c> on the next are 2,000 (Joshua 7:3), the Telugu <c>1,</c> and <c>44,000</c> are
+    /// 1,44,000 (Revelation 7:4), and <c>14.</c> and <c>5</c> closing their milestone are 14.5 (the UST's Exodus 26
+    /// and 36). Read as a line break, the reader and the text put a space into the number. A list of verses
+    /// (<c>14, 19,</c>) is not a group of three digits and stays as it is.
+    /// </summary>
+    internal static string NumbersRejoined(string content) =>
+        Decimal().Replace(Thousands().Replace(content, string.Empty), string.Empty);
+
+    /// <summary>
+    /// A line ending in a number and its thousands separator, and a group of thousands opening the next; neither
+    /// is a chapter or verse of a reference (<c>102:15-16,</c> and <c>113:3</c> in a Hindi footnote).
+    /// </summary>
+    [GeneratedRegex(@"(?<=(?<![:\-])\\w \d{1,3}\|[^\\\n]*\\w\*,)[ \t]*\r?\n[ \t]*(?=(?:\\zaln-s[ ]*\|[^\\]*\\\*)*\\w (?:\d{3}|\d{2}\|[^\\\n]*\\w\*,\\w \d{3})\|[^\\\n]*\\w\*(?![:\-]))")]
+    private static partial Regex Thousands();
+
+    /// <summary>A line ending in a number and a point, and one digit opening the next and closing the milestone both stand in.</summary>
+    [GeneratedRegex(@"(?<=\\w \d+\|[^\\\n]*\\w\*\.)[ \t]*\r?\n[ \t]*(?=\\w \d\|[^\\\n]*\\w\*\\zaln-e\\\*)")]
+    private static partial Regex Decimal();
 
     /// <summary>
     /// Whether two words are printed as one: nothing stands between them, once the milestones are out,

@@ -1,4 +1,5 @@
 using Essenthos.Core.Door43;
+using Essenthos.Core.Loading;
 using FluentAssertions;
 using Xunit;
 
@@ -133,6 +134,51 @@ public class Usfm3AlignmentTests
         spans[1].Glue.Should().BeNull();
         spans[2].Glue!.Single().Should().Match<WordGlue>(glue => !glue.Joined && glue.After.Single() == "Ir");
         spans[3].Glue!.Single().Joined.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// The release writes each piece of a number on its own line: «about 2,000» at Joshua 7:3, the Telugu 1,44,000
+    /// at Revelation 7:4, the UST's 14.5. Read as a line break, the text printed «2, 000». The pieces are one
+    /// printed word in the text and joined in the alignment; a list of verses keeps its spaces.
+    /// </summary>
+    [Fact]
+    public void ANumberWrittenInPiecesIsOneWord()
+    {
+        const string thousands =
+            """
+            \c 7
+            \v 3 \zaln-s |x-strong="k:H0505" x-occurrence="1" x-occurrences="1" x-content="כְּ⁠אַלְפַּ֥יִם"\*\w about|x-occurrence="1" x-occurrences="1"\w*
+            \w 2|x-occurrence="1" x-occurrences="1"\w*,
+            \w 000|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            \zaln-s |x-strong="H0376" x-occurrence="1" x-occurrences="1" x-content="אִ֔ישׁ"\*\w men|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+        const string lakh =
+            """
+            \v 4 \w 1|x-occurrence="1" x-occurrences="1"\w*,
+            \w 44|x-occurrence="1" x-occurrences="1"\w*,\w 000|x-occurrence="1" x-occurrences="1"\w*.
+            """;
+        const string point =
+            """
+            \v 2 \zaln-s |x-strong="H8083" x-occurrence="1" x-occurrences="1" x-content="שְׁמֹנֶ֤ה"\*\w 14|x-occurrence="1" x-occurrences="1"\w*.
+            \w 5|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+        const string verses =
+            """
+            \v 5 \f + \ft \w 14|x-occurrence="1" x-occurrences="1"\w*,
+            \w 19|x-occurrence="1" x-occurrences="1"\w*,
+            \w 2|x-occurrence="1" x-occurrences="1"\w*; \w 102|x-occurrence="1" x-occurrences="1"\w*:\w 16|x-occurrence="1" x-occurrences="1"\w*,
+            \w 113|x-occurrence="1" x-occurrences="1"\w*:\w 3|x-occurrence="1" x-occurrences="1"\w*\f*
+            """;
+
+        UnfoldingWordTextSource.Unaligned(thousands).ReplaceLineEndings("\n").Should().Contain("about\n2,000\nmen");
+        UnfoldingWordTextSource.Unaligned(lakh).ReplaceLineEndings("\n").Should().Be("\\v 4 1,44,000.");
+        UnfoldingWordTextSource.Unaligned(point).ReplaceLineEndings("\n").Should().Be("\\v 2 14.5");
+        UnfoldingWordTextSource.Unaligned(verses).ReplaceLineEndings("\n").Should().Contain("14,\n19,\n2; 102:16,\n113:3");
+
+        var spans = Usfm3AlignmentReader.Read(thousands).Single().Spans;
+        spans[0].Words.Should().Equal("about", "2", "000");
+        spans[0].Glue!.Select(glue => (glue.Joined, string.Join(' ', glue.After)))
+            .Should().Equal((false, ""), (false, "000"), (true, ""));
     }
 
     [Fact]
