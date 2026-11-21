@@ -100,7 +100,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         var clock = Stopwatch.StartNew();
         var keys = PaneInputs.Read(store, [.. keyed.Select(m => m.Text.Slug)], pairs, parallel,
-            [.. keyed.Where(m => m.Text.Numbered).Select(m => m.Text.Slug)]);
+            [.. keyed.Where(m => m.Text.Translation).Select(m => m.Text.Slug)]);
         logger.LogInformation("Panes: the chapters' inputs of {Texts} texts read in {Seconds:0.0} s", keyed.Count, clock.Elapsed.TotalSeconds);
         await Parallel.ForEachAsync(keyed, new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
             async (making, token) => await Plan(making, keys, force, token));
@@ -210,11 +210,8 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     }
 
     /// <summary>A text as its panes need it.</summary>
-    internal sealed record TextRow(int Id, string Slug, string Language, bool Translation)
-    {
-        /// <summary>Whether its panes write the Strong numbers its words render: a translation's, unless they are withheld.</summary>
-        public bool Numbered => Translation && RenderedNumbers.Shown(Slug);
-    }
+    /// <param name="Translation">Whether it is a translation, whose panes write the Strong numbers its words render.</param>
+    internal sealed record TextRow(int Id, string Slug, string Language, bool Translation);
 
     private async Task<List<TextRow>> Texts(CancellationToken cancellationToken)
     {
@@ -321,7 +318,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         products.AddRange(PaneInputs.RecordProducts);
         products.Add(TableProducts.Product("word_strong"));
-        if (text.Numbered)
+        if (text.Translation)
         {
             products.Add(StrongNumberFiles.Product(text.Slug));
         }

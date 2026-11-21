@@ -345,14 +345,12 @@ internal static class ChapterReading
             })
             .ToListAsync(cancellationToken);
 
-        // A translation's word carries the numbers it renders, read by the verses as the marked verse lists read them, except
-        // in the texts whose numbers are withheld.
-        var withheld = RenderedNumbers.Withheld;
+        // A translation's word carries the numbers it renders, read by the verses as the marked verse lists read them.
         var renderedRows = (await (
                 from row in db.WordRenderedStrongs
                 where inVerses.Contains(row.VerseId)
                 join verse in db.Verses on row.VerseId equals verse.Id
-                where verse.Text!.Kind == TextKind.Translation && !withheld.Contains(verse.Text.Slug)
+                where verse.Text!.Kind == TextKind.Translation
                 select new { row.WordId, row.StrongNumber })
             .ToListAsync(cancellationToken))
             .GroupBy(row => row.WordId)
