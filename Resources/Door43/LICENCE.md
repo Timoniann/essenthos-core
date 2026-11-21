@@ -127,7 +127,7 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   spelled alike. Romans, Philippians and Hebrews print the apostrophe as U+0185 («Імƅя», 49 words), which is read as
   an apostrophe.
 - **Joined**, as the producer reports it (spans joined / spans): Revelation 7,620 / 7,680, Romans 5,657 / 5,693,
-  Philippians 1,388 / 1,393, John 4,233 / 4,275, 1 Peter 193 / 195 (16 verses read from the project). Hebrews
+  Philippians 1,388 / 1,393, 1 Peter 193 / 195 (16 verses read from the project). John 4,233 / 4,275, Hebrews
   4,193 / 4,222 and Luke 1,405 / 1,411 before they were left out.
 - **Read by hand before taking** (TSK-1905; strict: any word on the wrong Greek word counts wrong). Revelation 40 of
   40, 1 Peter 40 of 40, Romans 76 of 80, Philippians 75 of 80 (78 counting three half right: a
@@ -136,8 +136,9 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   (mostly «Я» on ἐμοί/ἐμέ where it renders ἐγώ), so it would replace more right links than wrong ones (NOT-0228; the
   lead, 2026-11-19). Hebrews 34 of 40 and Luke 35 of 40 — not taken: their errors are mostly a small
   word tied to the next Greek word in order (Heb 2:14 «став» on παραπλησίως, Luke 2:37 «що» on ἕως), the mark of an
-  alignment made by walking both texts word by word. Their files stay here so the reading can be repeated on the same
-  bytes; `Door43BookAlignment` does not list them, so no product reads them.
+  alignment made by walking both texts word by word. The files of John, Hebrews and Luke stay here so the reading can
+  be repeated on the same bytes; their rows of `Essenthos/sources/door43-projects.tsv` say `read` f, so no product
+  reads them, and `build/licences.tsv` declares each of them `never`, so none can be read without a new row.
 
 ---
 

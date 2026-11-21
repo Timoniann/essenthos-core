@@ -51,9 +51,11 @@ DarbyFrench	strong	derived	the module says Public Domain; concordance.bible rese
 Dillmann	lexicon	content	CC-BY-NC-SA-4.0	non-commercial-only	dataset:dillmann	Dillmann/LICENCE.md	-	ShareAlike accepted for the Ge'ez meaning layer (NOT-0197).
 Door43	text	content	CC-BY-SA-4.0	share-alike	text:IRVASM text:IRVBEN text:IRVGUJ text:IRVKAN text:IRVMAL text:IRVMAR text:IRVPAN text:IRVTAM text:IRVTEL text:IRVURD text:ULT text:UST text:VIGLT	Door43/LICENCE.md	-	-
 Door43	alignment	derived	CC-BY-SA-4.0	share-alike	dataset:unfoldingword dataset:unfoldingword-ult dataset:unfoldingword-ust dataset:door43-avd dataset:door43-vi dataset:door43-lsg dataset:door43-irv	Door43/LICENCE.md	-	The links are offered under CC BY-SA, without the unfoldingWord mark.
-Door43/uk_ubio_books/44-JHN.usfm	alignment	derived	CC0-1.0	public-domain	dataset:door43-ubio-cc0	Door43/LICENCE.md	-	davidmax/uk_ubi_jhn_book.
+Door43/uk_ubio_books/43-LUK.usfm	alignment	never	CC-BY-SA-4.0	share-alike	-	Door43/LICENCE.md	-	AndreyParf/uk_ubio_luk_book, fetched and not read (TSK-1905): kept so its reading by hand can be repeated on the same bytes.
+Door43/uk_ubio_books/44-JHN.usfm	alignment	never	CC0-1.0	public-domain	-	Door43/LICENCE.md	-	davidmax/uk_ubi_jhn_book, fetched and not read (TSK-1905, NOT-0228): kept so its reading by hand can be repeated on the same bytes.
 Door43/uk_ubio_books/46-ROM.usfm	alignment	derived	CC0-1.0	public-domain	dataset:door43-ubio-cc0	Door43/LICENCE.md	-	ViraVlasiuk/uk_ubio_rom_book.
 Door43/uk_ubio_books/51-PHP.usfm	alignment	derived	CC-BY-SA-4.0	share-alike	dataset:door43-ubio-by-sa	Door43/LICENCE.md	-	ViraVlasiuk/uk_ubio_php_book.
+Door43/uk_ubio_books/59-HEB.usfm	alignment	never	CC0-1.0	public-domain	-	Door43/LICENCE.md	-	IlliaTs/uk_ubio_heb_book, fetched and not read (TSK-1905): kept so its reading by hand can be repeated on the same bytes.
 Door43/uk_ubio_books/61-1PE.usfm	alignment	derived	CC-BY-SA-4.0	share-alike	dataset:door43-ubio-by-sa	Door43/LICENCE.md	-	AndreyParf/uk_ubio_1pe_book; the verses unfoldingWord's uk_ubio states alike stay credited to it.
 Door43/uk_ubio_books/67-REV.usfm	alignment	derived	CC-BY-SA-4.0	share-alike	dataset:door43-ubio-by-sa	Door43/LICENCE.md	-	ViraVlasiuk/uk_ogi_rev_book.
 Door43/ru_rsb	alignment	derived	CC0-1.0	public-domain	dataset:door43-rsb	Door43/LICENCE.md	-	-
