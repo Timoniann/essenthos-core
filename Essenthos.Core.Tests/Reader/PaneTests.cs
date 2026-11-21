@@ -140,10 +140,11 @@ public sealed class PaneTests : IDisposable
 
     /// <summary>
     /// «twelve» renders שְׁנֵים and עָשָׂר as one word and carries both numbers, in the order the Hebrew words stand, though the
-    /// table holds them in another; a text whose numbers are withheld writes none, in the pane and in the parallel view alike.
+    /// table holds them in another. Every translation's words carry them, the Synodal's too, whose links are drawn from a
+    /// numbering laid onto it (the owner, 2026-11-22), in the pane and in the parallel view alike.
     /// </summary>
     [Fact]
-    public async Task AWordCarriesEveryNumberItRendersInItsOriginalsOrderAndAWithheldTextNone()
+    public async Task AWordCarriesEveryNumberItRendersInItsOriginalsOrderInEveryTranslation()
     {
         var (english, hebrew) = Pair();
         _db.WordAt(hebrew, 1, 1, 1).StrongNumber = "H8147";
@@ -153,17 +154,17 @@ public sealed class PaneTests : IDisposable
         var synodal = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (1, 1, ["двенадцать"]));
         _db.SaveChanges();
         var twelve = _db.WordAt(english, 1, 1, 1);
-        var withheld = _db.WordAt(synodal, 1, 1, 1);
+        var dvenadtsat = _db.WordAt(synodal, 1, 1, 1);
         _db.WordRenderedStrongs.AddRange(
             new WordRenderedStrong { VerseId = twelve.VerseId, WordId = twelve.Id, StrongNumber = "H8147" },
             new WordRenderedStrong { VerseId = twelve.VerseId, WordId = twelve.Id, StrongNumber = "H6240" },
-            new WordRenderedStrong { VerseId = withheld.VerseId, WordId = withheld.Id, StrongNumber = "H8147" });
+            new WordRenderedStrong { VerseId = dvenadtsat.VerseId, WordId = dvenadtsat.Id, StrongNumber = "H8147" });
         _db.SaveChanges();
 
         (await Pane(english)).GetProperty("verses")[0].GetProperty("words")[0].GetProperty("rn").GetString().Should().Be("H8147 H6240");
         (await ChapterReading.ReadByCanonicalVerse(_db, english.Id, 1, 1, default))[1][0].RenderedStrong.Should().Be("H8147 H6240");
-        (await Pane(synodal)).GetProperty("verses")[0].GetProperty("words")[0].TryGetProperty("rn", out _).Should().BeFalse();
-        (await ChapterReading.ReadByCanonicalVerse(_db, synodal.Id, 1, 1, default))[1].Single().RenderedStrong.Should().BeNull();
+        (await Pane(synodal)).GetProperty("verses")[0].GetProperty("words")[0].GetProperty("rn").GetString().Should().Be("H8147");
+        (await ChapterReading.ReadByCanonicalVerse(_db, synodal.Id, 1, 1, default))[1].Single().RenderedStrong.Should().Be("H8147");
         RenderedNumbers.Join(["H430", "H1004", "G26"]).Should().Be("G26 H430 H1004", "numbers no original word carries go in number order");
         RenderedNumbers.Join(["G3638", "G5144"], [("G5144", 5, 3), ("G2532", 5, 4), ("G03638", 5, 5)])
             .Should().Be("G5144 G3638", "«thirty-eight» over τριάκοντα καὶ ὀκτώ");
@@ -318,8 +319,12 @@ public sealed class PaneBuildTests : IDisposable
         (await Held("ASV")).Should().Be(2);
     }
 
+    /// <summary>
+    /// Every translation's panes read its numbers file, the Synodal's too (the owner, 2026-11-22): a new number moves the key
+    /// of each and its pane is made again.
+    /// </summary>
     [Fact]
-    public async Task AWithheldTextsPanesDoNotReadItsNumbers()
+    public async Task EveryTranslationsPanesReadItsNumbers()
     {
         await using (var db = _database.NewContext())
         {
@@ -341,7 +346,7 @@ public sealed class PaneBuildTests : IDisposable
         }
 
         store.Save();
-        (await Run(store, "YLT", "RUSV")).Where(o => o.Made).Select(o => o.Text).Should().Equal("YLT");
+        (await Run(store, "YLT", "RUSV")).Where(o => o.Made).Select(o => o.Text).Should().BeEquivalentTo("YLT", "RUSV");
     }
 
     [Fact]

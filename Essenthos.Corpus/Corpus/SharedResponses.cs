@@ -335,8 +335,8 @@ internal record TextWordResponse(
     /// <c>texts/&lt;SLUG&gt;/numbers</c>): what the word is marked by on a Strong number's verse list. A word rendering several
     /// original words as one carries their numbers joined by a space, in the order those words stand ("H8147 H6240" for
     /// «twelve» over שְׁנֵים עָשָׂר, <see cref="RenderedNumbers.Join"/>). Null where the word
-    /// carries its own number (<see cref="StrongNo"/>), on every word of a text that is not a translation, on every word of a
-    /// text whose numbers are withheld (<see cref="RenderedNumbers.Withheld"/>), and where no link gives it one.
+    /// carries its own number (<see cref="StrongNo"/>), on every word of a text that is not a translation, and where no link
+    /// gives it one.
     /// </summary>
     public string? RenderedStrong { get; init; }
 
