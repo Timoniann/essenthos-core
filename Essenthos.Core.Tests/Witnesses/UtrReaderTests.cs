@@ -115,6 +115,38 @@ public class UtrReaderTests
     }
 
     /// <summary>
+    /// A variant group of tags with a number among them completes the word before it. The
+    /// Westcott-Hort writes Mark 4:8 "en | 1722 {PREP} | 1520 {A-NSN} |" (the preposition in the text,
+    /// "one" in the margin), Ephesians 1:17 "dwh 1325 | 5630 {V-2AAO-3S} | 5632 {V-2AAS-3S} |" and
+    /// Luke 21:25 "hcouv | 0 2279 {N-GSF} | 2279 {N-GSN} |". Read as words they put 1722, 5630 and 0
+    /// into the text.
+    /// </summary>
+    [Theory]
+    [InlineData(true, "1722", "PREP", "5630", "V-2AAO-3S", "N-GSF")]
+    [InlineData(false, "1520", "A-NSN", "5632", "V-2AAS-3S", "N-GSN")]
+    public void AGroupOfTagsCompletesTheWordBeforeIt(
+        bool text, string enStrong, string enParse, string dwhInflection, string dwhParse, string hcouvParse)
+    {
+        var verses = UtrReader.Read(
+            """
+            4:8 eferen 5342 5707 {V-IAI-3S} triakonta 5144 {A-NUI} kai 2532 {CONJ}
+             en | 1722 {PREP} | 1520 {A-NSN} | exhkonta 1835 {A-NUI}
+            1:17 doxhv 1391 {N-GSF} dwh 1325 | 5630 {V-2AAO-3S} | 5632 {V-2AAS-3S} | umin 4771
+             {P-2DP}
+            21:25 aporia 640 {N-DSF} hcouv | 0 2279 {N-GSF} |
+             2279 {N-GSN} | qalasshv 2281 {N-GSF}
+            """, text ? Reading.First : Reading.Second);
+
+        verses.SelectMany(verse => verse.Words).Should().NotContain(word => word.Surface.All(char.IsAsciiDigit));
+        verses[0].Words.Select(word => word.Surface).Should().Equal("eferen", "triakonta", "kai", "en", "exhkonta");
+        (verses[0].Words[3].Strong, verses[0].Words[3].Morphology).Should().Be((enStrong, enParse));
+        (verses[1].Words[1] with { Segment = 0 }).Should().Be(new UtrWord("dwh", "1325", dwhInflection, dwhParse));
+        verses[1].Words.Select(word => word.Surface).Should().Equal("doxhv", "dwh", "umin");
+        (verses[2].Words[1] with { Segment = 0 }).Should().Be(new UtrWord("hcouv", "2279", null, hcouvParse));
+        verses[2].Words.Select(word => word.Surface).Should().Equal("aporia", "hcouv", "qalasshv");
+    }
+
+    /// <summary>
     /// Zero is not a Strong number. Robinson writes it before the number of a proper name the
     /// concordance lists elsewhere; taken literally it makes the word unresolvable and pushes the
     /// real number into the slot a verb's inflection code uses.

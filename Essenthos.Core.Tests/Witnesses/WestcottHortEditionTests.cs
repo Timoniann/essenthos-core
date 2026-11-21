@@ -25,21 +25,22 @@ namespace Essenthos.Core.Tests.Witnesses;
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class WestcottHortEditionTests(ITestOutputHelper output)
 {
-    /// <summary>Every address the parsed file writes, including the four it writes empty.</summary>
-    private const int Addresses = 7_941;
+    /// <summary>Every address the parsed file writes, including the seventeen the printed text has no words for.</summary>
+    private const int Addresses = 7_957;
 
     /// <summary>
-    /// The one address the file writes that the printed text has no words for. Sixteen verses the
-    /// critical text omits outright are simply not numbered here, and Matthew 12:47 is the
-    /// seventeenth: Westcott and Hort left it out of the text and put it in the margin, so the
-    /// group that holds it is empty on the side this edition is read from — which is one more thing
-    /// that would be the wrong way round if the sides were swapped.
+    /// The addresses the file writes that the printed text has no words for. The sixteen verses the
+    /// critical text omits outright stand alone on their line, with no words (Matthew 17:21, Acts
+    /// 8:37, ...), and Matthew 12:47 is the seventeenth: Westcott and Hort left it out of the text
+    /// and put it in the margin, so the group that holds it is empty on the side this edition is
+    /// read from — which is one more thing that would be the wrong way round if the sides were
+    /// swapped.
     /// </summary>
-    private const int Empty = 1;
+    private const int Empty = 17;
 
     /// <summary>
-    /// How many verses the printed side has to reproduce exactly. Today it is 7,887 of 7,940 and
-    /// the other side manages 6,774; the floor is set below the first and far above the second, so
+    /// How many verses the printed side has to reproduce exactly. Today it is 7,905 of 7,940 and
+    /// the other side manages 6,790; the floor is set below the first and far above the second, so
     /// a transcription change moves it and a swapped side breaks it.
     /// </summary>
     private const int Reproduced = 7_800;
@@ -209,6 +210,25 @@ public sealed class WestcottHortEditionTests(ITestOutputHelper output)
 
         romans.Should().OnlyContain(word => word.StrongNumber != null);
         romans.Select(word => word.Surface).Should().NotContain("3588");
+    }
+
+    /// <summary>
+    /// A Strong number, an inflection code, the unnumbered 0 or a verse address is never a word. Seven
+    /// numbers stood in the text of six verses, from variant groups of tags alone (Mark 4:8 «εν 1722
+    /// εξηκοντα», Ephesians 1:17 «δωη 5630 υμιν»); they complete the word before them. Sixteen
+    /// addresses ended the verse before an omitted one (Matthew 17:20 «υμιν 17:21»).
+    /// </summary>
+    [Fact]
+    public void NoWordIsANumber()
+    {
+        Loaded().Books.SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses).SelectMany(verse => verse.Words)
+            .Select(word => word.Surface).Where(surface => surface.Any(char.IsAsciiDigit)).Should().BeEmpty();
+
+        Words(41, 4, 8).Where(word => word.Surface == "εν").Should().HaveCount(2).And.OnlyContain(word => word.StrongNumber == "G1722");
+        Words(49, 1, 17).Single(word => word.Surface == "δωη").Morphology.Should().Contain("\"inflection\":\"5630\"");
+        Words(43, 6, 23).Select(word => word.Surface).Should().StartWith(["αλλα", "ηλθεν"]);
+        Words(40, 17, 20)[^1].Surface.Should().Be("υμιν");
     }
 
     /// <summary>Read once: the whole New Testament, and eight of these tests ask about it.</summary>
