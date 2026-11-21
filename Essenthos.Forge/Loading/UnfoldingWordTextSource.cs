@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Door43;
 using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
@@ -122,7 +123,8 @@ internal static partial class UnfoldingWordTextSource
     /// </summary>
     internal static string Unaligned(string content)
     {
-        var bare = AlignedWord().Replace(Milestone().Replace(content, string.Empty), match => match.Groups["word"].Value);
+        var bare = AlignedWord().Replace(Milestone().Replace(Usfm3AlignmentReader.NumbersRejoined(content), string.Empty),
+            match => match.Groups["word"].Value);
         var supplied = Braces().Replace(Supplied().Replace(bare, match => $"\\add{match.Groups["words"].Value}\\add*"), string.Empty);
         return OpeningALine().Replace(InsideALine().Replace(supplied, "\n"), " ");
     }

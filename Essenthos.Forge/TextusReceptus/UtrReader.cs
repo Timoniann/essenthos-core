@@ -135,7 +135,10 @@ internal static partial class UtrReader
 
     /// <summary>
     /// A verse begins at the start of a line with its address and runs until the next one; the
-    /// lines between are continuations, wrapped for a terminal that no longer exists.
+    /// lines between are continuations, wrapped for a terminal that no longer exists. An address
+    /// alone on its line is a verse with no words: the Westcott-Hort writes the sixteen verses it
+    /// omits (Matthew 17:21, Acts 8:37, ...) so, and read as a continuation the address became the
+    /// last word of the verse before.
     /// </summary>
     private static IEnumerable<(int Chapter, int Number, string Body)> Verses(string content)
     {
@@ -293,6 +296,30 @@ internal static partial class UtrReader
             return [];
         }
 
+        // The fourth shape: both alternatives are tags with a number among them, one word read as two
+        // words or forms. The Westcott-Hort writes "en | 1722 {PREP} | 1520 {A-NSN} |" at Mark 4:8 (ἐν
+        // in the text, ἕν in the margin) and "dwh 1325 | 5630 {V-2AAO-3S} | 5632 {V-2AAS-3S} |" at
+        // Ephesians 1:17. The tags complete the word before the group; read as a word they put "1722"
+        // and "5630" into the text.
+        if (chosen.All(token => token.StartsWith('{') || Number().IsMatch(token)))
+        {
+            if (words.Count == 0 || words[^1].Morphology is not null)
+            {
+                throw new InvalidOperationException(
+                    $"{chapter}:{verse} has a variant group of tags and nothing else after " +
+                    (words.Count == 0 ? "no word" : $"\"{words[^1].Surface}\", which already has its parse") +
+                    ", so there is no word for it to complete. Every group of this shape follows a word still " +
+                    "waiting for its tags; a file where one does not is one this reader has not seen.");
+            }
+
+            var before = words[^1];
+            string[] whole = [before.Surface, .. new[] { before.Strong, before.Inflection }.OfType<string>(), .. chosen];
+            var first = 0;
+            var completed = Word(whole, ref first);
+            words[^1] = completed with { Segment = before.Segment, Alternatives = [.. before.Alternatives, .. completed.Alternatives] };
+            return [];
+        }
+
         if (chosen.Any(token => token.StartsWith('{')))
         {
             var inner = 0;
@@ -400,7 +427,7 @@ internal static partial class UtrReader
         return new UtrWord(surface, strong, inflection, morphology, alternatives);
     }
 
-    [GeneratedRegex(@"^(\d+):(\d+) ")]
+    [GeneratedRegex(@"^(\d+):(\d+)(?:\s|$)")]
     private static partial Regex VerseStart();
 
     [GeneratedRegex(@"^\d+$")]

@@ -835,6 +835,57 @@ def mixed_script(text):
     return bool(MIXED_SCRIPT.search(text or ''))
 
 
+# The Latin letters drawn like a Cyrillic one, and that one. Opus writes about one request in a hundred with
+# such a letter inside a Ukrainian word ('оливa', 'устанoва', 'Божe'), and a resend often repeats it (PRB-1796).
+CYRILLIC_TWINS = str.maketrans('aceiopxyACEHIKMOPTXB', 'асеіорхуАСЕНІКМОРТХВ')
+WORD = re.compile(r'[A-Za-zЀ-ӿ]+')
+CYRILLIC = re.compile(r'[Ѐ-ӿ]')
+
+
+def cyrillic_twins(text):
+    """
+    (text, [(written, read)]): each word otherwise Cyrillic whose Latin letters all have a Cyrillic twin
+    written with the twins. A word with any other Latin letter ('nахиляти') is left, and stays mixed.
+    """
+    if not isinstance(text, str):
+        return text, []
+    fixed = []
+
+    def twin(match):
+        word = match.group(0)
+        latin = [c for c in word if c.isascii()]
+        if not latin or not CYRILLIC.search(word):
+            return word
+        read = word.translate(CYRILLIC_TWINS)
+        if any(c.isascii() for c in read):
+            return word
+        fixed.append((word, read))
+        return read
+
+    return WORD.sub(twin, text), fixed
+
+
+def with_cyrillic_twins(answer, job):
+    """
+    The answer with the Latin homoglyphs in its Ukrainian fields written in Cyrillic, every change kept
+    in the item's 'fixed' list ({'field', 'from', 'to'}), so the clean line shows it. Other fields are
+    left alone: a gloss's lemma or English may hold Latin by right.
+    """
+    if not isinstance(answer, dict):
+        return answer
+    if job == 'dillmann':
+        items = [(sense, ('uk',)) for entry in answer.get('entries') or [] if isinstance(entry, dict)
+                 for sense in entry.get('senses') or [] if isinstance(sense, dict)]
+    else:
+        items = [(word, ('sense_uk', 'uk')) for word in answer.get('words') or [] if isinstance(word, dict)]
+    for item, fields in items:
+        for field in fields:
+            item[field], changes = cyrillic_twins(item.get(field))
+            if changes:
+                item.setdefault('fixed', []).extend({'field': field, 'from': a, 'to': b} for a, b in changes)
+    return answer
+
+
 def _nonempty(value):
     return isinstance(value, str) and value.strip() != ''
 
@@ -967,10 +1018,14 @@ def download(run, client, submission, wait=False, poll=60):
 
 
 def judge(run, manifest, rows, headwords):
-    """Turns raw rows into clean lines and rejects; answers of another model are rejected."""
+    """
+    Turns raw rows into clean lines and rejects; answers of another model are rejected. Each clean line
+    names the raw row it came from in '_row', which collect takes out again.
+    """
     clean, rejects = [], []
-    for row in rows:
+    for number, row in enumerate(rows):
         cid = row['custom_id']
+        start = len(clean)
         items = manifest['items'].get(cid)
         why = None
         if items is None:
@@ -987,6 +1042,7 @@ def judge(run, manifest, rows, headwords):
             except (TypeError, ValueError) as error:
                 answer, why = None, [f'not JSON: {error}']
         if why is None and manifest['job'] == 'dillmann':
+            answer = with_cyrillic_twins(answer, 'dillmann')
             entry_errors = []
             good, errors = validate_dillmann(answer, items, entry_errors)
             if errors:
@@ -1002,7 +1058,7 @@ def judge(run, manifest, rows, headwords):
                                   'senses': entry['senses'], 'model': row['model'],
                                   'run': manifest['run'], 'prompt_version': manifest['prompt_version']})
         elif why is None:
-            answer = prompts.expand_gloss(answer, manifest.get('keys', 'long'))
+            answer = with_cyrillic_twins(prompts.expand_gloss(answer, manifest.get('keys', 'long')), 'gloss')
             good, errors, warnings = validate_gloss(answer, items, headwords)
             if errors:
                 why = errors
@@ -1015,10 +1071,13 @@ def judge(run, manifest, rows, headwords):
                                   'greek_word_ids': [items['greek'][g] for g in word['greek']],
                                   'greek_text': items['greek_text'], 'morph': word['morph'], 'conf': word['conf'],
                                   'warnings': [w for w in warnings if w.startswith(f'word {key}:')],
+                                  **({'fixed': word['fixed']} if word.get('fixed') else {}),
                                   'model': row['model'], 'run': manifest['run'],
                                   'prompt_version': manifest['prompt_version']})
         if why is not None:
             rejects.append({'custom_id': cid, 'why': why[:20]})
+        for line in clean[start:]:
+            line['_row'] = str(number)
     return clean, rejects
 
 
@@ -1038,6 +1097,13 @@ def collect(run, client=None, wait=False, fake=None):
     all_rows = [row for path in sorted((run / 'raw').glob('*.jsonl')) for row in read_jsonl(path)]
     # A later good answer supersedes an earlier failure of the same request.
     clean, rejects = judge(run, manifest, all_rows, headword_set(run))
+    # An answer that passed only once its Latin letters were written in Cyrillic gives way to another answer of
+    # the same request that needed none: a stray letter may have been typed in, not instead of, a Cyrillic one.
+    mapped = {line['custom_id'] + '\0' + line['_row'] for line in clean
+              if line.get('fixed') or any(s.get('fixed') for s in line.get('senses', []))}
+    clean.sort(key=lambda line: line['custom_id'] + '\0' + line['_row'] in mapped)
+    for line in clean:
+        del line['_row']
     dropped = 0
     if manifest['job'] == 'dillmann':
         # Only senses the current export still asks are kept: a sense dropped from the export after the
@@ -1070,6 +1136,8 @@ def collect(run, client=None, wait=False, fake=None):
     report = {'run': manifest['run'], 'requests': manifest['requests'], 'answered_requests': len(good),
               'rejected_requests': len({r['custom_id'] for r in final_rejects}), 'clean_items': len(final_clean),
               'warnings': sum(len(c.get('warnings', [])) for c in final_clean),
+              'latin_letters_written_cyrillic': sum(len(c.get('fixed', [])) + sum(len(s.get('fixed', [])) for s in c.get('senses', []))
+                                                    for c in final_clean),
               'submitted_requests': len(submitted_ids(run)), 'senses_dropped_not_dillmann': dropped,
               'usd': round(sum(r.get('usd') or 0 for r in all_rows), 4)}
     write_json(run / 'collect-report.json', report)

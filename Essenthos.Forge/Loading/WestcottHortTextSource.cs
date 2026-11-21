@@ -33,8 +33,8 @@ internal static partial class WestcottHortTextSource
     /// put in the margin, which is a different edition and not this one.
     ///
     /// Established against the repository's own plain transcription of the text rather than
-    /// assumed: taking this side reproduces 7,887 of its 7,940 verses word for word, and taking the
-    /// other reproduces 6,774. <c>WestcottHortEditionTests</c> is where that is asserted, so a file
+    /// assumed: taking this side reproduces 7,905 of its 7,940 verses word for word, and taking the
+    /// other reproduces 6,790. <c>WestcottHortEditionTests</c> is where that is asserted, so a file
     /// whose sides were ever swapped fails rather than loading the margin as the text.
     /// </summary>
     private const Reading Printed = Reading.First;
@@ -132,12 +132,11 @@ internal static partial class WestcottHortTextSource
                 Name: name,
                 Slug: Slugs.Of(name),
                 Chapters: [.. WithMarks(file, verses)
-                    // Matthew 12:47 is the one address the file writes and the printed text has no
-                    // words for: Westcott and Hort left the verse out and put it in their margin,
-                    // so taking their text leaves the group empty. A verse row means the edition has
-                    // that verse, so this one gets none — the same thing the Nestle load does with
-                    // the sixteen verses the critical text omits outright, which this file does not
-                    // number at all.
+                    // A verse row means the edition has that verse. The file writes the sixteen
+                    // verses the critical text omits outright as bare addresses, and Matthew 12:47
+                    // as a group whose text side is empty (Westcott and Hort put it in their
+                    // margin), so none of the seventeen gets a row — the same thing the Nestle load
+                    // does with the sixteen.
                     .Where(v => v.Verse.Words.Count > 0)
                     .GroupBy(v => v.Chapter)
                     .OrderBy(chapter => chapter.Key)

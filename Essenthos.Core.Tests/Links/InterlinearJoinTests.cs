@@ -288,6 +288,24 @@ public class InterlinearJoinTests
     }
 
     /// <summary>
+    /// PRB-1793: Joshua 7:3 «about 2,000 men», which the release writes 2, and 000 on two lines: the pieces the reader
+    /// joins are the one number the text prints.
+    /// </summary>
+    [Fact]
+    public void TheTwoPiecesOfANumberJoinTheNumberTheTextPrints()
+    {
+        var spans = Usfm3AlignmentReader.Read(
+            "\\c 7\n\\v 3 \\zaln-s |x-strong=\"k:H0505\" x-occurrence=\"1\" x-occurrences=\"1\" x-content=\"כְּ⁠אַלְפַּ֥יִם\"\\*\\w about|x-occurrence=\"1\" x-occurrences=\"1\"\\w*\n"
+            + "\\w 2|x-occurrence=\"1\" x-occurrences=\"1\"\\w*,\n\\w 000|x-occurrence=\"1\" x-occurrences=\"1\"\\w*\\zaln-e\\*\n")
+            .Single().Spans;
+
+        var (pairs, account) = Join([English("about"), English("2,000"), English("men")], [Hebrew("כְּאַלְפַּיִם")], spans[0]);
+
+        pairs.Single().From.Should().Equal(1, 2);
+        account.TranslatedPiecesJoined.Should().Be(1);
+    }
+
+    /// <summary>
     /// PRB-1887: Amos 6:3 prints a dash against its first word, and the corpus keeps <c>—the</c> as one word where
     /// the source names <c>the</c>; the span joins that word and not the later <c>the</c>.
     /// </summary>
