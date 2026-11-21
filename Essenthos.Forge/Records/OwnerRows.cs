@@ -59,6 +59,12 @@ internal static class OwnerRows
 
     private const string Records = "records/records";
 
+    /// <summary>
+    /// The value of a put on <c>records/records</c> that names the kind of the record it replaces under the same slug; no
+    /// column. Without it a put on a slug a record of another kind holds is refused.
+    /// </summary>
+    public const string Replaces = "replaces";
+
     /// <summary>Old addresses of folded records: a row's slug is held by no record, and its folded_into must be one.</summary>
     private const string Folds = "records/folds";
 
@@ -120,7 +126,8 @@ internal static class OwnerRows
     /// <param name="Values">
     /// A JSON object of the row's other columns by name. For put, a column not named is empty, except <c>by</c>, which
     /// is <see cref="Source"/>, and what a language's line or notes renders (<c>english</c>, <c>english_sha256</c>),
-    /// which is taken from the record's English line and notes; for drop, the columns a row must equal to go.
+    /// which is taken from the record's English line and notes; for drop, the columns a row must equal to go. A put on
+    /// <c>records/records</c> that turns a record into another kind also names the kind it replaces (<see cref="Replaces"/>).
     /// </param>
     /// <param name="Why">The reading the decision rests on.</param>
     /// <param name="By">Who decided it, from its file's <see cref="ByNote"/>: the <c>by</c> a put leaves unnamed.</param>
@@ -394,6 +401,15 @@ internal static class OwnerRows
                 return $"the values are no JSON object of columns ({exception.Message})";
             }
 
+            string? replaces = null;
+            if (row is { Product: Records, Op: Put } && values.Remove(Replaces, out var replacesNode))
+            {
+                if (replacesNode is not JsonValue replacesValue || !replacesValue.TryGetValue(out replaces))
+                {
+                    return $"'{Replaces}' names the kind of the record the row replaces";
+                }
+            }
+
             var edit = Edit(row.Product);
             var file = edit.File;
             var given = new string?[file.Parsed.Length];
@@ -445,6 +461,11 @@ internal static class OwnerRows
                 return edit.Amend(given, named);
             }
 
+            if (row.Product == Records && KindReplaced(edit, given, replaces) is { } refusal)
+            {
+                return refusal;
+            }
+
             for (var i = 1; i < given.Length; i++)
             {
                 if (!named[i])
@@ -471,6 +492,23 @@ internal static class OwnerRows
             }
 
             return edit.Put(given);
+        }
+
+        /// <summary>
+        /// Why a put on a slug that already names a record of another kind is refused: such a row was meant to make a new
+        /// record and would turn the one there into something else (two persons became birds). A row that does mean to
+        /// replace it says so by naming the kind it replaces.
+        /// </summary>
+        private static string? KindReplaced(RecordEdit edit, string?[] given, string? replaces)
+        {
+            var kind = Array.FindIndex(edit.File.Parsed, c => c.Name == "kind");
+            if (edit.Rows.FirstOrDefault(r => r[0] == given[0]) is not { } there || there[kind] == given[kind] || replaces == there[kind])
+            {
+                return null;
+            }
+
+            return $"{given[0]} is already a record of kind {there[kind]}, and this row would make it a {given[kind]}; " +
+                   $"a row that replaces it says so with \"{Replaces}\":\"{there[kind]}\", else it takes a slug of its own";
         }
 
         private RecordEdit Edit(string product)

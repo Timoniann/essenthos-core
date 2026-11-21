@@ -159,6 +159,50 @@ public sealed class OwnerRowsTests : IDisposable
     }
 
     /// <summary>
+    /// A put meant to make a record, on a slug a record of another kind already holds, would turn that record into the
+    /// new one (the persons Agur and Aiah became birds): it is refused and nothing is written. A row that does replace the
+    /// record names the kind it replaces; a put that keeps the kind changes the record as before.
+    /// </summary>
+    [Fact]
+    public void APutOnASlugARecordOfAnotherKindHoldsIsRefusedUnlessTheRowSaysItReplacesIt()
+    {
+        var store = Files();
+        Write(store, "records/records", "slug\tkind\tsubtype\tplace_kind\tname\tsex\tsex_source\tname_gender\ttribe\torigin\tanother_name_for\tbyname",
+            "god\tperson\t\\N\t\\N\tGod\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N",
+            "jachin-pillar\tobject\t\\N\t\\N\tJachin\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N",
+            "solomon\tperson\t\\N\t\\N\tSolomon\tmale\t\\N\t\\N\tJudah\t\\N\t\\N\t\\N",
+            "steps-of-ahaz\tobject\t\\N\t\\N\tSteps of Ahaz\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N");
+        store.Save();
+        store = new ProductStore(_resources);
+        var before = File.ReadAllText(store.FullPath("records/records", ProductKind.Hand));
+
+        var refused = OwnerRows.Apply(store, new OwnerRows.Decided([],
+        [
+            new("animals-b:12", "records/records", OwnerRows.Put, "solomon", """{"kind":"being","subtype":"creature"}""", "a bird"),
+            new("animals-b:13", "records/records", OwnerRows.Put, "god", """{"kind":"being","replaces":"object"}""", "names the wrong kind"),
+            new("animals-b:14", "records/records", OwnerRows.Put, "jachin-pillar", """{"kind":"object","name":"Jachin"}""", "the same kind"),
+        ]), dryRun: false, Now);
+
+        refused.Refused.Should().HaveCount(2);
+        refused.Refused[0].Should().Contain("solomon is already a record of kind person").And.Contain("\"replaces\":\"person\"");
+        refused.Refused[1].Should().Contain("god is already a record of kind person");
+        refused.Written.Should().BeEmpty();
+        File.ReadAllText(store.FullPath("records/records", ProductKind.Hand)).Should().Be(before);
+
+        var decided = new OwnerRows.Decided([],
+        [
+            new("PRB-1779", "records/records", OwnerRows.Put, "steps-of-ahaz", """{"kind":"place","name":"Steps of Ahaz","replaces":"object"}""", "a place"),
+            new("PRB-1779", "records/records", OwnerRows.Put, "jachin-pillar", """{"kind":"object","subtype":"structure","name":"Jachin"}""", "the same kind"),
+        ]);
+        var outcome = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
+
+        (outcome.Applied, outcome.Refused.Count).Should().Be((2, 0));
+        Rows("records/records").Single(r => r[0] == "steps-of-ahaz")[1].Should().Be("place");
+        OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now).Already.Should().Be(2,
+            "once applied the row is what the file shows, whatever kind it replaced");
+    }
+
+    /// <summary>
     /// The occupation files are made by the build from person-occupations.json: a row aimed at one would be applied and
     /// then written over by the next forge build, so it is refused with what to edit instead, and nothing is written.
     /// </summary>
