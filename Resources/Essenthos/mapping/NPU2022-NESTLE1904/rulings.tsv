@@ -1,0 +1,32 @@
+# product    Essenthos/mapping/NPU2022-NESTLE1904/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	43.21:22.6	43.21:22.7			John 21:22: the composition's link of «щоб» to θέλω is wrong, read by hand against Nestle 1904 (PRB-1948): щоб introduces the clause of μένειν; θέλω is хочу
+refuse	42.3:17.3	42.3:17.3			Luke 3:17: the composition's link of «руці» to πτύον is wrong, read by hand against Nestle 1904 (PRB-1948): руці is χειρὶ; πτύον is лопата
+refuse	45.9:25.6	45.9:25.5			Rom 9:25: the composition's link of «назву» to Ὡσηὲ is wrong, read by hand against Nestle 1904 (PRB-1948): назву is Καλέσω; Ὡσηὲ is Осії
+refuse	43.6:35.12	43.6:35.23			John 6:35: the composition's link of «не» to οὐ is wrong, read by hand against Nestle 1904 (PRB-1948): this не is the first clause's (οὐ μὴ πεινάσῃ); the second οὐ is the second не's
+refuse	41.12:26.21	41.12:26.15			Mark 12:26: the composition's link of «вогню» to Βάτου is wrong, read by hand against Nestle 1904 (PRB-1948): вогню (полум'ї вогню) has no word in Nestle; Βάτου is куща
+refuse	40.19:7.8	40.19:7.9			Matt 19:7: the composition's link of «їй» to ἀποστασίου is wrong, read by hand against Nestle 1904 (PRB-1948): їй has no word in Nestle; ἀποστασίου is розлучення
+refuse	60.2:9.12	60.2:9.11			1 Pet 2:9: the composition's link of «Богові» to περιποίησιν is wrong, read by hand against Nestle 1904 (PRB-1948): Богові (які належать Богові) has no word in Nestle; περιποίησιν is the possession
+refuse	59.4:16.9	59.4:16.6			Jas 4:16: the composition's link of «це» to ἀλαζονίαις is wrong, read by hand against Nestle 1904 (PRB-1948): це (усе це вихваляння) is τοιαύτη; ἀλαζονίαις is гордощах
+refuse	46.9:17.11	46.9:17.10			1 Cor 9:17: the composition's link of «то» to ἄκων is wrong, read by hand against Nestle 1904 (PRB-1948): то opens the main clause and has no word; ἄκων is недобровільно
+refuse	55.4:21.12	55.4:21.13			2 Tim 4:21: the composition's link of «всі» to Κλαυδία is wrong, read by hand against Nestle 1904 (PRB-1948): всі is πάντες; Κλαυδία is Клавдія
+refuse	42.22:10.12	42.22:10.14			Luke 22:10: the composition's link of «нестиме» to κεράμιον is wrong, read by hand against Nestle 1904 (PRB-1948): нестиме is βαστάζων; κεράμιον is глечик
+refuse	61.2:16.8	61.2:16.5			2 Pet 2:16: the composition's link of «німа» to παρανομίας is wrong, read by hand against Nestle 1904 (PRB-1948): німа is ἄφωνον; παρανομίας is беззаконня
+refuse	44.13:5.1	44.13:5.1			Acts 13:5: the composition's link of «Прибувши» to καὶ is wrong, read by hand against Nestle 1904 (PRB-1948): Прибувши is γενόμενοι, not καὶ
+refuse	48.1:9.19	48.1:9.11			Gal 1:9: the composition's link of «ту» to παρ is wrong, read by hand against Nestle 1904 (PRB-1948): ту is the antecedent of ὃ; παρ' is а не
+refuse	45.11:16.6	45.11:16.8			Rom 11:16: the composition's link of «все» to φύραμα is wrong, read by hand against Nestle 1904 (PRB-1948): все (все тісто) has no word in Nestle; φύραμα is тісто
+refuse	44.27:27.2	44.27:27.3			Acts 27:27: the composition's link of «настала» to τεσσαρεσκαιδεκάτη is wrong, read by hand against Nestle 1904 (PRB-1948): настала is ἐγένετο; τεσσαρεσκαιδεκάτη is чотирнадцята
+refuse	42.8:32.4	42.8:32.4			Luke 8:32: the composition's link of «велике» to ἀγέλη is wrong, read by hand against Nestle 1904 (PRB-1948): велике is ἱκανῶν; ἀγέλη is стадо
+refuse	42.10:41.10	42.10:41.11			Luke 10:41: the composition's link of «багатьма» to θορυβάζῃ is wrong, read by hand against Nestle 1904 (PRB-1948): багатьма is πολλά; θορυβάζῃ is клопочешся
+refuse	45.11:1.18	45.11:1.21			Rom 11:1: the composition's link of «роду» to Βενιαμείν is wrong, read by hand against Nestle 1904 (PRB-1948): роду is φυλῆς; Βενιαμείν is Веніаміна
+refuse	40.3:7.7	40.3:7.7			Matt 3:7: the composition's link of «які» to Σαδδουκαίων is wrong, read by hand against Nestle 1904 (PRB-1948): які is the relative of ἐρχομένους; Σαδδουκαίων is садукеїв
+refuse	59.1:5.15	59.1:5.13			Jas 1:5: the composition's link of «дарує» to ἁπλῶς is wrong, read by hand against Nestle 1904 (PRB-1948): дарує is διδόντος; ἁπλῶς is щедро
+refuse	45.1:31.7	45.1:31.3			Rom 1:31: the composition's link of «виконують» to ἀστόργους is wrong, read by hand against Nestle 1904 (PRB-1948): не виконують обіцянок is ἀσυνθέτους; ἀστόργους is не мають любові
+refuse	43.11:30.9	43.11:30.15			John 11:30: the composition's link of «там» to ὅπου is wrong, read by hand against Nestle 1904 (PRB-1948): там is ἐν τῷ τόπῳ; ὅπου is де
+refuse	58.6:14.3	58.6:14.3			Heb 6:14: the composition's link of «Я» to μὴν is wrong, read by hand against Nestle 1904 (PRB-1948): Я is the subject of εὐλογήσω; μὴν is неодмінно
+refuse	44.14:24.1	44.14:24.4			Acts 14:24: the composition's link of «Далі» to Πισιδίαν is wrong, read by hand against Nestle 1904 (PRB-1948): Далі has no word in Nestle; Πισιδίαν is Пісідію
+refuse	49.6:16.12	49.6:16.13			Eph 6:16: the composition's link of «диявола» to βέλη is wrong, read by hand against Nestle 1904 (PRB-1948): диявола is τοῦ πονηροῦ; βέλη is стріли (owner, 2026-11-22)
+accept	49.6:16.12	49.6:16.15	renders		Eph 6:16: «диявола» renders πονηροῦ (ὁ πονηρός, the evil one), read by hand against Nestle 1904 where the composition put it on βέλη (owner, 2026-11-22; PRB-1948)
