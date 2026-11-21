@@ -45,7 +45,7 @@ internal sealed class SourceWords
         [MaxfieldAsv] = [AddedNoun],
         [Berean] = [BereanSuppliedConjunction, BereanWawConjunction, BereanOpeningConjunction, BereanSubjectPart, BereanPrefix, BereanPrefixPart,
             BereanOpeningPreposition],
-        [ClearBible] = [ClearBibleSpanishAnd, ClearBibleSpanishBeforeNames, ClearBibleFrenchAnd, ClearBibleHindiAnd, ClearBibleHebrewAlso, ClearBibleGreekAlso],
+        [ClearBible] = [ClearBibleSpanishAnd, ClearBibleSpanishBefore, ClearBibleFrenchAnd, ClearBibleHindiAnd, ClearBibleHebrewAlso, ClearBibleGreekAlso],
     };
 
     public const string MaxfieldAsv = "maxfield-asv";
@@ -62,7 +62,7 @@ internal sealed class SourceWords
 
     public const string ClearBible = "clear-bible";
     public const string ClearBibleSpanishAnd = "spa-and";
-    public const string ClearBibleSpanishBeforeNames = "spa-before-names";
+    public const string ClearBibleSpanishBefore = "spa-before";
     public const string ClearBibleFrenchAnd = "fra-and";
     public const string ClearBibleHindiAnd = "hin-and";
     public const string ClearBibleHebrewAlso = "heb-also";

@@ -81,7 +81,10 @@ public class ClearBibleEarlyNameTests(ITestOutputHelper output)
             new Dictionary<string, string> { ["01014003009"] = "siddim", ["32002003005"] = "jehova" },
             new HashSet<(string, int)>(),
             new HashSet<string>(),
-            new HashSet<string>());
+            new HashSet<string>(),
+            new Dictionary<string, string>(),
+            new Dictionary<(string, int), int>(),
+            new Dictionary<string, int>());
 
         ClearBibleLinks.Early(new ClearBibleRecord(["o010140030071"], ["01014003008"]), early).Should().Be("01014003009");
         ClearBibleLinks.Early(new ClearBibleRecord(["o320020030041"], ["32002003004"]), early).Should().BeNull();

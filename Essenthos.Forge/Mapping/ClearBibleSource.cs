@@ -36,6 +36,10 @@ internal sealed class ClearBibleSource : IPairSource
     /// <summary>What a row says of itself where its record named the word before the name (<see cref="ClearBibleLinks.Early"/>).</summary>
     internal const string MovedNote = "the set's record names the preposition or article before this name and leaves the name unnamed; moved onto the name";
 
+    /// <summary>What a row says of itself where its record named the preposition or article before a common word (<see cref="ClearBibleLinks.Slipped"/>).</summary>
+    internal const string MovedOntoWordNote =
+        "the set's record names the preposition or article before this word and leaves the word unnamed; moved onto the word, which the set renders the same Strong number with elsewhere";
+
     public string Method => MappingMethods.Stated;
 
     public string Name => "clearbible";
@@ -97,6 +101,7 @@ internal sealed class ClearBibleSource : IPairSource
 
         log($"{joined.Records} records, {joined.Drafts.Count} resolved; {joined.Unresolved} unresolved ({joined.WithoutCounterpart} "
             + $"without a counterpart), {joined.Astray} astray, {joined.Shifted} shifted, {joined.Moved} moved onto the name after them, "
+            + $"{joined.MovedOntoWord} moved onto the common word after them and {joined.Slipped} refused as on the word before one, "
             + $"{joined.Misnumbered} misnumbered, {joined.Renumbered} renumbered and {joined.Unplaced} placed on nothing over "
             + $"{joined.Edited} verses numbered over an edited source ({joined.Crossed} identifiers crossed), "
             + $"{joined.Overruled} overruled ({joined.Trimmed} trimmed); {joined.Placed}");
@@ -106,7 +111,12 @@ internal sealed class ClearBibleSource : IPairSource
         {
             var row = new MappingRow(MappingText.Keys(draft.From.Select(translation.Key)),
                 MappingText.Keys(draft.To.Select(witness.Key)),
-                Renders, Method, null, set.Statement, draft.Moved ? MovedNote : null, null, null);
+                Renders, Method, null, set.Statement, draft.Moved switch
+                {
+                    ClearBibleLinks.Move.Name => MovedNote,
+                    ClearBibleLinks.Move.Word => MovedOntoWordNote,
+                    _ => null,
+                }, null, null);
             rows.TryAdd(row.Shape, row);
         }
 
