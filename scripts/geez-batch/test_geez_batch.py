@@ -203,6 +203,39 @@ class CollectTests(unittest.TestCase):
             first = gb.read_jsonl(run / 'clean.jsonl')[0]
             self.assertEqual((first['word_id'], first['greek_word_ids']), ('100', ['200']))
 
+    def test_a_latin_twin_inside_a_ukrainian_word_is_written_cyrillic_and_kept_visible(self):
+        # PRB-1796: 'оливa' and 'Божe' (Latin a and e) cost a whole request each; 'nахиляти' has no twin for n.
+        self.assertEqual(gb.cyrillic_twins('оливa і Божe, not Latin'),
+                         ('олива і Боже, not Latin', [('оливa', 'олива'), ('Божe', 'Боже')]))
+        self.assertEqual(gb.cyrillic_twins('nахиляти'), ('nахиляти', []))
+        with tempfile.TemporaryDirectory() as folder:
+            run = Path(folder) / 'run'
+            gb.write_jsonl(run / 'inputs' / 'gloss-chapters.jsonl', [chapter()])
+            gb.build(run, 'gloss', claude_api, 'claude-sonnet-5-5', 'high')
+            cid = gb.read_jsonl(run / 'requests.jsonl')[0]['custom_id']
+            words = [word(f'w{i}') for i in range(1, 7)]
+            words[0]['sense_uk'] = 'оливa'
+            fake = Path(folder) / 'fake.jsonl'
+            row = {'custom_id': cid, 'type': 'succeeded', 'model': 'claude-sonnet-5-5', 'stop_reason': 'end_turn',
+                   'text': json.dumps({'words': words})}
+            gb.write_jsonl(fake, [row])
+            report = gb.collect(run, fake=fake)
+            self.assertEqual((report['clean_items'], report['rejected_requests'], report['latin_letters_written_cyrillic']),
+                             (6, 0, 1))
+            first = gb.read_jsonl(run / 'clean.jsonl')[0]
+            self.assertEqual((first['sense_uk'], first['fixed']), ('олива', [{'field': 'sense_uk', 'from': 'оливa', 'to': 'олива'}]))
+            self.assertNotIn('_row', first)
+            resent = dict(row, text=json.dumps({'words': [word(f'w{i}') for i in range(1, 7)]}))
+            gb.write_jsonl(fake, [row, resent])
+            gb.collect(run, fake=fake)
+            first = gb.read_jsonl(run / 'clean.jsonl')[0]
+            self.assertEqual((first['sense_uk'], 'fixed' in first), ('земля', False))   # the answer that needed no mapping
+            words[0]['uk'] = 'nахиляти'
+            gb.write_jsonl(fake, [dict(row, text=json.dumps({'words': words}))])
+            gb.write_jsonl(run / 'raw' / 'fake.jsonl', [])
+            report = gb.collect(run, fake=fake)
+            self.assertEqual((report['clean_items'], report['rejected_requests']), (0, 1))
+
 
 
 class ShortKeyTests(unittest.TestCase):
