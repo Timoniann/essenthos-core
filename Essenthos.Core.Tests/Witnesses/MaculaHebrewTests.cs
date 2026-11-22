@@ -120,6 +120,43 @@ public sealed class MaculaHebrewTests(ITestOutputHelper output)
         MaculaHebrewAnnotation.Of(Read(table), Bhsa).Referents.Should().BeEmpty("which morph was meant is not guessed");
     }
 
+    /// <summary>
+    /// Ruth 1:5 cut down: Naomi (נָעֳמִי) ... the woman (הָאִשָּׁה, which MACULA refers on to Naomi) ... she (הִיא, referring to
+    /// the woman) ... she returned (תָּשָׁב, its subject the woman) ... a man (אִישׁ, referring nowhere) ... he (הוּא).
+    /// </summary>
+    private static readonly string Ruth =
+        "xml:id\tref\tclass\ttext\ttransliteration\tlang\tlemma\tpos\tperson\tgender\tnumber\ttype\tsdbh\tsubjref\tparticipantref\n"
+        + "o080010050011\tRUT 1:5!1\tnoun\tנָעֳמִי\tx\tH\tנָעֳמִי\tnoun\t\tfeminine\tsingular\tproper\tSDBH\t\t\n"
+        + "o080010050021\tRUT 1:5!2\tnoun\tאִשָּׁה\tx\tH\tאִשָּׁה\tnoun\t\tfeminine\tsingular\tcommon\tSDBH\t\t080010050011\n"
+        + "o080010050031\tRUT 1:5!3\tpron\tהִיא\tx\tH\tהִיא\tpronoun\tthird\tfeminine\tsingular\tpersonal\tSDBH\t\t080010050021\n"
+        + "o080010050041\tRUT 1:5!4\tverb\tתָּשָׁב\tx\tH\tשׁוּב\tverb\tthird\tfeminine\tsingular\twayyiqtol\tSDBH\t080010050021\t\n"
+        + "o080010050051\tRUT 1:5!5\tnoun\tאִישׁ\tx\tH\tאִישׁ\tnoun\t\tmasculine\tsingular\tcommon\tSDBH\t\t\n"
+        + "o080010050061\tRUT 1:5!6\tpron\tהוּא\tx\tH\tהוּא\tpronoun\tthird\tmasculine\tsingular\tpersonal\tSDBH\t\t080010050051\n";
+
+    private static readonly MaculaHebrewJoin.Word[] RuthWords =
+    [
+        new(51, 8, 1, 5, 1, "נָעֳמִי"),
+        new(52, 8, 1, 5, 2, "אִשָּׁה"),
+        new(53, 8, 1, 5, 3, "הִיא"),
+        new(54, 8, 1, 5, 4, "תָּשָׁב"),
+        new(55, 8, 1, 5, 5, "אִישׁ"),
+        new(56, 8, 1, 5, 6, "הוּא"),
+    ];
+
+    [Fact]
+    public void AVerbRefersByItsSubjectAndAChainEndsAtACommonNoun()
+    {
+        var (parsings, referents) = MaculaHebrewAnnotation.Of(Read(Ruth), RuthWords);
+
+        referents.Should().Equal([(53L, 52L), (54L, 52L), (56L, 55L)],
+            "she and the verb's subject are the woman; a common noun ends the chain, whomever MACULA refers it on to");
+        var verb = JsonDocument.Parse(parsings.Single(p => p.Word == 54).Morphology).RootElement;
+        verb.GetProperty("refers").GetString().Should().Be("subject");
+        verb.GetProperty("subject").GetString().Should().Be("3fs");
+        var noun = JsonDocument.Parse(parsings.Single(p => p.Word == 52).Morphology).RootElement;
+        noun.TryGetProperty("refers", out _).Should().BeFalse("a noun's own reference is followed, never shown on it");
+    }
+
     /// <summary>The whole file on BHSA's words, as the build places it (PRB-1727's measurement).</summary>
     [Fact]
     [Trait("Category", "Corpus")]

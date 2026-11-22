@@ -100,7 +100,7 @@ internal static class NameConsensusPass
     public const string Source = Essenthos.Core.Corpus.Annotations.Consensus;
 
     /// <summary>Raised with any change to what the consensus writes or how.</summary>
-    public const string Version = "1";
+    public const string Version = "2";
 
     public const string VersionNote = "consensus-version";
 
