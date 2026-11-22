@@ -114,28 +114,45 @@ public sealed class PaneTests : IDisposable
         words[1].TryGetProperty("bk", out _).Should().BeFalse();
     }
 
+    /// <summary>
+    /// A word with no number of its own carries the number it renders in every text, an original's and a printed edition's
+    /// as much as a translation's (NOT-0236): the Ge'ez of 1881 has no numbers of its own, so all its numbers come through its
+    /// links. A word with a number of its own shows only that.
+    /// </summary>
     [Fact]
-    public async Task ATranslationsWordCarriesTheNumberItRendersAndAnOriginalsWordOnlyItsOwn()
+    public async Task AWordWithNoNumberOfItsOwnCarriesTheNumberItRendersInEveryText()
     {
         var (english, hebrew) = Pair();
+        var geez = Corpus.Add(_db, "GEEZ81", TextKind.PrintedEdition, "gez", (1, 1, ["ወ", "ኢያሱ"]));
+        _db.SaveChanges();
         var and = _db.WordAt(english, 1, 1, 1);
         var joshua = _db.WordAt(english, 1, 1, 2);
         joshua.StrongNumber = "H3091";
         var conjunction = _db.WordAt(hebrew, 1, 1, 1);
+        var yehoshua = _db.WordAt(hebrew, 1, 1, 2);
+        yehoshua.StrongNumber = "H3091";
+        var iyasu = _db.WordAt(geez, 1, 1, 2);
         _db.WordRenderedStrongs.AddRange(
             new WordRenderedStrong { VerseId = and.VerseId, WordId = and.Id, StrongNumber = "H9000" },
             new WordRenderedStrong { VerseId = joshua.VerseId, WordId = joshua.Id, StrongNumber = "H3091" },
-            new WordRenderedStrong { VerseId = conjunction.VerseId, WordId = conjunction.Id, StrongNumber = "H9000" });
+            new WordRenderedStrong { VerseId = conjunction.VerseId, WordId = conjunction.Id, StrongNumber = "H9000" },
+            new WordRenderedStrong { VerseId = yehoshua.VerseId, WordId = yehoshua.Id, StrongNumber = "H3092" },
+            new WordRenderedStrong { VerseId = iyasu.VerseId, WordId = iyasu.Id, StrongNumber = "H3091" });
         _db.SaveChanges();
 
         var words = (await Pane(english)).GetProperty("verses")[0].GetProperty("words");
         var hebrewWords = (await Pane(hebrew)).GetProperty("verses")[0].GetProperty("words");
+        var geezWords = (await Pane(geez)).GetProperty("verses")[0].GetProperty("words");
 
         words[0].GetProperty("rn").GetString().Should().Be("H9000");
         words[0].TryGetProperty("n", out _).Should().BeFalse();
         (words[1].GetProperty("n").GetString(), words[1].TryGetProperty("rn", out _)).Should().Be(("H3091", false), "its own number is written once");
         words[2].TryGetProperty("rn", out _).Should().BeFalse("no link gives it a number");
-        hebrewWords[0].TryGetProperty("rn", out _).Should().BeFalse("an original's word shows only its own number");
+        hebrewWords[0].GetProperty("rn").GetString().Should().Be("H9000", "an original's word without a number of its own shows the one it renders");
+        (hebrewWords[1].GetProperty("n").GetString(), hebrewWords[1].TryGetProperty("rn", out _)).Should().Be(("H3091", false), "a number of its own wins");
+        geezWords[0].TryGetProperty("rn", out _).Should().BeFalse("no link gives it a number");
+        geezWords[1].GetProperty("rn").GetString().Should().Be("H3091");
+        (await ChapterReading.ReadByCanonicalVerse(_db, geez.Id, 1, 1, default))[1][1].RenderedStrong.Should().Be("H3091");
     }
 
     /// <summary>

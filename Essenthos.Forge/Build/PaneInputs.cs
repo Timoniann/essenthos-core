@@ -17,7 +17,7 @@ namespace Essenthos.Core.Build;
 /// cannot be told apart by (the text's own products, the other texts' words and kinds, the Strong candidates, the lexicons)
 /// whole, and of the rest only the rows that reach the chapter: the rows of each final that name a word of the text in it,
 /// the projected names on its words, the record files' rows of the records those names and its occupation words name, the
-/// occupation rows of those words, and for a translation the Strong number each of its words there renders. A word is in
+/// occupation rows of those words, and the Strong number each of its words there renders. A word is in
 /// every canonical chapter its verse stands at (the frame, every address, not only the primary one), and a pane is in every
 /// chapter it reads (<see cref="ChapterReading.Held"/>).
 /// <para>
@@ -69,11 +69,10 @@ internal sealed class PaneInputs
         || (product.StartsWith("texts/", StringComparison.Ordinal) && product == StrongNumberFiles.Product(product.Split('/')[1]));
 
     /// <summary>
-    /// The slices of the texts named, every final of a pair holding one of them read once, and the Strong numbers of the
-    /// <paramref name="numbered"/> among them (the translations, whose panes write the number each word renders).
+    /// The slices of the texts named, every final of a pair holding one of them read once, and the Strong numbers their words
+    /// render.
     /// </summary>
-    public static PaneInputs Read(ProductStore store, IReadOnlyCollection<string> texts, IReadOnlyList<(string From, string To)> pairs, int parallel,
-        IReadOnlyCollection<string>? numbered = null)
+    public static PaneInputs Read(ProductStore store, IReadOnlyCollection<string> texts, IReadOnlyList<(string From, string To)> pairs, int parallel)
     {
         var inputs = new PaneInputs();
         foreach (var text in texts.Order(StringComparer.Ordinal))
@@ -165,7 +164,7 @@ internal sealed class PaneInputs
         });
 
         // Only the number counts: how a word came by it (hops, source, confidence) is not written in a pane.
-        Parallel.ForEach(inputs._texts.Where(t => numbered?.Contains(t.Key) == true), new ParallelOptions { MaxDegreeOfParallelism = parallel }, entry =>
+        Parallel.ForEach(inputs._texts, new ParallelOptions { MaxDegreeOfParallelism = parallel }, entry =>
         {
             var (text, slices) = (entry.Key, entry.Value);
             if (!store.Exists(StrongNumberFiles.Product(text)))

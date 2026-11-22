@@ -82,14 +82,14 @@ public sealed class PaneInputsTests : IDisposable
         var store = Store();
         var numbered = new List<ProductInput> { new($"Essenthos/{StrongNumberFiles.Product("KJV")}.essx", "aa") };
         Numbers(store, "H430", hops: 1);
-        var before = PaneInputs.Read(store, ["KJV"], Pairs, 2, ["KJV"]).Keys("KJV", numbered, Chapters);
+        var before = PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", numbered, Chapters);
         var unread = Keys(store, "KJV");
 
         Numbers(store, "H430", hops: 2);
-        PaneInputs.Read(store, ["KJV"], Pairs, 2, ["KJV"]).Keys("KJV", numbered, Chapters).Should().Equal(before);
+        PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", numbered, Chapters).Should().Equal(before);
 
         Numbers(store, "H3068", hops: 1);
-        Moved(before, PaneInputs.Read(store, ["KJV"], Pairs, 2, ["KJV"]).Keys("KJV", numbered, Chapters)).Should().Equal([(1, 3)]);
+        Moved(before, PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", numbered, Chapters)).Should().Equal([(1, 3)]);
         Keys(store, "KJV").Should().Equal(unread);
     }
 
