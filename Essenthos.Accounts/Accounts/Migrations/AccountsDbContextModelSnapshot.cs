@@ -78,9 +78,23 @@ namespace Essenthos.Core.Accounts.Migrations
                         .HasColumnName("recent_bookmark_colors")
                         .HasDefaultValueSql("'{}'::text[]");
 
+                    b.Property<string>("RecentColumnSets")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("recent_column_sets")
+                        .HasDefaultValueSql("'[]'::jsonb");
+
                     b.Property<long>("Revision")
                         .HasColumnType("bigint")
                         .HasColumnName("revision");
+
+                    b.Property<string>("SavedColumnSets")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("saved_column_sets")
+                        .HasDefaultValueSql("'[]'::jsonb");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
