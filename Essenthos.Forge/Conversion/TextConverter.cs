@@ -35,6 +35,9 @@ internal sealed class ConvertedWord
 
     /// <summary>A corrections row added the word: no source printed it where it stands. Not written.</summary>
     public bool Added { get; set; }
+
+    /// <summary>The edition marks the word as part of a psalm's superscription (<see cref="WordDraft.Superscription"/>). Not written.</summary>
+    public bool Superscription { get; set; }
 }
 
 internal sealed class ConvertedVerse(VerseKey key, int sequence, List<ConvertedWord> words)
@@ -48,6 +51,24 @@ internal sealed class ConvertedVerse(VerseKey key, int sequence, List<ConvertedW
 
     /// <summary>Why the verse holds a psalm's superscription (<see cref="TextTitle"/>), or null.</summary>
     public string? Title { get; init; }
+
+    /// <summary>
+    /// How many of the verse's first words are the superscription, where the edition marks where it ends and more of the
+    /// verse follows it; null where it does not.
+    /// </summary>
+    public int? TitleWords
+    {
+        get
+        {
+            // A superscription the file did not print is the run of words a correction prepended to the psalm.
+            var leading = Title == TextTitle.Opening && Words is [{ Added: true }, ..]
+                ? Words.TakeWhile(word => word.Added).Count()
+                : Words.TakeWhile(word => word.Superscription).Count();
+            return Title is not null && leading > 0 && leading < Words.Count && Words.Skip(leading).All(word => !word.Superscription)
+                ? leading
+                : null;
+        }
+    }
 }
 
 /// <summary>A text while it is converted: its declaration, books, verses in print order and notes.</summary>
@@ -259,6 +280,7 @@ internal static class TextConverter
                             Supplied = supplied.Next(draft.SuppliedSpan),
                             Restored = restored.Next(draft.RestoredSpan),
                             Added = added?.Contains(draft) == true,
+                            Superscription = draft.Superscription,
                         });
                     }
 
@@ -334,7 +356,7 @@ internal static class TextConverter
 
         using (var writer = store.Create(TextTitle.ProductOf(slug), ProductKind.Machine, TextTitle.Schema, producer, inputs))
         {
-            writer.WriteAll(text.Verses.Where(verse => verse.Title is not null).Select(verse => new TextTitle(verse.Key, verse.Title!)));
+            writer.WriteAll(text.Verses.Where(verse => verse.Title is not null).Select(verse => new TextTitle(verse.Key, verse.Title!) { Words = verse.TitleWords }));
         }
 
         using (var writer = store.Create(TextNote.ProductOf(slug), ProductKind.Machine, TextNote.Schema, producer, inputs))

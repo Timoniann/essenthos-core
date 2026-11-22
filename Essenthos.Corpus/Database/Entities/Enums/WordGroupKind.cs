@@ -89,4 +89,10 @@ public enum WordGroupKind
     /// ╓ ╖ in his Enoch. They are the Ethiopic's own words, only not the Greek's.
     /// </summary>
     NotInGreek,
+
+    /// <summary>
+    /// A psalm's superscription where the file prints it at the head of the psalm's first verse and the edition marks
+    /// where it ends: the reader shows these words in the title's row, the rest of the verse in its own.
+    /// </summary>
+    Superscription,
 }

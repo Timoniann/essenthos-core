@@ -58,7 +58,11 @@ internal sealed record SwordText(
 /// </param>
 internal sealed record SwordWord(
     string Surface, string Trailer, IReadOnlyList<string> Numbers, int Unit, bool Elided,
-    IReadOnlyList<StatedPosition>? Positions = null, bool Added = false, IReadOnlyList<string?>? Morphology = null);
+    IReadOnlyList<StatedPosition>? Positions = null, bool Added = false, IReadOnlyList<string?>? Morphology = null)
+{
+    /// <summary>The word stands in a title element of the module: a psalm's superscription.</summary>
+    public bool Title { get; init; }
+}
 
 /// <param name="Book">The canonical ordinal of the verse the element stands in.</param>
 /// <param name="Positions">The Greek words it renders, by their place in the Received Text.</param>
@@ -136,6 +140,8 @@ internal static class SwordTextSource
     private const string NrsvVersification = "NRSV";
     private const int Psalms = 19;
     private const char OpeningParenthesis = '（';
+
+    private const char ClosingParenthesis = '）';
 
     /// <summary>
     /// The verses SWORD's NRSV numbers apart and the King James prints within a neighbour: where each
@@ -483,7 +489,7 @@ internal static class SwordTextSource
     }
 
     private static VerseDraft Draft(int number, ReadVerse verse) =>
-        new(number, [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer, Elided: word.Elided))])
+        new(number, [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer, Elided: word.Elided) { Superscription = word.Title })])
         {
             Notes = verse.Notes,
             Stated = verse.Stated,
@@ -528,10 +534,19 @@ internal static class SwordTextSource
                 continue;
             }
 
-            var superscription = pieces.Any(piece => piece.Title)
-                                 || (text.Segmentation == SwordSegmentation.Tagged && address is (Psalms, _, 1)
-                                     && words[0] is { Elided: true } opening
-                                     && opening.Trailer.TrimStart().StartsWith(OpeningParenthesis));
+            var parenthesised = text.Segmentation == SwordSegmentation.Tagged && address is (Psalms, _, 1)
+                                && words[0] is { Elided: true } opening
+                                && opening.Trailer.TrimStart().StartsWith(OpeningParenthesis);
+            var superscription = pieces.Any(piece => piece.Title) || parenthesised;
+            if (parenthesised && words.FindIndex(word => word.Trailer.Contains(ClosingParenthesis)) is var closed and >= 0
+                && closed < words.Count - 1)
+            {
+                // The Union Version prints a psalm's title in parentheses at the head of its first verse.
+                for (var at = 0; at <= closed; at++)
+                {
+                    words[at] = words[at] with { Title = true };
+                }
+            }
             verses[address] = new ReadVerse(words, notes, superscription, [])
             {
                 Unrendered =
@@ -665,7 +680,7 @@ internal static class SwordTextSource
 
                     if (words.Count == 0)
                     {
-                        words.Add(new SwordWord(string.Empty, trailer, [], ++unit, Elided: true));
+                        words.Add(new SwordWord(string.Empty, trailer, [], ++unit, Elided: true) { Title = piece.Title });
                     }
                     else
                     {
@@ -683,7 +698,7 @@ internal static class SwordTextSource
                 }
 
                 words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false, positions, piece.Added,
-                    morphology));
+                    morphology) { Title = piece.Title });
                 joinable = !tagged;
             }
         }

@@ -152,6 +152,13 @@ internal sealed record WordDraft(
     /// silence, as for <see cref="SuppliedSpan"/>.
     /// </summary>
     public int? RestoredSpan { get; init; }
+
+    /// <summary>
+    /// The word is part of a psalm's superscription the edition marks as one where the file prints it at the head of the
+    /// psalm's first verse: a <c>\d</c> line, a title element, the words before the address the edition gives the line
+    /// after the title. False is silence: a text that marks no superscription says nothing of where one ends.
+    /// </summary>
+    public bool Superscription { get; init; }
 }
 
 /// <param name="Chapter">The chapter of the edition's own numbering, which need not be the row's.</param>

@@ -143,6 +143,22 @@ public sealed class GeezPlacedByTheMapTests
                 .All(row => entry.Value.Contains(new ValueTuple<int, int, int>(row.Book, row.Chapter, row.Verse))));
     }
 
+    /// <summary>
+    /// Ludolf prints a psalm's title above its first verse and the edition joins them, so the verse stands at the psalm's
+    /// first row and holds the title's besides: standing first at the title, it left the first row empty (Psalm 9 had a
+    /// row 0 and no row 1).
+    /// </summary>
+    [Fact]
+    public void APsalmsFirstVerseStandsAtItsFirstRowAndHoldsTheTitle()
+    {
+        Rows(Psalms, 9, 1).Should().Equal((9, 1), (9, 0));
+        Rows(Psalms, 4, 1).Should().Equal((4, 1), (4, 0));
+        Rows(Psalms, 4, 2).Should().Equal((4, 1));
+        Rows(Psalms, 17, 1).Should().Equal((18, 1), (18, 0));
+        GeezVersification.Placements.Where(entry => entry.Key.Book == Psalms)
+            .Should().OnlyContain(entry => entry.Value.Count == 0 || entry.Value[0].Verse != CanonicalReference.TitleVerse);
+    }
+
     [Fact]
     public void TheOtherBooksTheChurchDividesKeepTheirOwnNumbers() =>
         GeezVersification.Placements.Keys.Should().NotContain(key => key.Book == 18 || key.Book == 22 || key.Book == 75);

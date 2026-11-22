@@ -115,6 +115,57 @@ public sealed class PaneTests : IDisposable
     }
 
     /// <summary>
+    /// The Synodal's file joins Psalm 9's title to the line after it as its 9:1 and states 9:1 and 9:2; the edition marks
+    /// where the title ends, and the frame stands the verse at the title too. The pane shows the title in the title's row
+    /// with the edition's 9:1 and the line in the verse's row with its 9:2, as the edition divides them.
+    /// </summary>
+    [Fact]
+    public async Task APsalmsTitleTheEditionMarksStandsInTheTitlesRowWithItsOwnNumber()
+    {
+        var synodal = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (1, 1, ["Начальнику", "хора", "Буду", "славить"]), (1, 2, ["Буду"]));
+        _db.SaveChanges();
+        var verse = _db.Verses.Single(v => v.TextId == synodal.Id && v.Number == 1);
+        _db.VerseReferences.Add(new VerseReference { VerseId = verse.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 0 });
+        _db.StatedVerseNumbers.AddRange(
+            new StatedVerseNumber { VerseId = verse.Id, Position = 1, ChapterNumber = 1, Number = 1 },
+            new StatedVerseNumber { VerseId = verse.Id, Position = 2, ChapterNumber = 1, Number = 2 });
+        var group = new WordGroup { TextId = synodal.Id, Kind = WordGroupKind.Superscription, Position = 1 };
+        _db.WordGroups.Add(group);
+        _db.SaveChanges();
+        _db.WordGroupWords.AddRange(
+            new WordGroupWord { WordGroupId = group.Id, WordId = _db.WordAt(synodal, 1, 1, 1).Id },
+            new WordGroupWord { WordGroupId = group.Id, WordId = _db.WordAt(synodal, 1, 1, 2).Id });
+        _db.SaveChanges();
+
+        var verses = (await Pane(synodal)).GetProperty("verses").EnumerateArray().ToList();
+
+        verses.Select(v => v.GetProperty("n").GetInt32()).Should().Equal(0, 1, 2);
+        verses[0].GetProperty("words").EnumerateArray().Select(w => w.GetProperty("s").GetString()).Should().Equal("Начальнику", "хора");
+        verses[1].GetProperty("words").EnumerateArray().Select(w => w.GetProperty("s").GetString()).Should().Equal("Буду", "славить");
+        verses[0].GetProperty("stated").EnumerateArray().Select(v => v.GetString()).Should().Equal("1:1");
+        verses[1].GetProperty("stated").EnumerateArray().Select(v => v.GetString()).Should().Equal("1:2");
+        verses[0].GetProperty("own").EnumerateArray().Select(v => v.GetString()).Should().Equal("1:1");
+        verses[0].TryGetProperty("ref", out _).Should().BeFalse("the file gives the title no address of its own");
+    }
+
+    [Fact]
+    public async Task ATitleIsLeftInItsVerseWhereTheFrameDoesNotNumberThePsalmsTitleApart()
+    {
+        var synodal = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (1, 1, ["Псалом", "Давида", "Господь"]));
+        _db.SaveChanges();
+        var group = new WordGroup { TextId = synodal.Id, Kind = WordGroupKind.Superscription, Position = 1 };
+        _db.WordGroups.Add(group);
+        _db.SaveChanges();
+        _db.WordGroupWords.Add(new WordGroupWord { WordGroupId = group.Id, WordId = _db.WordAt(synodal, 1, 1, 1).Id });
+        _db.SaveChanges();
+
+        var verses = (await Pane(synodal)).GetProperty("verses").EnumerateArray().ToList();
+
+        verses.Select(v => v.GetProperty("n").GetInt32()).Should().Equal(1);
+        verses[0].GetProperty("words").GetArrayLength().Should().Be(3);
+    }
+
+    /// <summary>
     /// A word with no number of its own carries the number it renders in every text, an original's and a printed edition's
     /// as much as a translation's (NOT-0236): the Ge'ez of 1881 has no numbers of its own, so all its numbers come through its
     /// links. A word with a number of its own shows only that.

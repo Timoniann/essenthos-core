@@ -1462,9 +1462,10 @@ internal static class ChapterReading
                 counterparts.Proposed, cancellationToken),
         };
         counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.VerseId, r.Text))], counterparts, cancellationToken);
+        var superscriptions = await Superscriptions(db, textId, canonicalBook, canonicalChapter, cancellationToken);
 
         return rows
-            .GroupBy(r => r.CanonicalVerse)
+            .GroupBy(r => superscriptions.TryGetValue(r.VerseId, out var title) && title.Contains(r.Id) ? TitleRow : r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
                 // Two verses of this text can sit at one canonical address, and ordering by word
@@ -1632,6 +1633,44 @@ internal static class ChapterReading
         }
     }
 
+    /// <summary>The row of a psalm's superscription, which the frame numbers verse 0 of its chapter.</summary>
+    internal const int TitleRow = 0;
+
+    /// <summary>
+    /// The verses of a text whose first words are a psalm's superscription the edition marks the end of (a word group of
+    /// kind superscription), and which the frame stands at this chapter's title as well as at their own row: by verse,
+    /// the superscription's words. The reader shows those words in the title's row and the rest in the verse's own, as
+    /// the edition divides them. Empty where another verse of the text already stands first at the title.
+    /// </summary>
+    internal static async Task<Dictionary<int, HashSet<long>>> Superscriptions(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var atTitle = await db.VerseReferences
+            .Where(r => r.Verse!.TextId == textId
+                        && r.CanonicalBook == canonicalBook
+                        && r.CanonicalChapter == canonicalChapter
+                        && r.CanonicalVerse == TitleRow)
+            .Select(r => new { r.VerseId, r.IsPrimary })
+            .ToListAsync(cancellationToken);
+        if (atTitle.Count == 0 || atTitle.Any(r => r.IsPrimary))
+        {
+            return [];
+        }
+
+        var verses = atTitle.Select(r => r.VerseId).ToList();
+        var words = await db.WordGroupWords
+            .Where(m => m.WordGroup!.TextId == textId
+                        && m.WordGroup.Kind == WordGroupKind.Superscription
+                        && verses.Contains(m.Word!.VerseId))
+            .Select(m => new { m.Word!.VerseId, m.WordId })
+            .ToListAsync(cancellationToken);
+        return words.GroupBy(w => w.VerseId).ToDictionary(group => group.Key, group => group.Select(w => w.WordId).ToHashSet());
+    }
+
     /// <summary>
     /// Which of a text's own verses sit at each canonical address in this chapter, as the text
     /// numbers them.
@@ -1656,11 +1695,14 @@ internal static class ChapterReading
             .Select(r => new
             {
                 r.CanonicalVerse,
+                r.VerseId,
                 Place = new EditionPlace(r.Verse!.Book!.Position, r.Verse.ChapterNumber, r.Verse.Sequence, r.Verse.Number, r.Verse.Label),
             })
             .ToListAsync(cancellationToken);
+        var superscriptions = await Superscriptions(db, textId, canonicalBook, canonicalChapter, cancellationToken);
 
         return rows
+            .Concat(rows.Where(r => superscriptions.ContainsKey(r.VerseId)).Select(r => r with { CanonicalVerse = TitleRow }))
             .GroupBy(r => r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
@@ -1703,6 +1745,7 @@ internal static class ChapterReading
             .Select(n => new
             {
                 Canonical = n.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
+                n.VerseId,
                 Holder = new EditionPlace(n.Verse.Book!.Position, n.Verse.ChapterNumber, n.Verse.Sequence, n.Verse.Number, n.Verse.Label),
                 n.Position,
                 Chapter = n.ChapterNumber,
@@ -1710,6 +1753,18 @@ internal static class ChapterReading
                 Verse = n.Number,
             })
             .ToListAsync(cancellationToken);
+        var superscriptions = await Superscriptions(db, textId, canonicalBook, canonicalChapter, cancellationToken);
+
+        // A verse whose superscription the reader shows in the title's row and which prints a number for the title as well
+        // as for the line after it gives the title every number but the last, which opens the line: the Synodal's Psalm 9:1
+        // states 9:1 and 9:2, its Psalm 51:1 50:1 and 50:2 over the two halves of the title and 50:3 over the line.
+        var titled = rows
+            .Where(row => superscriptions.ContainsKey(row.VerseId))
+            .GroupBy(row => row.VerseId)
+            .Where(group => group.Count() > 1)
+            .SelectMany(group => group.OrderBy(row => row.Position).SkipLast(1))
+            .ToHashSet();
+        rows = [.. rows.Select(row => titled.Contains(row) ? row with { Canonical = TitleRow } : row)];
 
         return rows
             .GroupBy(row => row.Canonical)

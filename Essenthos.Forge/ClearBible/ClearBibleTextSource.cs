@@ -129,7 +129,12 @@ internal static class ClearBibleTextSource
             }
 
             drafts.Add(number == 1 && title is { Count: > 0 }
-                ? new VerseDraft(number, [.. title[..^1], title[^1] with { Trailer = title[^1].Trailer + " " }, .. words])
+                ? new VerseDraft(number,
+                [
+                    .. title[..^1].Select(word => word with { Superscription = true }),
+                    title[^1] with { Trailer = title[^1].Trailer + " ", Superscription = true },
+                    .. words,
+                ])
                 {
                     MarksASuperscription = true,
                 }

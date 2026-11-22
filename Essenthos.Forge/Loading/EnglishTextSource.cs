@@ -479,7 +479,7 @@ internal static class EnglishTextSource
                 word.Trailer,
                 StrongNumber: tagged ? word.StrongNumber : null,
                 SuppliedSpan: word.SuppliedSpan,
-                Break: word.Break))],
+                Break: word.Break) { Superscription = word.Superscription })],
             verse.Label)
         {
             Notes = [.. verse.Notes.Select(note => new VerseNoteDraft(

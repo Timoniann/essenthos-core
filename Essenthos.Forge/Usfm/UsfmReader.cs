@@ -128,6 +128,9 @@ internal sealed record UsfmWord(string Surface, string Trailer)
     /// headings are the editor's leaves out of the verse.
     /// </summary>
     public bool Heading { get; init; }
+
+    /// <summary>The word stands in a psalm's superscription, the <c>\d</c> line before its first verse or at its very start.</summary>
+    public bool Superscription { get; init; }
 }
 
 /// <summary>
@@ -292,6 +295,7 @@ internal static partial class UsfmReader
         var running = new Running();
         var superscribed = false;
         var heading = false;
+        var inTitle = false;
         TextBreak? pending = null;
 
         // A break waits for the first word after it, and two marks before one word are one break:
@@ -310,6 +314,11 @@ internal static partial class UsfmReader
             {
                 words[at] = words[at] with { Heading = true };
             }
+
+            for (var at = before; inTitle && at < words.Count; at++)
+            {
+                words[at] = words[at] with { Superscription = true };
+            }
         }
 
         void CloseVerse()
@@ -326,6 +335,17 @@ internal static partial class UsfmReader
 
             if (words.Count > 0 || notes.Count > 0)
             {
+                // In a psalm's first verse the words before the last address the edition prints are its superscription:
+                // JPS 1917 prints Psalm 9:1's title and then (9-2) over the line after it.
+                if (book == Psalms && verse == 1 && label.Length == 0 && running.OpensBefore
+                    && running.WordsBeforeLast is var title and > 0 && title < words.Count)
+                {
+                    for (var at = 0; at < title; at++)
+                    {
+                        words[at] = words[at] with { Superscription = true };
+                    }
+                }
+
                 verses.Add(new UsfmVerse(verse, [.. words], label)
                 {
                     Notes = [.. notes],
@@ -386,6 +406,7 @@ internal static partial class UsfmReader
             var name = match.Groups["marker"].Value;
             var rest = match.Groups["rest"].Value.Trim();
             heading = Headings.Contains(name);
+            inTitle = false;
 
             switch (name)
             {
@@ -448,8 +469,9 @@ internal static partial class UsfmReader
                     {
                         // Before the first verse, or at its very start: the unfoldingWord Literal Text
                         // opens verse 1 and then its title in fifty psalms.
-                        superscribed |= name == Superscription && rest.Length > 0
-                                        && (verse == 0 || (verse == 1 && words.Count == 0));
+                        inTitle = name == Superscription && rest.Length > 0
+                                  && (verse == 0 || (verse == 1 && words.All(word => word.Superscription)));
+                        superscribed |= inTitle;
                         if (Breaks.TryGetValue(name, out var opening))
                         {
                             pending = pending == TextBreak.Paragraph ? pending : opening;
@@ -667,11 +689,15 @@ internal static partial class UsfmReader
 
         public void CloseSpan() => Current = null;
 
-        public void State(UsfmAddress address, bool afterWords)
+        /// <summary>How many of the verse's words stand before the last address it prints after words, or 0.</summary>
+        public int WordsBeforeLast { get; private set; }
+
+        public void State(UsfmAddress address, bool afterWords, int words = 0)
         {
             OpensUnmarked |= stated.Count == 0 && afterWords;
             stated.Add(address);
             OpensBefore |= afterWords;
+            WordsBeforeLast = afterWords ? words : WordsBeforeLast;
         }
 
         public void Close()
@@ -680,6 +706,7 @@ internal static partial class UsfmReader
             Current = null;
             OpensBefore = false;
             OpensUnmarked = false;
+            WordsBeforeLast = 0;
             stated.Clear();
         }
     }
@@ -753,9 +780,12 @@ internal static partial class UsfmReader
             }
             else if (element.Groups["chapter"].Success)
             {
+                var before = new List<UsfmWord>();
+                Split(plain.ToString(), numbers, spans, units, before);
                 running.State(
                     new UsfmAddress(int.Parse(element.Groups["chapter"].Value), int.Parse(element.Groups["verse"].Value)),
-                    into.Count > 0 || plain.ToString().Trim().Length > 0);
+                    into.Count > 0 || plain.ToString().Trim().Length > 0,
+                    into.Count + before.Count);
             }
             else if (element.Groups["close"].Success)
             {

@@ -101,11 +101,15 @@ internal static class BereanTextSource
             names.TryAdd(book, BibleBookAbbreviation.GetByOrdinal(book)?.FullName.Full ?? reference);
 
             var breaks = layout.Breaks.GetValueOrDefault(reference);
+            var title = layout.PsalmHeadings.Contains(reference) ? layout.TitleWords.GetValueOrDefault(reference) : 0;
             var words = verseWords
                 .Select((word, at) => new WordDraft(
                     word.Surface,
                     word.Trailer,
-                    Break: breaks is not null && breaks.TryGetValue(at + 1, out var opening) ? opening : null))
+                    Break: breaks is not null && breaks.TryGetValue(at + 1, out var opening) ? opening : null)
+                {
+                    Superscription = at < title,
+                })
                 .ToList();
 
             if (!books.TryGetValue(book, out var chapters))

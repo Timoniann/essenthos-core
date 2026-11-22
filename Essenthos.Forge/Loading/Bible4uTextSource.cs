@@ -213,20 +213,29 @@ internal static class Bible4uTextSource
     /// which the file leaves unmarked (<see cref="VerseWords.WordsBeforeItsFirstAddress"/>), so that
     /// number is stated first: the Synodal's Psalm 9:1 holds its 9:1 and 9:2.
     /// </summary>
-    private static VerseDraft Draft(int chapter, int number, string text, int ordinal, bool tagged) =>
-        new(number, VerseWords.Parse(text, tagged)
-            .Select(word => new WordDraft(
+    private static VerseDraft Draft(int chapter, int number, string text, int ordinal, bool tagged)
+    {
+        var opensBefore = VerseWords.OpensBeforeItsStatedAddress(text);
+        var title = ordinal == PsalmsOrdinal && number == 1 && opensBefore ? VerseWords.WordsBeforeItsLastAddress(text) : 0;
+        return new(number, VerseWords.Parse(text, tagged)
+            .Select((word, index) => new WordDraft(
                 word.Word,
                 word.Trailer,
                 StrongNumber: StrongOf(word.Tags, ordinal),
                 Elided: word.Word.Length == 0,
-                SuppliedSpan: word.SuppliedSpan))
+                SuppliedSpan: word.SuppliedSpan)
+            {
+                Superscription = index < title,
+            })
             .ToList())
         {
             Stated = Stated(chapter, number, text),
             MarksASuperscription = VerseWords.MarksASuperscription(text),
-            OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(text),
+            OpensBeforeItsStatedAddress = opensBefore,
         };
+    }
+
+    private const int PsalmsOrdinal = 19;
 
     private static List<StatedNumberDraft> Stated(int chapter, int number, string text)
     {

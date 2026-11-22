@@ -36,7 +36,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
     /// <summary>The products of a text's own layer: only a fresh build loads them.</summary>
     internal static readonly string[] TextLayer =
-        ["texts/{text}/words", "texts/{text}/verses", "texts/{text}/notes", "texts/{text}/books", "texts/{text}/text", WordIdCollision.Product];
+        ["texts/{text}/words", "texts/{text}/verses", "texts/{text}/notes", "texts/{text}/books", "texts/{text}/text", "texts/{text}/titles", WordIdCollision.Product];
 
     /// <summary>
     /// Applies what moved. <paramref name="beside"/>, when given and anything moved, is a verification started beside the page

@@ -167,8 +167,15 @@ internal sealed record TextTitle(VerseKey Own, string Why)
 
     public const string Opening = "opening";
 
+    /// <summary>
+    /// How many of the verse's first words the superscription is, where the edition marks where it ends; null where it
+    /// does not. The reader shows those words in the title's row and the rest in the verse's own.
+    /// </summary>
+    public int? Words { get; init; }
+
     public static readonly ProductSchema<TextTitle> Schema = new ProductSchema<TextTitle>()
         .VerseKey("own", t => t.Own)
         .Text("why", t => t.Why)
-        .Reads(row => new TextTitle(row.VerseKey(0), row.Text(1)));
+        .OptionalInteger("words", t => t.Words)
+        .Reads(row => new TextTitle(row.VerseKey(0), row.Text(1)) { Words = row.Int32OrNull(2) });
 }
