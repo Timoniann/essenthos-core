@@ -562,7 +562,7 @@ internal static class DeuterocanonTextSource
                 Position: 0,
                 Name: BookReferences.Name(ordinal),
                 Slug: BookReferences.Slug(ordinal),
-                Chapters: [.. files[code].Chapters.Select(chapter =>
+                Chapters: [.. (brenton ? BrentonChapters(files, code) : files[code].Chapters).Select(chapter =>
                     Chapter(chapter, notes: definition.Slug != ClementineVulgate))],
                 NameNative: files[code].Book.Name,
                 Abbreviation: BookReferences.Abbreviation(ordinal));
@@ -573,6 +573,33 @@ internal static class DeuterocanonTextSource
                 .Select((book, index) => book with { Position = index + 1 }),
         ]);
     }
+
+    /// <summary>
+    /// The chapters of one of Brenton's books as the corpus holds them. eBible's file prints the Greek
+    /// 2 Esdras whole under EZR, "Ezra and Nehemiah" in 23 chapters, and Nehemiah again under NEH in
+    /// the English Bibles' numbering, which the text's About describes and its links and rulings are
+    /// drawn on. Nehemiah is read once, from NEH: EZR's chapters 11 to 23 are the same thirteen chapters
+    /// in the Hebrew's numbering, and read as well they stood as an Ezra 11-23 no other text has.
+    /// </summary>
+    private static IEnumerable<UsfmChapter> BrentonChapters(Dictionary<string, ReadBook> files, string code)
+    {
+        if (code != "EZR")
+        {
+            return files[code].Chapters;
+        }
+
+        var ezra = files[code].Chapters;
+        if (ezra.Count != EzraChapters + files["NEH"].Chapters.Count)
+        {
+            throw new InvalidOperationException(
+                $"Brenton's EZR holds {ezra.Count} chapters, where 2 Esdras is Ezra's {EzraChapters} and the "
+                + $"{files["NEH"].Chapters.Count} of NEH: the file is not the edition this reader was written for.");
+        }
+
+        return ezra.Where(chapter => chapter.Number <= EzraChapters);
+    }
+
+    private const int EzraChapters = 10;
 
     private const int Daniel = 27;
 

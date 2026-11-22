@@ -554,6 +554,22 @@ public sealed class PageRenderingTests
         PageAddress.Parse("/en/read/mark/3").RedirectTo.Should().Be("/read/mark/3");
     }
 
+    /// <summary>Brenton's Nehemiah once stood a second time as Ezra 11-23; those addresses lead to Nehemiah (PRB-1946).</summary>
+    [Theory]
+    [InlineData("/read/ezra/11", "/read/nehemiah/1")]
+    [InlineData("/uk/read/ezra/17/1", "/uk/read/nehemiah/7/1")]
+    [InlineData("/de/verse/ezra/23/31", "/de/verse/nehemiah/13/31")]
+    [InlineData("/es/read/ezra/12", "/es/read/nehemiah/2")]
+    public void EzrasChaptersPastTenLeadToNehemiah(string address, string held) =>
+        PageAddress.Parse(address).RedirectTo.Should().Be(held);
+
+    [Theory]
+    [InlineData("/read/ezra/10")]
+    [InlineData("/uk/verse/ezra/10/44")]
+    [InlineData("/read/nehemiah/11")]
+    public void EzrasOwnChaptersStay(string address) =>
+        PageAddress.Parse(address).RedirectTo.Should().BeNull();
+
     [Theory]
     [InlineData("one two three four five", 10, "one two…")]
     [InlineData("short", 10, "short")]

@@ -128,7 +128,10 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
     /// <summary>A reader's own page, or a list a query picked: a page to open and never one to index.</summary>
     public bool Private { get; init; }
 
-    /// <summary>The English-language address the same page has without a prefix, where the prefix was <c>/en</c>.</summary>
+    /// <summary>
+    /// Where the page now is: the English-language address the same page has without a prefix, where the prefix was
+    /// <c>/en</c>; the chapter where a moved chapter is held (<see cref="MovedChapters"/>), in the address's language.
+    /// </summary>
     public string? RedirectTo { get; init; }
 
     public bool Indexed => Kind != PageKind.NotFound && !Private;
@@ -247,6 +250,11 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
         }
 
         var rest = "/" + string.Join('/', segments);
+        if (MovedChapters.Moved(segments, BookOf) is { } moved)
+        {
+            return new PageAddress(language, PageKind.NotFound, rest) { RedirectTo = language.Path(moved) };
+        }
+
         var notFound = new PageAddress(language, PageKind.NotFound, rest);
         var verseParameter = query.TryGetValue("v", out var v) ? Number(v) : null;
         IReadOnlyList<string> texts = query.TryGetValue("c", out var named)
