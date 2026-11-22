@@ -478,6 +478,7 @@ internal static class ChapterReading
         var kinds = new Dictionary<long, string>();
         var suffixes = new Dictionary<long, (string Agreement, string? Lemma)>();
         var bySuffix = new HashSet<long>();
+        var subjects = new Dictionary<long, Agreement?>();
         var languages = new Dictionary<long, string>();
         var agreements = new Dictionary<long, Agreement>();
         foreach (var parsing in parsings)
@@ -507,6 +508,10 @@ internal static class ChapterReading
             {
                 bySuffix.Add(parsing.WordId);
             }
+            else if (refers.ValueKind == JsonValueKind.String && refers.GetString() == Subject)
+            {
+                subjects[parsing.WordId] = root.TryGetProperty(Subject, out var subject) && subject.GetString() is { } said ? Agreement.OfSuffix(said) : null;
+            }
 
             if (root.TryGetProperty(Language, out var language) && language.GetString() is { } code)
             {
@@ -529,7 +534,9 @@ internal static class ChapterReading
             var whole = group.All(witness => direct.ContainsKey(witness) || !classes.ContainsKey(witness));
             foreach (var witness in group.Distinct().Order().Where(direct.ContainsKey))
             {
-                if (!whole || ReferredTo(direct, people, classes, bySuffix, witness) is not { } reached)
+                // A verb's own word does not show its subject: only a translation's pronoun saying it does (SubjectWord).
+                if (!whole || (witness == group.Key && subjects.ContainsKey(witness))
+                    || ReferredTo(direct, people, classes, bySuffix, witness) is not { } reached)
                 {
                     whole = false;
                     break;
@@ -556,7 +563,7 @@ internal static class ChapterReading
         }
 
         var pronouns = answers.Count == 0 ? [] : await Pronouns(db, forms, cancellationToken);
-        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes, pronouns))
+        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes, subjects, pronouns))
         {
             answers.Remove(word);
         }
@@ -666,6 +673,9 @@ internal static class ChapterReading
     /// </summary>
     private const string Suffix = "suffix";
 
+    /// <summary>The parsing's value of <c>refers</c>, and its key for the verb's person, gender and number, where a word refers by a verb's subject.</summary>
+    private const string Subject = "subject";
+
     /// <summary>The source's class of a pronoun, by which a run of any pronoun is judged; any other kind of word by its lemma.</summary>
     private const string Pronoun = "pron";
 
@@ -698,6 +708,7 @@ internal static class ChapterReading
         ILookup<long, long> heads,
         HashSet<long> bySuffix,
         Dictionary<long, (string Agreement, string? Lemma)> suffixes,
+        Dictionary<long, Agreement?> subjects,
         Dictionary<long, Agreement> pronouns)
     {
         var dropped = new HashSet<long>();
@@ -777,6 +788,16 @@ internal static class ChapterReading
         foreach (var word in given)
         {
             var referring = witnesses[word].Where(w => w != word && direct.ContainsKey(w)).Distinct().ToList();
+            if (referring.Any(subjects.ContainsKey))
+            {
+                if (!SubjectWord(word, referring, renderers, heads, subjects, pronouns))
+                {
+                    dropped.Add(word);
+                }
+
+                continue;
+            }
+
             if (referring.Any(bySuffix.Contains))
             {
                 if (!SuffixWord(word, referring, witnesses, renderers, classes, forms, heads, suffixes, pronouns))
@@ -928,6 +949,37 @@ internal static class ChapterReading
         }
 
         return run.Where(other => other != word).All(other => Standing(other) is not { } theirs || theirs < mine);
+    }
+
+    /// <summary>
+    /// Whether a word rendering a verb that refers by its subject (<c>וַיִּשְׂאוּ</c> "and they took") renders that subject: it
+    /// is the one word of those rendering the verb that is one of its language's pronouns saying the verb's person, number
+    /// and gender (<em>they</em> of "they took", «вони»), and the mapping attaches it to no other of them. A verb is never its
+    /// own subject's pronoun by its renderings alone, so a language without a list of pronouns, or a verb whose person
+    /// MACULA does not state (an infinitive), shows nothing.
+    /// </summary>
+    private static bool SubjectWord(
+        long word,
+        List<long> referring,
+        Dictionary<long, HashSet<long>> renderers,
+        ILookup<long, long> heads,
+        Dictionary<long, Agreement?> subjects,
+        Dictionary<long, Agreement> pronouns)
+    {
+        if (referring.Count != 1 || subjects[referring[0]] is not { } subject)
+        {
+            return false;
+        }
+
+        var run = (renderers.GetValueOrDefault(referring[0]) ?? []).Append(word).Distinct().ToList();
+        if (heads[word].Any(run.Contains))
+        {
+            return false;
+        }
+
+        run.RemoveAll(other => other != word && heads[other].Any(run.Contains));
+        var saying = run.Where(other => pronouns.TryGetValue(other, out var says) && says.Says(subject)).ToList();
+        return saying.Count == 1 && saying[0] == word;
     }
 
     /// <summary>

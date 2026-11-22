@@ -9,6 +9,7 @@ namespace Essenthos.Core.Macula;
 /// <param name="Word">The orthographic word's index within the verse, from 1: every morph of one written word shares it.</param>
 /// <param name="Text">The morph as MACULA prints it, pointed. Read to join it to BHSA by its letters, never stored.</param>
 /// <param name="Referents">The ids of the morphs this one refers back to (<c>participantref</c>), each with its <c>o</c>.</param>
+/// <param name="Subjects">The ids of the morphs a verb's subject is (<c>subjref</c>), each with its <c>o</c>.</param>
 internal sealed record MaculaMorph(
     string Id,
     int Book,
@@ -24,8 +25,12 @@ internal sealed record MaculaMorph(
     string Person,
     string Gender,
     string Number,
-    string[] Referents)
+    string[] Referents,
+    string[]? Subjects = null)
 {
+    /// <summary>A verb whose subject MACULA names.</summary>
+    public bool HasSubject => Class == "verb" && Subjects is { Length: > 0 };
+
     /// <summary>A pronoun suffix: the <c>וֹ</c> of <c>מְלַאכְתּוֹ</c> "his work", of <c>לוֹ</c> "to him".</summary>
     public bool IsSuffix => Pos == "suffix" && Type == "pronominal";
 
@@ -119,7 +124,8 @@ internal static class MaculaHebrewReader
                 Field("person"),
                 Field("gender"),
                 Field("number"),
-                [.. Field("participantref").Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(id => "o" + id)]));
+                [.. Field("participantref").Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(id => "o" + id)],
+                columns.ContainsKey("subjref") ? [.. Field("subjref").Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(id => "o" + id)] : null));
         }
 
         return morphs;
@@ -289,9 +295,17 @@ internal static class MaculaHebrewJoin
 /// **Only pronouns refer here**: suffixes, personal pronouns and demonstratives. MACULA's few references on nouns, verbs
 /// and adjectives (about 470) are left, as the reader leaves them on the Greek. A chain is followed here, in MACULA's own
 /// morphs: a morph referring to a pronoun refers to what that pronoun refers to, so a reference to a suffix inside another
-/// word never stands for its host. All or nothing: a morph whose references do not all end at a morph placed on a BHSA word
-/// that is not a pronoun gives no row at all, as the reader would give it no record. A BHSA word holding two referring
+/// word never stands for its host. A common noun referred to ends the chain: MACULA refers onward from one in 420 of the
+/// 26,000 references ending at one, nearly all "each man" (<c>אִישׁ</c>) standing for a group, which a singular "his" of
+/// "every man to his tent" does not mean. All or nothing: a morph whose references do not all end at a morph placed on a
+/// BHSA word that is not a pronoun gives no row at all, as the reader would give it no record. A BHSA word holding two referring
 /// morphs (7) gives none.
+/// </para>
+///
+/// <para>
+/// **A verb's subject** (<c>subjref</c>): a word holding a verb MACULA names the subject of, and no referring pronoun, refers
+/// to that subject, resolved the same way, and its parsing says so (<c>"refers": "subject"</c>, <c>"subject": "3mp"</c>, the
+/// verb's person, gender and number), so the reader shows it only on a translation's pronoun saying that person.
 /// </para>
 /// </summary>
 internal static class MaculaHebrewAnnotation
@@ -301,6 +315,9 @@ internal static class MaculaHebrewAnnotation
 
     /// <summary>How many references a chain through pronouns is followed through.</summary>
     private const int Steps = 8;
+
+    /// <summary>The parsing's value of <c>refers</c>, and its key for the verb's person, gender and number, where a word refers by a verb's subject.</summary>
+    internal const string Subject = "subject";
 
     /// <param name="Word">The BHSA word.</param>
     /// <param name="Lemma">The lemma of its main morph (the first that is no suffix).</param>
@@ -342,7 +359,8 @@ internal static class MaculaHebrewAnnotation
             var main = held.FirstOrDefault(i => !morphs[i].IsSuffix, held[0]);
             var suffix = held.Where(i => morphs[i].IsSuffix).Select(i => morphs[i].Agreement).FirstOrDefault(a => a is not null);
             var referring = held.Where(i => morphs[i].IsPronoun && morphs[i].Referents.Length > 0).ToList();
-            var part = referring.Count == 1 && held.Count > 1 ? "suffix" : null;
+            var verbs = referring.Count == 0 ? held.Where(i => morphs[i].HasSubject).ToList() : [];
+            var part = referring.Count == 1 && held.Count > 1 ? "suffix" : verbs.Count == 1 ? Subject : null;
             var features = new Dictionary<string, string>(StringComparer.Ordinal) { ["class"] = morphs[main].Class, ["pos"] = morphs[main].Pos };
             if (morphs[main].Type.Length > 0)
             {
@@ -360,6 +378,11 @@ internal static class MaculaHebrewAnnotation
                 features["refers"] = part;
             }
 
+            if (part == Subject && morphs[verbs[0]].Agreement is { } subject)
+            {
+                features[Subject] = subject;
+            }
+
             var w = surfaces[word];
             var key = (w.Book, w.Chapter, w.Verse);
             var theirs = string.Concat(byWord[word].Select(i => morphs[i].Text));
@@ -368,12 +391,12 @@ internal static class MaculaHebrewAnnotation
                 : null;
             parsings.Add(new Parsing(word, morphs[main].Lemma, JsonSerializer.Serialize(features), note));
 
-            if (referring.Count != 1)
+            if (referring.Count != 1 && verbs.Count != 1)
             {
                 continue;
             }
 
-            if (Resolved(morphs, at, placed, referring[0]) is { } targets)
+            if (Resolved(morphs, at, placed, referring.Count == 1 ? morphs[referring[0]].Referents : morphs[verbs[0]].Subjects!) is { } targets)
             {
                 referents.AddRange(targets.Select(t => placed[t]).Where(t => t != word).Distinct().Select(t => (word, t)));
             }
@@ -383,20 +406,20 @@ internal static class MaculaHebrewAnnotation
     }
 
     /// <summary>
-    /// The morphs one morph refers to, a pronoun on the way followed to what it refers to; null where any branch ends at a
-    /// morph not placed on a BHSA word, at a pronoun referring to nothing, past <see cref="Steps"/>, or at an id that is no
-    /// row of the table (1,372 of the 59,231 references at the commit read, such as GEN 6:3's o010060030063, where the
-    /// table's rows are 061, 061ה and 062: which morph was meant is not guessed).
+    /// The morphs a list of references reaches, a pronoun on the way followed to what it refers to; null where any branch ends
+    /// at a morph not placed on a BHSA word, at a pronoun referring to nothing, past <see cref="Steps"/>, or at an id that is no
+    /// row of the table (1,372 of the 59,231 references at the commit read, such as GEN 6:3's o010060030063, where the table's
+    /// rows are 061, 061ה and 062: which morph was meant is not guessed).
     /// </summary>
-    private static List<int>? Resolved(IReadOnlyList<MaculaMorph> morphs, Dictionary<string, int> at, long[] placed, int morph)
+    private static List<int>? Resolved(IReadOnlyList<MaculaMorph> morphs, Dictionary<string, int> at, long[] placed, string[] references)
     {
         var found = new List<int>();
-        var seen = new HashSet<int> { morph };
-        var queue = new Queue<(int Morph, int Step)>([(morph, 0)]);
+        var seen = new HashSet<int>();
+        var queue = new Queue<(string[] References, int Step)>([(references, 0)]);
         while (queue.Count > 0)
         {
-            var (from, step) = queue.Dequeue();
-            foreach (var id in morphs[from].Referents)
+            var (ids, step) = queue.Dequeue();
+            foreach (var id in ids)
             {
                 if (!at.TryGetValue(id, out var to))
                 {
@@ -419,7 +442,7 @@ internal static class MaculaHebrewAnnotation
                 }
                 else if (morphs[to].Referents.Length > 0 && step + 1 < Steps)
                 {
-                    queue.Enqueue((to, step + 1));
+                    queue.Enqueue((morphs[to].Referents, step + 1));
                 }
                 else
                 {
