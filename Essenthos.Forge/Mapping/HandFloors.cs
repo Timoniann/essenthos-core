@@ -28,6 +28,21 @@ internal sealed record HandFloorRow(string Readings, string From, string Right, 
         .Reads(row => new HandFloorRow(row.Text(0), row.Text(1), row.Text(2), row.Text(3), row.Text(4)));
 }
 
+/// <summary>
+/// The line <c>held</c> of a pair's floors, read: a composed link under <see cref="From"/> whose word of the second text
+/// a standing composed link of at least <see cref="From"/>, and surer than it, renders from other words of the first is refused.
+/// The model shares a word it cannot place onto a neighbour's target, and the composition then puts a second translation word
+/// on an original word a surer one already renders («диявола» beside «стріли» on βέλη, Ephesians 6:16). Switched on pair by
+/// pair, after a hand read of what it removes.
+/// </summary>
+/// <param name="Right">How often the links it refuses were wrong, as a fraction of the <see cref="Scored"/> read by hand.</param>
+internal sealed record HandHold(double From, double? Right, int Scored, string Basis)
+{
+    /// <summary>What the merge writes in the pair's statuses for a link the hold refuses.</summary>
+    public string Status =>
+        $"{MappingStatus.RefusedByHold}: under {HandFloor.Number(From)}, its original word rendered by a surer composed link from other words; {Basis}";
+}
+
 /// <summary>A floor set by hand for one combination of readings (<see cref="HandFloorRow"/>), read.</summary>
 /// <param name="Readings">Each reading of the combination, lower-cased: <c>as written</c>, <c>as stems</c>, <c>through kjv</c>.</param>
 /// <param name="From">The confidence from which its links stand; null where the combination is refused.</param>
@@ -62,8 +77,40 @@ internal static class HandFloors
 
     private const string Aligned = CompositionPipeline.Machine + ", aligned ";
 
+    /// <summary>
+    /// The <c>readings</c> of the line that switches the pair's hold on (<see cref="HandHold"/>): not a combination of readings
+    /// but every composed link, held against a surer one.
+    /// </summary>
+    public const string Held = "held";
+
     /// <summary>The pair's hand floors; empty where it has none.</summary>
-    public static IReadOnlyList<HandFloor> Read(ProductStore store, string pair)
+    public static IReadOnlyList<HandFloor> Read(ProductStore store, string pair) =>
+        Floors(pair, Rows(store, pair).Where(row => !IsHold(row)));
+
+    /// <summary>The pair's hold of composed links against surer ones, where its floors switch it on; null where they do not.</summary>
+    public static HandHold? Hold(ProductStore store, string pair)
+    {
+        var lines = Rows(store, pair).Where(IsHold).ToList();
+        if (lines.Count > 1)
+        {
+            throw new InvalidDataException($"{MappingProducts.Of(pair, Name)}: the line '{Held}' stands twice.");
+        }
+
+        if (lines.Count == 0)
+        {
+            return null;
+        }
+
+        var row = lines[0];
+        return new HandHold(Real(pair, row.From, "from"),
+            row.Right.Trim().Length == 0 ? null : Real(pair, row.Right, "right"),
+            row.Scored.Trim().Length == 0 ? 0 : int.Parse(row.Scored.Trim(), CultureInfo.InvariantCulture),
+            row.Basis.Trim());
+    }
+
+    private static bool IsHold(HandFloorRow row) => string.Equals(row.Readings.Trim(), Held, StringComparison.OrdinalIgnoreCase);
+
+    private static List<HandFloorRow> Rows(ProductStore store, string pair)
     {
         var product = MappingProducts.Of(pair, Name);
         if (!store.Exists(product))
@@ -72,7 +119,13 @@ internal static class HandFloors
         }
 
         using var reader = store.Open(product, HandFloorRow.Schema);
-        var floors = reader.ReadAll().Select(row => Parse(pair, row)).ToList();
+        return reader.ReadAll();
+    }
+
+    private static IReadOnlyList<HandFloor> Floors(string pair, IEnumerable<HandFloorRow> rows)
+    {
+        var product = MappingProducts.Of(pair, Name);
+        var floors = rows.Select(row => Parse(pair, row)).ToList();
         var twice = floors.GroupBy(f => Key(f.Readings), StringComparer.Ordinal).FirstOrDefault(g => g.Count() > 1);
         if (twice is not null)
         {

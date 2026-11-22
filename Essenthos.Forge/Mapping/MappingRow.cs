@@ -197,6 +197,12 @@ internal static class MappingStatus
     /// </summary>
     public const string RefusedByFloor = "refused-by floor";
 
+    /// <summary>
+    /// A composed link the pair's hold refused (<see cref="HandHold"/>): its original word stands rendered by a surer composed link
+    /// from other words. The status goes on to say from which confidence, and the measurement.
+    /// </summary>
+    public const string RefusedByHold = "refused-by hold";
+
     public const string NarrowedByRuling = "narrowed-by ruling";
 
     public const string NarrowedByEvidentia = "narrowed-by evidentia";

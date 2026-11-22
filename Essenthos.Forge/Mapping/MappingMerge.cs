@@ -62,7 +62,8 @@ internal static class MappingMerge
         IReadOnlyList<MappingRow>? Yielded = null,
         Input? Reverse = null,
         IReadOnlyList<HandFloor>? Floors = null,
-        RenderingWords? Words = null);
+        RenderingWords? Words = null,
+        HandHold? Hold = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -213,6 +214,11 @@ internal static class MappingMerge
 
         var held = new Held(input.Words);
         var (accepted, withdrawn, refinements, heldOriginals) = Compete(candidates, held);
+        if (input.Hold is { } hold)
+        {
+            HoldComposed(hold, accepted, withdrawn, held, report);
+        }
+
         var orphans = KeepOrphans(accepted, withdrawn, pinned, held);
         accepted.Sort(CompareBySort);
         var (final, collisions) = Finalise(input, accepted);
@@ -732,14 +738,30 @@ internal static class MappingMerge
     /// <summary>The standing correspondences, by each word of the first text and of the second they name.</summary>
     private sealed class Held(RenderingWords? words)
     {
-        private sealed record Holder(List<string> From, HashSet<string> FromSet, HashSet<string> To, int Rank, string Method, bool Sure, double Certainty);
+        private sealed record Holder(
+            Candidate Link, List<string> From, HashSet<string> FromSet, HashSet<string> To, int Rank, string Method, bool Sure, double Certainty);
 
         private readonly Dictionary<string, List<Holder>> _byFrom = new(StringComparer.Ordinal);
         private readonly Dictionary<string, List<Holder>> _byTo = new(StringComparer.Ordinal);
 
+        /// <summary>Takes a link that stood out of the standing ones again.</summary>
+        public void Withdraw(Candidate candidate)
+        {
+            foreach (var (index, keys) in new[] { (_byFrom, candidate.Top.Row.From), (_byTo, candidate.Top.Row.To) })
+            {
+                foreach (var key in MappingText.Split(keys))
+                {
+                    if (index.TryGetValue(key, out var list))
+                    {
+                        list.RemoveAll(holder => ReferenceEquals(holder.Link, candidate));
+                    }
+                }
+            }
+        }
+
         public void Stand(Candidate candidate, List<string> from, List<string> to, bool sure)
         {
-            var holder = new Holder(from, from.ToHashSet(StringComparer.Ordinal), to.ToHashSet(StringComparer.Ordinal), candidate.Rank,
+            var holder = new Holder(candidate, from, from.ToHashSet(StringComparer.Ordinal), to.ToHashSet(StringComparer.Ordinal), candidate.Rank,
                 candidate.Top.Row.Method, sure && words?.Slight(from) != true, Certainty(candidate));
             foreach (var (index, keys) in new[] { (_byFrom, from), (_byTo, to) })
             {
@@ -903,6 +925,60 @@ internal static class MappingMerge
         }
 
         return (accepted, withdrawn, refinements, heldOriginals);
+    }
+
+    /// <summary>
+    /// The pair's hold (<see cref="HandHold"/>), once the competition has decided which links stand: a standing composed link under
+    /// the hold's confidence is refused where a standing composed link of at least that confidence, and surer than it, renders a
+    /// word of the second text it names from words of the first it does not share. Two compositions are one method, so
+    /// <see cref="Held.Original"/> never sets them against each other; and a word beside its holder is held too, since most
+    /// such links stand next to the word that renders the original. The words it frees keep whatever else the merge
+    /// gives them; a refused link is never kept as an orphan, being under <see cref="MappingMethods.OrphanFloor"/>.
+    /// </summary>
+    private static void HoldComposed(HandHold hold, List<Candidate> accepted, List<Candidate> withdrawn, Held held, List<ReportRow> report)
+    {
+        static bool Composed(Candidate c) => c.Top.Row.Method == MappingMethods.Composed && !MappingMethods.IsAbsence(c.Top.Row.Relation);
+        static double Sureness(Candidate c) => c.Top.Row.Confidence ?? 1;
+
+        var holders = new Dictionary<string, List<(HashSet<string> From, double Confidence)>>(StringComparer.Ordinal);
+        foreach (var candidate in accepted.Where(c => Composed(c) && Sureness(c) >= hold.From))
+        {
+            var from = MappingText.Split(candidate.Top.Row.From).ToHashSet(StringComparer.Ordinal);
+            foreach (var key in MappingText.Split(candidate.Top.Row.To))
+            {
+                if (!holders.TryGetValue(key, out var list))
+                {
+                    holders[key] = list = [];
+                }
+
+                list.Add((from, Sureness(candidate)));
+            }
+        }
+
+        var refused = accepted
+            .Where(c => Composed(c) && Sureness(c) < hold.From)
+            .Where(c =>
+            {
+                var from = MappingText.Split(c.Top.Row.From).ToList();
+                return MappingText.Split(c.Top.Row.To).Any(key => holders.TryGetValue(key, out var list)
+                    && list.Any(h => h.Confidence > Sureness(c) && !from.Any(h.From.Contains)));
+            })
+            .ToList();
+
+        foreach (var candidate in refused)
+        {
+            foreach (var row in candidate.Rows)
+            {
+                row.Status = hold.Status;
+            }
+
+            held.Withdraw(candidate);
+        }
+
+        accepted.RemoveAll(refused.Contains);
+        withdrawn.AddRange(refused);
+        report.Add(new ReportRow("held-composed", string.Empty, string.Empty, refused.Count,
+            $"composed links under {HandFloor.Number(hold.From)} refused because a surer composed link renders their original word from other words"));
     }
 
     private static bool Sure(Candidate candidate) => MappingMethods.HoldsOriginal(candidate.Top.Row, candidate.Rank >= MappingMethods.Pinned);

@@ -123,7 +123,7 @@ internal static class MappingFiles
 
         return new MappingMerge.Input(
             pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers,
-            yielded, Floors: HandFloors.Read(store, pair), Words: RenderingWords.Read(store, fromText));
+            yielded, Floors: HandFloors.Read(store, pair), Words: RenderingWords.Read(store, fromText), Hold: HandFloors.Hold(store, pair));
     }
 
     /// <summary>
