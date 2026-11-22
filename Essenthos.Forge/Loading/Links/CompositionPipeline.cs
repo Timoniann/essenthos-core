@@ -215,7 +215,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         var (from, to) = (texts[fromSlug], texts[toSlug]);
         await using var writer = new StreamWriter(path, false, new UTF8Encoding(false));
         await writer.WriteLineAsync("reading\tfrom\tto\tconfidence\tadmitted\tchosen");
-        foreach (var link in Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed]))
+        foreach (var link in proposed.Families())
         {
             await writer.WriteLineAsync(string.Join('\t',
                 Admission.Name(link.Route, [.. viaSlugs]), from.Key(link.From).Own, to.Key(link.To).Own,
@@ -237,10 +237,23 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     }
 
     /// <param name="Composed">One set of pairs per middle text.</param>
+    /// <param name="Splits">Where each reading shared its word out evenly; none where null.</param>
     internal sealed record Proposed(
         IReadOnlyList<(long From, long To, double Confidence)> Written,
         IReadOnlyList<(long From, long To, double Confidence)> Reduced,
-        IReadOnlyList<IReadOnlyList<(long From, long To, double Confidence)>> Composed);
+        IReadOnlyList<IReadOnlyList<(long From, long To, double Confidence)>> Composed,
+        Splits? Splits = null)
+    {
+        /// <summary>The readings made into one set of routed pairs (<see cref="Routes.MergeFamilies"/>).</summary>
+        public IReadOnlyList<RoutedLink> Families() => Routes.MergeFamilies(Written, Reduced, [.. Composed], Splits);
+
+        /// <summary>The proposal through the first middle texts alone.</summary>
+        public Proposed Through(int middles) => this with
+        {
+            Composed = [.. Composed.Take(middles)],
+            Splits = Splits is null ? null : Splits with { Composed = [.. Splits.Composed.Take(middles)] },
+        };
+    }
 
     /// <param name="daughter">See <see cref="Run"/>.</param>
     private async Task<Proposed> Propose(
@@ -264,17 +277,37 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
             : await aligner.Proposals(
                 fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books, written: true), AgreementFloor,
                 asWritten: true, books: books, cancellationToken: cancellationToken);
+        var source = texts[fromSlug];
+        string Form(long word) => Folded(source.Words[(int)word].Surface, source.Language);
         var composed = new List<IReadOnlyList<(long From, long To, double Confidence)>>(viaSlugs.Count);
+        var splits = new List<IReadOnlyDictionary<(long From, long To), long[]>>(viaSlugs.Count);
         foreach (var viaSlug in viaSlugs)
         {
             var first = await aligner.Proposals(
                 fromSlug, viaSlug, Workspace(fromSlug, viaSlug, trial, books), AgreementFloor,
                 books: books, cancellationToken: cancellationToken);
-            composed.Add(Compose(first, _links.Carried(viaSlug, toSlug, daughter), joins));
+            var (pairs, split) = Compose(first, _links.Carried(viaSlug, toSlug, daughter), joins, Routes.Split(first, Form));
+            composed.Add(pairs);
+            splits.Add(split);
         }
 
-        return new Proposed(written, reduced, composed);
+        return new Proposed(written, reduced, composed, new Splits(Routes.Split(written, Form), Routes.Split(reduced, Form), splits));
     }
+    /// <summary>A word as search folds it, lower-cased and without marks: Ἁβραὰμ and Ἁβραάμ are one word said twice.</summary>
+    internal static string Folded(string surface, string language)
+    {
+        var text = new StringBuilder(surface.Length);
+        foreach (var letter in Corpus.WordFolding.Fold(surface, language))
+        {
+            if (char.GetUnicodeCategory(letter) != UnicodeCategory.NonSpacingMark)
+            {
+                text.Append(char.ToLowerInvariant(letter));
+            }
+        }
+
+        return text.ToString();
+    }
+
     /// <summary>
     /// Which answers a run writes: measured on the pair's own statements where it has enough, and
     /// otherwise on the other texts in its language that state the target, each composed the same
@@ -305,10 +338,10 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         if (viaSlugs.Count == Routes.Middles.Length)
         {
             var before = viaSlugs.Take(viaSlugs.Count - 1).ToList();
-            var proposedWithout = proposed with { Composed = proposed.Composed.Take(before.Count).ToList() };
+            var proposedWithout = proposed.Through(before.Count);
             var (without, measuredWithout) = await Measured(fromSlug, before, toSlug, proposedWithout, statements, minimumConfidence,
                 precision, trial, books, cancellationToken);
-            var standing = Routes.MergeFamilies(proposedWithout.Written, proposedWithout.Reduced, [.. proposedWithout.Composed])
+            var standing = proposedWithout.Families()
                 .Where(without.Admits).Select(link => (link.From, link.To)).ToHashSet();
             admission = admission.Keeping(without, Routes.Middles[^1], viaSlugs[^1], standing);
             measured += $"{Environment.NewLine}  through {string.Join(" and ", before)} alone, whose floors stand for what " +
@@ -402,7 +435,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     /// right by hand against 96 of 96 all three found.
     /// </param>
     internal static List<RoutedLink> Merge(Proposed proposed, Admission admission, int agreeing = 1) =>
-        Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed])
+        proposed.Families()
             .Where(admission.Admits)
             .Where(link => Routes.Families(link.Route) >= agreeing)
             .GroupBy(link => link.From)
@@ -439,9 +472,17 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     internal static List<(long From, long To, double Confidence)> Compose(
         IReadOnlyList<(long From, long To, double Confidence)> first,
         ILookup<long, (long To, double Confidence)> second,
-        VerseJoins joins)
+        VerseJoins joins) =>
+        Compose(first, second, joins, Splits.Empty).Pairs;
+
+    /// <param name="split">The hop's even splits (<see cref="Routes.Split"/>); each composed pair takes the split of its best path.</param>
+    internal static (List<(long From, long To, double Confidence)> Pairs, Dictionary<(long From, long To), long[]> Split) Compose(
+        IReadOnlyList<(long From, long To, double Confidence)> first,
+        ILookup<long, (long To, double Confidence)> second,
+        VerseJoins joins,
+        IReadOnlyDictionary<(long From, long To), long[]> split)
     {
-        var best = new Dictionary<(long, long), double>(400_000);
+        var best = new Dictionary<(long, long), (double Confidence, long Bridge)>(400_000);
 
         foreach (var (from, bridge, carried) in first)
         {
@@ -454,14 +495,23 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
 
                 var key = (from, to);
                 var confidence = carried * stated;
-                if (!best.TryGetValue(key, out var standing) || confidence > standing)
+                if (!best.TryGetValue(key, out var standing) || confidence > standing.Confidence)
                 {
-                    best[key] = confidence;
+                    best[key] = (confidence, bridge);
                 }
             }
         }
 
-        return [.. best.Select(entry => (entry.Key.Item1, entry.Key.Item2, entry.Value))];
+        var carriedSplit = new Dictionary<(long From, long To), long[]>();
+        foreach (var ((from, to), (_, bridge)) in best)
+        {
+            if (split.TryGetValue((from, bridge), out var with))
+            {
+                carriedSplit[(from, to)] = with;
+            }
+        }
+
+        return ([.. best.Select(entry => (entry.Key.Item1, entry.Key.Item2, entry.Value.Confidence))], carriedSplit);
     }
 
     /// <summary>
