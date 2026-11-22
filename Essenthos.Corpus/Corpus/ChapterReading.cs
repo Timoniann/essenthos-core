@@ -345,12 +345,11 @@ internal static class ChapterReading
             })
             .ToListAsync(cancellationToken);
 
-        // A translation's word carries the numbers it renders, read by the verses as the marked verse lists read them.
+        // A word of any text carries the numbers it renders, read by the verses as the marked verse lists read them; one with a
+        // number of its own shows only that (below).
         var renderedRows = (await (
                 from row in db.WordRenderedStrongs
                 where inVerses.Contains(row.VerseId)
-                join verse in db.Verses on row.VerseId equals verse.Id
-                where verse.Text!.Kind == TextKind.Translation
                 select new { row.WordId, row.StrongNumber })
             .ToListAsync(cancellationToken))
             .GroupBy(row => row.WordId)
@@ -1107,7 +1106,7 @@ internal static class ChapterReading
         public Dictionary<long, LexiconGlossResponse> Glossed { get; init; } = [];
 
         /// <summary>
-        /// For each word of a translation whose numbers are shown, the Strong numbers it renders through its links, its own among
+        /// For each word of any text, the Strong numbers it renders through its links, its own among
         /// them (<see cref="RenderedNumbers.Join"/>).
         /// </summary>
         public Dictionary<long, string> Rendered { get; init; } = [];

@@ -3,7 +3,7 @@ using System.Globalization;
 namespace Essenthos.Core.Corpus;
 
 /// <summary>
-/// The Strong numbers a translation's word renders through its links, as a reader is given them: <c>rn</c> in a pane and
+/// The Strong numbers a word renders through its links, as a reader is given them: <c>rn</c> in a pane and
 /// <c>renderedStrong</c> in /v1/parallel, both read by <see cref="ChapterReading"/>.
 /// </summary>
 internal static class RenderedNumbers
