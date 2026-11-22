@@ -163,7 +163,7 @@ internal static partial class UsfmReader
     private static readonly HashSet<string> Passage =
     [
         "p", "m", "nb", "b", "q", "q1", "q2", "q3", "q4", "qc", "pi", "pi1", "pi2", "mi", "d", "s", "s1", "s2",
-        "ms", "ms1", "sp", "li", "li1", "li2", "li3",
+        "sp", "li", "li1", "li2", "li3",
 
         // An embedded letter or speech set as its own paragraph — its opening, body and closing —
         // which the unfoldingWord Literal Text uses in Deuteronomy; a centred paragraph, a deeper
@@ -186,8 +186,10 @@ internal static partial class UsfmReader
         "tr", "th1", "th2", "tc1", "tc2", "tc3",
 
         // References to other passages printed under a heading or over a section, and a heading over a
-        // group of chapters. None is a word of the verse it stands beside.
-        "r", "mr", "ms2",
+        // group of chapters: the Psalter's five books, which the World English Bible and the American
+        // Standard print as "BOOK 1" over Psalms 1, 42, 73, 90 and 107. None is a word of the verse it
+        // stands beside; read as passage, the American Standard's ended Psalms 41, 72, 89 and 106.
+        "r", "mr", "ms", "ms1", "ms2",
 
         // The number a chapter is printed under where it is not the one it is filed under: the World
         // English Bible's Psalm 151 is one chapter printed as 151.
@@ -251,6 +253,9 @@ internal static partial class UsfmReader
 
     /// <summary>The marker of a psalm's superscription.</summary>
     private const string Superscription = "d";
+
+    /// <summary>The book code of the Psalms.</summary>
+    private const string Psalms = "PSA";
 
     /// <summary>
     /// The book's title as the edition prints it over the first chapter, at its levels. The title's
@@ -324,7 +329,10 @@ internal static partial class UsfmReader
                 verses.Add(new UsfmVerse(verse, [.. words], label)
                 {
                     Notes = [.. notes],
-                    Stated = [.. running.Stated],
+                    Stated = running.OpensUnmarked && book == Psalms && verse == 1 && label.Length == 0
+                             && running.Stated[0] != new UsfmAddress(chapter, verse)
+                        ? [new UsfmAddress(chapter, verse), .. running.Stated]
+                        : [.. running.Stated],
                     OpensBeforeItsStatedAddress = running.OpensBefore,
                     MarksASuperscription = superscribed,
                 });
@@ -643,6 +651,16 @@ internal static partial class UsfmReader
 
         public bool OpensBefore { get; private set; }
 
+        /// <summary>
+        /// Words stand before the first address the verse prints. In a psalm's first verse they are its superscription,
+        /// which an edition that numbers it numbers 1, and eBible leaves that address unwritten where the file's number
+        /// is the same: JPS 1917 prints Psalm 81:1 as its superscription and then <c>(81-2)</c>, so the verse holds its
+        /// 81:1 and 81:2. Elsewhere eBible does not always set the address where the edition's verse begins (the
+        /// Elberfelder's Numbers 30:1 prints <c>(030:2)</c> halfway through its own 30:2), so only the first verse of a
+        /// psalm is read so.
+        /// </summary>
+        public bool OpensUnmarked { get; private set; }
+
         public IReadOnlyList<UsfmAddress> Stated => stated;
 
         public void Open() => Current = ++spans;
@@ -651,6 +669,7 @@ internal static partial class UsfmReader
 
         public void State(UsfmAddress address, bool afterWords)
         {
+            OpensUnmarked |= stated.Count == 0 && afterWords;
             stated.Add(address);
             OpensBefore |= afterWords;
         }
@@ -660,6 +679,7 @@ internal static partial class UsfmReader
             spans = 0;
             Current = null;
             OpensBefore = false;
+            OpensUnmarked = false;
             stated.Clear();
         }
     }

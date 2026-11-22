@@ -1,0 +1,14 @@
+# product    Essenthos/texts/JPS1917/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes
+own	kind	before	after	why
+19.1:1.1	drop	BOOK	\N	the file opens the verse with the Psalter's heading "BOOK I", which is not a word of the psalm
+19.1:1.2	drop	I	\N	the file opens the verse with the Psalter's heading "BOOK I", which is not a word of the psalm
+19.42:1.1	drop	BOOK	\N	the file opens the verse with the Psalter's heading "BOOK II", which is not a word of the psalm
+19.42:1.2	drop	II	\N	the file opens the verse with the Psalter's heading "BOOK II", which is not a word of the psalm
+19.73:1.1	drop	BOOK	\N	the file opens the verse with the Psalter's heading "BOOK III", which is not a word of the psalm
+19.73:1.2	drop	III	\N	the file opens the verse with the Psalter's heading "BOOK III", which is not a word of the psalm
+19.90:1.1	drop	BOOK	\N	the file opens the verse with the Psalter's heading "BOOK IV", which is not a word of the psalm
+19.90:1.2	drop	IV	\N	the file opens the verse with the Psalter's heading "BOOK IV", which is not a word of the psalm
+19.107:1.1	drop	BOOK	\N	the file opens the verse with the Psalter's heading "BOOK V", which is not a word of the psalm
+19.107:1.2	drop	V	\N	the file opens the verse with the Psalter's heading "BOOK V", which is not a word of the psalm

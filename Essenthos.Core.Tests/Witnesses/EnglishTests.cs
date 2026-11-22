@@ -290,7 +290,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
             .SelectMany(chapter => chapter.Verses)
             .ToList();
 
-        verses.Sum(verse => verse.Stated.Count).Should().Be(2056);
+        verses.Sum(verse => verse.Stated.Count).Should().Be(2057);
 
         // The first verse of the third psalm holds the superscription and the line after it, which
         // the Hebrew numbers as two verses and the English as one, so this verse states both — and
@@ -389,9 +389,9 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     [Theory]
     [InlineData(EnglishTextSource.Tyndale, 181998)]
     [InlineData(EnglishTextSource.Geneva, 783932)]
-    [InlineData(EnglishTextSource.AmericanStandard, 784713)]
+    [InlineData(EnglishTextSource.AmericanStandard, 784703)]
     [InlineData(EnglishTextSource.Young, 786938)]
-    [InlineData(EnglishTextSource.WorldEnglish, 756240)]
+    [InlineData(EnglishTextSource.WorldEnglish, 756230)]
     [InlineData(EnglishTextSource.JewishPublicationSociety, 611118)]
     [InlineData(EnglishTextSource.BasicEnglish, 840285)]
     public void EveryWordIsCounted(string slug, int words) =>

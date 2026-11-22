@@ -1,0 +1,21 @@
+# product    Essenthos/texts/IRVBEN/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes
+own	kind	before	after	why
+2.37:28.15	drop	তেল	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.16	drop	ও	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.17	drop	ধুপের	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.18	drop	নির্মাণ	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.19	drop	(যাত্রা	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.20	drop	পুস্তক	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.21	drop	13:22	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+2.37:28.22	drop	38	\N	the file runs the next section's heading "Making of the oil and the incense" and its cross-reference "(Exodus 13:22, 38" on at the end of the verse (Door43 bn_irv); neither is a word of the verse
+19.1:1.1	drop	প্রথম	\N	the file opens the psalm's superscription with the Psalter's heading "Book One. Psalms 1-41." (Door43 bn_irv), which is not a word of the psalm
+19.1:1.2	drop	বই	\N	the file opens the psalm's superscription with the Psalter's heading "Book One. Psalms 1-41." (Door43 bn_irv), which is not a word of the psalm
+19.1:1.3	drop	গীতসংহিতা	\N	the file opens the psalm's superscription with the Psalter's heading "Book One. Psalms 1-41." (Door43 bn_irv), which is not a word of the psalm
+19.1:1.4	drop	1-41	\N	the file opens the psalm's superscription with the Psalter's heading "Book One. Psalms 1-41." (Door43 bn_irv), which is not a word of the psalm
+19.42:1.1	drop	গীতসংহিতা	\N	the file opens the psalm's superscription with the heading "Psalm 42, Book Two" (Door43 bn_irv), which is not a word of the psalm
+19.42:1.2	drop	42	\N	the file opens the psalm's superscription with the heading "Psalm 42, Book Two" (Door43 bn_irv), which is not a word of the psalm
+19.42:1.3	drop	দ্বিতীয়	\N	the file opens the psalm's superscription with the heading "Psalm 42, Book Two" (Door43 bn_irv), which is not a word of the psalm
+19.42:1.4	drop	বই	\N	the file opens the psalm's superscription with the heading "Psalm 42, Book Two" (Door43 bn_irv), which is not a word of the psalm
+40.18:10.1	drop	11	\N	the file prints the number of verse 11, which the edition omits, at the head of verse 10 (Door43 bn_irv); it is not a word of the verse
