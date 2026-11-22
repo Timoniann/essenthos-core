@@ -179,39 +179,34 @@ internal static class PaneEndpoints
 }
 
 /// <summary>
-/// Every record's name in a language, by slug, made once per language and kept: the corpus does not change under a
-/// running API (a new corpus is a restart). The names are <see cref="EntityNames.Localised"/>'s with a renamed person's
-/// heading (<see cref="RenamedHeadings"/>), so a record is called what the encyclopedia calls it in that language.
+/// Every record's name in a language, by slug, read once per language and kept: the corpus does not change under a
+/// running API (a new corpus is a restart). They are what the serving build stored (<c>record_name</c>): a record's own
+/// name in that language, or its English headword, a renamed person called by his page's heading (<see cref="RenamedHeadings"/>).
+/// A language the build stored no names in is composed by the same rule.
 /// </summary>
 internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOptions> json)
 {
-    private readonly ConcurrentDictionary<string, Lazy<Task<(byte[] Body, string Tag)>>> _made = new(StringComparer.Ordinal);
+    private readonly PerRelease<string, (byte[] Body, string Tag)> _made = new((language, token) => Make(scopes, json, language, token), StringComparer.Ordinal);
 
-    public Task<(byte[] Body, string Tag)> Of(string? language, CancellationToken cancellationToken)
-    {
-        var key = EntityNames.Local(language) ?? "eng";
-        var made = _made.GetOrAdd(key, _ => new Lazy<Task<(byte[], string)>>(() => Make(key, CancellationToken.None)));
-        return Wait(key, made, cancellationToken);
-    }
+    public Task<(byte[] Body, string Tag)> Of(string? language, CancellationToken cancellationToken) =>
+        _made.Get(EntityNames.Local(language) ?? "eng", cancellationToken);
 
-    /// <summary>A dictionary that failed to be made is forgotten, so the next request tries again.</summary>
-    private async Task<(byte[] Body, string Tag)> Wait(string key, Lazy<Task<(byte[] Body, string Tag)>> made, CancellationToken cancellationToken)
-    {
-        try
-        {
-            return await made.Value.WaitAsync(cancellationToken);
-        }
-        catch when (made.Value.IsFaulted)
-        {
-            _made.TryRemove(new KeyValuePair<string, Lazy<Task<(byte[] Body, string Tag)>>>(key, made));
-            throw;
-        }
-    }
-
-    private async Task<(byte[] Body, string Tag)> Make(string language, CancellationToken cancellationToken)
+    private static async Task<(byte[] Body, string Tag)> Make(
+        IServiceScopeFactory scopes, IOptions<JsonOptions> json, string language, CancellationToken cancellationToken)
     {
         using var scope = scopes.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var stored = await db.RecordNames.AsNoTracking()
+            .Where(n => n.Names == language)
+            .Select(n => new { n.Slug, Shown = n.LocalName ?? n.Name })
+            .ToListAsync(cancellationToken);
+        if (stored.Count > 0)
+        {
+            return Write(json, new RecordNamesResponse(language, stored
+                .OrderBy(n => n.Slug, StringComparer.Ordinal)
+                .ToDictionary(n => n.Slug, n => n.Shown, StringComparer.Ordinal)));
+        }
+
         var names = await EntityNames.Localised(db, db.Entities.AsNoTracking(), language)
             .Select(e => new { e.Entity.Id, e.Entity.Slug, e.Shown })
             .ToListAsync(cancellationToken);
@@ -226,7 +221,12 @@ internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOpti
                 n => n.Slug,
                 n => renamed.TryGetValue(n.Id, out var heading) ? heading.LocalName ?? heading.Name : n.Shown,
                 StringComparer.Ordinal));
-        // With the options every other response is written with, so a name is sent as its letters and not escaped.
+        return Write(json, response);
+    }
+
+    /// <summary>With the options every other response is written with, so a name is sent as its letters and not escaped.</summary>
+    private static (byte[] Body, string Tag) Write(IOptions<JsonOptions> json, RecordNamesResponse response)
+    {
         var body = JsonSerializer.SerializeToUtf8Bytes(response, json.Value.SerializerOptions.GetTypeInfo(typeof(RecordNamesResponse)));
         return (body, $"\"{Convert.ToHexStringLower(SHA256.HashData(body))[..16]}\"");
     }

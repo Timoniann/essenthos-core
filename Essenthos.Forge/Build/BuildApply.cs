@@ -78,6 +78,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             caught += await catchUp.Families(false, cancellationToken);
             caught += await catchUp.Context(false, cancellationToken);
             caught += await catchUp.Strength(null, false, cancellationToken);
+            caught += await catchUp.Facts(false, cancellationToken);
             if (caught + await catchUp.Pages(false, cancellationToken) > 0)
             {
                 await catchUp.Count(cancellationToken);
@@ -388,6 +389,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         await serving.Families(false, cancellationToken);
         await serving.Context(false, cancellationToken);
         await serving.Strength(null, false, cancellationToken, strength);
+        await serving.Facts(false, cancellationToken);
         var counted = serving.PagesThenCount(cancellationToken);
         var verifying = beside?.Invoke(pairs, counted);
         await counted;

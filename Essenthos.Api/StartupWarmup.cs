@@ -9,8 +9,9 @@ namespace Essenthos.Core;
 
 /// <summary>
 /// What the first reader after a start would otherwise pay for, paid as the API starts: Entity
-/// Framework's model and the queries it compiles, the database connections, the counts the process
-/// keeps for its lifetime, and the code of the endpoints readers open first.
+/// Framework's model and the queries it compiles, the database connections, the release's facts the
+/// process keeps for its lifetime (read from what the build stored, or counted where it stored none),
+/// and the code of the endpoints readers open first.
 ///
 /// It runs once the API is already serving, so neither the start nor <c>/health/live</c> nor
 /// <c>/health/ready</c> waits for it, and a reader who arrives while it runs is served as before.
@@ -33,18 +34,20 @@ internal sealed class StartupWarmup(
     public const int DefaultSeconds = 60;
 
     /// <summary>
-    /// The pages a reader opens first, asked of the API itself so routing, the endpoints, their queries
-    /// and their JSON are compiled before a reader asks. A record or chapter the corpus lacks answers
-    /// 404, which warms the same code.
+    /// The answers a reader's first page asks for that are slow the first time a process gives them, asked of the API itself so
+    /// routing, the endpoints, their queries and their JSON are compiled before a reader asks: the texts, a chapter's context and
+    /// the names of its records, a record and a Strong number, and a record's page as a crawler gets it. A pane, its strength and
+    /// the lists are as quick the first time as after, and are not asked. A record the corpus lacks answers 404, which warms the
+    /// same code.
     /// </summary>
     internal static readonly string[] Requests =
     [
-        "/v1/corpora",
         "/v1/corpora?brief=true",
-        "/v1/parallel/genesis/1?corpora=KJV,BHSA",
-        "/v1/context/genesis/1?language=en",
-        "/v1/entities/moses?language=en",
-        "/v1/entities/moses/references",
+        "/v1/context/genesis/1",
+        "/v1/record-names?language=eng",
+        "/v1/entities/moses",
+        "/v1/strong/H430",
+        "/v1/pages/people/moses",
     ];
 
     /// <summary>Starts the warm-up without waiting for it; the caller goes on serving.</summary>

@@ -174,6 +174,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             Context(false, cancellationToken));
         // After the panes and the record words, which save the store as each text is written.
         await Strength(null, false, cancellationToken);
+        await Facts(false, cancellationToken);
     }
 
     /// <summary>
@@ -321,6 +322,19 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             logger.LogInformation("Context: {Made} products made, {Rows} rows written, {Chapters} chapters, {Lines} lines; the largest chapter: {Largest}",
                 outcome.Made, outcome.Rows, outcome.Chapters, outcome.Lines, outcome.Largest);
             Stages.Enqueue(new BuildStage("load", "largest context chapter", TimeSpan.Zero, outcome.LargestGzip, outcome.Largest));
+            return outcome.Rows;
+        });
+
+    /// <summary>
+    /// The constants of the release the API reads instead of counting (<see cref="ReleaseFactsBuild"/>): counted from the tables as
+    /// they now stand where what they were counted from or the counting code moved (always with <paramref name="force"/>), copied
+    /// from the product where not. Returns the rows the table took.
+    /// </summary>
+    public Task<long> Facts(bool force, CancellationToken cancellationToken) =>
+        Timed("load", "release facts", async () =>
+        {
+            var outcome = await new ReleaseFactsBuild(connectionString, store, services, logger).Run(force, cancellationToken);
+            logger.LogInformation("Release facts: {Made}, {Rows} rows written", outcome.Made ? "counted" : "current", outcome.Rows);
             return outcome.Rows;
         });
 

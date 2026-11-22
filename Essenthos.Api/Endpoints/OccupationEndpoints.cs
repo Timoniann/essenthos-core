@@ -122,7 +122,7 @@ internal static class OccupationEndpoints
         var summaries = await db.Entities.Where(e => ids.Contains(e.Id)).Select(EncyclopediaEndpoints.Summary)
             .ToDictionaryAsync(e => e.Slug, cancellationToken);
         var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
-        var lines = await Descriptors.Of(db, named.Select(p => p.Slug), ReaderLanguages.Prose(prose, language), cancellationToken, language);
+        var lines = await RecordDescriptors.Of(db, named.Select(p => p.Slug), ReaderLanguages.Prose(prose, language), cancellationToken, language);
         var assertions = await db.PersonOccupations.AsNoTracking().Where(p => p.OccupationId == label.OccupationId && ids.Contains(p.PersonId))
             .Include(p => p.Witnesses).ToDictionaryAsync(p => p.PersonId, cancellationToken);
         var total = await people.CountAsync(cancellationToken);

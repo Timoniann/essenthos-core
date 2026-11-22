@@ -78,6 +78,20 @@ internal sealed class ContextWeights
         return said;
     }
 
+    /// <summary>The weights as the build stores them (<see cref="ReleaseFacts"/>), every list in ordinal order.</summary>
+    public StoredContextWeights Stored() => new(
+        TopicVerses.OrderBy(p => p.Key, StringComparer.Ordinal).ToDictionary(),
+        About.OrderBy(p => p.Key, StringComparer.Ordinal)
+            .ToDictionary(p => p.Key, p => new StoredTopicSubject([.. p.Value.Slugs.Order(StringComparer.Ordinal)], p.Value.Personal)),
+        [.. Places.Order(StringComparer.Ordinal)],
+        EntityChapters.OrderBy(p => p.Key, StringComparer.Ordinal).ToDictionary());
+
+    public static ContextWeights From(StoredContextWeights stored) => new(
+        stored.TopicVerses.ToDictionary(StringComparer.Ordinal),
+        stored.About.ToDictionary(p => p.Key, p => new TopicSubject(p.Value.Slugs.ToHashSet(StringComparer.Ordinal), p.Value.Personal), StringComparer.Ordinal),
+        stored.Places.ToHashSet(StringComparer.Ordinal),
+        stored.EntityChapters.ToDictionary(StringComparer.Ordinal));
+
     public static async Task<ContextWeights> Count(AppDbContext db, CancellationToken cancellationToken)
     {
         var lengths = (await db.VerseReferences
@@ -222,36 +236,26 @@ internal sealed class ContextWeights
     private static int Key(int book, int chapter, int verse) => (book * 1000 + chapter) * 1000 + verse;
 }
 
-/// <summary>The weights, counted once and kept: as the process starts (<see cref="StartupWarmup"/>), or on the first chapter asked for.</summary>
+/// <summary>
+/// The weights, read once from what the build stored, or counted where it stored none, and kept: as the process starts
+/// (<see cref="StartupWarmup"/>), or on the first chapter asked for.
+/// </summary>
 internal sealed class ContextWeightsCache(IServiceScopeFactory scopes, ILogger<ContextWeightsCache> logger)
 {
-    private readonly SemaphoreSlim _gate = new(1, 1);
-    private ContextWeights? _weights;
-
-    public async Task<ContextWeights> Get(CancellationToken cancellationToken)
+    private readonly PerRelease<ContextWeights> _weights = new(async token =>
     {
-        if (_weights is { } weights)
+        var started = Stopwatch.StartNew();
+        await using var scope = scopes.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        if (await ReleaseFacts.Read(db, ReleaseFacts.ContextWeightsKey, token) is { } stored)
         {
-            return weights;
+            return ReleaseFacts.ReadWeights(stored);
         }
 
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            if (_weights is null)
-            {
-                var started = Stopwatch.StartNew();
-                await using var scope = scopes.CreateAsyncScope();
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                _weights = await ContextWeights.Count(db, cancellationToken);
-                logger.LogInformation("The Chapter Context's weights were counted in {Elapsed}", started.Elapsed);
-            }
+        var weights = await ContextWeights.Count(db, token);
+        logger.LogInformation("The Chapter Context's weights were counted in {Elapsed}", started.Elapsed);
+        return weights;
+    });
 
-            return _weights;
-        }
-        finally
-        {
-            _gate.Release();
-        }
-    }
+    public Task<ContextWeights> Get(CancellationToken cancellationToken) => _weights.Get(cancellationToken);
 }

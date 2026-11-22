@@ -67,6 +67,18 @@ internal static class ContextLines
         IReadOnlyCollection<string> slugs,
         string? language,
         string? prose,
+        CancellationToken cancellationToken) =>
+        (await Compose(db, slugs, language, prose, cancellationToken)).Lines;
+
+    /// <summary>
+    /// The lines, and the whole descriptors they were cut from (<see cref="RecordDescriptors"/>), keyed by slug; a record
+    /// the corpus says nothing of has a line and no descriptor.
+    /// </summary>
+    public static async Task<(Dictionary<string, ContextLineBody> Lines, Dictionary<string, EntityDescriptorResponse> Descriptors)> Compose(
+        AppDbContext db,
+        IReadOnlyCollection<string> slugs,
+        string? language,
+        string? prose,
         CancellationToken cancellationToken)
     {
         var records = await db.Entities
@@ -97,6 +109,6 @@ internal static class ContextLines
                     : null);
         }
 
-        return composed;
+        return (composed, described);
     }
 }

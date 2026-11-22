@@ -337,7 +337,7 @@ internal static partial class EncyclopediaEndpoints
             return [];
         }
 
-        var lines = await Descriptors.Of(db, shared, words, cancellationToken, names);
+        var lines = await RecordDescriptors.Of(db, shared, words, cancellationToken, names);
         var said = await db.Entities
             .Where(e => shared.Contains(e.Slug))
             .Select(e => new { e.Id, e.Slug, Line = e.Distinguisher, Today = e.ModernEquivalent })

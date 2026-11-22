@@ -4282,6 +4282,34 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordDescriptor", b =>
+                {
+                    b.Property<string>("Prose")
+                        .HasColumnType("text")
+                        .HasColumnName("prose");
+
+                    b.Property<string>("Names")
+                        .HasColumnType("text")
+                        .HasColumnName("names");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("text")
+                        .HasColumnName("body")
+                        .HasAnnotation("Npgsql:Compression:", "lz4");
+
+                    b.HasKey("Prose", "Names", "Slug")
+                        .HasName("pk_record_descriptor");
+
+                    b.ToTable("record_descriptor", null, t =>
+                        {
+                            t.HasComment("What the corpus says each record is in a language of words and a language of names, as the whole descriptor JSON a record page, a list of practitioners or a place's distinguisher reads; no body where nothing is said. Records by slug. Made by the serving build (record-descriptors/{prose}).");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordExternalId", b =>
                 {
                     b.Property<int>("Id")
@@ -4715,6 +4743,31 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_reign_statement_source_not_empty", "length(btrim(source)) > 0");
 
                             t.HasCheckConstraint("ck_reign_statement_year", "year IS NULL OR year >= 1");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.ReleaseFact", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("text")
+                        .HasColumnName("key");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body");
+
+                    b.Property<string>("Stamp")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("stamp");
+
+                    b.HasKey("Key")
+                        .HasName("pk_release_fact");
+
+                    b.ToTable("release_fact", null, t =>
+                        {
+                            t.HasComment("Constants of the release the API would otherwise count at every start (each text's counts and links, each dataset's rows, the Chapter Context's weights), as JSON by key, with the stamp of the code that counted them. Made by the serving build (release-facts).");
                         });
                 });
 

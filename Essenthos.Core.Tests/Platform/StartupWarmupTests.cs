@@ -40,7 +40,7 @@ public sealed class StartupWarmupTests
         var warmup = new StartupWarmup(
             scopes,
             new TextFacts(scopes),
-            new DatasetCountsCache(scopes, new ConfigurationBuilder().Build()),
+            new DatasetCountsCache(scopes),
             new ContextWeightsCache(scopes, NullLogger<ContextWeightsCache>.Instance),
             new NoServer(),
             new ConfigurationBuilder().Build(),
@@ -64,7 +64,7 @@ public sealed class StartupWarmupTests
         var warmup = new StartupWarmup(
             scopes,
             new TextFacts(scopes),
-            new DatasetCountsCache(scopes, new ConfigurationBuilder().Build()),
+            new DatasetCountsCache(scopes),
             new ContextWeightsCache(scopes, NullLogger<ContextWeightsCache>.Instance),
             new NoServer(),
             new ConfigurationBuilder().Build(),

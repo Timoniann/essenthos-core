@@ -426,8 +426,13 @@ public class AppDbContext : DbContext
     /// <summary>Each record as a chapter's context shows it in each pair of languages, made at build.</summary>
     public DbSet<ContextLine> ContextLines { get; set; } = null!;
 
+    /// <summary>What the corpus says each record is in each pair of languages, whole, made at build.</summary>
+    public DbSet<RecordDescriptor> RecordDescriptors { get; set; } = null!;
+
     /// <summary>What each record's and Strong number's page is written from, per site language, made at build.</summary>
     public DbSet<PageDocument> PageDocuments { get; set; } = null!;
+
+    public DbSet<ReleaseFact> ReleaseFacts { get; set; } = null!;
 
     /// <summary>How often each text prints each form for each record under each Strong number, counted ahead of time.</summary>
     public DbSet<RecordSpelling> RecordSpellings { get; set; } = null!;
@@ -2035,11 +2040,28 @@ public class AppDbContext : DbContext
                 + "Made by the serving build (context/lines/{prose})."));
         });
 
+        modelBuilder.Entity<RecordDescriptor>(entity =>
+        {
+            entity.Property(d => d.Body).UseCompressionMethod("lz4");
+            entity.ToTable("record_descriptor", t => t.HasComment(
+                "What the corpus says each record is in a language of words and a language of names, as the whole descriptor "
+                + "JSON a record page, a list of practitioners or a place's distinguisher reads; no body where nothing is said. "
+                + "Records by slug. Made by the serving build (record-descriptors/{prose})."));
+        });
+
         modelBuilder.Entity<PageDocument>(entity =>
         {
             entity.ToTable("page_document", t => t.HasComment(
                 "What the server writes a record's or a Strong number's page from, per site language: the page's own facts and the "
                 + "API answers it carries, as gzip-compressed JSON. Pages by address. Made by the serving build (page-documents/{kind}/{language})."));
+        });
+
+        modelBuilder.Entity<ReleaseFact>(entity =>
+        {
+            entity.ToTable("release_fact", t => t.HasComment(
+                "Constants of the release the API would otherwise count at every start (each text's counts and links, each "
+                + "dataset's rows, the Chapter Context's weights), as JSON by key, with the stamp of the code that counted them. "
+                + "Made by the serving build (release-facts)."));
         });
 
         modelBuilder.Entity<RecordSpelling>(entity =>

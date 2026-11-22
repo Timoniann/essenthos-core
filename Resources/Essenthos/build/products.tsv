@@ -121,10 +121,12 @@ record-cards/{prose}	serve	families	Essenthos/records/** Essenthos/external/** E
 family-components/{prose}	serve	families	Essenthos/record-cards/{prose} Essenthos/records/derived/family-ties Essenthos/records/derived/family-members Essenthos/records/facts/relationships	family_component	all
 context/chapters	serve	context	Essenthos/records/** Essenthos/external/** Essenthos/names/projected/* Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text	context_chapter	all
 context/lines/{prose}	serve	context	Essenthos/records/** Essenthos/external/** Essenthos/texts/*/index/spellings	context_line	all
+record-descriptors/{prose}	serve	context	Essenthos/records/** Essenthos/external/** Essenthos/texts/*/index/spellings	record_descriptor	all
 record-spellings/{text}	serve	record-words	Essenthos/texts/*/words Essenthos/names/projected/{text} Essenthos/records/derived/kinds	record_spelling	text
 record-positions/{text}	serve	record-words	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/books Essenthos/names/projected/{text} Essenthos/records/derived/kinds	record_position	text
 strength/{text}	serve	strength	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/mapping/*/verses	verse_strength	text
 page-documents/{kind}/{language}	serve	pages	Essenthos/**	page_document	all
+release-facts	serve	facts	Essenthos/**	release_fact	all
 geez/**	kept	geez-layers (by hand, from a finished model run under generation/; the store and its backup are its only copy)	-	-	none
 texts/relations	hand	by hand (seeded once by tables from the Forge's list)	-	-	none
 lexicon/prefixes	hand	by hand (the prefixes Strong's dictionary lacks; read by tables)	-	-	none

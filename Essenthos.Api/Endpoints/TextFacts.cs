@@ -10,11 +10,12 @@ namespace Essenthos.Core.Endpoints;
 /// its words are linked to and by what.
 ///
 /// Every one of these is a sweep of a table millions of rows long — the link table alone takes a
-/// second and a half to group — and none of it changes while the process runs, because the corpus
-/// is read-only here. So it is counted once, for every text together, as the process starts
-/// (<see cref="StartupWarmup"/>) or for the first reader who asks. The queries run two at a time, each
-/// on its own connection: every one of them is split across the database's own workers already, and
-/// all nine at once made each so slow that one ran past the statement timeout.
+/// second and a half to group — and none of it changes within a release. So the serving build counts
+/// it once (<see cref="ReleaseFacts"/>) and the process reads it as it starts (<see cref="StartupWarmup"/>)
+/// or for the first reader who asks; a database without it is counted here, once, for every text
+/// together. The queries run two at a time, each on its own connection: every one of them is split
+/// across the database's own workers already, and all nine at once made each so slow that one ran
+/// past the statement timeout.
 ///
 /// A word the edition prints no letters for is counted nowhere, so every share of the words is a
 /// share of the words a reader can see.
@@ -23,36 +24,45 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
 {
     private const int AtOnce = 2;
 
-    private readonly SemaphoreSlim _gate = new(1, 1);
-    private readonly SemaphoreSlim _running = new(AtOnce, AtOnce);
-    private IReadOnlyDictionary<int, TextTally>? _tallies;
+    private readonly PerRelease<IReadOnlyDictionary<int, TextTally>> _tallies = new(token => Read(scopes, token));
 
     public async Task<TextTally> Of(int textId, CancellationToken cancellationToken) =>
-        (await Tallies(cancellationToken)).GetValueOrDefault(textId) ?? TextTally.Empty;
+        (await _tallies.Get(cancellationToken)).GetValueOrDefault(textId) ?? TextTally.Empty;
 
-    /// <summary>Counts every text now, if nothing has asked yet: what the start of the process does.</summary>
-    public Task Load(CancellationToken cancellationToken) => Tallies(cancellationToken);
+    /// <summary>Reads or counts every text now, if nothing has asked yet: what the start of the process does.</summary>
+    public Task Load(CancellationToken cancellationToken) => _tallies.Get(cancellationToken);
 
-    private async Task<IReadOnlyDictionary<int, TextTally>> Tallies(CancellationToken cancellationToken)
+    private static async Task<IReadOnlyDictionary<int, TextTally>> Read(IServiceScopeFactory scopes, CancellationToken cancellationToken)
     {
-        if (_tallies is { } tallies)
-        {
-            return tallies;
-        }
-
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            return _tallies ??= await Count(cancellationToken);
-        }
-        finally
-        {
-            _gate.Release();
-        }
+        await using var scope = scopes.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var bySlug = await ReleaseFacts.Read(db, ReleaseFacts.TextsKey, cancellationToken) is { } stored
+            ? ReleaseFacts.ReadTexts(stored)
+            : await Count(scopes, cancellationToken);
+        return (await db.Texts.AsNoTracking().Select(t => new { t.Id, t.Slug }).ToListAsync(cancellationToken))
+            .ToDictionary(t => t.Id, t => bySlug.GetValueOrDefault(t.Slug) ?? TextTally.Empty);
     }
 
-    private async Task<IReadOnlyDictionary<int, TextTally>> Count(CancellationToken cancellationToken)
+    /// <summary>Every text's tally, counted from the tables as they stand, by slug: what the build stores.</summary>
+    internal static async Task<IReadOnlyDictionary<string, TextTally>> Count(IServiceScopeFactory scopes, CancellationToken cancellationToken)
     {
+        using var running = new SemaphoreSlim(AtOnce, AtOnce);
+
+        async Task<T> Query<T>(Func<AppDbContext, Task<T>> query)
+        {
+            await running.WaitAsync(cancellationToken);
+            try
+            {
+                await using var scope = scopes.CreateAsyncScope();
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                return await StatementTimeout.Unhurried(db, () => query(db), CancellationToken.None);
+            }
+            finally
+            {
+                running.Release();
+            }
+        }
+
         var words = Query(db => db.Words
             .GroupBy(w => w.TextId)
             .Select(g => new WordRow(
@@ -130,13 +140,13 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
         var beside = besideStrong.Result.ToDictionary(row => row.TextId, row => row.Count);
         var wordRows = words.Result.ToDictionary(row => row.TextId);
 
-        var tallies = new Dictionary<int, TextTally>();
-        foreach (var (id, _) in slugs)
+        var tallies = new Dictionary<string, TextTally>(StringComparer.Ordinal);
+        foreach (var (id, slug) in slugs)
         {
             var word = wordRows.GetValueOrDefault(id) ?? new WordRow(id, 0, 0, 0, 0, 0, 0);
             var textGroups = groups.Result.Where(row => row.TextId == id).ToList();
 
-            tallies[id] = new TextTally(
+            tallies[slug] = new TextTally(
                 new TextCountsResponse(
                     chapterCount.GetValueOrDefault(id),
                     verseCount.GetValueOrDefault(id),
@@ -194,21 +204,6 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
                     .Select(dataset => new TextCreditResponse(dataset.Name, dataset.Author))]))
             .OrderByDescending(row => row.Links)
             .ThenBy(row => row.Text, StringComparer.Ordinal)];
-    }
-
-    private async Task<T> Query<T>(Func<AppDbContext, Task<T>> query)
-    {
-        await _running.WaitAsync();
-        try
-        {
-            await using var scope = scopes.CreateAsyncScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            return await StatementTimeout.Unhurried(db, () => query(db), CancellationToken.None);
-        }
-        finally
-        {
-            _running.Release();
-        }
     }
 
     /// <summary>The feature a BHSA word keeps its pronunciation under.</summary>

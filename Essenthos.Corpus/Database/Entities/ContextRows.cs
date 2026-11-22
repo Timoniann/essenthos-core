@@ -34,3 +34,20 @@ public class ContextLine
 
     public required string Body { get; set; }
 }
+
+/// <summary>
+/// What the corpus says one record is in a language of words and a language of names: the whole descriptor a record page,
+/// a list of practitioners or a place's distinguisher reads, as one JSON document, or no body where nothing is said. Made by
+/// the serving build (<c>record-descriptors/{prose}</c>) for every record in every pair of languages it builds.
+/// </summary>
+[PrimaryKey(nameof(Prose), nameof(Names), nameof(Slug))]
+public class RecordDescriptor
+{
+    public required string Prose { get; set; }
+
+    public required string Names { get; set; }
+
+    public required string Slug { get; set; }
+
+    public string? Body { get; set; }
+}

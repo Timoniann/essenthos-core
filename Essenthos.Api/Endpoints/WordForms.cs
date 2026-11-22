@@ -21,29 +21,11 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 internal sealed class WordForms(IServiceScopeFactory scopes)
 {
-    private readonly SemaphoreSlim _gate = new(1, 1);
-    private readonly Dictionary<int, FormIndex> _texts = [];
+    private readonly PerRelease<int, FormIndex> _texts = new((textId, token) => Read(scopes, textId, token));
 
-    public async Task<FormIndex> Of(int textId, CancellationToken cancellationToken)
-    {
-        await _gate.WaitAsync(cancellationToken);
-        try
-        {
-            if (!_texts.TryGetValue(textId, out var index))
-            {
-                index = await Read(textId, cancellationToken);
-                _texts[textId] = index;
-            }
+    public Task<FormIndex> Of(int textId, CancellationToken cancellationToken) => _texts.Get(textId, cancellationToken);
 
-            return index;
-        }
-        finally
-        {
-            _gate.Release();
-        }
-    }
-
-    private async Task<FormIndex> Read(int textId, CancellationToken cancellationToken)
+    private static async Task<FormIndex> Read(IServiceScopeFactory scopes, int textId, CancellationToken cancellationToken)
     {
         await using var scope = scopes.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

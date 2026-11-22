@@ -367,7 +367,7 @@ internal static partial class EncyclopediaEndpoints
         var missing = named.Where(row => !lines.ContainsKey(row.Slug)).ToList();
         if (missing.Count > 0)
         {
-            var describing = Beside(scopes, other => Descriptors.Of(other, missing.Select(row => row.Slug), words, cancellationToken, language));
+            var describing = Beside(scopes, other => RecordDescriptors.Of(other, missing.Select(row => row.Slug), words, cancellationToken, language));
             var distinguishers = await EntityDistinguishers.Of(db, [.. missing.Select(row => row.Id)], words, cancellationToken);
             var described = await describing;
             foreach (var row in missing)
