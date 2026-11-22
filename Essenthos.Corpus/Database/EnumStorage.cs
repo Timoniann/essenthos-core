@@ -70,6 +70,7 @@ internal static class EnumSpelling
         WordGroupKind.Corrupt => "corrupt",
         WordGroupKind.NotInEthiopic => "not-in-ethiopic",
         WordGroupKind.NotInGreek => "not-in-greek",
+        WordGroupKind.Superscription => "superscription",
         _ => throw Unmapped(value),
     };
 
@@ -90,6 +91,7 @@ internal static class EnumSpelling
         "corrupt" => WordGroupKind.Corrupt,
         "not-in-ethiopic" => WordGroupKind.NotInEthiopic,
         "not-in-greek" => WordGroupKind.NotInGreek,
+        "superscription" => WordGroupKind.Superscription,
         _ => throw Unreadable<WordGroupKind>(stored),
     };
 

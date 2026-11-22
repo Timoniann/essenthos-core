@@ -742,7 +742,7 @@ internal static class DeuterocanonTextSource
                 word.Surface,
                 word.Trailer,
                 SuppliedSpan: bracketed ? null : word.SuppliedSpan,
-                Break: word.Break))],
+                Break: word.Break) { Superscription = word.Superscription })],
             verse.Label)
         {
             Notes = notes

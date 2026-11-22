@@ -157,8 +157,9 @@ internal static class FrameProducts
 
     /// <summary>
     /// A text's frame computed from its products: where the rules put each verse of its manifest, and the title's address
-    /// for a verse its titles product lists where that verse stands first in a psalm whose title the frame numbers apart,
-    /// unless a reading of the edition (<see cref="CanonicalFrameLoader.Read"/>) placed the verse.
+    /// for a verse its titles product lists where that verse stands first in a psalm whose title the frame numbers apart
+    /// and nothing else of the text stands at it, a verse a reading of the edition placed (<see cref="CanonicalFrameLoader.Read"/>)
+    /// included: Ludolf's Psalms 50 and 51 print a title the reading of the Ge'ez gives no row.
     /// </summary>
     /// <param name="titlesInFirstVerse">
     /// Whether the text prints each psalm's title at the head of its first verse (<see cref="FirstVerseTitles"/>), so a
@@ -211,7 +212,6 @@ internal static class FrameProducts
             var holdsTitle = marked.Contains(new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label))
                              || (titlesInFirstVerse && verse is { Book: Psalms, Number: 1, Label: "" });
             if (holdsTitle
-                && read?.ContainsKey((verse.Book, verse.Chapter, verse.Number)) != true
                 && first.Verse == 1 && titled.Contains((first.Book, first.Chapter)) && covered.Add((first.Book, first.Chapter)))
             {
                 addresses.Add(new VerseKey(first.Book, first.Chapter, CanonicalReference.TitleVerse));

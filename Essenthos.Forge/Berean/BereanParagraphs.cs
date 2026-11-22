@@ -98,6 +98,7 @@ internal static partial class BereanParagraphs
     {
         var placed = new Dictionary<string, Dictionary<int, TextBreak>>(StringComparer.Ordinal);
         var headed = new HashSet<string>(StringComparer.Ordinal);
+        var titles = new Dictionary<string, int>(StringComparer.Ordinal);
         var unplaced = new List<string>();
 
         foreach (var (reference, rows) in Verses(tablesPath))
@@ -134,6 +135,10 @@ internal static partial class BereanParagraphs
                         }
 
                         marks[at + 1] = opening;
+                        if (at > 0 && headed.Contains(reference))
+                        {
+                            titles.TryAdd(reference, at);
+                        }
                     }
                     else
                     {
@@ -165,7 +170,7 @@ internal static partial class BereanParagraphs
                 + "tables and bsb.txt are no longer the same edition. Fetch both from the same release.");
         }
 
-        return new BereanLayout(placed, headed);
+        return new BereanLayout(placed, headed) { TitleWords = titles };
     }
 
     private readonly record struct Row(int EnglishOrder, TextBreak? Break, string English, bool PsalmHeading);
@@ -246,4 +251,11 @@ internal static partial class BereanParagraphs
 /// <param name="PsalmHeadings">The references of the verses that hold a psalm's heading.</param>
 internal sealed record BereanLayout(
     Dictionary<string, Dictionary<int, TextBreak>> Breaks,
-    IReadOnlySet<string> PsalmHeadings);
+    IReadOnlySet<string> PsalmHeadings)
+{
+    /// <summary>
+    /// For a verse holding a psalm's heading, how many of its first words the heading is: the words before the first
+    /// break the tables open after it, where the psalm's own first line begins.
+    /// </summary>
+    public IReadOnlyDictionary<string, int> TitleWords { get; init; } = new Dictionary<string, int>();
+}

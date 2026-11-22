@@ -305,7 +305,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     {
         var products = new List<string>
         {
-            $"texts/{text.Slug}/words", $"texts/{text.Slug}/verses", $"texts/{text.Slug}/notes", $"texts/{text.Slug}/books",
+            $"texts/{text.Slug}/words", $"texts/{text.Slug}/verses", $"texts/{text.Slug}/notes", $"texts/{text.Slug}/books", $"texts/{text.Slug}/titles",
             $"texts/{text.Slug}/text", $"texts/{text.Slug}/frame", NameProducts.Projected(text.Slug), WordIdCollision.Product,
         };
         foreach (var (from, to) in pairs.Where(p => p.From == text.Slug || p.To == text.Slug))

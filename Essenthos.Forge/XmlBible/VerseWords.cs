@@ -253,6 +253,32 @@ public static partial class VerseWords
         return first > 0 && StripMarkup(verseText[..first]).Length > 0;
     }
 
+    /// <summary>
+    /// How many words stand before the last address the verse prints, or 0 where it prints none or nothing stands before it.
+    ///
+    /// <para>
+    /// In a psalm's first verse that is the superscription: bible4u joins the title to the line after it, and the edition
+    /// numbers that line, so the last address opens it. The Synodal's Psalm 9:1 prints the title and then "(9-2)", its
+    /// Psalm 12:1 "(11-1)" over the title and "(11-2)" over the line, its Psalm 51:1 "(50-1)" and "(50-2)" over the two
+    /// halves of the title and "(50-3)" over the line. The words before an address are counted as the whole verse
+    /// tokenises them, so the count is of the verse's own words.
+    /// </para>
+    /// </summary>
+    public static int WordsBeforeItsLastAddress(string verseText)
+    {
+        var (_, last, _) = Addresses(verseText);
+        if (last <= 0)
+        {
+            return 0;
+        }
+
+        var before = Parse(verseText[..last]);
+        var all = Parse(verseText);
+        return before.Count < all.Count && before.Select(word => word.Word).SequenceEqual(all.Take(before.Count).Select(word => word.Word))
+            ? before.Count
+            : 0;
+    }
+
     /// <summary>Where the first and the last two-part address stand in the verse, and the verse the last one names.</summary>
     private static (int First, int Last, int Number) Addresses(string verseText)
     {

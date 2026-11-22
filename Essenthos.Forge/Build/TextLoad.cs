@@ -287,6 +287,15 @@ internal static class TextLoad
             groups.Rows.Add((text.Id, kind, position, Features(("brackets", brackets), ("letters", Letters(members))), [.. members]));
         }
 
+        var superscription = 0;
+        foreach (var (verse, count) in Superscriptions(store, text.Slug))
+        {
+            groups.Rows.Add((text.Id, Superscription, ++superscription, null,
+                [.. Enumerable.Range(1, count).Select(position => byKey.TryGetValue(new WordKey(text.Slug, verse, position), out var id)
+                    ? id
+                    : throw new InvalidOperationException($"{text.Slug} {verse}: its superscription is {count} words and the verse has no word {position}."))]));
+        }
+
         var notes = await LoadNotes(connection, store, text, byKey, cancellationToken);
         return (written, notes);
 
@@ -312,6 +321,23 @@ internal static class TextLoad
             }
 
             mark.Words.Add(id);
+        }
+    }
+
+    private const string Superscription = "superscription";
+
+    /// <summary>The verses whose first words the titles product says are a psalm's superscription, and how many.</summary>
+    internal static IEnumerable<(VerseKey Verse, int Words)> Superscriptions(ProductStore store, string slug)
+    {
+        if (!store.Exists(TextTitle.ProductOf(slug)))
+        {
+            yield break;
+        }
+
+        using var reader = store.Open(TextTitle.ProductOf(slug), TextTitle.Schema);
+        foreach (var title in reader.ReadAll().Where(title => title.Words > 0).OrderBy(title => title.Own))
+        {
+            yield return (title.Own, title.Words!.Value);
         }
     }
 

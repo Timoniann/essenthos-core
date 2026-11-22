@@ -101,6 +101,18 @@ internal static class GeezVersification
                 rows.AddRange(RowsOf(line.To, index, line.From.Count)
                     .Select(row => new CanonicalReference(row.Book, row.Chapter, row.Verse))
                     .Where(row => !rows.Contains(row)));
+                if (rows is [{ Verse: CanonicalReference.TitleVerse } title, ..])
+                {
+                    // Ludolf prints the title above the psalm's first verse and the edition joins the two, so the verse stands at
+                    // the psalm's first row and holds the title's row besides; standing first at the title, it left that row empty.
+                    rows.RemoveAt(0);
+                    if (rows.Count == 0 && line.To.FirstOrDefault(row => row.Verse != CanonicalReference.TitleVerse) is { Book: > 0 } first)
+                    {
+                        rows.Add(new CanonicalReference(first.Book, first.Chapter, first.Verse));
+                    }
+
+                    rows.Add(title);
+                }
             }
         }
 

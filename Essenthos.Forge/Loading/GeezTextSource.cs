@@ -371,11 +371,12 @@ internal static class GeezTextSource
         [
             .. verses.Select((verse, index) =>
             {
-                var text = index == 0 && chapter.Title is { } title
-                    ? title + GeezReader.LineBreak + verse.Text
-                    : verse.Text;
+                var brackets = book.Origin == Origin.DillmannByHaCohen;
+                var titled = index == 0 ? chapter.Title : null;
+                var words = GeezWords.Words(titled is null ? verse.Text : titled + GeezReader.LineBreak + verse.Text, brackets);
+                var title = titled is null ? 0 : GeezWords.Words(titled, brackets).Count;
                 return new VerseDraft(
-                    verse.Number + fromZero, GeezWords.Words(text, book.Origin == Origin.DillmannByHaCohen))
+                    verse.Number + fromZero, [.. words.Select((word, at) => at < title ? word with { Superscription = true } : word)])
                 {
                     Stated = renumbered ? [new StatedNumberDraft(chapter.Number, verse.Number)] : [],
                     MarksASuperscription = index == 0 && chapter.Title is not null,
