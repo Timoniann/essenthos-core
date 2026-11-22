@@ -1,0 +1,5 @@
+# product    Essenthos/names/overrides/TISCH.tsv
+# producer   by hand
+# edited     by hand from here on: add, suppress or differs on one word of this text
+own	record	action	base_record	role	source	note
+42.3:33.4	admin	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Ἀδμεὶν' names Admin, the name Luke 3:33 gives between Aminadab and Arni in this text; its link is to Nestle's Ἀδμίν, whose name is carried below the floor
