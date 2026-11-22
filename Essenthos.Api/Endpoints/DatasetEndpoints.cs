@@ -100,6 +100,7 @@ public static class DatasetEndpoints
         var crossReferences = await Counted(db.CrossReferences.Select(r => r.Source), cancellationToken);
         var comments = await Counted(db.CommentaryEntries.Select(c => c.Source), cancellationToken);
         var geezGlosses = await Counted(db.GeezWordGlosses.Select(g => g.Source), cancellationToken);
+        var articles = await Counted(db.LexiconArticles.Select(a => a.Source), cancellationToken);
         var texts = await db.Texts.CountAsync(cancellationToken);
         var points = await db.PlaceCandidates
             .Where(c => c.CoordinatesDataset != null && c.Longitude != null)
@@ -148,6 +149,7 @@ public static class DatasetEndpoints
                           .Select(rendering => rendering.Entry)
                           .Distinct()
                           .CountAsync(cancellationToken)
+                      + Of(articles, dataset)
                     : 0;
 
             var counts = new DatasetCounts(
@@ -192,6 +194,7 @@ public static class DatasetEndpoints
             .Concat(Undeclared(crossReferences))
             .Concat(Undeclared(comments))
             .Concat(Undeclared(geezGlosses))
+            .Concat(Undeclared(articles))
             .GroupBy(row => row.Source, StringComparer.Ordinal)
             .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
             .OrderByDescending(row => row.Rows)

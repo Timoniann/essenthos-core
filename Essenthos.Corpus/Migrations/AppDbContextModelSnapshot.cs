@@ -3006,6 +3006,70 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.LexiconArticle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body");
+
+                    b.Property<string>("Dictionary")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("dictionary");
+
+                    b.Property<string>("Entry")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("entry");
+
+                    b.Property<string>("Headword")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("headword");
+
+                    b.Property<int>("Ordinal")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordinal");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.Property<string>("StrongNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.HasKey("Id")
+                        .HasName("pk_lexicon_article");
+
+                    b.HasIndex("StrongNumber", "Dictionary", "Ordinal")
+                        .IsUnique()
+                        .HasDatabaseName("ix_lexicon_article_strong_number_dictionary_ordinal");
+
+                    b.ToTable("lexicon_article", null, t =>
+                        {
+                            t.HasComment("The articles of the scholarly lexicons (BDB, Abbott-Smith, LSJ) under the Strong number each lexicon files them at, in its order: one row per article and number. The body is the article as JSON blocks of marked text, its Hebrew and Greek marked, its cited verses and named numbers linked.");
+
+                            t.HasCheckConstraint("ck_lexicon_article_ordinal", "ordinal >= 1");
+
+                            t.HasCheckConstraint("ck_lexicon_article_source_not_empty", "length(btrim(\"source\")) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.LexiconGloss", b =>
                 {
                     b.Property<int>("Id")

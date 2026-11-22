@@ -182,6 +182,7 @@ v1.MapDownloads();
 v1.MapCommandments();
 v1.MapCrossReferences();
 v1.MapCommentaries();
+v1.MapLexicons();
 v1.MapDatasets();
 v1.MapAuth(providers);
 v1.MapMe();

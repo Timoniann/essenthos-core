@@ -202,6 +202,8 @@ public class AppDbContext : DbContext
     /// <summary>What a commentary wrote, each comment over the span of the text it was written on.</summary>
     public DbSet<CommentaryEntry> CommentaryEntries { get; set; } = null!;
 
+    public DbSet<LexiconArticle> LexiconArticles { get; set; } = null!;
+
     /// <summary>
     /// Strong numbers proposed for a word, with what proposed them. Separate from
     /// <c>word.strong_number</c>, which means a source stated it.
@@ -1187,6 +1189,24 @@ public class AppDbContext : DbContext
                     "What a commentary wrote, one row per comment over the span it was written on, in the shared "
                     + "frame: a comment on verses has all four ends, a chapter's introduction its chapter and no "
                     + "verse, a book's introduction neither. The body is the comment as JSON blocks of marked text.");
+            });
+        });
+
+        modelBuilder.Entity<LexiconArticle>(entity =>
+        {
+            entity.ToTable("lexicon_article", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_lexicon_article_source_not_empty",
+                    "length(btrim(\"source\")) > 0");
+                table.HasCheckConstraint(
+                    "ck_lexicon_article_ordinal",
+                    "ordinal >= 1");
+
+                table.HasComment(
+                    "The articles of the scholarly lexicons (BDB, Abbott-Smith, LSJ) under the Strong number each "
+                    + "lexicon files them at, in its order: one row per article and number. The body is the article as "
+                    + "JSON blocks of marked text, its Hebrew and Greek marked, its cited verses and named numbers linked.");
             });
         });
 
