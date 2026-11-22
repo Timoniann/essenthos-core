@@ -18,7 +18,7 @@ namespace Essenthos.Core.Names;
 internal sealed partial class NamesProjection
 {
     /// <summary>Raised with any change to what the projection writes or how; a product made by another version is made again.</summary>
-    public const string Version = "4";
+    public const string Version = "5";
 
     public const string VersionNote = "names-version";
 
@@ -186,6 +186,7 @@ internal sealed partial class NamesProjection
         public const string Foreign = "another-record's-name";
         public const string Several = "a-link-of-several-people";
         public const string Unprinted = "a-name-the-text-does-not-print";
+        public const string NotRendered = "another-word-of-the-group";
     }
 
     /// <param name="Names">The text's names, sorted by key and record.</param>
@@ -208,6 +209,114 @@ internal sealed partial class NamesProjection
         public string Through { get; set; } = through;
         public double Link { get; set; } = link;
         public string LinkMethod { get; set; } = method;
+    }
+
+    /// <summary>A name a link would carry onto a head of the text's side, from a word of the base's side.</summary>
+    private sealed record Take(string Head, string Reference, string Their, SettledName Name, double Link, string Method, bool Several);
+
+    /// <summary>
+    /// How often a form must name the record, or render the named word's lexeme, over links where that word is the only content
+    /// word of the base's side, to be taken as rendering it over a group link.
+    /// </summary>
+    internal const int RenderedElsewhere = 2;
+
+    private static Dictionary<(string Form, string Record), int> Standing(
+        Dictionary<(string Own, string Record), Candidate> candidates, IReadOnlyDictionary<string, Word> words)
+    {
+        var standing = new Dictionary<(string, string), int>();
+        foreach (var (own, record) in candidates.Keys)
+        {
+            if (words.TryGetValue(own, out var word))
+            {
+                standing[(word.Form, record)] = standing.GetValueOrDefault((word.Form, record)) + 1;
+            }
+        }
+
+        return standing;
+    }
+
+    /// <summary>
+    /// Whether the head renders the named word of a group link and not another word of the group: it carries the named word's
+    /// Strong number itself; its form names the record, or renders the named word's lexeme, at least <see cref="RenderedElsewhere"/>
+    /// times where that word stands alone, or holds such a form of the record inside it (a name written together with another:
+    /// <em>இயேசுகிறிஸ்துவின்</em>, CUV's <em>我為錫安</em>); or it is spelled like the named word or like a spelling of the record,
+    /// or a part of it joined by a hyphen is.
+    /// </summary>
+    private bool Renders(Take take, IReadOnlyDictionary<string, Word> words, Dictionary<(string Form, string Record), int> standing,
+        Dictionary<string, List<string>> standingForms,
+        Dictionary<(string Form, string Lexeme), int> rendering)
+    {
+        if (!words.TryGetValue(take.Head, out var word) || !BaseWords(take.Reference).TryGetValue(take.Their, out var seed))
+        {
+            return false;
+        }
+
+        return (word.Strong is not null && seed.Strong is not null && SameNumber(word.Strong, seed.Strong))
+               || standing.GetValueOrDefault((word.Form, take.Name.Record)) >= RenderedElsewhere
+               || (standingForms.TryGetValue(take.Name.Record, out var forms)
+                   && forms.Any(form => form.Length >= (word.Cased ? 3 : 2) && form.Length < word.Form.Length && word.Form.Contains(form, StringComparison.Ordinal)))
+               || rendering.GetValueOrDefault((word.Form, seed.Lexeme)) >= RenderedElsewhere
+               || _foreign.Value.IsSpelledLike(take.Name.Record, word.Surface, seed.Surface)
+               || (word.Surface.Split(Hyphens) is { Length: > 1 } parts
+                   && parts.Any(part => part.Length >= 3 && _foreign.Value.IsSpelledLike(take.Name.Record, part, seed.Surface)));
+    }
+
+    private static readonly HashSet<string> FunctionParts = new(
+        ["prep", "conj", "art", "prps", "prde", "prin", "nega", "inrg", "intj", "advb", "adv", "det", "pron", "ptcl"], StringComparer.Ordinal);
+
+    /// <summary>
+    /// Whether an original's word can render a group of the translation by itself, by its morphology: a noun, name, verb or
+    /// adjective of BHSA or Nestle 1904 that is not a cardinal number (<em>two</em> bears, like a lion: the number and the
+    /// particle go with the word they stand by), or a Textus Receptus word coded as a noun, verb, adjective or transliteration;
+    /// null where the morphology states neither.
+    /// </summary>
+    internal static bool? ContentWord(string? morphology)
+    {
+        if (morphology is null || morphology.Length < 2 || morphology[0] != '{')
+        {
+            return null;
+        }
+
+        using var json = System.Text.Json.JsonDocument.Parse(morphology);
+        string? Field(string name) => json.RootElement.TryGetProperty(name, out var value) && value.ValueKind == System.Text.Json.JsonValueKind.String ? value.GetString() : null;
+        if (Field("pos") is { } part)
+        {
+            return !FunctionParts.Contains(part) && Field("lexicalSet") != "card" && Field("form")?.EndsWith("-NUI", StringComparison.Ordinal) != true;
+        }
+
+        return Field("robinson") is { Length: > 0 } code
+            ? code.StartsWith("N-", StringComparison.Ordinal) || code.StartsWith("V-", StringComparison.Ordinal)
+              || (code.StartsWith("A-", StringComparison.Ordinal) && !code.EndsWith("-NUI", StringComparison.Ordinal)) || code is "HEB" or "ARAM"
+            : null;
+    }
+
+    /// <summary>The hyphens a name written in parts is joined with (<em>Bene-Ammon</em>, <em>Нагале-Гааша</em>).</summary>
+    private static readonly char[] Hyphens = ['-', '‐', '‑', '–'];
+
+    /// <summary>
+    /// Whether another word of a link's base side is part of the record's name there: the base settles the same record on it
+    /// (<em>גֵּיא הִנֹּם</em>), or it is a word of the record's Hebrew or Greek name (<em>בְּאֵר</em> of <em>בְּאֵר שֶׁבַע</em>).
+    /// </summary>
+    private bool PartOfTheName(string own, string record, string reference, IReadOnlyDictionary<string, List<SettledName>> settled) =>
+        (settled.TryGetValue(own, out var names) && names.Any(n => n.Record == record))
+        || (BaseWords(reference).TryGetValue(own, out var word) && _foreign.Value.IsWordOfOriginalName(record, word.Surface));
+
+    /// <summary>Two Strong numbers alike but for leading zeros and a letter after the digits (<c>H0430</c>, <c>H430a</c>).</summary>
+    private static bool SameNumber(string one, string other)
+    {
+        static string Bare(string number)
+        {
+            var digits = number.Length > 1 ? number.AsSpan(1).TrimStart('0') : [];
+            var end = 0;
+            while (end < digits.Length && char.IsAsciiDigit(digits[end]))
+            {
+                end++;
+            }
+
+            return string.Concat(number.AsSpan(0, 1), digits[..end]).ToUpperInvariant();
+        }
+
+        return Bare(one) == Bare(other);
     }
 
     [GeneratedRegex("['’]s?$", RegexOptions.IgnoreCase)]
@@ -294,6 +403,8 @@ internal sealed partial class NamesProjection
         var linkedTo = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         var ofSeveral = new HashSet<(string Own, string Record)>();
         var confirmed = new HashSet<(string Own, string Record)>();
+        var grouped = new List<Take>();
+        var rendering = new Dictionary<(string Form, string Lexeme), int>();
         var priorities = bookBases.Count == 0 ? 0 : bookBases.Values.Max(b => b.Count);
         for (var priority = 0; priority < priorities; priority++)
         {
@@ -317,6 +428,20 @@ internal sealed partial class NamesProjection
                     if (mineKeys.Count == 0)
                     {
                         continue;
+                    }
+
+                    var baseWords = BaseWords(reference);
+                    var content = MappingText.Split(theirs).Where(k => baseWords.TryGetValue(k, out var w) && w.Content).ToList();
+                    if (content.Count == 1)
+                    {
+                        var lexeme = baseWords[content[0]].Lexeme;
+                        foreach (var key in mineKeys)
+                        {
+                            if (words.TryGetValue(key, out var word) && !word.NeverAName)
+                            {
+                                rendering[(word.Form, lexeme)] = rendering.GetValueOrDefault((word.Form, lexeme)) + 1;
+                            }
+                        }
                     }
 
                     List<(string Their, SettledName Name)>? named = null;
@@ -374,23 +499,56 @@ internal sealed partial class NamesProjection
                     {
                         foreach (var (their, name) in named.Where(n => (n.Name.Role == NameRoles.Name ? nameHeads : heads).Contains(head)))
                         {
-                            if (name.Role == NameRoles.Name)
+                            var take = new Take(head, reference, their, name, link, row.Method, several);
+                            if (content.Any(k => k != their && !PartOfTheName(k, name.Record, reference, settled)))
                             {
-                                (several ? ofSeveral : confirmed).Add((head, name.Record));
+                                grouped.Add(take);
                             }
-
-                            var through = $"{reference} {their}";
-                            if (!candidates.TryGetValue((head, name.Record), out var candidate))
+                            else
                             {
-                                candidates[(head, name.Record)] = new Candidate(name.Record, name.Role, name, through, link, row.Method);
-                            }
-                            else if (Worth(link, name) > Worth(candidate.Link, candidate.Settled))
-                            {
-                                (candidate.Settled, candidate.Through, candidate.Link, candidate.LinkMethod) = (name, through, link, row.Method);
+                                Carry(take);
                             }
                         }
                     }
                 }
+            }
+        }
+
+        // Over a link whose original side holds another content word besides the named one, the head of the translation side
+        // may render that other word (UST «that time» over τῆς μετοικεσίας Βαβυλῶνος), so it takes the name only where it
+        // renders the named word itself.
+        var standing = Standing(candidates, words);
+        var standingForms = standing.Where(s => s.Value >= RenderedElsewhere)
+            .GroupBy(s => s.Key.Record, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(s => s.Key.Form).ToList(), StringComparer.Ordinal);
+        foreach (var take in grouped)
+        {
+            if (candidates.ContainsKey((take.Head, take.Name.Record)) || Renders(take, words, standing, standingForms, rendering))
+            {
+                Carry(take);
+            }
+            else
+            {
+                refused.TryAdd((take.Head, take.Name.Record), Refusals.NotRendered);
+            }
+        }
+
+        void Carry(Take take)
+        {
+            var (head, name) = (take.Head, take.Name);
+            if (name.Role == NameRoles.Name)
+            {
+                (take.Several ? ofSeveral : confirmed).Add((head, name.Record));
+            }
+
+            var through = $"{take.Reference} {take.Their}";
+            if (!candidates.TryGetValue((head, name.Record), out var candidate))
+            {
+                candidates[(head, name.Record)] = new Candidate(name.Record, name.Role, name, through, take.Link, take.Method);
+            }
+            else if (Worth(take.Link, name) > Worth(candidate.Link, candidate.Settled))
+            {
+                (candidate.Settled, candidate.Through, candidate.Link, candidate.LinkMethod) = (name, through, take.Link, take.Method);
             }
         }
 
@@ -662,15 +820,23 @@ internal sealed partial class NamesProjection
 
     private readonly Lazy<ForeignNameRule> _foreign;
 
-    private readonly ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<string, (string Surface, string? Strong)>>> _baseWords = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<string, (string Surface, string? Strong, bool Content, string Lexeme)>>> _baseWords = new(StringComparer.Ordinal);
 
     private readonly ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<string, List<string>>>> _namedByVerse = new(StringComparer.Ordinal);
 
-    private IReadOnlyDictionary<string, (string Surface, string? Strong)> BaseWords(string reference) =>
-        _baseWords.GetOrAdd(reference, r => new Lazy<IReadOnlyDictionary<string, (string, string?)>>(() =>
+    /// <summary>
+    /// A reference text's words: surface, Strong number, whether it is a content word (by its morphology,
+    /// <see cref="ContentWord"/>, or where that states nothing, unless its language never names anybody with it) and the
+    /// lexeme its renderings are counted by (its Strong number, else its lemma, else its form).
+    /// </summary>
+    private IReadOnlyDictionary<string, (string Surface, string? Strong, bool Content, string Lexeme)> BaseWords(string reference) =>
+        _baseWords.GetOrAdd(reference, r => new Lazy<IReadOnlyDictionary<string, (string, string?, bool, string)>>(() =>
         {
+            var language = Context.Texts.TryGetValue(r, out var declared) ? declared.Language : string.Empty;
             using var reader = Store.Open(TextWord.ProductOf(r), TextWord.Schema(r));
-            return reader.Rows().ToDictionary(w => w.Key.Own, w => (w.Surface, w.Strong), StringComparer.Ordinal);
+            return reader.Rows().ToDictionary(w => w.Key.Own, w => (w.Surface, w.Strong,
+                ContentWord(w.Morphology) ?? !Rules.IsNeverAName(language, NameRules.Bare(w.Surface), null, w.Strong, w.Normalised),
+                w.Strong ?? w.Lemma ?? w.Normalised ?? NameRules.Bare(w.Surface)), StringComparer.Ordinal);
         })).Value;
 
     /// <summary>The records a reference text's settled names hold in each verse.</summary>

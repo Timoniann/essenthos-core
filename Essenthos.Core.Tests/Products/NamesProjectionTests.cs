@@ -32,11 +32,12 @@ public sealed class NamesProjectionTests : IDisposable
         writer.WriteAll([new TextField("slug", slug), new TextField("kind", kind), new TextField("language", language)]);
     }
 
+    /// <summary>A text's words in one verse, each <c>surface</c> or <c>surface|morphology</c>.</summary>
     private static void Words(ProductStore store, string slug, params string[] surfaces)
     {
         using var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []);
-        writer.WriteAll(surfaces.Select((surface, at) => new TextWord(new WordKey(slug, new VerseKey(2, 3, 4), at + 1),
-            surface, " ", null, null, null, null, surface.ToLowerInvariant(), null, false, null, null, null)));
+        writer.WriteAll(surfaces.Select(word => word.Split('|')).Select((parts, at) => new TextWord(new WordKey(slug, new VerseKey(2, 3, 4), at + 1),
+            parts[0], " ", null, null, null, parts.Length > 1 ? parts[1] : null, parts[0].ToLowerInvariant(), null, false, null, null, null)));
     }
 
     private static FinalRow Link(long id, string from, string to, double? confidence = null) =>
@@ -197,7 +198,7 @@ public sealed class NamesProjectionTests : IDisposable
     }
 
     /// <summary>A store of ENG over BHSA in one verse: ENG's words as <c>surface|trailer|strong</c>, the final's links and BHSA's settled names.</summary>
-    private ProductStore Verse(string[] english, string[] hebrew, FinalRow[] links, SettledName[] settled)
+    private ProductStore Verse(string[] english, string[] hebrew, FinalRow[] links, SettledName[] settled, string[]? records = null)
     {
         var store = new ProductStore(_resources);
         Declare(store, "ENG", "eng", "translation");
@@ -222,6 +223,12 @@ public sealed class NamesProjectionTests : IDisposable
         using (var writer = store.Create(NameProducts.Rules, ProductKind.Hand, NameRuleRow.Schema, "test", []))
         {
             writer.WriteAll(NameRules.Seed().Select(r => r.Rule == NameRules.Head ? r with { Value = NameRules.HeadLastAndCapitals } : r));
+        }
+
+        if (records is not null)
+        {
+            using var writer = store.Create(NamesProjection.RecordsProduct, ProductKind.Hand, PersonSchema, "test", []);
+            writer.WriteAll(records.Select(record => new PersonRow(record, "person")));
         }
 
         store.Save();
@@ -258,13 +265,15 @@ public sealed class NamesProjectionTests : IDisposable
             ["to", "Jerusalem", "to", "Bethphage"],
             ["εἰς", "Ἰεροσόλυμα", "εἰς", "Βηθφαγή"],
             [Link(1, Key(2), Key(2), 0.95), Link(3, Key(4), Key(4), 0.95), Link(2, $"{Key(1)} {Key(2)} {Key(3)} {Key(4)}", $"{Key(1)} {Key(2)} {Key(3)} {Key(4)}")],
-            [Settled(2, "jerusalem"), Settled(4, "bethphage")]);
+            [Settled(2, "jerusalem"), Settled(4, "bethphage")],
+            ["jerusalem", "bethphage"]);
 
         var names = new NamesProjection(store).Project("ENG");
 
         names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(2), "jerusalem"), (Key(4), "bethphage")]);
-        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(4), "jerusalem"), "a-link-of-several-people"));
-        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(2), "bethphage"), "a-link-of-several-people"));
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(4), "jerusalem"), "another-word-of-the-group"),
+            "Bethphage renders another word of the group than Jerusalem's");
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(2), "bethphage"), "another-word-of-the-group"));
     }
 
     [Fact]
@@ -274,12 +283,15 @@ public sealed class NamesProjectionTests : IDisposable
             ["Aquila", "and", "Priscilla"],
             ["Πρίσκιλλα", "καὶ", "Ἀκύλας"],
             [Link(1, $"{Key(1)} {Key(2)} {Key(3)}", $"{Key(1)} {Key(2)} {Key(3)}")],
-            [Settled(1, "priscilla"), Settled(3, "aquila")]);
+            [Settled(1, "priscilla"), Settled(3, "aquila")],
+            ["priscilla", "aquila"]);
 
         var names = new NamesProjection(store).Project("ENG");
 
         names.Names.Should().BeEmpty("the link says both are there, not which word is which");
-        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(3), "aquila"), "a-link-of-several-people"));
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(3), "priscilla"), "a-link-of-several-people"),
+            "the head is spelled like Priscilla, but the link does not say Priscilla is that word");
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(3), "aquila"), "another-word-of-the-group"));
     }
 
     [Fact]
@@ -295,6 +307,34 @@ public sealed class NamesProjectionTests : IDisposable
 
         names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(4), "zipporah"), (Key(6), "moses")]);
         names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(8), "moses"), "not-the-head"));
+    }
+
+    private const string Article = "|{\"pos\": \"det\"}";
+    private const string Noun = "|{\"pos\": \"noun\"}";
+
+    /// <summary>
+    /// Matthew 1:17 as the UST writes it, <em>from that time</em> over τῆς μετοικεσίας Βαβυλῶνος: the head renders the deportation,
+    /// not Babylon, so it takes no name; a word over such a group that spells the name, or the one content word of a link, keeps it.
+    /// </summary>
+    [Fact]
+    public void AGroupLinksHeadTakesTheNameOnlyWhereItRendersTheNamedWord()
+    {
+        var store = Verse(
+            ["from", "that", "time", "to", "Babylon", "the", "Babylon"],
+            ["τῆς" + Article, "μετοικεσίας" + Noun, "Βαβυλῶνος" + Noun, "εἰς|{\"pos\": \"prep\"}", "Βαβυλῶνα" + Noun, "τῆς" + Article, "Βαβυλῶνος" + Noun],
+            [
+                Link(1, $"{Key(2)} {Key(3)}", $"{Key(1)} {Key(2)} {Key(3)}"),
+                Link(2, Key(5), $"{Key(4)} {Key(5)}"),
+                Link(3, $"{Key(6)} {Key(7)}", $"{Key(2)} {Key(6)} {Key(7)}"),
+            ],
+            [Settled(3, "babylon"), Settled(5, "babylon"), Settled(7, "babylon")],
+            ["babylon"]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(5), "babylon"), (Key(7), "babylon")],
+            "Babylon is the only content word of the second link, and the third link's Babylon spells the name");
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(3), "babylon"), "another-word-of-the-group"));
     }
 
     private sealed record PersonRow(string Slug, string Kind);

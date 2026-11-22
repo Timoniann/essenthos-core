@@ -31,6 +31,7 @@ internal sealed class ForeignNameRule
     private readonly Dictionary<string, List<string>> _spellings = new(StringComparer.Ordinal);
     private readonly Dictionary<string, HashSet<string>> _numbers = new(StringComparer.Ordinal);
     private readonly Dictionary<string, HashSet<string>> _keys = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, HashSet<string>> _originalWords = new(StringComparer.Ordinal);
     private readonly System.Collections.Concurrent.ConcurrentDictionary<(string, string), bool> _kin = new();
 
     public ForeignNameRule(ProductStore store)
@@ -87,6 +88,17 @@ internal sealed class ForeignNameRule
                 foreach (var column in new[] { "label", "hebrew", "hebrew_transliterated", "greek", "greek_transliterated" })
                 {
                     Spelling(slug, row[column]);
+                }
+
+                foreach (var column in new[] { "hebrew", "greek" })
+                {
+                    foreach (var word in (row[column] ?? string.Empty).Split([' ', '־', '-'], StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        if (Fold(word) is { Length: > 0 } folded)
+                        {
+                            Add(_originalWords, slug, (HashSet<string> set) => set.Add(folded));
+                        }
+                    }
                 }
 
                 Key(slug, row["label"]?.ToLowerInvariant());
@@ -186,6 +198,24 @@ internal sealed class ForeignNameRule
 
         return _spellings.TryGetValue(record, out var spellings)
                && spellings.Any(s => Similarity(folded, s) >= Spelled || (folded.Length >= 3 && s.Contains(folded, StringComparison.Ordinal)));
+    }
+
+    /// <summary>Whether an original's word, its marks folded, is one of the words of a Hebrew or Greek name the records hold for the record.</summary>
+    public bool IsWordOfOriginalName(string record, string surface) =>
+        _originalWords.TryGetValue(record, out var words) && words.Contains(Fold(surface));
+
+    /// <summary>Whether a word is spelled like the base word it renders or like a spelling the records hold for the record (no part of one counts).</summary>
+    public bool IsSpelledLike(string record, string surface, string baseSurface) =>
+        _spelledLike.GetOrAdd((record, surface, baseSurface), k => SpelledLike(k.Item1, k.Item2, k.Item3));
+
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<(string, string, string), bool> _spelledLike = new();
+
+    private bool SpelledLike(string record, string surface, string baseSurface)
+    {
+        var folded = Fold(surface);
+        return folded.Length > 0
+               && (Similarity(folded, Fold(baseSurface)) >= Spelled
+                   || (_spellings.TryGetValue(record, out var spellings) && spellings.Any(s => Similarity(folded, s) >= Spelled)));
     }
 
     /// <summary>
