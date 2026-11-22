@@ -44,9 +44,11 @@ internal static class SweteIsaiah
         + "the transcription let into the text, two where Brenton and Ottley both begin the verse — two "
         + "misnumbered verses of chapter 38 are renumbered, the end of 31:9 is given back to it, and Latin "
         + "letters standing for the Greek ones they look like are written as Greek; a verse number standing in "
-        + "the text at 11:16 is taken out, and a figure written for the breathing of Ἀμὼς at 13:1 is the breathing.";
+        + "the text at 11:16 is taken out, a figure written for the breathing of Ἀμὼς at 13:1 is the breathing, and "
+        + "Swete's signs for where another manuscript begins or breaks off, which the transcription let into the "
+        + "text beside the words, are taken out.";
 
     /// <summary>The book's lines, with the <c>tokens</c>, <c>opens</c> and <c>moves</c> rows of Swete's corrections file addressed to them made.</summary>
     public static IEnumerable<string> Lines(string folder, TextCorrections corrections) =>
-        EditionRepairs.Apply(File, Work, First1KGreekReader.Lines(Path.Combine(folder, Folder, File), Work), corrections);
+        EditionRepairs.Apply(File, Work, First1KGreekReader.WithoutSigns(First1KGreekReader.Lines(Path.Combine(folder, Folder, File), Work)), corrections);
 }

@@ -15,8 +15,9 @@ namespace Essenthos.Core.Swete;
 /// <para>
 /// Swete prints the other numbering of a verse in brackets where his division differs from it — <c>(17)</c> at the
 /// top of a page that continues 1:17, <c>(12)</c> inside 7:1, <c>(1)</c> before the first verse of chapters 8 and 9
-/// — and his signs § and ¶ where another uncial begins or ends; the transcription let both into the text, and the
-/// corrections file takes them out, with the drop capital's Latin letters and the one verse number left in a line.
+/// — and his signs § and ¶ where another uncial begins or ends; the transcription let both into the text. The signs
+/// are taken out as in Isaiah (<see cref="First1KGreekReader.WithoutSigns"/>), and the corrections file takes out the
+/// figures, with the drop capital's Latin letters and the one verse number left in a line.
 /// </para>
 /// </summary>
 internal static class SweteEcclesiastes
@@ -37,5 +38,5 @@ internal static class SweteEcclesiastes
 
     /// <summary>The book's lines, with the <c>tokens</c>, <c>opens</c> and <c>moves</c> rows of Swete's corrections file addressed to them made.</summary>
     public static IEnumerable<string> Lines(string folder, TextCorrections corrections) =>
-        EditionRepairs.Apply(File, Work, First1KGreekReader.Lines(Path.Combine(folder, SweteIsaiah.Folder, File), Work), corrections);
+        EditionRepairs.Apply(File, Work, First1KGreekReader.WithoutSigns(First1KGreekReader.Lines(Path.Combine(folder, SweteIsaiah.Folder, File), Work)), corrections);
 }

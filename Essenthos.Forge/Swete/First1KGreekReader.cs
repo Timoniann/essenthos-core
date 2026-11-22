@@ -1,4 +1,5 @@
 using Essenthos.Core.Utils;
+using System.Buffers;
 using System.Xml.Linq;
 
 namespace Essenthos.Core.Swete;
@@ -48,6 +49,9 @@ internal static class First1KGreekReader
     /// </summary>
     private static readonly HashSet<string> Inline = ["add", "del", "foreign", "hi", "unclear", "supplied"];
 
+    /// <summary>Swete's signs for where another uncial begins (§) and breaks off (¶).</summary>
+    private static readonly SearchValues<char> Signs = SearchValues.Create("§¶");
+
     /// <param name="path">The TEI file.</param>
     /// <param name="book">The work's number in the TLG catalogue, which every line states.</param>
     public static IEnumerable<string> Lines(string path, int book)
@@ -91,6 +95,52 @@ internal static class First1KGreekReader
             }
         }
     }
+
+    /// <summary>
+    /// The lines with Swete's signs taken out of every token: a token that was nothing but a sign is dropped, and a stop
+    /// the sign stood before (<c>θεμελιώσω ¶.</c>) is the word's, as the page sets it. He sets
+    /// § where another uncial of his apparatus begins and ¶ where it breaks off, against the siglum in the margin;
+    /// the transcription keeps them in the text, glued to the word beside or standing alone, and a sign read as a
+    /// letter is a word no search or link finds. The reader itself keeps them, because Alexandrinus's books are cut
+    /// where they stand (<see cref="Alexandrinus.SweteAlexandrinus"/>).
+    /// </summary>
+    public static IEnumerable<string> WithoutSigns(IEnumerable<string> lines)
+    {
+        string? held = null;
+        foreach (var line in lines)
+        {
+            var space = line.IndexOf(' ');
+            var signed = line[(space + 1)..];
+            var token = Unsigned(signed);
+            if (token.Length == 0)
+            {
+                continue;
+            }
+
+            if (held is not null && token.Length < signed.Length && !token.Any(char.IsLetterOrDigit)
+                && held.StartsWith(line[..(space + 1)], StringComparison.Ordinal))
+            {
+                held += token;
+                continue;
+            }
+
+            if (held is not null)
+            {
+                yield return held;
+            }
+
+            held = $"{line[..space]} {token}";
+        }
+
+        if (held is not null)
+        {
+            yield return held;
+        }
+    }
+
+    /// <summary>A token without Swete's signs § and ¶, wherever in it they stand.</summary>
+    public static string Unsigned(string token) =>
+        token.AsSpan().IndexOfAny(Signs) < 0 ? token : string.Concat(token.Where(c => !Signs.Contains(c)));
 
     private static Func<XElement, bool> IsA(string subtype) =>
         element => (string?)element.Attribute("subtype") == subtype;

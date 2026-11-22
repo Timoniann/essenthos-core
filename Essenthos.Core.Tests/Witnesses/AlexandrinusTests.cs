@@ -142,6 +142,18 @@ public class AlexandrinusTests
         Text(Genesis, 1, 1).Should().Be("ΕΝ ΑΡΧΗ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν.");
     }
 
+    /// <summary>Swete's signs for where the other uncials begin and break off are not text, wherever the transcription set them.</summary>
+    [Fact]
+    public void NoWordOfSwetesPrintingCarriesHisSigns()
+    {
+        Source.Value.Books.Where(book => book.CanonicalOrdinal is Genesis or 73 or 74 or 80 or 81)
+            .SelectMany(book => book.Chapters).SelectMany(chapter => chapter.Verses).SelectMany(verse => verse.Words)
+            .Where(word => (word.Surface + word.Trailer).Any(c => c is '§' or '¶'))
+            .Select(word => word.Surface + word.Trailer)
+            .Should().BeEmpty();
+        Text(Genesis, 3, 5).Should().EndWith("καλὸν καὶ πονηρόν.");
+    }
+
     /// <summary>
     /// Maccabees is read from First1KGreek's encoding, which is where the files Swete is loaded from
     /// were converted from, so both must address the same verses.

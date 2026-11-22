@@ -104,9 +104,9 @@ internal static class SweteAlexandrinus
 
                     continue;
                 }
-
-                token = token.TrimStart(Opens, Closes);
             }
+
+            token = First1KGreekReader.Unsigned(token);
 
             var kept = new System.Text.StringBuilder(token.Length);
             var outside = 0;
