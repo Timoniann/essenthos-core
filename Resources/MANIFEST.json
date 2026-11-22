@@ -1,4 +1,9 @@
 {
+  "AbbottSmith": {
+    "bytes": 5703233,
+    "files": 2,
+    "sha256": "80f855faed139e562e7548fc35e0a2e18752851d989f9d63d5cfa96ca0cb0950"
+  },
   "Alexandrinus": {
     "bytes": 6032440,
     "files": 9,
@@ -53,6 +58,11 @@
     "bytes": 4467523,
     "files": 54,
     "sha256": "740baa91e47934e895f118ec594ea06b92408125e2f5b83ba3c816ef000df790"
+  },
+  "BrownDriverBriggs": {
+    "bytes": 4696348,
+    "files": 3,
+    "sha256": "36037fdc98beab455846c8e236f3aee67b5fc3aad6b207c674bc2501a87cc10e"
   },
   "Byzantine": {
     "bytes": 7547647,
