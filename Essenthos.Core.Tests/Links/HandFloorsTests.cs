@@ -84,6 +84,37 @@ public sealed class HandFloorsTests : IDisposable
         Merge([aligner], null).Final.Should().BeEquivalentTo(with.Final);
     }
 
+    /// <summary>
+    /// A pair's own model is held to the line <c>aligner</c> (PRB-1957): GNV1599-BHSA, given a model it never had, settled its
+    /// guesses on every word the composition left bare, 21 of 40 right. A composition's combination is never read as that line.
+    /// </summary>
+    [Fact]
+    public void The_merge_refuses_the_pair_s_aligner_rows_under_its_aligner_floor_and_leaves_compositions_to_theirs()
+    {
+        MappingRow Aligned(string from, string to, double confidence) =>
+            new(from, to, "renders", MappingMethods.Aligner, confidence, "SIL.Machine ibm4, symmetrised och", null, null, null);
+        IReadOnlyList<HandFloor> floors =
+        [
+            HandFloors.Parse(Pair, new HandFloorRow("aligner", "0.8", "0.9", "20", "18 of 20 right from 0.80")),
+            HandFloors.Parse(Pair, new HandFloorRow("as written", HandFloorRow.Refused, "0.4", "30", "10 of 30 right")),
+        ];
+
+        var output = Merge(
+            [
+                Aligned("1.1:1.1", "1.1:1.1", 0.95),
+                Aligned("1.1:1.2", "1.1:1.2", 0.6),
+                Composed("1.1:1.3", "1.1:1.3", 0.3, "SIL.Machine, aligned as written"),
+                Composed("1.1:1.4", "1.1:1.4", 0.3, Middle),
+            ],
+            floors);
+
+        output.Final.Where(r => r.Settled).Select(r => r.From).Should().Equal(["1.1:1.1", "1.1:1.4"]);
+        output.Methods[MappingMethods.Aligner].Select(r => r.Status).Should().Equal(null, "refused-by floor: aligner under 0.80; 18 of 20 right from 0.80");
+        output.Methods[MappingMethods.Composed][0].Status.Should().Be("refused-by floor: as written refused; 10 of 30 right");
+        HandFloors.For(floors, "SIL.Machine, aligned aligner").Should().BeNull("the aligner's line binds no composition");
+        HandFloors.AsRoutes(Pair, floors, ["KJV"]).Should().ContainSingle("a composition reads no aligner line as a route");
+    }
+
     [Fact]
     public void A_floors_file_is_read_from_the_store_and_is_no_method_file()
     {

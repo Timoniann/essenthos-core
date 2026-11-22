@@ -54,6 +54,40 @@ public sealed class NamesFirstSourceTests : IDisposable
         Write(store).Should().BeEmpty("the original's word is already linked in the pair");
     }
 
+    /// <summary>
+    /// An aligner the pair's floors refuse keeps no name off a word (PRB-1957): GNV1599-BHSA, given a model it holds refused, lost
+    /// Beth-hashittah and Ebrewes to guesses on the wrong Hebrew word. An aligner the floors admit still does.
+    /// </summary>
+    [Fact]
+    public void A_word_only_a_refused_aligner_links_takes_its_name()
+    {
+        var store = Store();
+        Method(store, MappingMethods.Aligner, new MappingRow("1.12:4.2", "1.12:4.1", "renders", MappingMethods.Aligner, 0.98,
+            "SIL.Machine ibm4", null, null, null));
+        Write(store).Should().BeEmpty("an aligner the floors admit is a link");
+
+        Floors(store, "aligner\trefused\t0.53\t40\t21 of 40 right");
+
+        Write(store).Should().ContainSingle().Which.To.Should().Be("1.12:4.2");
+    }
+
+    /// <summary>
+    /// A composed row the pair's hand floors refuse keeps no name off its word either (PRB-1957): JPS1917-BHSA's redraw covered 46
+    /// names with links only through the King James, which its floors refuse, and the words were left bare.
+    /// </summary>
+    [Fact]
+    public void A_word_only_a_refused_composed_row_links_takes_its_name()
+    {
+        var store = Store();
+        Method(store, MappingMethods.Composed, new MappingRow("1.12:4.2", "1.12:4.2", "renders", MappingMethods.Composed, 0.9,
+            "SIL.Machine, aligned through KJV", null, null, null));
+        Write(store).Should().BeEmpty("a composed link the floors admit is a link");
+
+        Floors(store, "through kjv\trefused\t0.5\t40\t20 of 40 right");
+
+        Write(store).Should().ContainSingle().Which.To.Should().Be("1.12:4.2");
+    }
+
     [Fact]
     public void Adonai_beside_the_name_is_weighed_but_neither_is_placed()
     {
@@ -156,6 +190,10 @@ public sealed class NamesFirstSourceTests : IDisposable
         using var reader = store.Open(MappingProducts.Of("DRA-BHSA", MappingMethods.Names), MappingRow.Schema);
         return reader.ReadAll();
     }
+
+    private static void Floors(ProductStore store, string line) =>
+        File.WriteAllLines(Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, MappingProducts.Folder, "DRA-BHSA", "floors.tsv"),
+            ["# producer   by hand", "readings\tfrom\tright\tscored\tbasis", line]);
 
     private static void Method(ProductStore store, string method, params MappingRow[] rows)
     {

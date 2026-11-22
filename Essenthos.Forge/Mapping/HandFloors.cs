@@ -83,7 +83,14 @@ internal static class HandFloors
     /// </summary>
     public const string Held = "held";
 
-    /// <summary>The pair's hand floors; empty where it has none.</summary>
+    /// <summary>
+    /// The <c>readings</c> of the line that holds the pair's own aligner rows to a floor: not a composition's combination but the
+    /// direct model's links, which a pair given a model of its own settles wherever nothing surer links a word. Measured by hand
+    /// like a combination (PRB-1957: GNV1599-BHSA's new aligner links read 21 of 40 right).
+    /// </summary>
+    public const string Aligner = "aligner";
+
+    /// <summary>The pair's hand floors, its aligner's (<see cref="Aligner"/>) among them; empty where it has none.</summary>
     public static IReadOnlyList<HandFloor> Read(ProductStore store, string pair) =>
         Floors(pair, Rows(store, pair).Where(row => !IsHold(row)));
 
@@ -175,7 +182,23 @@ internal static class HandFloors
     public static HandFloor? For(IReadOnlyList<HandFloor> floors, string source) =>
         floors.Count == 0 || OfSource(source) is not { } readings
             ? null
-            : floors.FirstOrDefault(floor => floor.Readings.SetEquals(readings));
+            : floors.FirstOrDefault(floor => !IsAligner(floor) && floor.Readings.SetEquals(readings));
+
+    /// <summary>The floor the pair's own aligner rows are held to (<see cref="Aligner"/>), if it sets one.</summary>
+    public static HandFloor? ForAligner(IReadOnlyList<HandFloor> floors) => floors.FirstOrDefault(IsAligner);
+
+    /// <summary>
+    /// Whether the pair's floors refuse this method-file row: a composed row under its combination's floor, an aligner row under
+    /// the aligner's. A refused row keeps nothing off a word for the rules that place names and possessives where no link stands.
+    /// </summary>
+    public static bool Refuses(IReadOnlyList<HandFloor> floors, MappingRow row) => floors.Count > 0 && row.Method switch
+    {
+        MappingMethods.Composed => For(floors, row.Source)?.Refuses(row.Confidence) == true,
+        MappingMethods.Aligner => ForAligner(floors)?.Refuses(row.Confidence) == true,
+        _ => false,
+    };
+
+    private static bool IsAligner(HandFloor floor) => floor.Readings.Count == 1 && floor.Readings.Contains(Aligner);
 
     /// <summary>
     /// The floors as a composition through these middle texts numbers its routes, for <see cref="Admission.With"/>. A reading
@@ -184,7 +207,7 @@ internal static class HandFloors
     public static IReadOnlyDictionary<Route, RouteFloor> AsRoutes(string pair, IReadOnlyList<HandFloor> floors, IReadOnlyList<string> vias)
     {
         var routes = new Dictionary<Route, RouteFloor>();
-        foreach (var floor in floors)
+        foreach (var floor in floors.Where(floor => !IsAligner(floor)))
         {
             var route = Route.None;
             foreach (var reading in floor.Readings)

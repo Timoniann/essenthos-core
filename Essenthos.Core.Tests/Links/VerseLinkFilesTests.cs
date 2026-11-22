@@ -138,4 +138,24 @@ public sealed class VerseLinkFilesTests
         output.Report.Should().Contain(r => r.Kind == "withdrawn" && r.Method == MappingMethods.Aligner && r.By == CrossingRule.Name && r.Rows == 1);
         output.Report.Should().Contain(r => r.Kind == "needs" && r.Method == CrossingRule.Name && r.By == "align" && r.Rows == 1);
     }
+
+    /// <summary>
+    /// A composed link withdrawn across verses asks for compose, not align: told "align", a landing trained direct models for five
+    /// composed pairs that never had one (PRB-1957).
+    /// </summary>
+    [Fact]
+    public void A_composed_link_across_verses_asks_for_compose_again()
+    {
+        var output = MappingMerge.Merge(new MappingMerge.Input(
+            "KJV-BHSA", "KJV", "BHSA",
+            new Dictionary<string, List<MappingRow>>
+            {
+                [MappingMethods.Composed] = [new("1.1:1.2", "1.1:4.1", "renders", MappingMethods.Composed, 0.9, "SIL.Machine, aligned through BSB", null, null, null)],
+            },
+            [], new Dictionary<(string, VerseKey), string>(), new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(),
+            1, Verses: Frames));
+
+        output.Report.Should().ContainSingle(r => r.Kind == "needs").Which.Should().Match<ReportRow>(r =>
+            r.Method == CrossingRule.Name && r.By == "compose" && r.Rows == 1 && r.Note.EndsWith("needs compose again"));
+    }
 }

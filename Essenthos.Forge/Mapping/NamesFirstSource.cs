@@ -27,7 +27,10 @@ namespace Essenthos.Core.Mapping;
 /// <para>
 /// <strong>A name is placed only where neither word is linked yet</strong>, as the database's pass wrote it after every
 /// other step of the recipe: by the pair's stated, Strong, aligner, composed, lexical and possessive files, a supporting
-/// numbering's rows aside (<see cref="StrongNumberSource.Supporting"/>).
+/// numbering's rows aside (<see cref="StrongNumberSource.Supporting"/>). A row the pair's hand floors refuse keeps no name off
+/// a word (<see cref="HandFloors.Refuses"/>): the merge never lets it stand, and GNV1599-BHSA, given a model it never had and
+/// holds refused, lost Beth-hashittah and Ebrewes to its guesses (PRB-1957). An aligner the floors admit still keeps names off:
+/// over the Greek manuscripts and the Ge'ez, names placed past it read 13 of 29 right.
 /// EVIDENTIA's file and the laid stated rows read this one, so they are not read here; the merge ranks EVIDENTIA above the
 /// names where both claim a word. A ruling's refused rendering is the merge's to suppress, as for every method.
 /// </para>
@@ -87,7 +90,7 @@ internal sealed class NamesFirstSource : IPairSource
         string[] products =
         [
             NameProducts.Settled(toText), NameProducts.Consensus(fromText), RecordsProduct, FoldsProduct,
-            .. Before.Select(method => MappingProducts.Of(pair, method)),
+            .. Before.Select(method => MappingProducts.Of(pair, method)), MappingProducts.Of(pair, HandFloors.Name),
         ];
         return products.Select(store.Find).OfType<string>();
     }
@@ -418,11 +421,12 @@ internal sealed class NamesFirstSource : IPairSource
         return slug;
     }
 
-    /// <summary>The words of either text some link of the pair's earlier method files names.</summary>
+    /// <summary>The words of either text some link of the pair's earlier method files names, but a row its floors refuse.</summary>
     private static (HashSet<long> Sources, HashSet<long> Targets) Linked(
         ProductStore store, string pair, IReadOnlyDictionary<string, int> fromIds, IReadOnlyDictionary<string, int> toIds)
     {
         var (sources, targets) = (new HashSet<long>(), new HashSet<long>());
+        var floors = HandFloors.Read(store, pair);
         foreach (var method in Before)
         {
             var product = MappingProducts.Of(pair, method);
@@ -432,7 +436,7 @@ internal sealed class NamesFirstSource : IPairSource
             }
 
             using var reader = store.Open(product, MappingRow.Schema);
-            foreach (var row in reader.Rows().Where(row => !StrongNumberSource.Supporting(row.Source)))
+            foreach (var row in reader.Rows().Where(row => !StrongNumberSource.Supporting(row.Source) && !HandFloors.Refuses(floors, row)))
             {
                 sources.UnionWith(PairLinkFiles.Words(row.From, fromIds).Select(id => (long)id));
                 targets.UnionWith(PairLinkFiles.Words(row.To, toIds).Select(id => (long)id));
