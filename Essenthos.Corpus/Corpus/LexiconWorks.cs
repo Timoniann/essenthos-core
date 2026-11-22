@@ -15,18 +15,22 @@ public static class LexiconWorks
 
     public const string BdbSource = "Brown-Driver-Briggs, Open Scriptures Hebrew Lexicon";
 
+    public const string ThayerSource = "Thayer, A Greek-English Lexicon of the New Testament";
+
     public const string AbbottSmithSource = "Abbott-Smith, A Manual Greek Lexicon of the New Testament";
 
     public const string LsjSource = "Liddell-Scott-Jones, STEPBible TFLSJ";
 
     public static readonly Work Bdb = new("bdb", "bdb", 'H', BdbSource);
 
+    public static readonly Work Thayer = new("thayer", "thayer", 'G', ThayerSource);
+
     public static readonly Work AbbottSmith = new("abbott-smith", "abbott-smith", 'G', AbbottSmithSource);
 
     public static readonly Work Lsj = new("lsj", "stepbible-tflsj", 'G', LsjSource);
 
     /// <summary>In the order their tabs stand on a Strong page, after Strong's own.</summary>
-    public static readonly Work[] All = [Bdb, AbbottSmith, Lsj];
+    public static readonly Work[] All = [Bdb, Thayer, AbbottSmith, Lsj];
 
     public static Work? Find(string id) => Array.Find(All, work => work.Id == id);
 }

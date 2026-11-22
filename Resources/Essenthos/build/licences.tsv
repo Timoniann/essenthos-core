@@ -128,6 +128,7 @@ SynodalStrong	strong	derived	Copyright 1996 Bob Jones University: non-profit use
 SynodalWikisource	text	content	Public Domain	public-domain	text:*	SynodalWikisource/LICENCE.md	-	-
 TextusReceptus	text	content	Public Domain	public-domain	text:TR1550 text:TR1894 dataset:byztxt	TextusReceptus/LICENCE.md	-	parsed/, Robinson's composite of both editions.
 TextusReceptus/scrivener	data	never	Public Domain	public-domain	-	TextusReceptus/LICENCE.md	-	Robinson's plain Scrivener 1894 (byztxt/greektext-scrivener), the answer key the extraction from parsed/ is checked against; never loaded.
+Thayer	lexicon	content	CC0-1.0 (the Every Promise edition); Thayer 1889 and Strong 1890 public domain	public-domain	dataset:thayer	Thayer/LICENCE.md	-	book/*.md only, 5,414 of its 5,521 entries (97 are cards of Strong-style fields, not Thayer, and 10 hold another word's article; neither is read); decoded from an e-Sword module whose own terms are not stated, accepted by the owner 2026-11-22 (TSK-1901).
 TheographicBibleData	data	never	no licence file; reported as CC BY-SA 4.0	share-alike	-	OpenBible/LICENCE.md	-	-
 Tischendorf	text	content	Public Domain	public-domain	text:TISCH	Tischendorf/LICENCE.md	-	-
 TreasuryOfScriptureKnowledge	data	content	Public Domain	public-domain	dataset:tsk	TreasuryOfScriptureKnowledge/LICENCE.md	-	-

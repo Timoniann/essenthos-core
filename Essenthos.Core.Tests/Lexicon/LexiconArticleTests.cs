@@ -136,6 +136,114 @@ public sealed class LexiconArticleTests
         love.Should().EndWith("{\"p\":[{\"t\":\"SYN.\",\"i\":1},\": \",{\"t\":\"φιλία\",\"el\":1}]}]");
     }
 
+    internal const string ThayerFile = """
+        # Thayer's Lexicon — G1 to G224
+
+        [← back to contents](README.md)
+
+        ---
+
+        ### ἀγάπη — agápē
+        `Strong's G26`
+
+        ἀγάπη, (ης, ἡ, a purely Biblical word (Plutarch, sympos. 7, 6, 3).
+
+        1. affection, good-will, love: Joh 15:13; Rom 13:10; Isa 1:2.
+
+        2. plural, ἀγαπαι, love-feasts: Jud 1:12.
+
+        ---
+
+        ### ἅλας — halas
+        `Strong's G217`
+
+        [ἅλα, τό, read by Tdf. in Mat 5:13; see ἅλας.]
+
+        STRONGS NT 217: ἅλαςἅλας, (ατος, τό, salt: Mat 5:13; Mat 5:3-12; Mar 9:50.
+
+        I. properly.
+
+        A. in the New Testament
+
+        1. of food: Luk 14:34.
+
+        a. with the genitive: Col 4:6.
+
+        b. so Heb 5:12 f.
+
+        2. figuratively: Rev 21:1-22:2.
+
+        B. in the Old Testament: Gen 1:1.
+
+        STRONGS NT 217a: ἌλασσαἌλασσα: Act 27:8.
+
+        ---
+
+        ### αἴτιον — aítion
+        `Strong's G158`
+
+        - Original: αἴτιον
+
+        - Definition:
+
+        1. cause, fault
+
+        - Part(s) of speech: Noun Neuter
+
+        ---
+
+        ### ἀγρός
+        `Strong's G68`
+
+        ἅπτω; 1 aorist participle ἅψας; to fasten: Luk 8:16.
+
+        ---
+
+        ### ἄγε
+        `Strong's G34`
+
+        ἄγε, see ἄγω.
+
+        ---
+        """;
+
+    [Fact]
+    public void ThayerGivesEachArticleItsNumberItsSensesAndItsNewTestamentVerses()
+    {
+        var left = new ThayerReader.Left();
+
+        var rows = ThayerReader.Read([ThayerFile], left);
+
+        left.Cards.Should().Equal("G158");
+        left.Extended.Should().Equal("G217");
+        left.Misfiled.Should().Equal("G68");
+        rows.Select(r => (r.Dictionary, r.StrongNumber, r.Ordinal, r.Entry, r.Headword)).Should().Equal(
+            ("thayer", "G26", 1, "G26", "ἀγάπη"), ("thayer", "G34", 1, "G34", "ἄγε"), ("thayer", "G217", 1, "G217", "ἅλας"));
+        rows.Should().OnlyContain(r => r.Source.StartsWith(LexiconWorks.ThayerSource));
+        rows[0].Body.Should().Be(
+            "[{\"p\":[{\"t\":\"ἀγάπη\",\"el\":1},\", (\",{\"t\":\"ης, ἡ\",\"el\":1},\", a purely Biblical word (Plutarch, sympos. 7, 6, 3).\"]}," +
+            "{\"p\":[{\"t\":\"1.\",\"b\":1},\" affection, good-will, love: \",{\"t\":\"Joh 15:13\",\"r\":[43,15,13]},\"; \"," +
+            "{\"t\":\"Rom 13:10\",\"r\":[45,13,10]},\"; Isa 1:2.\"],\"d\":1}," +
+            "{\"p\":[{\"t\":\"2.\",\"b\":1},\" plural, \",{\"t\":\"ἀγαπαι\",\"el\":1},\", love-feasts: \",{\"t\":\"Jud 1:12\",\"r\":[65,1,12]},\".\"],\"d\":1}]");
+    }
+
+    [Fact]
+    public void ThayerDropsTheModulesLabelAndDoubledHeadwordAndNestsSensesByTheirKind()
+    {
+        var body = ThayerReader.Read([ThayerFile]).Single(r => r.StrongNumber == "G217").Body;
+        var blocks = JsonDocument.Parse(body).RootElement.EnumerateArray().ToList();
+
+        body.Should().NotContain("STRONGS").And.NotContain("ἅλαςἅλας");
+        body.Should().Contain("ἅλα").And.Contain("salt: ").And.NotContain("Ἄλασσα").And.NotContain("Act 27:8");
+        body.Should().Contain("{\"t\":\"Mat 5:3-12\",\"r\":[40,5,3,5,12]}").And.Contain("{\"t\":\"Rev 21:1-22:2\",\"r\":[66,21,1,22,2]}");
+        body.Should().Contain("{\"t\":\"Heb 5:12\",\"r\":[58,5,12]}").And.Contain("Gen 1:1");
+        body.Should().NotContain("[1,1,1]");
+        // I. A. 1. a. nest one below the other; 2. comes back to the depth of 1.; B. to the depth of A.
+        blocks.Select(b => (b.GetProperty("p")[0].ValueKind == JsonValueKind.Object ? b.GetProperty("p")[0].GetProperty("t").GetString() : null,
+                b.TryGetProperty("d", out var depth) ? depth.GetInt32() : 0))
+            .Skip(2).Should().Equal(("I.", 1), ("A.", 2), ("1.", 3), ("a.", 4), ("b.", 4), ("2.", 3), ("B.", 2));
+    }
+
     private static string Row(string number, string disambiguated, string greek, string meaning) =>
         string.Join('\t', number, disambiguated + " =", disambiguated, greek, "x", "G:N", "gloss", meaning);
 
@@ -192,7 +300,9 @@ public sealed class LexiconArticleCorpusTests
     public void EveryLexiconReadsWholeAndFilesTheCheckedNumbers()
     {
         var unread = new Dictionary<string, int>();
+        var left = new ThayerReader.Left();
         var bdb = BdbReader.Read(Resources, unread);
+        var thayer = ThayerReader.Read(Resources, left);
         var abbott = AbbottSmithReader.Read(Resources, unread);
         var lsj = LsjReader.Read(Resources, unread);
 
@@ -202,16 +312,21 @@ public sealed class LexiconArticleCorpusTests
         bdb.Should().Contain(r => r.StrongNumber == "H7965");
         foreach (var number in new[] { "G26", "G3056", "G5485" })
         {
+            thayer.Should().Contain(r => r.StrongNumber == number);
             abbott.Should().Contain(r => r.StrongNumber == number);
             lsj.Should().Contain(r => r.StrongNumber == number);
         }
 
-        foreach (var row in bdb.Concat(abbott).Concat(lsj))
+        thayer.Should().HaveCount(5521 - 97 - 10);
+        left.Cards.Should().HaveCount(97).And.Contain("G149");
+        left.Misfiled.Should().BeEquivalentTo(ThayerReader.Misfiled);
+        thayer.Should().OnlyContain(r => !r.Body.Contains("STRONGS NT"));
+        foreach (var row in bdb.Concat(thayer).Concat(abbott).Concat(lsj))
         {
             JsonDocument.Parse(row.Body).RootElement.GetArrayLength().Should().BePositive();
         }
 
-        bdb.Concat(abbott).Concat(lsj).GroupBy(r => (r.Dictionary, r.StrongNumber, r.Ordinal)).Should().OnlyContain(g => g.Count() == 1);
+        bdb.Concat(thayer).Concat(abbott).Concat(lsj).GroupBy(r => (r.Dictionary, r.StrongNumber, r.Ordinal)).Should().OnlyContain(g => g.Count() == 1);
     }
 }
 
@@ -226,6 +341,7 @@ public sealed class LexiconEndpointTests : IDisposable
         _db.LexiconArticles.ExecuteDelete();
         _db.LexiconArticles.AddRange(
             Article("lsj", "G26", 1, "LSJ on love"),
+            Article("thayer", "G26", 1, "Thayer on love"),
             Article("abbott-smith", "G26", 1, "Abbott-Smith on love"),
             Article("bdb", "H1254", 2, "be fat"),
             Article("bdb", "H1254", 1, "shape"));
@@ -243,9 +359,9 @@ public sealed class LexiconEndpointTests : IDisposable
     {
         var greek = await LexiconEndpoints.Articles(_db, "G26", default);
 
-        greek.Dictionaries.Select(d => d.Id).Should().Equal("abbott-smith", "lsj");
-        greek.Dictionaries[1].Licence.Should().Be("CC BY-SA 4.0");
-        greek.Articles.Select(a => a.Body.GetRawText()).Should().Equal("[{\"p\":[\"Abbott-Smith on love\"]}]", "[{\"p\":[\"LSJ on love\"]}]");
+        greek.Dictionaries.Select(d => d.Id).Should().Equal("thayer", "abbott-smith", "lsj");
+        greek.Dictionaries[2].Licence.Should().Be("CC BY-SA 4.0");
+        greek.Articles.Select(a => a.Body.GetRawText()).Should().Equal("[{\"p\":[\"Thayer on love\"]}]", "[{\"p\":[\"Abbott-Smith on love\"]}]", "[{\"p\":[\"LSJ on love\"]}]");
 
         var hebrew = await LexiconEndpoints.Articles(_db, "H1254", default);
         hebrew.Articles.Select(a => (a.Ordinal, a.Status)).Should().Equal((1, "base"), (2, "base"));
@@ -288,22 +404,24 @@ public sealed class LexiconArticleTableTests(WitnessDatabase database) : IDispos
             "<entry id=\"a.dl.ad\"><w>אֱלֹהִים</w> <def>gods</def><status p=\"43\">ref</status></entry></section></part></lexicon>");
         Write(BdbReader.Index,
             "<index xmlns=\"http://openscriptures.github.com/morphhb/namespace\"><part><entry id=\"arn\"><xref bdb=\"a.dl.ad\" strong=\"430\"/></entry></part></index>");
+        Write($"{ThayerReader.Book}/01-G1-G224.md", LexiconArticleTests.ThayerFile);
         Write(AbbottSmithReader.Lexicon,
             "<TEI xmlns=\"http://www.crosswire.org/2013/TEIOSIS/namespace\"><text><body><entry n=\"ἀγάπη|G26\"><form><orth>ἀγάπη</orth></form> " +
             "<sense><gloss>love</gloss></sense></entry></body></text></TEI>");
         Write(LsjReader.Lexicon, "header\n" + string.Join('\t', "G0026", "G0026 =", "G0026", "ἀγάπη", "agapē", "G:N-F", "love", "<b> ἀγάπη</b>, love") + "\n");
 
         var store = new Essenthos.Core.Products.ProductStore(_resources);
-        TableProducts.Write(store, new HashSet<string> { "lexicon_article" }, force: false).Single().Rows.Should().Be(3);
+        TableProducts.Write(store, new HashSet<string> { "lexicon_article" }, force: false).Single().Rows.Should().Be(6);
         await using var db = database.NewContext();
         await db.LexiconArticles.ExecuteDeleteAsync();
 
         var loaded = await CarriedTables.Load(database.NewConnection().ConnectionString, store, new HashSet<string> { "lexicon_article" }, default);
 
-        loaded.Single().Loaded.Should().Be(3);
+        loaded.Single().Loaded.Should().Be(6);
         var rows = await db.LexiconArticles.OrderBy(a => a.Id).ToListAsync();
         rows.Select(a => (a.Dictionary, a.StrongNumber, a.Ordinal, a.Headword, a.Status)).Should().Equal(
-            ("bdb", "H430", 1, "אֱלֹהִים", "ref"), ("abbott-smith", "G26", 1, "ἀγάπη", null), ("lsj", "G26", 1, "ἀγάπη", null));
+            ("bdb", "H430", 1, "אֱלֹהִים", "ref"), ("thayer", "G26", 1, "ἀγάπη", null), ("thayer", "G34", 1, "ἄγε", null),
+            ("thayer", "G217", 1, "ἅλας", null), ("abbott-smith", "G26", 1, "ἀγάπη", null), ("lsj", "G26", 1, "ἀγάπη", null));
         rows[0].Body.Should().Be("[{\"p\":[{\"t\":\"אֱלֹהִים\",\"he\":1},\" \",{\"t\":\"gods\",\"b\":1}]}]");
         await db.LexiconArticles.ExecuteDeleteAsync();
     }

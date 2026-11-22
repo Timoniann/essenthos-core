@@ -111,7 +111,7 @@ tables/geez_lexicon_entry	build	tables	Dillmann	geez_lexicon_entry	all
 tables/geez_lexicon_rendering	build	tables	Dillmann Essenthos/geez/dillmann-renderings	geez_lexicon_rendering	all
 tables/geez_word_gloss	build	tables	Essenthos/geez/glosses Essenthos/texts/GEEZ81/words Essenthos/texts/GRCBRENT/words Essenthos/texts/NESTLE1904/words Essenthos/texts/word-id-collisions	geez_word_gloss	all
 tables/commentary_entry	build	tables	Commentaries/* Essenthos/texts/RUSV/words Essenthos/texts/RUSV/frame Essenthos/texts/RUSV/text	commentary_entry	all
-tables/lexicon_article	build	tables	BrownDriverBriggs/* AbbottSmith/* STEPBibleLexicons/*	lexicon_article	all
+tables/lexicon_article	build	tables	BrownDriverBriggs/* Thayer/* AbbottSmith/* STEPBibleLexicons/*	lexicon_article	all
 tables/word_group	build	tables	etcbc Essenthos/texts/BHSA/words Essenthos/texts/BHSA/books Essenthos/texts/word-id-collisions	word_group	all
 tables/word_group_word	build	tables	etcbc Essenthos/texts/BHSA/words Essenthos/texts/BHSA/books Essenthos/texts/word-id-collisions	word_group_word	all
 tables/word_parsing	build	tables	MorphGnt Macula MaculaHebrew Essenthos/texts/NESTLE1904/words Essenthos/texts/BHSA/words Essenthos/texts/word-id-collisions	word_parsing	all
