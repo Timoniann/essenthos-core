@@ -26,3 +26,4 @@ own	kind	before	after	why
 11.16:28.111	divide	ወሰከበ	11.16:28h	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28h, which is Dillmann's 11
 9.31:1	line	ወእምዝ፡ እምድኅረ፡ ሞተ፡ ሳኦል	10.1:1	The last line of 1 Samuel (LIT2697Sam.xml) is numbered 1 and is the first verse of 2 Samuel, which the next file (LIT2698Sam.xml) lacks: it opens at 1:2
 40.7:24	line	እስመ፡ ከመ፡ መኰንን፡ ይሜህሮሙ	40.7:29	Matthew 7 runs 1 to 28 and ends on a line numbered 24, which is the chapter's last verse
+24.22:21.1	drop	21	\N	the source line prints the verse's own number "21" at its head (Beta maṣāḥǝft LIT1685, l n=21), which is not a word of the verse

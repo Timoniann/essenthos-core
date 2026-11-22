@@ -1,0 +1,5 @@
+# product    Essenthos/texts/IRVTAM/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes
+own	kind	before	after	why
+25.1:1.1	drop	2	\N	the file prints "2" at the head of the verse, a stray number from its digitisation (Door43 ta_irv), not a word of the verse

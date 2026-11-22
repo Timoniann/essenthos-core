@@ -230,6 +230,33 @@ public static partial class VerseWords
     /// </summary>
     public static bool OpensBeforeItsStatedAddress(string verseText)
     {
+        var (_, last, number) = Addresses(verseText);
+        return last > 0 && number > 1 && StripMarkup(verseText[..last]).Length > 0;
+    }
+
+    /// <summary>
+    /// Whether words stand before the first address the verse prints.
+    ///
+    /// <para>
+    /// bible4u writes an address only where the edition numbers what follows otherwise than the file
+    /// does, so the words before the first one are the edition's verse of the file's own number. The
+    /// Synodal's Psalm 9:1 prints its superscription and then "(9-2)": the superscription is its 9:1,
+    /// and only Psalm 12:1 on prints "(11-1)" over it because there the numbers part. The same holds in
+    /// the middle of a line: the Ukrainian's 1 Samuel 20:42 runs into "(21-1)", its 3 John 1:14 into
+    /// "(1-15)". Measured over the two files: 73 such verses, 68 of them a psalm's first verse whose
+    /// words before the address are its superscription.
+    /// </para>
+    /// </summary>
+    public static bool WordsBeforeItsFirstAddress(string verseText)
+    {
+        var (first, _, _) = Addresses(verseText);
+        return first > 0 && StripMarkup(verseText[..first]).Length > 0;
+    }
+
+    /// <summary>Where the first and the last two-part address stand in the verse, and the verse the last one names.</summary>
+    private static (int First, int Last, int Number) Addresses(string verseText)
+    {
+        var first = -1;
         var last = -1;
         var number = 0;
 
@@ -242,11 +269,12 @@ public static partial class VerseWords
                 continue;
             }
 
+            first = first < 0 ? match.Index : first;
             last = match.Index;
             number = int.Parse(marker[(separator + 1)..^1], CultureInfo.InvariantCulture);
         }
 
-        return last > 0 && number > 1 && StripMarkup(verseText[..last]).Length > 0;
+        return (first, last, number);
     }
 
     /// <summary>

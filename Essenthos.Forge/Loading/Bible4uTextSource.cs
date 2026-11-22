@@ -171,6 +171,7 @@ internal static class Bible4uTextSource
                         chapter.CNumber,
                         chapter.Verses
                             .Select(verse => Draft(
+                                chapter.CNumber,
                                 verse.VNumber,
                                 repairs?.Text(ordinal, chapter.CNumber, verse.VNumber, verse.Text) ?? verse.Text,
                                 ordinal,
@@ -208,8 +209,11 @@ internal static class Bible4uTextSource
     /// place either Slavic file records the numbering its own readers hold — bible4u renumbered
     /// both of them to the King James — so it becomes the verse's stated address, and a pane of the
     /// Synodal can then say its Psalm 119 is printed as 118 the way Brenton's pane already does.
+    /// Words standing before the first address are the edition's verse of the file's own number,
+    /// which the file leaves unmarked (<see cref="VerseWords.WordsBeforeItsFirstAddress"/>), so that
+    /// number is stated first: the Synodal's Psalm 9:1 holds its 9:1 and 9:2.
     /// </summary>
-    private static VerseDraft Draft(int number, string text, int ordinal, bool tagged) =>
+    private static VerseDraft Draft(int chapter, int number, string text, int ordinal, bool tagged) =>
         new(number, VerseWords.Parse(text, tagged)
             .Select(word => new WordDraft(
                 word.Word,
@@ -219,14 +223,17 @@ internal static class Bible4uTextSource
                 SuppliedSpan: word.SuppliedSpan))
             .ToList())
         {
-            Stated =
-            [
-                .. VerseWords.StatedAddresses(text)
-                    .Select(address => new StatedNumberDraft(address.Chapter, address.Number)),
-            ],
+            Stated = Stated(chapter, number, text),
             MarksASuperscription = VerseWords.MarksASuperscription(text),
             OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(text),
         };
+
+    private static List<StatedNumberDraft> Stated(int chapter, int number, string text)
+    {
+        var printed = VerseWords.StatedAddresses(text).Select(address => new StatedNumberDraft(address.Chapter, address.Number)).ToList();
+        var own = new StatedNumberDraft(chapter, number);
+        return VerseWords.WordsBeforeItsFirstAddress(text) && printed[0] != own ? [own, .. printed] : printed;
+    }
 
     /// <summary>
     /// The files that print Strong tags inside their text (<see cref="VerseWords.Parse"/>). Ohienko's

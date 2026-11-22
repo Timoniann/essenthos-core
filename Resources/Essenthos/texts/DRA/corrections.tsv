@@ -1,0 +1,22 @@
+# product    Essenthos/texts/DRA/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes
+own	kind	before	after	why
+19.7:1.20	drop	[2	\N	the title ends with the edition's cross-reference "[2 Kings 16]", which is a note on the title, not a word of the psalm
+19.7:1.21	drop	Kings	\N	the title ends with the edition's cross-reference "[2 Kings 16]", which is a note on the title, not a word of the psalm
+19.7:1.22	drop	16	\N	the title ends with the edition's cross-reference "[2 Kings 16]", which is a note on the title, not a word of the psalm
+19.17:1.42	drop	[2	\N	the title ends with the edition's cross-reference "[2 Kings 22]", which is a note on the title, not a word of the psalm
+19.17:1.43	drop	Kings	\N	the title ends with the edition's cross-reference "[2 Kings 22]", which is a note on the title, not a word of the psalm
+19.17:1.44	drop	22	\N	the title ends with the edition's cross-reference "[2 Kings 22]", which is a note on the title, not a word of the psalm
+19.33:1.18	drop	[1	\N	the title ends with the edition's cross-reference "[1 Kings 21]", which is a note on the title, not a word of the psalm
+19.33:1.19	drop	Kings	\N	the title ends with the edition's cross-reference "[1 Kings 21]", which is a note on the title, not a word of the psalm
+19.33:1.20	drop	21	\N	the title ends with the edition's cross-reference "[1 Kings 21]", which is a note on the title, not a word of the psalm
+19.51:2.16	drop	[1	\N	the title ends with the edition's cross-reference "[1 Kings 22]", which is a note on the title, not a word of the psalm
+19.51:2.17	drop	Kings	\N	the title ends with the edition's cross-reference "[1 Kings 22]", which is a note on the title, not a word of the psalm
+19.51:2.18	drop	22	\N	the title ends with the edition's cross-reference "[1 Kings 22]", which is a note on the title, not a word of the psalm
+19.56:1.22	drop	[1	\N	the title ends with the edition's cross-reference "[1 Kings 24]", which is a note on the title, not a word of the psalm
+19.56:1.23	drop	Kings	\N	the title ends with the edition's cross-reference "[1 Kings 24]", which is a note on the title, not a word of the psalm
+19.56:1.24	drop	24	\N	the title ends with the edition's cross-reference "[1 Kings 24]", which is a note on the title, not a word of the psalm
+19.141:1.13	drop	[1	\N	the title ends with the edition's cross-reference "[1 Kings 24]", which is a note on the title, not a word of the psalm
+19.141:1.14	drop	Kings	\N	the title ends with the edition's cross-reference "[1 Kings 24]", which is a note on the title, not a word of the psalm
+19.141:1.15	drop	24	\N	the title ends with the edition's cross-reference "[1 Kings 24]", which is a note on the title, not a word of the psalm

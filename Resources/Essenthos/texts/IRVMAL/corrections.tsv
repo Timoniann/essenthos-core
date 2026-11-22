@@ -1,0 +1,18 @@
+# product    Essenthos/texts/IRVMAL/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes
+own	kind	before	after	why
+2.6:28.1	drop	3	\N	the Malayalam IRV's file prints "3" at the head of the verse, a stray number from its digitisation (Door43 ml_irv), not a word of the verse
+6.6:26.28	drop	27	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.29	drop	യഹോവ	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.30	drop	യോശുവയോടുകൂടെ	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.31	drop	ഉണ്ടായിരുന്നു	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.32	drop	അവന്റെ	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.33	drop	കീർത്തി	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.34	drop	ദേശത്ത്	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.35	drop	എല്ലാടവും	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+6.6:26.36	drop	പരന്നു	\N	the file runs verse 27 on at the end of verse 26 under a printed "27" and then prints verse 27 again under its own number (Door43 ml_irv); the number and the repeated verse go
+9.20:1.1	drop	25	\N	the file prints "25" at the head of the verse, a stray number from its digitisation (Door43 ml_irv), not a word of the verse
+9.30:1.1	drop	22	\N	the file prints "22" at the head of the verse, a stray number from its digitisation (Door43 ml_irv), not a word of the verse
+11.6:26.1	drop	1	\N	the file prints "1" at the head of the verse, a stray number from its digitisation (Door43 ml_irv), not a word of the verse
+19.46:1.11	drop	9	\N	the file prints "9" between the superscription and the verse, a stray number from its digitisation (Door43 ml_irv), not a word of the psalm

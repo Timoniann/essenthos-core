@@ -1,0 +1,6 @@
+# Chapters the site once served under one book that are held under another now. Their addresses were
+# crawled and linked while they stood, so each leads, with its verse, to the same chapter where it is held.
+# chapters: the first and last chapter of the book that moved; to: the book they are held in; first: the
+# chapter the first of them is there.
+book	chapters	to	first	why
+ezra	11-23	nehemiah	1	Brenton's English held Nehemiah a second time, as the 2 Esdras 11-23 of eBible's file, which stood as Ezra 11-23; it is held once, as Nehemiah 1-13 (PRB-1946)

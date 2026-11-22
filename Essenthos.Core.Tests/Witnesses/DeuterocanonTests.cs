@@ -287,7 +287,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
         var greek = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, ShippedCorrections.Brenton);
 
         read.Brenton.Books.Should().HaveCount(53);
-        read.Brenton.Books.Sum(Deuterocanon.Verses).Should().Be(29_005);
+        read.Brenton.Books.Sum(Deuterocanon.Verses).Should().Be(28_616);
         read.Brenton.Books.Select(book => book.CanonicalOrdinal).Should()
             .Contain([FirstMaccabees, SecondMaccabees, ThirdMaccabees, FourthMaccabees]);
 
@@ -404,6 +404,23 @@ public class MaccabeesFrameTests(Deuterocanon read) : IClassFixture<Deuterocanon
 
         english.Resolve(nehemiah, 4, 1)[0].Should().Be(greek.Resolve(nehemiah, 3, 33)[0]);
         english.Resolve(nehemiah, 9, 38)[0].Should().Be(greek.Resolve(nehemiah, 10, 1)[0]);
+    }
+
+    /// <summary>
+    /// eBible's file prints 2 Esdras whole under EZR and Nehemiah again under NEH; Nehemiah is held once,
+    /// so Ezra ends at its tenth chapter, as his Greek's does (PRB-1946).
+    /// </summary>
+    [Fact]
+    public void BrentonsNehemiahIsHeldOnce()
+    {
+        const int ezra = 15;
+        const int nehemiah = 16;
+
+        read.Brenton.Books.Single(book => book.CanonicalOrdinal == ezra).Chapters.Select(chapter => chapter.Number)
+            .Should().Equal(Enumerable.Range(1, 10));
+        var held = read.Brenton.Books.Single(book => book.CanonicalOrdinal == nehemiah);
+        held.Chapters.Should().HaveCount(13);
+        string.Join(' ', held.Chapters[0].Verses[0].Words.Select(word => word.Surface)).Should().StartWith("The words of Neemias");
     }
 
     [Fact]
