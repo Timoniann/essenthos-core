@@ -259,6 +259,46 @@ public sealed class NamesProjectionTests : IDisposable
     }
 
     [Fact]
+    public void AWordNeverANameThatTheTextNumbersWithTheRepeatedNameDoesNotKeepThePairingInOrderUncertain()
+    {
+        var store = Verse(
+            ["Solomon| |G4672", "begat| |G1080", "the| |G4497", "Rehoboam|; |G4497", "and", "Rehoboam| |G4497", "begat| |G1080"],
+            ["שְׁלֹמֹה", "הוֹלִיד", "רְחַבְעָם", "רְחַבְעָם", "הוֹלִיד"],
+            [Strong(1, $"{Key(3)} {Key(4)}", Key(3), 0.7), Strong(2, Key(6), Key(4), 0.7)],
+            [Settled(3, "rehoboam", 0.96), Settled(4, "rehoboam", 0.96)]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(4), "rehoboam"), (Key(6), "rehoboam")],
+            "the article numbered with the first Rehoboam (the Reina-Valera's 'á Roboam') takes no name, so both Rehoboams name him either way");
+        names.Names.Should().OnlyContain(n => Math.Abs(n.Confidence!.Value - 0.9 * 0.96) < 1e-9);
+    }
+
+    [Fact]
+    public void ALinkSettledByAFaintClaimIsAsSureAsTheSurestClaimOfTheSameWords()
+    {
+        var store = Corpus();
+        using (var writer = store.Create(MappingProducts.Of("ENG-BHSA", MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "test", []))
+        {
+            writer.WriteAll([
+                Link(3, "2.3:4.5", "2.3:4.3", 0.4) with { Method = MappingMethods.Evidentia },
+                Link(5, "2.3:4.8", "2.3:4.5", 0.4) with { Method = MappingMethods.Evidentia },
+                Link(5, "2.3:4.8", "2.3:4.5", 0.98) with { Method = MappingMethods.Composed, Settled = false },
+            ]);
+        }
+
+        store.Save();
+
+        var names = new NamesProjection(new ProductStore(_resources)).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record, n.Link)).Should().BeEquivalentTo([(Key(8), "aaron", MappingMethods.Composed)],
+            "the aligner's 0.98 for the same words stands behind the verdict that settled Aaron's link");
+        names.Names.Single().Confidence.Should().BeApproximately(0.98, 1e-9);
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(5), "moses"), "below-the-floor"),
+            "a verdict at 0.4 that nothing else states stays below the floor");
+    }
+
+    [Fact]
     public void APersonOfALinkNamingSeveralGoesOnlyToAWordAnotherLinkJoinsToHim()
     {
         var store = Verse(

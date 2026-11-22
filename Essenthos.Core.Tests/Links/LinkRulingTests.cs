@@ -100,6 +100,29 @@ public sealed class LinkRulingTests : IDisposable
         }
     }
 
+    /// <summary>
+    /// Clear Bible's hand alignment of the Hausa joins Matthew 1:7's Ἀβιά to Rehobowam as well as Abiya, and 1:15's first
+    /// Ματθάν to both Mattans and Ἰακώβ to the first: the groups are refused and each name is pinned to its own word.
+    /// </summary>
+    [Fact]
+    public void TheHausaMatthewOneNamesClearBibleSetsOneNameOffArePinnedToTheirOwnWords()
+    {
+        var rulings = Rulings(new ProductStore(Path.Combine(Repository(), "Resources")), "OHCB-NESTLE1904")
+            .Select(ruling => (ruling.Action, ruling.From, ruling.To));
+
+        rulings.Should().BeEquivalentTo(new[]
+        {
+            (RulingRow.Refuse, "40.1:7.4 40.1:7.8", "40.1:7.10"),
+            (RulingRow.Refuse, "40.1:7.5 40.1:7.9", "40.1:7.11"),
+            (RulingRow.Accept, "40.1:7.8", "40.1:7.10"),
+            (RulingRow.Accept, "40.1:7.9", "40.1:7.11"),
+            (RulingRow.Refuse, "40.1:15.8 40.1:15.12", "40.1:15.15"),
+            (RulingRow.Accept, "40.1:15.8", "40.1:15.10"),
+            (RulingRow.Accept, "40.1:15.9", "40.1:15.11"),
+            (RulingRow.Accept, "40.1:15.12", "40.1:15.15"),
+        });
+    }
+
     [Fact]
     public void ACompositionLeavesOutOnlyTheWordPairsItsPairsRulingsRefuseToTheAligner()
     {

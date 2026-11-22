@@ -18,7 +18,7 @@ namespace Essenthos.Core.Names;
 internal sealed partial class NamesProjection
 {
     /// <summary>Raised with any change to what the projection writes or how; a product made by another version is made again.</summary>
-    public const string Version = "5";
+    public const string Version = "6";
 
     public const string VersionNote = "names-version";
 
@@ -606,15 +606,38 @@ internal sealed partial class NamesProjection
         return new Projection(text, names, linked, refused, linkedTo, inputs);
     }
 
-    /// <summary>The links of a pair names are carried over: its final's settled claims, or every row of the method files named.</summary>
+    /// <summary>
+    /// The links of a pair names are carried over: each link of its final once, as sure as the claim of it that stands furthest
+    /// above its method's floor (every claim of a link names the same words, so an EVIDENTIA verdict settling a link at its
+    /// kind's 0.4 does not make the aligner's 0.98 for the same words worth less); or every row of the method files named.
+    /// </summary>
     private IEnumerable<(string From, string To, double? Confidence, string Method)> Links(string pair, IReadOnlyList<string>? methods)
     {
         if (methods is null)
         {
             using var final = Store.Open(MappingProducts.Of(pair, MappingProducts.Final), FinalRow.Schema);
-            foreach (var row in final.Rows().Where(row => row.Settled))
+            FinalRow? link = null;
+            (double? Confidence, string Method) surest = default;
+            foreach (var row in final.Rows())
             {
-                yield return (row.From, row.To, row.Confidence, row.Method);
+                if (row.Settled)
+                {
+                    if (link is not null)
+                    {
+                        yield return (link.From, link.To, surest.Confidence, surest.Method);
+                    }
+
+                    (link, surest) = (row, (row.Confidence, row.Method));
+                }
+                else if (link is not null && row.Id == link.Id && AboveTheFloor(row.Confidence, row.Method) > AboveTheFloor(surest.Confidence, surest.Method))
+                {
+                    surest = (row.Confidence, row.Method);
+                }
+            }
+
+            if (link is not null)
+            {
+                yield return (link.From, link.To, surest.Confidence, surest.Method);
             }
 
             yield break;
@@ -630,6 +653,8 @@ internal sealed partial class NamesProjection
         }
     }
 
+    private double AboveTheFloor(double? confidence, string method) => (confidence ?? 1.0) - Rules.FloorOver(method);
+
     private static double Worth(double link, SettledName name) => link * (name.Confidence ?? 1.0);
 
     /// <summary>
@@ -637,6 +662,8 @@ internal sealed partial class NamesProjection
     /// less than a number written once, because the occurrences could be paired the other way round. Where every word of the
     /// verse tagged with the number takes the same records, either pairing names the same people, so the name over such a
     /// link is worth what it is over an unambiguous match (Matthew 1:2: <em>Abraham begat Isaac; and Isaac begat Jacob</em>).
+    /// A word that is never a name takes no records and is not counted, though the text numbers it with the name (the
+    /// Reina-Valera's <em>á Roboam</em>).
     /// </summary>
     private static void Unpaired(Dictionary<(string Own, string Record), Candidate> candidates, IReadOnlyDictionary<string, Word> words)
     {
@@ -654,7 +681,7 @@ internal sealed partial class NamesProjection
         var recordsOf = candidates.Keys.GroupBy(k => k.Own, StringComparer.Ordinal)
             .ToDictionary(g => g.Key, g => g.Select(k => k.Record).Order(StringComparer.Ordinal).ToList(), StringComparer.Ordinal);
         var verses = paired.Select(k => words[k.Own].Verse).ToHashSet();
-        var tagged = words.Values.Where(w => w.Strong is not null && verses.Contains(w.Verse))
+        var tagged = words.Values.Where(w => w.Strong is not null && !w.NeverAName && verses.Contains(w.Verse))
             .GroupBy(w => (w.Verse, w.Strong!))
             .ToDictionary(g => g.Key, g => g.Select(w => w.Key.Own).ToList());
         foreach (var key in paired)
