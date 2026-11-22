@@ -496,7 +496,7 @@ internal sealed class PageLoader(
             : (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken)).GetValueOrDefault(entity.Id);
         // The structured line where it is phrased in the page's language — every language on an English
         // page, Ukrainian, German and Spanish on theirs — and the source's English line on English pages only.
-        var descriptor = await Descriptors.Of(db, entity.Slug, language.Corpus, cancellationToken);
+        var descriptor = await RecordDescriptors.Of(db, entity.Slug, language.Corpus, cancellationToken);
         if (descriptor is not null && !language.IsEnglish && !PhrasedLanguages.Contains(descriptor.Language))
         {
             descriptor = null;

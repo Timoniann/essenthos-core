@@ -426,6 +426,9 @@ public class AppDbContext : DbContext
     /// <summary>Each record as a chapter's context shows it in each pair of languages, made at build.</summary>
     public DbSet<ContextLine> ContextLines { get; set; } = null!;
 
+    /// <summary>What the corpus says each record is in each pair of languages, whole, made at build.</summary>
+    public DbSet<RecordDescriptor> RecordDescriptors { get; set; } = null!;
+
     /// <summary>What each record's and Strong number's page is written from, per site language, made at build.</summary>
     public DbSet<PageDocument> PageDocuments { get; set; } = null!;
 
@@ -2035,6 +2038,15 @@ public class AppDbContext : DbContext
                 "One record as a chapter's context shows it in a language of words and a language of names: its local name, "
                 + "our own line, and the line's claims with the names they point at, as one JSON document. Records by slug. "
                 + "Made by the serving build (context/lines/{prose})."));
+        });
+
+        modelBuilder.Entity<RecordDescriptor>(entity =>
+        {
+            entity.Property(d => d.Body).UseCompressionMethod("lz4");
+            entity.ToTable("record_descriptor", t => t.HasComment(
+                "What the corpus says each record is in a language of words and a language of names, as the whole descriptor "
+                + "JSON a record page, a list of practitioners or a place's distinguisher reads; no body where nothing is said. "
+                + "Records by slug. Made by the serving build (record-descriptors/{prose})."));
         });
 
         modelBuilder.Entity<PageDocument>(entity =>

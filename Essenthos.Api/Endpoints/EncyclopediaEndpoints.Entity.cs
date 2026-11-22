@@ -345,7 +345,7 @@ internal static partial class EncyclopediaEndpoints
         // The record's own line and the people's it is related to, in one reading, so a row says who
         // each one is as their own page does, in the reader's language. A people's, a place's or a
         // title's line is not read here.
-        var described = await Descriptors.Of(
+        var described = await RecordDescriptors.Of(
             db,
             [entity.Slug, .. related.Where(r => r.Kind == EnumSpelling.Of(EntityKind.Person)).Select(r => r.Slug)],
             words,

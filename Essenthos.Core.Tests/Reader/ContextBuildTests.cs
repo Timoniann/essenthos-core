@@ -92,7 +92,7 @@ public sealed class ContextBuildTests : IDisposable
 
         var store = new ProductStore(_root);
         var first = await Run(store);
-        first.Made.Should().Be(1 + FamilyDocuments.ProseLanguages.Length, "the chapters and the lines of every language of words");
+        first.Made.Should().Be(1 + 2 * FamilyDocuments.ProseLanguages.Length, "the chapters, and the lines and the descriptors of every language of words");
         first.Chapters.Should().Be(1);
 
         var open = new TextEntry(english.Id, english.Slug, [Genesis], true);

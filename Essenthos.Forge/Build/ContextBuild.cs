@@ -34,6 +34,16 @@ internal sealed record ContextLineRow(string Names, string Slug, string Body)
         .Reads(row => new ContextLineRow(row.Text(0), row.Text(1), row.Text(2)));
 }
 
+/// <summary>One record's whole descriptor in one language of names (<see cref="RecordDescriptors"/>), in the product's language of words; no body where nothing is said.</summary>
+internal sealed record RecordDescriptorRow(string Names, string Slug, string? Body)
+{
+    public static readonly ProductSchema<RecordDescriptorRow> Schema = new ProductSchema<RecordDescriptorRow>()
+        .Text("names", r => r.Names)
+        .Text("slug", r => r.Slug)
+        .OptionalText("body", r => r.Body)
+        .Reads(row => new RecordDescriptorRow(row.Text(0), row.Text(1), row.TextOrNull(2)));
+}
+
 /// <summary>What a context run did: the products made, the rows the tables took, and the largest chapter.</summary>
 internal sealed record ContextOutcome(int Made, long Rows, int Chapters, int Lines, long LargestGzip, string Largest, TimeSpan Elapsed);
 
@@ -41,7 +51,9 @@ internal sealed record ContextOutcome(int Made, long Rows, int Chapters, int Lin
 /// The chapter context as the serving build stores it (TSK-1669), products of the serving stage (<c>build/products</c>, maker
 /// <c>serve</c>): <c>context/chapters</c> holds every canonical chapter's skeleton (<see cref="ChapterSkeletons"/>), loaded as
 /// <c>context_chapter</c>; <c>context/lines/{prose}</c> holds every record's line in every language of names the corpus holds
-/// names in and that language of words (<see cref="ContextLines"/>), loaded as <c>context_line</c>. A product is made again
+/// names in and that language of words (<see cref="ContextLines"/>), loaded as <c>context_line</c>; <c>record-descriptors/{prose}</c>
+/// holds the whole descriptors those lines were cut from (<see cref="RecordDescriptors"/>), loaded as <c>record_descriptor</c>.
+/// A product is made again
 /// where its inputs or its composer's version moved; a table that does not hold the rows of a current product (a fresh
 /// database) takes them from the product, and nothing is composed.
 /// </summary>
@@ -50,6 +62,8 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
     public const string ChaptersProduct = "context/chapters";
 
     public static string LinesProduct(string prose) => $"context/lines/{prose}";
+
+    public static string DescriptorsProduct(string prose) => $"record-descriptors/{prose}";
 
     private const string Producer = "forge context";
 
@@ -105,13 +119,28 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
             made++;
         }
 
+        foreach (var prose in FamilyDocuments.ProseLanguages)
+        {
+            foreach (var language in names)
+            {
+                if (RecordDescriptors.Key(prose, language) != (prose, language))
+                {
+                    throw new InvalidOperationException(
+                        $"The descriptors of words {prose} and names {language} would be read under {RecordDescriptors.Key(prose, language)}.");
+                }
+            }
+        }
+
         var lines = new ConcurrentDictionary<string, List<ContextLineRow>>(StringComparer.Ordinal);
+        var descriptors = new ConcurrentDictionary<string, List<RecordDescriptorRow>>(StringComparer.Ordinal);
         await Parallel.ForEachAsync(FamilyDocuments.ProseLanguages, cancellationToken, async (prose, token) =>
         {
             var product = LinesProduct(prose);
-            if (Current<ContextLineRow>(product, lineInputs, ContextLines.Version, force) is { } stored)
+            if (Current<ContextLineRow>(product, lineInputs, ContextLines.Version, force) is { } stored
+                && Current<RecordDescriptorRow>(DescriptorsProduct(prose), lineInputs, RecordDescriptors.Version, force) is { } held)
             {
                 lines[prose] = stored;
+                descriptors[prose] = held;
                 return;
             }
 
@@ -119,21 +148,29 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
             var reader = own.ServiceProvider.GetRequiredService<AppDbContext>();
             reader.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             var composed = new List<ContextLineRow>();
+            var whole = new List<RecordDescriptorRow>();
             foreach (var language in names)
             {
                 foreach (var batch in slugs.Chunk(FamilyDocuments.Batch))
                 {
-                    composed.AddRange((await ContextLines.Gather(reader, batch, language, prose, token))
-                        .Select(line => new ContextLineRow(language, line.Key, ContextLines.Write(line.Value))));
+                    var (said, described) = await ContextLines.Compose(reader, batch, language, prose, token);
+                    composed.AddRange(said.Select(line => new ContextLineRow(language, line.Key, ContextLines.Write(line.Value))));
+                    whole.AddRange(said.Keys.Select(slug => new RecordDescriptorRow(
+                        language, slug, described.TryGetValue(slug, out var descriptor) ? RecordDescriptors.Write(descriptor) : null)));
                 }
             }
 
             composed = [.. composed.OrderBy(r => r.Names, StringComparer.Ordinal).ThenBy(r => r.Slug, StringComparer.Ordinal)];
+            whole = [.. whole.OrderBy(r => r.Names, StringComparer.Ordinal).ThenBy(r => r.Slug, StringComparer.Ordinal)];
             Write(product, ContextLineRow.Schema, composed, lineInputs, ContextLines.Version);
-            logger.LogInformation("Context lines in {Prose}: {Rows} lines over {Names} languages of names, {Bytes} bytes, in {Seconds:0.0} s",
-                prose, composed.Count, names.Count, composed.Sum(r => (long)Encoding.UTF8.GetByteCount(r.Body)), clock.Elapsed.TotalSeconds);
+            Write(DescriptorsProduct(prose), RecordDescriptorRow.Schema, whole, lineInputs, RecordDescriptors.Version);
+            logger.LogInformation(
+                "Context lines in {Prose}: {Rows} lines over {Names} languages of names, {Bytes} bytes, and {Described} descriptors, {DescriptorBytes} bytes, in {Seconds:0.0} s",
+                prose, composed.Count, names.Count, composed.Sum(r => (long)Encoding.UTF8.GetByteCount(r.Body)),
+                whole.Count(r => r.Body is not null), whole.Sum(r => r.Body is null ? 0L : Encoding.UTF8.GetByteCount(r.Body)), clock.Elapsed.TotalSeconds);
             lines[prose] = composed;
-            Interlocked.Increment(ref made);
+            descriptors[prose] = whole;
+            Interlocked.Add(ref made, 2);
         });
 
         lock (store)
@@ -141,8 +178,8 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
             store.Save();
         }
 
-        var rows = await Match(chapters, lines, cancellationToken);
-        await Check(db, chapters, lines, names, cancellationToken);
+        var rows = await Match(chapters, lines, descriptors, cancellationToken);
+        await Check(db, chapters, lines, descriptors, names, cancellationToken);
 
         var largest = chapters.MaxBy(c => c.Gzip);
         return new ContextOutcome(made, rows, chapters.Count, lines.Values.Sum(l => l.Count), largest?.Gzip ?? 0,
@@ -186,7 +223,9 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
     }
 
     private static ProductSchema<T> Schema<T>() where T : class =>
-        typeof(T) == typeof(ContextChapterRow) ? (ProductSchema<T>)(object)ContextChapterRow.Schema : (ProductSchema<T>)(object)ContextLineRow.Schema;
+        typeof(T) == typeof(ContextChapterRow) ? (ProductSchema<T>)(object)ContextChapterRow.Schema
+        : typeof(T) == typeof(RecordDescriptorRow) ? (ProductSchema<T>)(object)RecordDescriptorRow.Schema
+        : (ProductSchema<T>)(object)ContextLineRow.Schema;
 
     private void Write<T>(string product, ProductSchema<T> schema, IEnumerable<T> rows, IReadOnlyList<ProductInput> inputs, int version)
     {
@@ -205,12 +244,13 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
 
     /// <summary>
     /// The tables made to hold exactly the products' rows: <c>context_chapter</c> where its rows differ in count or hash from
-    /// the product's, and each language of words of <c>context_line</c> likewise, each replaced in one transaction. Returns the
-    /// rows written.
+    /// the product's, and each language of words of <c>context_line</c> and <c>record_descriptor</c> likewise, each replaced in
+    /// one transaction. Returns the rows written.
     /// </summary>
     private async Task<long> Match(
         IReadOnlyList<ContextChapterRow> chapters,
         IReadOnlyDictionary<string, List<ContextLineRow>> lines,
+        IReadOnlyDictionary<string, List<RecordDescriptorRow>> descriptors,
         CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(connectionString);
@@ -253,9 +293,37 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
             written += rows.Count;
         }
 
+        foreach (var (prose, rows) in descriptors)
+        {
+            var hash = Digest(rows.Select(r => r.Body is null ? $"{r.Names}\u001f{r.Slug}" : $"{r.Names}\u001f{r.Slug}\u001f{Md5(r.Body)}"));
+            if (await Held(connection, "SELECT count(*), coalesce(md5(string_agg(concat_ws(chr(31), names, slug, md5(body)), chr(30) ORDER BY names COLLATE \"C\", slug COLLATE \"C\")), '') FROM record_descriptor WHERE prose = @prose", prose, cancellationToken)
+                == (rows.Count, hash))
+            {
+                continue;
+            }
+
+            await Replace(connection, "DELETE FROM record_descriptor WHERE prose = @prose", prose,
+                "COPY record_descriptor (prose, names, slug, body) FROM STDIN (FORMAT BINARY)",
+                rows, async (copy, r) =>
+                {
+                    await copy.WriteAsync(prose, NpgsqlDbType.Text, cancellationToken);
+                    await copy.WriteAsync(r.Names, NpgsqlDbType.Text, cancellationToken);
+                    await copy.WriteAsync(r.Slug, NpgsqlDbType.Text, cancellationToken);
+                    if (r.Body is null)
+                    {
+                        await copy.WriteNullAsync(cancellationToken);
+                    }
+                    else
+                    {
+                        await copy.WriteAsync(r.Body, NpgsqlDbType.Text, cancellationToken);
+                    }
+                }, cancellationToken);
+            written += rows.Count;
+        }
+
         if (written > 0)
         {
-            await using var analyze = new NpgsqlCommand("ANALYZE context_chapter, context_line", connection);
+            await using var analyze = new NpgsqlCommand("ANALYZE context_chapter, context_line, record_descriptor", connection);
             await analyze.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -321,6 +389,7 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
         AppDbContext db,
         IReadOnlyList<ContextChapterRow> chapters,
         IReadOnlyDictionary<string, List<ContextLineRow>> lines,
+        IReadOnlyDictionary<string, List<RecordDescriptorRow>> descriptors,
         IReadOnlyList<string> names,
         CancellationToken cancellationToken)
     {
@@ -344,11 +413,19 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
             foreach (var (prose, language) in pairs.Where(p => lines.ContainsKey(p.Prose)))
             {
                 var stored = lines[prose].Where(r => r.Names == language).ToDictionary(r => r.Slug, r => r.Body, StringComparer.Ordinal);
-                foreach (var (slug, line) in await ContextLines.Gather(db, slugs, language, prose, cancellationToken))
+                var whole = descriptors[prose].Where(r => r.Names == language).ToDictionary(r => r.Slug, r => r.Body, StringComparer.Ordinal);
+                var (composed, described) = await ContextLines.Compose(db, slugs, language, prose, cancellationToken);
+                foreach (var (slug, line) in composed)
                 {
                     if (stored.GetValueOrDefault(slug) != ContextLines.Write(line))
                     {
                         differences.Add($"line {prose}/{language} {slug}");
+                    }
+
+                    if (!whole.TryGetValue(slug, out var body)
+                        || body != (described.TryGetValue(slug, out var descriptor) ? RecordDescriptors.Write(descriptor) : null))
+                    {
+                        differences.Add($"descriptor {prose}/{language} {slug}");
                     }
                 }
             }
@@ -358,10 +435,10 @@ internal sealed class ContextBuild(string connectionString, ProductStore store, 
         {
             throw new InvalidOperationException(
                 $"Stored chapter contexts differ from those composed again from the tables: {string.Join(", ", differences.Take(20))}. " +
-                "Raise ChapterSkeletons.Version or ContextLines.Version with a change to what they compose, then build again.");
+                "Raise ChapterSkeletons.Version, ContextLines.Version or RecordDescriptors.Version with a change to what they compose, then build again.");
         }
 
-        logger.LogInformation("Context check: {Chapters} chapters and their records' lines in two pairs of languages composed again equal the stored ones",
+        logger.LogInformation("Context check: {Chapters} chapters and their records' lines and descriptors in two pairs of languages composed again equal the stored ones",
             drawn.Count);
     }
 }

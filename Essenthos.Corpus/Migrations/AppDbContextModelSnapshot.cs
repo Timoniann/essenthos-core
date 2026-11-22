@@ -4282,6 +4282,34 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordDescriptor", b =>
+                {
+                    b.Property<string>("Prose")
+                        .HasColumnType("text")
+                        .HasColumnName("prose");
+
+                    b.Property<string>("Names")
+                        .HasColumnType("text")
+                        .HasColumnName("names");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("text")
+                        .HasColumnName("body")
+                        .HasAnnotation("Npgsql:Compression:", "lz4");
+
+                    b.HasKey("Prose", "Names", "Slug")
+                        .HasName("pk_record_descriptor");
+
+                    b.ToTable("record_descriptor", null, t =>
+                        {
+                            t.HasComment("What the corpus says each record is in a language of words and a language of names, as the whole descriptor JSON a record page, a list of practitioners or a place's distinguisher reads; no body where nothing is said. Records by slug. Made by the serving build (record-descriptors/{prose}).");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordExternalId", b =>
                 {
                     b.Property<int>("Id")

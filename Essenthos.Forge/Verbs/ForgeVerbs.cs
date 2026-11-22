@@ -50,7 +50,8 @@ internal static partial class ForgeVerbs
             FamiliesVerb, Most: 1),
         new("context", "[--force]",
             "Compose every chapter's context skeleton (context_chapter, context/chapters) and every record's line in every pair of "
-            + "languages (context_line, context/lines/<prose>) from the configured database where their inputs moved (all with --force), "
+            + "languages (context_line, context/lines/<prose>) with the whole descriptors it is cut from (record_descriptor, "
+            + "record-descriptors/<prose>) from the configured database where their inputs moved (all with --force), "
             + "copying them from the products where not. Never writes the live corpus or the snapshot.",
             ContextVerb, Most: 1),
         new("facts", "[--force]",
