@@ -129,7 +129,7 @@ public class SweteUnnumberedTests
     }
 }
 
-/// <summary>Read once; fifty-two books of half a million tokens is a few seconds.</summary>
+/// <summary>Read once; fifty-four books of half a million tokens is a few seconds.</summary>
 public sealed class Swete
 {
     internal TextSource Source { get; } = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
@@ -155,15 +155,15 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void TheWholeEditionIsRead()
     {
-        swete.Source.Books.Should().HaveCount(53);
-        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1121);
+        swete.Source.Books.Should().HaveCount(54);
+        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1133);
         swete.Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count))
-            .Should().Be(28790);
+            .Should().Be(29024);
         swete.Source.Books
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(575777, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
+            .Should().Be(580379, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
                                   + "place of one, the running head and apparatus read into Judges 18:8 and 1 Samuel 8:2 and 11:11 are not Swete's "
                                   + "text, and of the margin's letters read into nine verses six stood as words");
     }
@@ -176,10 +176,10 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryBookKeepsTheEditionOwnOrderAndTheSharedOrdinal()
     {
-        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 53));
+        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 54));
         swete.Source.Books.Select(book => book.CanonicalOrdinal).Should().OnlyHaveUniqueItems();
-        swete.Book(30).Position.Should().Be(34, "Amos stands second among the Twelve here");
-        swete.Book(29).Position.Should().Be(36, "and Joel fourth");
+        swete.Book(30).Position.Should().Be(35, "Amos stands second among the Twelve here");
+        swete.Book(29).Position.Should().Be(37, "and Joel fourth");
     }
 
     /// <summary>

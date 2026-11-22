@@ -123,6 +123,7 @@ Septuagint	text	content	Public Domain	public-domain	text:GRCBRENT	Septuagint/LIC
 Sinaiticus	text	content	CC-BY-4.0	permitted-with-attribution	text:SIN	Sinaiticus/LICENCE.md	-	The INTF transcription; cntr-01.txt (CC BY-SA 4.0) is never read.
 Strong	lexicon	content	Public Domain	public-domain	dataset:strong	Strong/LICENCE.md	-	StrongHebrew.xml carries TWOT reference numbers (c) 1980 Moody Bible Institute, declared on the dataset as a work of its own.
 Swete	text	content	CC-BY-SA-4.0	share-alike	text:SWETE text:SWETEOG text:OTTLEY text:ALEX	Swete/LICENCE.md	-	The licence is on the transcription; the printed text is public domain.
+Swete/First1KGreek/ecclesiastes-swete-1896.xml	text	content	CC-BY-SA-4.0	share-alike	text:SWETE	Swete/LICENCE.md	-	First1KGreek's tlg0527.tlg030.opp-grc2.xml at 2d023b83 (2017), dropped from the repository since; its TEI header states CC BY-SA 4.0, the repository's license.md of that commit CC BY-NC-SA 4.0.
 SweteScans	scans	never	Public Domain	public-domain	-	SweteScans/LICENCE.md	-	Read by hand to restore words.
 SynodalStrong	strong	derived	Copyright 1996 Bob Jones University: non-profit use of the work unmodified	prohibited	dataset:bju-synodal-strong	SynodalStrong/LICENCE.md	PRB-0264 TSK-1443	The owner, 2026-09-13 (PRB-0264) and 2026-11-04 (TSK-1443): mapping only, numbers never served; RUSV also takes 209 corrections of letters from it.
 SynodalWikisource	text	content	Public Domain	public-domain	text:*	SynodalWikisource/LICENCE.md	-	-

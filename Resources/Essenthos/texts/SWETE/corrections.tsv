@@ -1355,6 +1355,25 @@ own	kind	before	after	why
 27.65.3	tokens	ἐχθροί	ἐχθροί σου.	Printed in Swete, vol. 2 (Cambridge, 1896), p. 294; the transcription lost it
 27.70.22	tokens	ἀλήθειάν ψαλῶ	ἀλήθειάν σου, ψαλῶ	Printed in Swete, vol. 2 (Cambridge, 1896), p. 304; the transcription lost it
 27.148.4	tokens	οὐρανῶν,	οὐρανῶν, καὶ τὸ ὕδωρ τὸ ὑπεράνω τῶν οὐρανῶν.	Printed in Swete, vol. 2 (Cambridge, 1896), p. 413; the transcription lost it
+27.24.13	opens	κραταίωμα	27.24.14 κραταίωμα	Swete, vol. 2 (Cambridge, 1896), p. 241, prints 14 before this word; the transcription runs the verse into 13
+27.47.6	opens	τρόμος	27.47.7 τρόμος	Swete, vol. 2 (Cambridge, 1896), p. 274, prints 7 before this word, inside the line; the transcription runs the verse into 6
+27.88.84	moves	\N	27.88.48	The transcription numbers 88:48 as 84, between 47 and 49; Swete, vol. 2 (Cambridge, 1896), p. 334, prints 48
+27.88.48	tokens	ὑπόστασις· διάψαλμα.	ὑπόστασις·	Swete, vol. 2 (Cambridge, 1896), p. 334, sets διάψαλμα in the margin of the last line of 46 and none in 48; the transcription read it into 48
+27.88.46	tokens	αἰσχύνην.	αἰσχύνην. διάψαλμα.	Swete, vol. 2 (Cambridge, 1896), p. 334, prints διάψαλμα at the end of 46, in the margin of its last line; the transcription read it into 48
+27.115.5	moves	\N	27.115.6	Swete, vol. 2 (Cambridge, 1896), p. 373, numbers this verse 6 and prints no verse 5
+27.118.18	opens	πάροικός	27.118.19 πάροικός	Swete, vol. 2 (Cambridge, 1896), p. 376, prints 19 before this word; the transcription runs the verse into 18
+27.118.31	moves	\N	27.118.131	The transcription numbers 118:131 as 31, between 130 and 132; Swete, vol. 2 (Cambridge, 1896), p. 384, prints 131
+27.118.33	moves	\N	27.118.133	The transcription numbers 118:133 as 33, between 132 and 134; Swete, vol. 2 (Cambridge, 1896), p. 384, prints 133
+27.118.27	tokens	θαυμασίοις σου.	θαυμασίοις σου. ἐνύσταξεν ἡ ψυχή μου ἀπὸ ἀκηδίας, βεβαίωσόν με ἐν τοῖς λόγοις σου· ὁδὸν ἀδικίας ἀπόστησον ἀπʼ ἐμοῦ, καὶ τῷ νόμῳ σου ἐλέησόν με. ὁδὸν ἀληθείας ᾑρετισάμην· τὰ κρίματά σου οὐκ ἐπελαθόμην. ἐκολλήθην τοῖς μαρτυρίοις σου· Κύριε, μή με καταισχύνῃς. ὁδὸν ἐντολῶν σου ἔδραμον, ὅταν ἐπλάτυνας τὴν καρδίαν μου. Νομοθέτησόν με, Κύριε, τὴν ὁδὸν τῶν δικαιωμάτων σου, καὶ ἐκζητήσω αὐτὴν διὰ παντός. συνέτισόν με, καὶ ἐκζητήσω τὸν νόμον σου, καὶ φυλάξω αὐτὸν ἐν ὅλῃ καρδίᾳ μου. ὁδήγησόν με ἐν τρίβῳ τῶν ἐντολῶν σου, ὅτι αὐτὸν ἠθέλησα.	Swete, vol. 2 (Cambridge, 1896), p. 377, prints verses 28 to 35 after 27, as the transcription does not; their words as the page prints them, divided by the rows after this one
+27.118.27	opens	ὁδήγησόν	27.118.35 ὁδήγησόν	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 35 before these words
+27.118.27	opens	συνέτισόν με, καὶ ἐκζητήσω	27.118.34 συνέτισόν με, καὶ ἐκζητήσω	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 34 before these words
+27.118.27	opens	Νομοθέτησόν	27.118.33 Νομοθέτησόν	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 33 before these words
+27.118.27	opens	ὁδὸν ἐντολῶν	27.118.32 ὁδὸν ἐντολῶν	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 32 before these words
+27.118.27	opens	ἐκολλήθην	27.118.31 ἐκολλήθην	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 31 before these words
+27.118.27	opens	ὁδὸν ἀληθείας	27.118.30 ὁδὸν ἀληθείας	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 30 before these words
+27.118.27	opens	ὁδὸν ἀδικίας	27.118.29 ὁδὸν ἀδικίας	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 29 before these words
+27.118.27	opens	ἐνύσταξεν	27.118.28 ἐνύσταξεν	Swete, vol. 2 (Cambridge, 1896), p. 377, prints 28 before these words
+27.119.3	opens	τὸ βέλη	27.119.4 τὰ βέλη	Swete, vol. 2 (Cambridge, 1896), p. 387, prints 4 before these words, and τὰ where the transcription reads τὸ
 28.1.1	tokens	AΣΩΜΕΝ	ΑΣΩΜΕΝ	A Latin letter for the Greek one it looks exactly like
 29.2.8	tokens	⁸τοῦ	τοῦ	The verse number Swete prints in figures, let into the text
 29.3.16a	tokens	¹⁶aἐκ	ἐκ	The verse number Swete prints in figures, let into the text
@@ -1391,6 +1410,38 @@ own	kind	before	after	why
 29.29.46	tokens	⁴⁶ἀνέστησεν	ἀνέστησεν	The verse number Swete prints in figures, let into the text
 29.29.48	tokens	⁴⁸ψευδεῖς	ψευδεῖς	The verse number Swete prints in figures, let into the text
 29.22.17	tokens	C	\N	Printed in Swete, vol. 2 (Cambridge), p. 458, scan leaf 476 of oldtestamentingr02swetuoft. The page prints no word there: the letter is the manuscript's siglum the margin prints beside the line.
+30.1.1	tokens	PHMATA	ΡΗΜΑΤΑ	Latin letters for the Greek ones they look exactly like; Swete, vol. 2 (Cambridge, 1896), p. 480, prints ΡΗΜΑΤΑ
+30.1.2	tokens	§ματαιότης	ματαιότης	Swete's sign for where Codex Ephraemi begins, which Swete, vol. 2 (Cambridge, 1896), p. 480, sets before this word with § C in the margin; not a letter of the word
+30.1.5	opens	6ἐκεῖ	30.1.6 ἐκεῖ	Swete's own number for the verse stands in the text before the word that opens it; Swete, vol. 2 (Cambridge, 1896), p. 480, prints 6 here
+30.1.14	tokens	πνεύματος.¶	πνεύματος.	Swete's sign for where Codex Ephraemi breaks off, which Swete, vol. 2 (Cambridge, 1896), p. 481, sets after this word with ¶ C in the margin
+30.1.17	tokens	( 17)	\N	The verse number Swete, vol. 2 (Cambridge, 1896), p. 482, prints in brackets at the head of the page where 1:17 continues, let into the text
+30.2.18	tokens	§ὑπὸ	ὑπὸ	Swete's sign for where Codex Ephraemi begins again, which Swete, vol. 2 (Cambridge, 1896), p. 484, sets before this word with § C in the margin
+30.7.1	tokens	( 12)ὅτι	ὅτι	The other numbering's 6:12, which Swete, vol. 2 (Cambridge, 1896), p. 493, prints in brackets inside Swete's 7:1, let into the text
+30.8.1	tokens	( 1)Τίς οἶδεν σοφούς καὶ τίς οἶδεν λύσιν ῥήματος	Τίς οἶδεν σοφούς; καὶ τίς οἶδεν λύσιν ῥήματος;	The other numbering's 8:1, which Swete, vol. 2 (Cambridge, 1896), p. 496, prints in brackets before Swete's 8:1, let into the text; the page sets a question mark after σοφούς and after ῥήματος, which the transcription lost
+30.9.1	tokens	( 1)ὅτι	ὅτι	The other numbering's 9:1, which Swete, vol. 2 (Cambridge, 1896), p. 498, prints in brackets before Swete's 9:1, let into the text
+30.1.18	tokens	ὅτὶ	ὅτι	Swete, vol. 2 (Cambridge, 1896), p. 482, prints ὅτι; the transcription misread it
+30.2.16	tokens	αἰῶνα.	αἰῶνα,	Swete, vol. 2 (Cambridge, 1896), p. 484, sets a comma here; the transcription read another stop
+30.6.3	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 492, prints ὑπὲρ, with the grave; the transcription misread it
+30.6.10	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 493, prints ὑπὲρ, with the grave; the transcription misread it
+30.7.1	tokens	ζωῇ.	ζωῇ,	Swete, vol. 2 (Cambridge, 1896), p. 493, sets a comma here; the transcription read another stop
+30.7.2	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 493, prints ὑπὲρ, with the grave; the transcription misread it
+30.7.3	tokens	ἣ ὅτι	ἢ ὅτι	Swete, vol. 2 (Cambridge, 1896), p. 493, prints ἢ; the transcription misread it
+30.7.4	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 493, prints ὑπὲρ, with the grave; the transcription misread it
+30.7.11	tokens	Τἰ	Τί	Swete, vol. 2 (Cambridge, 1896), p. 494, prints Τί; the transcription misread it
+30.7.11	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 494, prints ὑπὲρ, with the grave; the transcription misread it
+30.7.13	tokens	σκιῷ	σκιᾷ	Swete, vol. 2 (Cambridge, 1896), p. 494, prints σκιᾷ; the transcription misread it
+30.7.14	tokens	ἴδκ	ἴδε	Swete, vol. 2 (Cambridge, 1896), p. 494, prints ἴδε; the transcription misread it
+30.7.15	tokens	κακίας ἴδε	κακίας. ἴδε	Swete, vol. 2 (Cambridge, 1896), p. 494, sets a full stop after κακίας here; the transcription read another stop
+30.7.15	tokens	συμφώναως	συμφώνως	Swete, vol. 2 (Cambridge, 1896), p. 494, prints συμφώνως; the transcription misread it
+30.7.27	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 496, prints ὑπὲρ, with the grave; the transcription misread it
+30.7.28	tokens	ἴδχ	ἴδε	Swete, vol. 2 (Cambridge, 1896), p. 496, prints ἴδε; the transcription misread it
+30.7.28	tokens	μά,	μιᾷ,	Swete, vol. 2 (Cambridge, 1896), p. 496, prints μία τῇ μιᾷ; the transcription misread it
+30.7.30	tokens	εὐθῆ.	εὐθῆ·	Swete, vol. 2 (Cambridge, 1896), p. 496, sets a raised stop here; the transcription read another stop
+30.9.12	tokens	καλῷ.	καλῷ,	Swete, vol. 2 (Cambridge, 1896), p. 500, sets a comma here; the transcription read another stop
+30.9.16	tokens	ὑπέρ	ὑπὲρ	Swete, vol. 2 (Cambridge, 1896), p. 500, prints ὑπὲρ, with the grave; the transcription misread it
+30.12.10	tokens	ἀληθεὶας.	ἀληθείας.	Swete, vol. 2 (Cambridge, 1896), p. 505, prints ἀληθείας; the transcription misread it
+30.12.13	tokens	φύλασσε.	φύλασσε,	Swete, vol. 2 (Cambridge, 1896), p. 505, sets a comma here; the transcription read another stop
+30.12.14	tokens	παρεωραμένῳ.	παρεωραμένῳ,	Swete, vol. 2 (Cambridge, 1896), p. 505, sets a comma here; the transcription read another stop
 31.1.3	tokens	³καὶ	καὶ	The verse number Swete prints in figures, let into the text
 31.1.3	tokens	3	\N	The verse number Swete prints in figures, let into the text
 31.5.1	tokens	(¹)Εἰοῆλθον	Εἰοῆλθον	The verse number Swete prints in figures, let into the text

@@ -38,6 +38,13 @@ internal static class SweteNotes
         + "where Swete's own verse number stands in the text before the verse's first word, and Genesis 15:19, "
         + "20 and 21 and Psalm 91:16 from the printed page, with the two words the transcription lost in Genesis.";
 
+    /// <summary>The Psalms' verse numbers put right against the printed page, and the eight verses of Psalm 118 the transcription lost.</summary>
+    public const string Psalms =
+        "Modified: in the Psalms, four verses the transcription numbered as the page does not (88:48, 115:6, 118:131 "
+        + "and 118:133) are given the page's number, the divisions it lost at 24:14, 47:7, 118:19 and 119:4 are opened "
+        + "where the page begins those verses, a διάψαλμα it moved from 88:46 into 88:48 is put back, and 118:28-35, "
+        + "which it lost, are restored by Essenthos from the printed page.";
+
     /// <summary>The Roman chapter numbers the reader takes out, and the chapter opening the transcription kept only the number of.</summary>
     public const string ChapterMarkers =
         "Modified: the Roman chapter numbers Swete prints in the margin, which the transcription let into the "

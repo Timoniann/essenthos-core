@@ -14,8 +14,9 @@ below before it replaces anything.
 
 The files are one token per line — `10.1.1 ΚΑΙ` — where the number is the work's number in the TLG
 catalogue of the Septuagint, not a canonical ordinal. **55 files, 588,579 tokens, 11.3 MB.** The
-corpus loads 51 of them, and Isaiah from First1KGreek's own TEI (below), as **52 books, 1,107
-chapters, 28,533 verses, 570,385 words**. No annotation of any kind: no morphology, no lemmas, no
+corpus loads 51 of them, and Isaiah and Ecclesiastes from First1KGreek's own TEI (below), as **54
+books, 1,133 chapters, 29,024 verses, 580,379 words** (Esdras B read as Ezra and Nehemiah, the
+corrections file applied; measured 2026-11-22). No annotation of any kind: no morphology, no lemmas, no
 Strong numbers, no alignment to anything.
 
 ## The licence: on the transcription, not on the text
@@ -122,10 +123,12 @@ ordinal. 12,759 tokens, waiting for a text row of their own.
 verse. The corpus addresses text by chapter and verse and has no address for a page outside the
 book's numbering; Brenton omits it as well.
 
-**Ecclesiastes does not exist upstream.** First1KGreek's `tlg0527` has no `tlg030`, so this edition
-supplies 38 of the 39 books of the Hebrew canon. The corpus reads Greek Ecclesiastes from Brenton.
+**Ecclesiastes is not in these files, and is read from First1KGreek's own transcription.** First1KGreek's
+`tlg0527/tlg030` holds only a catalogue entry naming Swete's Ecclesiastes of 1896, so nathans'
+build has no file 30. The transcription existed: it was committed in September 2017 and dropped by a
+merge two days after its last correction (next section), and is read from there.
 
-## `First1KGreek/` — Isaiah, twice, from the transcription itself
+## `First1KGreek/` — Isaiah, twice, and Ecclesiastes, from the transcription itself
 
 Two files fetched from <https://github.com/OpenGreekAndLatin/First1KGreek>, pinned to commit
 `b67137e6b82669d08fe6ad1c225999ca6aca362c` (19 December 2024, the last commit to change either) and
@@ -150,6 +153,39 @@ Harvard College Library as publisher (2017) and Digital Divide Data as having co
 the text, under Gregory Crane; Ottley's names the University of Leipzig (2014), the same encoders, and
 Gregory R. Crane and Monica Berti as principals. The printed texts are out of copyright: Swete's for
 the reason given above, Ottley's because it was printed in 1904.
+
+### `ecclesiastes-swete-1896.xml` — Ecclesiastes, recovered from the repository's history
+
+| Kept as | Upstream | Commit | Bytes | What it is |
+|---|---|---|---|---|
+| `ecclesiastes-swete-1896.xml` | `data/tlg0527/tlg030/tlg0527.tlg030.opp-grc2.xml` | `2d023b8335f0b5c5ddaaea6ced4f751f907c4ab8` (2 October 2017) | 101,697 | Swete, volume 2, Cambridge University Press 1896, pages 480–505 |
+
+First1KGreek added the book on 26 September 2017 ("Added Ecclesiastes", 4bf96316) and corrected it
+three times to 2 October (cca3fa53, 6a5b3e19, 2d023b83); the merge of 4 October ("Fixed merge
+conflict", 80a3ac68) dropped the file and kept the folder's `__cts__.xml`, which still catalogues
+the edition (renamed `tlg0527.tlg030.1st1K-grc1`, "Septuaginta, Ecclesiastes, Swete, Cambridge,
+1896"). No later commit brought it back, so it is fetched at the last commit that changed it. Read
+at the source on **2026-11-22**.
+
+**Its licence, and the one place two statements differ.** The file's own TEI header, in
+`publicationStmt/availability`, says:
+
+> Available under a Creative Commons Attribution-ShareAlike 4.0 International License
+
+with Harvard College Library as publisher (2017), Digital Divide Data as having corrected and encoded
+the text, Gregory Crane as principal and the Harvard Library Arcadia Fund as funder, and its
+`sourceDesc` names the Internet Archive's scan of volume 2 (`oldtestamentingr02swetuoft`, the scan in
+`Resources/SweteScans/`). The repository's own `license.md` at that commit was **Attribution-
+NonCommercial-ShareAlike 4.0 International**; the repository has stated Attribution-ShareAlike 4.0
+since (its `license.md` and Zenodo record above), but the file left it before that change. The
+statement attached to these bytes is the header's, and it is the one recorded in `build/licences.tsv`;
+read the stricter way, the file is NonCommercial-ShareAlike, which RUL-0183 accepts. Either way it is
+redistributable with credit and under the same terms.
+
+The printed text is out of copyright for the reason given above. Swete's signs § and ¶ (where Codex
+Ephraemi begins and breaks off), the bracketed figures of the other numbering, the drop capital's
+Latin letters and one verse number the transcription let into the text are taken out by rows of
+`Resources/Essenthos/texts/SWETE/corrections.tsv` (book `30`), each citing the page.
 
 **Swete's Isaiah** is read into the edition as its fifty-second book, after the Twelve where Swete
 prints it. **Ottley's is a text of its own**, `OTTLEY`, on the owner's decision of 2026-09-24: it is
