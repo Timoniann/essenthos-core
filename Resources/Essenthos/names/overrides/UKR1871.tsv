@@ -36,3 +36,11 @@ own	record	action	base_record	role	source	note
 66.4:7.26	aetos	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'орла' renders the creature's word; the link did not carry it
 2.8:24.29	arov	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'песячих': the word does not render the creature's word; the link carried the record onto a neighbour
 2.8:24.30	arov	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'мух' renders the creature's word; the link did not carry it
+40.1:2.7	jacob	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Якова' names Jacob, Isaac's son; no link joins it to the Greek, so the name was not carried
+40.1:2.9	jacob	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Яков' names Jacob, Judah's father; no link joins it to the Greek, so the name was not carried
+40.1:7.6	rehoboam	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Ровоам' names Rehoboam, Abijah's father; its link goes to another word of the verse, so the name was not carried
+40.1:8.10	jehoram	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Йорам' names King Joram, Uzziah's forefather; its link goes to another word of the verse, so the name was not carried
+40.1:9.6	jotham-2	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Йоатам' names King Jotham, Ahaz's father; its link goes to another word of the verse, so the name was not carried
+40.1:13.10	eliakim-4	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Єліяким' names Eliakim, Azor's father; its link goes to another word of the verse, so the name was not carried
+40.1:14.10	achim	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Ахим' names Achim, Eliud's father; no link joins it to the Greek, so the name was not carried
+40.1:16.2	jacob-2	add	\N	name	Essenthos, read against the verse by claude-opus-5-5 on 2026-11-22	'Яков' names Jacob, Joseph's father; its only link is the aligner's, below the floor, so the name was not carried
