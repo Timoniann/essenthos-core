@@ -63,7 +63,7 @@ mapping/KJV-GRCBRENT/aligner	kept	align KJV GRCBRENT (by hand; the file is autho
 mapping/WEB-GRCBRENT/aligner	kept	align WEB GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
 mapping/RUSV-GRCBRENT/aligner	kept	align RUSV GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
 mapping/ALEX-GRCBRENT/aligner	kept	align ALEX GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
-mapping/{from}-{to}/aligner	build	aligner-pairs	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/** Essenthos/versification/*	-	none
+mapping/{from}-{to}/aligner	build	aligner-pairs	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Essenthos/texts/BHSA/books etcbc Alignments/** Essenthos/versification/*	-	none
 mapping/{from}-{to}/composed	kept	compose (by hand; composed-pairs <pair> --force draws a declared pair)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Essenthos/texts/BHSA/books etcbc Essenthos/mapping/*/final Essenthos/mapping/*/statuses Essenthos/mapping/*/verses Alignments/** Essenthos/mapping/{from}-{to}/floors Essenthos/mapping/{from}-{to}/rulings Essenthos/lexicon/function-words	-	none
 mapping/{from}-{to}/rulings	hand	by hand	-	-	none
 mapping/{from}-{to}/floors	hand	by hand (floors set from a hand measurement; read by compose and the merge)	-	-	none
