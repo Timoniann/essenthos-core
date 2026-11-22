@@ -2,8 +2,9 @@
 # inputs     bible4u/RUSV.xml@f99f206be151f30d521c57e9de1b0c4723d76a70bf44e5965482ce03609b5cd9
 # producer   forge texts corrections RUSV   (Essenthos.Forge 1.0.0+8aa731d0dc56-dirty)
 # rows                131
-# kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes; divide: the word opens the verse after (the source prints no number there)
+# kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes; divide: the word opens the verse after (the source prints no number there); strong: the word's Strong number becomes after (none where after is \N); before is the word and, after a space, the number it carries until then
 # note       written once from the repairs the load computed in code; edit this file, not the code
+# strong     numbers Bob Jones University's tagging of the Synodal (Resources/SynodalStrong/RSTE_verse_words.xml, read unmodified) puts on the wrong word, read against the verse, the Greek or Hebrew and Strong's dictionary by hand; the file stays as published and the build reads these over it (PRB-1962)
 own	kind	before	after	why
 1.10:7.13	letters	дедан	Дедан	bible4u's file against the Strong-tagged digitisation swmail/RST: case
 1.10:10.4	letters	сщставляли	составляли	bible4u's file against the Strong-tagged digitisation swmail/RST: case, letters
@@ -217,3 +218,5 @@ own	kind	before	after	why
 38.3:8.20	letters	ОТРАСЛЪ	ОТРАСЛЬ	bible4u's file against the Strong-tagged digitisation swmail/RST: letters
 38.6:12.12	letters	ОТРАСЛЪ	ОТРАСЛЬ	bible4u's file against the Strong-tagged digitisation swmail/RST: letters
 41.10:28	verse	И начал Петр говорить Ему: вот, мы оставили всё ипоследовали за Тобою.	И начал Петр говорить Ему: вот, мы оставили всё и последовали за Тобою.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
+40.3:9.7	strong	отец G11	G3962	'отец' renders πατέρα; RSTE_verse_words.xml Matt.3.9 tags „отец G11 and Авраам G3962, the two numbers swapped: πατέρα (G3962) ἔχομεν τὸν Ἀβραάμ (G11) in every Greek text; Авраам is G11 at every other place the file tags it (PRB-1962)
+40.3:9.10	strong	Авраам G3962	G11	'Авраам' renders Ἀβραάμ; RSTE_verse_words.xml Matt.3.9 tags „отец G11 and Авраам G3962, the two numbers swapped: πατέρα (G3962) ἔχομεν τὸν Ἀβραάμ (G11) in every Greek text; Авраам is G11 at every other place the file tags it (PRB-1962)

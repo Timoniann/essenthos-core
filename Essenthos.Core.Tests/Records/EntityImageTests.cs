@@ -589,11 +589,17 @@ public sealed class EntityImageTests : IDisposable
             "generated/tiglathpileser.webp", "generated/reuel-2.webp", "generated/bani-7.webp",
             "generated/abiram.webp", "generated/ahijah-7.webp", "generated/malchijah-2.webp",
             "generated/adam-and-eve.webp#eve",
+            // PRB-1960: the detector framed the other figure of a two- or more-person picture.
+            "generated/bathsheba.webp", "generated/felix.webp", "generated/luke.webp", "generated/bethuel.webp",
+            "generated/hoglah.webp", "generated/noah-2.webp", "generated/tirzah.webp", "generated/philip-3.webp",
+            "generated/shearjashub.webp", "generated/sherebiah-2.webp", "generated/agur.webp", "generated/bildad.webp",
         ];
 
         byEye.Should().OnlyContain(key => faces.ContainsKey(key) && faces[key].By == "eye" && faces[key].Face != null);
         var (x, _, width, _) = PortraitFaces.Bust(faces["generated/jehu.webp"].Face!, 1024, 1536)!.Value;
         (x + width).Should().BeLessThan(0.5, "the prophet stands on the left, the king on the right");
+        var bathsheba = PortraitFaces.Bust(faces["generated/bathsheba.webp"].Face!, 1312, 1199)!.Value;
+        bathsheba.X.Should().BeGreaterThan(0.5, "Bathsheba sits on the right; Solomon, the larger face, stands on the left");
         PortraitFaces.For(faces, "generated/adam-and-eve.webp", "eve").Should().BeSameAs(faces["generated/adam-and-eve.webp#eve"]);
         PortraitFaces.For(faces, "generated/adam-and-eve.webp", "adam").Should().BeSameAs(faces["generated/adam-and-eve.webp"]);
         faces.Where(f => f.Key.Contains('#'))

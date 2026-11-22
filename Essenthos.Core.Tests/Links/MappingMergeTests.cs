@@ -310,6 +310,28 @@ public sealed class MappingMergeTests
         output.Final.Last().Id.Should().Be(LinkIds.Of(Ordinal, "KJV-BHSA", "1.1:1.9", "1.1:1.9"), "a link's id comes from its words, whoever proposed it");
     }
 
+    /// <summary>
+    /// PRB-1961: a word the translation adds (the Synodal's Jehoiakim in Matthew 1:11, which no Greek text holds) is stated
+    /// absent by an accepted one-sided ruling; the aligner's guess onto a neighbouring Greek name gives way to it.
+    /// </summary>
+    [Fact]
+    public void An_accepted_absence_on_one_word_withdraws_the_aligner_guess_and_is_written_as_a_ruling()
+    {
+        var output = Merge(
+            [
+                Row(MappingMethods.Aligner, "40.1:11.3", "40.1:11.5", confidence: 0.285, source: "SIL.Machine ibm4", link: 1),
+                Row(MappingMethods.Aligner, "40.1:11.6", "40.1:11.5", confidence: 0.98, source: "SIL.Machine ibm4", link: 2),
+            ],
+            [new RulingRow(RulingRow.Accept, "40.1:11.3", string.Empty, "expands", string.Empty, "Иоакима: no Greek text names Jehoiakim here")],
+            pair: "RUSV-NESTLE1904");
+
+        output.Final.Where(r => r.Settled).Select(r => (r.From, r.To, r.Relation, r.Method)).Should().BeEquivalentTo([
+            ("40.1:11.3", string.Empty, "expands", MappingMethods.Ruling),
+            ("40.1:11.6", "40.1:11.5", "renders", MappingMethods.Aligner),
+        ]);
+        output.Methods[MappingMethods.Aligner][0].Status.Should().Be(MappingStatus.WithdrawnBy(MappingMethods.Ruling));
+    }
+
     [Fact]
     public void A_changed_verse_drops_the_model_rows_citing_it_and_lists_the_pair()
     {

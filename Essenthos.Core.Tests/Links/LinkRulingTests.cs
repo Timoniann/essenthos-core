@@ -2,6 +2,7 @@ using Essenthos.Core.Berean;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
+using Essenthos.Core.Names;
 using Essenthos.Core.Products;
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -61,6 +62,42 @@ public sealed class LinkRulingTests : IDisposable
             .Select(ruling => (ruling.From, ruling.To));
 
         refused.Should().Contain([("1.14:5.29", "1.14:5.22"), ("1.14:5.32", "1.14:5.24")]);
+    }
+
+    /// <summary>
+    /// PRB-1961 (PRB-0949's ruling, lost with the old loaders): Matthew 1:11 names Jehoiakim in the Synodal, Ohienko, the
+    /// Elizabethan Slavonic and the Geneva, where no Greek text has him. Both words name eliakim-2 by hand, and every pair of
+    /// the translation with a New Testament text states them absent, so no aligner guess sends them to Jechoniah.
+    /// </summary>
+    [Fact]
+    public void MatthewOneElevensJehoiakimNamesEliakimAndHasNoCounterpartInTheGreek()
+    {
+        var store = new ProductStore(Path.Combine(Repository(), "Resources"));
+        (string Text, int[] Words, string[] Pairs)[] cases =
+        [
+            ("RUSV", [3, 4], ["KJV", "NESTLE1904", "RP2018", "SBLGNT", "SIN", "TISCH", "TR1550", "TR1894", "VAT", "WH1881"]),
+            ("UBIO", [4, 5], ["KJV", "NESTLE1904", "TR1894"]),
+            ("CSLELIZABETH", [17, 21], ["NESTLE1904"]),
+            ("GNV1599", [4, 6], ["NESTLE1904"]),
+        ];
+
+        foreach (var (text, words, pairs) in cases)
+        {
+            var keys = words.Select(word => $"40.1:11.{word}").ToList();
+            using (var reader = store.Open(NameProducts.Overrides(text), NameOverride.Schema(text)))
+            {
+                reader.Rows().Where(row => keys.Contains(row.Own.Own))
+                    .Select(row => (row.Own.Own, row.Record, row.Action, row.Role))
+                    .Should().BeEquivalentTo(keys.Select(key => (key, "eliakim-2", OverrideActions.Add, "name")), text);
+            }
+
+            foreach (var pair in pairs.Select(to => MappingProducts.Pair(text, to)))
+            {
+                Rulings(store, pair).Where(ruling => keys.Contains(ruling.From))
+                    .Select(ruling => (ruling.Action, ruling.From, ruling.To, ruling.Relation))
+                    .Should().BeEquivalentTo(keys.Select(key => (RulingRow.Accept, key, string.Empty, "expands")), pair);
+            }
+        }
     }
 
     [Fact]
