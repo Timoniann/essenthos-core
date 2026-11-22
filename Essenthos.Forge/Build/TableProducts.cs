@@ -7,6 +7,7 @@ using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Lexicons;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
@@ -79,6 +80,8 @@ internal static partial class TableProducts
             ["id", "commentary", "source", "book", "first_chapter", "first_verse", "last_chapter", "last_verse", "sequence", "body"],
             [.. CommentaryWorks.All.Select(w => $"{CommentaryReader.Folder}/{w.Module}")], [.. ProductText.Products(LopukhinReader.Synodal)],
             CommentaryRows),
+        new("lexicon_article", ["id", "dictionary", "strong_number", "ordinal", "entry", "headword", "status", "body", "source"],
+            [BdbReader.Lexicon, BdbReader.Index, AbbottSmithReader.Lexicon, LsjReader.Lexicon], [], LexiconArticleRows),
     ];
 
     private const string StrongHebrew = "Strong/StrongHebrew.xml";
@@ -412,6 +415,23 @@ internal static partial class TableProducts
                 r.Commentary, r.Source, Int(r.Book), Int(r.FirstChapter), Int(r.FirstVerse), Int(r.LastChapter), Int(r.LastVerse), Int(r.Sequence), r.Body,
             })),
             string.Join("; ", CommentaryWorks.All.Select(w => $"{w.Id} {rows.Count(r => r.Commentary == w.Id)}"))
+            + (unread.Count == 0 ? string.Empty : "; markup not read: " + string.Join(", ", unread.Select(u => $"{u.Key} {u.Value}"))));
+    }
+
+    /// <summary>Every article of every lexicon beside Strong's, lexicon by lexicon, each under its numbers in the lexicon's order.</summary>
+    private static Rows LexiconArticleRows(ProductStore store)
+    {
+        var unread = new Dictionary<string, int>(StringComparer.Ordinal);
+        var rows = BdbReader.Read(store.ResourcesPath, unread)
+            .Concat(AbbottSmithReader.Read(store.ResourcesPath, unread))
+            .Concat(LsjReader.Read(store.ResourcesPath, unread))
+            .ToList();
+        return new(Numbered(rows.Select(r => new[]
+            {
+                r.Dictionary, r.StrongNumber, Int(r.Ordinal), r.Entry, r.Headword, r.Status, r.Body, r.Source,
+            })),
+            string.Join("; ", LexiconWorks.All.Select(w =>
+                $"{w.Id} {rows.Count(r => r.Dictionary == w.Id)} articles under {rows.Where(r => r.Dictionary == w.Id).Select(r => r.StrongNumber).Distinct().Count()} numbers"))
             + (unread.Count == 0 ? string.Empty : "; markup not read: " + string.Join(", ", unread.Select(u => $"{u.Key} {u.Value}"))));
     }
 

@@ -17,6 +17,7 @@
 # declared: where its licence was read, under Resources/, or - where nothing holds it. exception: the tickets under which the
 #   owner keeps a source whose redistribution is prohibited or unknown; the build reports it as an exception and does not fail.
 source	layer	served	licence	redistribution	credit	declared	exception	note
+AbbottSmith	lexicon	content	Public Domain	public-domain	dataset:abbott-smith	AbbottSmith/LICENCE.md	-	abbott-smith.tei.xml only; the scanned PDF beside it in the repository carries Internet Archive's restrictions and is not taken.
 Alexandrinus	text	content	CC-BY-SA-4.0	share-alike	text:ALEX	Alexandrinus/LICENCE.md	-	The INTF transcription (CC BY 4.0) with Swete's First1KGreek (CC BY-SA 4.0); cntr-02.txt is kept only to check verse labels.
 Alignments	alignment	derived	this project's own statistical alignment models	own	dataset:essenthos	-	-	Trained here on the texts; only the links they yield are served, each pair under its texts' terms.
 Almeida1911	text	content	Public Domain	public-domain	text:ALM1911	Almeida1911/LICENCE.md	-	-
@@ -34,6 +35,7 @@ BibleData2026	data	content	CC-BY-4.0	permitted-with-attribution	dataset:bibledat
 BibleData2026/AlamoPolyglot.csv	data	never	each of its texts under its own terms	unknown	-	BibleData2026/LICENCE.md	-	Its columns are to be read one by one before any is served.
 BiblicaUkrainian2022	text	content	CC-BY-SA-4.0	share-alike	text:NPU2022	BiblicaUkrainian2022/LICENCE.md	-	-
 BrentonEnglish	text	content	Public Domain	public-domain	text:BRENTON	BrentonEnglish/LICENCE.md	-	-
+BrownDriverBriggs	lexicon	content	CC-BY-4.0; the BDB text itself public domain	permitted-with-attribution	dataset:bdb	BrownDriverBriggs/LICENCE.md	-	BrownDriverBriggs.xml and LexicalIndex.xml, the Open Scriptures Hebrew Lexicon.
 Byzantine	text	content	Unlicense	public-domain	text:RP2018 dataset:byzantine-apparatus	Byzantine/LICENCE.md	-	-
 CATSS	alignment	derived	CC-BY-NC-SA-3.0	non-commercial-only	dataset:catss	CATSS/LICENCE.md	-	Only the Oxford Text Archive copy (item 1111); CCAT's own copy is never read. The GRCBRENT-BHSA links drawn from it carry CC BY-NC-SA 3.0 and its source prefix.
 Charles	text	content	Public Domain	public-domain	text:CHARLES1913	Charles/LICENCE.md	-	The two SWORD modules' verses only; their notes and cross-references, Charles's chapter summaries and headings and the Greek and Latin fragments' translations are not read.
@@ -108,7 +110,7 @@ SBLGNT	text	content	CC-BY-4.0	permitted-with-attribution	text:SBLGNT	SBLGNT/LICE
 STEPBible	data	content	CC-BY-NC-3.0	non-commercial-only	dataset:tahot	STEPBible/LICENCE.md	-	Not passed on as files; readers are pointed to github.com/STEPBible.
 STEPBibleLexicons/TBESG.txt	lexicon	content	CC-BY-4.0	permitted-with-attribution	dataset:stepbible-tbesg	STEPBibleLexicons/LICENCE.md	-	-
 STEPBibleLexicons/TBESH.txt	lexicon	never	CC-BY-4.0; its BDB definitions need the Online Bible's permission	prohibited	-	STEPBibleLexicons/LICENCE.md	-	Quarantined until that permission is obtained and recorded.
-STEPBibleLexicons/TFLSJ-0-5624.txt	lexicon	never	CC-BY-4.0	permitted-with-attribution	-	STEPBibleLexicons/LICENCE.md	-	A candidate, not read.
+STEPBibleLexicons/TFLSJ-0-5624.txt	lexicon	content	CC-BY-4.0 (STEP Bible); the LSJ text it formats CC-BY-SA-4.0 (Perseus)	share-alike	dataset:stepbible-tflsj	STEPBibleLexicons/LICENCE.md	-	LSJ articles under Strong numbers; rows carrying Abbott-Smith or STEP's own note instead are not read.
 STEPBibleLexicons/TFLSJ-extra.txt	lexicon	never	CC-BY-4.0	permitted-with-attribution	-	STEPBibleLexicons/LICENCE.md	-	A candidate, not read.
 SamaritanPentateuch	text	content	CC-BY-NC-4.0	non-commercial-only	text:SP	SamaritanPentateuch/LICENCE.md	-	-
 Schlachter1951	text	content	Copyrighted; Free non-commercial distribution	non-commercial-only	text:SCH1951	Schlachter1951/LICENCE.md	-	-

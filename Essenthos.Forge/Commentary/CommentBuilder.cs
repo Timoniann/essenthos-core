@@ -9,7 +9,10 @@ namespace Essenthos.Core.Commentary;
 /// quotation <c>q</c>), each a run of pieces of text. A piece is a plain string, or an object holding the text as
 /// <c>t</c> with what marks it: <c>i</c> italic, <c>b</c> bold, <c>sc</c> small capitals, <c>sup</c> raised (a verse
 /// number in the printed text), <c>u</c> underlined, <c>n</c> a note of the author's, and <c>r</c> the verse it cites
-/// as [book, chapter] or [book, chapter, verse] or [book, chapter, verse, last chapter, last verse].
+/// as [book, chapter] or [book, chapter, verse] or [book, chapter, verse, last chapter, last verse]. A lexicon's article
+/// marks its Hebrew <c>he</c> and Greek <c>el</c>, names the Strong number a word is filed at as <c>s</c>, marks what the
+/// printed lexicon gives only on request (sources behind a date) <c>x</c>, and nests its senses: a block below the top
+/// level says how deep as <c>d</c>.
 ///
 /// <para>
 /// The markup readers drive it: they say where a block begins and ends and what marks the text they hand over, and
@@ -28,11 +31,14 @@ internal sealed class CommentBuilder
         Raised = 8,
         Underlined = 16,
         Note = 32,
+        Hebrew = 64,
+        Greek = 128,
+        Hidden = 256,
     }
 
-    private sealed record Piece(string Text, Mark Marks, int[]? Reference);
+    private sealed record Piece(string Text, Mark Marks, int[]? Reference, string? Strong);
 
-    private sealed record Block(string Kind, List<Piece> Pieces);
+    private sealed record Block(string Kind, List<Piece> Pieces, int Depth = 0);
 
     private static readonly JsonWriterOptions Options = new() { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
 
@@ -40,14 +46,15 @@ internal sealed class CommentBuilder
     private Block? open;
     private readonly List<Mark> marks = [];
     private int[]? reference;
+    private string? strong;
 
     public int Blocks => blocks.Count + (open is { Pieces.Count: > 0 } ? 1 : 0);
 
-    /// <summary>Ends the block being written and starts one of this kind.</summary>
-    public void Begin(string kind)
+    /// <summary>Ends the block being written and starts one of this kind, <paramref name="depth"/> levels below the top.</summary>
+    public void Begin(string kind, int depth = 0)
     {
         End();
-        open = new Block(kind, []);
+        open = new Block(kind, [], depth);
     }
 
     /// <summary>Ends the block being written; text after it starts a paragraph.</summary>
@@ -87,6 +94,9 @@ internal sealed class CommentBuilder
     /// <summary>The verse the text from here cites, until <see cref="Cite"/> is called with null.</summary>
     public void Cite(int[]? verse) => reference = verse;
 
+    /// <summary>The Strong number the text from here names, until <see cref="Name"/> is called with null.</summary>
+    public void Name(string? number) => strong = number;
+
     public void Text(string text)
     {
         if (text.Length == 0)
@@ -109,13 +119,13 @@ internal sealed class CommentBuilder
         }
 
         var current = marks.Aggregate(Mark.None, (all, mark) => all | mark);
-        if (pieces.Count > 0 && pieces[^1].Marks == current && SameReference(pieces[^1].Reference, reference))
+        if (pieces.Count > 0 && pieces[^1].Marks == current && SameReference(pieces[^1].Reference, reference) && pieces[^1].Strong == strong)
         {
             pieces[^1] = pieces[^1] with { Text = pieces[^1].Text + collapsed };
         }
         else
         {
-            pieces.Add(new Piece(collapsed, current, reference));
+            pieces.Add(new Piece(collapsed, current, reference, strong));
         }
     }
 
@@ -147,7 +157,7 @@ internal sealed class CommentBuilder
                 json.WriteStartArray(block.Kind);
                 foreach (var piece in block.Pieces)
                 {
-                    if (piece.Marks == Mark.None && piece.Reference is null)
+                    if (piece.Marks == Mark.None && piece.Reference is null && piece.Strong is null)
                     {
                         json.WriteStringValue(piece.Text);
                         continue;
@@ -161,6 +171,14 @@ internal sealed class CommentBuilder
                     Flag(json, piece.Marks, Mark.Raised, "sup");
                     Flag(json, piece.Marks, Mark.Underlined, "u");
                     Flag(json, piece.Marks, Mark.Note, "n");
+                    Flag(json, piece.Marks, Mark.Hebrew, "he");
+                    Flag(json, piece.Marks, Mark.Greek, "el");
+                    Flag(json, piece.Marks, Mark.Hidden, "x");
+                    if (piece.Strong is { } named)
+                    {
+                        json.WriteString("s", named);
+                    }
+
                     if (piece.Reference is { } verse)
                     {
                         json.WriteStartArray("r");
@@ -176,6 +194,11 @@ internal sealed class CommentBuilder
                 }
 
                 json.WriteEndArray();
+                if (block.Depth > 0)
+                {
+                    json.WriteNumber("d", block.Depth);
+                }
+
                 json.WriteEndObject();
             }
 

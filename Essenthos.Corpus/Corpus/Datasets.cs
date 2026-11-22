@@ -931,6 +931,42 @@ public static class Datasets
                 + "on as a copy but that others be referred to github.com/STEPBible, so a download of "
                 + "the corpus should point there rather than carry the glosses."),
 
+        // The scholarly lexicons shown beside Strong's on a Strong page, each article under the number its source files it at.
+        new("bdb", "Brown-Driver-Briggs, A Hebrew and English Lexicon of the Old Testament (Open Scriptures Hebrew Lexicon)",
+            "Francis Brown, S. R. Driver and Charles A. Briggs, 1906; marked up by the Open Scriptures Hebrew Bible project",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/openscriptures/HebrewLexicon",
+            "The standard Hebrew and Aramaic lexicon of the Old Testament, article by article, under the Strong numbers "
+            + "the Open Scriptures lexical index files each article at. The digital edition is still being completed: "
+            + "each article says whether it gives only the basic definitions, has its references added, or is whole.",
+            LexiconWorks.BdbSource, Glossary: true,
+            Obliges: "Attribution, under CC BY 4.0, to the Open Scriptures Hebrew Bible Project; the text of Brown, Driver "
+                + "and Briggs itself is in the public domain."),
+
+        new("abbott-smith", "Abbott-Smith, A Manual Greek Lexicon of the New Testament",
+            "G. Abbott-Smith, 1922; marked up in TEI by the translatable-exegetical-tools project (Daniel Owens and others)",
+            "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://github.com/translatable-exegetical-tools/Abbott-Smith",
+            "A concise lexicon of New Testament Greek, each article under the Strong number its digital edition gives it, "
+            + "with the Hebrew words the Septuagint renders by it.",
+            LexiconWorks.AbbottSmithSource, Glossary: true),
+
+        new("stepbible-tflsj", "Liddell-Scott-Jones Greek-English Lexicon, as formatted by STEP Bible (TFLSJ)",
+            "H. G. Liddell, R. Scott, H. S. Jones; digital text by the Perseus Digital Library; abbreviations expanded "
+            + "and dates added by STEP Bible, Tyndale House, Cambridge",
+            "CC BY-SA 4.0",
+            "https://creativecommons.org/licenses/by-sa/4.0/",
+            "https://github.com/STEPBible/STEPBible-Data",
+            "The great lexicon of classical Greek, its article on each word of the New Testament under the Strong number "
+            + "STEP Bible files it at, with the earliest writers who use each sense.",
+            LexiconWorks.LsjSource, Glossary: true, HolderUrl: StepBible,
+            Obliges: "Attribution to the Perseus Digital Library and to STEP Bible / Tyndale House, Cambridge. STEP Bible "
+                + "publishes its formatting under CC BY 4.0, but the LSJ text it formats is Perseus's, shared under CC BY-SA "
+                + "4.0, so the articles are passed on under ShareAlike; others are referred to github.com/STEPBible for "
+                + "the data itself."),
+
         // The verse numbering every text is placed by. Its header asks that changes come with a note of
         // them that those who use the result can read, and the corpus changes it: Changes is that note,
         // kept beside TvtmsCorrections and TvtmsSupplements, which make the changes.
