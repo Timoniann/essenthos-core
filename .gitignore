@@ -240,6 +240,8 @@ Resources/Essenthos/context/
 Resources/Essenthos/page-documents/
 Resources/Essenthos/record-cards/
 Resources/Essenthos/family-components/
+Resources/Essenthos/record-descriptors/
+Resources/Essenthos/release-facts.essx
 Resources/Essenthos/build/*
 !Resources/Essenthos/build/products.tsv
 !Resources/Essenthos/build/licences.tsv
