@@ -51,3 +51,15 @@ UBIO	*	*	aligner	all	precision	92.8	4401	unfoldingWord's Ukrainian interlinear (
 BSB	BHSA	OT	names	all	precision	100.0	297	the held-out part of the Berean's key	TSK-1086	2026-10-15	names placed first; 99.6% on the development part
 UBIO	BHSA	OT	composed	all	precision	79.3	300	a hand-scored stratified sample, 7 combinations x 4 bands (r128, seed 1607)	PRB-1607	2026-11-15	before the floors: 238 of 300 right, Esther left out; 91.6% weighted by the rows of each stratum
 UBIO	BHSA	OT	composed	all	precision	92.0	50	a hand re-read of kept links in the formerly mixed bands (r130, seed 1630)	PRB-1607	2026-11-15	after the floors; drawn from the weaker bands (direct-only from 0.90, two-route under 0.70), not in proportion: 46 right, 2 partly, 2 wrong
+YLT	BHSA	OT	aligner	all	precision	100.0	40	a hand-scored sample, 10 per confidence band (seed 1957)	PRB-1957	2026-11-22	the direct model's links inside Clear Bible's stated phrases (refinements)
+GNV1599	BHSA	OT	aligner	all	precision	52.5	40	a hand-scored sample, 10 per confidence band (seed 1957)	PRB-1957	2026-11-22	refused by the pair's floors
+BBE	BHSA	OT	aligner	all	precision	42.5	40	a hand-scored sample, 10 per confidence band (seed 1957)	PRB-1957	2026-11-22	refused by the pair's floors
+ALM1911	BHSA	OT	aligner	all	precision	27.3	33	a hand-scored sample, 10 per confidence band (seed 1957)	PRB-1957	2026-11-22	refused by the pair's floors
+UKR1871	BHSA	OT	aligner	all	precision	65.0	40	a hand-scored sample, 10 per confidence band (seed 1957)	PRB-1957	2026-11-22	refused by the pair's floors
+ASV	BHSA	OT	composed	all	precision	52.0	40	a hand-scored sample of the links only through the King James, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors
+ASV	BHSA	OT	composed	all	precision	52.0	40	a hand-scored sample of the links only through the King James and the Berean, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors
+JPS1917	BHSA	OT	composed	all	precision	57.0	40	a hand-scored sample of the links only through the King James, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors
+JPS1917	BHSA	OT	composed	all	precision	61.0	40	a hand-scored sample of the links only through the King James and the Berean, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors
+WEB	BHSA	OT	composed	all	precision	55.0	40	a hand-scored sample of the links only through the King James, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors
+WEB	BHSA	OT	composed	all	precision	48.0	40	a hand-scored sample of the links only through the King James and the Berean, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors
+UBIO	TR1894	NT	composed	all	precision	80.0	40	a hand-scored sample of the links only through the King James, 10 per band (seed 2026)	PRB-1957	2026-11-22	weighted by rows; refused by the pair's floors

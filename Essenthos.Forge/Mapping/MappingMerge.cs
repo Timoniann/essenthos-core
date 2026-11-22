@@ -8,7 +8,8 @@ namespace Essenthos.Core.Mapping;
 /// <item>rows citing a verse whose text moved since they were made are stale and stand aside; a model's rows
 /// stay out until the pair is aligned again (the owner's D1);</item>
 /// <item>a pair's rulings refuse shapes or words and pin shapes;</item>
-/// <item>a composed row under the floor the pair sets by hand for its combination of readings is refused (<see cref="HandFloors"/>);</item>
+/// <item>a composed row under the floor the pair sets by hand for its combination of readings, and an aligner row under the
+/// floor it sets for its own model, is refused (<see cref="HandFloors"/>);</item>
 /// <item>an approved EVIDENTIA verdict that a word has no counterpart takes that word out of a Strong pairing laid from
 /// another edition (<see cref="NarrowLaidStrong"/>);</item>
 /// <item>rows naming the same words are one link: the top-ranked row is its settled claim, the others its claims;</item>
@@ -712,9 +713,10 @@ internal static class MappingMerge
     }
 
     /// <summary>
-    /// Refuses the composed rows under the floor the pair sets by hand for their combination of readings, before the competition.
-    /// Nothing is made for the words they leave: a link of another method that the composed one would have withdrawn stands in
-    /// the competition as it would have without it, and a word nothing else claims stays bare until EVIDENTIA reads it.
+    /// Refuses the composed rows under the floor the pair sets by hand for their combination of readings, and the aligner rows
+    /// under the floor it sets for its own model, before the competition. Nothing is made for the words they leave: a link of
+    /// another method that the refused one would have withdrawn stands in the competition as it would have without it, and a
+    /// word nothing else claims stays bare until EVIDENTIA reads it.
     /// </summary>
     private static void Floor(Input input, List<Entry> entries)
     {
@@ -723,9 +725,11 @@ internal static class MappingMerge
             return;
         }
 
-        foreach (var entry in entries.Where(e => e.Status is null && e.Row.Method == MappingMethods.Composed))
+        var aligner = HandFloors.ForAligner(floors);
+        foreach (var entry in entries.Where(e => e.Status is null && e.Row.Method is MappingMethods.Composed or MappingMethods.Aligner))
         {
-            if (HandFloors.For(floors, entry.Row.Source) is { } floor && floor.Refuses(entry.Row.Confidence))
+            var floor = entry.Row.Method == MappingMethods.Aligner ? aligner : HandFloors.For(floors, entry.Row.Source);
+            if (floor is not null && floor.Refuses(entry.Row.Confidence))
             {
                 entry.Status = floor.Status;
             }
@@ -1181,11 +1185,12 @@ internal static class MappingMerge
                     $"rows of verses whose text moved, which no producer makes again: {input.Pair} has no {method} rows of this source there"));
         }
 
-        var crossed = entries.Count(e => e.Index >= 0 && e.Status == MappingStatus.WithdrawnBy(CrossingRule.Name));
-        if (crossed > 0)
+        // A crossing is the method's to draw again that drew it: a composed link's is compose, never align.
+        foreach (var group in entries.Where(e => e.Index >= 0 && e.Status == MappingStatus.WithdrawnBy(CrossingRule.Name))
+                     .GroupBy(e => MappingMethods.Regenerates(e.Row.Method)).OrderBy(g => g.Key, StringComparer.Ordinal))
         {
-            report.Add(new ReportRow("needs", CrossingRule.Name, MappingMethods.Regenerates(MappingMethods.Aligner), crossed,
-                $"machine links joining verses no verse link joins were withdrawn; {input.Pair} needs {MappingMethods.Regenerates(MappingMethods.Aligner)} again"));
+            report.Add(new ReportRow("needs", CrossingRule.Name, group.Key, group.Count(),
+                $"machine links joining verses no verse link joins were withdrawn; {input.Pair} needs {group.Key} again"));
         }
 
         report.Add(new ReportRow("links", string.Empty, string.Empty, final.Count(r => r.Settled), "links of the final"));

@@ -33,8 +33,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <para>
 /// <strong>A text's own names are what the earlier methods carry.</strong> What a word is already named, which the
 /// consensus writes nothing over, is the names projection carried over the method files that come before the names
-/// (<see cref="NamesFirstSource.Before"/>: stated, Strong, aligner, composed, lexical, possessive) of the pairs names-pairs
-/// places, never over the final: the final holds the names this file places, so reading it would make the graph read
+/// (<see cref="NamesFirstSource.Before"/>: stated, Strong, aligner, composed, lexical, possessive; not a row the pair's hand floors
+/// refuse, <see cref="HandFloors.Refuses"/>) of the pairs names-pairs places, never over the final: the final holds the names this file places, so reading it would make the graph read
 /// itself. Such a word is linked in the pair already, so names-pairs never places it; a word named only over another pair
 /// (Brenton over his Greek) keeps the consensus, which names-pairs needs there. A name carried by EVIDENTIA's or the names'
 /// own links does not keep a word from the consensus. The measured texts are scored against what their stated and Strong
@@ -385,7 +385,7 @@ internal static class NameConsensusPass
             foreach (var (pair, _, _) in projection.ReferencePairs(slug))
             {
                 IEnumerable<string> methods = NamesFirstSource.Placed.Contains(pair) ? NamesFirstSource.Before : Measured.Contains(slug) ? StatedMethods : [];
-                read.UnionWith(methods.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>());
+                read.UnionWith(methods.Append(HandFloors.Name).Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>());
             }
 
             return read;

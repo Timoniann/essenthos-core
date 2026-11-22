@@ -7,7 +7,9 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// The possessive a Slavic translation spends beside a word linked to a Hebrew word with a pronominal suffix
 /// (<see cref="PossessivePass"/> has the rule and its reasons), read from both texts' words and the pair's other
-/// method files (<see cref="PairLinkFiles"/>) instead of the links a database held.
+/// method files (<see cref="PairLinkFiles"/>) instead of the links a database held; a row the pair's hand floors refuse is no
+/// link here (<see cref="HandFloors.Refuses"/>): UKR1871-BHSA, given a model it holds refused, lost «наших» and «його» to its
+/// guesses (PRB-1957).
 /// </summary>
 internal sealed class PossessiveSource : IPairSource
 {
@@ -21,7 +23,8 @@ internal sealed class PossessiveSource : IPairSource
 
     public bool Makes(string source) => source == PossessivePass.Source;
 
-    public IEnumerable<string> Inputs(ProductStore store, string pair) => PairLinkFiles.Inputs(store, pair, Method);
+    public IEnumerable<string> Inputs(ProductStore store, string pair) =>
+        PairLinkFiles.Inputs(store, pair, Method).Concat(new[] { store.Find(MappingProducts.Of(pair, HandFloors.Name)) }.OfType<string>());
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
@@ -33,7 +36,8 @@ internal sealed class PossessiveSource : IPairSource
 
         var linked = new Dictionary<int, SortedSet<int>>();
         var reaching = new HashSet<int>();
-        foreach (var row in PairLinkFiles.Rows(texts.Store, pair, Method))
+        var floors = HandFloors.Read(texts.Store, pair);
+        foreach (var row in PairLinkFiles.Rows(texts.Store, pair, Method).Where(row => !HandFloors.Refuses(floors, row)))
         {
             var from = PairLinkFiles.Words(row.From, translationIds);
             reaching.UnionWith(from);

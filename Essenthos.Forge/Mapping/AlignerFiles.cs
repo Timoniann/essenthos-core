@@ -658,6 +658,11 @@ internal sealed class AlignerSource : IPairSource
         new("GEEZ81", "NESTLE1904"),
         new("GEEZ81", "RP2018"),
 
+        // Young's against the Hebrew directly: Clear Bible states it in phrases, and the model's links inside them stand as
+        // refinements (104,815 of them; 40 of 40 right by hand across every band). The other composed pairs given a model of their
+        // own read 9 to 21 of 40 and hold it refused in their floors.
+        new("YLT", "BHSA"),
+
         // Brenton's Greek against the Hebrew directly, both by lexeme, the pairs both directions of the model name, trained on the
         // whole Old Testament and written for the four books CATSS's Oxford copy lacks (Esther, Job, Psalms, Proverbs). Measured
         // against CATSS on the books it covers, on the Greek words the composed links left bare: 1-16 97.2% from 0.30, 21-39

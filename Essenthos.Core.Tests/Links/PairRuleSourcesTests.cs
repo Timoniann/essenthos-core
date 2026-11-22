@@ -43,6 +43,26 @@ public sealed class PairRuleSourcesTests : IDisposable
             row.From == "1.1:1.3" && row.To == "1.1:1.2" && row.Method == MappingMethods.Possessive && row.Confidence == 0.8);
     }
 
+    /// <summary>
+    /// A possessive only an aligner the floors refuse reaches is still linked (PRB-1957): UKR1871-BHSA, given a model it holds
+    /// refused, lost «наших» and «його» to its guesses.
+    /// </summary>
+    [Fact]
+    public void A_possessive_only_a_refused_aligner_reaches_is_linked_all_the_same()
+    {
+        var store = new ProductStore(_root);
+        Plain(store, "RUSV", "rus", "translation", ("1.1:1", ["и", "сына", "своего"]));
+        Text(store, "BHSA", "hbo", "critical-edition", ("1.1:1", [("וַ", null), ("בְּנֹו", Suffix)]));
+        Method(store, "RUSV-BHSA", MappingMethods.Composed, Row("1.1:1.2", "1.1:1.2"));
+        Method(store, "RUSV-BHSA", MappingMethods.Aligner, Row("1.1:1.3", "1.1:1.1"));
+        Write(store, "RUSV-BHSA", MappingMethods.Possessive).Should().BeEmpty("an aligner the floors admit reaches the word");
+        File.WriteAllLines(Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, MappingProducts.Folder, "RUSV-BHSA", "floors.tsv"),
+            ["# producer   by hand", "readings\tfrom\tright\tscored\tbasis", "aligner\trefused\t0.67\t40\t26 of 40 right"]);
+
+        Write(store, "RUSV-BHSA", MappingMethods.Possessive).Should().ContainSingle()
+            .Which.Should().Match<MappingRow>(row => row.From == "1.1:1.3" && row.To == "1.1:1.2");
+    }
+
     private static List<MappingRow> Write(ProductStore store, string pair, string method)
     {
         var outcome = PairSources.Write(new ProductTexts(store), method, pair, force: true, _ => { });

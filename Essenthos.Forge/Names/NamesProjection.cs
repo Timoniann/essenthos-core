@@ -609,7 +609,8 @@ internal sealed partial class NamesProjection
     /// <summary>
     /// The links of a pair names are carried over: each link of its final once, as sure as the claim of it that stands furthest
     /// above its method's floor (every claim of a link names the same words, so an EVIDENTIA verdict settling a link at its
-    /// kind's 0.4 does not make the aligner's 0.98 for the same words worth less); or every row of the method files named.
+    /// kind's 0.4 does not make the aligner's 0.98 for the same words worth less); or every row of the method files named but those
+    /// the pair's hand floors refuse (<see cref="HandFloors.Refuses"/>), which the merge never lets stand.
     /// </summary>
     private IEnumerable<(string From, string To, double? Confidence, string Method)> Links(string pair, IReadOnlyList<string>? methods)
     {
@@ -643,10 +644,11 @@ internal sealed partial class NamesProjection
             yield break;
         }
 
+        var floors = HandFloors.Read(Store, pair);
         foreach (var method in methods.Where(method => Store.Exists(MappingProducts.Of(pair, method))))
         {
             using var reader = Store.Open(MappingProducts.Of(pair, method), MappingRow.Schema);
-            foreach (var row in reader.Rows())
+            foreach (var row in reader.Rows().Where(row => !HandFloors.Refuses(floors, row)))
             {
                 yield return (row.From, row.To, row.Confidence, row.Method);
             }
