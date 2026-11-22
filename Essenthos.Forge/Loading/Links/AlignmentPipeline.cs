@@ -122,7 +122,8 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         Dictionary<(int, int, int), List<Word>> target,
         CancellationToken cancellationToken,
         IReadOnlyDictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>>? anchors = null,
-        bool shareAnchorTokens = false)
+        bool shareAnchorTokens = false,
+        string symmetrisation = Och)
     {
         var shared = shareAnchorTokens && anchors is not null
             ? SharedAnchorTokens(source, target, anchors)
@@ -135,6 +136,11 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         if (anchors is not null)
         {
             inputs.Add((AnchorFile, AnchorLines(addresses, anchors)));
+        }
+
+        if (symmetrisation != Och)
+        {
+            inputs.Add(("symmetrisation.txt", [symmetrisation]));
         }
 
         var folder = await Answer(workspace, modelType, inputs, AlignmentFile, async training =>
@@ -156,7 +162,7 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
             train.Add(Path.Combine(training, TargetFile));
             await Machine([.. train], cancellationToken);
             await AlignWhole(modelType, modelPrefix, Path.Combine(training, SourceFile),
-                Path.Combine(training, TargetFile), Path.Combine(training, AlignmentFile), cancellationToken);
+                Path.Combine(training, TargetFile), Path.Combine(training, AlignmentFile), cancellationToken, symmetrisation);
         });
 
         return Path.Combine(folder, AlignmentFile);
@@ -1271,6 +1277,14 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         : !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma
         : !string.IsNullOrWhiteSpace(word.Surface) ? word.Surface.ToLowerInvariant()
         : word.Strong ?? string.Empty;
+
+    /// <summary>
+    /// A word by its dictionary form where the text gives one: BHSA's lexeme, a Greek edition's lemma. Between two originals
+    /// both sides carry one, so a Hebrew word met with and without its suffix, or a Greek verb in twenty forms, is one word to
+    /// the model; a word without a lemma falls back to <see cref="Comparable"/>.
+    /// </summary>
+    internal static string Lexeme(WordForms word) =>
+        !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma.ToLowerInvariant() : Comparable(word);
 
     /// <param name="Strong">
     /// The last resort, and the only form a zero morpheme has.

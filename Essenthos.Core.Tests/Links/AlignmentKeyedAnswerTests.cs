@@ -221,6 +221,34 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     }
 
     [Fact]
+    public async Task APairJoinedByIntersectionReadsItsOwnAnswerInItsOwnWorkspaceAndWritesOnlyTheBooksNamed()
+    {
+        var workspace = Path.Combine(_root, "Alignments", "BSB-KJV-both");
+        var keyed = Path.Combine(workspace, AlignmentPipeline.Key("ibm4",
+            [("source.txt", Lines(Verses)), ("target.txt", Lines(Verses)), ("symmetrisation.txt", [AlignmentPipeline.BothDirections])]));
+        Store(keyed, Lines(Verses), Lines(Verses), Straight);
+        File.WriteAllLines(Path.Combine(keyed, "symmetrisation.txt"), [AlignmentPipeline.BothDirections]);
+        var files = new AlignerFiles(new ProductTexts(_store), new AlignmentPipeline(null, NullLogger<AlignmentPipeline>.Instance) { Trains = false });
+        var pair = new AlignedPair("BSB", "KJV", Symmetrisation: AlignmentPipeline.BothDirections, Workspace: "BSB-KJV-both", Note: "measured");
+
+        var (rows, _) = await files.Align(pair with { Books = new HashSet<int> { 1 } });
+        var (none, _) = await files.Align(pair with { Books = new HashSet<int> { 2 } });
+
+        rows.Should().HaveCount(6).And.OnlyContain(row => row.Source.Contains("symmetrised intersection") && row.Source.EndsWith("; measured"));
+        none.Should().BeEmpty("the model reads every verse, and only the target's books named are written");
+        Directory.Exists(_workspace).Should().BeFalse("the pair's own workspace is another run's");
+    }
+
+    [Fact]
+    public void ALexemeIsTheWordsDictionaryFormWhereItHasOne()
+    {
+        AlignmentPipeline.Lexeme(new AlignmentPipeline.WordForms("בָּרָ֣א", "ברא", "ברא", "H1254", "hbo", 3)).Should().Be("ברא");
+        AlignmentPipeline.Lexeme(new AlignmentPipeline.WordForms("Ἐν", "ἐν", null, null, "grc", 1)).Should().Be("ἐν");
+        AlignmentPipeline.Lexeme(new AlignmentPipeline.WordForms("λόγοις", null, null, null, "grc", 2))
+            .Should().Be(AlignmentPipeline.Comparable(new AlignmentPipeline.WordForms("λόγοις", null, null, null, "grc", 2)));
+    }
+
+    [Fact]
     public void AModelCountsOnlyWithEachDirectionsConfigurationAndATableThatHoldsSomething()
     {
         var prefix = Path.Combine(_workspace, "model", "GEEZ81");

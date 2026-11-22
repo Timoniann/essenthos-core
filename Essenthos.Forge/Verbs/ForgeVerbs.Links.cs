@@ -27,6 +27,11 @@ internal static partial class ForgeVerbs
             Model = Option(args, "--model") ?? declared.Model,
             Minimum = Option(args, "--min") is { } min ? double.Parse(min, CultureInfo.InvariantCulture) : declared.Minimum,
             Outside = Option(args, "--outside") is { } outside ? Identifier(outside) : declared.Outside,
+            Symmetrisation = Option(args, "--symmetrisation") ?? declared.Symmetrisation,
+            Lexemes = declared.Lexemes || args.Contains("--lexemes"),
+            Books = args.Contains("--all-books") ? null
+                : Option(args, "--books") is { } books ? books.Split(',').Select(int.Parse).ToHashSet() : declared.Books,
+            Workspace = Option(args, "--workspace") ?? declared.Workspace,
         };
 
         // --verses: only the rows of FROM words in these verses are written again, every other row of the file stays (PRB-1681).
