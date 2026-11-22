@@ -1757,12 +1757,13 @@ internal static class ChapterReading
         var superscriptions = await Superscriptions(db, textId, canonicalBook, canonicalChapter, cancellationToken);
 
         // A verse whose superscription the reader shows in the title's row and which prints a number for the title as well
-        // as for the line after it gives the title its first number: the Synodal's Psalm 9:1 states 9:1 and 9:2.
+        // as for the line after it gives the title every number but the last, which opens the line: the Synodal's Psalm 9:1
+        // states 9:1 and 9:2, its Psalm 51:1 50:1 and 50:2 over the two halves of the title and 50:3 over the line.
         var titled = rows
             .Where(row => superscriptions.ContainsKey(row.VerseId))
             .GroupBy(row => row.VerseId)
             .Where(group => group.Count() > 1)
-            .Select(group => group.MinBy(row => row.Position)!)
+            .SelectMany(group => group.OrderBy(row => row.Position).SkipLast(1))
             .ToHashSet();
         rows = [.. rows.Select(row => titled.Contains(row) ? row with { Canonical = TitleRow } : row)];
 
