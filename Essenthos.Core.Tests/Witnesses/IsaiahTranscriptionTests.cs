@@ -102,6 +102,17 @@ public class First1KGreekReaderTests
              <div type="textpart" subtype="verse" n="3"><p>ὁ &lt;υἱός&gt; σου</p></div>
              </div>
              """).Should().Equal("48.7.3 ὁ", "48.7.3 <", "48.7.3 υἱός>", "48.7.3 σου");
+
+    /// <summary>Swete's § and ¶ are marks of the page wherever the transcription set them, and a sign alone is no word.</summary>
+    [Fact]
+    public void SwetesSignsAreNotLetters() =>
+        First1KGreekReader.WithoutSigns(
+            [
+                "48.3.8 §διότι", "48.9.19 κατακεκαυμένος.¶", "48.10.12 νοῦν", "48.10.12 §", "48.10.12 τὸν",
+                "48.44.28 θεμελιώσω", "48.44.28 ¶.", "48.45.1 ;",
+            ])
+            .Should().Equal(
+                "48.3.8 διότι", "48.9.19 κατακεκαυμένος.", "48.10.12 νοῦν", "48.10.12 τὸν", "48.44.28 θεμελιώσω.", "48.45.1 ;");
 }
 
 public class EditionRepairTests
@@ -178,7 +189,7 @@ public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
         var opening = Swete.Text(swete.Verse(Isaiah, 1, 1));
 
         opening.Should().StartWith("ΟΡΑΣΙΣ ἣν").And.Contain("Ὀζείου").And.NotContain("προφήτης");
-        Book.Position.Should().Be(45, "Swete prints Isaiah after the Twelve");
+        Book.Position.Should().Be(46, "Swete prints Isaiah after the Twelve");
     }
 
     /// <summary>
@@ -227,6 +238,18 @@ public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
         surfaces.Where(s => s.Any(char.IsAsciiDigit) && s.Any(char.IsLetter))
             .Should().BeEmpty();
         surfaces.Where(s => s.Any(char.IsAsciiLetter)).Should().Equal("nἅμα");
+    }
+
+    /// <summary>Swete's signs for where another uncial begins or breaks off are not letters of the words beside them.</summary>
+    [Fact]
+    public void NoWordCarriesSwetesSigns()
+    {
+        Book.Chapters.SelectMany(c => c.Verses).SelectMany(v => v.Words)
+            .Where(word => (word.Surface + word.Trailer).Any(c => c is '§' or '¶'))
+            .Select(word => word.Surface + word.Trailer)
+            .Should().BeEmpty();
+        Swete.Text(swete.Verse(Isaiah, 3, 8)).Should().Contain("ἀπειθοῦντες· διότι νῦν");
+        Swete.Text(swete.Verse(Isaiah, 29, 11)).Should().Contain("Οὐ δύναμαι ἀναγνῶναι, ἐσφράγισται");
     }
 
     /// <summary>

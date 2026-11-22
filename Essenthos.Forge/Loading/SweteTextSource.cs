@@ -43,15 +43,21 @@ internal static class SweteTextSource
     private const string Isaiah = "48.Isaias";
 
     /// <summary>
+    /// Ecclesiastes' name among the edition's works. No file of that name exists; the book is read
+    /// from <see cref="SweteEcclesiastes.File"/>.
+    /// </summary>
+    private const string Ecclesiastes = "30.Ecclesiastes";
+
+    /// <summary>
     /// The files this edition is read from, in the order Swete prints them, with each one's place
     /// in the shared canon.
     ///
     /// The number in a file name is the work's number in the TLG catalogue of the Septuagint rather
     /// than any canonical order, which is why 37 is Amos and 39 is Joel: the Twelve stand in the
     /// Greek order and the shared canon is alphabetical in Hebrew order. The gaps are works nobody
-    /// has transcribed — 07 and 09 are the second Greek forms of Joshua and Judges, 22 is the
-    /// Sinaiticus Tobit, and 30 is Ecclesiastes, which is the one book of the Hebrew canon this
-    /// edition cannot supply.
+    /// has transcribed — 07 and 09 are the second Greek forms of Joshua and Judges, and 22 is the
+    /// Sinaiticus Tobit. 30, Ecclesiastes, was transcribed and then lost from the repository the
+    /// files are built from, and is read from that transcription itself (<see cref="SweteEcclesiastes"/>).
     ///
     /// Three files this folder holds are deliberately not here: the Old Greek of Susanna, Daniel and
     /// Bel. Swete prints them beside the text he takes from Vaticanus, and Vaticanus reads Theodotion
@@ -74,7 +80,7 @@ internal static class SweteTextSource
         ("17.Esdras_A", 68), ("18.Esdras_B", SecondEsdras.Ezra), ("19.Esther", 17),
         ("20.Judith", 71), ("21.Tobias", 70), ("23.Machabaeorum_i", 73),
         ("24.Machabaeorum_ii", 74), ("25.Machabaeorum_iii", 80), ("26.Machabaeorum_iv", 81),
-        ("27.Psalmi", 19), (SweteOdes.File, 83), ("29.Proverbia", 20), ("31.Canticum", 22), ("32.Job", 18),
+        ("27.Psalmi", 19), (SweteOdes.File, 83), ("29.Proverbia", 20), (Ecclesiastes, 21), ("31.Canticum", 22), ("32.Job", 18),
         ("33.Sapientia_Salomonis", 75), ("34.Ecclesiasticus", 72), ("35.Psalmi_Salomonis", 84),
         ("36.Osee", 28), ("37.Amos", 30), ("38.Michaeas", 33), ("39.Joel", 29),
         ("40.Abdias", 31), ("41.Jonas", 32), ("42.Nahum", 34), ("43.Habacuc", 35),
@@ -190,7 +196,8 @@ internal static class SweteTextSource
                      + "digitisation of the edition and not on the edition, and it is an obligation to "
                      + "credit and to share alike anything derived from these files. "
                      + SweteNotes.Restored + " " + SweteNotes.Letters + " " + SweteNotes.Page + " "
-                     + SweteNotes.Figures + " " + SweteNotes.Divisions + " " + SweteIsaiah.Note + " "
+                     + SweteNotes.Figures + " " + SweteNotes.Divisions + " " + SweteNotes.Psalms + " " + SweteIsaiah.Note + " "
+                     + SweteEcclesiastes.Note + " "
                      + SweteOdes.Note + " " + SweteNotes.ChapterMarkers + " " + SweteNotes.Settled + " "
                      + SweteNotes.Margin,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
@@ -277,9 +284,12 @@ internal static class SweteTextSource
 
         foreach (var (file, canonical) in Canon)
         {
-            var path = file == Isaiah
-                ? Path.Combine(folder, SweteIsaiah.Folder, SweteIsaiah.File)
-                : Path.Combine(folder, FileName(file));
+            var path = file switch
+            {
+                Isaiah => Path.Combine(folder, SweteIsaiah.Folder, SweteIsaiah.File),
+                Ecclesiastes => Path.Combine(folder, SweteIsaiah.Folder, SweteEcclesiastes.File),
+                _ => Path.Combine(folder, FileName(file)),
+            };
             if (!File.Exists(path))
             {
                 throw new InvalidOperationException(
@@ -288,9 +298,12 @@ internal static class SweteTextSource
                     + "absent from a witness reads as a book the witness does not contain.");
             }
 
-            var lines = file == Isaiah
-                ? SweteIsaiah.Lines(folder, corrections)
-                : EditionRepairs.Apply(file, Number(file), File.ReadLines(path), corrections);
+            var lines = file switch
+            {
+                Isaiah => SweteIsaiah.Lines(folder, corrections),
+                Ecclesiastes => SweteEcclesiastes.Lines(folder, corrections),
+                _ => EditionRepairs.Apply(file, Number(file), File.ReadLines(path), corrections),
+            };
             if (file == SweteOdes.File)
             {
                 books.Add(Book(canonical, ++position, SweteOdes.Chapters(SweteReader.Read(SweteOdes.Lines(lines), keepChapterMarkers))));

@@ -129,7 +129,7 @@ public class SweteUnnumberedTests
     }
 }
 
-/// <summary>Read once; fifty-two books of half a million tokens is a few seconds.</summary>
+/// <summary>Read once; fifty-four books of half a million tokens is a few seconds.</summary>
 public sealed class Swete
 {
     internal TextSource Source { get; } = SweteTextSource.Read(TestResources.SweteFolder, ShippedCorrections.Swete);
@@ -155,17 +155,17 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void TheWholeEditionIsRead()
     {
-        swete.Source.Books.Should().HaveCount(53);
-        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1121);
+        swete.Source.Books.Should().HaveCount(54);
+        swete.Source.Books.Sum(book => book.Chapters.Count).Should().Be(1133);
         swete.Source.Books.Sum(book => book.Chapters.Sum(chapter => chapter.Verses.Count))
-            .Should().Be(28790);
+            .Should().Be(29024);
         swete.Source.Books
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(575777, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
+            .Should().Be(580378, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
                                   + "place of one, the running head and apparatus read into Judges 18:8 and 1 Samuel 8:2 and 11:11 are not Swete's "
-                                  + "text, and of the margin's letters read into nine verses six stood as words");
+                                  + "text, of the margin's letters read into nine verses six stood as words, and σκηνῆς of Genesis 18:2 is one");
     }
 
     /// <summary>
@@ -176,10 +176,10 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryBookKeepsTheEditionOwnOrderAndTheSharedOrdinal()
     {
-        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 53));
+        swete.Source.Books.Select(book => book.Position).Should().Equal(Enumerable.Range(1, 54));
         swete.Source.Books.Select(book => book.CanonicalOrdinal).Should().OnlyHaveUniqueItems();
-        swete.Book(30).Position.Should().Be(34, "Amos stands second among the Twelve here");
-        swete.Book(29).Position.Should().Be(36, "and Joel fourth");
+        swete.Book(30).Position.Should().Be(35, "Amos stands second among the Twelve here");
+        swete.Book(29).Position.Should().Be(37, "and Joel fourth");
     }
 
     /// <summary>
@@ -455,6 +455,11 @@ public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
         Swete.Text(swete.Verse(Genesis, 15, 21)).Should().Be(
             "καὶ τοὺς Ἀμορραίους καὶ τοὺς Χαναναίους καὶ τοὺς Εὑοίους καὶ τοὺς Γεργεσαίους καὶ τοὺς Ἰεβουσαίους.");
     }
+
+    /// <summary>Read off the page, vol. 1 p. 26, which divides σκη-νῆς at a line end where the transcription lost the hyphen.</summary>
+    [Fact]
+    public void AWordTheTranscriptionDividedAtALineEndIsOne() =>
+        Swete.Text(swete.Verse(Genesis, 18, 2)).Should().Contain("ἀπὸ τῆς θύρας τῆς σκηνῆς αὐτοῦ, καὶ προσεκύνησεν");
 
     /// <summary>Read off the page, vol. 2 p. 337: the psalm's last verse is its sixteenth, as in Brenton.</summary>
     [Fact]

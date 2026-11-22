@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Swete;
 
@@ -48,7 +49,8 @@ internal static class SweteAlexandrinus
 
     public static string File(int work) => $"tlg0527.tlg{work:000}.1st1K-grc1.xml";
 
-    public static IReadOnlyList<SweteChapter> Read(string folder, int work)
+    /// <summary>A book as far as it is Alexandrinus, with the <c>tokens</c> rows of the codex's corrections file addressed to it made.</summary>
+    public static IReadOnlyList<SweteChapter> Read(string folder, int work, TextCorrections corrections)
     {
         var path = Path.Combine(folder, Folder, File(work));
         if (!System.IO.File.Exists(path))
@@ -58,7 +60,8 @@ internal static class SweteAlexandrinus
                 + "loading the codex without it would leave out a book it has.");
         }
 
-        return SweteReader.Read(Extant(First1KGreekReader.Lines(path, work), work == Genesis)).Chapters;
+        return SweteReader.Read(
+            EditionRepairs.Apply(File(work), work, Extant(First1KGreekReader.Lines(path, work), work == Genesis), corrections)).Chapters;
     }
 
     /// <summary>The lines of the edition that are Alexandrinus, with the editor's signs taken out.</summary>
@@ -104,9 +107,9 @@ internal static class SweteAlexandrinus
 
                     continue;
                 }
-
-                token = token.TrimStart(Opens, Closes);
             }
+
+            token = First1KGreekReader.Unsigned(token);
 
             var kept = new System.Text.StringBuilder(token.Length);
             var outside = 0;

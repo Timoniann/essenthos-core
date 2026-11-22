@@ -28,7 +28,8 @@ public class AlexandrinusTests
     private const int ThirdJohn = 64;
 
     private static readonly Lazy<TextSource> Source =
-        new(() => AlexandrinusTextSource.Read(TestResources.Folder("."), ShippedCorrections.Of(OttleyTextSource.Slug)));
+        new(() => AlexandrinusTextSource.Read(
+            TestResources.Folder("."), ShippedCorrections.Of(OttleyTextSource.Slug), ShippedCorrections.Of(AlexandrinusTextSource.Slug)));
 
     private static string Folder => TestResources.Folder(AlexandrinusTextSource.Folder);
 
@@ -142,6 +143,23 @@ public class AlexandrinusTests
         Text(Genesis, 1, 1).Should().Be("ΕΝ ΑΡΧΗ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν.");
     }
 
+    /// <summary>Swete's signs for where the other uncials begin and break off are not text, wherever the transcription set them.</summary>
+    [Fact]
+    public void NoWordOfSwetesPrintingCarriesHisSigns()
+    {
+        Source.Value.Books.Where(book => book.CanonicalOrdinal is Genesis or 73 or 74 or 80 or 81)
+            .SelectMany(book => book.Chapters).SelectMany(chapter => chapter.Verses).SelectMany(verse => verse.Words)
+            .Where(word => (word.Surface + word.Trailer).Any(c => c is '§' or '¶'))
+            .Select(word => word.Surface + word.Trailer)
+            .Should().BeEmpty();
+        Text(Genesis, 3, 5).Should().EndWith("καλὸν καὶ πονηρόν.");
+    }
+
+    /// <summary>Swete, vol. 1 (1901), p. 26, divides σκη-νῆς at a line end, where the transcription set a sign for the hyphen.</summary>
+    [Fact]
+    public void AWordTheTranscriptionDividedAtALineEndIsOne() =>
+        Text(Genesis, 18, 2).Should().Contain("ἀπὸ τῆς θύρας τῆς σκηνῆς αὐτοῦ, καὶ προσεκύνησεν");
+
     /// <summary>
     /// Maccabees is read from First1KGreek's encoding, which is where the files Swete is loaded from
     /// were converted from, so both must address the same verses.
@@ -153,7 +171,7 @@ public class AlexandrinusTests
     [InlineData(26, "26.Machabaeorum_iv")]
     public void MaccabeesAddressesTheVersesSweteDoes(int work, string file)
     {
-        var fromTei = SweteAlexandrinus.Read(Folder, work);
+        var fromTei = SweteAlexandrinus.Read(Folder, work, ShippedCorrections.Of(AlexandrinusTextSource.Slug));
         var fromSwete = SweteReader.Read(File.ReadLines(Path.Combine(TestResources.SweteFolder, file + ".txt"))).Chapters;
 
         fromTei.SelectMany(chapter => chapter.Verses.Select(verse => (chapter.Number, verse.Number, verse.Label)))

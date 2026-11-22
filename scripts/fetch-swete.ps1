@@ -35,6 +35,10 @@
     them. Each states its licence in its own header, and that statement is checked before either
     is kept.
 
+    So is Swete's Ecclesiastes, which the upstream has no file 30 for: First1KGreek committed its
+    transcription in 2017 and a merge dropped it two days after its last correction, so it is
+    fetched from that last commit.
+
 .EXAMPLE
     ./scripts/fetch-swete.ps1
 #>
@@ -69,6 +73,12 @@ $Isaiahs = @(
     @{ Source = 'tlg0527.tlg048.1st1K-grc1.xml'; Target = 'isaiah-swete-1905.xml'; Bytes = 688809 },
     @{ Source = 'tlg0527.tlg048.1st1K-grc2.xml'; Target = 'isaiah-ottley-1904.xml'; Bytes = 520194 }
 )
+# Swete's Ecclesiastes, at the last commit that changed it before a merge dropped it from the repository.
+$EcclesiastesCommit = '2d023b8335f0b5c5ddaaea6ced4f751f907c4ab8'
+$Ecclesiastes = @{
+    Url = "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/$EcclesiastesCommit/data/tlg0527/tlg030/tlg0527.tlg030.opp-grc2.xml";
+    Source = 'tlg0527.tlg030.opp-grc2.xml'; Target = 'ecclesiastes-swete-1896.xml'; Bytes = 101697
+}
 $ExpectedTeiLicence = 'Creative Commons Attribution-ShareAlike 4.0 International'
 $ExpectedUpstreamLicence = 'Attribution-ShareAlike 4.0 International'
 $ExpectedZenodoLicence = 'CC-BY-SA-4.0'
@@ -152,24 +162,26 @@ try {
 
     $transcribed = Join-Path $target 'First1KGreek'
     New-Item -ItemType Directory -Force -Path $transcribed | Out-Null
-    foreach ($isaiah in $Isaiahs) {
-        $staged = Join-Path $staging $isaiah.Target
-        Invoke-WebRequest -Uri "$First1KGreekRaw/$($isaiah.Source)" -OutFile $staged `
+    $teis = @($Isaiahs | ForEach-Object { $_ + @{ Url = "$First1KGreekRaw/$($_.Source)" } }) + @($Ecclesiastes)
+    foreach ($tei in $teis) {
+        $staged = Join-Path $staging $tei.Target
+        Invoke-WebRequest -Uri $tei.Url -OutFile $staged `
             -Headers @{ 'User-Agent' = 'essenthos' }
         $bytes = (Get-Item $staged).Length
-        if ($bytes -ne $isaiah.Bytes) {
-            throw "$($isaiah.Source) is $bytes bytes where it was $($isaiah.Bytes) at $First1KGreekCommit. " +
+        if ($bytes -ne $tei.Bytes) {
+            throw "$($tei.Source) is $bytes bytes where it was $($tei.Bytes) at its pinned commit. " +
                   "A pinned file cannot change size; the download is partial or not the file. It was not kept."
         }
         # The header's <licence> element runs over a line break, so the whitespace is folded first.
         $header = ((Get-Content $staged -Raw -Encoding UTF8) -split '</teiHeader>')[0] -replace '\s+', ' '
         if ($header -notmatch [regex]::Escape($ExpectedTeiLicence)) {
-            throw "$($isaiah.Source) no longer states `"$ExpectedTeiLicence`" in its header. Read what " +
+            throw "$($tei.Source) no longer states `"$ExpectedTeiLicence`" in its header. Read what " +
                   "it says and record it in Resources/Swete/LICENCE.md before keeping it."
         }
-        Move-Item -Path $staged -Destination (Join-Path $transcribed $isaiah.Target) -Force
+        Move-Item -Path $staged -Destination (Join-Path $transcribed $tei.Target) -Force
     }
     Write-Host "  Isaiah from First1KGreek at $($First1KGreekCommit.Substring(0, 7)): Swete's and Ottley's, both CC BY-SA 4.0 in their headers"
+    Write-Host "  Ecclesiastes from First1KGreek at $($EcclesiastesCommit.Substring(0, 7)): Swete's, CC BY-SA 4.0 in its header"
 
     $size = (Get-ChildItem $target -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1MB
     Write-Host ("{0:N0} tokens in {1} books, {2:N1} MB in {3}" -f $tokens, $files.Count, $size, $target)

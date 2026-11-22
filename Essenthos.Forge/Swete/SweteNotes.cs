@@ -13,12 +13,13 @@ internal static class SweteNotes
         + "restored by Essenthos where Brenton's Greek and the GLAUx treebank read the same words, in the "
         + "spelling Swete prints beside them. Letters the transcription misread are left as it reads them.";
 
-    /// <summary>Latin letters, margin numbers run into a word, and two words run together, each settled by the token itself.</summary>
+    /// <summary>Latin letters, margin numbers run into a word, two words run together and a word divided at a line end.</summary>
     public const string Letters =
         "Letters and spaces corrected by Essenthos throughout: a Latin letter the transcription wrote for the "
         + "Greek one it looks like is written as Greek, the chapter or verse number Swete prints in the margin "
         + "is taken out of the word it was run into, and two words run together are divided where Brenton's "
-        + "Greek and the GLAUx treebank both read them apart.";
+        + "Greek and the GLAUx treebank both read them apart; a word the page divides at a line end, which the "
+        + "transcription read as two, is one word again.";
 
     /// <summary>Words the transcription lost, read back off the printed page where Brenton's Greek and GLAUx read words it lacks.</summary>
     public const string Page =
@@ -37,6 +38,13 @@ internal static class SweteNotes
         "Modified: thirty verse divisions the transcription lost are restored by Essenthos — twenty-six "
         + "where Swete's own verse number stands in the text before the verse's first word, and Genesis 15:19, "
         + "20 and 21 and Psalm 91:16 from the printed page, with the two words the transcription lost in Genesis.";
+
+    /// <summary>The Psalms' verse numbers put right against the printed page, and the eight verses of Psalm 118 the transcription lost.</summary>
+    public const string Psalms =
+        "Modified: in the Psalms, four verses the transcription numbered as the page does not (88:48, 115:6, 118:131 "
+        + "and 118:133) are given the page's number, the divisions it lost at 24:14, 47:7, 118:19 and 119:4 are opened "
+        + "where the page begins those verses, a διάψαλμα it moved from 88:46 into 88:48 is put back, and 118:28-35, "
+        + "which it lost, are restored by Essenthos from the printed page.";
 
     /// <summary>The Roman chapter numbers the reader takes out, and the chapter opening the transcription kept only the number of.</summary>
     public const string ChapterMarkers =
