@@ -496,5 +496,5 @@ refuse	44.27:7.10	44.27:7.9			Acts 27:7: the aligner's link of «Кніду» to
 accept	44.27:7.10	44.27:7.11	renders		Acts 27:7: «Кніду» renders Κνίδον, read by hand against Nestle 1904: насупроти Кніду = κατὰ τὴν Κνίδον
 refuse	44.27:7.11	44.27:7.11			Acts 27:7: the aligner's link of «приплинули» to Κνίδον is wrong, read by hand against Nestle 1904: приплинули is γενόμενοι, not the name Κνίδον, which Кніду renders
 accept	44.27:7.11	44.27:7.8	renders		Acts 27:7: «приплинули» renders γενόμενοι, read by hand against Nestle 1904: насилу приплинули = μόλις γενόμενοι
-accept	40.1:11.4		expands		Йоякима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one (PRB-0949, PRB-1961)
-accept	40.1:11.5		expands		Йояким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one (PRB-0949, PRB-1961)
+accept	40.1:11.4		expands		Йоякима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one
+accept	40.1:11.5		expands		Йояким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one

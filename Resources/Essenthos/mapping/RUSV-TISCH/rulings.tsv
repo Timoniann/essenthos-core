@@ -3,5 +3,5 @@
 # producer   by hand
 # Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
 action	from	to	relation	source	reason
-accept	40.1:11.3		expands		Иоакима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and TISCH does not hold; no word of it renders this one (PRB-0949, PRB-1961)
-accept	40.1:11.4		expands		Иоаким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and TISCH does not hold; no word of it renders this one (PRB-0949, PRB-1961)
+accept	40.1:11.3		expands		Иоакима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and TISCH does not hold; no word of it renders this one
+accept	40.1:11.4		expands		Иоаким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and TISCH does not hold; no word of it renders this one

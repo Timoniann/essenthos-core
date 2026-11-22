@@ -4,5 +4,5 @@
 # Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
 action	from	to	relation	source	reason
 refuse	10.23:38.3	10.23:38.6			2 Samuel 23:38 «Іра їтрянин, Ґарев їтрянин»: Ґарев is Gareb (KJV word 4), not the second 'Ithrite' (word 6); the aligner remade on 2026-11-12 (PRB-1588) pairs it with the gentilic.
-accept	40.1:11.4		expands		Йоякима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and KJV does not hold; no word of it renders this one (PRB-0949, PRB-1961)
-accept	40.1:11.5		expands		Йояким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and KJV does not hold; no word of it renders this one (PRB-0949, PRB-1961)
+accept	40.1:11.4		expands		Йоякима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and KJV does not hold; no word of it renders this one
+accept	40.1:11.5		expands		Йояким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and KJV does not hold; no word of it renders this one

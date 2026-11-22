@@ -5,5 +5,5 @@
 action	from	to	relation	source	reason
 refuse	45.16:20.14	45.16:20.8	renders	SIL.Machine	Христа / Σατανᾶν: Codex, 2026-10-05: the Synodal names Jesus Christ here; Satan is separately named at position 5.
 refuse	46.5:5.15	46.5:5.5	renders	SIL.Machine	Христа / Σατανᾷ: Codex, 2026-10-05: the Synodal adds Christ after Jesus; Satan is separately named at position 2.
-accept	40.1:11.3		expands		Иоакима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one (PRB-0949, PRB-1961)
-accept	40.1:11.4		expands		Иоаким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one (PRB-0949, PRB-1961)
+accept	40.1:11.3		expands		Иоакима: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one
+accept	40.1:11.4		expands		Иоаким: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one
