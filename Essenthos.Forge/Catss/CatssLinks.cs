@@ -52,14 +52,16 @@ internal static class CatssLinks
         private static string Percent(int a, int b) => b == 0 ? "-" : $"{100.0 * a / b:0.0}%";
     }
 
-    public static (List<Draft> Drafts, List<Tally> Tallies) Draw(IReadOnlyList<CatssVerse> catss, ProductText bhsa, ProductText greek)
+    /// <param name="takes">Which of CATSS's books the Greek text prints, by code: Brenton's where none is given.</param>
+    public static (List<Draft> Drafts, List<Tally> Tallies) Draw(
+        IReadOnlyList<CatssVerse> catss, ProductText bhsa, ProductText greek, Func<string, bool>? takes = null)
     {
         var drafts = new List<Draft>();
         var tallies = new List<Tally>();
         var filled = new HashSet<int>();
         foreach (var book in catss.GroupBy(v => v.Book))
         {
-            if (!Books.TryGetValue(book.Key, out var target) || !target.Brenton)
+            if (!Books.TryGetValue(book.Key, out var target) || !(takes?.Invoke(book.Key) ?? target.Brenton))
             {
                 continue;
             }

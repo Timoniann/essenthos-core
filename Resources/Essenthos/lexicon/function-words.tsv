@@ -3,6 +3,9 @@
 # Words of a language that render no word of the original of their own, or only a particle: articles, conjunctions,
 #   particles, pronouns, prepositions, auxiliaries. Ours; edit a row and run forge build (each product made with the list
 #   declares this file). The English rows are the list the ASV's Strong layers were measured with (TSK-1890).
+#   The Greek rows (Brenton's article, καί/δέ and prepositions as printed) send a CATSS phrase's article, conjunction and
+#   preposition to their own kind, and its other words to the content words,
+#   when Swete, Ottley or Brenton's English are composed through Brenton's Greek (TSK-1939).
 # Columns: language (the text's declared language), word (as printed, case aside), kind.
 # Kinds, and what reads them:
 #   article, conjunction, connective, particle   a composition carries a phrase's word of these kinds only to an original
@@ -204,3 +207,66 @@ eng	therein	adverb
 eng	thereby	adverb
 eng	wherewith	adverb
 eng	rather	adverb
+grc	ὁ	article
+grc	ἡ	article
+grc	οἱ	article
+grc	αἱ	article
+grc	τοῦ	article
+grc	τῆς	article
+grc	τῷ	article
+grc	τῇ	article
+grc	τὸν	article
+grc	τόν	article
+grc	τὴν	article
+grc	τήν	article
+grc	τὸ	article
+grc	τό	article
+grc	τῶν	article
+grc	τὰ	article
+grc	τά	article
+grc	τοὺς	article
+grc	τούς	article
+grc	τοῖς	article
+grc	ταῖς	article
+grc	τὰς	article
+grc	τάς	article
+grc	καὶ	conjunction
+grc	καί	conjunction
+grc	και	conjunction
+grc	δὲ	conjunction
+grc	δέ	conjunction
+grc	δʼ	conjunction
+grc	ἐν	preposition
+grc	εἰς	preposition
+grc	ἐπὶ	preposition
+grc	πρὸς	preposition
+grc	ἀπὸ	preposition
+grc	ἐκ	preposition
+grc	κατὰ	preposition
+grc	μετὰ	preposition
+grc	ἐπʼ	preposition
+grc	ἐξ	preposition
+grc	περὶ	preposition
+grc	διὰ	preposition
+grc	μετʼ	preposition
+grc	παρὰ	preposition
+grc	ἀπʼ	preposition
+grc	ἐνώπιον	preposition
+grc	ἐναντίον	preposition
+grc	ὑπὲρ	preposition
+grc	ἐφʼ	preposition
+grc	ὑπὸ	preposition
+grc	κατʼ	preposition
+grc	ἔναντι	preposition
+grc	διʼ	preposition
+grc	μεθʼ	preposition
+grc	σὺν	preposition
+grc	παρʼ	preposition
+grc	ἀντὶ	preposition
+grc	ἀφʼ	preposition
+grc	καθʼ	preposition
+grc	ἀνθʼ	preposition
+grc	ἀντʼ	preposition
+grc	ἐνώπιόν	preposition
+grc	ὑπʼ	preposition
+grc	πρός	preposition

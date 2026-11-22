@@ -74,6 +74,11 @@ internal sealed class ComposedSource : IPairSource
         new("RUSV", English, "BHSA"),
         new("GRCBRENT", ["KJV"], "BHSA", Unmeasured: true),
         new("GEEZ81", ["GRCBRENT"], "BHSA", Unmeasured: true, Daughter: true),
+
+        // Swete's and Ottley's Greek and Brenton's English reach the Hebrew only as far as Brenton's Greek does (TSK-1939).
+        new("SWETE", ["GRCBRENT"], "BHSA", Unmeasured: true, Daughter: true),
+        new("OTTLEY", ["GRCBRENT"], "BHSA", Unmeasured: true, Daughter: true),
+        new("BRENTON", ["GRCBRENT"], "BHSA", Unmeasured: true, Daughter: true),
         new("YLT", English, "BHSA"),
         new("YLT", English, "NESTLE1904"),
     ];

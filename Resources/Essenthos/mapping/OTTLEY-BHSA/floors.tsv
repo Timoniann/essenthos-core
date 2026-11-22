@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/OTTLEY-BHSA/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right.
+# Measured by hand on 2026-11-22 (TSK-1939): settled composed links of OTTLEY-BHSA (Isaiah) through GRCBRENT, 10 per confidence band (0.25, 0.40, 0.60, 0.80) with seed 31 and 12 more from 0.80 with seed 77; right as for SWETE-BHSA. Ottley's Greek departs from Brenton's more often, and the Ottley-Brenton hop is trained on Isaiah alone.
+readings	from	right	scored	basis
+through grcbrent	0.8	0.909	22	hand sample 2026-11-22: from 0.80 20 of 22 right; under it 25 of 30 (0.25-0.40 8/10, 0.40-0.60 9/10, 0.60-0.80 8/10)

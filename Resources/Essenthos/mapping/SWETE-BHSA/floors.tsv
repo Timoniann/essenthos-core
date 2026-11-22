@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/SWETE-BHSA/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right.
+# Measured by hand on 2026-11-22 (TSK-1939): settled composed links of SWETE-BHSA through GRCBRENT, 10 per confidence band (0.25, 0.40, 0.60, 0.80), seed 31, from a scratch store holding CATSS and the direct GRCBRENT-BHSA alignment; right = the Greek word renders that Hebrew word (an article on its ה, a pronoun on the suffixed word). Bar 90%; a floor needs 10 read at or above it and at most 1 wrong in its lowest band.
+readings	from	right	scored	basis
+through grcbrent	0.4	0.967	30	hand sample 2026-11-22: from 0.40 29 of 30 right (0.40-0.60 9/10, 0.60-0.80 10/10, from 0.80 10/10); 0.25-0.40 8 of 10

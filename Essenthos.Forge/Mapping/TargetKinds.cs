@@ -12,6 +12,9 @@ internal enum TargetKind
 
     /// <summary>A particle, a negation or an interjection.</summary>
     Particle,
+
+    /// <summary>A preposition, BHSA's object marker among them.</summary>
+    Preposition,
 }
 
 /// <summary>
@@ -42,6 +45,7 @@ internal static class TargetKinds
                 "conj" => TargetKind.Conjunction,
                 "adv" or "advb" => TargetKind.Adverb,
                 "ptcl" or "intj" or "nega" => TargetKind.Particle,
+                "prep" => TargetKind.Preposition,
                 _ => TargetKind.Other,
             };
         }

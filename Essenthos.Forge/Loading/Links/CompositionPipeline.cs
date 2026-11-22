@@ -330,6 +330,14 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     {
         var pair = MappingProducts.Pair(fromSlug, toSlug);
         var hand = HandFloors.AsRoutes(pair, HandFloors.Read(texts.Store, pair), viaSlugs);
+
+        // A daughter read through one middle text has that one way to the target; where a hand floor measured it, what another
+        // text of its language would borrow is never read, and no proxy's hops are trained for it.
+        if (proposed.Written.Count == 0 && proposed.Reduced.Count == 0 && viaSlugs.Count == 1 && hand.ContainsKey(Routes.Middles[0]))
+        {
+            return (Admission.Everything(minimumConfidence).With(hand).RefusingUnmeasured(refuseUnmeasured), "  by its hand floor alone");
+        }
+
         var (admission, measured) = await Measured(fromSlug, viaSlugs, toSlug, proposed, statements, minimumConfidence, precision, trial, books,
             cancellationToken);
 
