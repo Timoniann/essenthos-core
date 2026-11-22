@@ -944,6 +944,16 @@ public static class Datasets
             Obliges: "Attribution, under CC BY 4.0, to the Open Scriptures Hebrew Bible Project; the text of Brown, Driver "
                 + "and Briggs itself is in the public domain."),
 
+        new("thayer", "Thayer, A Greek-English Lexicon of the New Testament (the Every Promise edition)",
+            "Joseph Henry Thayer, 1889; digitised in an e-Sword module and decoded into Unicode by the Every Promise project",
+            "CC0 1.0",
+            "https://creativecommons.org/publicdomain/zero/1.0/",
+            "https://github.com/imbennyhim/Every-Promise-Thayers",
+            "Thayer's lexicon of New Testament Greek, each article under the Strong number its digital edition gives it, "
+            + "with the verses it cites. The text keeps some marks of its digitisation: its italics are lost and a few "
+            + "characters stand for others.",
+            LexiconWorks.ThayerSource, Glossary: true),
+
         new("abbott-smith", "Abbott-Smith, A Manual Greek Lexicon of the New Testament",
             "G. Abbott-Smith, 1922; marked up in TEI by the translatable-exegetical-tools project (Daniel Owens and others)",
             "Public Domain",

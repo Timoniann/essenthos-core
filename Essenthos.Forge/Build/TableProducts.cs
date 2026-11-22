@@ -81,7 +81,7 @@ internal static partial class TableProducts
             [.. CommentaryWorks.All.Select(w => $"{CommentaryReader.Folder}/{w.Module}")], [.. ProductText.Products(LopukhinReader.Synodal)],
             CommentaryRows),
         new("lexicon_article", ["id", "dictionary", "strong_number", "ordinal", "entry", "headword", "status", "body", "source"],
-            [BdbReader.Lexicon, BdbReader.Index, AbbottSmithReader.Lexicon, LsjReader.Lexicon], [], LexiconArticleRows),
+            [BdbReader.Lexicon, BdbReader.Index, ThayerReader.Book, AbbottSmithReader.Lexicon, LsjReader.Lexicon], [], LexiconArticleRows),
     ];
 
     private const string StrongHebrew = "Strong/StrongHebrew.xml";
@@ -422,7 +422,9 @@ internal static partial class TableProducts
     private static Rows LexiconArticleRows(ProductStore store)
     {
         var unread = new Dictionary<string, int>(StringComparer.Ordinal);
+        var thayer = new ThayerReader.Left();
         var rows = BdbReader.Read(store.ResourcesPath, unread)
+            .Concat(ThayerReader.Read(store.ResourcesPath, thayer))
             .Concat(AbbottSmithReader.Read(store.ResourcesPath, unread))
             .Concat(LsjReader.Read(store.ResourcesPath, unread))
             .ToList();
@@ -432,6 +434,7 @@ internal static partial class TableProducts
             })),
             string.Join("; ", LexiconWorks.All.Select(w =>
                 $"{w.Id} {rows.Count(r => r.Dictionary == w.Id)} articles under {rows.Where(r => r.Dictionary == w.Id).Select(r => r.StrongNumber).Distinct().Count()} numbers"))
+            + $"; thayer left out {thayer.Cards.Count} entries that are cards of Strong-style fields, {thayer.Misfiled.Count} filed under another word's number and {thayer.Extended.Count} the module numbers between Strong's numbers"
             + (unread.Count == 0 ? string.Empty : "; markup not read: " + string.Join(", ", unread.Select(u => $"{u.Key} {u.Value}"))));
     }
 

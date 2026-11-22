@@ -334,6 +334,11 @@
     "files": 55,
     "sha256": "cad426763e69353724537d1f6a8029927b1c244b2cdd4a84238e921fe88d0669"
   },
+  "Thayer": {
+    "bytes": 5541719,
+    "files": 30,
+    "sha256": "e903b9a34684e5fa763cb7a4516946dcd101ea38f405c45184cec840a883f999"
+  },
   "TheographicBibleData": {
     "bytes": 35548558,
     "files": 12,
