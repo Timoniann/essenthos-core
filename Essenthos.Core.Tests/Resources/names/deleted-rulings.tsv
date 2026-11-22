@@ -1,0 +1,1375 @@
+# The word rulings of the 65 rulings files deleted in 98d5b22a (Essenthos.Forge/Loading/Encyclopedia/*.json at 98d5b22a^), one line each.
+# names: the records the word names (several apart by a space); refuses: a record it must not name.
+# status: holds (the names layer carries it), restored (it had been lost and is an override now), superseded (a later dated decision names another record: why says which).
+file	text	own	surface	names	refuses	status	why
+AdamEveRecords.json	BHSA	1.2:7.7	אָדָ֗ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:7.21	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:8.15	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:15.7	אָדָ֑ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:16.7	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:18.9	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:19.22	אָדָ֔ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:19.34	אָדָ֛ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:20.4	אָדָ֜ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:21.8	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:22.12	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:22.19	אָדָֽם	adam		holds	
+AdamEveRecords.json	BHSA	1.2:23.4	אָדָם֒	adam		holds	
+AdamEveRecords.json	BHSA	1.2:25.6	אָדָ֖ם	adam		holds	
+AdamEveRecords.json	BHSA	1.3:6.34	אִישָׁ֛הּ	adam		holds	
+AdamEveRecords.json	BHSA	1.3:8.18	אָדָ֜ם	adam		holds	
+AdamEveRecords.json	BHSA	1.3:9.7	אָדָ֑ם	adam		holds	
+AdamEveRecords.json	BHSA	1.3:12.4	אָדָ֑ם	adam		holds	
+AdamEveRecords.json	BHSA	1.3:16.16	אִישֵׁךְ֙	adam		holds	
+AdamEveRecords.json	BHSA	1.3:20.4	אָדָ֛ם	adam		holds	
+AdamEveRecords.json	BHSA	1.3:22.7	אָדָם֙	adam		holds	
+AdamEveRecords.json	BHSA	1.3:24.5	אָדָ֑ם	adam		holds	
+AdamEveRecords.json	BHSA	1.4:1.3	אָדָ֔ם	adam		holds	
+AdamEveRecords.json	NESTLE1904	46.15:45.14	Ἀδὰμ	jesus		holds	
+AdamEveRecords.json	RP2018	46.15:45.14	αδαμ	jesus		holds	
+AdamEveRecords.json	TISCH	46.15:45.14	Ἀδὰμ	jesus		holds	
+AdamEveRecords.json	TR1550	46.15:45.14	αδαμ	jesus		holds	
+AdamEveRecords.json	TR1894	46.15:45.14	αδαμ	jesus		holds	
+AdamEveRecords.json	WH1881	46.15:45.14	αδαμ	jesus		holds	
+AdamEveRecords.json	NESTLE1904	54.2:14.7	γυνὴ	eve		holds	
+AdamEveRecords.json	RP2018	54.2:14.7	γυνη	eve		holds	
+AdamEveRecords.json	TISCH	54.2:14.7	γυνὴ	eve		holds	
+AdamEveRecords.json	TR1550	54.2:14.7	γυνη	eve		holds	
+AdamEveRecords.json	TR1894	54.2:14.7	γυνη	eve		holds	
+AdamEveRecords.json	WH1881	54.2:14.7	γυνη	eve		holds	
+AddressedRecords.json	NESTLE1904	40.9:22.10	θύγατερ	daughter		holds	
+AddressedRecords.json	NESTLE1904	41.5:34.5	Θυγάτηρ	daughter		holds	
+AddressedRecords.json	NESTLE1904	42.8:48.5	Θυγάτηρ	daughter		holds	
+AncientWordRecords.json	BHSA	24.46:25.9	אָמֹ֣ון	amon-3	thebes	holds	
+AncientWordRecords.json	SWETE	24.26:25.5	Ἀμμὼν	amon-3		holds	
+AncientWordRecords.json	SWETE	2.28:23.11	λογίου	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	2.36:15.3	λόγιον	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	2.36:24.12	λογίου	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	2.36:25.15	λογίου	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	2.36:27.16	λογίου	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	2.36:29.4	λόγιον	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	3.8:8.6	λόγιον	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	3.8:8.11	λόγιον	breastpiece-of-judgment		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.16	Χετταίου	hittites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.19	Ἀμορραίου	amorites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.22	Φερεζαίου	perizzites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.25	Χαναναίου	canaanites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.28	Εὑαίου	hivites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.31	Ἰεβουσαίου	jebusites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:24.34	Γεργεσαίου	girgashites		restored	an override of names/overrides/SWETE
+AncientWordRecords.json	SWETE	11.10:30.13	ἀλλοφύλων	philistines		holds	
+AncientWordRecords.json	SWETE	17.1:1a.14	Μαρδοχαῖος	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.1:11a.3	Μαρδοχαῖος	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.1:12a.3	Μαρδοχαῖος	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.1:15a.11	Μαρδοχαῖος	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.1:16a.5	Μαρδοχαίῳ	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.1:17a.14	Μαρδοχαῖον	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.2:23.25	Μαρδοχαίου	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.3:7.27	Μαρδοχαίου	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.8:13a.9	Μαρδοχαῖον	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.9:25.10	Μαρδοχαῖον	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.10:1.3	Μαρδοχαῖς	mordecai-2		holds	
+AncientWordRecords.json	SWETE	17.1:2a.2	Ἰουδαῖος	judahites		holds	
+AncientWordRecords.json	SWETE	17.1:2a.5	Σούσοις	susa		holds	
+AncientWordRecords.json	SWETE	17.1:3a.18	Ἰουδαίας	judahites		holds	
+AncientWordRecords.json	SWETE	17.5:9.17	Ἰουδαῖον	judahites		holds	
+AncientWordRecords.json	SWETE	17.8:15a.10	Ἰουδαίους	judahites		holds	
+AncientWordRecords.json	SWETE	17.8:18a.9	Σούσων	susa		holds	
+AncientWordRecords.json	SWETE	17.8:19a.15	Ἰουδαίους	judahites		holds	
+AncientWordRecords.json	SWETE	17.9:14.8	Ἰουδαίοις	judahites		holds	
+AncientWordRecords.json	SWETE	17.10:5.10	Ἰουδαίων	judahites		holds	
+AncientWordRecords.json	RP2018	43.3:23.10	σαλημ	salim	jerusalem	holds	
+AncientWordRecords.json	BSB	7.1:33.1	Naphtali	naphtalites	naphtali	holds	
+AncientWordRecords.json	BSB	14.31:6.12	Judah	judahites	judah	holds	
+AncientWordRecords.json	BHSA	1.12:9.8	נֶּֽגְבָּה	negev		holds	
+AncientWordRecords.json	BHSA	1.13:1.17	נֶּֽגְבָּה	negev		holds	
+AncientWordRecords.json	BHSA	1.13:3.6	נֶּ֖גֶב	negev		holds	
+AncientWordRecords.json	BHSA	1.20:1.8	נֶּ֔גֶב	negev		holds	
+AncientWordRecords.json	BHSA	1.24:62.14	נֶּֽגֶב	negev		holds	
+AncientWordRecords.json	BHSA	4.13:17.17	נֶּ֔גֶב	negev		holds	
+AncientWordRecords.json	BHSA	4.13:22.5	נֶּגֶב֮	negev		holds	
+AncientWordRecords.json	BHSA	4.13:29.6	נֶּ֑גֶב	negev		holds	
+AncientWordRecords.json	BHSA	4.21:1.9	נֶּ֔גֶב	negev		holds	
+AncientWordRecords.json	BHSA	4.33:40.12	נֶּ֖גֶב	negev		holds	
+AncientWordRecords.json	BHSA	5.1:7.27	נֶּ֖גֶב	negev		holds	
+AncientWordRecords.json	BHSA	5.34:3.4	נֶּ֗גֶב	negev		holds	
+AncientWordRecords.json	BHSA	6.10:40.12	נֶּ֨גֶב	negev		holds	
+AncientWordRecords.json	BHSA	6.11:16.16	נֶּ֨גֶב֙	negev		holds	
+AncientWordRecords.json	BHSA	6.12:8.23	נֶּ֑גֶב	negev		holds	
+AncientWordRecords.json	BHSA	6.15:19.9	נֶּ֨גֶב֙	negev		holds	
+AncientWordRecords.json	BHSA	6.15:21.16	נֶּ֑גְבָּה	negev		holds	
+AncientWordRecords.json	BHSA	6.19:8.14	נֶ֑גֶב	negev		holds	
+AncientWordRecords.json	BHSA	7.1:9.16	נֶּ֖גֶב	negev	canaanites	holds	
+AncientWordRecords.json	BHSA	7.1:15.10	נֶּ֨גֶב֙	negev		holds	
+AncientWordRecords.json	BHSA	7.1:16.18	נֶ֣גֶב	negev		holds	
+AncientWordRecords.json	BHSA	9.27:10.12	נֶ֤גֶב	negev		holds	
+AncientWordRecords.json	BHSA	9.27:10.16	נֶ֣גֶב	negev		holds	
+AncientWordRecords.json	BHSA	9.27:10.21	נֶ֖גֶב	negev		holds	
+AncientWordRecords.json	BHSA	9.30:1.18	נֶ֨גֶב֙	negev		holds	
+AncientWordRecords.json	BHSA	9.30:14.3	נֶ֧גֶב	negev		holds	
+AncientWordRecords.json	BHSA	9.30:14.13	נֶ֣גֶב	negev		holds	
+AncientWordRecords.json	BHSA	10.24:7.16	נֶ֥גֶב	negev		holds	
+AncientWordRecords.json	BHSA	14.28:18.10	נֶּגֶב֮	negev		holds	
+AncientWordRecords.json	BHSA	19.126:4.9	נֶּֽגֶב	negev		holds	
+AncientWordRecords.json	BHSA	23.21:1.8	נֶּ֨גֶב֙	negev		holds	
+AncientWordRecords.json	BHSA	23.30:6.3	נֶ֑גֶב	negev		holds	
+AncientWordRecords.json	BHSA	24.13:19.3	נֶּ֛גֶב	negev		holds	
+AncientWordRecords.json	BHSA	24.17:26.25	נֶּ֔גֶב	negev		holds	
+AncientWordRecords.json	BHSA	24.32:44.41	נֶּ֑גֶב	negev		holds	
+AncientWordRecords.json	BHSA	24.33:13.13	נֶּ֔גֶב	negev		holds	
+AncientWordRecords.json	BHSA	26.21:2.17	נֶֽגֶב	negev		holds	
+AncientWordRecords.json	BHSA	26.21:3.6	נֶּ֔גֶב	negev		holds	
+AncientWordRecords.json	BHSA	31.1:19.4	נֶּ֜גֶב	negev		holds	
+AncientWordRecords.json	BHSA	31.1:20.24	נֶּֽגֶב	negev		holds	
+AncientWordRecords.json	BHSA	5.1:7.23	שְּׁפֵלָ֥ה	shephelah		holds	
+AncientWordRecords.json	BHSA	6.9:1.19	שְּׁפֵלָ֗ה	shephelah		holds	
+AncientWordRecords.json	BHSA	6.10:40.15	שְּׁפֵלָ֜ה	shephelah		holds	
+AncientWordRecords.json	BHSA	6.11:2.20	שְּׁפֵלָ֑ה	shephelah		holds	
+AncientWordRecords.json	BHSA	6.11:16.26	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	6.12:8.7	שְּׁפֵלָ֗ה	shephelah		holds	
+AncientWordRecords.json	BHSA	6.15:33.3	שְּׁפֵלָ֑ה	shephelah		holds	
+AncientWordRecords.json	BHSA	7.1:9.19	שְּׁפֵלָֽה	shephelah		holds	
+AncientWordRecords.json	BHSA	11.10:27.24	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	13.27:28.11	שְּׁפֵלָ֔ה	shephelah		holds	
+AncientWordRecords.json	BHSA	14.1:15.28	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	14.9:27.24	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	14.26:10.19	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	14.28:18.7	שְּׁפֵלָ֣ה	shephelah		holds	
+AncientWordRecords.json	BHSA	24.17:26.17	שְּׁפֵלָ֤ה	shephelah		holds	
+AncientWordRecords.json	BHSA	24.32:44.36	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	24.33:13.8	שְּׁפֵלָה֙	shephelah		holds	
+AncientWordRecords.json	BHSA	31.1:19.10	שְּׁפֵלָה֙	shephelah		holds	
+AncientWordRecords.json	BHSA	38.7:7.29	שְּׁפֵלָ֖ה	shephelah		holds	
+AncientWordRecords.json	BHSA	24.20:3.24	מָגֹ֥ור	pashhur-2		holds	
+AncientWordRecords.json	BHSA	24.20:3.26	סָּבִֽיב	pashhur-2		holds	
+AncientWordRecords.json	SWETE	24.20:3.22	Μέτοικον	pashhur-2		holds	
+AncientWordRecords.json	BHSA	8.1:20.10	מָרָ֔א	naomi		holds	
+AncientWordRecords.json	SWETE	10.12:25.13	Ἰδεδεί	solomon		holds	
+AncientWordRecords.json	SWETE	1.41:45.6	ψουθομΦανήχ	joseph		holds	
+AngelRecords.json	NESTLE1904	65.1:9.3	Μιχαὴλ	michael-9		holds	
+AngelRecords.json	NESTLE1904	42.1:19.9	Γαβριὴλ	gabriel		holds	
+AntipatrisRecords.json	NESTLE1904	44.23:31.17	Ἀντιπατρίδα	antipatris		holds	
+AntipatrisRecords.json	BHSA	9.4:1.25	אֲפֵֽק	aphek-2		holds	
+DatasetRecordRulings.json	BHSA	19.7:1.10	כ֝֗וּשׁ	cush-2		holds	
+DatasetRecordRulings.json	GRCBRENT	1.10:2.11	Ἐλισὰ	elishah-2		holds	
+DatasetRecordRulings.json	BRENTON	1.10:2.13	Elisa	elishah-2		holds	
+DatasetRecordRulings.json	BRENTON	13.4:26.4	Sabud	zaboud		holds	
+DatasetRecordRulings.json	GRCBRENT	16.7:7.14	Ἔσδρα	ezra-2		holds	
+DatasetRecordRulings.json	BRENTON	16.7:7.14	Esdra	ezra-2		holds	
+DatasetRecordRulings.json	BRENTON	15.2:50.12	Nephusim	nephisim		holds	
+EsauWivesRecords.json	KJV	1.36:2.10	Adah	adah-wife-of-esau		holds	
+EsauWivesRecords.json	KJV	1.28:9.14	Mahalath	mahalath		holds	
+EsauWivesRecords.json	KJV	1.26:34.12	Judith	judith		holds	
+EsauWivesRecords.json	KJV	1.36:2.18	Aholibamah	oholibamah-wife-of-esau		holds	
+EshtemoaRecords.json	KJV	13.4:19.19	Eshtemoa	eshtemoa-2		holds	
+FamilyTailsRecords.json	BHSA	1.36:26.4	דִישָׁ֑ן	dishon		holds	
+FamilyTailsRecords.json	BHSA	11.4:2.7	עֲזַרְיָ֥הוּ	azariah-son-of-zadok	azariah	holds	
+FatherOfTownPeopleRecords.json	BHSA	13.2:24.18	תְקֹֽועַ	tekoites tekoa-2		holds	
+FatherOfTownPeopleRecords.json	BHSA	13.2:42.10	זִ֑יף	ziphites ziph-3		holds	
+FatherOfTownPeopleRecords.json	BHSA	13.2:51.3	בֵֽית־לָ֔חֶם	bethlehemites bethlehem		holds	
+FatherOfTownPeopleRecords.json	BHSA	13.4:4.15	בֵּ֥ית לָֽחֶם	bethlehemites bethlehem		holds	
+FatherOfTownPeopleRecords.json	BHSA	13.4:5.5	תְקֹ֔ועַ	tekoites tekoa-2		holds	
+FatherOfTownPeopleRecords.json	BHSA	13.8:29.6	גִבְעֹ֑ון	gibeonites gibeon		holds	
+FatherOfTownPeopleRecords.json	BHSA	13.9:35.6	גִבְעֹ֖ון	gibeonites gibeon		holds	
+FatherOfTownRecords.json	BHSA	13.2:24.18	תְקֹֽועַ	tekoa-2		holds	
+FatherOfTownRecords.json	BHSA	13.2:51.3	בֵֽית־לָ֔חֶם	bethlehem		holds	
+FatherOfTownRecords.json	BHSA	13.4:4.15	בֵּ֥ית לָֽחֶם	bethlehem		holds	
+FatherOfTownRecords.json	BHSA	13.4:5.5	תְקֹ֔ועַ	tekoa-2		holds	
+FatherOfTownRecords.json	BHSA	13.8:29.6	גִבְעֹ֑ון	gibeon		holds	
+FatherOfTownRecords.json	BHSA	13.9:35.6	גִבְעֹ֖ון	gibeon		holds	
+GenealogyRecords.json	BHSA	13.1:9.10	רַעְמָ֖א	raamah		holds	
+GenealogyRecords.json	BHSA	13.1:9.15	רַעְמָ֖א	raamah		holds	
+GenealogyRecords.json	BHSA	13.1:41.6	דִישֹׁ֔ון	dishon		holds	
+GenealogyRecords.json	BHSA	4.13:7.6	יֹוסֵֽף	joseph-2		holds	
+JuniaRecords.json	NESTLE1904	45.16:7.4	Ἰουνίαν	junias		holds	
+KinshipRecords.json	BHSA	16.12:24.8	יֵשׁ֤וּעַ	jeshua-son-of-kadmiel	jeshua-7	holds	
+KulishTwoWordNameRecords.json	UKR1871	1.14:5.19	Карнаїмі	ashterothkarnaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	1.14:5.27	Кириятаїм-долинї	kiriathaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	4.33:46.9	Алмон	almondiblathaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	7.3:8.14	Хузанові	cushanrishathaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	7.3:8.23	Хузанові	cushanrishathaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	7.3:10.24	Хузана	cushanrishathaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	7.3:10.33	Хузаном	cushanrishathaim		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	12.4:42.4	Баал	baalshalishah		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	12.20:12.5	Баладан	berodachbaladan		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	23.39:1.5	Баладан	berodachbaladan		restored	an override of names/overrides/UKR1871
+KulishTwoWordNameRecords.json	UKR1871	15.2:57.8	Газзебаїма	pocherethhazzebaim		restored	an override of names/overrides/UKR1871
+LukeLordRecords.json	NESTLE1904	42.7:13.5	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.10:39.14	Κυρίου	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.10:41.6	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.11:39.4	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.12:42.4	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.13:15.5	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.17:5.6	Κυρίῳ	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.17:6.4	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.18:6.4	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.19:8.7	Κύριον	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.19:8.14	Κύριε	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.22:61.4	Κύριος	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.22:61.15	Κυρίου	jesus		holds	
+LukeLordRecords.json	NESTLE1904	42.24:34.6	Κύριος	jesus		holds	
+NamesReadAgainRecords.json	BHSA	14.29:12.31	יֹואָח֙	joah-the-later-gershonite	joah-2	holds	
+NamesReadAgainRecords.json	BHSA	14.29:12.37	יֹואָֽח	joah-the-later-gershonite	joah-2	holds	
+NamesReadAgainRecords.json	BHSA	13.7:12.2	שֻׁפִּ֤ם	shuppim-the-benjamite	huppim	holds	
+NamesReadAgainRecords.json	BHSA	13.7:15.9	שֻׁפִּ֔ים	shuppim-the-benjamite	huppim	holds	
+NamesReadAgainRecords.json	GRCBRENT	13.7:12.2	Σαπφὶν	shuppim-the-benjamite	huppim	holds	
+NamesReadAgainRecords.json	GRCBRENT	13.7:15.8	Σαπφίν	shuppim-the-benjamite	huppim	holds	
+NamesReadAgainRecords.json	SWETE	13.7:15.8	Μαμφείν	shuppim-the-benjamite	huppim	holds	
+NamesReadAgainRecords.json	UKR1871	13.3:15.4	Йоахаз	johanan-firstborn-of-josiah	jehoahaz-2	restored	an override of names/overrides/UKR1871
+NamesReadAgainRecords.json	BHSA	1.10:2.3	גֹּ֣מֶר	gomer		holds	
+NamesReadAgainRecords.json	BHSA	1.10:3.3	גֹּ֑מֶר	gomer		holds	
+NamesReadAgainRecords.json	BHSA	13.1:5.3	גֹּ֣מֶר	gomer		holds	
+NamesReadAgainRecords.json	BHSA	13.1:6.3	גֹּ֑מֶר	gomer		holds	
+NamesReadAgainRecords.json	BHSA	26.38:6.1	גֹּ֚מֶר	gomer-3		holds	
+NamesReadAgainRecords.json	BHSA	1.14:3.7	שִּׂדִּ֑ים	valleyofsiddim		superseded	vale-of-siddim was folded into valleyofsiddim: Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29
+NamesReadAgainRecords.json	BHSA	1.14:8.26	שִּׂדִּֽים	valleyofsiddim		superseded	vale-of-siddim was folded into valleyofsiddim: Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29
+NamesReadAgainRecords.json	BHSA	1.14:10.4	שִׂדִּ֗ים	valleyofsiddim		superseded	vale-of-siddim was folded into valleyofsiddim: Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29
+NamesReadAgainRecords.json	BHSA	1.14:3.9	יָ֥ם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	1.14:3.11	מֶּֽלַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	4.34:3.19	יָם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	4.34:3.21	מֶּ֖לַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	4.34:12.10	יָ֣ם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	4.34:12.12	מֶּ֑לַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	5.3:17.16	יָ֣ם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	5.3:17.18	מֶּ֔לַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.3:16.30	יָם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.3:16.32	מֶּ֖לַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.12:3.13	יָם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.12:3.15	מֶּ֨לַח֙	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.15:2.8	יָ֣ם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.15:2.10	מֶּ֑לַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.15:5.4	יָ֣ם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.15:5.6	מֶּ֔לַח	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.18:19.16	יָם	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	6.18:19.18	מֶּ֨לַח֙	saltsea		holds	
+NamesReadAgainRecords.json	BHSA	19.60:2.4	אֲרַ֣ם	mesopotamia		holds	
+NamesReadAgainRecords.json	BHSA	19.60:2.8	אֲרַ֢ם	aramzobah		holds	
+NamesReadPerVerseRecords.json	BHSA	1.24:10.23	אֲרַ֥ם	mesopotamia		holds	
+NamesReadPerVerseRecords.json	BHSA	1.24:10.27	נָחֹֽור	nahor-3		holds	
+NamesReadPerVerseRecords.json	BHSA	2.6:19.10	לֵּוִ֖י	levites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:8.3	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:9.13	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:10.12	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:11.18	עֲמָלֵֽק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:13.5	עֲמָלֵ֥ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:14.22	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	2.17:16.12	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	4.13:21.15	חֲמָֽת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	4.13:29.1	עֲמָלֵ֥ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	4.24:20.4	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	4.24:20.12	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	4.26:49.5	יִּצְרִ֑י	jezerites		holds	
+NamesReadPerVerseRecords.json	BHSA	4.34:8.8	חֲמָ֑ת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	5.23:5.31	אֲרַ֥ם	mesopotamia		holds	
+NamesReadPerVerseRecords.json	BHSA	5.25:17.6	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	5.25:19.27	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	5.32:51.12	קָדֵ֖שׁ	kadesh		holds	
+NamesReadPerVerseRecords.json	BHSA	6.8:16.9	עיר	ai		holds	
+NamesReadPerVerseRecords.json	BHSA	6.11:3.31	מִּצְפָּֽה	mizpah-2		holds	
+NamesReadPerVerseRecords.json	BHSA	6.15:7.5	דְּבִרָה֮	debir-3		holds	
+NamesReadPerVerseRecords.json	BHSA	6.19:33.13	יַבְנְאֵ֖ל	jabneel-2		holds	
+NamesReadPerVerseRecords.json	BHSA	7.1:35.10	אַיָּלֹ֖ון	aijalon		holds	
+NamesReadPerVerseRecords.json	BHSA	7.3:3.24	חֲמָֽת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	7.3:8.13	אֲרַ֣ם	mesopotamia		holds	
+NamesReadPerVerseRecords.json	BHSA	7.3:13.8	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	7.4:2.12	חָצֹ֑ור	hazor		holds	
+NamesReadPerVerseRecords.json	BHSA	7.5:14.5	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	7.5:14.11	מָכִ֗יר	makirites		holds	
+NamesReadPerVerseRecords.json	BHSA	7.6:3.10	עֲמָלֵ֛ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	7.6:33.5	עֲמָלֵ֛ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	7.7:12.4	עֲמָלֵ֤ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	7.10:12.4	עֲמָלֵק֙	amalekites	sidonians	holds	
+NamesReadPerVerseRecords.json	BHSA	7.11:33.4	עֲרֹועֵר֩	aroer-2		holds	
+NamesReadPerVerseRecords.json	BHSA	9.9:4.25	יְמִינִ֖י	benjaminites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.14:48.7	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:2.9	עֲמָלֵ֖ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:3.6	עֲמָלֵ֗ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:5.6	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:6.33	עֲמָלֵֽק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:7.5	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:8.6	עֲמָלֵ֖ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:18.15	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:20.24	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:20.27	עֲמָלֵ֖ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.15:32.9	עֲמָלֵ֔ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.22:7.12	יְמִינִ֑י	benjaminites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.28:18.14	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.30:14.14	כָּלֵ֑ב	calebites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.30:18.8	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	9.31:2.16	אֲבִינָדָ֛ב	ishvi-2		holds	
+NamesReadPerVerseRecords.json	BHSA	10.1:1.13	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	10.3:24.13	אַבְנֵר֙	abner		holds	
+NamesReadPerVerseRecords.json	BHSA	10.8:12.15	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	10.8:13.10	אֲרָ֖ם	syria		holds	
+NamesReadPerVerseRecords.json	BHSA	10.21:16.9	רָפָ֗ה	raphah	rephaim	holds	
+NamesReadPerVerseRecords.json	BHSA	10.21:18.25	רָפָֽה	raphah	rephaim	holds	
+NamesReadPerVerseRecords.json	BHSA	10.21:20.30	רָפָֽה	raphah	rephaim	holds	
+NamesReadPerVerseRecords.json	BHSA	10.21:22.7	רָפָ֖ה	raphah	rephaim	holds	
+NamesReadPerVerseRecords.json	BHSA	11.8:65.21	חֲמָ֣ת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	12.13:5.12	אֲרָ֑ם	syrians		superseded	names/BHSA.tsv names syrians: Essenthos, a land's name read as its people where the English translations render the word by the people's name: the people alone where at least half of them do, the people beside the land where fewer do, on the project owner's instruction of 2026-11-05
+NamesReadPerVerseRecords.json	BHSA	12.13:17.25	אֲרָ֔ם	syria		holds	
+NamesReadPerVerseRecords.json	BHSA	12.13:17.29	אֲרָ֛ם	syrians		superseded	names/BHSA.tsv names syrians: Essenthos, a land's name read as its people where the English translations render the word by the people's name: the people alone where at least half of them do, the people beside the land where fewer do, on the project owner's instruction of 2026-11-05
+NamesReadPerVerseRecords.json	BHSA	12.14:25.9	חֲמָ֖ת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	12.17:6.29	מָדָֽי	media		holds	
+NamesReadPerVerseRecords.json	BHSA	12.18:11.19	מָדָֽי	media		holds	
+NamesReadPerVerseRecords.json	BHSA	12.18:26.24	יְהוּדִ֔ית	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	12.18:28.9	יְהוּדִ֑ית	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	13.2:24.6	כָלֵ֣ב	calebephrathah		holds	
+NamesReadPerVerseRecords.json	BHSA	13.4:18.4	יְהֻדִיָּ֗ה	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	13.4:32.3	עֵיטָ֣ם	etam-3		holds	
+NamesReadPerVerseRecords.json	BHSA	13.4:40.18	חָ֔ם	ham		holds	
+NamesReadPerVerseRecords.json	BHSA	13.4:43.8	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	13.6:21.6	עֲזַרְיָ֖ה	azariah-son-of-zephaniah		holds	
+NamesReadPerVerseRecords.json	BHSA	13.13:5.14	חֲמָ֑ת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	13.18:3.8	חֲמָ֑תָה	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	13.18:11.35	עֲמָלֵֽק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	13.19:6.22	אֲרַ֨ם	mesopotamia		holds	
+NamesReadPerVerseRecords.json	BHSA	13.19:6.26	אֲרַ֤ם	maacah-9		holds	
+NamesReadPerVerseRecords.json	BHSA	13.19:6.27	מַעֲכָה֙	maacah-9		holds	
+NamesReadPerVerseRecords.json	BHSA	13.20:6.25	רָפָֽא	raphah	rephaim	holds	
+NamesReadPerVerseRecords.json	BHSA	13.20:8.5	רָפָ֖א	raphah	rephaim	holds	
+NamesReadPerVerseRecords.json	BHSA	14.7:8.24	חֲמָ֖ת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	14.20:2.19	אֲרָ֑ם	syria		holds	
+NamesReadPerVerseRecords.json	BHSA	14.28:3.20	יְהוָ֔ה	yhvh		holds	
+NamesReadPerVerseRecords.json	BHSA	14.32:18.6	יְהוּדִ֗ית	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	14.34:6.4	מְנַשֶּׁ֧ה	manassites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.5:1.21	יִשְׂרָאֵ֖ל	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.5:11.29	יִשְׂרָאֵל֙	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.6:14.22	יִשְׂרָאֵ֔ל	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.6:16.4	יִ֠שְׂרָאֵל	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.6:17.22	יִשְׂרָאֵל֙	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.6:17.28	יִשְׂרָאֵֽל	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.7:13.11	יִשְׂרָאֵ֜ל	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	15.7:15.14	יִשְׂרָאֵ֔ל	israelites		holds	
+NamesReadPerVerseRecords.json	BHSA	16.10:11.4	הֹֽודִיָּ֛ה	hodiah-2		holds	
+NamesReadPerVerseRecords.json	BHSA	16.12:29.7	גֶּ֖בַע	geba		holds	
+NamesReadPerVerseRecords.json	BHSA	16.13:13.9	צָדֹ֣וק	zadok-10		holds	
+NamesReadPerVerseRecords.json	BHSA	16.13:24.11	יְהוּדִ֑ית	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	19.48:8.6	תַּרְשִֽׁישׁ	tarshish-5		holds	
+NamesReadPerVerseRecords.json	BHSA	19.83:8.5	עֲמָלֵ֑ק	amalekites		holds	
+NamesReadPerVerseRecords.json	BHSA	19.95:8.5	מְרִיבָ֑ה	meribah-2		holds	
+NamesReadPerVerseRecords.json	BHSA	19.105:23.10	חָֽם	ham-3		holds	
+NamesReadPerVerseRecords.json	BHSA	19.105:27.9	חָֽם	ham-3		holds	
+NamesReadPerVerseRecords.json	BHSA	19.106:22.4	חָ֑ם	ham-3		holds	
+NamesReadPerVerseRecords.json	BHSA	19.106:32.5	מְרִיבָ֑ה	meribah		holds	
+NamesReadPerVerseRecords.json	BHSA	19.120:5.9	קֵדָֽר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	22.1:5.9	קֵדָ֔ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.2:16.5	תַּרְשִׁ֑ישׁ	tarshish-5		holds	
+NamesReadPerVerseRecords.json	BHSA	23.13:17.5	מָדָ֑י	medes		holds	
+NamesReadPerVerseRecords.json	BHSA	23.21:16.16	קֵדָֽר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.21:17.7	קֵדָ֖ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.36:11.22	יְהוּדִ֔ית	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	23.36:13.9	יְהוּדִ֑ית	judahites		holds	
+NamesReadPerVerseRecords.json	BHSA	23.42:11.7	קֵדָ֑ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.43:3.13	סְבָ֖א	seba-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.60:7.3	קֵדָר֙	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.60:7.7	נְבָיֹ֖ות	nebaioth-2		holds	
+NamesReadPerVerseRecords.json	BHSA	23.60:9.7	תַּרְשִׁישׁ֙	tarshish-5		holds	
+NamesReadPerVerseRecords.json	BHSA	23.66:19.18	תֻּבַ֣ל	tubal-2		holds	
+NamesReadPerVerseRecords.json	BHSA	24.1:1.4	חִלְקִיָּ֑הוּ	hilkiah-7		holds	
+NamesReadPerVerseRecords.json	BHSA	24.2:10.8	קֵדָ֛ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	24.29:3.9	חִלְקִיָּ֑ה	hilkiah-8		holds	
+NamesReadPerVerseRecords.json	BHSA	24.35:4.27	שַׁלֻּ֖ם	shallum-7		holds	
+NamesReadPerVerseRecords.json	BHSA	24.40:6.9	מִּצְפָּ֑תָה	mizpah-3		holds	
+NamesReadPerVerseRecords.json	BHSA	24.40:8.6	מִּצְפָּ֑תָה	mizpah-3		holds	
+NamesReadPerVerseRecords.json	BHSA	24.40:12.20	מִּצְפָּ֑תָה	mizpah-3		holds	
+NamesReadPerVerseRecords.json	BHSA	24.40:13.18	מִּצְפָּֽתָה	mizpah-3		holds	
+NamesReadPerVerseRecords.json	BHSA	24.46:9.14	פוּט֙	put-2		holds	
+NamesReadPerVerseRecords.json	BHSA	24.49:27.10	בֶּן־הֲדָֽד	benhadad-2		holds	
+NamesReadPerVerseRecords.json	BHSA	24.49:28.2	קֵדָ֣ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	24.49:28.18	קֵדָ֔ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	24.51:27.20	אַשְׁכְּנָ֑ז	ashkenaz-2		holds	
+NamesReadPerVerseRecords.json	BHSA	26.27:10.5	פוּט֙	put-2		holds	
+NamesReadPerVerseRecords.json	BHSA	26.27:21.5	קֵדָ֔ר	kedar-2		holds	
+NamesReadPerVerseRecords.json	BHSA	26.29:10.21	כּֽוּשׁ	cush-4		holds	
+NamesReadPerVerseRecords.json	BHSA	26.30:5.3	פ֤וּט	put-2		holds	
+NamesReadPerVerseRecords.json	BHSA	26.30:5.5	לוּד֙	lud-4		holds	
+NamesReadPerVerseRecords.json	BHSA	26.38:5.4	פ֖וּט	put-2		holds	
+NamesReadPerVerseRecords.json	BHSA	27.8:21.7	יָוָ֑ן	greece		holds	
+NamesReadPerVerseRecords.json	BHSA	27.9:1.10	מָדָ֑י	medes		holds	
+NamesReadPerVerseRecords.json	BHSA	27.10:20.22	יָוָ֖ן	greece		holds	
+NamesReadPerVerseRecords.json	BHSA	27.11:2.31	יָוָֽן	greece		holds	
+NamesReadPerVerseRecords.json	BHSA	30.1:5.18	אֲרָ֛ם	syria		holds	
+NamesReadPerVerseRecords.json	BHSA	30.6:14.19	חֲמָ֖ת	hamath-2		holds	
+NamesReadPerVerseRecords.json	BHSA	38.9:13.14	יָוָ֑ן	greece		holds	
+NamesReadPerVerseRecords.json	BHSA	39.2:8.15	לֵּוִ֔י	levites		holds	
+NamesakeReadingRecords.json	BHSA	7.3:15.15	גֵּרָא֙	gera-2	gera-3	holds	
+NamesakeReadingRecords.json	BHSA	12.14:24.13	יָרָבְעָ֣ם	jeroboam	jeroboam-2	holds	
+NamesakeReadingRecords.json	BHSA	13.3:6.6	אֱלִיפָֽלֶט	eliphelet-3	eliphelet	holds	
+NamesakeReadingRecords.json	BHSA	13.6:8.1	אֶלְקָנָ֥ה	elkanah	elkanah-4	holds	
+NamesakeReadingRecords.json	BHSA	13.6:11.3	אֶלְקָנָ֔ה	elkanah-5	elkanah-4	holds	
+NamesakeReadingRecords.json	BHSA	13.6:20.4	אֶלְקָנָ֔ה	elkanah-5	elkanah-4	holds	
+NamesakeReadingRecords.json	BHSA	13.9:16.14	אֶלְקָנָ֔ה	elkanah-6	elkanah-4	holds	
+NamesakeReadingRecords.json	BHSA	13.11:41.4	זָבָ֖ד	zabad-3	zabad	holds	
+NamesakeReadingRecords.json	BHSA	13.14:5.6	אֶלְפָּֽלֶט	eliphelet-3	eliphelet	holds	
+NamesakeReadingRecords.json	BHSA	13.23:9.2	שִׁמְעִ֗י	shimei-9	shimei	holds	
+NamesakeReadingRecords.json	BHSA	14.35:9.13	יֹוזָבָ֖ד	jozabad-11	jozabad-4	holds	
+NamesakeReadingRecords.json	BHSA	15.2:40.4	יֵשׁ֧וּעַ	jeshua-5	jeshua-7	holds	
+NamesakeReadingRecords.json	BHSA	15.8:2.3	פִֽינְחָס֙	phinehas	phinehas-3	holds	
+NamesakeReadingRecords.json	BHSA	15.8:16.23	זְכַרְיָ֥ה	zechariah-24	zechariah-16	holds	
+NamesakeReadingRecords.json	BHSA	15.10:21.5	מַעֲשֵׂיָ֤ה	maaseiah-15	maaseiah-6	holds	
+NamesakeReadingRecords.json	BHSA	15.10:23.15	אֱלִיעֶֽזֶר	eliezer-11	eliezer-7	holds	
+NamesakeReadingRecords.json	BHSA	16.3:17.11	חֲשַׁבְיָ֛ה	hashabiah-5	hashabiah-4	holds	
+NamesakeReadingRecords.json	BHSA	16.3:29.11	שְׁמַֽעְיָ֣ה	shemaiah-17	shemaiah-2	holds	
+NamesakeReadingRecords.json	BHSA	16.7:43.4	יֵשׁ֧וּעַ	jeshua-5	jeshua-7	holds	
+NamesakeReadingRecords.json	BHSA	16.9:4.10	קַדְמִיאֵ֧ל	kadmiel-2	kadmiel	holds	
+NamesakeReadingRecords.json	BHSA	16.9:5.7	קַדְמִיאֵל	kadmiel-2	kadmiel	holds	
+NamesakeReadingRecords.json	BHSA	16.10:5.1	חַטּ֥וּשׁ	hattush-3	hattush	holds	
+NamesakeReadingRecords.json	BHSA	16.10:10.12	קַדְמִיאֵֽל	kadmiel-2	kadmiel	holds	
+NamesakeReadingRecords.json	BHSA	16.11:9.11	סְּנוּאָ֛ה	hassenuah-2	hassenuah	holds	
+NamesakeReadingRecords.json	BHSA	16.12:2.3	חַטּֽוּשׁ	hattush-3	hattush	holds	
+NamesakeReadingRecords.json	BHSA	16.12:5.2	מַֽעַדְיָ֖ה	maaziah-3		holds	
+NamesakeReadingRecords.json	BHSA	16.12:34.1	יְהוּדָה֙	judah-7	judah-4	holds	
+NamesakeReadingRecords.json	BHSA	16.12:41.6	מִ֠נְיָמִין	miniamin-3	miniamin-2	holds	
+NamesakeReadingRecords.json	BHSA	16.12:42.8	עֻזִּ֛י	uzzi-7	uzzi-6	holds	
+NamesakeReadingRecords.json	BHSA	16.12:42.10	יהֹוחָנָ֥ן	jehohanan-5	jehohanan-4	holds	
+NamesakeReadingRecords.json	BHSA	24.29:3.5	שָׁפָ֔ן	shaphan-5	shaphan	holds	
+NamesakeReadingRecords.json	BHSA	38.12:12.20	נָתָן֙	nathan-10	nathan-2	holds	
+NamesakeReadingRecords.json	NESTLE1904	40.1:15.15	Ἰακώβ	jacob-2	jacob	holds	
+NamesakeReadingRecords.json	NESTLE1904	40.1:16.1	Ἰακὼβ	jacob-2	jacob	holds	
+NamesakeReadingRecords.json	NESTLE1904	44.23:35.15	Ἡρῴδου	herod		holds	
+NamesakeReadingRecords.json	NESTLE1904	46.15:7.3	Ἰακώβῳ	james-3		holds	
+NamesakeReadingRecords.json	NESTLE1904	64.1:1.3	Γαΐῳ	gaius-4	gaius	holds	
+NamesakeRecords.json	BHSA	1.10:7.3	כ֔וּשׁ	cush		holds	
+NamesakeRecords.json	BHSA	1.10:7.6	חֲוִילָ֔ה	havilah		holds	
+NamesakeRecords.json	BHSA	1.10:7.18	דְדָֽן	dedan		holds	
+NamesakeRecords.json	BHSA	1.25:4.4	עֵיפָ֤ה	ephah		holds	
+NamesakeRecords.json	BHSA	1.25:4.6	עֵ֨פֶר֙	epher		holds	
+NamesakeRecords.json	BHSA	1.25:4.8	חֲנֹ֔ךְ	hanoch		holds	
+NamesakeRecords.json	BHSA	1.25:9.16	צֹ֨חַר֙	zohar		holds	
+NamesakeRecords.json	BHSA	1.46:10.12	צֹ֑חַר	zohar-2		holds	
+NamesakeRecords.json	BHSA	1.46:12.4	עֵ֧ר	er		holds	
+NamesakeRecords.json	BHSA	1.46:12.12	זָ֑רַח	zerah-3		holds	
+NamesakeRecords.json	BHSA	1.46:12.15	עֵ֤ר	er		holds	
+NamesakeRecords.json	BHSA	1.46:12.25	חֶצְרֹ֥ון	hezron-2		holds	
+NamesakeRecords.json	BHSA	2.6:15.12	צֹ֔חַר	zohar-2		holds	
+NamesakeRecords.json	BHSA	4.2:14.11	רְעוּאֵֽל	deuel		holds	
+NamesakeRecords.json	BHSA	4.26:44.9	יִּמְנָ֔ה	imnah		holds	
+NamesakeRecords.json	BHSA	6.13:5.21	חֲמָֽת	hamath-2		holds	
+NamesakeRecords.json	BHSA	6.15:34.8	עֵינָֽם	enam		holds	
+NamesakeRecords.json	BHSA	6.16:2.5	ל֑וּזָה	luz		holds	
+NamesakeRecords.json	BHSA	6.21:38.11	רָמֹ֥ת	ramoth-3		holds	
+NamesakeRecords.json	BHSA	10.23:37.9	יֹואָ֥ב	joab		holds	
+NamesakeRecords.json	BHSA	13.1:29.5	נְבָיֹ֔ות	nebaioth		holds	
+NamesakeRecords.json	BHSA	13.1:38.6	שֹׁובָ֖ל	shobal		holds	
+NamesakeRecords.json	BHSA	13.1:38.10	עֲנָ֑ה	anah		holds	
+NamesakeRecords.json	BHSA	13.1:38.12	דִישֹׁ֥ן	dishon		holds	
+NamesakeRecords.json	BHSA	13.1:42.8	דִישֹׁ֖ון	dishan		holds	
+NamesakeRecords.json	BHSA	13.2:3.13	שׁ֖וּעַ	shua		holds	
+NamesakeRecords.json	BHSA	13.2:4.10	זָ֑רַח	zerah-3		holds	
+NamesakeRecords.json	BHSA	13.2:21.9	גִלְעָ֔ד	gilead		holds	
+NamesakeRecords.json	BHSA	13.2:22.5	יָאִ֑יר	jair		holds	
+NamesakeRecords.json	BHSA	13.2:23.8	יָאִ֧יר	jair		holds	
+NamesakeRecords.json	BHSA	13.2:23.23	גִלְעָֽד	gilead		holds	
+NamesakeRecords.json	BHSA	13.2:25.9	רָ֑ם	ram-2		holds	
+NamesakeRecords.json	BHSA	13.2:27.4	רָ֖ם	ram-2		holds	
+NamesakeRecords.json	BHSA	13.2:43.6	תַפֻּ֖חַ	tappuah		holds	
+NamesakeRecords.json	BHSA	13.2:47.6	יֹותָ֛ם	jotham-3		holds	
+NamesakeRecords.json	BHSA	13.2:47.10	פֶ֖לֶט	pelet		holds	
+NamesakeRecords.json	BHSA	13.2:47.12	עֵיפָ֥ה	ephah-3		holds	
+NamesakeRecords.json	BHSA	13.2:47.14	שָֽׁעַף	shaaph		holds	
+NamesakeRecords.json	BHSA	13.2:49.3	שַׁ֚עַף	shaaph-2		holds	
+NamesakeRecords.json	BHSA	13.2:49.7	שְׁוָ֛א	sheva-2		holds	
+NamesakeRecords.json	BHSA	13.2:49.15	כָּלֵ֖ב	chelubai		holds	
+NamesakeRecords.json	BHSA	13.2:50.4	כָלֵ֔ב	chelubai		holds	
+NamesakeRecords.json	BHSA	13.3:17.4	אַסִּ֔ר	assir-3		holds	
+NamesakeRecords.json	BHSA	13.4:3.4	עֵיטָ֔ם	etam-4		superseded	etam was folded into etam-4: Essenthos: the project owner's word of 2026-11-16 (not humans or not persons get no sex; a people or a town is not a man; Etam read in context), each record read against its verses in the Hebrew, the Septuagint, the King James, Ohienko and the Synodal by claude-opus-5-5 on 2026-11-16
+NamesakeRecords.json	BHSA	13.4:18.14	שֹׂוכֹ֔ו	soco		holds	
+NamesakeRecords.json	BHSA	13.4:33.11	בָּ֑עַל	baalathbeer		holds	
+NamesakeRecords.json	BHSA	13.4:42.22	יִשְׁעִ֖י	ishi-the-simeonite		holds	
+NamesakeRecords.json	BHSA	13.5:15.1	אֲחִי֙	ahi		holds	
+NamesakeRecords.json	BHSA	13.7:1.5	תֹּולָ֧ע	tola		holds	
+NamesakeRecords.json	BHSA	13.7:1.7	פוּאָ֛ה	puvvah		holds	
+NamesakeRecords.json	BHSA	13.7:1.8	ישׁיב	iob		holds	
+NamesakeRecords.json	BHSA	13.7:8.14	ירֵמֹ֣ות	jeremoth		holds	
+NamesakeRecords.json	BHSA	13.7:14.13	גִלְעָֽד	gilead		holds	
+NamesakeRecords.json	BHSA	13.7:17.7	גִלְעָ֔ד	gilead		holds	
+NamesakeRecords.json	BHSA	13.7:27.3	יְהֹושֻׁ֥עַ	joshua		holds	
+NamesakeRecords.json	BHSA	13.7:34.4	אֲחִ֥י	ahi-2		holds	
+NamesakeRecords.json	BHSA	13.7:38.3	יֶ֑תֶר	ithran-2		holds	
+NamesakeRecords.json	BHSA	13.8:14.5	ירֵמֹֽות	jeremoth-2		holds	
+NamesakeRecords.json	BHSA	13.8:27.8	יְרֹחָֽם	jeroham-father-of-jaresiah		holds	
+NamesakeRecords.json	BHSA	13.8:33.15	יְהֹֽונָתָן֙	jonathan-2		holds	
+NamesakeRecords.json	BHSA	13.8:34.3	יְהֹונָתָ֖ן	jonathan-2		holds	
+NamesakeRecords.json	BHSA	13.9:14.11	חֲשַׁבְיָ֖ה	hashabiah-11		holds	
+NamesakeRecords.json	BHSA	13.9:35.7	יעואל	jeiel-2		holds	
+NamesakeRecords.json	BHSA	13.9:39.15	יְהֹֽונָתָן֙	jonathan-2		holds	
+NamesakeRecords.json	BHSA	13.9:40.3	יְהֹונָתָ֖ן	jonathan-2		holds	
+NamesakeRecords.json	BHSA	13.11:34.5	יֹונָתָ֥ן	jonathan-5		holds	
+NamesakeRecords.json	BHSA	13.12:3.16	עַזְמָ֑וֶת	azmaveth-6		holds	
+NamesakeRecords.json	BHSA	13.12:4.2	יִֽשְׁמַֽעְיָ֧ה	ishmaiah-2		holds	
+NamesakeRecords.json	BHSA	13.12:5.2	יִרְמְיָ֤ה	jeremiah-3		holds	
+NamesakeRecords.json	BHSA	13.12:5.4	יַחֲזִיאֵל֙	jahaziel		holds	
+NamesakeRecords.json	BHSA	13.12:5.6	יֹ֣וחָנָ֔ן	johanan-4		holds	
+NamesakeRecords.json	BHSA	13.12:5.8	יֹוזָבָ֖ד	jozabad		holds	
+NamesakeRecords.json	BHSA	13.12:13.1	יֹֽוחָנָן֙	johanan-5		holds	
+NamesakeRecords.json	BHSA	13.12:19.5	עֲמָשַׂי֮	amasa-3		holds	
+NamesakeRecords.json	BHSA	13.12:28.2	יהֹויָדָ֖ע	jehoiada-4		holds	
+NamesakeRecords.json	BHSA	13.15:23.4	אֶלְקָנָ֔ה	elkanah-doorkeeper-of-the-ark		holds	
+NamesakeRecords.json	BHSA	13.15:24.8	עֲמָשַׂ֡י	amasai-2		holds	
+NamesakeRecords.json	BHSA	13.23:20.2	עֻזִּיאֵ֑ל	uzziel		holds	
+NamesakeRecords.json	BHSA	13.23:20.3	מִיכָ֣ה	micah-3		holds	
+NamesakeRecords.json	BHSA	13.23:20.7	יִשִּׁיָּ֖ה	isshiah-3		holds	
+NamesakeRecords.json	BHSA	13.24:11.2	יֵשׁ֨וּעַ֙	jeshua		holds	
+NamesakeRecords.json	BHSA	13.24:11.6	שְׁכַנְיָ֖הוּ	shecaniah-2		holds	
+NamesakeRecords.json	BHSA	13.25:17.3	שִׁמְעִ֔י	shimei-10		holds	
+NamesakeRecords.json	BHSA	13.26:1.13	אָסָֽף	abiasaph		holds	
+NamesakeRecords.json	BHSA	13.26:20.4	אֲחִיָּ֗ה	ahijah-8		holds	
+NamesakeRecords.json	BHSA	13.26:28.25	שְׁלֹמִ֖ית	shelomoth-2		holds	
+NamesakeRecords.json	BHSA	13.27:18.3	אֱלִיה֖וּ	eliab-3		superseded	elihu-4 was folded into eliab-3: the lead reading 1CH 27:18 against 1SA 16:6-11, 17:13 and 1CH 2:13-15 on the project owner's ruling of 2026-10-15, decided 2026-10-15
+NamesakeRecords.json	BHSA	13.27:18.11	מִיכָאֵֽל	michael-10		holds	
+NamesakeRecords.json	BHSA	13.27:25.8	עֲדִיאֵ֑ל	adiel-3		holds	
+NamesakeRecords.json	BHSA	13.27:25.29	עֻזִּיָּֽהוּ	uzziah-4		holds	
+NamesakeRecords.json	BHSA	13.27:32.2	יהֹונָתָ֤ן	jonathan-15		holds	
+NamesakeRecords.json	BHSA	15.2:2.5	יֵשׁ֡וּעַ	joshua-4		superseded	jeshua-3 was folded into joshua-4: Essenthos, the project owner's ruling of 2026-11-09 that Jeshua son of Jozadak and Joshua son of Jehozadak are one man, jeshua-3 folded into joshua-4 by claude-opus-5-5 on his instruction
+NamesakeRecords.json	BHSA	15.2:2.6	נְ֠חֶמְיָה	nehemiah-3		holds	
+NamesakeRecords.json	BHSA	15.2:2.7	שְׂרָיָ֨ה	seraiah-6		holds	
+NamesakeRecords.json	BHSA	15.2:2.9	מָרְדֳּכַ֥י	mordecai		holds	
+NamesakeRecords.json	BHSA	15.2:2.13	רְח֣וּם	rehum		holds	
+NamesakeRecords.json	BHSA	15.2:16.4	יחִזְקִיָּ֖ה	hezekiah-2		holds	
+NamesakeRecords.json	BHSA	15.7:1.12	עֶזְרָא֙	ezra		holds	
+NamesakeRecords.json	BHSA	15.7:6.2	עֶזְרָא֙	ezra		holds	
+NamesakeRecords.json	BHSA	15.7:6.5	בָּבֶ֔ל	babylon		holds	
+NamesakeRecords.json	BHSA	15.7:9.14	בָּבֶ֑ל	babylon		holds	
+NamesakeRecords.json	BHSA	15.7:10.2	עֶזְרָא֙	ezra		holds	
+NamesakeRecords.json	BHSA	15.7:11.12	עֶזְרָ֥א	ezra		holds	
+NamesakeRecords.json	BHSA	15.8:1.16	בָּבֶֽל	babylon		holds	
+NamesakeRecords.json	BHSA	15.8:3.3	שְׁכַנְיָ֔ה	shecaniah		holds	
+NamesakeRecords.json	BHSA	15.8:13.10	יְעִיאֵ֣ל	jeiel-10		holds	
+NamesakeRecords.json	BHSA	15.8:16.6	אֲרִיאֵ֡ל	ariel-2		holds	
+NamesakeRecords.json	BHSA	15.8:18.14	מַחְלִ֔י	mahli		holds	
+NamesakeRecords.json	BHSA	15.8:33.30	פִּֽינְחָ֑ס	phinehas-3		holds	
+NamesakeRecords.json	BHSA	15.10:1.4	עֶזְרָא֙	ezra		holds	
+NamesakeRecords.json	BHSA	15.10:2.12	עֶזְרָ֔א	ezra		holds	
+NamesakeRecords.json	BHSA	15.10:5.3	עֶזְרָ֡א	ezra		holds	
+NamesakeRecords.json	BHSA	15.10:6.3	עֶזְרָ֗א	ezra		holds	
+NamesakeRecords.json	BHSA	15.10:10.3	עֶזְרָ֤א	ezra		holds	
+NamesakeRecords.json	BHSA	15.10:16.9	עֶזְרָ֨א	ezra		holds	
+NamesakeRecords.json	BHSA	15.10:38.2	בָנִ֥י	bani-5		holds	
+NamesakeRecords.json	BHSA	16.7:21.4	חִזְקִיָּ֖ה	hezekiah-2		holds	
+NamesakeRecords.json	BHSA	16.8:1.21	עֶזְרָ֣א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:2.3	עֶזְרָ֣א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:4.3	עֶזְרָ֣א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:5.3	עֶזְרָ֤א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:6.3	עֶזְרָ֔א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:9.8	עֶזְרָ֣א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:13.21	עֶזְרָ֖א	ezra		holds	
+NamesakeRecords.json	BHSA	16.8:17.22	יֵשׁ֨וּעַ	joshua		holds	
+NamesakeRecords.json	BHSA	16.10:11.7	חָנָֽן	hanan-6		holds	
+NamesakeRecords.json	BHSA	16.10:12.1	מִיכָ֥א	mica-2		holds	
+NamesakeRecords.json	BHSA	16.10:16.1	בֻּנִּ֥י	bunni-the-covenant-chief		holds	
+NamesakeRecords.json	BHSA	16.10:18.2	חִזְקִיָּ֖ה	hizkijah-the-covenant-chief		holds	
+NamesakeRecords.json	BHSA	16.10:21.2	מְשֻׁלָּ֖ם	meshullam-the-covenant-chief		holds	
+NamesakeRecords.json	BHSA	16.10:22.1	מְשֵׁיזַבְאֵ֥ל	meshezabel-3		holds	
+NamesakeRecords.json	BHSA	16.10:22.2	צָדֹ֖וק	zadok-8		holds	
+NamesakeRecords.json	BHSA	16.10:23.2	חָנָ֖ן	hanan-5		holds	
+NamesakeRecords.json	BHSA	16.10:24.2	חֲנַנְיָ֖ה	hananiah-7		holds	
+NamesakeRecords.json	BHSA	16.10:24.3	חַשּֽׁוּב	hasshub-4		holds	
+NamesakeRecords.json	BHSA	16.10:26.1	רְח֥וּם	rehum-5		holds	
+NamesakeRecords.json	BHSA	16.10:26.3	מַעֲשֵׂיָֽה	maaseiah-17		holds	
+NamesakeRecords.json	BHSA	16.10:27.3	חָנָ֖ן	hanan-9		holds	
+NamesakeRecords.json	BHSA	16.10:28.1	מַלּ֥וּךְ	malluch-5		holds	
+NamesakeRecords.json	BHSA	16.11:15.11	חֲשַׁבְיָ֖ה	hashabiah-11		holds	
+NamesakeRecords.json	BHSA	16.11:17.4	מִ֠יכָה	mica-2		holds	
+NamesakeRecords.json	BHSA	16.12:1.18	עֶזְרָֽא	ezra-3		holds	
+NamesakeRecords.json	BHSA	16.12:2.1	אֲמַרְיָ֥ה	amariah-priest-with-zerubbabel		holds	
+NamesakeRecords.json	BHSA	16.12:2.2	מַלּ֖וּךְ	malluch-4		superseded	malluch-6 was folded into malluch-4: Essenthos: the namesakes judge's pairs of one man held twice, read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08
+NamesakeRecords.json	BHSA	16.12:3.3	מְרֵמֹֽת	meremoth-3		holds	
+NamesakeRecords.json	BHSA	16.12:5.1	מִיָּמִ֥ין	mijamin-4		holds	
+NamesakeRecords.json	BHSA	16.12:6.1	שְׁמַֽעְיָ֥ה	shemaiah-19		superseded	shemaiah-24 was folded into shemaiah-19: Essenthos: the namesakes judge's pairs of one man held twice, read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08
+NamesakeRecords.json	BHSA	16.12:8.5	בִּנּ֛וּי	binnui-levite-with-zerubbabel		holds	
+NamesakeRecords.json	BHSA	16.12:13.2	עֶזְרָ֣א	ezra-3		holds	
+NamesakeRecords.json	BHSA	16.12:13.5	אֲמַרְיָ֖ה	amariah-priest-with-zerubbabel		holds	
+NamesakeRecords.json	BHSA	16.12:14.2	מלוכי	malluch-4		superseded	malluch-6 was folded into malluch-4: Essenthos: the namesakes judge's pairs of one man held twice, read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08
+NamesakeRecords.json	BHSA	16.12:14.5	שְׁבַנְיָ֖ה	shebaniah-3		holds	
+NamesakeRecords.json	BHSA	16.12:15.5	מְרָיֹ֖ות	meraioth-2		holds	
+NamesakeRecords.json	BHSA	16.12:18.5	שְׁמַעְיָ֖ה	shemaiah-19		superseded	shemaiah-24 was folded into shemaiah-19: Essenthos: the namesakes judge's pairs of one man held twice, read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08
+NamesakeRecords.json	BHSA	16.12:22.5	אֶלְיָשִׁ֜יב	eliashib-7		holds	
+NamesakeRecords.json	BHSA	16.12:26.16	עֶזְרָ֥א	ezra		holds	
+NamesakeRecords.json	BHSA	16.12:33.3	עֶזְרָ֖א	ezra-4		holds	
+NamesakeRecords.json	BHSA	16.12:33.5	מְשֻׁלָּֽם	meshullam-16		holds	
+NamesakeRecords.json	BHSA	16.12:34.5	שְׁמַֽעְיָ֖ה	shemaiah-25		holds	
+NamesakeRecords.json	BHSA	16.12:35.12	שְׁמַֽעְיָ֗ה	shemaiah-26		holds	
+NamesakeRecords.json	BHSA	16.12:35.14	מַתַּנְיָה֙	mattaniah-12		holds	
+NamesakeRecords.json	BHSA	16.12:36.3	שְֽׁמַעְיָ֡ה	shemaiah-27		holds	
+NamesakeRecords.json	BHSA	16.12:36.5	עֲזַרְאֵ֡ל	azarel-6		holds	
+NamesakeRecords.json	BHSA	16.12:36.9	נְתַנְאֵ֤ל	nethanel-10		holds	
+NamesakeRecords.json	BHSA	16.12:36.12	חֲנָ֔נִי	hanani-5		holds	
+NamesakeRecords.json	BHSA	16.12:36.21	עֶזְרָ֥א	ezra		holds	
+NamesakeRecords.json	BHSA	16.12:41.9	זְכַרְיָ֥ה	zechariah-trumpeter-of-the-second-company		holds	
+NamesakeRecords.json	BHSA	16.12:41.10	חֲנַנְיָ֖ה	hananiah-9		holds	
+NamesakeRecords.json	BHSA	16.12:42.2	מַעֲשֵׂיָ֨ה	maaseiah-18		holds	
+NamesakeRecords.json	BHSA	16.12:42.4	שְׁמַֽעְיָ֜ה	shemaiah-19		holds	
+NamesakeRecords.json	BHSA	16.12:42.14	עֵילָ֣ם	elam-9		holds	
+NamesakeRecordsSecond.json	BHSA	1.10:7.16	שְׁבָ֥א	sheba		holds	
+NamesakeRecordsSecond.json	BHSA	1.14:1.10	אֶלָּסָ֑ר	ellasar		holds	
+NamesakeRecordsSecond.json	BHSA	1.14:9.16	אֶלָּסָ֑ר	ellasar		holds	
+NamesakeRecordsSecond.json	BHSA	1.14:18.4	שָׁלֵ֔ם	salem		holds	
+NamesakeRecordsSecond.json	BHSA	1.23:8.24	צֹֽחַר	zohar		holds	
+NamesakeRecordsSecond.json	BHSA	1.25:3.5	שְׁבָ֖א	sheba-3		holds	
+NamesakeRecordsSecond.json	BHSA	1.25:3.15	לְטוּשִׁ֖ים	letush		holds	
+NamesakeRecordsSecond.json	BHSA	1.25:3.17	לְאֻמִּֽים	leum		holds	
+NamesakeRecordsSecond.json	BHSA	1.36:20.3	שֵׂעִיר֙	seir		holds	
+NamesakeRecordsSecond.json	BHSA	1.36:21.12	שֵׂעִ֖יר	seir		holds	
+NamesakeRecordsSecond.json	BHSA	1.46:16.14	אַרְאֵלִֽי	areli		holds	
+NamesakeRecordsSecond.json	BHSA	2.38:22.4	אוּרִ֥י	uri		holds	
+NamesakeRecordsSecond.json	BHSA	2.38:22.6	ח֖וּר	hur		holds	
+NamesakeRecordsSecond.json	BHSA	4.13:22.18	עֲנָ֑ק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	4.13:28.21	עֲנָ֖ק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	4.13:33.8	עֲנָ֖ק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	4.26:17.7	אַ֨רְאֵלִ֔י	areli		holds	
+NamesakeRecordsSecond.json	BHSA	4.36:11.3	מַחְלָ֣ה	mahlah		holds	
+NamesakeRecordsSecond.json	BHSA	4.36:11.8	מִלְכָּ֛ה	milcah-2		holds	
+NamesakeRecordsSecond.json	BHSA	5.9:2.18	עֲנָֽק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	5.23:5.28	בְּעֹ֗ור	beor-2		holds	
+NamesakeRecordsSecond.json	BHSA	6.10:3.17	יָפִ֧יעַ	japhia		holds	
+NamesakeRecordsSecond.json	BHSA	6.15:13.21	עֲנָ֖ק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	6.15:14.10	עֲנָ֑ק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	6.15:14.21	עֲנָֽק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	7.1:20.19	עֲנָֽק	anak		holds	
+NamesakeRecordsSecond.json	BHSA	7.1:35.18	יֹוסֵ֔ף	joseph		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:5.4	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:8.22	מִיכָ֖ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:9.4	מִיכָ֖ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:10.4	מִיכָ֜ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:12.3	מִיכָה֙	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:12.19	מִיכָֽה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.17:13.3	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:2.41	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:3.4	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:4.11	מִיכָ֑ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:13.11	מִיכָֽה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:15.13	מִיכָ֑ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:18.5	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:22.5	מִיכָ֑ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:22.16	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:23.12	מִיכָ֔ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:26.9	מִיכָ֗ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:27.7	מִיכָ֗ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:30.10	יהֹונָתָן	jonathan		holds	
+NamesakeRecordsSecond.json	BHSA	7.18:31.6	מִיכָ֖ה	micah		holds	
+NamesakeRecordsSecond.json	BHSA	9.14:3.2	אֲחִיָּ֣ה	ahijah-7		holds	
+NamesakeRecordsSecond.json	BHSA	9.14:3.4	אֲחִט֡וּב	ahitub		holds	
+NamesakeRecordsSecond.json	BHSA	9.14:3.8	פִּינְחָ֨ס	phinehas-2		holds	
+NamesakeRecordsSecond.json	BHSA	9.16:6.8	אֱלִיאָ֑ב	eliab-3		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:4.34	יהֹונָתָ֥ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:5.16	יהֹֽונָתָ֥ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:12.14	יְהֹונָתָ֣ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:17.13	יְהֹונָתָ֥ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:22.8	יְהֹ֣ונָתָ֔ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:23.3	יהֹונָתָ֗ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:25.8	יְהֹ֣ונָתָ֔ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.1:26.5	יְהֹ֣ונָתָ֔ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.2:30.6	אַבְנֵ֔ר	abner		holds	
+NamesakeRecordsSecond.json	BHSA	10.4:2.12	בַּֽעֲנָ֜ה	baanah		holds	
+NamesakeRecordsSecond.json	BHSA	10.4:4.3	יהֹֽונָתָן֙	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.4:4.18	יהֹֽונָתָ֜ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.4:5.9	בַעֲנָ֔ה	baanah		holds	
+NamesakeRecordsSecond.json	BHSA	10.4:6.18	בַעֲנָ֥ה	baanah		holds	
+NamesakeRecordsSecond.json	BHSA	10.4:9.8	בַּעֲנָ֣ה	baanah		holds	
+NamesakeRecordsSecond.json	BHSA	10.5:14.9	שַׁמּ֣וּעַ	shammua-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.5:14.11	שֹׁובָ֔ב	shobab		holds	
+NamesakeRecordsSecond.json	BHSA	10.5:14.13	נָתָ֖ן	nathan		holds	
+NamesakeRecordsSecond.json	BHSA	10.9:1.19	יְהֹונָתָֽן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.9:3.26	יהֹונָתָ֖ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.9:6.5	יְהֹונָתָ֤ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.9:7.14	יְהֹונָתָ֣ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:7.6	מְפִי־בֹ֖שֶׁת	mephibosheth		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:7.8	יְהֹונָתָ֣ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:7.20	יְהֹונָתָ֥ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:12.12	יְהֹונָתָ֣ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:13.11	יְהֹונָתָ֣ן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:14.7	יהֹונָֽתָן	jonathan-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:21.7	יְהֹ֣ונָתָ֔ן	jonathan-4		holds	
+NamesakeRecordsSecond.json	BHSA	10.21:21.9	שׁמעי	shammah-2		holds	
+NamesakeRecordsSecond.json	BHSA	10.23:8.17	עֲדִינֹ֣ו	joshebbasshebeth		holds	
+NamesakeRecordsSecond.json	BHSA	11.1:42.5	יֹונָתָ֛ן	jonathan-3		holds	
+NamesakeRecordsSecond.json	BHSA	11.1:43.3	יֹונָתָ֔ן	jonathan-3		holds	
+NamesakeRecordsSecond.json	BHSA	11.9:11.1	חִירָ֣ם	hiram		holds	
+NamesakeRecordsSecond.json	BHSA	11.9:11.27	חִירָם֙	hiram		holds	
+NamesakeRecordsSecond.json	BHSA	12.8:16.6	יֹורָ֤ם	jehoram-2		holds	
+NamesakeRecordsSecond.json	BHSA	12.8:16.12	יהֹושָׁפָ֖ט	jehoshaphat-3		holds	
+NamesakeRecordsSecond.json	BHSA	12.8:16.16	יְהֹורָ֥ם	jehoram		holds	
+NamesakeRecordsSecond.json	BHSA	12.8:16.18	יְהֹושָׁפָ֖ט	jehoshaphat-3		holds	
+NamesakeRecordsSecond.json	BHSA	12.9:27.2	אֲחַזְיָ֤ה	ahaziah-2		holds	
+NamesakeRecordsSecond.json	BHSA	12.15:25.18	אַרְגֹּ֣ב	argob		holds	
+NamesakeRecordsSecond.json	BHSA	13.1:9.16	שְׁבָ֥א	sheba		holds	
+NamesakeRecordsSecond.json	BHSA	13.1:32.22	שְׁבָ֥א	sheba-3		holds	
+NamesakeRecordsSecond.json	BHSA	13.2:52.5	שֹׁובָ֔ל	shobal-2		holds	
+NamesakeRecordsSecond.json	BHSA	13.2:52.8	הָרֹאֶ֖ה	haroeh		holds	
+NamesakeRecordsSecond.json	BHSA	13.4:6.12	תֵּימְנִ֖י	temeni		holds	
+NamesakeRecordsSecond.json	BHSA	13.4:6.16	אֲחַשְׁתָּרִ֑י	haahashtari		holds	
+NamesakeRecordsSecond.json	BHSA	13.4:19.12	אֶשְׁתְּמֹ֖עַ	eshtemoa-2		holds	
+NamesakeRecordsSecond.json	BHSA	13.4:37.6	אַלֹּ֛ון	allon		holds	
+NamesakeRecordsSecond.json	BHSA	13.7:19.7	שֶׁ֔כֶם	shechem-3		holds	
+NamesakeRecordsSecond.json	BHSA	13.8:31.6	זָֽכֶר	zecher		holds	
+NamesakeRecordsSecond.json	BHSA	13.9:4.9	בני	bani-3		holds	
+NamesakeRecordsSecond.json	BHSA	13.12:10.1	עֵ֖זֶר	ezer-4		holds	
+NamesakeRecordsSecond.json	BHSA	13.12:18.3	דָוִיד֮	david		holds	
+NamesakeRecordsSecond.json	BHSA	13.21:1.3	שָׂטָ֖ן	satan		holds	
+NamesakeRecordsSecond.json	BHSA	13.25:11.5	יִּצְרִ֔י	zeri		holds	
+NamesakeRecordsSecond.json	BHSA	14.11:18.9	יְרִימֹ֖ות	jerimoth-4		holds	
+NamesakeRecordsSecond.json	BHSA	14.12:15.19	עִדֹּ֥ו	iddo-4		holds	
+NamesakeRecordsSecond.json	BHSA	14.13:19.3	אֲבִיָּה֮	abijam		holds	
+NamesakeRecordsSecond.json	BHSA	14.13:22.14	עִדֹּֽו	iddo-4		holds	
+NamesakeRecordsSecond.json	BHSA	14.18:8.11	מיכהו	micaiah		holds	
+NamesakeRecordsSecond.json	BHSA	14.18:12.9	מִיכָ֗יְהוּ	micaiah		holds	
+NamesakeRecordsSecond.json	BHSA	14.18:14.11	מִיכָה֙	micaiah		holds	
+NamesakeRecordsSecond.json	BHSA	14.26:17.4	עֲזַרְיָ֣הוּ	azariah-20		holds	
+NamesakeRecordsSecond.json	BHSA	14.26:20.4	עֲזַרְיָהוּ֩	azariah-20		holds	
+NamesakeRecordsSecond.json	BHSA	14.29:12.7	עֲמָשַׂ֞י	amasai-3		holds	
+NamesakeRecordsSecond.json	BHSA	14.29:12.22	עַבְדִּ֔י	abdi-3		holds	
+NamesakeRecordsSecond.json	BHSA	14.31:14.2	קֹורֵ֨א	kore-2		holds	
+NamesakeRecordsSecond.json	BHSA	14.35:8.18	זְכַרְיָ֜הוּ	zechariah-26		holds	
+NamesakeRecordsSecond.json	BHSA	14.35:9.4	שְׁמַֽעְיָ֨הוּ	shemaiah-23		holds	
+NamesakeRecordsSecond.json	BHSA	14.35:9.6	נְתַנְאֵ֜ל	nethanel-9		holds	
+NamesakeRecordsSecond.json	BHSA	14.35:9.9	חֲשַׁבְיָ֧הוּ	hashabiah-10		holds	
+NamesakeRecordsSecond.json	BHSA	14.36:2.6	יֹואָחָ֣ז	jehoahaz-2		holds	
+NamesakeRecordsSecond.json	BHSA	14.36:4.19	יֹואָחָ֤ז	jehoahaz-2		holds	
+NamesakeRecordsSecond.json	BHSA	15.2:2.14	בַּעֲנָ֑ה	baanah-3		holds	
+NamesakeRecordsSecond.json	BHSA	15.2:50.6	נפיסים	nephisim		holds	
+NamesakeRecordsSecond.json	BHSA	15.2:55.8	סֹּפֶ֖רֶת	hassophereth		holds	
+NamesakeRecordsSecond.json	BHSA	15.3:9.25	חֵֽנָדָ֔ד	henadad-2		holds	
+NamesakeRecordsSecond.json	BHSA	15.5:2.8	יֵשׁ֣וּעַ	joshua-4		superseded	jeshua-3 was folded into joshua-4: Essenthos, the project owner's ruling of 2026-11-09 that Jeshua son of Jozadak and Joshua son of Jehozadak are one man, jeshua-3 folded into joshua-4 by claude-opus-5-5 on his instruction
+NamesakeRecordsSecond.json	BHSA	16.3:19.5	עֵ֧זֶר	ezer-5		holds	
+NamesakeRecordsSecond.json	BHSA	16.7:7.15	בַּעֲנָ֑ה	baanah-3		holds	
+NamesakeRecordsSecond.json	BHSA	16.7:52.6	נפושׁסים	nephisim		holds	
+NamesakeRecordsSecond.json	BHSA	16.7:57.7	סֹופֶ֖רֶת	hassophereth		holds	
+NamesakeRecordsSecond.json	BHSA	16.10:28.3	בַּעֲנָֽה	baanah-4		holds	
+NamesakeRecordsSecond.json	BHSA	16.13:8.11	טֹובִיָּ֛ה	tobiah-2		holds	
+NamesakeRecordsSecond.json	BHSA	16.13:13.13	פְדָיָה֙	pedaiah-7		holds	
+NamesakeRecordsSecond.json	BHSA	16.13:28.6	אֶלְיָשִׁיב֙	eliashib-7		holds	
+NamesakeRecordsSecond.json	BHSA	19.78:51.11	חָֽם	ham-3		holds	
+NamesakeRecordsSecond.json	BHSA	20.30:1.15	אֻכָֽל	ucal		holds	
+NamesakeRecordsSecond.json	BHSA	23.8:8.19	אֵֽל	immanuel		holds	
+NamesakeRecordsSecond.json	BHSA	24.19:14.3	יִרְמְיָ֨הוּ֙	jeremiah-6		holds	
+NamesakeRecordsSecond.json	BHSA	24.20:1.5	אִמֵּ֣ר	immer-5		holds	
+NamesakeRecordsSecond.json	BHSA	24.26:18.1	מיכיה	micah-4		holds	
+NamesakeRecordsSecond.json	BHSA	24.28:6.3	יִרְמְיָ֣ה	jeremiah-6		holds	
+NamesakeRecordsSecond.json	BHSA	24.29:21.15	מַֽעֲשֵׂיָ֔ה	maaseiah-19		holds	
+NamesakeRecordsSecond.json	BHSA	24.35:4.25	מַעֲשֵׂיָ֥הוּ	maaseiah-20		holds	
+NamesakeRecordsSecond.json	BHSA	24.36:8.10	יִרְמְיָ֣הוּ	jeremiah-6		holds	
+NamesakeRecordsSecond.json	BHSA	24.36:10.9	יִרְמְיָ֖הוּ	jeremiah-6		holds	
+NamesakeRecordsSecond.json	BHSA	24.36:10.14	גְּמַרְיָהוּ֩	gemariah-2		holds	
+NamesakeRecordsSecond.json	BHSA	24.36:12.23	שְׁ֠מַעְיָהוּ	shemaiah-22		holds	
+NamesakeRecordsSecond.json	BHSA	24.36:12.35	חֲנַנְיָ֖הוּ	hananiah-13		holds	
+NamesakeRecordsSecond.json	BHSA	26.11:1.32	יַאֲזַנְיָ֧ה	jaazaniah-4		holds	
+NamesakeRecordsSecond.json	BHSA	26.11:1.34	עַזֻּ֛ר	azzur-3		holds	
+NamesakeRecordsSecond.json	BHSA	26.11:1.37	פְּלַטְיָ֥הוּ	pelatiah-4		holds	
+NamesakeRecordsSecond.json	BHSA	26.11:1.39	בְּנָיָ֖הוּ	benaiah-11		holds	
+NamesakeRecordsSecond.json	BHSA	26.27:13.1	יָוָ֤ן	javan-2		holds	
+NamesakeRecordsSecond.json	BHSA	26.27:13.2	תֻּבַל֙	tubal-2		holds	
+NamesakeRecordsSecond.json	BHSA	27.2:48.4	דָנִיֵּ֣אל	daniel-2		holds	
+NamesakeRecordsSecond.json	BHSA	27.3:22.19	שַׁדְרַ֤ךְ	hananiah-12		holds	
+NamesakeRecordsSecond.json	BHSA	27.3:22.20	מֵישַׁךְ֙	mishael-3		holds	
+NamesakeRecordsSecond.json	BHSA	27.3:24.2	נְבוּכַדְנֶצַּ֣ר	nebuchadnezzar		holds	
+NamesakeRecordsSecond.json	BHSA	27.6:24.9	דָ֣נִיֵּ֔אל	daniel-2		holds	
+NamesakeRecordsSecond.json	BHSA	27.6:24.17	דָּנִיֵּ֜אל	daniel-2		holds	
+NamesakeRecordsSecond.json	BHSA	28.1:3.6	גֹּ֖מֶר	gomer-2		holds	
+NamesakeRecordsSecond.json	BHSA	36.1:1.8	כּוּשִׁ֣י	cushi-2		holds	
+NamesakeRecordsSecond.json	BHSA	37.1:13.3	חַגַּ֞י	haggai		holds	
+NamesakeRecordsSecond.json	NESTLE1904	41.5:9.10	Λεγιὼν	legion		holds	
+NamesakeRecordsSecond.json	NESTLE1904	42.6:16.5	Ἰούδαν	judas		holds	
+NamesakeRecordsSecond.json	NESTLE1904	42.8:30.13	Λεγιών	legion		holds	
+NamesakeRecordsSecond.json	NESTLE1904	43.14:22.3	Ἰούδας	thaddaeus		superseded	judas-of-james was folded into thaddaeus: the project owner's ruling of 2026-10-25 that Thaddaeus and Judas of James are one man, decided 2026-10-25
+NamesakeRecordsSecond.json	NESTLE1904	44.1:13.17	Ἰάκωβος	james		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.1:13.26	Ἰάκωβος	james-2		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.1:13.29	Σίμων	simon-2		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.1:13.34	Ἰακώβου	james-4		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.5:37.4	Ἰούδας	judas-3		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.9:43.10	Σίμωνι	simon-9		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.10:17.27	Σίμωνος	simon-9		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.10:32.15	Σίμωνος	simon-9		holds	
+NamesakeRecordsSecond.json	NESTLE1904	44.20:4.5	Πύρρου	pyrrhus		holds	
+NamesakeRecordsSecond.json	NESTLE1904	45.16:14.2	Ἀσύνκριτον	asynchritus		holds	
+NamesakeRecordsSecond.json	NESTLE1904	57.1:1.9	Φιλήμονι	philemon		holds	
+NamesakeRecordsSecond.json	NESTLE1904	58.11:22.9	Ἰσραὴλ	israelites		holds	
+NamesakeRecordsSecond.json	NESTLE1904	58.11:31.2	Ῥαὰβ	rahab		holds	
+NamesakeRecordsSecond.json	NESTLE1904	59.2:25.4	Ῥαὰβ	rahab		holds	
+NamesakeRecordsSecond.json	NESTLE1904	66.6:8.15	Θάνατος	death		holds	
+NamesakeTiebreakRecords.json	BHSA	13.9:10.5	יְדַֽעְיָ֥ה	jedaiah-5	jedaiah-2	holds	
+NamesakeTiebreakRecords.json	BHSA	13.12:29.2	צָדֹ֥וק	zadok	zadok-9	holds	
+NamesakeTiebreakRecords.json	BHSA	16.10:13.3	שְׁבַנְיָֽה	shebaniah-5	shebaniah-2	holds	
+NamesakeTiebreakRecords.json	BHSA	16.12:21.5	ידַֽעְיָ֖ה	jedaiah-8	jedaiah-5	holds	
+NamesakeTiebreakRecords.json	BHSA	16.12:23.17	אֶלְיָשִֽׁיב	eliashib-7	eliashib-3	holds	
+NamesakeTiebreakSecondRecords.json	BHSA	13.15:23.2	בֶֽרֶכְיָה֙	berechiah-doorkeeper-of-the-ark		holds	
+NamesakeTiebreakSecondRecords.json	BHSA	16.12:7.4	יְדַֽעְיָ֑ה	jedaiah-8	jedaiah-5	holds	
+NationEponymRecords.json	BHSA	1.10:16.4	יְבוּסִי֙	jebusite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:14.4	יְבוּסִי֙	jebusite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:16.8	אֱמֹרִ֔י	amorite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:14.8	אֱמֹרִ֔י	amorite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:16.12	גִּרְגָּשִֽׁי	girgashite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:14.12	גִּרְגָּשִֽׁי	girgashite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:17.4	חִוִּ֥י	hivite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:15.4	חִוִּ֥י	hivite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:17.8	עַרְקִ֖י	arkite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:15.8	עַרְקִ֖י	arkite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:17.12	סִּינִֽי	sinite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:15.12	סִּינִֽי	sinite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:18.4	אַרְוָדִ֥י	arvadite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:16.4	אַרְוָדִ֥י	arvadite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:18.8	צְּמָרִ֖י	zemarite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:16.8	צְּמָרִ֖י	zemarite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:18.12	חֲמָתִ֑י	hamathite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	13.1:16.12	חֲמָתִֽי	hamathite-son-of-canaan		holds	
+NationEponymRecords.json	BHSA	1.10:13.5	לוּדִ֧ים	lud		holds	
+NationEponymRecords.json	BHSA	13.1:11.5	לודיים	lud		holds	
+NationEponymRecords.json	BHSA	1.10:13.8	עֲנָמִ֛ים	anamim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	13.1:11.8	עֲנָמִ֛ים	anamim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	1.10:13.11	לְהָבִ֖ים	lehabim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	13.1:11.11	לְהָבִ֖ים	lehabim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	1.10:13.14	נַפְתֻּחִֽים	naphtuh		holds	
+NationEponymRecords.json	BHSA	13.1:11.14	נַפְתֻּחִֽים	naphtuh		holds	
+NationEponymRecords.json	BHSA	1.10:14.3	פַּתְרֻסִ֞ים	pathrusim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	13.1:12.3	פַּתְרֻסִ֞ים	pathrusim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	1.10:14.6	כַּסְלֻחִ֗ים	casluhim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	13.1:12.6	כַּסְלֻחִ֗ים	casluhim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	1.10:14.14	כַּפְתֹּרִֽים	caphtorim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	13.1:12.14	כַּפְתֹּרִֽים	caphtorim-son-of-mizraim		holds	
+NationEponymRecords.json	BHSA	1.10:4.7	כִּתִּ֖ים	kittim-son-of-javan		holds	
+NationEponymRecords.json	BHSA	13.1:7.7	כִּתִּ֖ים	kittim-son-of-javan		holds	
+NationEponymRecords.json	BHSA	1.10:4.9	דֹדָנִֽים	dodanim		holds	
+NationEponymRecords.json	BHSA	13.1:7.9	רֹודָנִֽים	dodanim		holds	
+NestleNameRecords.json	NESTLE1904	44.16:11.12	Νέαν	neapolis		holds	
+NestleNameRecords.json	NESTLE1904	44.16:11.13	Πόλιν	neapolis		holds	
+NestleNameRecords.json	NESTLE1904	44.20:13.10	Ἆσσον	assos		holds	
+NestleNameRecords.json	NESTLE1904	44.20:14.7	Ἆσσον	assos		holds	
+NoNameRecords.json	BHSA	16.11:14.12	זַבְדִּיאֵ֖ל	zabdiel-2		holds	
+OhienkoAdamRecords.json	UBIO	1.2:23.3	Адам	adam		holds	
+OhienkoAdamRecords.json	UBIO	1.2:25.6	Адам	adam		holds	
+OhienkoAdamRecords.json	UBIO	1.3:8.17	Адам	adam		holds	
+OhienkoAdamRecords.json	UBIO	1.3:12.2	Адам	adam		holds	
+OhienkoAdamRecords.json	UBIO	1.3:20.3	Адам	adam		holds	
+OhienkoAdamRecords.json	UBIO	1.4:1.3	Адам	adam		holds	
+OhienkoGentilicRecords.json	UBIO	13.11:44.1	аштерянин	ashterathites	uzzia	restored	an override of names/overrides/UBIO
+OhienkoGentilicRecords.json	UBIO	13.11:44.2	Уззійя	uzzia	ashterathites	restored	an override of names/overrides/UBIO
+OhienkoGentilicRecords.json	UBIO	13.27:4.6	Ахохівець	ahohites	dodai	restored	an override of names/overrides/UBIO
+OhienkoGentilicRecords.json	UBIO	13.27:4.7	Додай	dodai	ahohites	restored	an override of names/overrides/UBIO
+OwnRecords.json	BHSA	16.10:3.2	עֲזַרְיָ֖ה	azariah-the-covenant-priest		holds	
+OwnRecords.json	BHSA	16.12:33.2	עֲזַרְיָ֥ה	azariah-of-the-wall-dedication		holds	
+OwnRecords.json	BHSA	14.17:7.14	עֹבַדְיָ֣ה	obadiah-the-teaching-prince		holds	
+OwnRecords.json	BHSA	12.9:31.11	זִמְרִ֖י	zimri-in-jezebels-cry		holds	
+OwnRecords.json	BHSA	7.4:11.10	חֹבָ֖ב	hobab		holds	
+OwnerMarkRecords.json	BHSA	10.3:4.12	אֲבִיטָֽל	abital		holds	
+PatriarchJacobRecords.json	NESTLE1904	40.22:32.13	Ἰακώβ	jacob		holds	
+PatriarchJacobRecords.json	NESTLE1904	41.12:26.31	Ἰακώβ	jacob		holds	
+PatriarchJacobRecords.json	NESTLE1904	42.20:37.23	Ἰακώβ	jacob		holds	
+PatriarchJacobRecords.json	NESTLE1904	44.3:13.7	Ἰακώβ	jacob		holds	
+PatriarchJacobRecords.json	NESTLE1904	44.7:32.13	Ἰακώβ	jacob		holds	
+PatriarchJacobRecords.json	NESTLE1904	44.7:46.13	Ἰακώβ	jacob		holds	
+PatriarchJacobRecords.json	NESTLE1904	45.11:26.16	Ἰακώβ	israelites		holds	
+PaulsCircleRecords.json	NESTLE1904	44.18:17.4	Σωσθένην	sosthenes	crispus	holds	
+PaulsCircleRecords.json	NESTLE1904	46.1:1.10	Σωσθένης	sosthenes-the-brother	crispus	holds	
+PaulsCircleRecords.json	NESTLE1904	51.1:7.4	Ἐπαφρᾶ	epaphras	epaphroditus	holds	
+PaulsCircleRecords.json	NESTLE1904	51.4:12.3	Ἐπαφρᾶς	epaphras	epaphroditus	holds	
+PaulsCircleRecords.json	NESTLE1904	57.1:23.3	Ἐπαφρᾶς	epaphras	epaphroditus	holds	
+PaulsCircleRecords.json	NESTLE1904	50.2:25.4	Ἐπαφρόδιτον	epaphroditus		holds	
+PaulsCircleRecords.json	NESTLE1904	44.19:29.14	Γάϊον	gaius		holds	
+PaulsCircleRecords.json	NESTLE1904	45.16:23.3	Γάϊος	gaius-of-corinth	gaius	holds	
+PaulsCircleRecords.json	NESTLE1904	46.1:14.10	Γάϊον	gaius-of-corinth	gaius	holds	
+PaulsCircleRecords.json	KJV	64.1:1.6	Gaius	gaius-4	gaius	holds	
+PaulsCircleRecords.json	NESTLE1904	44.19:22.12	Ἔραστον	erastus		holds	
+PaulsCircleRecords.json	NESTLE1904	55.4:20.1	Ἔραστος	erastus	erastus-2	holds	
+PaulsCircleRecords.json	KJV	45.16:23.11	Erastus	erastus-2		holds	
+Peoples.json	BHSA	4.1:11.2	בִ֨נְיָמִ֔ן	benjaminites		holds	
+Peoples.json	BHSA	4.1:36.3	בִנְיָמִ֔ן	benjaminites		holds	
+Peoples.json	BHSA	4.1:37.4	בִנְיָמִ֑ן	benjaminites		holds	
+Peoples.json	BHSA	4.2:22.3	בִּנְיָמִ֑ן	benjaminites		holds	
+Peoples.json	BHSA	4.2:22.8	בִנְיָמִ֔ן	benjaminites		holds	
+Peoples.json	BHSA	4.7:60.9	בִנְיָמִ֑ן	benjaminites		holds	
+Peoples.json	BHSA	4.10:24.6	בִנְיָמִ֑ן	benjaminites		holds	
+Peoples.json	BHSA	4.13:9.3	בִנְיָמִ֔ן	benjaminites		holds	
+PeoplesNamedRecords.json	BHSA	9.25:3.27	כלבו	calebites		holds	
+PeoplesNamedRecords.json	BHSA	13.12:5.10	גְּדֵרָתִֽי	gederathites		holds	
+PhilipRecords.json	TR1894	42.3:19.13	φιλιππου	philip-2		holds	
+PlacesOfOneNameRecords.json	BHSA	2.14:2.13	מִגְדֹּ֖ל	migdol		holds	
+PlacesOfOneNameRecords.json	BHSA	24.44:1.19	מִגְדֹּל֙	migdol-2		holds	
+PlacesOfOneNameRecords.json	BHSA	9.1:19.18	רָמָ֑תָה	ramah-4		holds	
+PlacesOfOneNameRecords.json	BHSA	2.10:19.5	יָם֙	redsea		holds	
+PlacesOfOneNameRecords.json	BHSA	2.13:18.10	יַם	redsea-2	redsea	holds	
+PlacesOfOneNameRecords.json	BHSA	1.14:7.24	חַֽצְצֹ֥ן תָּמָֽר	hazazontamar		holds	
+PlacesOfOneNameRecords.json	BHSA	7.13:25.8	מַחֲנֵה־דָ֑ן	mahanehdan	mahanehdan-2	holds	
+PlacesOfOneNameRecords.json	BHSA	11.4:12.25	יָקְמֳעָֽם	jokmeam		holds	
+PlacesOfOneNameRecords.json	BHSA	23.15:1.14	קִיר־מֹואָ֖ב	kir-2	kir	holds	
+PlacesOfOneNameRecords.json	NESTLE1904	41.6:45.17	Βηθσαϊδάν	bethsaida-2		holds	
+PlacesOfOneNameRecords.json	BHSA	12.14:7.14	סֶּ֖לַע	sela-2		holds	
+PlacesOfOneNameRecords.json	BHSA	23.16:1.6	סֶּ֣לַע	sela-3		holds	
+PlacesOfOneNameRecords.json	BHSA	26.47:19.6	תָּמָ֗ר	tamar-5		holds	
+PlacesOfOneNameRecords.json	BHSA	11.9:18.6	תמר	tadmor		holds	
+PlacesOfOneNameRecords.json	BHSA	15.10:43.3	נְבֹ֑ו	nebo-3		superseded	nebo was folded into nebo-3: Essenthos: the project owner's word of 2026-11-16 (not humans or not persons get no sex; a people or a town is not a man; Etam read in context), each record read against its verses in the Hebrew, the Septuagint, the King James, Ohienko and the Synodal by claude-opus-5-5 on 2026-11-16
+PlacesOfOneNameRecords.json	BHSA	13.2:55.15	חַמַּ֖ת	hemath		holds	
+PsalmTitleRecords.json	BHSA	19.3:1.8	אַבְשָׁלֹ֬ום	absalom		holds	
+PsalmTitleRecords.json	BHSA	19.7:1.12	יְמִינִֽי	benjaminites		holds	
+PsalmTitleRecords.json	BHSA	19.18:1.31	שָׁאֽוּל	saul		holds	
+PsalmTitleRecords.json	BHSA	19.42:1.7	קֹֽרַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.44:1.6	קֹ֬רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.45:1.8	קֹ֑רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.46:1.6	קֹ֑רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.47:1.6	קֹ֬רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.48:1.5	קֹֽרַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.49:1.6	קֹ֬רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.50:1.3	אָ֫סָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.51:1.6	דָוִֽד	david		holds	
+PsalmTitleRecords.json	BHSA	19.51:2.4	נָתָ֣ן	nathan-2		holds	
+PsalmTitleRecords.json	BHSA	19.52:2.5	אֲדֹמִי֮	edomites		holds	
+PsalmTitleRecords.json	BHSA	19.52:2.9	שָׁ֫א֥וּל	saul		holds	
+PsalmTitleRecords.json	BHSA	19.52:2.17	אֲחִימֶֽלֶךְ	ahimelech		holds	
+PsalmTitleRecords.json	BHSA	19.54:2.4	זִּיפִים	ziphites		holds	
+PsalmTitleRecords.json	BHSA	19.54:2.8	שָׁא֑וּל	saul		holds	
+PsalmTitleRecords.json	BHSA	19.56:1.14	פְלִשְׁתִּ֣ים	philistines		holds	
+PsalmTitleRecords.json	BHSA	19.56:1.16	גַֽת	gath		holds	
+PsalmTitleRecords.json	BHSA	19.57:1.13	שָׁ֝א֗וּל	saul		holds	
+PsalmTitleRecords.json	BHSA	19.59:1.11	שָׁא֑וּל	saul		holds	
+PsalmTitleRecords.json	BHSA	19.60:2.9	צֹ֫ובָ֥ה	zobah		holds	
+PsalmTitleRecords.json	BHSA	19.60:2.12	יֹואָ֗ב	joab		holds	
+PsalmTitleRecords.json	BHSA	19.60:2.16	אֱדֹ֣ום	edom		holds	
+PsalmTitleRecords.json	BHSA	19.73:1.3	אָ֫סָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.74:1.3	אָ֫סָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.75:1.8	אָסָ֣ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.76:1.8	אָסָ֣ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.77:1.7	אָסָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.78:1.3	אָ֫סָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.79:1.3	אָ֫סָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.80:1.8	אָסָ֣ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.81:1.8	אָסָֽף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.82:1.3	אָ֫סָ֥ף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.83:1.4	אָסָֽף	asaph-2		holds	
+PsalmTitleRecords.json	BHSA	19.84:1.9	קֹ֥רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.85:1.6	קֹ֬רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.87:1.3	קֹ֖רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.88:1.5	קֹ֥רַח	korah-3		holds	
+PsalmTitleRecords.json	BHSA	19.88:1.15	הֵימָ֥ן	heman		holds	
+PsalmTitleRecords.json	BHSA	19.88:1.17	אֶזְרָחִֽי	ezrahites		holds	
+PsalmTitleRecords.json	BHSA	19.89:1.3	אֵיתָ֥ן	ethan		holds	
+PsalmTitleRecords.json	BHSA	19.89:1.5	אֶזְרָחִֽי	ezrahites		holds	
+ReportRecords.json	BHSA	1.2:20.23	אָדָ֕ם	adam		holds	
+ReportRecords.json	BHSA	1.3:17.3	אָדָ֣ם	adam		holds	
+ReportRecords.json	BHSA	1.3:21.6	אָדָ֧ם	adam		holds	
+ReportRecords.json	BHSA	1.10:1.7	חָ֣ם	ham		holds	
+ReportRecords.json	BHSA	1.10:2.5	מָגֹ֔וג	magog		holds	
+ReportRecords.json	BHSA	1.10:2.7	מָדַ֖י	madai		holds	
+ReportRecords.json	BHSA	1.10:2.9	יָוָ֣ן	javan		holds	
+ReportRecords.json	BHSA	1.10:2.11	תֻבָ֑ל	tubal		holds	
+ReportRecords.json	BHSA	1.10:2.15	תִירָֽס	tiras		holds	
+ReportRecords.json	BHSA	1.10:3.4	אַשְׁכֲּנַ֥ז	ashkenaz		holds	
+ReportRecords.json	BHSA	1.10:3.6	רִיפַ֖ת	riphath		holds	
+ReportRecords.json	BHSA	1.10:3.8	תֹגַרְמָֽה	togarmah		holds	
+ReportRecords.json	BHSA	1.10:4.3	יָוָ֖ן	javan		holds	
+ReportRecords.json	BHSA	1.10:4.4	אֱלִישָׁ֣ה	elishah		holds	
+ReportRecords.json	BHSA	1.10:6.3	חָ֑ם	ham		holds	
+ReportRecords.json	BHSA	1.10:6.8	פ֥וּט	put		holds	
+ReportRecords.json	BHSA	1.10:10.5	בָּבֶ֔ל	babel		holds	
+ReportRecords.json	BHSA	1.10:20.3	חָ֔ם	ham		holds	
+ReportRecords.json	BHSA	1.10:23.6	ח֖וּל	hul		holds	
+ReportRecords.json	BHSA	1.10:23.10	מַֽשׁ	mash		holds	
+ReportRecords.json	BHSA	1.10:26.8	שָׁ֑לֶף	sheleph		holds	
+ReportRecords.json	BHSA	1.10:26.11	חֲצַרְמָ֖וֶת	hazarmaveth		holds	
+ReportRecords.json	BHSA	1.10:28.9	שְׁבָֽא	sheba-2		holds	
+ReportRecords.json	BHSA	1.10:29.3	אֹופִ֥ר	ophir		holds	
+RevelationTribeRecords.json	BSB	66.7:4.18	Israel	jacob		holds	
+RevelationTribeRecords.json	BSB	66.7:5.5	Judah	judah		holds	
+RevelationTribeRecords.json	BSB	66.7:5.14	Reuben	reuben		holds	
+RevelationTribeRecords.json	BSB	66.7:5.21	Gad	gad		holds	
+RevelationTribeRecords.json	BSB	66.7:6.5	Asher	asher		holds	
+RevelationTribeRecords.json	BSB	66.7:6.12	Naphtali	naphtali		holds	
+RevelationTribeRecords.json	BSB	66.7:6.19	Manasseh	manasseh		holds	
+RevelationTribeRecords.json	BSB	66.7:7.5	Simeon	simeon		holds	
+RevelationTribeRecords.json	BSB	66.7:7.12	Levi	levi		holds	
+RevelationTribeRecords.json	BSB	66.7:7.19	Issachar	issachar		holds	
+RevelationTribeRecords.json	BSB	66.7:8.5	Zebulun	zebulun		holds	
+RevelationTribeRecords.json	BSB	66.7:8.12	Joseph	joseph		holds	
+RevelationTribeRecords.json	BSB	66.7:8.20	Benjamin	benjamin		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:4.16	Ἰσραήλ	jacob		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:5.3	Ἰούδα	judah		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:5.9	Ῥουβὴν	reuben		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:5.14	Γὰδ	gad		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:6.3	Ἀσὴρ	asher		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:6.8	Νεφθαλεὶμ	naphtali		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:6.13	Μανασσῆ	manasseh		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:7.3	Συμεὼν	simeon		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:7.8	Λευεὶ	levi		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:7.13	Ἰσσαχὰρ	issachar		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:8.3	Ζαβουλὼν	zebulun		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:8.8	Ἰωσὴφ	joseph		holds	
+RevelationTribeRecords.json	NESTLE1904	66.7:8.13	Βενιαμεὶν	benjamin		holds	
+RevelationTribeRecords.json	RP2018	66.7:4.17	ισραηλ	jacob		holds	
+RevelationTribeRecords.json	RP2018	66.7:5.3	ιουδα	judah		holds	
+RevelationTribeRecords.json	RP2018	66.7:5.9	ρουβιμ	reuben		holds	
+RevelationTribeRecords.json	RP2018	66.7:5.14	γαδ	gad		holds	
+RevelationTribeRecords.json	RP2018	66.7:6.3	ασηρ	asher		holds	
+RevelationTribeRecords.json	RP2018	66.7:6.8	νεφθαλειμ	naphtali		holds	
+RevelationTribeRecords.json	RP2018	66.7:6.13	μανασση	manasseh		holds	
+RevelationTribeRecords.json	RP2018	66.7:7.3	συμεων	simeon		holds	
+RevelationTribeRecords.json	RP2018	66.7:7.8	λευι	levi		holds	
+RevelationTribeRecords.json	RP2018	66.7:7.13	ισαχαρ	issachar		holds	
+RevelationTribeRecords.json	RP2018	66.7:8.3	ζαβουλων	zebulun		holds	
+RevelationTribeRecords.json	RP2018	66.7:8.8	ιωσηφ	joseph		holds	
+RevelationTribeRecords.json	RP2018	66.7:8.13	βενιαμιν	benjamin		holds	
+RevelationTribeRecords.json	TISCH	66.7:4.16	Ἰσραήλ	jacob		holds	
+RevelationTribeRecords.json	TISCH	66.7:5.3	Ἰούδα	judah		holds	
+RevelationTribeRecords.json	TISCH	66.7:5.9	Ῥουβὴν	reuben		holds	
+RevelationTribeRecords.json	TISCH	66.7:5.14	Γὰδ	gad		holds	
+RevelationTribeRecords.json	TISCH	66.7:6.3	Ἀσὴρ	asher		holds	
+RevelationTribeRecords.json	TISCH	66.7:6.8	Νεφθαλεὶμ	naphtali		holds	
+RevelationTribeRecords.json	TISCH	66.7:6.13	Μανασσῆ	manasseh		holds	
+RevelationTribeRecords.json	TISCH	66.7:7.3	Συμεὼν	simeon		holds	
+RevelationTribeRecords.json	TISCH	66.7:7.8	Λευεὶ	levi		holds	
+RevelationTribeRecords.json	TISCH	66.7:7.13	Ἰσσαχὰρ	issachar		holds	
+RevelationTribeRecords.json	TISCH	66.7:8.3	Ζαβουλὼν	zebulun		holds	
+RevelationTribeRecords.json	TISCH	66.7:8.8	Ἰωσὴφ	joseph		holds	
+RevelationTribeRecords.json	TISCH	66.7:8.13	Βενιαμεὶν	benjamin		holds	
+RevelationTribeRecords.json	TR1550	66.7:4.14	ισραηλ	jacob		holds	
+RevelationTribeRecords.json	TR1550	66.7:5.3	ιουδα	judah		holds	
+RevelationTribeRecords.json	TR1550	66.7:5.9	ρουβην	reuben		holds	
+RevelationTribeRecords.json	TR1550	66.7:5.15	γαδ	gad		holds	
+RevelationTribeRecords.json	TR1550	66.7:6.3	ασηρ	asher		holds	
+RevelationTribeRecords.json	TR1550	66.7:6.9	νεφθαλειμ	naphtali		holds	
+RevelationTribeRecords.json	TR1550	66.7:6.15	μανασση	manasseh		holds	
+RevelationTribeRecords.json	TR1550	66.7:7.3	συμεων	simeon		holds	
+RevelationTribeRecords.json	TR1550	66.7:7.9	λευι	levi		holds	
+RevelationTribeRecords.json	TR1550	66.7:7.15	ισαχαρ	issachar		holds	
+RevelationTribeRecords.json	TR1550	66.7:8.3	ζαβουλων	zebulun		holds	
+RevelationTribeRecords.json	TR1550	66.7:8.9	ιωσηφ	joseph		holds	
+RevelationTribeRecords.json	TR1550	66.7:8.15	βενιαμιν	benjamin		holds	
+RevelationTribeRecords.json	TR1894	66.7:4.14	ισραηλ	jacob		holds	
+RevelationTribeRecords.json	TR1894	66.7:5.3	ιουδα	judah		holds	
+RevelationTribeRecords.json	TR1894	66.7:5.9	ρουβην	reuben		holds	
+RevelationTribeRecords.json	TR1894	66.7:5.15	γαδ	gad		holds	
+RevelationTribeRecords.json	TR1894	66.7:6.3	ασηρ	asher		holds	
+RevelationTribeRecords.json	TR1894	66.7:6.9	νεφθαλειμ	naphtali		holds	
+RevelationTribeRecords.json	TR1894	66.7:6.15	μανασση	manasseh		holds	
+RevelationTribeRecords.json	TR1894	66.7:7.3	συμεων	simeon		holds	
+RevelationTribeRecords.json	TR1894	66.7:7.9	λευι	levi		holds	
+RevelationTribeRecords.json	TR1894	66.7:7.15	ισαχαρ	issachar		holds	
+RevelationTribeRecords.json	TR1894	66.7:8.3	ζαβουλων	zebulun		holds	
+RevelationTribeRecords.json	TR1894	66.7:8.9	ιωσηφ	joseph		holds	
+RevelationTribeRecords.json	TR1894	66.7:8.15	βενιαμιν	benjamin		holds	
+RevelationTribeRecords.json	WH1881	66.7:4.16	ισραηλ	jacob		holds	
+RevelationTribeRecords.json	WH1881	66.7:5.3	ιουδα	judah		holds	
+RevelationTribeRecords.json	WH1881	66.7:5.9	ρουβην	reuben		holds	
+RevelationTribeRecords.json	WH1881	66.7:5.14	γαδ	gad		holds	
+RevelationTribeRecords.json	WH1881	66.7:6.3	ασηρ	asher		holds	
+RevelationTribeRecords.json	WH1881	66.7:6.8	νεφθαλιμ	naphtali		holds	
+RevelationTribeRecords.json	WH1881	66.7:6.13	μανασση	manasseh		holds	
+RevelationTribeRecords.json	WH1881	66.7:7.3	συμεων	simeon		holds	
+RevelationTribeRecords.json	WH1881	66.7:7.8	λευι	levi		holds	
+RevelationTribeRecords.json	WH1881	66.7:7.13	ισσαχαρ	issachar		holds	
+RevelationTribeRecords.json	WH1881	66.7:8.3	ζαβουλων	zebulun		holds	
+RevelationTribeRecords.json	WH1881	66.7:8.8	ιωσηφ	joseph		holds	
+RevelationTribeRecords.json	WH1881	66.7:8.13	βενιαμειν	benjamin		holds	
+ReviewNoteRecords.json	BHSA	9.14:50.4	שָׁא֔וּל	saul		holds	
+ReviewNoteRecords.json	BHSA	9.14:51.2	קִ֧ישׁ	kish		holds	
+ReviewNoteRecords.json	BHSA	9.14:51.6	נֵ֥ר	ner		holds	
+ReviewNoteRecords.json	BHSA	9.14:50.12	אֲבִינֵ֔ר	abner		holds	
+ReviewNoteRecords.json	BHSA	8.1:4.9	עָרְפָּ֔ה	orpah		holds	
+ReviewNoteRecords.json	BHSA	7.18:30.14	מְנַשֶּׁ֜ה	manasseh-2		holds	
+ReviewNoteRecords.json	BHSA	10.13:1.14	תָּמָ֑ר	tamar-2		holds	
+ReviewNoteRecords.json	BHSA	13.2:24.11	אֲבִיָּ֔ה	abijah-3		holds	
+ReviewNoteRecords.json	BHSA	11.11:26.4	נְבָ֨ט	nebat		holds	
+ReviewRecords.json	BHSA	10.11:21.4	אֲבִימֶ֣לֶךְ	abimelech-2		holds	
+ReviewRecords.json	BHSA	24.36:11.7	שָׁפָ֛ן	shaphan		holds	
+ReviewRecords.json	BHSA	24.36:12.31	שָׁפָ֛ן	shaphan		holds	
+ReviewRecords.json	BHSA	26.17:4.9	כְּנַ֔עַן	babylonia		holds	
+ReviewRecords.json	BHSA	15.2:35.2	סְנָאָ֔ה	senaah-2		holds	
+ReviewRecords.json	BHSA	15.3:9.3	יֵשׁ֡וּעַ	jeshua-5		holds	
+ReviewRecords.json	BHSA	16.3:3.9	סְּנָאָ֑ה	senaah-2		holds	
+ReviewRecords.json	BHSA	16.7:38.2	סְנָאָ֔ה	senaah-2		holds	
+ReviewRecords.json	BHSA	16.8:4.25	חִלְקִיָּ֛ה	hilkiah-at-ezras-right-hand		holds	
+ReviewRecords.json	BHSA	16.8:7.8	עַקּ֡וּב	akkub-5		superseded	names/BHSA.tsv names akkub-5: Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+ReviewRecords.json	BHSA	16.8:7.13	עֲזַרְיָה֩	azariah-22		superseded	names/BHSA.tsv names azariah-22: Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+ReviewRecords.json	BHSA	16.10:12.3	חֲשַׁבְיָֽה	hashabiah-4		holds	
+ReviewRecords.json	BHSA	16.10:13.3	שְׁבַנְיָֽה	shebaniah-5		superseded	names/BHSA.tsv names shebaniah-5: Essenthos, five verses where two men of one name were identified, read in the original by gpt-6.1-sol, a blind judge and claude-fable-5-1, settled by their majority, 2026-10-08
+ReviewRecords.json	BHSA	16.10:15.8	בָּנִֽי	bani-4		holds	
+ReviewRecords.json	BHSA	16.11:11.5	מְשֻׁלָּ֣ם	shallum-6		holds	
+ReviewRecords.json	BHSA	16.12:8.4	יֵשׁ֧וּעַ	jeshua-5		holds	
+ReviewRecords.json	BHSA	16.12:19.6	ידַֽעְיָ֖ה	jedaiah-2		superseded	names/BHSA.tsv names jedaiah-2: Essenthos, on the report of records holding several people and of names crossed in the translations, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+ReviewRecords.json	BHSA	16.12:21.5	ידַֽעְיָ֖ה	jedaiah-8		superseded	names/BHSA.tsv names jedaiah-8: Essenthos, five verses where two men of one name were identified, read in the original by gpt-6.1-sol, a blind judge and claude-fable-5-1, settled by their majority, 2026-10-08
+ReviewRecords.json	BHSA	13.2:42.10	זִ֑יף	ziph-3		holds	
+ReviewRecords.json	BHSA	13.3:15.6	יֹוחָנָ֔ן	johanan-firstborn-of-josiah		holds	
+ReviewRecords.json	BHSA	13.5:14.11	מִיכָאֵ֛ל	michael-the-gadite-forefather		holds	
+ReviewRecords.json	BHSA	13.6:11.1	אֶלְקָנָ֑ה	elkanah-5		holds	
+ReviewRecords.json	BHSA	13.11:36.1	חֵ֚פֶר	hepher-the-mecherathite		holds	
+ReviewRecords.json	BHSA	13.15:24.10	זְכַרְיָהוּ	zechariah-the-trumpeting-priest		holds	
+ReviewRecords.json	BHSA	13.16:5.7	יְעִיאֵ֡ל	jeiel-the-alamoth-psaltery-player		holds	
+ReviewRecords.json	BHSA	13.27:34.4	יְהֹויָדָ֤ע	jehoiada-son-of-benaiah		holds	
+ReviewRecords.json	BHSA	14.13:2.11	אוּרִיאֵ֖ל	uriel-of-gibeah		holds	
+ReviewRecords.json	BHSA	14.25:23.9	יְהֹואָחָ֗ז	ahaziah-2		holds	
+ReviewRecords.json	BHSA	14.26:5.8	זְכַרְיָ֔הוּ	zechariah-who-taught-uzziah		holds	
+ReviewRecords.json	BHSA	14.29:12.5	מַ֣חַת	mahath-2		holds	
+ReviewRecords.json	BHSA	14.29:12.20	קִ֚ישׁ	kish-son-of-abdi		holds	
+ReviewRecords.json	BHSA	14.29:12.33	זִמָּ֔ה	zimmah-the-later-gershonite		holds	
+ReviewRecords.json	BHSA	14.35:8.20	יחִיאֵ֗ל	jehiel-ruler-of-the-house-of-god		holds	
+SecondBearerRecords.json	BHSA	13.9:15.5	גָלָ֑ל	galal-who-dwelt-in-jerusalem	galal	holds	
+SecondBearerRecords.json	BHSA	13.11:11.11	חַכְמֹונִ֗י	hachmoni-father-of-jashobeam	hachmoni	holds	
+SecondBearerRecords.json	BHSA	7.4:2.6	יָבִ֣ין	jabin-king-of-canaan	jabin	holds	
+SecondBearerRecords.json	BHSA	13.27:26.13	כְּלֽוּב	chelub-father-of-ezri	chelub	holds	
+SecondBearerRecords.json	BHSA	16.10:17.3	עָדִֽין	adin-who-sealed-the-covenant	adin	holds	
+SecondBearerRecords.json	BHSA	16.10:16.2	עַזְגָּ֖ד	azgad-who-sealed-the-covenant	azgad	holds	
+SecondBearerRecords.json	BHSA	16.10:15.5	פַּחַ֣ת מֹואָ֔ב	pahath-moab-who-sealed-the-covenant	pahathmoab	holds	
+SecondBearerRecords.json	BHSA	16.10:15.4	פַּרְעֹשׁ֙	parosh-who-sealed-the-covenant	parosh	holds	
+SecondBearerRecords.json	BHSA	16.11:21.9	צִיחָ֥א	ziha-over-the-nethinims	ziha	holds	
+SecondBearerRecords.json	BHSA	10.23:29.6	אִתַּי֙	ittai-son-of-ribai	ittai	holds	
+SecondBearerRecords.json	BHSA	10.23:29.3	בַּעֲנָ֖ה	baanah-2		holds	
+SecondBearerRecords.json	BHSA	13.11:30.6	בַּֽעֲנָ֖ה	baanah-2		holds	
+SecondBearerRecords.json	BHSA	13.9:19.4	קֹ֠ורֵא	kore		holds	
+SecondBearerRecords.json	BHSA	13.26:1.10	קֹרֵ֖א	kore		holds	
+SecondBearerRecords.json	BHSA	4.26:31.7	שֶׁ֕כֶם	shechem-2		holds	
+SecondBearerRecords.json	BHSA	7.4:7.11	יָבִ֔ין	jabin-king-of-canaan		holds	
+SecondBearerRecords.json	BHSA	7.4:17.16	יָבִ֣ין	jabin-king-of-canaan		holds	
+SecondBearerRecords.json	BHSA	7.4:23.10	יָבִ֣ין	jabin-king-of-canaan		holds	
+SecondBearerRecords.json	BHSA	7.4:24.10	יָבִ֣ין	jabin-king-of-canaan		holds	
+SecondBearerRecords.json	BHSA	7.4:24.17	יָבִ֥ין	jabin-king-of-canaan		holds	
+SecondBearerRecords.json	BHSA	19.83:10.8	יָבִ֗ין	jabin-king-of-canaan		holds	
+SecondBearerRecords.json	BHSA	13.11:31.1	אִיתַ֣י	ittai-son-of-ribai		holds	
+SeptuagintNameListRecords.json	GRCBRENT	1.14:5.29	Ὀμμαίους	emims		holds	
+SeptuagintNameListRecords.json	GRCBRENT	1.14:5.32	Σαυῇ	shavehkiriathaim		holds	
+SeptuagintNameListRecords.json	GEEZ81	1.14:5.14	ወለአምዮስ	emims		holds	
+SeptuagintNameListRecords.json	GEEZ81	1.14:5.16	ሴዊ	shavehkiriathaim		holds	
+SeveralPeopleRecords.json	NESTLE1904	42.6:16.2	Ἰούδαν	thaddaeus		superseded	judas-of-james was folded into thaddaeus: the project owner's ruling of 2026-10-25 that Thaddaeus and Judas of James are one man, decided 2026-10-25
+SeveralPeopleRecords.json	BHSA	27.9:1.7	אֲחַשְׁוֵרֹ֖ושׁ	ahasuerus-father-of-darius		holds	
+SeveralPeopleRecords.json	BHSA	1.36:24.8	עֲנָ֑ה	anah-son-of-zibeon		holds	
+SeveralPeopleRecords.json	BHSA	14.20:14.10	מַתַּנְיָ֛ה	mattaniah-11		holds	
+SeveralPeopleRecords.json	BHSA	4.22:4.23	בָלָ֧ק	balak		holds	
+SeveralPeopleRecords.json	NESTLE1904	40.27:56.4	Μαρία	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	40.27:61.4	Μαριὰμ	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	40.28:1.10	Μαριὰμ	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	41.15:40.11	Μαρία	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	41.15:47.3	Μαρία	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	41.16:1.5	Μαρία	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	42.24:10.5	Μαρία	mary-2		holds	
+SeveralPeopleRecords.json	NESTLE1904	44.13:7.7	Παύλῳ	sergius		holds	
+SeveralPeopleRecords.json	NESTLE1904	44.13:7.6	Σεργίῳ	sergius		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.9:12.6	פַּשְׁח֖וּר	pashhur-the-priest	pashhur	holds	
+SeveralPeopleRecordsFifth.json	BHSA	24.21:1.17	פַּשְׁחוּר֙	pashhur		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.9:12.8	מַלְכִּיָּ֑ה	malchijah-father-of-pashhur	malchijah-2	holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.11:12.27	מַלְכִּיָּֽה	malchijah-father-of-pashhur	malchijah-2	holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.8:4.37	מַלְכִּיָּ֛ה	malchijah-2		holds	
+SeveralPeopleRecordsFifth.json	BHSA	12.25:23.38	יַֽאֲזַנְיָ֨הוּ֙	jaazaniah		holds	
+SeveralPeopleRecordsFifth.json	BHSA	24.42:1.12	יזַנְיָ֖ה	jaazaniah-5	jaazaniah	holds	
+SeveralPeopleRecordsFifth.json	BHSA	24.42:1.14	הֹושַֽׁעְיָ֑ה	hoshaiah-2		holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.1:1.2	נְחֶמְיָ֖ה	nehemiah		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.20:7.7	יְהֹ֣ונָתָ֔ן	jonathan-4		holds	
+SeveralPeopleRecordsFifth.json	BHSA	14.35:9.2	כונניהו	conaniah-chief-of-the-levites	conaniah	holds	
+SeveralPeopleRecordsFifth.json	BHSA	14.35:9.11	יעִיאֵ֛ל	jeiel-chief-of-the-levites		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.15:24.12	בְנָיָ֤הוּ	benaiah-the-trumpeting-priest	benaiah-4	holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.15:18.18	בְנָיָ֡הוּ	benaiah-4		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.15:18.6	זְכַרְיָ֡הוּ	zechariah-5		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.16:6.4	יַחֲזִיאֵ֖ל	jahaziel-the-trumpeting-priest		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.23:8.5	יְחִיאֵ֛ל	jehiel-9	jehiel	holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.29:8.13	יְחִיאֵ֖ל	jehiel-9	jehiel	holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.15:18.13	יחִיאֵ֣ל	jehiel		holds	
+SeveralPeopleRecordsFifth.json	BHSA	10.23:24.7	אֶלְחָנָ֥ן	elhanan-son-of-dodo	elhanan	holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.11:26.8	אֶלְחָנָ֥ן	elhanan-son-of-dodo	elhanan	holds	
+SeveralPeopleRecordsFifth.json	BHSA	10.21:19.12	אֶלְחָנָן֩	elhanan		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.6:30.4	אֲמַצְיָ֖ה	amaziah-the-merarite	amaziah-3	holds	
+SeveralPeopleRecordsFifth.json	BHSA	30.7:10.3	אֲמַצְיָה֙	amaziah-3		holds	
+SeveralPeopleRecordsFifth.json	BHSA	30.7:12.3	אֲמַצְיָה֙	amaziah-3		holds	
+SeveralPeopleRecordsFifth.json	BHSA	30.7:14.7	אֲמַצְיָ֔ה	amaziah-3		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.6:21.4	יֹואֵ֔ל	joel-son-of-azariah		holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.12:42.16	עָ֑זֶר	ezer-at-the-dedication	ezer-2	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	41.2:14.4	Λευεὶν	levi-son-of-alphaeus		holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	42.5:27.9	Λευεὶν	levi-son-of-alphaeus		holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	42.5:29.5	Λευεὶς	levi-son-of-alphaeus		holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	45.16:23.13	Ἔραστος	erastus-2		holds	
+SeveralPeopleRecordsFifth.json	BHSA	15.2:46.6	חָנָֽן	hanan-4		holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.8:7.15	חָנָ֤ן	hanan-6	hanan-4	holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.8:4.43	מְשֻׁלָּֽם	meshullam-13		holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.8:4.27	מַעֲשֵׂיָ֖ה	maaseiah-10		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.5:37.5	אֲמַרְיָ֑ה	amariah-2		holds	
+SeveralPeopleRecordsFifth.json	BHSA	14.19:11.3	אֲמַרְיָ֣הוּ	amariah-9	amariah-2	holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.8:7.13	עֲזַרְיָה֩	azariah-22	azariah-16	holds	
+SeveralPeopleRecordsFifth.json	BHSA	16.8:7.8	עַקּ֡וּב	akkub-5	akkub-2	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	40.27:56.11	Ἰακώβου	james-son-of-mary	james-3	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	41.15:40.17	Ἰακώβου	james-son-of-mary	james-3	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	41.16:1.12	Ἰακώβου	james-son-of-mary	james-3	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	42.24:10.11	Ἰακώβου	james-son-of-mary	james-3	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	41.15:40.21	Ἰωσῆτος	joses-son-of-mary	joseph-7	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	40.27:56.13	Ἰωσὴφ	joses-son-of-mary	joseph-7	holds	
+SeveralPeopleRecordsFifth.json	NESTLE1904	41.15:47.9	Ἰωσῆτος	joses-son-of-mary	joseph-7	holds	
+SeveralPeopleRecordsFifth.json	BHSA	17.1:1.5	אֲחַשְׁוֵרֹ֑ושׁ	ahasuerus		holds	
+SeveralPeopleRecordsFifth.json	BHSA	27.6:27.18	דָֽנִיֵּ֑אל	daniel-2		holds	
+SeveralPeopleRecordsFifth.json	BHSA	11.22:14.3	מִיכָ֑יְהוּ	micaiah		holds	
+SeveralPeopleRecordsFifth.json	BHSA	11.22:25.3	מִיכָ֔יְהוּ	micaiah		holds	
+SeveralPeopleRecordsFifth.json	BHSA	13.5:36.5	עֲזַרְיָ֑ה	azariah		holds	
+SeveralPeopleRecordsFourth.json	BHSA	1.35:8.3	דְּבֹרָה֙	deborah		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.4:4.2	דְבֹורָה֙	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.4:4.4	נְבִיאָ֔ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.4:5.6	דְּבֹורָ֗ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.4:9.27	דְּבֹורָ֛ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.4:10.20	דְּבֹורָֽה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.4:14.3	דְּבֹרָ֨ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.5:1.3	דְּבֹורָ֔ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.5:7.9	דְּבֹורָ֔ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.5:12.3	דְּבֹורָ֔ה	deborah-2		holds	
+SeveralPeopleRecordsFourth.json	BHSA	7.5:15.6	דְּבֹרָ֔ה	deborah-2		holds	
+SeveralPeopleRecordsSecond.json	BHSA	14.25:23.7	יֹואָ֣שׁ	joash-3		holds	
+SeveralPeopleRecordsSecond.json	KJV	14.25:23.15	Joash	joash-3		holds	
+SeveralPeopleRecordsSecond.json	KJV	12.14:13.2	Jehoash	joash-4		holds	
+SeveralPeopleRecordsSecond.json	KJV	12.14:13.14	Jehoash	joash-3		holds	
+SeveralPeopleRecordsSecond.json	BHSA	14.28:9.7	עֹדֵ֣ד	oded-prophet-in-samaria		holds	
+SeveralPeopleRecordsSecond.json	BHSA	38.1:1.15	זְכַרְיָה֙	zechariah-13		holds	
+SeveralPeopleRecordsSecond.json	BHSA	16.8:4.42	זְכַרְיָ֥ה	zechariah-24		holds	
+SeveralPeopleRecordsSecond.json	BHSA	16.12:16.3	זְכַרְיָ֖ה	zechariah-25		holds	
+SeveralPeopleRecordsSecond.json	NESTLE1904	40.23:35.21	Ζαχαρίου	zacharias-son-of-barachias		holds	
+SeveralPeopleRecordsSecond.json	NESTLE1904	40.23:35.23	Βαραχίου	barachias		holds	
+SeveralPeopleRecordsSecond.json	NESTLE1904	40.27:56.8	Μαρία	mary-7		holds	
+SeveralPeopleRecordsSecond.json	NESTLE1904	66.1:1.28	Ἰωάνῃ	john-who-saw-the-revelation		holds	
+SeveralPeopleRecordsSecond.json	NESTLE1904	40.4:21.13	Ἰωάνην	john-2		holds	
+SeveralPeopleRecordsThird.json	KJV	13.7:30.7	Isuah	ishvah	ishvi	restored	an override of names/overrides/KJV
+SeveralPeopleRecordsThird.json	KJV	13.7:30.9	Ishuai	ishvi	ishvah	restored	an override of names/overrides/KJV
+SeveralPeopleRecordsThird.json	LSG1910	13.7:30.4	Jischva	ishvah	ishvi	restored	an override of names/overrides/LSG1910
+SeveralPeopleRecordsThird.json	LSG1910	13.7:30.5	Jischvi	ishvi	ishvah	restored	an override of names/overrides/LSG1910
+SeveralPeopleRecordsThird.json	RV1909	13.7:30.7	Isui	ishvi	ishvah	restored	an override of names/overrides/RV1909
+SeveralPeopleRecordsThird.json	UKR1871	13.7:30.5	Ішвій	ishvi	ishvah	restored	an override of names/overrides/UKR1871
+SeveralPeopleRecordsThird.json	GRCBRENT	13.7:30.5	Σουΐα	ishvah		holds	
+SeveralPeopleRecordsThird.json	GRCBRENT	13.7:30.7	Ἰσουῒ	ishvi		holds	
+SeveralPeopleRecordsThird.json	BHSA	16.12:19.6	ידַֽעְיָ֖ה	jedaiah-2	jedaiah-5	holds	
+SeveralPeopleRecordsThird.json	BHSA	16.12:21.5	ידַֽעְיָ֖ה	jedaiah-8		superseded	names/BHSA.tsv names jedaiah-8: Essenthos, five verses where two men of one name were identified, read in the original by gpt-6.1-sol, a blind judge and claude-fable-5-1, settled by their majority, 2026-10-08
+SeveralPeopleRecordsThird.json	NESTLE1904	40.13:55.18	Ἰάκωβος	james-3		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	40.13:55.20	Ἰωσὴφ	joseph-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	40.13:55.22	Σίμων	simon-3		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	40.13:55.24	Ἰούδας	judas-2		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	40.27:61.10	Μαρία	mary-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	40.28:1.16	Μαρία	mary-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	41.15:40.15	Μαρία	mary-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	41.15:47.7	Μαρία	mary-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	41.16:1.9	Μαρία	mary-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	42.24:10.9	Μαρία	mary-7		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	43.19:25.17	Μαρία	mary-4		holds	
+SeveralPeopleRecordsThird.json	NESTLE1904	43.19:25.22	Μαρία	mary-2		holds	
+SeveralPeopleRecordsThird.json	BHSA	11.11:29.16	אֲחִיָּה֩	ahijah		holds	
+SeveralPeopleRecordsThird.json	BHSA	16.12:7.3	חִלְקִיָּ֖ה	hilkiah-3		holds	
+SeveralPeopleRecordsThird.json	BHSA	16.12:21.2	חִלְקִיָּ֣ה	hilkiah-3		holds	
+SeveralPeopleRecordsThird.json	BHSA	37.1:1.5	דָרְיָ֣וֶשׁ	darius		holds	
+SynodalChristBearerRecords.json	RUSV	46.5:5.15	Христа	jesus anointed		restored	an override of names/overrides/RUSV
+SynodalChristTitleRecords.json	RUSV	46.5:5.15	Христа	anointed		restored	an override of names/overrides/RUSV
+SynodalJehoiakimRecords.json	RUSV	40.1:11.3	Иоакима	eliakim-2		restored	an override of names/overrides/RUSV
+SynodalJehoiakimRecords.json	RUSV	40.1:11.4	Иоаким	eliakim-2		restored	an override of names/overrides/RUSV
+SynodalPsalmTitleRecords.json	RUSV	19.52:1.9	Доик	doeg		holds	
+TitleRecords.json	BHSA	19.34:1.9	אֲבִימֶ֑לֶךְ	abimelech		holds	
+TitleRecords.json	GRCBRENT	1.21:22.11	Ὁχοζὰθ	ahuzzath		holds	
+TitleRecords.json	GRCBRENT	1.21:22.16	Φιχὸλ	phicol		holds	
+TitleRecords.json	GRCBRENT	1.21:32.12	Ὁχοζὰθ	ahuzzath		holds	
+TitleRecords.json	GRCBRENT	1.21:32.17	Φίχολ	phicol		holds	
+TitleRecords.json	GRCBRENT	1.26:26.9	Ὁχοζὰθ	ahuzzath		holds	
+TitleRecords.json	GRCBRENT	1.26:26.14	Φιχὼλ	phicol		holds	
+TwelveRecords.json	NESTLE1904	40.10:3.14	Θαδδαῖος	thaddaeus		holds	
+TwoSidedIdentityRecords.json	NESTLE1904	40.10:3.3	Βαρθολομαῖος	bartholomew		holds	
+TwoSidedIdentityRecords.json	BHSA	13.4:18.23	בִּתְיָ֣ה	bithia		holds	
+UnreadHebrewNameRecords.json	BHSA	9.23:15.18	חֹֽרְשָׁה	horesh		holds	
+UnreadHebrewNameRecords.json	BHSA	9.23:16.10	חֹ֑רְשָׁה	horesh		holds	
+UnreadHebrewNameRecords.json	BHSA	9.23:18.13	חֹ֔רְשָׁה	horesh		holds	
+UnreadHebrewNameRecords.json	BHSA	9.23:19.20	חֹ֔רְשָׁה	horesh		holds	
+UnreadHebrewNameRecords.json	BHSA	12.9:27.9	בֵּ֣ית הַגָּ֑ן	bethhaggan		holds	
+UnreadHebrewNameRecords.json	BHSA	16.6:2.15	כְּפִירִ֖ים	hakkephirim		holds	
+UnreadHebrewNameRecords.json	BHSA	4.21:14.11	סוּפָ֔ה	suphah		holds	
+UnreadHebrewNameRecords.json	BHSA	30.6:13.13	קַרְנָֽיִם	karnaim		holds	
+UnreadHebrewNameRecords.json	BHSA	30.4:3.9	הַרְמֹ֖ונָה	harmon		holds	
+UnreadHebrewNameRecords.json	BHSA	26.27:11.4	חֵילֵ֗ךְ	helech		holds	
+UnreadHebrewNameRecords.json	BHSA	7.9:31.7	תָרְמָ֣ה	tormah		holds	
+UnreadHebrewNameRecords.json	BHSA	26.27:18.15	צָֽחַר	zahar		holds	
+UnreadNameRecords.json	BHSA	1.14:5.16	רְפָאִים֙	rephaim		holds	
+UnreadNameRecords.json	BHSA	1.15:20.12	רְפָאִֽים	rephaim		holds	
+UnreadNameRecords.json	BHSA	5.2:11.1	רְפָאִ֛ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	5.2:20.2	רְפָאִ֥ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	5.2:20.6	רְפָאִ֤ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	5.3:11.11	רְפָאִים֒	rephaim		holds	
+UnreadNameRecords.json	BHSA	5.3:13.29	רְפָאִֽים	rephaim		holds	
+UnreadNameRecords.json	BHSA	6.12:4.10	רְפָאִ֑ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	6.13:12.19	רְפָאִ֔ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	6.17:15.23	רְפָאִ֑ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	13.20:4.22	רְפָאִ֖ים	rephaim		holds	
+UnreadNameRecords.json	BHSA	6.15:8.33	רְפָאִ֖ים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	6.18:16.17	רְפָאִ֖ים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	10.5:18.8	רְפָאִֽים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	10.5:22.11	רְפָאִֽים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	10.23:13.23	רְפָאִֽים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	13.11:15.22	רְפָאִֽים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	13.14:9.8	רְפָאִֽים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	23.17:5.18	רְפָאִֽים	valleyofrephaim		holds	
+UnreadNameRecords.json	BHSA	6.15:8.6	בֶן־הִנֹּ֗ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	6.18:16.13	בֶן־הִנֹּ֔ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	14.28:3.6	בֶן־הִנֹּ֑ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	14.33:6.11	בֶן־הִנֹּ֔ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	24.7:31.9	בֶן־הִנֹּ֔ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	24.7:32.15	בֶן־הִנֹּ֔ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	24.19:2.5	בֶן־הִנֹּ֔ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	24.19:6.20	בֶן־הִנֹּ֑ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	24.32:35.10	בֶן־הִנֹּ֗ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	6.15:8.27	הִנֹּם֙	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	6.18:16.22	הִנֹּ֜ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	12.23:10.10	הִנֹּ֑ם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	16.11:30.18	הִנֹּֽם	valleyofhinnom		holds	
+UnreadNameRecords.json	BHSA	24.35:2.5	רֵכָבִים֒	rechabites		holds	
+UnreadNameRecords.json	BHSA	24.35:3.21	רֵכָבִֽים	rechabites		holds	
+UnreadNameRecords.json	BHSA	24.35:5.8	רֵכָבִ֗ים	rechabites		holds	
+UnreadNameRecords.json	BHSA	24.35:18.5	רֵכָבִ֜ים	rechabites		holds	
+UnreadNameRecords.json	BHSA	1.14:1.17	גֹּויִֽם	goiim		holds	
+UnreadNameRecords.json	BHSA	1.14:9.8	גֹּויִ֔ם	goiim		holds	
+UnreadNameRecords.json	BHSA	6.12:23.8	גֹּויִ֥ם	goiim-2		holds	
+UnreadNameRecords.json	BHSA	5.2:20.16	זַמְזֻמִּֽים	zamzummims		holds	
+UnreadNameRecords.json	BHSA	26.27:11.9	גַ֨מָּדִ֔ים	gammadims		holds	
+UnreadNameRecords.json	BHSA	15.4:9.19	דהוא	dehavites		holds	
+UnreadNameRecords.json	BHSA	13.5:19.12	נֹודָֽב	nodab		holds	
+UnreadNameRecords.json	BHSA	9.10:21.12	מַּטְרִ֑י	matrites		holds	
+UnreadNameRecords.json	BHSA	10.6:6.5	נָכֹ֑ון	nachon		holds	
+UnreadNameRecords.json	BHSA	11.1:9.12	זֹּחֶ֔לֶת	serpentsstone		superseded	zoheleth was folded into serpentsstone: Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29
+UnreadNameRecords.json	BHSA	28.10:14.12	שַֽׁלְמַ֛ן	shalman		holds	
+UnreadNameRecords.json	BHSA	4.26:17.2	אֲרֹ֕וד	arodi		holds	
+UnreadNameRecords.json	BHSA	1.19:38.11	בֶּן־עַמִּ֑י	benammi		holds	
+UnreadNameRecords.json	BHSA	24.40:8.27	יזַנְיָ֨הוּ֙	jaazaniah		holds	
+UnreadNameRecords.json	BHSA	19.80:2.8	יֹוסֵ֑ף	josephites		holds	
+UnreadNameRecords.json	BHSA	19.81:6.3	יהֹ֘וסֵ֤ף	josephites		holds	
+UnreadNameRecords.json	BHSA	13.13:9.5	כִּידֹ֑ן	chidon		holds	
+UnreadNameRecords.json	BHSA	13.11:47.7	מְּצֹבָיָֽה	mesobaite		holds	
+UnreadNameRecords.json	BHSA	13.4:21.20	אַשְׁבֵּֽעַ	bethashbea		holds	
+UnreadNameRecords.json	BHSA	14.1:16.12	קְוֵ֕א	kue		holds	
+UnreadNameRecords.json	BHSA	14.1:16.17	קְוֵ֥א	kue		holds	
+UnreadNameRecords.json	BHSA	23.15:5.8	עֶגְלַ֣ת שְׁלִשִׁיָּ֑ה	eglathshelishiyah		holds	
+UnreadNameRecords.json	BHSA	24.48:34.14	עֶגְלַ֖ת שְׁלִֽשִׁיָּ֑ה	eglathshelishiyah		holds	
+UnreadNameRecords.json	BHSA	7.11:33.13	אָבֵ֣ל כְּרָמִ֔ים	abelkeramim		holds	
+UnreadNameRecords.json	BHSA	1.50:11.26	אָבֵ֣ל מִצְרַ֔יִם	abelmizraim		holds	
+UnreadNameRecords.json	BHSA	26.30:17.2	אָ֛וֶן	aven		holds	
+UnreadNameRecords.json	BHSA	30.1:5.9	בִּקְעַת־אָ֔וֶן	valleyofaven		holds	
+UnreadNameRecords.json	BHSA	9.20:19.23	אָֽזֶל	ezel		holds	
+UnreadNameRecords.json	BHSA	16.12:29.3	בֵּית֙ הַגִּלְגָּ֔ל	bethgilgal		holds	
+UnreadNameRecords.json	BHSA	30.1:5.14	בֵּ֣ית עֶ֑דֶן	betheden		holds	
+UnreadNameRecords.json	BHSA	12.10:12.9	בֵּֽית־עֵ֥קֶד הָרֹעִ֖ים	betheked		holds	
+UnreadNameRecords.json	BHSA	7.1:35.8	הַר־חֶ֔רֶס	mountheres		holds	
+UnreadNameRecords.json	BHSA	7.8:13.11	מַעֲלֵ֖ה הֶחָֽרֶס	heres		holds	
+UnreadNameRecords.json	BHSA	12.9:27.23	מַֽעֲלֵה־גוּר֙	gur		holds	
+UnreadNameRecords.json	BHSA	6.15:7.18	מַעֲלֵ֣ה אֲדֻמִּ֔ים	adummim		holds	
+UnreadNameRecords.json	BHSA	6.18:17.14	מַעֲלֵ֣ה אֲדֻמִּ֑ים	adummim		holds	
+UnreadNameRecords.json	BHSA	19.132:6.8	יָֽעַר	jaar		holds	
+UnreadNameRecords.json	BHSA	35.3:7.5	כוּשָׁ֑ן	cushan		holds	
+UnreadNameRecords.json	BHSA	34.3:8.4	נֹּ֣א אָמֹ֔ון	thebes		holds	
+UnreadNameRecords.json	BHSA	5.1:1.21	ס֜וּף	suph		holds	
+UnreadNameRecords.json	BHSA	16.2:13.11	עֵ֣ין הַתַּנִּ֔ין	dragonspring		holds	
+UnreadNameRecords.json	BHSA	26.23:23.10	קֹ֔ועַ	koa		holds	
+UnreadNameRecords.json	BHSA	1.10:11.14	רְחֹבֹ֥ת עִ֖יר	rehobothir		holds	
+UnreadNameRecords.json	BHSA	1.14:17.21	שָׁוֵ֔ה	valleyofshaveh		holds	
+UnreadNameRecords.json	BHSA	1.14:5.28	אֵימִ֔ים	emims		holds	
+UnreadNameRecords.json	BHSA	5.2:11.13	אֵמִֽים	emims		holds	
+UnsettledRecords.json	BHSA	13.2:18.11	יְרִיעֹ֑ות	jerioth		holds	
+UnsettledRecordsSecond.json	BHSA	13.7:18.10	אֲבִיעֶ֖זֶר	iezer		holds	
+UnsettledRecordsThird.json	BHSA	1.36:2.9	עָדָ֗ה	adah-wife-of-esau		holds	
+UnsettledRecordsThird.json	BHSA	1.36:4.3	עָדָ֛ה	adah-wife-of-esau		holds	
+UnsettledRecordsThird.json	BHSA	1.36:10.7	עָדָה֙	adah-wife-of-esau		holds	
+UnsettledRecordsThird.json	BHSA	1.36:12.17	עָדָ֖ה	adah-wife-of-esau		holds	
+UnsettledRecordsThird.json	BHSA	1.36:16.15	עָדָֽה	adah-wife-of-esau		holds	
+UnsettledRecordsThird.json	BHSA	1.36:2.16	אָהֳלִֽיבָמָה֙	oholibamah-wife-of-esau	judith	holds	
+UnsettledRecordsThird.json	BHSA	1.36:5.2	אָהֳלִֽיבָמָה֙	oholibamah-wife-of-esau	judith	holds	
+UnsettledRecordsThird.json	BHSA	1.36:14.5	אָהֳלִיבָמָ֧ה	oholibamah-wife-of-esau	judith	holds	
+UnsettledRecordsThird.json	BHSA	1.36:18.4	אָהֳלִֽיבָמָה֙	oholibamah-wife-of-esau	judith	holds	
+UnsettledRecordsThird.json	BHSA	1.36:18.15	אָֽהֳלִיבָמָ֛ה	oholibamah-wife-of-esau	judith	holds	
+UnsettledRecordsThird.json	BHSA	1.36:25.7	אָהֳלִיבָמָ֖ה	oholibamah-wife-of-esau	judith	holds	
+UnsettledRecordsThird.json	BHSA	1.36:3.3	בָּשְׂמַ֥ת	mahalath		superseded	basemath-daughter-of-ishmael was folded into mahalath: the project owner, ruled 2026-10-12
+UnsettledRecordsThird.json	BHSA	1.36:4.9	בָ֣שְׂמַ֔ת	mahalath		superseded	basemath-daughter-of-ishmael was folded into mahalath: the project owner, ruled 2026-10-12
+UnsettledRecordsThird.json	BHSA	1.36:10.12	בָּשְׂמַ֖ת	mahalath		superseded	basemath-daughter-of-ishmael was folded into mahalath: the project owner, ruled 2026-10-12
+UnsettledRecordsThird.json	BHSA	1.36:13.14	בָשְׂמַ֖ת	mahalath		superseded	basemath-daughter-of-ishmael was folded into mahalath: the project owner, ruled 2026-10-12
+UnsettledRecordsThird.json	BHSA	1.36:17.23	בָשְׂמַ֖ת	mahalath		superseded	basemath-daughter-of-ishmael was folded into mahalath: the project owner, ruled 2026-10-12
+UnsettledRecordsThird.json	BHSA	1.26:34.18	בָּ֣שְׂמַ֔ת	adah-wife-of-esau		superseded	basemath was folded into adah-wife-of-esau: an agent reading GEN 26:34 and GEN 36:2 on the project owner's instruction of 2026-10-12, decided 2026-10-12
+UnsettledRecordsThird.json	BHSA	1.26:34.11	יְהוּדִ֔ית	judith		holds	
+UnsettledRecordsThird.json	BHSA	1.28:9.9	מָחֲלַ֣ת	mahalath		holds	
+UnsettledRecordsThird.json	BHSA	1.26:34.13	בְּאֵרִ֖י	beeri		holds	
+UnsettledRecordsThird.json	BHSA	1.36:20.15	עֲנָֽה	anah		holds	
