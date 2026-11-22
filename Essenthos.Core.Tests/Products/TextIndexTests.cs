@@ -175,4 +175,34 @@ public sealed class TextIndexTests : IDisposable
         outcome.Reordered.Should().Be(1, "ὁ stands once among Nestle's words left in the verse, after ἦν");
         outcome.Unnumbered.Should().Be(1);
     }
+
+    /// <summary>
+    /// John 1:26: Nestle and Westcott and Hort read στήκει where the SBLGNT reads ἕστηκεν, which the Textus Receptus reads
+    /// too; the Textus Receptus lends its number, and only for the same form (its δέ is no word of the SBLGNT's).
+    /// </summary>
+    [Fact]
+    public void AFormTheCriticalEditionsDoNotReadTakesTheTextusReceptusNumber()
+    {
+        static ConvertedWord Word(string form) => new() { Surface = form, Trailer = " ", Normalised = form };
+        var key = new VerseKey(43, 1, 26);
+        var verse = new ConvertedVerse(key, 26, [Word("μεσοσ"), Word("υμων"), Word("εστηκεν"), Word("ον")]);
+        var nestle = new Dictionary<VerseKey, List<(string?, string?)>>
+        {
+            [key] = [("μεσοσ", "G3319"), ("υμων", "G4771"), ("στηκει", "G4739"), ("ον", "G3739")],
+        };
+        var westcott = new Dictionary<VerseKey, List<(string?, string?)>>
+        {
+            [key] = [("μεσοσ", "G3319"), ("υμων", "G4771"), ("στηκει", "G4739"), ("ον", "G3739")],
+        };
+        var received = new Dictionary<VerseKey, List<(string?, string?)>>
+        {
+            [key] = [("μεσοσ", "G3319"), ("δε", "G1161"), ("υμων", "G4771"), ("εστηκεν", "G2476"), ("ον", "G3739")],
+        };
+
+        var outcome = DerivedStrongNumbers.Number([verse], [("NESTLE1904", nestle), ("WH1881", westcott), ("TR1894", received)]);
+
+        verse.Words.Select(w => w.Strong).Should().Equal("G3319", "G4771", "G2476", "G3739");
+        outcome.InOrder.Should().Equal(("NESTLE1904", 3), ("WH1881", 0), ("TR1894", 1));
+        outcome.Unnumbered.Should().Be(0);
+    }
 }

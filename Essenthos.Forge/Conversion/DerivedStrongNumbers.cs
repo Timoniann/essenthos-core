@@ -4,26 +4,31 @@ using Essenthos.Core.Products;
 namespace Essenthos.Core.Conversion;
 
 /// <summary>
-/// Strong numbers for an edition that prints none, taken from editions of the same family that carry them, word by word
-/// within each verse (DOC-0224 §9, TSK-1459). The SBL Greek New Testament carries no numbers; Nestle 1904 and Westcott
-/// and Hort do, and the three differ in a few hundred places in all, so a verse of the SBLGNT is joined to the same verse
-/// of each in turn:
+/// Strong numbers for an edition that prints none, taken from editions that carry them, word by word within each verse
+/// (DOC-0224 §9, TSK-1459). The SBL Greek New Testament carries no numbers; Nestle 1904 and Westcott and Hort do, and the
+/// three differ in a few hundred places in all, so a verse of the SBLGNT is joined to the same verse of each in turn:
 /// <list type="number">
 /// <item>in order, by the longest common run of folded forms (<c>normalised</c>): a word takes the number of the word it is
-/// paired with, first from Nestle 1904, then, for the words left, from Westcott and Hort;</item>
+/// paired with, first from Nestle 1904, then, for the words left, from Westcott and Hort, then from the Textus Receptus of
+/// 1894, the Byzantine text of 2018 and Stephanus' Textus Receptus of 1550. Where the two critical editions read another
+/// form, one of these often reads the SBLGNT's: John 1:26's ἕστηκεν, where Nestle and Westcott and Hort read στήκει, is
+/// the Textus Receptus' ἕστηκεν, G2476. Only the same form lends its number;</item>
 /// <item>a word still left whose folded form stands exactly once among the words of the same verse of Nestle 1904 that
 /// nothing paired, carrying one number, takes it: the two editions print the same words in another order.</item>
 /// </list>
-/// A word neither pairs keeps no number. The header says where the numbers came from (<c>strong_source</c>) and how many
-/// words each step numbered (<c>strong</c>). The numbers are Nestle's and Westcott and Hort's own, which are served, so the
-/// SBLGNT's are served as well.
+/// A word none pairs keeps no number. The header says where the numbers came from (<c>strong_source</c>) and how many
+/// words each step numbered (<c>strong</c>). The numbers are the editions' own, which are served, so the SBLGNT's are
+/// served as well.
 /// </summary>
 internal sealed class DerivedStrongNumbers : ITextStage
 {
     /// <summary>The edition each derived text takes its numbers from, then the one that fills what the first leaves.</summary>
     private static readonly Dictionary<string, string[]> From = new(StringComparer.Ordinal)
     {
-        [SblgntTextSource.Slug] = [NestleTextSource.Slug, WestcottHortTextSource.Slug],
+        [SblgntTextSource.Slug] =
+        [
+            NestleTextSource.Slug, WestcottHortTextSource.Slug, Corpus.Sources.ScrivenerSlug, ByzantineTextSource.Slug, Corpus.Sources.StephanusSlug,
+        ],
     };
 
     public bool AppliesTo(string slug) => From.ContainsKey(slug);

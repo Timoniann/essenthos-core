@@ -62,7 +62,9 @@ internal sealed record ClearBibleJoined(
     int Edited = 0,
     int Renumbered = 0,
     int Unplaced = 0,
-    int Crossed = 0);
+    int Crossed = 0,
+    int MovedOntoWord = 0,
+    int Slipped = 0);
 
 /// <summary>
 /// Clear Bible's hand-made alignments: a second opinion on the Berean, and the only opinion anybody
@@ -164,6 +166,7 @@ internal static partial class ClearBibleLinks
         var drafts = new List<Draft>();
         int records = 0, unresolved = 0, withoutCounterpart = 0;
         int astray = 0, shifted = 0, moved = 0, refused = 0, overruledRecords = 0, trimmed = 0, renumbered = 0, unplaced = 0;
+        int movedOntoWord = 0, slipped = 0;
 
         foreach (var stated in all)
         {
@@ -204,10 +207,32 @@ internal static partial class ClearBibleLinks
             }
 
             var named = early is not null ? Early(record, early) : null;
+            var move = Move.None;
+            if (named is not null)
+            {
+                move = Move.Name;
+                moved++;
+            }
+            else if (early is not null)
+            {
+                var (slip, word) = Slipped(record, early);
+                if (slip == Slip.Refused)
+                {
+                    slipped++;
+                    continue;
+                }
+
+                if (slip == Slip.Moved)
+                {
+                    named = word;
+                    move = Move.Word;
+                    movedOntoWord++;
+                }
+            }
+
             if (named is not null)
             {
                 record = record with { Target = [named] };
-                moved++;
             }
 
             var ours = Ours(record.Source, theirSource, ClearBibleAlignment.Unit);
@@ -236,12 +261,12 @@ internal static partial class ClearBibleLinks
                 trimmed++;
             }
 
-            drafts.Add(new Draft(theirs, ours, named is not null));
+            drafts.Add(new Draft(theirs, ours, move));
         }
 
         return new ClearBibleJoined(
             drafts, records, unresolved, withoutCounterpart, astray, shifted, moved, refused, overruledRecords, trimmed,
-            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0);
+            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0, movedOntoWord, slipped);
     }
 
     /// <summary>
@@ -393,6 +418,106 @@ internal static partial class ClearBibleLinks
             : null;
 
     /// <summary>
+    /// What a record that puts a noun, a verb or an adjective on a preposition or an article says of the word after it, when
+    /// that word is no name and no record names it: <see cref="Early"/>'s slip before a common word. The Reina-Valera's set
+    /// does this some five thousand times in the Old Testament and some nine hundred in the New: Ezekiel 28:13's אֹדֶם is on
+    /// the <em>el</em> of <em>el sardio</em> and <em>sardio</em> is on nothing; 2 Chronicles 1:11's נֶפֶשׁ on the <em>el</em>
+    /// of <em>el alma</em>; and with an article between, Judges 3:13's תְּמָרִים on the <em>de</em> of <em>ciudad de las
+    /// palmas</em>.
+    ///
+    /// The word the record means is the first after it in the verse that is neither (<see cref="Aheads"/>). A common word has
+    /// no letters to confirm it as a name has, so the record is moved onto it only where the set itself renders the source
+    /// word's Strong number with that word elsewhere, in a record naming that word alone, and in at least
+    /// <see cref="LeastShare"/> of the records naming that word alone: <em>sardio</em> with אֹדֶם, <em>gentes</em> with
+    /// גּוֹי. The share keeps out the determiners and pronouns the set gives a noun now and then (<em>su</em>, <em>un</em>),
+    /// which would otherwise pass as its rendering. A word or a source word that stands twice in its verse is not moved onto,
+    /// as for names. Any other record of this shape is refused: the preposition or article does not render the noun, verb or
+    /// adjective, and which word does is not certain enough to be stored as the set's. Job 3:12's שָּׁדַיִם on the
+    /// <em>las</em> of <em>las tetas</em> is one: no other record names <em>tetas</em> alone.
+    /// </summary>
+    internal static (Slip Slip, string? Word) Slipped(ClearBibleRecord record, EarlyNames early)
+    {
+        if (record is not { Target.Count: 1, Source.Count: > 0 }
+            || !early.Aheads.TryGetValue(ClearBibleAlignment.Word(record.Target[0]), out var word)
+            || early.Named.Contains(word)
+            || !record.Source.All(id => early.Content.ContainsKey(ClearBibleAlignment.Unit(id))))
+        {
+            return (Slip.None, null);
+        }
+
+        var placed = !early.Repeated.Contains(word)
+                     && record.Source.All(id =>
+                         !early.RepeatedSources.Contains(ClearBibleAlignment.Unit(id))
+                         && early.Renders(early.Content[ClearBibleAlignment.Unit(id)], word));
+        return placed ? (Slip.Moved, word) : (Slip.Refused, null);
+    }
+
+    /// <summary>
+    /// The least share of the records naming a word alone that must pair it with a source word's Strong number before
+    /// <see cref="Slipped"/> moves a record onto it.
+    /// </summary>
+    internal const double LeastShare = 0.05;
+
+    /// <summary>What <see cref="Slipped"/> does with a record.</summary>
+    internal enum Slip
+    {
+        /// <summary>Not the slip: left as it is.</summary>
+        None,
+
+        /// <summary>Moved onto the word after the preposition or article.</summary>
+        Moved,
+
+        /// <summary>The slip, with no word it can be moved onto with confidence: refused.</summary>
+        Refused,
+    }
+
+    /// <summary>Which word a record was moved onto from the preposition or article before it.</summary>
+    internal enum Move
+    {
+        /// <summary>None: the record names the words it named.</summary>
+        None,
+
+        /// <summary>A name (<see cref="Early"/>).</summary>
+        Name,
+
+        /// <summary>A common word (<see cref="Slipped"/>).</summary>
+        Word,
+    }
+
+    /// <summary>
+    /// The translation's prepositions and articles in <paramref name="before"/>, each with the first word after it in its verse,
+    /// punctuation left out, that is not one of them, skipping one at most (<em>de las palmas</em>), where that word is not
+    /// written as a name (a name is <see cref="Befores"/>' to give).
+    /// </summary>
+    internal static Dictionary<string, string> Aheads(IEnumerable<ClearBibleToken> tokens, IReadOnlySet<string> before)
+    {
+        var words = tokens.Where(token => !token.Excluded).ToList();
+        var aheads = new Dictionary<string, string>(StringComparer.Ordinal);
+        bool Before(int i) => before.Contains(words[i].Text.ToLowerInvariant());
+        int? Verse(int i) => ClearBibleAlignment.Verse(ClearBibleAlignment.Word(words[i].Id));
+        for (var i = 0; i < words.Count; i++)
+        {
+            if (!Before(i))
+            {
+                continue;
+            }
+
+            var next = i + 1;
+            if (next < words.Count && Verse(next) == Verse(i) && Before(next))
+            {
+                next++;
+            }
+
+            if (next < words.Count && Verse(next) == Verse(i) && !Before(next) && !WrittenAsName(words[next].Text))
+            {
+                aheads[ClearBibleAlignment.Word(words[i].Id)] = ClearBibleAlignment.Word(words[next].Id);
+            }
+        }
+
+        return aheads;
+    }
+
+    /// <summary>
     /// The translation's prepositions and articles in <paramref name="before"/> whose next word in the verse,
     /// punctuation left out, is written as a name, each with that word.
     /// </summary>
@@ -511,6 +636,11 @@ internal static partial class ClearBibleLinks
     /// <param name="Named">Every target word some record names, before any is moved.</param>
     /// <param name="Texts">Every target word's text, folded as <see cref="Comparable"/> folds it, by word.</param>
     /// <param name="Pairs">Every target word's folded text with the Strong number of every source word a record pairs it with.</param>
+    /// <param name="Aheads">See <see cref="ClearBibleLinks.Aheads"/>.</param>
+    /// <param name="Alone">
+    /// How many times the records that name one target word pair its folded text with a source word's Strong number.
+    /// </param>
+    /// <param name="AloneTotals">How many records name a target word of each folded text alone.</param>
     /// <param name="Repeated">The target words whose folded text stands more than once in their verse.</param>
     /// <param name="RepeatedSources">
     /// The source units whose Strong number (or, without one, whose letters) stands more than once in their verse,
@@ -527,7 +657,10 @@ internal static partial class ClearBibleLinks
         IReadOnlyDictionary<string, string> Texts,
         IReadOnlySet<(string Text, int Lemma)> Pairs,
         IReadOnlySet<string> Repeated,
-        IReadOnlySet<string> RepeatedSources)
+        IReadOnlySet<string> RepeatedSources,
+        IReadOnlyDictionary<string, string> Aheads,
+        IReadOnlyDictionary<(string Text, int Lemma), int> Alone,
+        IReadOnlyDictionary<string, int> AloneTotals)
     {
         public static EarlyNames Of(
             IReadOnlyList<ClearBibleToken> tokens, IReadOnlySet<string> before, string source, IReadOnlyList<ClearBibleRecord> records)
@@ -558,8 +691,11 @@ internal static partial class ClearBibleLinks
             }
 
             var pairs = new HashSet<(string, int)>();
+            var alone = new Dictionary<(string, int), int>();
+            var aloneTotals = new Dictionary<string, int>(StringComparer.Ordinal);
             foreach (var record in records)
             {
+                var one = record.Target.Count == 1;
                 foreach (var target in record.Target)
                 {
                     if (!texts.TryGetValue(ClearBibleAlignment.Word(target), out var text))
@@ -567,11 +703,20 @@ internal static partial class ClearBibleLinks
                         continue;
                     }
 
+                    if (one)
+                    {
+                        aloneTotals[text] = aloneTotals.GetValueOrDefault(text) + 1;
+                    }
+
                     foreach (var unit in record.Source)
                     {
                         if (strongs.TryGetValue(ClearBibleAlignment.Unit(unit), out var lemma))
                         {
                             pairs.Add((text, lemma));
+                            if (one)
+                            {
+                                alone[(text, lemma)] = alone.GetValueOrDefault((text, lemma)) + 1;
+                            }
                         }
                     }
                 }
@@ -579,7 +724,7 @@ internal static partial class ClearBibleLinks
 
             return new EarlyNames(
                 ClearBibleLinks.Befores(tokens, before), ClearBibleLinks.Content(source), ClearBibleLinks.Named(records), texts, pairs,
-                Twice(targetKeys), Twice(sourceKeys));
+                Twice(targetKeys), Twice(sourceKeys), ClearBibleLinks.Aheads(tokens, before), alone, aloneTotals);
         }
 
         private static HashSet<string> Twice(Dictionary<string, (int?, string)> keys) =>
@@ -604,6 +749,16 @@ internal static partial class ClearBibleLinks
             return letters.Length > 0
                    && NameLetters.Likeness(NameLetters.Of(text, "spa"), letters, text) >= NameLists.LeastLikeness;
         }
+
+        /// <summary>
+        /// Whether the set renders a source word's Strong number with the translation's word elsewhere, in records naming that
+        /// word alone, often enough to say so (<see cref="ClearBibleLinks.Slipped"/>).
+        /// </summary>
+        public bool Renders(ClearBibleToken word, string target) =>
+            Texts.TryGetValue(target, out var text)
+            && Lemma(word.Strong) is { } lemma
+            && Alone.GetValueOrDefault((text, lemma)) is var count and > 0
+            && count >= LeastShare * AloneTotals.GetValueOrDefault(text);
     }
 
     private static HashSet<int> Canonical(IEnumerable<int> printed, IReadOnlyDictionary<int, HashSet<int>> frame)
@@ -1133,8 +1288,8 @@ internal static partial class ClearBibleLinks
     /// <param name="With">The morphemes compared and placed as part of this one: its suffixes.</param>
     private sealed record Token(string Id, string Folded, string? Strong, IReadOnlyList<string> With);
 
-    /// <param name="Moved">Whether the record was moved from the word before the name onto it (<see cref="Early"/>).</param>
-    internal sealed record Draft(List<long> From, List<long> To, bool Moved = false);
+    /// <param name="Moved">Which word, if any, the record was moved onto from the preposition or article before it.</param>
+    internal sealed record Draft(List<long> From, List<long> To, Move Moved = Move.None);
 
     internal sealed class Counter
     {
