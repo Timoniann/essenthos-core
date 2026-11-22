@@ -48,6 +48,18 @@ public class Account : IRevised
     /// <summary>The colours the reader keeps as their own, each <c>#rrggbb</c>, in the order they added them.</summary>
     public List<string> OwnBookmarkColors { get; set; } = [];
 
+    /// <summary>
+    /// The sets of columns the reader read in last that were none of the reader's modes, newest first, as
+    /// JSON: <c>[["KJV","BHSA"], …]</c>, each set the texts' slugs in the order of the columns.
+    /// </summary>
+    public string RecentColumnSets { get; set; } = "[]";
+
+    /// <summary>
+    /// The sets of columns the reader saved under a name of their own, in the order they keep them, as
+    /// JSON: <c>[{"name":"…","texts":["KJV","BHSA"]}, …]</c>.
+    /// </summary>
+    public string SavedColumnSets { get; set; } = "[]";
+
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset UpdatedAt { get; set; }

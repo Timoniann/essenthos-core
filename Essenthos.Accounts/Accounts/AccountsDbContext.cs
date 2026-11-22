@@ -78,6 +78,8 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             account.Property(a => a.ProviderPhotoUrl).HasMaxLength(1024);
             account.Property(a => a.RecentBookmarkColors).HasDefaultValueSql("'{}'::text[]");
             account.Property(a => a.OwnBookmarkColors).HasDefaultValueSql("'{}'::text[]");
+            account.Property(a => a.RecentColumnSets).HasColumnType("jsonb").HasDefaultValueSql("'[]'::jsonb");
+            account.Property(a => a.SavedColumnSets).HasColumnType("jsonb").HasDefaultValueSql("'[]'::jsonb");
             account.HasIndex(a => a.Revision);
             account.HasMany(a => a.Credentials).WithOne(c => c.Account).HasForeignKey(c => c.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -383,6 +385,15 @@ public static class Limits
 
     /// <summary>How many colours of their own an account keeps: a palette, not a colour store.</summary>
     public const int OwnBookmarkColors = 24;
+
+    /// <summary>How many sets of columns read last an account remembers: enough to find one's way back.</summary>
+    public const int RecentColumnSets = 5;
+
+    /// <summary>How many named sets of columns an account keeps: a shelf of ways to read, not a store.</summary>
+    public const int SavedColumnSets = 30;
+
+    /// <summary>The name a reader gives a set of columns.</summary>
+    public const int ColumnSetName = 60;
 
     /// <summary>A suggestion's main text: a long letter, not a manuscript.</summary>
     public const int SuggestionBody = 10_000;

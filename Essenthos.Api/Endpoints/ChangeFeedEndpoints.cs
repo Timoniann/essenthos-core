@@ -46,11 +46,22 @@ internal static class ChangeFeedEndpoints
     {
         // Each collection gives its oldest changes past the revision, one more than a page can use. The
         // revisions are one sequence, so merging them in order and cutting the page is exact.
-        var profile = await db.Accounts.AsNoTracking()
+        var kept = await db.Accounts.AsNoTracking()
             .Where(a => a.Id == account && a.Revision > since)
-            .Select(a => new ProfileChange(
-                a.Revision, a.DisplayName, a.About, a.Locale, a.PhotoVersion, a.RecentBookmarkColors, a.OwnBookmarkColors))
+            .Select(a => new
+            {
+                a.Revision, a.DisplayName, a.About, a.Locale, a.PhotoVersion, a.RecentBookmarkColors, a.OwnBookmarkColors,
+                a.RecentColumnSets, a.SavedColumnSets,
+            })
             .FirstOrDefaultAsync(cancellationToken);
+        ProfileChange? profile = null;
+        if (kept is not null)
+        {
+            var columnSets = ColumnSetEndpoints.Describe(kept.RecentColumnSets, kept.SavedColumnSets);
+            profile = new ProfileChange(
+                kept.Revision, kept.DisplayName, kept.About, kept.Locale, kept.PhotoVersion, kept.RecentBookmarkColors,
+                kept.OwnBookmarkColors, columnSets.Recent, columnSets.Saved);
+        }
 
         var bookmarks = await db.Bookmarks.IgnoreQueryFilters().AsNoTracking()
             .Where(b => b.AccountId == account && b.Revision > since)
@@ -131,7 +142,7 @@ internal static class ChangeFeedEndpoints
 
 /// <param name="Revision">The last revision in this answer, or the one asked about when nothing changed. Store it and send it next.</param>
 /// <param name="More">Whether the answer stopped at the page's limit and there are further changes to ask for from <paramref name="Revision"/>.</param>
-/// <param name="Profile">The account's own name, about line, language and bookmark colours, when they changed.</param>
+/// <param name="Profile">The account's own name, about line, language, bookmark colours and sets of columns, when they changed.</param>
 internal record ChangesResponse(
     long Revision,
     bool More,
@@ -148,7 +159,9 @@ internal record ProfileChange(
     string? Locale,
     int PhotoVersion,
     IReadOnlyList<string> RecentBookmarkColors,
-    IReadOnlyList<string> OwnBookmarkColors);
+    IReadOnlyList<string> OwnBookmarkColors,
+    IReadOnlyList<IReadOnlyList<string>> RecentColumnSets,
+    IReadOnlyList<ColumnSet> SavedColumnSets);
 
 /// <param name="DeletedAt">When the reader removed it; then <paramref name="Bookmark"/> is null.</param>
 internal record BookmarkChange(Guid Id, long Revision, DateTimeOffset? DeletedAt, BookmarkResponse? Bookmark);
