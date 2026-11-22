@@ -47,17 +47,23 @@ internal sealed class StrongNumberSource : IPairSource
     private readonly string? _credit;
     private readonly LaidRules? _rules;
     private readonly IReadOnlyList<string> _prefixes;
-    private readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<long, WordTag>>> _tags = new();
+    private readonly bool _guardsNames;
+    private readonly ConditionalWeakTable<ProductTexts, Lazy<(Dictionary<long, WordTag> Tags, HashSet<long> Corrected)>> _tags = new();
     private readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<long, long>>> _moved = new();
 
     /// <param name="credit">Whose numbering is laid onto the translation; null for numbers the translation carries itself.</param>
     /// <param name="rules">What a laid numbering may claim beyond the ordinary match, where it may claim less.</param>
-    private StrongNumberSource(string translation, IReadOnlyList<string> witnesses, string? credit, LaidRules? rules = null)
+    /// <param name="guardsNames">
+    /// Whether a word the numbering's tag sends across the line between names and common words is taken out of the match
+    /// (<see cref="NameClassGuard"/>, PRB-1962).
+    /// </param>
+    private StrongNumberSource(string translation, IReadOnlyList<string> witnesses, string? credit, LaidRules? rules = null, bool guardsNames = false)
     {
         _translation = translation;
         _witnesses = witnesses;
         _credit = credit;
         _rules = rules;
+        _guardsNames = guardsNames;
         _prefixes = credit is null
             ? [.. TextAliases.Of(translation).Append(translation).Distinct(StringComparer.Ordinal).Select(t => TaggedTextLinkLoader.Source(t, string.Empty))]
             : [credit + Against];
@@ -198,7 +204,14 @@ internal sealed class StrongNumberSource : IPairSource
         var witness = WitnessWords.Of(texts, toText);
         var series = witness.Series;
         var source = Named(store, pair, toText);
-        var tags = Laid ? _tags.GetValue(texts, t => new Lazy<Dictionary<long, WordTag>>(() => LaidTags(t, log))).Value : null;
+        var laid = Laid ? _tags.GetValue(texts, t => new Lazy<(Dictionary<long, WordTag>, HashSet<long>)>(() => LaidTags(t, log))).Value : default;
+        var tags = laid.Tags;
+        var guard = _guardsNames && tags is not null
+            ? NameClassGuard.Of(tags, laid.Corrected, id => translation.Words[(int)id].Surface, series, series == StrongNumbers.Greek
+                ? NameClassGuard.GreekNames(GreekEntries(store))
+                : NameClassGuard.HebrewNames(witness.Text.Words.Select(word => (word.Strong, word.Morphology))))
+            : null;
+        var guarded = new List<string>();
         var german = translation.Language == "deu";
         var functions = _rules?.FunctionWords == true ? FunctionWords.Of(store) : null;
         var addedNouns = _rules?.AddedNouns == true ? EnglishAddedNouns.Of(store) : null;
@@ -257,9 +270,26 @@ internal sealed class StrongNumberSource : IPairSource
             // one word on either side.
             var offset = (long)translation.Words.Count;
             var drafts = StrongNumberMatch.Verse(units, [.. against.Select((a, at) => a.Word with { Id = offset + at })], resolution, out _);
+            var verseNumbers = guard is null ? null : against.Select(a => a.Word.Strong).OfType<string>().ToHashSet(StringComparer.Ordinal);
             foreach (var draft in drafts)
             {
                 var ids = draft.From.SelectMany(id => members[id]).ToList();
+                if (guard is not null)
+                {
+                    var witnessed = draft.To.Select(id => against[(int)(id - offset)].Word.Strong).ToList();
+                    var refused = ids.Where(id => guard.Refuses(id, witnessed, verseNumbers!)).ToList();
+                    if (refused.Count > 0)
+                    {
+                        guarded.AddRange(refused.Select(id =>
+                            $"{translation.Key(id).Own} {translation.Words[(int)id].Surface}->"
+                            + string.Join('+', draft.To.Select(to => witness.Text.Words[(int)against[(int)(to - offset)].Id].Surface + "(" + against[(int)(to - offset)].Word.Strong + ")"))));
+                        ids = [.. ids.Except(refused)];
+                        if (ids.Count == 0)
+                        {
+                            continue;
+                        }
+                    }
+                }
                 if (_rules is { OneOccurrence: true } && draft.SeveralOccurrences)
                 {
                     several++;
@@ -338,7 +368,13 @@ internal sealed class StrongNumberSource : IPairSource
             + $"({kinds[(int)StrongMatchKind.Unambiguous]} unambiguous, {kinds[(int)StrongMatchKind.Paired]} paired, "
             + $"{kinds[(int)StrongMatchKind.Contended]} contended), {testified} left to a stated link"
             + (moved is null ? string.Empty : $"; {regained} auxiliaries or pronouns attached to the verb their number moved to")
-            + (_rules is null ? string.Empty : $"; {several} matches ({severalWords} words) left out for naming several occurrences, {supporting} rows on function words, {supplied} on supplied words, {added} on added nouns and {phrases} of several phrases on one word that only support another method's link"));
+            + (_rules is null ? string.Empty : $"; {several} matches ({severalWords} words) left out for naming several occurrences, {supporting} rows on function words, {supplied} on supplied words, {added} on added nouns and {phrases} of several phrases on one word that only support another method's link")
+            + (guard is null ? string.Empty : $"; {guarded.Count} words taken out of a match their tag sends across the line between names and common words"));
+        if (guarded.Count > 0)
+        {
+            log($"names and common words kept apart: {string.Join("; ", guarded)}");
+        }
+
         return rows;
     }
 
@@ -412,7 +448,7 @@ internal sealed class StrongNumberSource : IPairSource
     /// The edition laid onto the translation's words as the conversion lays it, a word's id its place in the words product;
     /// where the words product's number differs from the tag's first (a correction set or cleared it), the words' stands.
     /// </summary>
-    private Dictionary<long, WordTag> LaidTags(ProductTexts texts, Action<string> log)
+    private (Dictionary<long, WordTag> Tags, HashSet<long> Corrected) LaidTags(ProductTexts texts, Action<string> log)
     {
         var text = texts[_translation];
         var (_, stated) = SideStrongNumbers.Edition(_translation);
@@ -425,11 +461,16 @@ internal sealed class StrongNumberSource : IPairSource
         }
 
         var laid = SynodalStrongLayer.Lay(SideStrongNumbers.ReadEdition(_translation, texts.Store.ResourcesPath), corpus);
-        var (tags, set, cleared) = Overlay(laid.Tags, [.. text.Words.Select(word => word.Strong)]);
+        var numbers = text.Words.Select(word => word.Strong).ToList();
+        var (tags, set, cleared) = Overlay(laid.Tags, numbers);
+        var corrected = Enumerable.Range(0, numbers.Count)
+            .Where(id => numbers[id] != (laid.Tags.TryGetValue(id, out var tag) && tag.Numbers.Count > 0 ? tag.Numbers[0] : null))
+            .Select(id => (long)id)
+            .ToHashSet();
         log($"{SideStrongNumbers.Edition(_translation).Source} laid onto {laid.Verses} verses ({laid.Renumbered} through the address the "
             + $"text prints, {laid.Joined} with a neighbour, {laid.Refused} refused, {laid.Unused} edition verses unused), {laid.TaggedWords} "
             + $"words numbered; {set} numbers the words product holds otherwise, {cleared} it clears");
-        return tags;
+        return (tags, corrected);
     }
 
     /// <summary>
