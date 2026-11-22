@@ -104,7 +104,8 @@ internal static class AlexandrinusTextSource
                      + "obliges anything derived from those books to be shared alike. Modified: the "
                      + "transcription labels 69 verses of 3 John, Jude, Hebrews 13 and 1 Timothy 1 in a form "
                      + "other than its own, and Essenthos places them by that form, checked verse for verse "
-                     + "against CNTR's independent transcription of the manuscript. " + OttleyIsaiah.Note + " "
+                     + "against CNTR's independent transcription of the manuscript. A word Swete's page divides at "
+                     + "a line end, which the transcription read as two, is one word again. " + OttleyIsaiah.Note + " "
                      + OttleyIsaiah.PageNote,
         Citation = "Codex Alexandrinus (GA 02), New Testament transcription by the Institut für "
                    + "Neutestamentliche Textforschung, New Testament Virtual Manuscript Room, CC BY 4.0; Isaiah "
@@ -128,8 +129,10 @@ internal static class AlexandrinusTextSource
 
     /// <summary>The codex's books in the order it has them: the Law, the Prophets, Maccabees, then the New Testament.</summary>
     /// <param name="ottley">OTTLEY's corrections file, through which Ottley's Isaiah is read here as it is there.</param>
-    public static TextSource Read(string resources, TextCorrections ottley)
+    /// <param name="corrections">This text's own, whose <c>tokens</c> rows are made on Swete's books.</param>
+    public static TextSource Read(string resources, TextCorrections ottley, TextCorrections corrections)
     {
+        EditionRepairs.CheckBooks(Slug, corrections, SweteAlexandrinus.Books.Select(book => book.Work).ToHashSet());
         var folder = Path.Combine(resources, Folder);
         var transcription = Path.Combine(folder, NtvmrTranscription.Alexandrinus.File);
         if (!File.Exists(transcription))
@@ -142,7 +145,7 @@ internal static class AlexandrinusTextSource
         var books = new List<BookDraft>();
         foreach (var (work, canonical) in SweteAlexandrinus.Books.Take(1))
         {
-            books.Add(Book(canonical, books.Count + 1, SweteAlexandrinus.Read(folder, work)));
+            books.Add(Book(canonical, books.Count + 1, SweteAlexandrinus.Read(folder, work, corrections)));
         }
 
         books.Add(OttleyTextSource.Read(Path.Combine(resources, "Swete"), ottley).Books.Single() with
@@ -152,7 +155,7 @@ internal static class AlexandrinusTextSource
 
         foreach (var (work, canonical) in SweteAlexandrinus.Books.Skip(1))
         {
-            books.Add(Book(canonical, books.Count + 1, SweteAlexandrinus.Read(folder, work)));
+            books.Add(Book(canonical, books.Count + 1, SweteAlexandrinus.Read(folder, work, corrections)));
         }
 
         books.AddRange(NtvmrTranscription.Books(transcription, books.Count + 1, NtvmrTranscription.Alexandrinus));
