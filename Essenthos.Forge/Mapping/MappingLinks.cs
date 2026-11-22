@@ -46,18 +46,49 @@ internal sealed class MappingLinks(ProductTexts texts)
     /// <param name="aligned">
     /// Whether the middle text's own aligner links count, at their confidence, and EVIDENTIA's rule-based ones with them: for a
     /// daughter version they are the only way its mother reaches the target. Otherwise neither is walked, so one inference is
-    /// never the next one's bridge.
+    /// never the next one's bridge. A daughter's middle word that a one-to-one link places inside a wider one is carried by
+    /// the one-to-one link alone: CATSS states ἐν ἀρχῇ over בְּרֵאשִׁית as one link, and the aligner's ἀρχῇ on רֵאשִׁית
+    /// beside it says which of the two words the noun is, where the group would carry it to the preposition too. A daughter's
+    /// phrase word with no such link goes to a target word of its kind: a preposition to the preposition, any other word that is
+    /// not a function word to the content words (καὶ τὸ ἐμπλόκιον over וְהַקִּשֻּׁרִים: the noun to the noun, not to the וְ).
     /// </param>
     public ILookup<long, (long To, double Confidence)> Carried(string viaSlug, string toSlug, bool aligned)
     {
         var (via, to) = (texts[viaSlug], texts[toSlug]);
         var functions = FunctionWords.Of(texts.Store);
         var kinds = Kinds(toSlug);
-        return Links(viaSlug, toSlug)
+        var links = Links(viaSlug, toSlug)
             .Where(l => l.To.Length > 0 && (aligned || l.Method is not (LinkMethod.Aligner or LinkMethod.RuleBased)))
-            .SelectMany(l => l.From.SelectMany(f => Targets(via.Words[(int)f].Strong, l.From.Length > 1 ? functions.Kind(via.Language, via.Words[(int)f].Surface) : FunctionKind.None,
-                    l.To, t => to.Words[(int)t].Strong, t => kinds[(int)t])
-                .Select(t => (Bridge: f, To: t, Confidence: (l.Confidence ?? 1) * CompositionPipeline.SpecificityOf(l.From.Length)))))
+            .ToList();
+        var narrow = aligned
+            ? links.Where(l => l.From.Length == 1 && l.To.Length == 1).ToLookup(l => l.From[0], l => l.To[0])
+            : null;
+        bool Refined(FinalLink link, long word) =>
+            narrow is not null && (link.From.Length > 1 || link.To.Length > 1) && narrow[word].Any(link.To.Contains);
+        IEnumerable<long> OfItsKind(FinalLink link, FunctionKind kind, IEnumerable<long> targets)
+        {
+            if (narrow is null || (link.From.Length == 1 && link.To.Length == 1))
+            {
+                return targets;
+            }
+
+            var all = targets.ToList();
+            var fitting = kind switch
+            {
+                FunctionKind.Preposition => all.Where(t => kinds[(int)t] == TargetKind.Preposition).ToList(),
+                FunctionKind.None or FunctionKind.Pronoun => all.Where(t => kinds[(int)t] is TargetKind.Other or TargetKind.Adverb).ToList(),
+                _ => all,
+            };
+            return fitting.Count > 0 ? fitting : all;
+        }
+
+        return links
+            .SelectMany(l => l.From.Where(f => !Refined(l, f)).SelectMany(f =>
+            {
+                var kind = l.From.Length > 1 ? functions.Kind(via.Language, via.Words[(int)f].Surface) : FunctionKind.None;
+                return OfItsKind(l, kind, Targets(via.Words[(int)f].Strong, kind, l.To, t => to.Words[(int)t].Strong, t => kinds[(int)t]))
+                    .Select(t => (Bridge: f, To: t, Confidence: (l.Confidence ?? 1) * CompositionPipeline.SpecificityOf(l.From.Length)));
+            }))
             .ToLookup(r => r.Bridge, r => (r.To, r.Confidence));
     }
 

@@ -234,8 +234,9 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         var threshold = pair.Minimum ?? measured?.Minimum ?? AlignmentPipeline.DefaultMinimumConfidence;
         var pool = AlignmentPipeline.Pool(pair.From, pair.To);
         double? agreedBelow = measured is { AgreedBelow: { } measuredBelow } && threshold == measured.Minimum ? measuredBelow : null;
-        var answer = await Answer(pair.From, pair.To, $"{pair.From}-{pair.To}", pair.Model, asWritten: false, books: null,
-            lettered: pair.Outside is not null || SameVersification(pair.From, pair.To), cancellationToken, agreed: agreedBelow is not null);
+        var answer = await Answer(pair.From, pair.To, pair.Answers, pair.Model, asWritten: false, books: null,
+            lettered: pair.Outside is not null || SameVersification(pair.From, pair.To), cancellationToken, agreed: agreedBelow is not null,
+            lexemes: pair.Lexemes, symmetrisation: pair.Symmetrisation);
         var prior = Syntax(pair.To);
         var agreement = agreedBelow is { } agreedFrom
             ? new AlignmentPipeline.Agreement(AlignmentPipeline.PairsOf(answer.Agreed!, answer.Addresses.Count), agreedFrom)
@@ -250,10 +251,20 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             drafts = [.. drafts.Where(draft => beyond.Contains(draft.SourceWordId))];
         }
 
+        if (pair.Books is { } books)
+        {
+            drafts = [.. drafts.Where(draft => books.Contains(to.Key(draft.TargetWordId).Verse.Book))];
+        }
+
         var note = pool is null ? null : $"one model over {string.Join(", ", pool)}";
         if (measured is not null && threshold == measured.Minimum)
         {
             note = note is null ? measured.Note : $"{note}; {measured.Note}";
+        }
+
+        if (pair.Note is { } declared)
+        {
+            note = note is null ? declared : $"{note}; {declared}";
         }
 
         var rejected = Rejected(pair.From, pair.To);
@@ -267,7 +278,8 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             "renders",
             MappingMethods.Aligner,
             Routes.Written(draft.Translation),
-            $"{CompositionPipeline.Machine} {pair.Model}, symmetrised och"
+            $"{CompositionPipeline.Machine} {pair.Model}, symmetrised {pair.Symmetrisation}"
+            + (pair.Lexemes ? ", both texts by lexeme" : string.Empty)
             + (prior.Known ? ", rescored on ETCBC phrase and clause structure" : string.Empty)
             + (double.IsNaN(draft.Position)
                 ? $", {NameLists.AddedSource}"
@@ -330,13 +342,19 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
     /// A trial over a few books trains a model of its own rather than reading the pool's.
     /// </summary>
     /// <param name="agreed">Whether the answer holding only the pairs both directions of the model name is read too: a pool's pair alone has one.</param>
+    /// <param name="lexemes">Both texts by their dictionary forms (<see cref="AlignmentPipeline.Lexeme"/>): two originals, which both carry one.</param>
+    /// <param name="symmetrisation">How the model's two directions are joined for an unpooled pair (<see cref="AlignmentPipeline.Och"/> or another).</param>
     private async Task<Stored> Answer(
         string fromSlug, string toSlug, string workspace, string modelType, bool asWritten, IReadOnlySet<int>? books, bool lettered,
-        CancellationToken cancellationToken, bool agreed = false)
+        CancellationToken cancellationToken, bool agreed = false, bool lexemes = false, string symmetrisation = AlignmentPipeline.Och)
     {
         var pool = asWritten || books is not null ? null : AlignmentPipeline.Pool(fromSlug, toSlug);
-        Func<WordForms, string> sourceForm = asWritten ? AlignmentPipeline.Written : word => AlignmentPipeline.Reduce(word);
-        Func<WordForms, string> targetForm = pool is null ? word => AlignmentPipeline.Comparable(word) : AlignmentPipeline.Pooled;
+        Func<WordForms, string> sourceForm = lexemes ? AlignmentPipeline.Lexeme
+            : asWritten ? AlignmentPipeline.Written
+            : word => AlignmentPipeline.Reduce(word);
+        Func<WordForms, string> targetForm = lexemes ? AlignmentPipeline.Lexeme
+            : pool is null ? word => AlignmentPipeline.Comparable(word)
+            : AlignmentPipeline.Pooled;
         var source = AlignedWords.Read(texts[fromSlug], sourceForm, lettered, books: books, strong: Served(fromSlug),
             hebrew: pool is null ? Hebrew(fromSlug, lettered) : null);
         var target = AlignedWords.Read(texts[toSlug], targetForm, lettered, pool is not null, books, Served(toSlug),
@@ -352,6 +370,11 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         }
 
         Directory.CreateDirectory(Path.Combine(Root, workspace));
+        if (pool is not null && (lexemes || symmetrisation != AlignmentPipeline.Och))
+        {
+            throw new InvalidOperationException($"{fromSlug}-{toSlug} is aligned by its pool's model, which reads its own forms and joins its directions by och.");
+        }
+
         if (pool is null)
         {
             if (agreed)
@@ -361,7 +384,8 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             }
 
             return new Stored(
-                await pipeline.Align(fromSlug, toSlug, Path.Combine(Root, workspace), modelType, addresses, source, target, cancellationToken),
+                await pipeline.Align(fromSlug, toSlug, Path.Combine(Root, workspace), modelType, addresses, source, target, cancellationToken,
+                    symmetrisation: symmetrisation),
                 addresses, source, target);
         }
 
@@ -582,9 +606,27 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
 /// are written: the King James's Apocrypha was translated from the Greek and the rest of its Old Testament from the Hebrew,
 /// so against the Septuagint it renders the one and only resembles the other. Lettered verses are read too.
 /// </param>
-internal sealed record AlignedPair(string From, string To, string Model = "ibm4", double? Minimum = null, string? Outside = null)
+/// <param name="Symmetrisation">How the model's two directions are joined: och, or intersection for the pairs both name.</param>
+/// <param name="Lexemes">Both texts read by their dictionary forms (<see cref="AlignmentPipeline.Lexeme"/>).</param>
+/// <param name="Books">The target's canonical books whose words the file is written for; the model still trains on every verse.</param>
+/// <param name="Workspace">The workspace the answers are kept in, where it is not the pair's own (which another run of the pair reads).</param>
+/// <param name="Note">How the threshold was measured, carried in every row's source.</param>
+internal sealed record AlignedPair(
+    string From,
+    string To,
+    string Model = "ibm4",
+    double? Minimum = null,
+    string? Outside = null,
+    string Symmetrisation = AlignmentPipeline.Och,
+    bool Lexemes = false,
+    IReadOnlySet<int>? Books = null,
+    string? Workspace = null,
+    string? Note = null)
 {
     public string Name => MappingProducts.Pair(From, To);
+
+    /// <summary>The workspace under the store's alignments that holds this pair's answers.</summary>
+    public string Answers => Workspace ?? Name;
 }
 
 /// <summary>
@@ -615,6 +657,14 @@ internal sealed class AlignerSource : IPairSource
         new("GEEZ81", "SWETE"),
         new("GEEZ81", "NESTLE1904"),
         new("GEEZ81", "RP2018"),
+
+        // Brenton's Greek against the Hebrew directly, both by lexeme, the pairs both directions of the model name, trained on the
+        // whole Old Testament and written for the four books CATSS's Oxford copy lacks (Esther, Job, Psalms, Proverbs). Measured
+        // against CATSS on the books it covers, on the Greek words the composed links left bare: 1-16 97.2% from 0.30, 21-39
+        // (held) 96.8%, every band of 0.10 from 0.30 up at 95% or more; under 0.30 the held bands read 94%.
+        new("GRCBRENT", "BHSA", Minimum: 0.3, Symmetrisation: AlignmentPipeline.BothDirections, Lexemes: true,
+            Books: new HashSet<int> { 17, 18, 19, 20 }, Workspace: "GRCBRENT-BHSA-lexemes",
+            Note: "threshold 0.30 measured against CATSS on the books it covers, 96.8% on held books"),
     ];
 
     private readonly IReadOnlyList<AlignedPair> _pairs;
@@ -640,7 +690,7 @@ internal sealed class AlignerSource : IPairSource
         return
         [
             .. read.SelectMany(text => ProductText.Products(text).Append(VerseManifestRow.ProductOf(text))).Select(store.Find).OfType<string>(),
-            .. AlignerFiles.StoredAnswers(store, pair),
+            .. AlignerFiles.StoredAnswers(store, aligned.Answers),
             .. pool is null ? [] : AlignerFiles.StoredAnswers(store, $"{aligned.From}-{string.Join('-', pool)}").Concat(PoolStamps(store, aligned.From, pool)),
             .. aligned.To == AlignerFiles.Analysed ? AlignerFiles.SyntaxInputs(store) : [],
             .. AlignerFiles.ReadsHebrew(store, aligned) && !read.Contains(BhsaTextSource.Slug)

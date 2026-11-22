@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/BRENTON-BHSA/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right.
+# Measured by hand on 2026-11-22 (TSK-1939): settled composed links of BRENTON-BHSA (Brenton's English) through GRCBRENT, 10 per confidence band (0.25, 0.40, 0.60, 0.80), seed 31; right = the English word renders that Hebrew word, Brenton translating the Greek (a reading the Greek has against the Hebrew counts right where the words correspond).
+readings	from	right	scored	basis
+through grcbrent	0.25	0.9	40	hand sample 2026-11-22: 36 of 40 right (0.25-0.40 9/10, 0.40-0.60 9/10, 0.60-0.80 8/10, from 0.80 10/10), about 92% weighted by rows

@@ -114,6 +114,7 @@ public class CompositionSpecificityTests
     [InlineData("{\"pos\": \"det\"}", "Article")]
     [InlineData("{\"pos\": \"art\"}", "Article")]
     [InlineData("{\"pos\": \"nega\"}", "Particle")]
+    [InlineData("{\"pos\": \"prep\"}", "Preposition")]
     [InlineData("{\"pos\": \"verb\"}", "Other")]
     [InlineData("{\"robinson\": \"T-NSM\"}", "Article")]
     [InlineData("{\"robinson\": \"CONJ-N\"}", "Conjunction")]
