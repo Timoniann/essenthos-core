@@ -30,7 +30,14 @@ internal enum OsisPieceKind
 /// <param name="Morph">The <c>morph</c> attribute of a <c>&lt;w&gt;</c>, as written; null elsewhere.</param>
 internal readonly record struct OsisPiece(
     OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null, string? Source = null, bool Added = false,
-    string? Morph = null);
+    string? Morph = null)
+{
+    /// <summary>
+    /// The <c>type</c> of the innermost <c>&lt;title&gt;</c> the piece stands in (<c>chapter</c> for a section heading,
+    /// <c>psalm</c>), or of the <c>&lt;note&gt;</c> it is (<c>study</c>, <c>x-crossreference</c>); null where none is written.
+    /// </summary>
+    public string? Type { get; init; }
+}
 
 /// <summary>
 /// One verse of a SWORD module's OSIS, as the pieces a reader needs: the tagged words, the text
@@ -73,20 +80,26 @@ internal static class OsisVerse
         var titles = 0;
         var added = 0;
         var changes = new Stack<bool>();
+        var titleTypes = new Stack<string?>();
+        string? noteType = null;
 
         while (xml.Read())
         {
             switch (xml.NodeType)
             {
                 case XmlNodeType.Element when xml.LocalName == NoteElement && !xml.IsEmptyElement:
-                    noteDepth++;
+                    if (noteDepth++ == 0)
+                    {
+                        noteType = xml.GetAttribute(TypeAttribute);
+                    }
+
                     note ??= new StringBuilder();
                     break;
 
                 case XmlNodeType.EndElement when xml.LocalName == NoteElement:
                     if (--noteDepth == 0 && note is not null)
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Note, note.ToString().Trim(), null, titles > 0));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Note, note.ToString().Trim(), null, titles > 0) { Type = noteType });
                         note = null;
                     }
 
@@ -94,10 +107,12 @@ internal static class OsisVerse
 
                 case XmlNodeType.Element when xml.LocalName == TitleElement && !xml.IsEmptyElement && noteDepth == 0:
                     titles++;
+                    titleTypes.Push(xml.GetAttribute(TypeAttribute));
                     break;
 
                 case XmlNodeType.EndElement when xml.LocalName == TitleElement && noteDepth == 0:
                     titles--;
+                    titleTypes.TryPop(out _);
                     break;
 
                 case XmlNodeType.Element when xml.LocalName == ChangeElement && !xml.IsEmptyElement:
@@ -119,7 +134,7 @@ internal static class OsisVerse
                     morph = xml.GetAttribute(MorphAttribute);
                     if (xml.IsEmptyElement)
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source, added > 0, morph));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source, added > 0, morph) { Type = TitleType(titleTypes) });
                     }
                     else
                     {
@@ -129,7 +144,7 @@ internal static class OsisVerse
                     break;
 
                 case XmlNodeType.EndElement when xml.LocalName == WordElement && noteDepth == 0 && word is not null:
-                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source, added > 0, morph));
+                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source, added > 0, morph) { Type = TitleType(titleTypes) });
                     word = null;
                     break;
 
@@ -144,7 +159,7 @@ internal static class OsisVerse
                     }
                     else
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Text, xml.Value, null, titles > 0, Added: added > 0));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Text, xml.Value, null, titles > 0, Added: added > 0) { Type = TitleType(titleTypes) });
                     }
 
                     break;
@@ -153,4 +168,6 @@ internal static class OsisVerse
 
         return pieces;
     }
+
+    private static string? TitleType(Stack<string?> open) => open.TryPeek(out var type) ? type : null;
 }

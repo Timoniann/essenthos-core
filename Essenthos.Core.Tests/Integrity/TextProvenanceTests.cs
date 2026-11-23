@@ -145,7 +145,7 @@ public sealed class TextProvenanceTests
     {
         All.Where(definition => definition.Licence.Contains("SA", StringComparison.OrdinalIgnoreCase))
             .Should().OnlyContain(definition => definition.Redistribution == Redistribution.ShareAlike)
-            .And.HaveCount(22);
+            .And.HaveCount(23);
 
         Of(Bible4uTextSource.Ohienko).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(SweteTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
@@ -153,6 +153,7 @@ public sealed class TextProvenanceTests
         Of(SweteOldGreekTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(EbibleTextSource.IrvHindi).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(EbibleTextSource.BiblicaUkrainian).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(EbibleTextSource.BiblicaSlovak).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(UnfoldingWordTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(GeezTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
         Of(AlexandrinusTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);

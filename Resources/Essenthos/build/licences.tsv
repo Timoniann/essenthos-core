@@ -33,6 +33,7 @@ BetaMasaheft	older-editions	content	CC-BY-SA-4.0 with non-commercial transcripti
 BibleData	data	never	CC-BY-4.0	permitted-with-attribution	-	BibleData/LICENCE.md	-	The 2024 release, kept as its only copy; nothing reads it.
 BibleData2026	data	content	CC-BY-4.0	permitted-with-attribution	dataset:bibledata dataset:naves dataset:ussher	BibleData2026/LICENCE.md	-	Fetched from GitHub, whose files say CC BY 4.0; the Kaggle and Zenodo copies still say CC BY-NC-SA.
 BibleData2026/AlamoPolyglot.csv	data	never	each of its texts under its own terms	unknown	-	BibleData2026/LICENCE.md	-	Its columns are to be read one by one before any is served.
+BiblicaSlovak2023	text	content	CC-BY-SA-4.0	share-alike	text:NPK2023	BiblicaSlovak2023/LICENCE.md	-	Served verbatim, no corrections. Biblica's section headings are not read.
 BiblicaUkrainian2022	text	content	CC-BY-SA-4.0	share-alike	text:NPU2022	BiblicaUkrainian2022/LICENCE.md	-	-
 BrentonEnglish	text	content	Public Domain	public-domain	text:BRENTON	BrentonEnglish/LICENCE.md	-	-
 BrownDriverBriggs	lexicon	content	CC-BY-4.0; the BDB text itself public domain	permitted-with-attribution	dataset:bdb	BrownDriverBriggs/LICENCE.md	-	BrownDriverBriggs.xml and LexicalIndex.xml, the Open Scriptures Hebrew Lexicon.
@@ -49,6 +50,7 @@ Commentaries/MHC	commentary	content	Public Domain	public-domain	dataset:henry	Co
 Commentaries/Rieger	commentary	content	Public Domain	public-domain	dataset:rieger	Commentaries/LICENCE.md	-	-
 Commentaries/Lopukhin	commentary	content	Public Domain	public-domain	dataset:lopukhin	Commentaries/LICENCE.md	-	-
 CrossWireKJV	strong	content	GPL	share-alike	dataset:crosswire-kjv	CrossWireKJV/LICENCE.md	-	The King James New Testament's Strong numbers and italics, served on KJV's words, and the places of the Greek words, served as links (owner, 2026-11-13, PRB-1332). The module's own wording is not read: the text is bible4u's. GPL binds this layer and what is derived from it, not the code that reads it (NOT-0226).
+CzechStudy2009	text	content	CC-BY-NC-ND-4.0	non-commercial-only	text:CSP2009	CzechStudy2009/LICENCE.md	-	NoDerivatives: served verbatim, no corrections; links are a layer beside it (RUL-0183). Its section headings, the notes pointing to the printed volume's tables and the sparse Strong and parsing codes are not read.
 DarbyFrench	text	content	Public Domain	public-domain	text:JND2024	DarbyFrench/LICENCE.md	-	-
 DarbyFrench	strong	derived	the module says Public Domain; concordance.bible reserves its data	unknown	dataset:concordance-darby-strong	DarbyFrench/LICENCE.md	TSK-1443 TSK-1331	The owner, 2026-11-04 (TSK-1443): numbers whose terms are unclear are used for the mapping only and never served; a replacement is sought (TSK-1331).
 Dillmann	lexicon	content	CC-BY-NC-SA-4.0	non-commercial-only	dataset:dillmann	Dillmann/LICENCE.md	-	ShareAlike accepted for the Ge'ez meaning layer (NOT-0197).
@@ -74,6 +76,7 @@ Essenthos/external/shulman	data	content	CC-BY-4.0	permitted-with-attribution	dat
 Essenthos/external/tsk	data	content	Public Domain	public-domain	dataset:tsk	TreasuryOfScriptureKnowledge/LICENCE.md	-	-
 Essenthos/external/ussher	data	content	CC-BY-4.0	permitted-with-attribution	dataset:ussher	BibleData2026/LICENCE.md	-	-
 Essenthos/external/wikidata	data	content	CC0-1.0	public-domain	dataset:wikidata	WorldHistory/README.md	-	-
+Gdansk1881	text	content	Public Domain	public-domain	text:BG1881	Gdansk1881/LICENCE.md	-	-
 Geneva1599	text	content	Public Domain	public-domain	text:GNV1599	Geneva1599/LICENCE.md	-	-
 Glaux	lemmas	content	CC-BY-SA-3.0	share-alike	dataset:glaux	Glaux/LICENCE.md	-	Read as a dictionary from form to lemma for GRCBRENT; ShareAlike accepted by the owner on 2026-09-03.
 Images	pictures	content	each picture under its own licence, stated beside it	permitted-with-attribution	picture	Images/LICENCE.md	-	The picture check holds every served picture to its own licence and credit.
@@ -82,6 +85,7 @@ Jps1917	text	content	Public Domain	public-domain	text:JPS1917	Jps1917/LICENCE.md
 KingJames2006	text	content	Public Domain	public-domain	text:KJV	KingJames2006/LICENCE.md	-	Psalm superscriptions, repair readings and the Old Testament's Strong numbers. eBible states Public Domain for its files; the Old Testament tagging is the Bible Foundation's, which CrossWire distributes in its own KJV module under GPL (CrossWireKJV).
 KingJamesApocrypha	text	content	Public Domain	public-domain	text:*	KingJamesApocrypha/LICENCE.md	-	-
 KoreanRevised1961	text	content	Public Domain	public-domain	text:KRV	KoreanRevised1961/LICENCE.md	-	The moral rights of attribution and integrity remain: served unaltered, under its own title.
+Kralice1613	text	content	Public Domain	public-domain	text:BKR1613	Kralice1613/LICENCE.md	-	-
 Kulish	text	content	Public Domain	public-domain	text:UKR1871	Kulish/LICENCE.md	-	-
 Luther1912	text	content	Public Domain	public-domain	text:LUTH1912	Luther1912/LICENCE.md	-	-
 Luther1912	strong	content	No licence stated	unknown	dataset:luther1912-strong	Luther1912/LICENCE.md	PRB-1332 TSK-1331	Served on LUTH1912's words. The owner, 2026-10-29 (TSK-1331): kept until a licensed numbering replaces it; what removing it costs is PRB-1332.
@@ -135,6 +139,7 @@ Tischendorf	text	content	Public Domain	public-domain	text:TISCH	Tischendorf/LICE
 TreasuryOfScriptureKnowledge	data	content	Public Domain	public-domain	dataset:tsk	TreasuryOfScriptureKnowledge/LICENCE.md	-	-
 Tyndale1534	text	content	Public Domain	public-domain	text:TYN1534	Tyndale1534/LICENCE.md	-	-
 UDPipe	tool	never	CC-BY-NC-SA-4.0 models; MPL-2.0 program	non-commercial-only	-	UDPipe/LICENCE.md	-	Run by EVIDENTIA's rules; what they read reaches the ledger only as reviewed verdicts (dataset evidentia).
+UpdatedGdansk2018	text	content	CC-BY-ND-4.0	non-commercial-only	text:UBG2018	UpdatedGdansk2018/LICENCE.md	-	eBible states CC BY-ND 4.0; CrossWire's conf of the same translation, from the foundation, free non-commercial distribution, unchanged: the stricter is declared. Served verbatim, no corrections; links are a layer beside it (RUL-0183).
 VanDyck1865	text	content	Public Domain	public-domain	text:AVD1865	VanDyck1865/LICENCE.md	-	-
 Vaticanus	text	content	CC-BY-4.0	permitted-with-attribution	text:VAT	Vaticanus/LICENCE.md	-	The INTF transcription; cntr-03.txt (CC BY-SA 4.0) is never read.
 Versification	frame	content	CC-BY-4.0	permitted-with-attribution	dataset:tvtms	Versification/LICENCE.md	-	Not passed on as a file, as its header asks; the changes are listed on the dataset.

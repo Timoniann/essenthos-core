@@ -81,6 +81,18 @@ internal sealed class ComposedSource : IPairSource
         new("BRENTON", ["GRCBRENT"], "BHSA", Unmeasured: true, Daughter: true),
         new("YLT", English, "BHSA"),
         new("YLT", English, "NESTLE1904"),
+
+        // The Slovak, Czech and Polish texts: nothing in their languages states the originals, so every answer is written from
+        // the threshold and held to the hand floors of each pair (TSK-1997).
+        new("NPK2023", English, "NESTLE1904", Unmeasured: true),
+        new("CSP2009", English, "BHSA", Unmeasured: true),
+        new("CSP2009", English, "NESTLE1904", Unmeasured: true),
+        new("BKR1613", English, "BHSA", Unmeasured: true),
+        new("BKR1613", English, "NESTLE1904", Unmeasured: true),
+        new("UBG2018", English, "BHSA", Unmeasured: true),
+        new("UBG2018", English, "NESTLE1904", Unmeasured: true),
+        new("BG1881", English, "BHSA", Unmeasured: true),
+        new("BG1881", English, "NESTLE1904", Unmeasured: true),
     ];
 
     private readonly IReadOnlyList<ComposedPair> _pairs;

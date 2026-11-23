@@ -40,6 +40,14 @@ internal sealed record SwordText(
     /// Every other module numbers only what Strong's dictionaries hold.
     /// </summary>
     public bool FhlPrefixes { get; init; }
+
+    /// <summary>
+    /// Whether a <c>&lt;title&gt;</c> inside a verse is the edition's section heading rather than a psalm's superscription,
+    /// and its notes are typed: a heading is dropped (a psalm's title the module types <c>psalm</c> stays), a cross
+    /// reference is loaded as one, and a pointer to a table of the printed volume (<c>x-index</c>) is dropped, since the
+    /// page it names is not here. The Czech Study Translation prints its section headings inside the verse they open.
+    /// </summary>
+    public bool SectionHeadings { get; init; }
 }
 
 /// <param name="Numbers">
@@ -132,12 +140,21 @@ internal static class SwordTextSource
     /// <summary>The Church Slavonic Bible of 1751, in rusbible.ru's modernised spelling.</summary>
     public const string Elizabeth = Sources.ElizabethSlug;
 
+    /// <summary>The Czech Study Translation (Český studijní překlad) of 2009.</summary>
+    public const string CzechStudy = "CSP2009";
+
+    /// <summary>The Gdańsk Bible of 1632 in the British and Foreign Bible Society's edition of 1881.</summary>
+    public const string Gdansk = "BG1881";
+
     /// <summary>ISO 15924 for the two ways Chinese is printed.</summary>
     public const string TraditionalChinese = "Hant";
 
     public const string SimplifiedChinese = "Hans";
 
     private const string NrsvVersification = "NRSV";
+    private const string PsalmTitle = "psalm";
+    private const string IndexNote = "x-index";
+    private const string CrossReferenceNote = "x-crossreference";
     private const int Psalms = 19;
     private const char OpeningParenthesis = '（';
 
@@ -364,6 +381,83 @@ internal static class SwordTextSource
                 + "the 1757 printing), in rusbible.ru's electronic text as CrossWire publishes it in the SWORD "
                 + "module CSlElizabeth.",
         }),
+
+        ["CzeCSP"] = new(Path.Combine("CzechStudy2009", "CzeCSP"), SwordSegmentation.Spaced, new TextDefinition(
+            Slug: CzechStudy,
+            Name: "Czech Study Translation",
+            NameNative: "Český studijní překlad",
+            Kind: TextKind.Translation,
+            Language: "ces",
+            Direction: TextDirection.LeftToRight,
+            Versification: Versification.Original,
+            PublishedYear: 2009,
+            SourceUrl: "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=CzeCSP",
+            RightsHolder: "Nakladatelství KMS, s.r.o.",
+            Licence: "CC-BY-NC-ND-4.0",
+            LicenceUrl: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+            Redistribution: Redistribution.NonCommercialOnly,
+            TextualFamily: "Alexandrian")
+        {
+            Translators = "The ČSP translators' team led by Antonín Zelina, with Michal Krchňák, Karel Dřízal, Jiří Hedánek and Pavel Jartym",
+            Edition = "The whole Bible of 2009 with its errata fixed, as CrossWire publishes it in CzeCSP 1.4.1",
+            About =
+                "A translation made to be studied: it keeps close to the Hebrew and the Greek, marks with corner "
+                + "brackets ⌈ ⌉ where the Czech words stand for a different literal wording, and prints in square "
+                + "brackets the words its translators supplied. Its notes give the literal wording, the variants of "
+                + "the manuscripts and the background, and its cross references run through the whole Bible; both are "
+                + "loaded beside the verse. The New Testament appeared in 1994 and the whole Bible in 2009. Its Greek is "
+                + "a critical text, and its Old Testament is numbered as the Hebrew is, a psalm's title being its first "
+                + "verse.",
+            RightsNote =
+                "Copyright Nakladatelství KMS, distributed by CrossWire under Creative Commons Attribution-"
+                + "NonCommercial-NoDerivatives 4.0, as the module states. It is served for non-commercial use, every "
+                + "word as the edition prints it; the links beside it say which of its words renders which Hebrew or "
+                + "Greek word and change none of them. The few Strong numbers and parsing codes the module writes on "
+                + "about four thousand New Testament words are not a tagging of the text and are not read, and the "
+                + "notes that point to tables of the printed volume are left out, since the tables are not here.",
+            Citation =
+                "Český studijní překlad Bible (ČSP), © Nakladatelství KMS, s.r.o., www.biblecsp.cz, CC BY-NC-ND 4.0, "
+                + "as CrossWire publishes it in the SWORD module CzeCSP.",
+        })
+        {
+            SectionHeadings = true,
+        },
+
+        ["PolGdanska"] = new(Path.Combine("Gdansk1881", "PolGdanska"), SwordSegmentation.Spaced, new TextDefinition(
+            Slug: Gdansk,
+            Name: "Gdańsk Bible",
+            NameNative: "Biblia Gdańska",
+            Kind: TextKind.Translation,
+            Language: "pol",
+            Direction: TextDirection.LeftToRight,
+            Versification: Versification.Original,
+            PublishedYear: 1632,
+            SourceUrl: "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=PolGdanska",
+            RightsHolder: null,
+            Licence: "Public Domain",
+            LicenceUrl: "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/polgdanska.conf",
+            Redistribution: Redistribution.PublicDomain,
+            TextualFamily: "Byzantine")
+        {
+            Translators = "Daniel Mikołajewski (1560-1633) and Jan Turnowski (1567-1629), of the Unity of the Brethren and the Reformed Church",
+            Edition = "The 1881 edition, in the electronic text of biblia.elblag.net, as CrossWire publishes it in PolGdanska 1.0",
+            EditionYear = 1881,
+            About =
+                "The Bible of Polish Protestants from 1632 until the twentieth century, printed at Gdańsk and "
+                + "translated from the Hebrew and the Greek with the Brest Bible beside it. The text served here is "
+                + "the edition of 1881, whose spelling is older than today's Polish and younger than the first "
+                + "printing's. Its New Testament follows the Received Text: the heavenly witnesses of 1 John 5:7, "
+                + "Acts 8:37 and the doxology of the Lord's Prayer are printed. Where the Hebrew numbers the verses "
+                + "otherwise than the English, it numbers them as the Hebrew does, a psalm's title being its first verse; "
+                + "the electronic text keeps them in the English count, so the verses beyond it stood inside a chapter's last "
+                + "verse and are divided here where the next verse begins, in 72 places.",
+            RightsNote =
+                "Out of copyright by age; CrossWire publishes the module as Public Domain, with biblia.elblag.net as "
+                + "its source.",
+            Citation =
+                "Biblia Gdańska (1632), the edition of 1881, in the electronic text of biblia.elblag.net as CrossWire "
+                + "publishes it in the SWORD module PolGdanska.",
+        }),
     };
 
     /// <summary>
@@ -528,7 +622,13 @@ internal static class SwordTextSource
         foreach (var (address, markup) in SwordModule.Verses(folder))
         {
             var pieces = OsisVerse.Parse(markup);
-            var words = Segment(pieces, text.Segmentation, ref unit, out var notes, prefixes);
+            if (text.SectionHeadings)
+            {
+                pieces = [.. pieces.Where(piece => !(piece.Title && piece.Type != PsalmTitle)
+                                                   && !(piece.Kind == OsisPieceKind.Note && piece.Type == IndexNote))];
+            }
+
+            var words = Segment(pieces, text.Segmentation, ref unit, out var notes, prefixes, text.SectionHeadings);
             if (words.Count == 0)
             {
                 continue;
@@ -630,7 +730,8 @@ internal static class SwordTextSource
         SwordSegmentation segmentation,
         ref int unit,
         out List<VerseNoteDraft> notes,
-        IReadOnlyDictionary<int, string>? fhlPrefixes = null)
+        IReadOnlyDictionary<int, string>? fhlPrefixes = null,
+        bool typedNotes = false)
     {
         var words = new List<SwordWord>();
         var splits = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -643,7 +744,9 @@ internal static class SwordTextSource
             {
                 if (piece.Text.Length > 0)
                 {
-                    notes.Add(new VerseNoteDraft(VerseNoteKind.Footnote, piece.Text, words.Count));
+                    notes.Add(new VerseNoteDraft(
+                        typedNotes && piece.Type == CrossReferenceNote ? VerseNoteKind.CrossReference : VerseNoteKind.Footnote,
+                        piece.Text, words.Count));
                 }
 
                 continue;

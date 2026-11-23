@@ -85,6 +85,24 @@ internal static class EbibleTextSource
     public const string BiblicaUkrainian = "NPU2022";
 
     /// <summary>
+    /// Biblica's Open Slovak Hope for All New Testament (Nádej pre každého) in its open edition of 2023: the
+    /// only Slovak text anybody may take. John 1:1 reads "Na počiatku bolo Slovo, to Slovo bolo u Boha".
+    /// </summary>
+    public const string BiblicaSlovak = "NPK2023";
+
+    /// <summary>
+    /// The Bible of Kralice in its last edition of 1613. Genesis 1:1 reads "Na počátku stvořil Bůh nebe a
+    /// zemi", and 1 John 5:7 prints the heavenly witnesses.
+    /// </summary>
+    public const string Kralice = "BKR1613";
+
+    /// <summary>
+    /// The Updated Gdańsk Bible (Uwspółcześniona Biblia Gdańska) of 2018, the Gdańsk Bible of 1632 put
+    /// into present-day Polish. Genesis 1:1 reads "Na początku Bóg stworzył niebo i ziemię".
+    /// </summary>
+    public const string UpdatedGdansk = "UBG2018";
+
+    /// <summary>
     /// Each text's folder under <c>Resources</c> and the definition it loads with, so the download
     /// and the identifier we publish can differ without either being guessed from the other. The
     /// fetch script names the folder; eBible's own identifier is on the row, in the source URL.
@@ -306,6 +324,101 @@ internal static class EbibleTextSource
                 + "товарною знакою зареєстрованою в бюро патентів та торгових марок США компанією «Biblica, Inc.» "
                 + "Використовуються з дозволу.",
         },
+
+        ["BiblicaSlovak2023"] = Definition(
+            BiblicaSlovak, "slk", "Biblica® Open Slovak Hope for All New Testament",
+            "Biblica® Nádej pre každého, verejne dostupné", "slk", 1993, "Alexandrian") with
+        {
+            RightsHolder = "Biblica, Inc.",
+            Licence = "CC-BY-SA-4.0",
+            LicenceUrl = "https://creativecommons.org/licenses/by-sa/4.0/",
+            Redistribution = Redistribution.ShareAlike,
+            Translators = "Biblica's Slovak translation team",
+            Edition = "The open New Testament of 2023",
+            EditionYear = 2023,
+            About =
+                "A translation of the New Testament into present-day Slovak made by Biblica, first published in 1993 "
+                + "and released in 2023 as an open edition; no Old Testament has been published. It renders the "
+                + "sense in plain sentences rather than word for word. Its Greek is a critical text: the verses the "
+                + "oldest manuscripts lack (Matthew 17:21, 18:11, 23:14, Acts 8:37 and others) are printed in square "
+                + "brackets with a note saying so, the doxology of the Lord's Prayer in parentheses, and 1 John 5:7 "
+                + "has no heavenly witnesses. Three times it renders two verses as one, 2 Timothy 4:3-4, Philemon "
+                + "23-24 and 2 John 2-3, so it holds 7,955 verses.",
+            RightsNote =
+                "Copyright 1993, 2023 Biblica, Inc., under Creative Commons Attribution-ShareAlike 4.0, stated in all "
+                + "three of eBible's places. ShareAlike binds an adaptation of this text, and not the texts it is read "
+                + "beside or the links that say which of its words renders which Greek word. The text is served "
+                + "unchanged and under Biblica's name and mark, as its terms ask of an unmodified copy; the section "
+                + "headings of this edition are its editors' and are not loaded. \"Biblica\" is a trademark registered "
+                + "in the United States Patent and Trademark Office by Biblica, Inc., used with permission.",
+            Citation =
+                "Biblica® Nádej pre každého, verejne dostupné™ Copyright © 1993, 2023 od Biblica, Inc. Biblica® Open "
+                + "Slovak Hope for All New Testament™ Copyright © 1993, 2023 by Biblica, Inc., CC BY-SA 4.0, in the "
+                + "digital edition eBible.org publishes as slk. The original work by Biblica, Inc. is available for "
+                + "free at www.biblica.com and open.bible. „Biblica“ je ochranná známka registrovaná na Úrade pre "
+                + "patenty a ochranné známky Spojených štátov amerických spoločnosťou Biblica, Inc. Použité so "
+                + "súhlasom spoločnosti.",
+        },
+
+        ["Kralice1613"] = Definition(
+            Kralice, "ces1613", "Bible of Kralice", "Bible kralická", "ces", 1593, "Byzantine") with
+        {
+            Versification = Versification.Original,
+            Translators =
+                "The scholars of the Unity of the Brethren: Jan Blahoslav (1523-1571) for the New Testament, and "
+                + "for the Old Testament Mikuláš Albrecht z Kaménka, Lukáš Helic, Jan Eneáš, Izaiáš Cibulka, Jiří "
+                + "Strejc, Jan Efraim, Pavel Jessen and Jan Kapita",
+            Edition = "The last Kralice edition, of 1613, in one volume",
+            EditionYear = 1613,
+            About =
+                "The Bible the Unity of the Brethren translated from the Hebrew and the Greek and printed at Kralice "
+                + "in Moravia: Blahoslav's New Testament of 1564 and an Old Testament made by a council of the "
+                + "Unity's scholars, published in six volumes between 1579 and 1593 and in one volume in 1594, 1596 "
+                + "and 1613. Its Czech was the model of the written language for three centuries, and Slovak "
+                + "Protestants read it too. Its New Testament follows the Received Text: the heavenly witnesses of "
+                + "1 John 5:7, Acts 8:37 and the doxology of the Lord's Prayer are printed. It numbers the Psalms as "
+                + "the Hebrew does, a psalm's title being its first verse, and divides Joel and Malachi as the King "
+                + "James does.",
+            RightsNote =
+                "Public domain by age, and stated so by eBible in its catalogue, on its copyright page and in the "
+                + "copy of that page inside the archive; CrossWire distributes the same edition, from Czech "
+                + "Wikisource, as Public Domain too.",
+            Citation =
+                "Bible svatá aneb všecka svatá Písma Starého i Nového zákona, podle posledního vydání kralického "
+                + "z roku 1613, in the digital edition eBible.org publishes as ces1613.",
+        },
+
+        ["UpdatedGdansk2018"] = Definition(
+            UpdatedGdansk, "polubg", "Updated Gdańsk Bible", "Uwspółcześniona Biblia Gdańska", "pol", 2017,
+            "Byzantine") with
+        {
+            RightsHolder = "Fundacja Wrota Nadziei (Gate of Hope Foundation)",
+            Licence = "CC-BY-ND-4.0",
+            LicenceUrl = "https://creativecommons.org/licenses/by-nd/4.0/",
+            Redistribution = Redistribution.NonCommercialOnly,
+            Translators = "Fundacja Wrota Nadziei, revising the Gdańsk Bible of 1632",
+            Edition = "The edition of 2018",
+            EditionYear = 2018,
+            About =
+                "The Gdańsk Bible of 1632, the Bible of Polish Protestants for three centuries, brought into "
+                + "present-day Polish by the Gate of Hope Foundation of Toruń, whose founders Brent Riggs and Joe West "
+                + "worked with Polish colleagues to update its grammar and vocabulary; the New Testament came first and "
+                + "the whole Bible in 2017. Its New Testament follows the Received Text as the 1632 Bible did: the "
+                + "heavenly witnesses of 1 John 5:7, Acts 8:37 and the doxology of the Lord's Prayer are printed. "
+                + "The words its translators supplied are marked as the edition marks them, and the Psalms' titles "
+                + "stand before the first verse.",
+            RightsNote =
+                "Copyright 2018 Fundacja Wrota Nadziei, under Creative Commons Attribution-NoDerivatives 4.0, stated "
+                + "on eBible's copyright page and in the copy of it inside the archive; CrossWire distributes the same "
+                + "translation as \"Copyrighted; Free non-commercial distribution\" with the foundation's note that it "
+                + "may be copied free of charge and unchanged; the stricter of the two is kept, so it is served for "
+                + "non-commercial use. The text is served unchanged, every word and every "
+                + "mark of punctuation as the edition prints them; the links beside it say which of its words "
+                + "renders which Hebrew or Greek word and change none of them.",
+            Citation =
+                "Uwspółcześniona Biblia Gdańska, copyright © 2018 Fundacja Wrota Nadziei, CC BY-ND 4.0, in the "
+                + "digital edition eBible.org publishes as polubg.",
+        },
     };
 
     /// <summary>
@@ -315,6 +428,7 @@ internal static class EbibleTextSource
     private static readonly Dictionary<string, int[]> Holds = new(StringComparer.OrdinalIgnoreCase)
     {
         ["BiblicaUkrainian2022"] = [19, .. Enumerable.Range(40, 27)],
+        ["BiblicaSlovak2023"] = [.. Enumerable.Range(40, 27)],
     };
 
     /// <summary>
@@ -328,7 +442,7 @@ internal static class EbibleTextSource
     /// printed over the text; they are dropped rather than read as words of the verse beside them.
     /// </summary>
     private static readonly HashSet<string> HeadingsAreTheEditors =
-        new(["Segond1910", "VanDyck1865", "IrvHindi2019", "BiblicaUkrainian2022"], StringComparer.OrdinalIgnoreCase);
+        new(["Segond1910", "VanDyck1865", "IrvHindi2019", "BiblicaUkrainian2022", "BiblicaSlovak2023"], StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Every text this reader knows, by the folder its files are fetched into.</summary>
     public static IReadOnlyDictionary<string, TextDefinition> Definitions => Known;

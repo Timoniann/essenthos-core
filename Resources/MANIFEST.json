@@ -49,6 +49,11 @@
     "files": 19,
     "sha256": "7e6aaa7e7f7aac37733bb117df2ec09dfc5a8e90086d0186bfafdb27c6d08768"
   },
+  "BiblicaSlovak2023": {
+    "bytes": 1063600,
+    "files": 29,
+    "sha256": "226a00a4044d603d0f7a088f9a1040021c62ea3daed8f08c41d749529f5bad60"
+  },
   "BiblicaUkrainian2022": {
     "bytes": 2131478,
     "files": 29,
@@ -99,6 +104,11 @@
     "files": 8,
     "sha256": "4555d54a6eba70ff63667bcc130081fe0db91f434890886b57b66f43357e8922"
   },
+  "CzechStudy2009": {
+    "bytes": 4436981,
+    "files": 8,
+    "sha256": "25b77a3a7aaf3f424d1db3b9b3be19587fba8022c3c7170b84cdcda93fe28615"
+  },
   "DarbyFrench": {
     "bytes": 3431375,
     "files": 7,
@@ -128,6 +138,11 @@
     "bytes": 2178500,
     "files": 7,
     "sha256": "82f27bdc75cf6b36f0b506d41bedf1aa28f637f6bd66ab2e9a961f0af3f11956"
+  },
+  "Gdansk1881": {
+    "bytes": 1773279,
+    "files": 8,
+    "sha256": "27d3cb3555ccfa9e84ac9eba5b90bb21f098aefb38ddb45bdb69350d3baa225c"
   },
   "Geneva1599": {
     "bytes": 4447845,
@@ -163,6 +178,11 @@
     "bytes": 1802943,
     "files": 8,
     "sha256": "56b4be3c6c9f498f39055b9748f85fc2ac3f1daf4585bc5e3936e15c398bd139"
+  },
+  "Kralice1613": {
+    "bytes": 4154519,
+    "files": 68,
+    "sha256": "14fcbb8ec1530dfc73f79c88802223ac44fdfb8571d0ca231495f4af2f2ca28f"
   },
   "Kulish": {
     "bytes": 6326684,
@@ -363,6 +383,11 @@
     "bytes": 376578877,
     "files": 23,
     "sha256": "f6d264b06ab42164fa7918c8b06a20339221461e282281619dec9803c677b42b"
+  },
+  "UpdatedGdansk2018": {
+    "bytes": 4391282,
+    "files": 69,
+    "sha256": "dda3dffd636e07857083e12adaf57b1a5e18fb7296fa3561e011a8359840e99b"
   },
   "VanDyck1865": {
     "bytes": 7822806,
