@@ -226,26 +226,7 @@ internal static partial class TableProducts
     /// <summary>Every Greek entry of Strong's that GLAUx's lemma of a Brenton word answers, as the load proposes them.</summary>
     private static IEnumerable<string?[]> SeptuagintProposals(ProductStore store)
     {
-        var entries = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-        foreach (var entry in StrongByNumber(store).Where(e => Optional(e.Lemma) is not null && e.StrongNumber.StartsWith('G')))
-        {
-            var folded = GreekLetters.Bare(entry.Lemma!);
-            if (folded.Length == 0)
-            {
-                continue;
-            }
-
-            if (!entries.TryGetValue(folded, out var numbers))
-            {
-                entries[folded] = numbers = [];
-            }
-
-            if (!numbers.Contains(entry.StrongNumber, StringComparer.Ordinal))
-            {
-                numbers.Add(entry.StrongNumber);
-            }
-        }
-
+        var entries = GreekLemmas(StrongByNumber(store));
         var lexical = EnumSpelling.Of(LinkMethod.Lexical);
         var ids = Ids(store);
         foreach (var word in WordsOf(store, Brenton).Where(w => w.Lemma is not null))

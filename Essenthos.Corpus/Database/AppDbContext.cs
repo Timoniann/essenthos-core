@@ -454,6 +454,9 @@ public class AppDbContext : DbContext
     /// <summary>A compiler's part of speech, gender, count and first verse for each Hebrew entry, credited to him.</summary>
     public DbSet<StrongProfile> StrongProfiles { get; set; } = null!;
 
+    /// <summary>The Greek numbers that stand for each Hebrew number and back, from the Septuagint's links and Strong's derivations.</summary>
+    public DbSet<StrongCounterpart> StrongCounterparts { get; set; } = null!;
+
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
     /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
@@ -2160,6 +2163,23 @@ public class AppDbContext : DbContext
                 t.HasComment(
                     "What one Strong entry's etymology says about another, with the clause it was read from "
                     + "and whose reading it is. Keyed on numbers: a claim about two words of the language.");
+            });
+        });
+
+        modelBuilder.Entity<StrongCounterpart>(entity =>
+        {
+            entity.ToTable("strong_counterpart", t =>
+            {
+                t.HasCheckConstraint("ck_strong_counterpart_numbers", "hebrew LIKE 'H%' AND greek LIKE 'G%'");
+                t.HasCheckConstraint(
+                    "ck_strong_counterpart_counts",
+                    "septuagint >= 0 AND greek_words >= 0 AND stated BETWEEN 0 AND septuagint "
+                    + "AND septuagint <= hebrew_linked AND greek_words <= greek_linked");
+                t.HasCheckConstraint("ck_strong_counterpart_said", "(dictionary IS NULL) = (statement IS NULL)");
+                t.HasComment(
+                    "A Hebrew Strong number and a Greek one that stand for the same word: how often the Septuagint renders "
+                    + "the one by the other in its settled links to BHSA (Greek words numbered through GLAUx's lemma), and "
+                    + "Strong's own derivation where his Greek dictionary says the word comes from the Hebrew. Made at build.");
             });
         });
 

@@ -48,6 +48,7 @@ internal static class StrongEndpoints
                 Kin = kin,
                 Profile = await SharedReads.Once($"strong-profile:{canonical}", () => Profile(db, canonical, cancellationToken)),
                 Translation = await Translation(db, canonical, language, cancellationToken),
+                Counterparts = await Counterparts(db, canonical, language, cancellationToken),
             };
         }
 
@@ -933,6 +934,42 @@ internal static class StrongEndpoints
     }
 
     /// <summary>
+    /// The entries of the other language that stand for this one: the Greek words the Septuagint renders a Hebrew word by, or
+    /// the Hebrew words a Greek word renders there, commonest first, and those Strong's Greek dictionary derives from the
+    /// Hebrew. Each carries the other entry's headword and gloss and how many times the Septuagint pairs the two, counted
+    /// from this entry's side.
+    /// </summary>
+    internal static async Task<IList<StrongCounterpartResponse>> Counterparts(
+        AppDbContext db,
+        string canonical,
+        string? language,
+        CancellationToken cancellationToken)
+    {
+        var greek = canonical.StartsWith(StrongNumbers.Greek);
+        var rows = await SharedReads.Once($"strong-counterparts:{canonical}", () =>
+        {
+            var all = db.StrongCounterparts.AsNoTracking();
+            var paired = greek
+                ? all.Where(c => c.Greek == canonical).Select(c => new { Other = c.Hebrew, Count = c.GreekWords, c.Dictionary, c.Statement })
+                : all.Where(c => c.Hebrew == canonical).Select(c => new { Other = c.Greek, Count = c.Septuagint, c.Dictionary, c.Statement });
+            return (
+                from c in paired
+                join e in db.StrongEntries on c.Other equals e.StrongNumber into found
+                from e in found.DefaultIfEmpty()
+                orderby c.Count descending, c.Other
+                select new StrongCounterpartResponse(c.Other, e.Lemma, e.Transliteration, e.Definition, c.Count, c.Dictionary, c.Statement))
+                .ToListAsync(cancellationToken);
+        });
+        if (rows.Count == 0)
+        {
+            return [];
+        }
+
+        var glosses = await Glosses(db, [.. rows.Select(c => c.Number)], language, cancellationToken);
+        return [.. rows.Select(c => c with { Translation = glosses.GetValueOrDefault(c.Number) })];
+    }
+
+    /// <summary>
     /// A compiler's part of speech, gender and first verse for a Hebrew entry, credited to him, or a
     /// lexicon's part of speech and gender for a Greek one, credited to it. The verse is named as
     /// BHSA names its book, which is the edition the Hebrew is read in. His count is not served:
@@ -1119,6 +1156,12 @@ internal record StrongEntryResponse(
     public StrongProfileResponse? Profile { get; init; }
 
     /// <summary>
+    /// The entries of the other language that stand for this one, from the Septuagint's links and Strong's derivations,
+    /// commonest first. Empty where there are none; null on the lexicon's list.
+    /// </summary>
+    public IList<StrongCounterpartResponse>? Counterparts { get; init; }
+
+    /// <summary>
     /// The commonest few phrases <see cref="StrongListResponse.Corpus"/> puts where this number
     /// stands, commonest first, counted as the entry page's renderings are. Empty where that text
     /// renders it nowhere; null on a single entry.
@@ -1156,6 +1199,26 @@ internal record StrongRelationResponse(
     bool Hedged,
     string Statement,
     string Source)
+{
+    /// <summary>The other entry's definition in the language asked for, where it has been translated.</summary>
+    public StrongGlossTranslationResponse? Translation { get; init; }
+}
+
+/// <param name="Number">The entry of the other language.</param>
+/// <param name="Septuagint">
+/// How many times the Septuagint's settled links pair the two, counted from the entry asked about: its Hebrew words rendered
+/// by the other, or its Greek words rendering the other. Zero where only Strong's dictionary joins them.
+/// </param>
+/// <param name="Dictionary">Strong's relation between the two (<c>loan-from</c>, <c>corresponds-to</c>), null where he states none.</param>
+/// <param name="Statement">Strong's own clause for <paramref name="Dictionary"/>.</param>
+internal record StrongCounterpartResponse(
+    string Number,
+    string? Lemma,
+    string? Transliteration,
+    string? Definition,
+    int Septuagint,
+    string? Dictionary,
+    string? Statement)
 {
     /// <summary>The other entry's definition in the language asked for, where it has been translated.</summary>
     public StrongGlossTranslationResponse? Translation { get; init; }

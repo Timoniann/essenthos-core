@@ -5237,6 +5237,62 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongCounterpart", b =>
+                {
+                    b.Property<string>("Hebrew")
+                        .HasColumnType("text")
+                        .HasColumnName("hebrew");
+
+                    b.Property<string>("Greek")
+                        .HasColumnType("text")
+                        .HasColumnName("greek");
+
+                    b.Property<string>("Dictionary")
+                        .HasColumnType("text")
+                        .HasColumnName("dictionary");
+
+                    b.Property<int>("GreekLinked")
+                        .HasColumnType("integer")
+                        .HasColumnName("greek_linked");
+
+                    b.Property<int>("GreekWords")
+                        .HasColumnType("integer")
+                        .HasColumnName("greek_words");
+
+                    b.Property<int>("HebrewLinked")
+                        .HasColumnType("integer")
+                        .HasColumnName("hebrew_linked");
+
+                    b.Property<int>("Septuagint")
+                        .HasColumnType("integer")
+                        .HasColumnName("septuagint");
+
+                    b.Property<int>("Stated")
+                        .HasColumnType("integer")
+                        .HasColumnName("stated");
+
+                    b.Property<string>("Statement")
+                        .HasColumnType("text")
+                        .HasColumnName("statement");
+
+                    b.HasKey("Hebrew", "Greek")
+                        .HasName("pk_strong_counterpart");
+
+                    b.HasIndex("Greek")
+                        .HasDatabaseName("ix_strong_counterpart_greek");
+
+                    b.ToTable("strong_counterpart", null, t =>
+                        {
+                            t.HasComment("A Hebrew Strong number and a Greek one that stand for the same word: how often the Septuagint renders the one by the other in its settled links to BHSA (Greek words numbered through GLAUx's lemma), and Strong's own derivation where his Greek dictionary says the word comes from the Hebrew. Made at build.");
+
+                            t.HasCheckConstraint("ck_strong_counterpart_counts", "septuagint >= 0 AND greek_words >= 0 AND stated BETWEEN 0 AND septuagint AND septuagint <= hebrew_linked AND greek_words <= greek_linked");
+
+                            t.HasCheckConstraint("ck_strong_counterpart_numbers", "hebrew LIKE 'H%' AND greek LIKE 'G%'");
+
+                            t.HasCheckConstraint("ck_strong_counterpart_said", "(dictionary IS NULL) = (statement IS NULL)");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongEntry", b =>
                 {
                     b.Property<int>("Id")
