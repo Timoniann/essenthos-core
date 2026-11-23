@@ -21,6 +21,7 @@ internal static class TextStages
         new BereanSupplied(),
         new EditionBrackets(),
         new CharlesSigns(),
+        new SynodalDashes(),
         new PrintedWords(),
     ];
 }
