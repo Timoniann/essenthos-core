@@ -93,11 +93,12 @@ internal static class SearchEndpoints
             WordForms forms,
             CancellationToken cancellationToken) =>
         {
-            var terms = SearchTerms.Parse(q);
-            if (terms.Length == 0)
+            if (string.IsNullOrWhiteSpace(q))
             {
                 return Results.BadRequest(new ProblemResponse(SearchTerms.FormatHint()));
             }
+
+            var terms = SearchTerms.Parse(q);
 
             var text = corpus is { Length: > 0 }
                 ? await index.Text(corpus, cancellationToken)
@@ -119,6 +120,13 @@ internal static class SearchEndpoints
             if (widenHint is not null)
             {
                 return Results.BadRequest(new ProblemResponse(widenHint));
+            }
+
+            // Punctuation alone, a dash or a quotation mark, is no word: no verse holds it, as none holds
+            // a word the text does not print.
+            if (terms.Length == 0)
+            {
+                return Results.Ok(SearchResultsResponse.Nothing(Math.Max(0, skip ?? 0)));
             }
 
             var language = await db.Texts.Where(t => t.Id == text.Id).Select(t => t.Language)
@@ -345,6 +353,9 @@ internal record SearchResultsResponse(
     /// searched for silently; null where there is nothing to offer.
     /// </summary>
     public string? Suggestion { get; init; }
+
+    /// <summary>The answer to a query holding no word to look for: no verse, and no term.</summary>
+    public static SearchResultsResponse Nothing(int skip) => new(0, skip, 0, [], SearchTerms.Matching([]), []);
 }
 
 /// <param name="Snippet">

@@ -113,6 +113,29 @@ public sealed class VerseSearchTests : IAsyncLifetime
     private static List<int> Verses(SearchResultsResponse found) => [.. found.Items.Select(hit => hit.Verse)];
 
     /// <summary>
+    /// A query of no word asks the database nothing it cannot read: every text, counted or not, answers an
+    /// empty page.
+    /// </summary>
+    [Theory]
+    [InlineData("—")]
+    [InlineData("« »")]
+    [InlineData("…")]
+    public async Task NoWordFindsNoVerse(string query)
+    {
+        foreach (var text in new[] { _ohienko, _english })
+        {
+            var found = await Search(text, query);
+            found.Total.Should().Be(0);
+            found.Items.Should().BeEmpty();
+            found.Terms.Should().BeEmpty();
+
+            (await VerseSearch.Search(
+                _db, text.Id, text.Slug, text.Language, [], new SearchScope(null, null, null),
+                SearchWidening.AsFarAsNeeded, 0, 20, CancellationToken.None)).Total.Should().Be(0);
+        }
+    }
+
+    /// <summary>
     /// A hit names its verse by the text's own number and by the shared frame's, which the reader's
     /// addresses are written in: the Hebrew Psalms run a verse ahead of the English, so a link by the
     /// own number opens the verse after, or one the frame does not have.

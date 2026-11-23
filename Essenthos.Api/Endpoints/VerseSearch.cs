@@ -75,7 +75,7 @@ internal static class TypedQuery
     private static List<string> Words(string stretch) =>
         [.. stretch.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)
             .Select(word => word.Trim(Trimmed))
-            .Where(word => word.Length > 0)];
+            .Where(SearchTerms.IsSearchable)];
 }
 
 /// <summary>
@@ -198,6 +198,11 @@ internal static class VerseSearch
         CancellationToken cancellationToken,
         FormIndex? paradigm = null)
     {
+        if (typed.Count == 0)
+        {
+            return SearchResultsResponse.Nothing(skip);
+        }
+
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         var counted = await Scalar<bool>(
@@ -495,6 +500,10 @@ internal static class VerseSearch
 
         var requiredTerms = terms.Select((term, index) => (term, index)).Where(t => !t.term.Joint).ToList();
         var jointTerms = terms.Select((term, index) => (term, index)).Where(t => t.term.Joint).ToList();
+        if (requiredTerms.Count == 0)
+        {
+            return (0, []);
+        }
 
         sql.Append("WITH required AS (");
         sql.Append(string.Join(" UNION ALL ", requiredTerms.Select(t => Select(t.index, t.term, null))));
