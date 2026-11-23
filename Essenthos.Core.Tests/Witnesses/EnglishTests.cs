@@ -365,9 +365,34 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     }
 
     /// <summary>
-    /// And that the other five mark nothing at all, which is worth checking rather than assuming:
-    /// annotation appearing on a text whose edition supplied none is an inference wearing that
-    /// edition's authority, and this is what would catch it.
+    /// Young sets the words he supplied in square brackets, and they reach the same column (PRB-1993): 10,390 spans as the
+    /// file prints them, one of them (1 John 5:7-8) running across a verse, with no bracket left in any word. Five of them
+    /// are Greek he brackets as doubtful rather than words he supplied, which the corrections file takes the mark off;
+    /// the converted text marks 10,385.
+    /// </summary>
+    [Fact]
+    public void YoungMarksTheWordsItSuppliesInSquareBrackets()
+    {
+        var verses = english.Young.Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .ToList();
+        var words = verses.SelectMany(verse => verse.Words).ToList();
+
+        verses.Sum(verse => verse.Words.Where(word => word.SuppliedSpan is not null).Select(word => word.SuppliedSpan).Distinct().Count())
+            .Should().Be(10390);
+        words.Count(word => word.SuppliedSpan is not null).Should().Be(10859);
+        words.Count(word => $"{word.Surface}{word.Trailer}".IndexOfAny(['[', ']']) >= 0).Should().Be(0);
+
+        var job = english.Verse(english.Young, 18, 29, 3).Words;
+        (job[15].Surface, job[15].SuppliedSpan, job[16].SuppliedSpan).Should().Be(("through", 1, null));
+        english.Verse(english.Young, 18, 29, 11).Words[15].Should().Match<WordDraft>(word => word.Surface == "to" && word.SuppliedSpan == 1);
+    }
+
+    /// <summary>
+    /// And that the others mark nothing at all, Young nothing but his brackets, which is worth checking
+    /// rather than assuming: annotation appearing on a text whose edition supplied none is an inference
+    /// wearing that edition's authority, and this is what would catch it.
     /// </summary>
     [Theory]
     [InlineData(EnglishTextSource.Tyndale)]
@@ -379,7 +404,7 @@ public class EnglishCorpusTests(English english) : IClassFixture<English>
     public void TheOthersCarryNoAnnotationAtAll(string slug) =>
         english.Words(Source(slug)).Should().OnlyContain(word =>
             word.Lemma == null && word.StrongNumber == null && word.Gloss == null
-            && word.Morphology == null && word.SuppliedSpan == null);
+            && word.Morphology == null && (word.SuppliedSpan == null || slug == EnglishTextSource.Young));
 
     /// <summary>
     /// What the reader gets out of each, which no catalogue states and only counting establishes. A

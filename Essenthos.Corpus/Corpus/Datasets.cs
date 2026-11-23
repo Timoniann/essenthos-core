@@ -1153,6 +1153,7 @@ public static class Datasets
                 "American Standard Version 1901, the words its italics print as the revisers' own",
                 "Reina-Valera 1909, the words its italics print as the translators' own",
                 "Russian Synodal, the words its square brackets mark as the translators' own",
+                "Young's Literal Translation 1898, the words its square brackets mark as the translator's own",
                 "Biblica Open New Ukrainian Translation 2022, the words it marks as added",
                 "Brenton 1844, the words its italics print as the translator's own",
                 // Literally how the rows begin, because these double as the source-string
