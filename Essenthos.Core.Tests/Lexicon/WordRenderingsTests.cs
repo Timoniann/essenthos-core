@@ -343,6 +343,25 @@ public sealed class WordFormsTests
     }
 
     /// <summary>
+    /// An exact ask counts the one spelling and still names every form of its word, so that a reader who chose
+    /// <em>слову</em> can move to <em>слово</em>; an ask that counts every form names no family beside them.
+    /// </summary>
+    [Fact]
+    public void AnExactAskStillNamesEveryFormOfItsWord()
+    {
+        var index = new FormIndex("rus",
+        [
+            new("слово", 300), new("слова", 200), new("слову", 60), new("словом", 50), new("слов", 40),
+            new("словах", 10), new("словоохотливый", 1),
+        ]);
+
+        index.Matching("слову", exact: true).Select(form => form.Text).Should().Equal("слову");
+        RenderingEndpoints.Family(index, "слову", exact: true)!.Select(form => (form.Text, form.Count)).Should()
+            .Equal(("слово", 300), ("слова", 200), ("слову", 60), ("словом", 50), ("слов", 40), ("словах", 10));
+        RenderingEndpoints.Family(index, "слову", exact: false).Should().BeNull();
+    }
+
+    /// <summary>
     /// <em>любов</em>, <em>любі</em> (dear) and the verb share letters and no ending; the noun's own
     /// forms are the ones kept, however the apostrophe of <em>любов'ю</em> is written.
     /// </summary>

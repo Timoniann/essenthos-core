@@ -99,9 +99,12 @@ internal static class RenderingEndpoints
                 typed,
                 exact ?? false,
                 index.Stems,
-                [.. matched.Select(form => new WordFormResponse(form.Text, form.Count))],
+                [.. matched.Select(Form)],
                 matched.Sum(form => form.Count),
-                witnesses));
+                witnesses)
+            {
+                Family = Family(index, typed, exact ?? false),
+            });
         }).RequireRateLimiting(RateLimits.Expensive);
 
         routes.MapGet("/renderings/places", async (
@@ -184,11 +187,23 @@ internal static class RenderingEndpoints
                 terms[0],
                 exact ?? false,
                 index.Stems,
-                [.. matched.Select(form => new WordFormResponse(form.Text, form.Count))],
+                [.. matched.Select(Form)],
                 page.Total,
-                page.Items));
+                page.Items)
+            {
+                Family = Family(index, terms[0], exact ?? false),
+            });
         }).RequireRateLimiting(RateLimits.Expensive);
     }
+
+    /// <summary>
+    /// Every form sharing the word's stem, when an exact ask counts only one of them, so that a reader can move to another;
+    /// null when the forms counted are already all of them.
+    /// </summary>
+    internal static IList<WordFormResponse>? Family(FormIndex index, string typed, bool exact) =>
+        exact ? [.. index.Matching(typed, exact: false).Select(Form)] : null;
+
+    private static WordFormResponse Form(WordForm form) => new(form.Text, form.Count);
 
     /// <summary>The text and the one word a request asks about; null for either it does not name well.</summary>
     private static async Task<(TextEntry? Text, string? Word)> Asked(string? corpus, string? word, ICanonIndex canon, CancellationToken cancellationToken)
@@ -478,7 +493,11 @@ internal record WordRenderingsResponse(
     bool Stemmed,
     IList<WordFormResponse> Forms,
     int Occurrences,
-    IList<WordWitnessResponse> Witnesses);
+    IList<WordWitnessResponse> Witnesses)
+{
+    /// <summary>With an exact ask, every spelling sharing the word's stem, commonest first; null otherwise.</summary>
+    public IList<WordFormResponse>? Family { get; init; }
+}
 
 internal record WordFormResponse(string Text, int Count);
 
@@ -494,7 +513,11 @@ internal record WordOccurrencesResponse(
     bool Stemmed,
     IList<WordFormResponse> Forms,
     int Total,
-    IList<StrongOccurrenceResponse> Items);
+    IList<StrongOccurrenceResponse> Items)
+{
+    /// <summary>With an exact ask, every spelling sharing the word's stem, commonest first; null otherwise.</summary>
+    public IList<WordFormResponse>? Family { get; init; }
+}
 
 /// <param name="Occurrences">
 /// The translation's occurrences in the books this witness holds: the denominator. A Greek New
