@@ -1,4 +1,5 @@
-﻿using Essenthos.Core.Corpus;
+﻿using System.Text;
+using Essenthos.Core.Corpus;
 ﻿namespace Essenthos.Core.Endpoints;
 
 /// <summary>
@@ -100,9 +101,27 @@ internal static class SearchTerms
 
         return query.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Select(term => term.Trim(TrimmedPunctuation))
-            .Where(term => term.Length > 0)
+            .Where(IsSearchable)
             .Take(MaxTerms)
             .ToArray();
+    }
+
+    /// <summary>
+    /// Whether a typed term holds a letter or a digit, which every word of every text does. A dash, a
+    /// quotation mark, an ellipsis or an apostrophe alone is no word: no verse holds it, and it folds to
+    /// nothing a query can be built from, so it is not a term.
+    /// </summary>
+    public static bool IsSearchable(string term)
+    {
+        foreach (var rune in term.EnumerateRunes())
+        {
+            if (Rune.IsLetterOrDigit(rune))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

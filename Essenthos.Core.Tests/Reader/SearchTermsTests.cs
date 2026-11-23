@@ -29,6 +29,51 @@ public class SearchTermsTests
         SearchTerms.Parse(query).Should().BeEmpty();
     }
 
+    [Theory]
+    [InlineData("—")]
+    [InlineData("–")]
+    [InlineData("«")]
+    [InlineData("»")]
+    [InlineData("„")]
+    [InlineData("“")]
+    [InlineData("”")]
+    [InlineData("--")]
+    [InlineData("-")]
+    [InlineData("*")]
+    [InlineData("…")]
+    [InlineData("·")]
+    [InlineData("’")]
+    [InlineData("( ) \" ! \"\"")]
+    [InlineData("« — » „ “")]
+    public void PunctuationAloneIsNoWordToSearchFor(string query)
+    {
+        SearchTerms.Parse(query).Should().BeEmpty();
+        TypedQuery.Parse(query).Should().BeEmpty();
+    }
+
+    [Theory]
+    [InlineData("— слово")]
+    [InlineData("слово —")]
+    [InlineData("слово, — …")]
+    [InlineData("* слово ·")]
+    public void AWordBesideTheMarksIsTheOnlyTerm(string query)
+    {
+        SearchTerms.Parse(query).Should().Equal("слово");
+        TypedQuery.Parse(query).Select(term => term.Text).Should().Equal("слово");
+    }
+
+    [Theory]
+    [InlineData("ὁ")]
+    [InlineData("7")]
+    [InlineData("в")]
+    [InlineData("שָׁלוֹם")]
+    [InlineData("word-for-word")]
+    public void AnythingWithALetterOrADigitIsAWord(string query)
+    {
+        SearchTerms.Parse(query).Should().Equal(query);
+        TypedQuery.Parse(query).Select(term => term.Text).Should().Equal(query);
+    }
+
     [Fact]
     public void LongQueriesAreCappedRatherThanRefused()
     {
