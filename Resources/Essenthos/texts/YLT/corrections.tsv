@@ -1,0 +1,9 @@
+# product    Essenthos/texts/YLT/corrections.tsv
+# producer   by hand
+# kinds      unsupplied: the words the source marks supplied are the edition's own text, so none of them is supplied (before: how many it marks)
+own	kind	before	after	why
+41.15:3	unsupplied	4	\N	Young brackets "but he answered nothing" as Greek the editions differ on, not as words he supplied: the Textus Receptus of 1894 prints αὐτὸς δὲ οὐδὲν ἀπεκρίνατο, the Stephanus of 1550 does not
+44.8:37	unsupplied	29	\N	Young brackets the whole of Acts 8:37 as a verse the Greek editions differ on; both Received Texts print it, so it is his translation of the Greek, not words he supplied
+62.2:23	unsupplied	10	\N	Young brackets the verse's second clause as Greek the editions differ on: the Textus Receptus of 1894 prints ὁ ὁμολογῶν τὸν υἱὸν καὶ τὸν πατέρα ἔχει, the Stephanus of 1550 does not; it is translated, not supplied
+62.5:7	unsupplied	17	\N	Young brackets the heavenly witnesses (1 John 5:7-8) as text the Greek editions differ on; both Received Texts print it, so it is his translation of the Greek, not words he supplied
+62.5:8	unsupplied	9	\N	Young brackets the heavenly witnesses (1 John 5:7-8) as text the Greek editions differ on; both Received Texts print it, so it is his translation of the Greek, not words he supplied

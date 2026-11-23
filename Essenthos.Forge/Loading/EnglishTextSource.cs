@@ -221,7 +221,8 @@ internal static class EnglishTextSource
                 + "participle stays a participle, and one Hebrew or Greek lexeme is rendered by one "
                 + "English word wherever he could manage it. \"In the beginning of God's preparing "
                 + "the heavens and the earth\" is Genesis 1:1 and \"life age-during\" is what John "
-                + "3:16 promises. His Greek is the Textus Receptus. What makes it worth holding is "
+                + "3:16 promises. His Greek is the Textus Receptus. He marks 10,385 spans as words he "
+                + "supplied for the English, the square brackets of the printed edition. What makes it worth holding is "
                 + "that its awkwardness is a cost to a reader and a gift to an aligner: where an "
                 + "aligner disagrees with Young about which original word an English word renders, "
                 + "the disagreement is worth reading rather than smoothing over.",
@@ -443,12 +444,13 @@ internal static class EnglishTextSource
                     + "part of a text as though it were the whole of one.");
             }
 
+            var chapters = book.Chapters.Select(chapter => Chapter(chapter, tagged));
             drafts.Add(new BookDraft(
                 CanonicalOrdinal: ordinal,
                 Position: ordinal - text.FirstBook + 1,
                 Name: BookReferences.Name(ordinal),
                 Slug: BookReferences.Slug(ordinal),
-                Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged))],
+                Chapters: text.Definition.Slug == Young ? SquareBrackets.Supplied(chapters) : [.. chapters],
                 NameNative: book.Name,
                 Abbreviation: BookReferences.Abbreviation(ordinal))
             {
