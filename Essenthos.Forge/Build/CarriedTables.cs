@@ -72,6 +72,8 @@ internal static class CarriedTables
                                  "confidence, model, run, made:date, source", order: "word_id"),
         Plain("commentary_entry", "id:int, commentary, source, book:int, first_chapter:int, first_verse:int, last_chapter:int, last_verse:int, sequence:int, body"),
         Plain("lexicon_article", "id:int, dictionary, strong_number, ordinal:int, entry, headword, status, body, source"),
+        Plain("strong_counterpart", "hebrew, greek, septuagint:int, greek_words:int, hebrew_linked:int, greek_linked:int, stated:int, dictionary, statement",
+            order: "hebrew, greek"),
     ];
 
     public static IReadOnlyList<string> Tables => [.. All.Select(c => c.Table).Distinct()];

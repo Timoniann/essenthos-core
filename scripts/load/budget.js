@@ -24,7 +24,7 @@ const ROUTES = [
   ["context", "/v1/context/genesis/1?language=eng&prose=eng", 4],
   ["context-ukr", "/v1/context/matthew/1?language=ukr&prose=ukr", 3],
   ["strength", "/v1/strength/genesis/1?texts=BSB", 1],
-  ["strong", "/v1/strong/H430?language=eng", 6],
+  ["strong", "/v1/strong/H430?language=eng", 7], // the counterparts in the other language are one read of strong_counterpart
   ["strong-books", "/v1/strong/H430/books?corpus=BSB", 8],
   ["strong-verses", "/v1/strong/H430/verses?corpus=BSB&skip=0&take=40", 5],
   ["strong-occurrences", "/v1/strong/G2316/occurrences?skip=40&take=20", 4],

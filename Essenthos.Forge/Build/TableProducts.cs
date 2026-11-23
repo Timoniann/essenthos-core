@@ -90,14 +90,14 @@ internal static partial class TableProducts
     private const string BriefGreek = "STEPBibleLexicons/TBESG.txt";
 
     /// <summary>The tables made here, by name.</summary>
-    public static IReadOnlyList<string> Tables => [.. All.Concat(Words).Select(t => t.Name)];
+    public static IReadOnlyList<string> Tables => [.. All.Concat(Words).Concat(Counterparts).Select(t => t.Name)];
 
     /// <summary>Writes every table asked for (all by default) whose sources moved since it was written, or every one with <paramref name="force"/>.</summary>
     public static List<Made> Write(ProductStore store, IReadOnlySet<string>? only, bool force)
     {
         SeedRelations(store);
         var made = new List<Made>();
-        foreach (var table in All.Concat(Words).Where(t => only is null || only.Contains(t.Name)))
+        foreach (var table in All.Concat(Words).Concat(Counterparts).Where(t => only is null || only.Contains(t.Name)))
         {
             var clock = Stopwatch.StartNew();
             IReadOnlyList<ProductInput> inputs =
