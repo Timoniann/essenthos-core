@@ -80,10 +80,10 @@ public sealed class NamesFirstSourceTests : IDisposable
     {
         var store = Store();
         Method(store, MappingMethods.Composed, new MappingRow("1.12:4.2", "1.12:4.2", "renders", MappingMethods.Composed, 0.9,
-            "SIL.Machine, aligned through KJV", null, null, null));
+            "SIL.Machine, aligned as written and through KJV", null, null, null));
         Write(store).Should().BeEmpty("a composed link the floors admit is a link");
 
-        Floors(store, "through kjv\trefused\t0.5\t40\t20 of 40 right");
+        Floors(store, "as written and through kjv\trefused\t0.5\t40\t20 of 40 right");
 
         Write(store).Should().ContainSingle().Which.To.Should().Be("1.12:4.2");
     }

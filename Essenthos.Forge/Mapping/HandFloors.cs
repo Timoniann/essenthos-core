@@ -90,9 +90,28 @@ internal static class HandFloors
     /// </summary>
     public const string Aligner = "aligner";
 
-    /// <summary>The pair's hand floors, its aligner's (<see cref="Aligner"/>) among them; empty where it has none.</summary>
-    public static IReadOnlyList<HandFloor> Read(ProductStore store, string pair) =>
-        Floors(pair, Rows(store, pair).Where(row => !IsHold(row)));
+    /// <summary>
+    /// The readings of the floor every pair but a daughter is held to without a line of its own: a composed link only the middle
+    /// texts found, with no direct reading, is refused unless a line of the pair names its combination and admits it
+    /// (<see cref="Admission.RefusingMiddlesAlone"/>, which binds the composition the same way).
+    /// </summary>
+    public const string MiddlesAlone = "through middle texts alone";
+
+    private const string Through = "through ";
+
+    private static readonly HandFloor Standing = new(
+        new HashSet<string>(StringComparer.Ordinal) { MiddlesAlone }, MiddlesAlone, null, null, 0,
+        "only the middle texts found it, and no hand floor of the pair admits that (NOT-0228)");
+
+    /// <summary>
+    /// The pair's hand floors, its aligner's (<see cref="Aligner"/>) among them, and the refusal of what only the middle texts
+    /// found (<see cref="MiddlesAlone"/>) unless the pair is a daughter's composition, which reaches its target that way by design.
+    /// </summary>
+    public static IReadOnlyList<HandFloor> Read(ProductStore store, string pair)
+    {
+        var floors = Floors(pair, Rows(store, pair).Where(row => !IsHold(row)));
+        return ComposedSource.Pairs.Any(composed => composed.Daughter && composed.Name == pair) ? floors : [.. floors, Standing];
+    }
 
     /// <summary>The pair's hold of composed links against surer ones, where its floors switch it on; null where they do not.</summary>
     public static HandHold? Hold(ProductStore store, string pair)
@@ -178,11 +197,28 @@ internal static class HandFloors
         return Readings(note < 0 ? readings : readings[..note]);
     }
 
-    /// <summary>The floor a composed link of this source is held to, if the pair sets one for its combination.</summary>
-    public static HandFloor? For(IReadOnlyList<HandFloor> floors, string source) =>
-        floors.Count == 0 || OfSource(source) is not { } readings
-            ? null
-            : floors.FirstOrDefault(floor => !IsAligner(floor) && floor.Readings.SetEquals(readings));
+    /// <summary>
+    /// The floor a composed link of this source is held to: the pair's line for its combination, or, for a combination only middle
+    /// texts found that no line names, the refusal of those (<see cref="MiddlesAlone"/>) where the floors hold it.
+    /// </summary>
+    public static HandFloor? For(IReadOnlyList<HandFloor> floors, string source)
+    {
+        if (floors.Count == 0 || OfSource(source) is not { } readings)
+        {
+            return null;
+        }
+
+        var line = floors.FirstOrDefault(floor => !IsAligner(floor) && !IsMiddlesAlone(floor) && floor.Readings.SetEquals(readings));
+        if (line is not null || readings.Count == 0 || !readings.All(reading => reading.StartsWith(Through, StringComparison.Ordinal))
+            || floors.FirstOrDefault(IsMiddlesAlone) is not { } alone)
+        {
+            return line;
+        }
+
+        var named = source[Aligned.Length..];
+        var note = named.IndexOf(';');
+        return alone with { Readings = readings, Name = (note < 0 ? named : named[..note]).Trim().ToLowerInvariant() };
+    }
 
     /// <summary>The floor the pair's own aligner rows are held to (<see cref="Aligner"/>), if it sets one.</summary>
     public static HandFloor? ForAligner(IReadOnlyList<HandFloor> floors) => floors.FirstOrDefault(IsAligner);
@@ -200,6 +236,8 @@ internal static class HandFloors
 
     private static bool IsAligner(HandFloor floor) => floor.Readings.Count == 1 && floor.Readings.Contains(Aligner);
 
+    private static bool IsMiddlesAlone(HandFloor floor) => floor.Readings.Count == 1 && floor.Readings.Contains(MiddlesAlone);
+
     /// <summary>
     /// The floors as a composition through these middle texts numbers its routes, for <see cref="Admission.With"/>. A reading
     /// that names no route of this composition stops it: a floor that silently bound nothing would be worse than none.
@@ -207,7 +245,7 @@ internal static class HandFloors
     public static IReadOnlyDictionary<Route, RouteFloor> AsRoutes(string pair, IReadOnlyList<HandFloor> floors, IReadOnlyList<string> vias)
     {
         var routes = new Dictionary<Route, RouteFloor>();
-        foreach (var floor in floors.Where(floor => !IsAligner(floor)))
+        foreach (var floor in floors.Where(floor => !IsAligner(floor) && !IsMiddlesAlone(floor)))
         {
             var route = Route.None;
             foreach (var reading in floor.Readings)
@@ -229,7 +267,6 @@ internal static class HandFloors
 
     private static Route? Middle(string reading, IReadOnlyList<string> vias)
     {
-        const string Through = "through ";
         if (!reading.StartsWith(Through, StringComparison.Ordinal))
         {
             return null;

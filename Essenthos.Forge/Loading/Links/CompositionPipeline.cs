@@ -109,7 +109,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         var proposed = await Propose(fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
         var statements = Key(fromSlug, toSlug);
         var (admission, _) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, threshold, precision, false, null,
-            refuseUnmeasured, cancellationToken);
+            refuseUnmeasured, daughter, cancellationToken);
         if (admission.Floors.Count == 0 && !unmeasured)
         {
             throw new InvalidOperationException(
@@ -170,7 +170,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         var scope = CompositionTrial.Scope(texts, fromSlug, toSlug, statements, books);
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
         var (admission, measured) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, minimumConfidence, precision, true, books,
-            refuseUnmeasured, cancellationToken);
+            refuseUnmeasured, daughter, cancellationToken);
 
         if (explain is not null)
         {
@@ -311,10 +311,12 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     /// <summary>
     /// Which answers a run writes: measured on the pair's own statements where it has enough, and
     /// otherwise on the other texts in its language that state the target, each composed the same
-    /// way; a floor the pair sets by hand (<see cref="HandFloors"/>) comes before either. Also returns
+    /// way; a floor the pair sets by hand (<see cref="HandFloors"/>) comes before either, and what only the middle texts found is
+    /// refused unless such a floor admits it (<see cref="Admission.RefusingMiddlesAlone"/>). Also returns
     /// what each combination scored from each confidence up, for a dry run to print.
     /// </summary>
     /// <param name="refuseUnmeasured">See <see cref="Admission.RefusingUnmeasured"/>.</param>
+    /// <param name="daughter">See <see cref="Run"/>: the middle text is the way a daughter reaches the target, and it is not refused.</param>
     private async Task<(Admission Admission, string Measured)> Admit(
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
@@ -326,6 +328,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         bool trial,
         IReadOnlySet<int>? books,
         bool refuseUnmeasured,
+        bool daughter,
         CancellationToken cancellationToken)
     {
         var pair = MappingProducts.Pair(fromSlug, toSlug);
@@ -356,7 +359,8 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
                         $"{viaSlugs[^1]} does not find; {without.Describe([.. before])}{Environment.NewLine}{measuredWithout}";
         }
 
-        return (admission.With(hand).RefusingUnmeasured(refuseUnmeasured), measured);
+        admission = admission.With(hand).RefusingUnmeasured(refuseUnmeasured);
+        return (daughter ? admission : admission.RefusingMiddlesAlone(hand), measured);
     }
 
     /// <summary>What <see cref="Admit"/> measures or borrows, before the pair's hand floors and the refusal of the unmeasured.</summary>

@@ -76,7 +76,7 @@ public sealed class PairRuleSourcesTests : IDisposable
     }
 
     private static MappingRow Row(string from, string to) =>
-        new(from, to, "renders", MappingMethods.Composed, 0.5, "SIL.Machine, aligned through KJV", null, null, null);
+        new(from, to, "renders", MappingMethods.Composed, 0.5, "SIL.Machine, aligned as stems and through KJV", null, null, null);
 
     private static void Method(ProductStore store, string pair, string method, params MappingRow[] rows)
     {
