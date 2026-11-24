@@ -385,9 +385,11 @@ internal static partial class ForgeVerbs
 
             var clock = Stopwatch.StartNew();
             var ready = Redraws.Ready(due);
+            var duePairs = due.Select(d => d.Pair).ToHashSet(StringComparer.Ordinal);
             foreach (var later in due.Except(ready))
             {
-                forge.Logger.LogInformation("redraw: {Name} waits for {Reads}, due in this round too", later.Name, string.Join(",", later.Reads));
+                forge.Logger.LogInformation("redraw: {Name} waits for {Reads}, due in this round too", later.Name,
+                    string.Join(",", later.Reads.Where(duePairs.Contains)));
             }
 
             foreach (var drawn in ready)

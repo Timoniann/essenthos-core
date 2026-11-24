@@ -101,6 +101,24 @@ public sealed class RedrawsTests : IDisposable
         Redraws.Ready([through]).Should().Equal(through);
     }
 
+    [Fact]
+    public void Compositions_that_read_each_others_finals_are_one_cycle_and_one_reading_them_is_not_of_it()
+    {
+        var reads = new Dictionary<string, List<string>>
+        {
+            ["ASV-BHSA"] = ["KJV-BHSA", "WEB-BHSA"],
+            ["WEB-BHSA"] = ["KJV-BHSA", "YLT-BHSA"],
+            ["YLT-BHSA"] = ["ASV-BHSA"],
+            ["ALM1911-BHSA"] = ["RV1909-BHSA", "ASV-BHSA"],
+            ["RV1909-BHSA"] = ["KJV-BHSA"],
+        };
+
+        var mutual = Redraws.Mutual(reads);
+
+        mutual.Keys.Should().BeEquivalentTo("ASV-BHSA", "WEB-BHSA", "YLT-BHSA");
+        mutual["ASV-BHSA"].Should().BeEquivalentTo("WEB-BHSA", "YLT-BHSA");
+    }
+
     private List<Redraws.Due> Due()
     {
         var store = new ProductStore(_root);
