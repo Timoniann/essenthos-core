@@ -70,9 +70,10 @@ internal static class ContextEndpoints
             }
 
             var (names, words) = Languages(language, prose);
-            return Results.Ok(await Context(
+            var context = await Context(
                 db, ordinal, chapter, names, await weights.Get(cancellationToken), cancellationToken,
-                settings.Is(SiteSettings.GeneratedImages), words, open, shown, stored: true));
+                settings.Is(SiteSettings.GeneratedImages), words, open, shown, stored: true);
+            return Results.Ok(context with { Credits = DatasetCredits.Of(context.Entities.Select(e => e.SourceId), settings) });
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -418,7 +419,12 @@ internal record ChapterContextResponse(
     IList<ContextMeasureResponse> Measures,
     IList<ContextCommandmentResponse> Commandments,
     IList<ContextTopicResponse> Topics,
-    IDictionary<string, ContextRecordResponse> Records);
+    IDictionary<string, ContextRecordResponse> Records)
+{
+    /// <summary>The datasets the panel credits, those its records come from, as <see cref="DatasetCredits"/> names them; on the answer alone.</summary>
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public IList<DatasetCreditResponse>? Credits { get; init; }
+}
 
 
 /// <param name="Kind">person, place, people, title or term.</param>
