@@ -8,6 +8,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -1294,7 +1295,7 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
     internal static string Consonants(WordForms word)
     {
         var letters = new StringBuilder(word.Surface.Length);
-        foreach (var ch in word.Surface.Normalize(NormalizationForm.FormD))
+        foreach (var ch in UnicodeNormalization.Decomposed(word.Surface))
         {
             if (char.IsLetter(ch))
             {
