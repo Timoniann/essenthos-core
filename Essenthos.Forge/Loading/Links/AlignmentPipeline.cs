@@ -1286,6 +1286,25 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
     internal static string Lexeme(WordForms word) =>
         !string.IsNullOrWhiteSpace(word.Lemma) ? word.Lemma.ToLowerInvariant() : Comparable(word);
 
+    /// <summary>
+    /// A word by its letters alone, every vowel point, accent and dot taken off: the Targums' Aramaic, pointed in Sefaria's
+    /// copies, and the Peshitta's Syriac with its seyame and dots, neither of which carries a lemma. Pointed, one Aramaic word
+    /// is several strings, and a model trained on a few thousand verses meets none of them often enough.
+    /// </summary>
+    internal static string Consonants(WordForms word)
+    {
+        var letters = new StringBuilder(word.Surface.Length);
+        foreach (var ch in word.Surface.Normalize(NormalizationForm.FormD))
+        {
+            if (char.IsLetter(ch))
+            {
+                letters.Append(ch);
+            }
+        }
+
+        return letters.ToString();
+    }
+
     /// <param name="Strong">
     /// The last resort, and the only form a zero morpheme has.
     /// </param>

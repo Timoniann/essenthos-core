@@ -122,7 +122,7 @@ internal static partial class ForgeVerbs
             FrameCheck),
 
         // Links between texts.
-        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--symmetrisation och|intersection] [--lexemes] [--books <b,...>|--all-books] [--workspace <name>] [--verses <range,...>] [--from <Resources>]",
+        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--symmetrisation och|intersection] [--lexemes] [--consonants] [--books <b,...>|--all-books] [--workspace <name>] [--verses <range,...>] [--from <Resources>]",
             "Align two texts with SIL's statistical aligner from the store's files into the pair's aligner method file, training the answer "
             + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise; --verses writes only the rows of FROM words in those verses and keeps every other row of the file. Reads no database.",
             Align, Least: 2),

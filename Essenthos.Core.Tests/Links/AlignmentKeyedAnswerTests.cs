@@ -249,6 +249,27 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     }
 
     [Fact]
+    public async Task AWitnessWithoutALemmaIsReadByItsLettersAndABookLeftUnreadIsNeitherTrainedOnNorWritten()
+    {
+        ProductCorpus.Text(_store, "ONKELOS", "arc", [("1.1:1", ["בְּקַדְמִין", "בְּרָא", "יְיָ"]), ("14.1:1", ["וּמְלַךְ", "שְׁלֹמֹה", "בַּר"])]);
+        ProductCorpus.Text(_store, "HEB", "arc", [("1.1:1", ["בראשית", "ברא", "אלהים"]), ("14.1:1", ["וימלך", "שלמה", "בן"])]);
+        string[] source = ["בקדמין ברא יי"];
+        string[] target = ["בראשית ברא אלהים"];
+        var workspace = Path.Combine(_root, "Alignments", "ONKELOS-HEB");
+        ProductCorpus.Answer(Path.Combine(workspace, AlignmentPipeline.Key("ibm4", [("source.txt", source), ("target.txt", target)])), source, target,
+            Straight);
+        var pair = new AlignedPair("ONKELOS", "HEB", Minimum: 0.5, Consonants: true, Unread: new HashSet<int> { 14 });
+
+        var (rows, _) = await ProductCorpus.Aligner(_store).Align(pair);
+        var whole = () => ProductCorpus.Aligner(_store).Align(pair with { Unread = null });
+
+        rows.Select(row => (row.From, row.To)).Should().Equal(("1.1:1.1", "1.1:1.1"), ("1.1:1.2", "1.1:1.2"), ("1.1:1.3", "1.1:1.3"));
+        rows.Should().OnlyContain(row => row.Source.Contains("the source by its consonants and the target by lexeme"));
+        await whole.Should().ThrowAsync<StoredAlignmentMissingException>("read whole, the lines hold 2 Chronicles and no answer was made from them");
+        AlignmentPipeline.Consonants(new AlignmentPipeline.WordForms("ܡܰܠܟܳܐ̈", null, null, null, "syc", 1)).Should().Be("ܡܠܟܐ");
+    }
+
+    [Fact]
     public void AModelCountsOnlyWithEachDirectionsConfigurationAndATableThatHoldsSomething()
     {
         var prefix = Path.Combine(_workspace, "model", "GEEZ81");
