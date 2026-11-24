@@ -34,9 +34,7 @@ public static class DatasetEndpoints
             var answers = tally.Counted.Select(counted =>
             {
                 var dataset = counted.Dataset;
-                var licence = dataset.OwnWork && settings.OwnWorkLicence is { } own
-                    ? (own.Name, own.Url)
-                    : (dataset.Licence, dataset.LicenceUrl);
+                var licence = DatasetCredits.Licence(dataset, settings);
                 return new DatasetResponse(
                     dataset.Id,
                     dataset.Name,
@@ -337,6 +335,46 @@ public record DatasetCounts(
 public record UndeclaredResponse(string Source, int Rows);
 
 public record DatasetListResponse(IList<DatasetResponse> Items, IList<UndeclaredResponse> Undeclared);
+
+/// <summary>A dataset as a credit names it: whose a row is and under what licence, with a link to each.</summary>
+internal record DatasetCreditResponse(string Id, string Name, string Author, string? Licence, string? LicenceUrl, string Url);
+
+/// <summary>
+/// The credits an answer carries for the datasets its own rows cite, so the page it is written for names them without
+/// asking for <c>/v1/datasets</c>, which also carries every dataset's counts and every undeclared source string.
+/// </summary>
+internal static class DatasetCredits
+{
+    private static readonly Dictionary<string, Datasets.Dataset> ById = Datasets.All.ToDictionary(d => d.Id, StringComparer.Ordinal);
+
+    /// <summary>A dataset's licence as the site states it: this project's own work under the licence the owner chose.</summary>
+    public static (string? Name, string? Url) Licence(Datasets.Dataset dataset, SiteSettingsFile settings) =>
+        dataset.OwnWork && settings.OwnWorkLicence is { } own ? (own.Name, own.Url) : (dataset.Licence, dataset.LicenceUrl);
+
+    /// <summary>The declared datasets among <paramref name="cited"/>, each once, by id.</summary>
+    public static IList<DatasetCreditResponse> Of(IEnumerable<string?> cited, SiteSettingsFile settings) =>
+    [
+        .. cited.OfType<string>().Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)
+            .Select(id => ById.GetValueOrDefault(id)).OfType<Datasets.Dataset>()
+            .Select(dataset =>
+            {
+                var (licence, url) = Licence(dataset, settings);
+                return new DatasetCreditResponse(dataset.Id, dataset.Name, dataset.Author, licence, url, dataset.Url);
+            }),
+    ];
+
+    /// <summary>Every dataset a record's page credits: the record's own, its claims', names', relationships' and events'.</summary>
+    public static IList<DatasetCreditResponse> Of(EntityResponse entity, SiteSettingsFile settings) =>
+        Of(
+        [
+            entity.SourceId,
+            .. entity.Claims.Select(c => c.Dataset),
+            .. entity.Alternatives.Select(a => a.Dataset),
+            .. entity.ReferenceSources.Select(r => r.Dataset),
+            .. entity.Relationships.SelectMany(r => r.Corroboration.Select(w => w.Dataset).Prepend(r.Dataset)),
+            .. entity.Events.Select(e => e.SourceId),
+        ], settings);
+}
 
 internal sealed record DatasetTally(
     IReadOnlyList<(Datasets.Dataset Dataset, DatasetCounts Counts)> Counted,

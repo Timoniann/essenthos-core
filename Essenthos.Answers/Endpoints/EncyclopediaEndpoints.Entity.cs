@@ -415,7 +415,7 @@ internal static partial class EncyclopediaEndpoints
             .Select(c => c.Source)
             .FirstOrDefault() ?? OursOnlyRecords.Credit;
 
-        return new EntityResponse(
+        var response = new EntityResponse(
             entity.Slug,
             EnumSpelling.Of(entity.Kind),
             renamed?.Name ?? entity.Name,
@@ -536,6 +536,7 @@ internal static partial class EncyclopediaEndpoints
             AmongKings = await SharedReads.Once($"among-kings:{entity.Id}", () => db.ReignStatements.AnyAsync(
                 s => (s.EntityId == entity.Id || s.RulerEntityId == entity.Id) && KingsRoles.Contains(s.Role), cancellationToken)),
         };
+        return response with { Credits = DatasetCredits.Of(response, settings) };
     }
 
     /// <summary>What a verse may state of a person that sets them among the kings; a subject dated by a ruler's year is not.</summary>

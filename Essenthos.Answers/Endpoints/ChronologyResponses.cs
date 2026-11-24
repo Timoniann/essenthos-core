@@ -110,6 +110,18 @@ internal record EventResponse(
     /// <summary>The description in the reader's language, a machine translation, as <see cref="LocalName"/>.</summary>
     public string? LocalDescription { get; init; }
 
+    /// <summary>The datasets the event's page credits, as <see cref="DatasetCredits"/> names them; on one event's answer alone.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<DatasetCreditResponse>? Credits { get; init; }
+
+    /// <summary>
+    /// Every period whose span in some reckoning reaches <see cref="YearFromCreation"/>, as <c>/v1/periods</c> gives it:
+    /// the page keeps the ones its own reckoning places the year in, so it needs no list of every period. On one
+    /// event's answer alone.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<TimelinePeriodResponse>? Periods { get; init; }
+
     /// <summary>The source's notes in the reader's language, a machine translation, as <see cref="LocalName"/>.</summary>
     public string? LocalNotes { get; init; }
 

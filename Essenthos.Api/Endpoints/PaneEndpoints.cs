@@ -168,6 +168,67 @@ internal static class PaneEndpoints
 
             return Results.Bytes(body, "application/json");
         });
+
+        // The names a chapter's panes need: those of the records the asked texts' panes of it name, instead of every
+        // record's name in the language.
+        routes.MapGet("/record-names/{book}/{chapter:int}", async (
+            string book,
+            int chapter,
+            string? texts,
+            string? language,
+            HttpContext context,
+            ICanonIndex canon,
+            AppDbContext db,
+            RecordNames names,
+            CancellationToken cancellationToken) =>
+        {
+            if (BookReferences.ResolveOrdinal(book) is not { } ordinal)
+            {
+                return ApiResults.NotFound(BookReferences.FormatHint(book));
+            }
+
+            var ids = new List<int>();
+            foreach (var slug in (texts ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                if (await canon.Text(slug, cancellationToken) is { } entry && !ids.Contains(entry.Id))
+                {
+                    ids.Add(entry.Id);
+                }
+            }
+
+            if (ids.Count == 0)
+            {
+                return ApiResults.Malformed("Name the texts whose panes the names are for in the texts query, as a comma-separated list.");
+            }
+
+            if (ids.Count > ParallelEndpoints.MostCorporaAtOnce)
+            {
+                return ApiResults.Malformed($"At most {ParallelEndpoints.MostCorporaAtOnce} texts can be read side by side; {ids.Count} were asked for.");
+            }
+
+            var bodies = await db.Panes.AsNoTracking()
+                .Where(p => ids.Contains(p.TextId) && p.CanonicalBook == ordinal && p.CanonicalChapter == chapter)
+                .Select(p => p.Body)
+                .ToListAsync(cancellationToken);
+            var named = new SortedSet<string>(StringComparer.Ordinal);
+            foreach (var body in bodies)
+            {
+                using var pane = JsonDocument.Parse(Panes.Unpack(body));
+                if (pane.RootElement.TryGetProperty("records", out var records))
+                {
+                    foreach (var record in records.EnumerateArray())
+                    {
+                        named.Add(record[0].GetString()!);
+                    }
+                }
+            }
+
+            var every = await names.Names(language, cancellationToken);
+            context.Response.Headers.CacheControl = Cached;
+            return Results.Ok(new RecordNamesResponse(
+                names.Language(language),
+                named.Where(every.ContainsKey).ToDictionary(slug => slug, slug => every[slug], StringComparer.Ordinal)));
+        });
     }
 
     private static bool AcceptsGzip(HttpRequest request) =>
@@ -184,15 +245,30 @@ internal static class PaneEndpoints
 /// name in that language, or its English headword, a renamed person called by his page's heading (<see cref="RenamedHeadings"/>).
 /// A language the build stored no names in is composed by the same rule.
 /// </summary>
-internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOptions> json)
+internal sealed class RecordNames
 {
-    private readonly PerRelease<string, (byte[] Body, string Tag)> _made = new((language, token) => Make(scopes, json, language, token), StringComparer.Ordinal);
+    private readonly PerRelease<string, Dictionary<string, string>> _names;
+
+    private readonly PerRelease<string, (byte[] Body, string Tag)> _made;
+
+    public RecordNames(IServiceScopeFactory scopes, IOptions<JsonOptions> json)
+    {
+        _names = new((language, token) => Make(scopes, language, token), StringComparer.Ordinal);
+        _made = new(async (language, token) => Write(json, new RecordNamesResponse(language, await _names.Get(language, token))), StringComparer.Ordinal);
+    }
+
+    /// <summary>The language the names are in, as the corpus spells it: English where none or an unknown one is asked for.</summary>
+    public string Language(string? language) => EntityNames.Local(language) ?? "eng";
 
     public Task<(byte[] Body, string Tag)> Of(string? language, CancellationToken cancellationToken) =>
-        _made.Get(EntityNames.Local(language) ?? "eng", cancellationToken);
+        _made.Get(Language(language), cancellationToken);
 
-    private static async Task<(byte[] Body, string Tag)> Make(
-        IServiceScopeFactory scopes, IOptions<JsonOptions> json, string language, CancellationToken cancellationToken)
+    /// <summary>Every record's name in the language, by slug, in slug order.</summary>
+    public Task<Dictionary<string, string>> Names(string? language, CancellationToken cancellationToken) =>
+        _names.Get(Language(language), cancellationToken);
+
+    private static async Task<Dictionary<string, string>> Make(
+        IServiceScopeFactory scopes, string language, CancellationToken cancellationToken)
     {
         using var scope = scopes.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -202,9 +278,9 @@ internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOpti
             .ToListAsync(cancellationToken);
         if (stored.Count > 0)
         {
-            return Write(json, new RecordNamesResponse(language, stored
+            return stored
                 .OrderBy(n => n.Slug, StringComparer.Ordinal)
-                .ToDictionary(n => n.Slug, n => n.Shown, StringComparer.Ordinal)));
+                .ToDictionary(n => n.Slug, n => n.Shown, StringComparer.Ordinal);
         }
 
         var names = await EntityNames.Localised(db, db.Entities.AsNoTracking(), language)
@@ -215,13 +291,12 @@ internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOpti
         // Аврам in Genesis 22, which prints Авраам.
         var persons = await db.Entities.AsNoTracking().Where(e => e.Kind == EntityKind.Person).Select(e => e.Id).ToListAsync(cancellationToken);
         var renamed = await RenamedHeadings.Of(db, persons, language, cancellationToken);
-        var response = new RecordNamesResponse(language, names
+        return names
             .OrderBy(n => n.Slug, StringComparer.Ordinal)
             .ToDictionary(
                 n => n.Slug,
                 n => renamed.TryGetValue(n.Id, out var heading) ? heading.LocalName ?? heading.Name : n.Shown,
-                StringComparer.Ordinal));
-        return Write(json, response);
+                StringComparer.Ordinal);
     }
 
     /// <summary>With the options every other response is written with, so a name is sent as its letters and not escaped.</summary>

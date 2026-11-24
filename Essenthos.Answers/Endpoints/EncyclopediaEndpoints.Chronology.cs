@@ -32,19 +32,9 @@ internal static partial class EncyclopediaEndpoints
         // Every period with its span in each reckoning: the timeline without its fifteen hundred
         // events, which is all a page placing one year or naming one era needs.
         // With a language, each period carries its name in it where its record can say it.
-        routes.MapGet("/periods", async ([FromQuery] string? language, AppDbContext db, CancellationToken cancellationToken) =>
-        {
-            var anchoring = db.EventDates.Where(d => db.Periods.Any(
-                p => p.StartEventId == d.EventId || p.EndEventId == d.EventId));
-            var years = await EventYears(db, anchoring, cancellationToken);
-            var periods = await Periods(db, years, cancellationToken);
-            var named = await PeriodNames.Of(
-                db, [.. periods.Select(p => (p.Slug, p.Name, p.Kind, p.EntitySlug))], language, cancellationToken);
-
-            return Results.Ok(new PeriodListResponse(
-                LastYearBeforeChrist,
-                [.. periods.Select(p => named.TryGetValue(p.Slug, out var local) ? p with { LocalName = local } : p)]));
-        });
+        routes.MapGet("/periods", async (
+                [FromQuery] string? language, AppDbContext db, [FromServices] PeriodLists? lists, CancellationToken cancellationToken) =>
+            Results.Ok(lists is null ? await PeriodList(db, language, cancellationToken) : await lists.Get(language, cancellationToken)));
 
         // Every event at once, trimmed to what a timeline draws with.
         //
@@ -236,6 +226,21 @@ internal static partial class EncyclopediaEndpoints
 
     internal static int Placed(int? year, int? statedYear, int zero) => ChronologySpans.Placed(year, statedYear, zero);
 
+    /// <summary>Every period with its span in each reckoning, named in <paramref name="language"/> where its record can say it.</summary>
+    internal static async Task<PeriodListResponse> PeriodList(AppDbContext db, string? language, CancellationToken cancellationToken)
+    {
+        var anchoring = db.EventDates.Where(d => db.Periods.Any(
+            p => p.StartEventId == d.EventId || p.EndEventId == d.EventId));
+        var years = await EventYears(db, anchoring, cancellationToken);
+        var periods = await Periods(db, years, cancellationToken);
+        var named = await PeriodNames.Of(
+            db, [.. periods.Select(p => (p.Slug, p.Name, p.Kind, p.EntitySlug))], language, cancellationToken);
+
+        return new PeriodListResponse(
+            LastYearBeforeChrist,
+            [.. periods.Select(p => named.TryGetValue(p.Slug, out var local) ? p with { LocalName = local } : p)]);
+    }
+
     internal static async Task<IList<TimelinePeriodResponse>> Periods(
         AppDbContext db,
         Dictionary<int, Dictionary<string, int>> years,
@@ -297,4 +302,21 @@ internal static partial class EncyclopediaEndpoints
         stored is { Length: > 0 }
             ? [.. stored.Split(',').Select(entry => entry.Trim()).Where(entry => entry.Length > 0)]
             : [];
+}
+
+/// <summary>
+/// Every period as <c>/v1/periods</c> answers it, per language, read once per process: the corpus does not change under a running
+/// API. An event's answer picks the periods that may frame it from here rather than reading them again.
+/// </summary>
+internal sealed class PeriodLists(IServiceScopeFactory scopes)
+{
+    private readonly PerRelease<string, PeriodListResponse> _lists = new(async (language, token) =>
+    {
+        await using var scope = scopes.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        return await EncyclopediaEndpoints.PeriodList(db, language.Length == 0 ? null : language, token);
+    }, StringComparer.Ordinal);
+
+    public Task<PeriodListResponse> Get(string? language, CancellationToken cancellationToken) =>
+        _lists.Get(language ?? "", cancellationToken);
 }

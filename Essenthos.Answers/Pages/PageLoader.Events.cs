@@ -17,7 +17,7 @@ internal sealed partial class PageLoader
         var language = address.Language;
         // The event as the reader's script asks for it in this language: the page carries it and is written from it.
         var detail = await EncyclopediaEndpoints.EventDetail(
-            db, address.Slug!, language.Corpus, language.Corpus, cancellationToken);
+            db, settings, address.Slug!, language.Corpus, language.Corpus, cancellationToken, periods);
         if (detail is null)
         {
             return null;

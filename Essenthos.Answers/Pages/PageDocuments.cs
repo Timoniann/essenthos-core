@@ -109,7 +109,7 @@ internal static class PageDocuments
     public const string OccupationKind = "occupation";
 
     /// <summary>Raise with any change to what a document holds or how a page is written from it, so older rows are not read.</summary>
-    public const int Version = 3;
+    public const int Version = 4;
 
     /// <summary>
     /// The code that composes a document, and the only code that may write a page or answer from one: the commit this API was

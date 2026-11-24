@@ -126,7 +126,7 @@ internal static class StrongEndpoints
             {
                 Corpus = text.Slug,
             });
-        }).RequireRateLimiting(RateLimits.Expensive);
+        }).RequireRateLimiting(RateLimitPolicies.Expensive);
 
         routes.MapGet("/strong/{number}/occurrences", async (
             string number,
@@ -677,7 +677,7 @@ internal static class StrongEndpoints
 
             return Results.Ok(await RenderingsOf(
                 db, canonical, text.Id, text.Slug, Math.Clamp(take ?? 40, 1, MostPerPage), cancellationToken));
-        }).RequireRateLimiting(RateLimits.Expensive);
+        }).RequireRateLimiting(RateLimitPolicies.Expensive);
 
     /// <summary>
     /// The renderings page for one number in one text. Counted over one edition of the original, the

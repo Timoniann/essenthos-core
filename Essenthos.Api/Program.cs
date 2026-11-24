@@ -65,6 +65,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
 builder.Services.AddSingleton<RecordNames>();
+builder.Services.AddSingleton<PeriodLists>();
 builder.Services.AddSingleton<SparseJson>();
 builder.Services.AddSingleton<ContextWeightsCache>();
 builder.Services.AddSingleton<StartupWarmup>();

@@ -17,9 +17,9 @@
         <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
         <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
         <ProjectReference Include="..\Essenthos.Products.Postgres\Essenthos.Products.Postgres.csproj" />
-        <!-- The documents record and Strong pages are written from are composed at build by the API's own page code
-             (TSK-1670), so a stored page is the page the API would compose. The API holds no reference back. -->
-        <ProjectReference Include="..\Essenthos.Api\Essenthos.Api.csproj" />
+        <!-- The documents record and Strong pages are written from are composed at build by the same page code the
+             API serves them with (TSK-1670), so a stored page is the page the API would compose. -->
+        <ProjectReference Include="..\Essenthos.Answers\Essenthos.Answers.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -135,22 +135,73 @@
         <Using Include="Essenthos.Core.Context" />
     </ItemGroup>
 
-    <!-- The API's own settings files (appsettings*.json, site-settings.json) stay out of the Forge's output: the Forge
-         reads its own appsettings.json, and the site's switches from the API's folder (PageDocumentBuild). -->
-    <PropertyGroup>
-        <ApiProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../Essenthos.Api/'))</ApiProjectFolder>
-    </PropertyGroup>
+    <!-- The code of each load the build fills tables with, digested per load into LoadCode.All (PRB-1867): an apply loads
+         again whole the tables of a load whose code moved since the database was served, as it does for a moved product.
+         Tables names what the load fills, which ApplyReloads maps to the load again or refuses (@carried: every carried
+         table). A file a load's rows depend on belongs in its list. -->
+    <ItemGroup>
+        <LoadCode Include="Records\RecordFiles*.cs;Records\RecordCanons.cs;..\Essenthos.Answers\Endpoints\StoredEventOrder.cs" Load="records" Tables="entity entity_canon" />
+        <LoadCode Include="Names\NamesLoad.cs" Load="names" Tables="word_entity" />
+        <LoadCode Include="Indexes\IndexLoad.cs" Load="indexes" Tables="strong_rendering strong_book text_form word_rendering word_rendering_witness entity_rendering" />
+        <LoadCode Include="Indexes\StrongNumberFiles.cs" Load="numbers" Tables="word_rendered_strong" />
+        <LoadCode Include="Indexes\StoredStrongFiles.cs" Load="stored-strong" Tables="strong_occurrence text_pair_links" />
+        <LoadCode Include="Loading\CanonicalFrameLoader.cs" Load="frames" Tables="verse_reference" />
+        <LoadCode Include="Mapping\VerseLinkFiles.cs" Load="verse-links" Tables="verse_link verse_link_verse" />
+        <LoadCode Include="Build\CarriedTables.cs" Load="carried" Tables="@carried" />
+        <LoadCode Include="Build\TextLoad.cs" Load="texts" Tables="word" />
+        <LoadCode Include="Mapping\MappingLoad.cs" Load="links" Tables="link" />
+    </ItemGroup>
 
-    <Target Name="LeaveOutTheApisSettings" AfterTargets="GetCopyToOutputDirectoryItems">
-        <ItemGroup>
-            <_SourceItemsToCopyToOutputDirectory Remove="@(_SourceItemsToCopyToOutputDirectory)" Condition="'%(Extension)' == '.json' and '%(RootDir)%(Directory)' == '$(ApiProjectFolder)'" />
-            <_SourceItemsToCopyToOutputDirectoryAlways Remove="@(_SourceItemsToCopyToOutputDirectoryAlways)" Condition="'%(Extension)' == '.json' and '%(RootDir)%(Directory)' == '$(ApiProjectFolder)'" />
-        </ItemGroup>
-    </Target>
+    <!-- A digest of the source, line endings made one, so a Debug and a Release Forge and any checkout agree. -->
+    <UsingTask TaskName="DigestLoadCode" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <Sources ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+            <OutputFile ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.Linq" />
+            <Using Namespace="System.Security.Cryptography" />
+            <Using Namespace="System.Text" />
+            <Code Type="Fragment" Language="cs"><![CDATA[
+            var code = new StringBuilder();
+            code.Append("// Made by the DigestLoadCode target of Essenthos.Forge.csproj from the files each load is declared with.\n");
+            code.Append("namespace Essenthos.Core.Build;\n\ninternal static partial class LoadCode\n{\n    public static readonly LoadCodeDigest[] All =\n    [\n");
+            foreach (var load in Sources.GroupBy(s => s.GetMetadata("Load")).OrderBy(g => g.Key, StringComparer.Ordinal))
+            {
+                var text = new StringBuilder();
+                foreach (var source in load.OrderBy(s => s.ItemSpec.Replace('\\', '/'), StringComparer.Ordinal))
+                {
+                    text.Append(source.ItemSpec.Replace('\\', '/')).Append('\n')
+                        .Append(File.ReadAllText(source.GetMetadata("FullPath")).Replace("\r\n", "\n")).Append('\n');
+                }
 
-    <Target Name="LeaveOutTheApisSettingsFromPublish" AfterTargets="ComputeResolvedFilesToPublishList" BeforeTargets="_HandleFileConflictsForPublish">
+                string digest;
+                using (var sha = SHA256.Create())
+                {
+                    digest = string.Concat(sha.ComputeHash(Encoding.UTF8.GetBytes(text.ToString())).Take(8).Select(b => b.ToString("x2")));
+                }
+                var tables = load.Select(s => s.GetMetadata("Tables")).First(t => t.Length > 0)
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(t => "\"" + t + "\"");
+                code.Append("        new(\"").Append(load.Key).Append("\", \"").Append(digest).Append("\", [").Append(string.Join(", ", tables)).Append("]),\n");
+            }
+
+            code.Append("    ];\n}\n");
+            var written = code.ToString();
+            if (!File.Exists(OutputFile) || File.ReadAllText(OutputFile) != written)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(OutputFile));
+                File.WriteAllText(OutputFile, written);
+            }
+            ]]></Code>
+        </Task>
+    </UsingTask>
+
+    <Target Name="DigestLoadCode" BeforeTargets="CoreCompile">
+        <DigestLoadCode Sources="@(LoadCode)" OutputFile="$(IntermediateOutputPath)LoadCode.g.cs" />
         <ItemGroup>
-            <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Extension)' == '.json' and '%(RootDir)%(Directory)' == '$(ApiProjectFolder)'" />
+            <Compile Include="$(IntermediateOutputPath)LoadCode.g.cs" />
+            <FileWrites Include="$(IntermediateOutputPath)LoadCode.g.cs" />
         </ItemGroup>
     </Target>
 

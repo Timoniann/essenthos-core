@@ -71,7 +71,7 @@ internal static partial class EncyclopediaEndpoints
                     o.Kind,
                     o.Dataset,
                     [o.West, o.South, o.East, o.North],
-                    System.Text.Json.JsonSerializer.Deserialize(o.Shape, AppJsonSerializerContext.Default.ListPlaceOutlineBand)
+                    System.Text.Json.JsonSerializer.Deserialize(o.Shape, AnswerJsonContext.Default.ListPlaceOutlineBand)
                     ?? [])),
             ]);
     }

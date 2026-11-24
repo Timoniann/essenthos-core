@@ -97,8 +97,10 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? language,
             [FromQuery] string? prose,
             AppDbContext db,
+            SiteSettingsFile settings,
+            [FromServices] PeriodLists? periods,
             CancellationToken cancellationToken) =>
-            await EventDetail(db, slug, language, prose, cancellationToken) is { } found
+            await EventDetail(db, settings, slug, language, prose, cancellationToken, periods) is { } found
                 ? Results.Ok(found)
                 : Results.NotFound());
     }
@@ -106,10 +108,12 @@ internal static partial class EncyclopediaEndpoints
     /// <summary>One event as <c>/v1/events/{slug}</c> answers it; null where there is none.</summary>
     internal static async Task<EventResponse?> EventDetail(
         AppDbContext db,
+        SiteSettingsFile settings,
         string slug,
         string? language,
         string? prose,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        PeriodLists? lists = null)
     {
         var row = await db.Events.Where(e => e.Slug == slug).Select(Rows).FirstOrDefaultAsync(cancellationToken);
         if (row is null)
@@ -139,7 +143,17 @@ internal static partial class EncyclopediaEndpoints
             };
         }
 
-        return (await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0];
+        var read = (await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0];
+        var periods = read.YearFromCreation is { } year
+            ? [.. (lists is null ? await PeriodList(db, language, cancellationToken) : await lists.Get(language, cancellationToken))
+                .Items.Where(p => p.Years.Values.Any(
+                span => span.Length == 2 && Math.Min(span[0], span[1]) <= year && year <= Math.Max(span[0], span[1])))]
+            : new List<TimelinePeriodResponse>();
+        return read with
+        {
+            Credits = DatasetCredits.Of([read.SourceId], settings),
+            Periods = periods,
+        };
     }
 
     /// <summary>How many events around one the step answers when the page does not say.</summary>

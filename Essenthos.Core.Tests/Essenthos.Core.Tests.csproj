@@ -38,8 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <!-- One suite over all of them, because a test project per assembly would buy nothing: the
-         boundary that matters is that Essenthos.Api does not reference Essenthos.Forge, and that is
-         enforced in the API's own project file rather than here. -->
+         boundaries that matter are that Essenthos.Api and Essenthos.Forge do not reference each other,
+         and those are enforced in their own project files rather than here. -->
     <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
     <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
     <ProjectReference Include="..\Essenthos.Products.Postgres\Essenthos.Products.Postgres.csproj" />

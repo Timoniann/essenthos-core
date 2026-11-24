@@ -13,16 +13,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <!-- The schema, and the accounts this one owns. There is deliberately no reference to
+        <!-- The schema, the accounts this one owns, and the answers and pages it serves, which the
+             Forge composes too (Essenthos.Answers). There is deliberately no reference to
              Essenthos.Forge: a server that serves the corpus has no business holding a parser, and
              a boundary the compiler checks is the only kind that holds. -->
         <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
         <ProjectReference Include="..\Essenthos.Accounts\Essenthos.Accounts.csproj" />
+        <ProjectReference Include="..\Essenthos.Answers\Essenthos.Answers.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <InternalsVisibleTo Include="Essenthos.Core.Tests" />
-        <InternalsVisibleTo Include="Essenthos.Forge" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,25 +33,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- What each page is called in each language, as the reader's own meta.json words it; read
-             from the web container where it publishes them, and from here where it does not. -->
-        <Content Remove="Pages\Wording\*.json" />
-        <EmbeddedResource Include="Pages\Wording\*.json" LogicalName="Wording.%(Filename).json" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <!-- The passages that tell what happened where, which decide a record's story places (TSK-1235). -->
-        <None Remove="Endpoints\NarrativePassages.tsv" />
-        <EmbeddedResource Include="Endpoints\NarrativePassages.tsv" LogicalName="NarrativePassages.tsv" />
-        <EmbeddedResource Include="Pages\MovedChapters.tsv" LogicalName="MovedChapters.tsv" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="10.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.12" />
-      <!-- The smaller copies of the pictures, made on request (MIT). The Linux build of its native
-           library without dependencies, because the server's image has no fontconfig and draws no text. -->
-      <PackageReference Include="SkiaSharp" Version="4.152.1" />
+      <!-- SkiaSharp (Essenthos.Answers) makes the smaller copies of the pictures on request. The Linux build of its
+           native library without dependencies, because the server's image has no fontconfig and draws no text. -->
       <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.152.1" />
     </ItemGroup>
 
