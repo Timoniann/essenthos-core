@@ -65,5 +65,6 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
     }
 
     private static List<GreekWitnessLinks.GreekWord> Words(ProductText text, List<int> ids, long offset) =>
-        [.. ids.Select(id => new GreekWitnessLinks.GreekWord(offset + id, text.Words[id].Key.Position, text.Words[id].Surface, text.Words[id].Strong))];
+        [.. ids.Select(id => new GreekWitnessLinks.GreekWord(offset + id, text.Words[id].Key.Position, text.Words[id].Surface,
+            text.Words[id].Strong, text.Words[id].Morphology))];
 }
