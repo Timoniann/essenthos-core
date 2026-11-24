@@ -22,6 +22,7 @@ internal readonly record struct ClearBibleRecord(IReadOnlyList<string> Source, I
 /// </param>
 /// <param name="Part">The part of speech a source edition's row states, or null in a target file.</param>
 /// <param name="Gloss">The English gloss a source edition's row gives the word, or null.</param>
+/// <param name="Morph">The morphology code a source edition's row gives the word (<c>P-DPM</c>), or null.</param>
 internal readonly record struct ClearBibleToken(
     string Id,
     string Text,
@@ -29,7 +30,8 @@ internal readonly record struct ClearBibleToken(
     string? Strong,
     (int First, int Last)? Renders = null,
     string? Part = null,
-    string? Gloss = null);
+    string? Gloss = null,
+    string? Morph = null);
 
 /// <summary>
 /// Clear Bible's hand-made alignments, in Scripture Burrito form.
@@ -103,6 +105,7 @@ internal static class ClearBibleAlignment
         var rendersTo = Array.IndexOf(header, "source_verse_range_end");
         var parts = Array.IndexOf(header, "pos");
         var glosses = Array.IndexOf(header, "gloss");
+        var morphs = Array.IndexOf(header, "morph");
 
         while (reader.ReadLine() is { } line)
         {
@@ -120,7 +123,8 @@ internal static class ClearBibleAlignment
                 strongs >= 0 && cells.Length > strongs ? cells[strongs] : null,
                 Number(cells, renders) is { } first ? (first, Number(cells, rendersTo) ?? first) : null,
                 parts >= 0 && cells.Length > parts ? cells[parts] : null,
-                glosses >= 0 && cells.Length > glosses ? cells[glosses] : null);
+                glosses >= 0 && cells.Length > glosses ? cells[glosses] : null,
+                morphs >= 0 && cells.Length > morphs && cells[morphs].Length > 0 ? cells[morphs] : null);
         }
     }
 

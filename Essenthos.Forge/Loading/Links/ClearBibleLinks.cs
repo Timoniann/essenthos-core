@@ -64,7 +64,9 @@ internal sealed record ClearBibleJoined(
     int Unplaced = 0,
     int Crossed = 0,
     int MovedOntoWord = 0,
-    int Slipped = 0);
+    int Slipped = 0,
+    int Stray = 0,
+    int StrayRecords = 0);
 
 /// <summary>
 /// Clear Bible's hand-made alignments: a second opinion on the Berean, and the only opinion anybody
@@ -156,6 +158,7 @@ internal static partial class ClearBibleLinks
             ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
             : null;
         var early = set.Early is { } before ? EarlyNames.Of(tokens, before, source, all) : null;
+        var possessives = set.Possessive is { } possessive ? new Possessives(possessive, tokens, sourceTokens) : null;
         var misnumbered = set.Numbering switch
         {
             ClearBibleNumbering.Retokenised or ClearBibleNumbering.Redivided => Misnumbered(all, tokens),
@@ -166,7 +169,7 @@ internal static partial class ClearBibleLinks
         var drafts = new List<Draft>();
         int records = 0, unresolved = 0, withoutCounterpart = 0;
         int astray = 0, shifted = 0, moved = 0, refused = 0, overruledRecords = 0, trimmed = 0, renumbered = 0, unplaced = 0;
-        int movedOntoWord = 0, slipped = 0;
+        int movedOntoWord = 0, slipped = 0, stray = 0, strayRecords = 0;
 
         foreach (var stated in all)
         {
@@ -235,6 +238,17 @@ internal static partial class ClearBibleLinks
                 record = record with { Target = [named] };
             }
 
+            if (possessives is not null && Stray(record, possessives) is { Count: > 0 } strays)
+            {
+                stray += strays.Count;
+                record = record with { Target = [.. record.Target.Where(id => !strays.Contains(ClearBibleAlignment.Word(id)))] };
+                if (record.Target.Count == 0)
+                {
+                    strayRecords++;
+                    continue;
+                }
+            }
+
             var ours = Ours(record.Source, theirSource, ClearBibleAlignment.Unit);
             var theirs = Ours(record.Target, theirTarget, ClearBibleAlignment.Word);
 
@@ -266,7 +280,7 @@ internal static partial class ClearBibleLinks
 
         return new ClearBibleJoined(
             drafts, records, unresolved, withoutCounterpart, astray, shifted, moved, refused, overruledRecords, trimmed,
-            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0, movedOntoWord, slipped);
+            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0, movedOntoWord, slipped, stray, strayRecords);
     }
 
     /// <summary>
@@ -469,6 +483,122 @@ internal static partial class ClearBibleLinks
 
         /// <summary>The slip, with no word it can be moved onto with confidence: refused.</summary>
         Refused,
+    }
+
+    /// <summary>
+    /// The possessive determiners a record names that render none of its source words, as the Reina-Valera's set puts them
+    /// on another word of the verse than the one whose suffix or genitive they render: on the independent pronoun of the
+    /// suffix's person (Exodus 21:3 <em>su mujer</em> on הוּא, John 1:12 <em>su nombre</em> on αὐτοῖς), or as the same
+    /// spelling's other occurrence (Genesis 4:11, where <em>tu hermano</em> names the <em>tu</em> of <em>tu mano</em> and
+    /// the other way round; Genesis 10:5 <em>sus familias</em> on the <em>sus</em> of <em>sus tierras</em>). Read against
+    /// the Hebrew and the Greek, every one of 40 drawn at random is wrong, and the other sets do neither (PRB-1765).
+    /// <list type="bullet">
+    /// <item>A possessive whose record's source words are all independent pronouns: a Hebrew pronoun is never genitive,
+    /// and a Greek personal pronoun is one only in the genitive.</item>
+    /// <item>A possessive standing apart from the record's other words, where a word of the same spelling stands right
+    /// beside them, or where it stands more than three words away: a determiner stands before its noun.</item>
+    /// </list>
+    /// The possessive is taken out of the record, which keeps its other words; which word it should have named is the
+    /// record's question, not the reader's. Ids are the eleven-digit words.
+    /// </summary>
+    internal static HashSet<string> Stray(ClearBibleRecord record, Possessives possessives)
+    {
+        var stray = new HashSet<string>(StringComparer.Ordinal);
+        var targets = record.Target.Select(ClearBibleAlignment.Word).Distinct().ToList();
+        if (!targets.Any(possessives.Is))
+        {
+            return stray;
+        }
+
+        var independent = record.Source.Count > 0 && record.Source.All(possessives.Independent);
+        var others = targets.Where(id => !possessives.Is(id)).Select(possessives.At).OfType<int>().ToList();
+        foreach (var id in targets.Where(possessives.Is))
+        {
+            if (independent)
+            {
+                stray.Add(id);
+                continue;
+            }
+
+            if (others.Count == 0 || possessives.At(id) is not { } at)
+            {
+                continue;
+            }
+
+            var near = others.MinBy(other => Math.Abs(other - at));
+            var gap = Math.Abs(near - at);
+            if (gap > 1 && (gap > 3 || possessives.Beside(id, near)))
+            {
+                stray.Add(id);
+            }
+        }
+
+        return stray;
+    }
+
+    /// <summary>A set's possessive determiners and what <see cref="Stray"/> asks of its two token files.</summary>
+    internal sealed class Possessives
+    {
+        private readonly IReadOnlySet<string> words;
+        private readonly Dictionary<string, (int At, string Text)> target = new(StringComparer.Ordinal);
+        private readonly List<string> order = [];
+        private readonly Dictionary<string, ClearBibleToken> source = new(StringComparer.Ordinal);
+
+        public Possessives(IReadOnlySet<string> words, IEnumerable<ClearBibleToken> targetTokens, IEnumerable<ClearBibleToken> sourceTokens)
+        {
+            this.words = words;
+            foreach (var token in targetTokens.Where(token => !token.Excluded).OrderBy(token => token.Id, StringComparer.Ordinal))
+            {
+                var id = ClearBibleAlignment.Word(token.Id);
+                if (id.Length > 0 && target.TryAdd(id, (order.Count, token.Text.ToLowerInvariant())))
+                {
+                    order.Add(id);
+                }
+            }
+
+            foreach (var token in sourceTokens)
+            {
+                source.TryAdd(ClearBibleAlignment.Unit(token.Id), token);
+            }
+        }
+
+        public bool Is(string id) => target.TryGetValue(id, out var token) && words.Contains(token.Text);
+
+        /// <summary>Where a word stands among the words of the target file, marks of punctuation left out.</summary>
+        public int? At(string id) => target.TryGetValue(id, out var token) ? token.At : null;
+
+        /// <summary>Whether a word of the possessive's spelling, in its verse, stands right before or after the word at <paramref name="near"/>.</summary>
+        public bool Beside(string possessive, int near)
+        {
+            var (_, text) = target[possessive];
+            return new[] { near - 1, near + 1 }.Any(at => at >= 0 && at < order.Count && order[at] != possessive
+                && order[at][..8] == possessive[..8] && target[order[at]].Text == text);
+        }
+
+        /// <summary>
+        /// Whether a source word is a pronoun standing on its own: the Westminster morphology calls a suffix a suffix, and a
+        /// Greek personal pronoun (<c>P-</c>, <c>P-1</c>, <c>P-2</c>) outside the genitive renders no possessor.
+        /// </summary>
+        public bool Independent(string id)
+        {
+            if (!source.TryGetValue(ClearBibleAlignment.Unit(id), out var token) || token.Part is not ("pronoun" or "pron"))
+            {
+                return false;
+            }
+
+            if (token.Morph is not { } morph)
+            {
+                return true;
+            }
+
+            if (!morph.StartsWith("P-", StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            var inflection = morph.AsSpan(2).TrimStart("123");
+            return inflection.Length > 0 && inflection[0] != 'G';
+        }
     }
 
     /// <summary>Which word a record was moved onto from the preposition or article before it.</summary>
