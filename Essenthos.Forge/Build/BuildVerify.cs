@@ -37,7 +37,11 @@ internal static class ServedState
                               || !CarriedTables.Tables.Contains(Path.GetFileNameWithoutExtension(p)))))
             .Order(StringComparer.Ordinal).ToList();
         using var writer = store.Create(Product(database), ProductKind.Hand, ServedTable.Schema, ProductHeader.DescribeProducer(producer), store.Inputs(loaded),
-            header => header.Notes.Add(new(KeysNote, keys.ToString(CultureInfo.InvariantCulture))));
+            header =>
+            {
+                header.Notes.Add(new(KeysNote, keys.ToString(CultureInfo.InvariantCulture)));
+                header.Notes.AddRange(LoadCode.Notes);
+            });
         foreach (var (table, count) in rows.OrderBy(r => r.Key, StringComparer.Ordinal))
         {
             writer.Write(new ServedTable(table, count));

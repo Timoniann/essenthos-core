@@ -119,4 +119,47 @@ public sealed class ApplyReloadsTests
         new ApplyReloads().Reload(["strong_entry"], Graph, "test").Should().BeNull();
         new ApplyReloads().Reload(["word"], Graph, "test").Should().Contain("texts' load");
     }
+
+    [Fact]
+    public void A_load_whose_code_moved_reloads_its_own_tables_and_a_texts_or_links_load_refuses()
+    {
+        ApplyReloads Moved(string name, out string? refused)
+        {
+            var reloads = new ApplyReloads();
+            refused = reloads.Reload(LoadCode.Tables(LoadCode.All.Single(load => load.Load == name)), Graph, "test");
+            return reloads;
+        }
+
+        Moved("records", out var refused).Records.Should().BeTrue();
+        refused.Should().BeNull();
+        var names = Moved("names", out refused);
+        (names.Names, names.Records, refused).Should().Be((true, false, (string?)null));
+        var indexes = Moved("indexes", out refused);
+        (indexes.Strong, indexes.Forms, indexes.Renderings, indexes.Spellings, indexes.Names, refused)
+            .Should().Be((true, true, true, true, false, (string?)null));
+        Moved("numbers", out refused).Numbers.Should().BeTrue();
+        Moved("stored-strong", out refused).StoredStrong.Should().BeTrue();
+        Moved("frames", out refused).Frames.Should().BeTrue();
+        Moved("verse-links", out refused).VerseLinks.Should().BeTrue();
+        refused.Should().BeNull();
+        foreach (var fresh in new[] { "texts", "links", "carried" })
+        {
+            Moved(fresh, out refused);
+            refused.Should().NotBeNull($"only a fresh build fills what the {fresh} load fills");
+        }
+    }
+
+    [Fact]
+    public void A_served_state_names_the_loads_whose_code_moved_and_none_where_it_records_no_code()
+    {
+        var served = new ProductHeader("Essenthos/build/served/test", [], "test");
+        LoadCode.Recorded(served).Should().BeFalse();
+        served.Notes.AddRange(LoadCode.Notes);
+        LoadCode.Recorded(served).Should().BeTrue();
+        LoadCode.Moved(served).Should().BeEmpty();
+
+        var names = served.Notes.FindIndex(note => note.Key == "code-names");
+        served.Notes[names] = new(served.Notes[names].Key, "0000000000000000");
+        LoadCode.Moved(served).Select(load => load.Load).Should().Equal("names");
+    }
 }

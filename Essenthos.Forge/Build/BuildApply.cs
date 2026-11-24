@@ -65,6 +65,23 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             Stages.Add(new BuildStage("apply", "migrate", migrating.Elapsed, reloads.Migrations.Count, string.Join(", ", reloads.Migrations)));
         }
 
+        // A load whose code moved since the database was served is loaded again whole, as for a moved product (PRB-1867).
+        if (!LoadCode.Recorded(served.Header))
+        {
+            logger.LogWarning("build/served/{Database} records no loader code; it is recorded now, and a loader change made before it is not seen", database);
+        }
+        else
+        {
+            foreach (var load in LoadCode.Moved(served.Header))
+            {
+                if (reloads.Reload(LoadCode.Tables(load), graph, $"the code of the {load.Load} load moved") is { } refused)
+                {
+                    logger.LogError("The code of the {Load} load moved and is not applied in place: {Refused}; build --into a new database", load.Load, refused);
+                    return null;
+                }
+            }
+        }
+
         var changed = Changed(served.Header);
         if (changed.Count == 0 && reloads.IsEmpty)
         {
@@ -79,7 +96,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             caught += await catchUp.Context(false, cancellationToken);
             caught += await catchUp.Strength(null, false, cancellationToken);
             caught += await catchUp.Facts(false, cancellationToken);
-            if (caught + await catchUp.Pages(false, cancellationToken) > 0)
+            if (caught + await catchUp.Pages(false, cancellationToken) > 0 || !LoadCode.Recorded(served.Header))
             {
                 await catchUp.Count(cancellationToken);
                 await WriteServed(database, catchUp.Rows, cancellationToken);
