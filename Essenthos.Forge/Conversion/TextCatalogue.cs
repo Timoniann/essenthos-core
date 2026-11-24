@@ -100,6 +100,11 @@ internal static class TextCatalogue
                 ["Alexandrinus", "Swete", .. OttleyPages, $"Essenthos/texts/{OttleyTextSource.Slug}/corrections.tsv"]),
             .. CodexTextSource.All.Select(codex => Text(codex.Slug, codex.Read, codex.Folder)),
             Text(SamaritanTextSource.Slug, resources => SamaritanTextSource.Read(Path.Combine(resources, "SamaritanPentateuch")), "SamaritanPentateuch"),
+            Text(PeshittaTextSource.Slug, resources => PeshittaTextSource.Read(Path.Combine(resources, PeshittaTextSource.Folder)),
+                PeshittaTextSource.Folder),
+            .. TargumTextSource.All.Select(text => Text(text.Definition.Slug,
+                resources => TargumTextSource.Read(Path.Combine(resources, TargumTextSource.Folder), text),
+                [.. text.Books.Select(book => $"{TargumTextSource.Folder}/{book.Path}")])),
             Corrected(GeezTextSource.Slug, (resources, corrections) => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder), corrections),
                 GeezTextSource.Folder),
             Text(BereanTextSource.Slug, resources => BereanTextSource.Read(

@@ -39,6 +39,7 @@ texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/word
 texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/projected/* Essenthos/names/rules Essenthos/records/derived/kinds Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
 texts/{text}/index/renderings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/books Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/tables/word_strong Essenthos/texts/word-id-collisions	word_rendering word_rendering_place	text
 texts/{text}/index/rendered	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/books Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/tables/word_strong Essenthos/texts/word-id-collisions	word_rendering_witness word_rendering_source	text
+editions/tagnt	build	tagnt-editions	STEPBible Essenthos/texts/SBLGNT/words Essenthos/texts/WH1881/words Essenthos/texts/RP2018/words Essenthos/texts/TR1550/words	-	none
 versification/*	hand	by hand	-	-	none
 evidentia/words/*	hand	by hand (the small words of a language EVIDENTIA's attached-word rules read, and what each form says)	-	-	none
 evidentia/**	hand	by hand (the ledger; forge evidentia-export writes it)	-	-	none

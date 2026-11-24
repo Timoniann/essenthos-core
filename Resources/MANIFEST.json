@@ -114,6 +114,11 @@
     "files": 7,
     "sha256": "3dd88801e7eff68805014270c11748cfdc444423c9254c3af85e55751e3f5d4b"
   },
+  "DeadSeaScrolls": {
+    "bytes": 139848623,
+    "files": 82,
+    "sha256": "6b78a96e6232c72354875c76789b249ea0bc61485486aaac345791e5c758e80e"
+  },
   "Dillmann": {
     "bytes": 76301127,
     "files": 13729,
@@ -259,6 +264,11 @@
     "files": 3,
     "sha256": "b1e2a9cc6d57ea781214f6933118a81e86f4cc744e11e2d2c54b67438c4ddbac"
   },
+  "Peshitta": {
+    "bytes": 9286264,
+    "files": 16,
+    "sha256": "f79a558d2a5dc2a47a478db2d9bcbaa19f4b330a2a133fde19d28cf997ff10c6"
+  },
   "PlaceLocationSources": {
     "bytes": 1066648,
     "files": 5,
@@ -280,9 +290,9 @@
     "sha256": "b36dd971285114f8b05a2dbfc0b4d3688f51bab32f4f596327168a04aa295ff2"
   },
   "STEPBible": {
-    "bytes": 70208423,
-    "files": 4,
-    "sha256": "178f51e2ea43373a2ed68401557bbad08154e3f74d6c99d81d6e4546f3c32b06"
+    "bytes": 100337387,
+    "files": 6,
+    "sha256": "ab95a80cb4e641aa436c7c6694b6c1f37afd63f03889ef01a459226d66535908"
   },
   "STEPBibleLexicons": {
     "bytes": 40248359,
@@ -348,6 +358,11 @@
     "bytes": 1223700,
     "files": 14,
     "sha256": "15a5d5504b65fef876a7d365ad35d3e59b278b0c163fa910e722d9b6f55c5f61"
+  },
+  "Targums": {
+    "bytes": 5309226,
+    "files": 34,
+    "sha256": "02764a47b53de2d27a2110cddbee56fc7d3f3f89b3b51ce10292bd662be8d6ec"
   },
   "TextusReceptus": {
     "bytes": 4011481,

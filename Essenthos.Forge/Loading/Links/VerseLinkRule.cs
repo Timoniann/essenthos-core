@@ -42,7 +42,7 @@ internal static class VerseLinkRule
     /// </summary>
     internal static IReadOnlyList<DeclaredVersePair> DeclaredPairs =>
         [.. GeezTextSource.VersePairs, .. DeuterocanonTextSource.VersePairs, .. AlexandrinusTextSource.VersePairs,
-        .. CodexTextSource.VersePairs];
+        .. CodexTextSource.VersePairs, .. PeshittaTextSource.VersePairs, .. TargumTextSource.VersePairs];
 
     /// <summary>
     /// Every verse link with what it states and the verses it states it of, as one array: the verses

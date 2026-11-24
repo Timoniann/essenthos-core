@@ -1,0 +1,37 @@
+# SHA-256 of every Sefaria export file scripts/fetch-sefaria-targums.ps1 installs, read on 2026-11-24, as
+# <hash>  Targums/<work>/<book>.json  <-  <the object's path under json/Tanakh/Targum/ in the sefaria-export bucket>.
+# Each says "Public Domain" in its license field.
+e45770c06acc59a5524efea298d213f81d531c5182d13b444d9995fa3dacf5e0  Targums/onkelos/Deuteronomy.json  <-  Onkelos/Torah/Onkelos Deuteronomy/Hebrew/Onkelos Deuteronomy.json
+58965f70188de972cc13ebde03d6fbe5b299c249471610c7c717663de279a09f  Targums/onkelos/Exodus.json  <-  Onkelos/Torah/Onkelos Exodus/Hebrew/Onkelos Exodus.json
+d35c944077d33238bba5e6de40808ee68a7cffd1f64c0ca8d1f632d469ab7cf4  Targums/onkelos/Genesis.json  <-  Onkelos/Torah/Onkelos Genesis/Hebrew/Onkelos Genesis.json
+47b555fa6fabbbdda8f7c452287c7f1ac51f52c6e67befa78fb9bbd085865764  Targums/onkelos/Leviticus.json  <-  Onkelos/Torah/Onkelos Leviticus/Hebrew/Onkelos Leviticus.json
+208ccd843fe8507d11e09ea1057db55875d052435bff0d1f09f73c95bc63185d  Targums/onkelos/Numbers.json  <-  Onkelos/Torah/Onkelos Numbers/Hebrew/Onkelos Numbers.json
+ec16df1bce7fef9e68ef995a9b0d440a1be63774f2c45d5e357dccf48ae11dda  Targums/jonathan/Amos.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Amos/Hebrew/Mikraot Gedolot.json
+19888c9590967b6b6c22acf9605dc3149f435b810ad278ec7db045808a2d63da  Targums/jonathan/Ezekiel.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Ezekiel/Hebrew/Mikraot Gedolot.json
+0af0ac4919aa6ddbe38a99abaafaccfaffdd7038994f3fd4c319864f1af2698a  Targums/jonathan/Habakkuk.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Habakkuk/Hebrew/Mikraot Gedolot.json
+a5aee86c9af44ffc93366769d28c85b2a8f6fa0da50e9f736af4c1f2fe3ee4e0  Targums/jonathan/Haggai.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Haggai/Hebrew/Mikraot Gedolot.json
+1ef94d34740cb3e681443a4ebe95b1f0d802fa8ae94d02a21bf188353683c71b  Targums/jonathan/Hosea.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Hosea/Hebrew/Mikraot Gedolot.json
+9cdfee3625701efbd0bccb20cd1160e14ca50b7b0a755c5f20bd8d7931f0fb7d  Targums/jonathan/1Kings.json  <-  Targum Jonathan/Prophets/Targum Jonathan on I Kings/Hebrew/Mikraot Gedolot.json
+52959286d21f7b365cd192fa6ece650730ba3aed9cb084896627a96cb48279fa  Targums/jonathan/1Samuel.json  <-  Targum Jonathan/Prophets/Targum Jonathan on I Samuel/Hebrew/Mikraot Gedolot.json
+a6b229569fb0fe1c57979db8086de474b7ef66e9dd52055f638ef0b54c8523c6  Targums/jonathan/2Kings.json  <-  Targum Jonathan/Prophets/Targum Jonathan on II Kings/Hebrew/Mikraot Gedolot.json
+4c59b69429a88f1d3bc19f00d30b3d95f3f0361d66de508296a850cd9d07256b  Targums/jonathan/2Samuel.json  <-  Targum Jonathan/Prophets/Targum Jonathan on II Samuel/Hebrew/Mikraot Gedolot.json
+b6bf6c4bbfea3526841779fc47595df11e63f14e1392fc2e51ce39035e10c2b6  Targums/jonathan/Isaiah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Isaiah/Hebrew/Mikraot Gedolot.json
+d6fa71be33e3138275695d2688340137a5e31b797de43d88994951f1a76f6364  Targums/jonathan/Jeremiah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Jeremiah/Hebrew/Mikraot Gedolot.json
+059b54cdb732d9b6cd6e5c81fec8581fe69ce27f1e3c10ea6a969bdfd755429d  Targums/jonathan/Joel.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Joel/Hebrew/Mikraot Gedolot.json
+b89d633f4feaf47572a248b7da002b146a8b2c5a79a420b1305e351992209dc3  Targums/jonathan/Jonah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Jonah/Hebrew/Mikraot Gedolot.json
+0b81b9f29c228816201b1d1296e1f25bdee368662dee4f98fc6cf85fc5fed2d6  Targums/jonathan/Joshua.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Joshua/Hebrew/Mikraot Gedolot.json
+41454a73658175ca6e01e3cfe5ac5cb781791fcc6602b137e50eb2223b357fe3  Targums/jonathan/Judges.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Judges/Hebrew/Mikraot Gedolot.json
+9516b1268a5ab392d9241d1cbf0b2ce3af34f6ba6c1239e639b39a03d6eae3ce  Targums/jonathan/Malachi.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Malachi/Hebrew/Mikraot Gedolot.json
+87d415684c3a13d3243eb156e30ad7e227e58681831400effff038f7ac927a0f  Targums/jonathan/Micah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Micah/Hebrew/Mikraot Gedolot.json
+1c62743e98795ca4c0605c460db18f96d1b7ad465f2711eb58fdc2742c645311  Targums/jonathan/Nahum.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Nahum/Hebrew/Mikraot Gedolot.json
+ae75199ca584a37516db4f9bfa63ffd97de5e2669b08412bb3615af8f4ae5c21  Targums/jonathan/Obadiah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Obadiah/Hebrew/Mikraot Gedolot.json
+723df1ef6cd96f7bf76a5b7e5d440e0495195a1869db81b3cc172fb82285ac70  Targums/jonathan/Zechariah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Zechariah/Hebrew/Mikraot Gedolot.json
+80deb8853efe81cc71d091af45e294c70926bc27d9d680b514e7b710b43ea978  Targums/jonathan/Zephaniah.json  <-  Targum Jonathan/Prophets/Targum Jonathan on Zephaniah/Hebrew/Mikraot Gedolot.json
+a0384c797da817ac78b38c44d1cc4a053bfbe6f9309f45d01326d8bbaf20bd1e  Targums/writings/Ecclesiastes.json  <-  Aramaic Targum/Writings/Aramaic Targum to Ecclesiastes/Hebrew/Mikraot Gedolot.json
+327cbf4eeb0dcb461d3fcf715a93455a5aa75e3db808b822ec00c1453b11a6d2  Targums/writings/Esther.json  <-  Aramaic Targum/Writings/Aramaic Targum to Esther/Hebrew/Mikraot Gedolot.json
+25bc57466d13b85ca64d8ec3cac51390a41057b2518d70a331653929daf107b2  Targums/writings/Job.json  <-  Aramaic Targum/Writings/Aramaic Targum to Job/Hebrew/Mikraot Gedolot.json
+34ba30035bfa64fad212de02f0b62f59f202fb3a38344e69a48af44f0f634911  Targums/writings/Lamentations.json  <-  Aramaic Targum/Writings/Aramaic Targum to Lamentations/Hebrew/Mikraot Gedolot.json
+09adb0c87db98d63ad7863b04cbbb54e372b1794a90d3d6abd5f927fa9469ff0  Targums/writings/Proverbs.json  <-  Aramaic Targum/Writings/Aramaic Targum to Proverbs/Hebrew/Mikraot Gedolot.json
+eee9c13752e9e4f15653d2f16b3699854ee3d3a2c5429ee581a2f5ab28628588  Targums/writings/Psalms.json  <-  Aramaic Targum/Writings/Aramaic Targum to Psalms/Hebrew/Mikraot Gedolot.json
+04f303b283847ffdd09edc75bd8a0e7a05686da5ad3d9606254a583b4050dd83  Targums/writings/Ruth.json  <-  Aramaic Targum/Writings/Aramaic Targum to Ruth/Hebrew/Mikraot Gedolot.json
+0364b313ac8daa8e92bc482b16490856a2fcebd95e330a2b89dc12d2d8fcf21e  Targums/writings/SongofSongs.json  <-  Aramaic Targum/Writings/Aramaic Targum to Song of Songs/Hebrew/Mikraot Gedolot.json

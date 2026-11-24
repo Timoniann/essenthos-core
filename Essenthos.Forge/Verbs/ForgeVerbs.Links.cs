@@ -29,6 +29,7 @@ internal static partial class ForgeVerbs
             Outside = Option(args, "--outside") is { } outside ? Identifier(outside) : declared.Outside,
             Symmetrisation = Option(args, "--symmetrisation") ?? declared.Symmetrisation,
             Lexemes = declared.Lexemes || args.Contains("--lexemes"),
+            Consonants = declared.Consonants || args.Contains("--consonants"),
             Books = args.Contains("--all-books") ? null
                 : Option(args, "--books") is { } books ? books.Split(',').Select(int.Parse).ToHashSet() : declared.Books,
             Workspace = Option(args, "--workspace") ?? declared.Workspace,

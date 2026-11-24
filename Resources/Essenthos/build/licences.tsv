@@ -53,6 +53,7 @@ CrossWireKJV	strong	content	GPL	share-alike	dataset:crosswire-kjv	CrossWireKJV/L
 CzechStudy2009	text	content	CC-BY-NC-ND-4.0	non-commercial-only	text:CSP2009	CzechStudy2009/LICENCE.md	-	NoDerivatives: served verbatim, no corrections; links are a layer beside it (RUL-0183). Its section headings, the notes pointing to the printed volume's tables and the sparse Strong and parsing codes are not read.
 DarbyFrench	text	content	Public Domain	public-domain	text:JND2024	DarbyFrench/LICENCE.md	-	-
 DarbyFrench	strong	derived	the module says Public Domain; concordance.bible reserves its data	unknown	dataset:concordance-darby-strong	DarbyFrench/LICENCE.md	TSK-1443 TSK-1331	The owner, 2026-11-04 (TSK-1443): numbers whose terms are unclear are used for the mapping only and never served; a replacement is sought (TSK-1331).
+DeadSeaScrolls	data	never	CC-BY-NC-4.0	non-commercial-only	-	DeadSeaScrolls/LICENCE.md	-	Fetched for TSK-0232; no reader yet, nothing reads it.
 Dillmann	lexicon	content	CC-BY-NC-SA-4.0	non-commercial-only	dataset:dillmann	Dillmann/LICENCE.md	-	ShareAlike accepted for the Ge'ez meaning layer (NOT-0197).
 Door43	text	content	CC-BY-SA-4.0	share-alike	text:IRVASM text:IRVBEN text:IRVGUJ text:IRVKAN text:IRVMAL text:IRVMAR text:IRVPAN text:IRVTAM text:IRVTEL text:IRVURD text:ULT text:UST text:VIGLT	Door43/LICENCE.md	-	-
 Door43	alignment	derived	CC-BY-SA-4.0	share-alike	dataset:unfoldingword dataset:unfoldingword-ult dataset:unfoldingword-ust dataset:door43-avd dataset:door43-vi dataset:door43-lsg dataset:door43-irv	Door43/LICENCE.md	-	The links are offered under CC BY-SA, without the unfoldingWord mark.
@@ -105,6 +106,7 @@ OpenBibleCrossReferences	data	content	CC BY	permitted-with-attribution	dataset:o
 OpenHebrewBible	alignment	derived	CC-BY-NC-4.0	non-commercial-only	dataset:ohb-cuv	OpenHebrewBible/LICENCE.md	-	-
 PanLexSwadesh	data	never	CC0-1.0	public-domain	-	PanLexSwadesh/LICENCE.md	-	-
 PeriodO	data	content	CC0-1.0	public-domain	dataset:periodo	PeriodO/LICENCE.md	-	-
+Peshitta	text	content	CC-BY-NC-4.0	non-commercial-only	text:PESHITTA	Peshitta/LICENCE.md	-	The ETCBC's data licence (docs/about.md); its LICENSE file is the converter's MIT. The .tf headers name SEDRA as source: both accounts are quoted.
 PlaceLocationSources	data	derived	OGL-UK-3.0 and CC BY	permitted-with-attribution	dataset:pcgn dataset:drews-han-2010	PlaceLocationSources/LICENCE.md	-	The documents read; their coordinates are typed into records/facts/location-supplements.
 ReinaValera1909	text	content	Public Domain	public-domain	text:RV1909	ReinaValera1909/LICENCE.md	-	-
 ReinaValera1909	strong	derived	Copyrighted; given by its author to software publishers, locked	prohibited	dataset:gomez-rv1909-strong	ReinaValera1909/LICENCE.md	TSK-1443 TSK-1331	Rubén Gómez's tagging. The owner, 2026-09-20 (PRB-0375) and 2026-11-04 (TSK-1443): mapping only, never served; a replacement is sought (TSK-1331).
@@ -131,6 +133,9 @@ Swete/First1KGreek/ecclesiastes-swete-1896.xml	text	content	CC-BY-SA-4.0	share-a
 SweteScans	scans	never	Public Domain	public-domain	-	SweteScans/LICENCE.md	-	Read by hand to restore words.
 SynodalStrong	strong	derived	Copyright 1996 Bob Jones University: non-profit use of the work unmodified	prohibited	dataset:bju-synodal-strong	SynodalStrong/LICENCE.md	PRB-0264 TSK-1443	The owner, 2026-09-13 (PRB-0264) and 2026-11-04 (TSK-1443): mapping only, numbers never served; RUSV also takes 209 corrections of letters from it.
 SynodalWikisource	text	content	Public Domain	public-domain	text:*	SynodalWikisource/LICENCE.md	-	-
+Targums/writings	text	content	Public Domain	public-domain	text:TGWRITINGS	Targums/LICENCE.md	-	Each Mikraot Gedolot version's own license field; the fetch refuses any other.
+Targums/onkelos	text	content	Public Domain	public-domain	text:ONKELOS	Targums/LICENCE.md	-	Each version's own license field; the Yemenite Taj (CC-BY-SA) and the Metsudah copy (CC-BY-NC) are not fetched.
+Targums/jonathan	text	content	Public Domain	public-domain	text:TGJONATHAN	Targums/LICENCE.md	-	The Prophets only, each version's own license field; the Torah's "Targum Jonathan" is Pseudo-Jonathan and not fetched.
 TextusReceptus	text	content	Public Domain	public-domain	text:TR1550 text:TR1894 dataset:byztxt	TextusReceptus/LICENCE.md	-	parsed/, Robinson's composite of both editions.
 TextusReceptus/scrivener	data	never	Public Domain	public-domain	-	TextusReceptus/LICENCE.md	-	Robinson's plain Scrivener 1894 (byztxt/greektext-scrivener), the answer key the extraction from parsed/ is checked against; never loaded.
 Thayer	lexicon	content	CC0-1.0 (the Every Promise edition); Thayer 1889 and Strong 1890 public domain	public-domain	dataset:thayer	Thayer/LICENCE.md	-	book/*.md only, 5,414 of its 5,521 entries (97 are cards of Strong-style fields, not Thayer, and 10 hold another word's article; neither is read); decoded from an e-Sword module whose own terms are not stated, accepted by the owner 2026-11-22 (TSK-1901).

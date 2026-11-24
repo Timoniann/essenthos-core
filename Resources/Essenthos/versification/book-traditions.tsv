@@ -26,6 +26,10 @@
 # for it either. It numbers the Septuagint's way everywhere else except in 1 Kings and Malachi, where it
 # divides the chapters as the King James does: placed by the Greek's rules there, 1 Kings 5 stood at the
 # Greek's chapter 4 and Malachi 4:4 at 4:5, against the Synodal's words.
+#
+# PESHITTA: the Leiden Peshitta numbers the books of the Hebrew Bible as the Hebrew does (measured chapter by chapter
+# against BHSA, 2026-11-24, TSK-0230), and the books beyond them in the edition's own way, which the data has no column for:
+# they stand at their own numbers, and the verse pairs join them to Brenton's Greek only where both print the same verses.
 text	book	tradition	why
 NPU2022	Psa	septuagint	its note on Psalm 9 says it numbers the Psalms as the Greek does, and it counts the titles as verses
 RUSV	1Es	unknown	from Russian Wikisource in the Synodal's own numbering, which the data has no column for
@@ -41,3 +45,16 @@ CSLELIZABETH	Tob	unknown	as 1 Esdras
 CSLELIZABETH	Jdt	unknown	as 1 Esdras
 CSLELIZABETH	Sir	unknown	as 1 Esdras
 CSLELIZABETH	Wis	unknown	as 1 Esdras
+PESHITTA	Bar	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Lje	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Tob	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Jdt	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Wis	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Sir	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	1Es	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	2Es	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Man	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Sus	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	Bel	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	1Ma	unknown	the Leiden edition's own numbering, which the data has no column for
+PESHITTA	2Ma	unknown	the Leiden edition's own numbering, which the data has no column for

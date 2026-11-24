@@ -122,7 +122,7 @@ internal static partial class ForgeVerbs
             FrameCheck),
 
         // Links between texts.
-        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--symmetrisation och|intersection] [--lexemes] [--books <b,...>|--all-books] [--workspace <name>] [--verses <range,...>] [--from <Resources>]",
+        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--symmetrisation och|intersection] [--lexemes] [--consonants] [--books <b,...>|--all-books] [--workspace <name>] [--verses <range,...>] [--from <Resources>]",
             "Align two texts with SIL's statistical aligner from the store's files into the pair's aligner method file, training the answer "
             + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise; --verses writes only the rows of FROM words in those verses and keeps every other row of the file. Reads no database.",
             Align, Least: 2),
@@ -264,6 +264,9 @@ internal static partial class ForgeVerbs
         new("strong-numbers", "[--from <Resources>] [--force] [--parallel <n>]",
             "Write each text's texts/<SLUG>/numbers, the one Strong number every word carries for marking (its own, else an original's it renders, else a translation's it renders by the same rule), where an input moved, and build/strong-disagreements. Reads no database.",
             StrongNumbersVerb),
+        new("tagnt-editions", "[--from <Resources>] [--force]",
+            "Write editions/tagnt: which printed editions STEPBible's TAGNT says hold each word, joined to the words of SBLGNT, WH1881, "
+            + "RP2018 and TR1550 by Strong number, where TAGNT or those words moved. Reads no database.", TaggedEditionsVerb),
         new("stored-strong", "[--from <Resources>] [--force] [--parallel <n>]",
             "Write each text's texts/<SLUG>/strong-occurrences (its numbered words at their verses' primary frame places) and texts/<SLUG>/pair-links (the links joining it to each edition that is not a translation), where an input moved. Reads no database.",
             StoredStrongVerb),

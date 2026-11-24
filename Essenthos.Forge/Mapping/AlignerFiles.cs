@@ -236,7 +236,7 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         double? agreedBelow = measured is { AgreedBelow: { } measuredBelow } && threshold == measured.Minimum ? measuredBelow : null;
         var answer = await Answer(pair.From, pair.To, pair.Answers, pair.Model, asWritten: false, books: null,
             lettered: pair.Outside is not null || SameVersification(pair.From, pair.To), cancellationToken, agreed: agreedBelow is not null,
-            lexemes: pair.Lexemes, symmetrisation: pair.Symmetrisation);
+            lexemes: pair.Lexemes, symmetrisation: pair.Symmetrisation, consonants: pair.Consonants, unread: pair.Unread);
         var prior = Syntax(pair.To);
         var agreement = agreedBelow is { } agreedFrom
             ? new AlignmentPipeline.Agreement(AlignmentPipeline.PairsOf(answer.Agreed!, answer.Addresses.Count), agreedFrom)
@@ -280,6 +280,7 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             Routes.Written(draft.Translation),
             $"{CompositionPipeline.Machine} {pair.Model}, symmetrised {pair.Symmetrisation}"
             + (pair.Lexemes ? ", both texts by lexeme" : string.Empty)
+            + (pair.Consonants ? ", the source by its consonants and the target by lexeme" : string.Empty)
             + (prior.Known ? ", rescored on ETCBC phrase and clause structure" : string.Empty)
             + (double.IsNaN(draft.Position)
                 ? $", {NameLists.AddedSource}"
@@ -344,15 +345,22 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
     /// <param name="agreed">Whether the answer holding only the pairs both directions of the model name is read too: a pool's pair alone has one.</param>
     /// <param name="lexemes">Both texts by their dictionary forms (<see cref="AlignmentPipeline.Lexeme"/>): two originals, which both carry one.</param>
     /// <param name="symmetrisation">How the model's two directions are joined for an unpooled pair (<see cref="AlignmentPipeline.Och"/> or another).</param>
+    /// <param name="consonants">
+    /// The source by its consonants (<see cref="AlignmentPipeline.Consonants"/>) and the target by lexeme: a Semitic witness that
+    /// carries no lemma against the Hebrew.
+    /// </param>
+    /// <param name="unread">Canonical books neither trained on nor written: books the source orders otherwise under the same numbers.</param>
     private async Task<Stored> Answer(
         string fromSlug, string toSlug, string workspace, string modelType, bool asWritten, IReadOnlySet<int>? books, bool lettered,
-        CancellationToken cancellationToken, bool agreed = false, bool lexemes = false, string symmetrisation = AlignmentPipeline.Och)
+        CancellationToken cancellationToken, bool agreed = false, bool lexemes = false, string symmetrisation = AlignmentPipeline.Och,
+        bool consonants = false, IReadOnlySet<int>? unread = null)
     {
         var pool = asWritten || books is not null ? null : AlignmentPipeline.Pool(fromSlug, toSlug);
-        Func<WordForms, string> sourceForm = lexemes ? AlignmentPipeline.Lexeme
+        Func<WordForms, string> sourceForm = consonants ? AlignmentPipeline.Consonants
+            : lexemes ? AlignmentPipeline.Lexeme
             : asWritten ? AlignmentPipeline.Written
             : word => AlignmentPipeline.Reduce(word);
-        Func<WordForms, string> targetForm = lexemes ? AlignmentPipeline.Lexeme
+        Func<WordForms, string> targetForm = lexemes || consonants ? AlignmentPipeline.Lexeme
             : pool is null ? word => AlignmentPipeline.Comparable(word)
             : AlignmentPipeline.Pooled;
         var source = AlignedWords.Read(texts[fromSlug], sourceForm, lettered, books: books, strong: Served(fromSlug),
@@ -362,6 +370,12 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         var refused = Refused(fromSlug, toSlug);
         source = AlignmentPipeline.Unmet(source, refused);
         target = AlignmentPipeline.Unmet(target, refused);
+        if (unread is not null)
+        {
+            source = source.Where(verse => !unread.Contains(verse.Key.Item1)).ToDictionary();
+            target = target.Where(verse => !unread.Contains(verse.Key.Item1)).ToDictionary();
+        }
+
         var addresses = AlignmentPipeline.Shared(fromSlug, toSlug, source, target);
         if (addresses.Count == 0)
         {
@@ -370,7 +384,7 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         }
 
         Directory.CreateDirectory(Path.Combine(Root, workspace));
-        if (pool is not null && (lexemes || symmetrisation != AlignmentPipeline.Och))
+        if (pool is not null && (lexemes || consonants || symmetrisation != AlignmentPipeline.Och))
         {
             throw new InvalidOperationException($"{fromSlug}-{toSlug} is aligned by its pool's model, which reads its own forms and joins its directions by och.");
         }
@@ -611,6 +625,11 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
 /// <param name="Books">The target's canonical books whose words the file is written for; the model still trains on every verse.</param>
 /// <param name="Workspace">The workspace the answers are kept in, where it is not the pair's own (which another run of the pair reads).</param>
 /// <param name="Note">How the threshold was measured, carried in every row's source.</param>
+/// <param name="Consonants">The source read by its consonants and the target by lexeme: a Semitic witness that carries no lemma.</param>
+/// <param name="Unread">
+/// Canonical books the model neither trains on nor writes: the source prints them under the target's numbers in another order,
+/// so a shared address pairs two different passages.
+/// </param>
 internal sealed record AlignedPair(
     string From,
     string To,
@@ -621,7 +640,9 @@ internal sealed record AlignedPair(
     bool Lexemes = false,
     IReadOnlySet<int>? Books = null,
     string? Workspace = null,
-    string? Note = null)
+    string? Note = null,
+    bool Consonants = false,
+    IReadOnlySet<int>? Unread = null)
 {
     public string Name => MappingProducts.Pair(From, To);
 
@@ -670,6 +691,21 @@ internal sealed class AlignerSource : IPairSource
         new("GRCBRENT", "BHSA", Minimum: 0.3, Symmetrisation: AlignmentPipeline.BothDirections, Lexemes: true,
             Books: new HashSet<int> { 17, 18, 19, 20 }, Workspace: "GRCBRENT-BHSA-lexemes",
             Note: "threshold 0.30 measured against CATSS on the books it covers, 96.8% on held books"),
+
+        // The Targums and the Peshitta against the Hebrew they were translated from: the source by its consonants (neither
+        // carries a lemma), BHSA by lexeme, each trained on every verse it shares with BHSA and written from the lowest band of
+        // 0.10 that read 95% or more right by hand against the Hebrew, every band above it too (TSK-0230, TSK-0231). Onkelos is
+        // close to word for word; Jonathan explains as it translates, so the 0.60 band read 13 of 15. The Targums of the
+        // Writings read 90-94% in every band of the model's och answer and hold only the pairs both its directions name. The
+        // Peshitta's 2 Chronicles stands under the Hebrew numbers in another order, so it is not read.
+        new("ONKELOS", "BHSA", Minimum: 0.5, Consonants: true,
+            Note: "threshold 0.50 read by hand against the Hebrew, 80 of 81 right from it"),
+        new("TGJONATHAN", "BHSA", Minimum: 0.7, Consonants: true,
+            Note: "threshold 0.70 read by hand against the Hebrew, 93 of 95 right from it"),
+        new("TGWRITINGS", "BHSA", Minimum: 0.3, Consonants: true, Symmetrisation: AlignmentPipeline.BothDirections,
+            Note: "threshold 0.30 read by hand against the Hebrew, 136 of 140 right from it"),
+        new("PESHITTA", "BHSA", Minimum: 0.5, Consonants: true, Unread: new HashSet<int> { 14 },
+            Note: "threshold 0.50 read by hand against the Hebrew, 98 of 100 right from it"),
     ];
 
     private readonly IReadOnlyList<AlignedPair> _pairs;
