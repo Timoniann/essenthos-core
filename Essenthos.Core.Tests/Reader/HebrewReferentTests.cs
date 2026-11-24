@@ -32,13 +32,14 @@ public sealed class HebrewReferentTests : IDisposable
 
         // God ... his work ... his father ... his hand ... his work ... he (a pronoun as a whole) ... his seed, rendered "seed" alone
         // ... the Philistine, him ... here am I, here am I ... my daughters, rendered «дочки мої» ... and he saw him, rendered
-        // «він побачив його» ... his father, rendered «її батька» ... and he said, its subject God.
+        // «він побачив його» ... his father, rendered «її батька» ... and he said, its subject God ... he was buried, its
+        // suffix God ... he brought, its suffix God.
         _hebrew = Corpus.Add(_db, "BHSA", TextKind.PrintedEdition, "hbo",
             (2, 2, ["אֱלֹהִים", "מְלַאכְתּוֹ", "אָבִיו", "יָדוֹ", "מְלַאכְתּוֹ", "הוּא", "זַרְעוֹ", "לוֹ", "לוֹ", "הַפְּלִשְׁתִּי", "לוֹ", "הִנֵּנִי", "הִנֵּנִי",
-                "בְנֹתַי", "וַיַּרְאֵהוּ", "אָבִיו", "וַיֹּאמֶר"]));
+                "בְנֹתַי", "וַיַּרְאֵהוּ", "אָבִיו", "וַיֹּאמֶר", "וַיִּקְבְּרֻהוּ", "הֱבִיאוֹ"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (2, 2, ["God", "his", "work", "his", "father", "his", "hand", "his", "work", "he", "seed", "unto", "him", "him", "Philistine", "him",
-                "Here", "Here", "he", "said"]));
+                "Here", "Here", "he", "said", "he", "was", "buried", "he", "brought"]));
         _ukrainian = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (2, 2, ["дочки", "мої", "він", "побачив", "його", "її", "батька", "його", "її", "йому"]));
         _db.SaveChanges();
 
@@ -77,7 +78,9 @@ public sealed class HebrewReferentTests : IDisposable
         Parsed(Hebrew(15), "verb", "רָאָה", "3ms", true);
         Parsed(Hebrew(16), "noun", "אָב", "3ms", true);
         Parsed(Hebrew(17), "verb", "אָמַר", null, false, subject: "3ms");
-        foreach (var position in new[] { 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17 })
+        Parsed(Hebrew(18), "verb", "קָבַר", "3ms", true);
+        Parsed(Hebrew(19), "verb", "בּוֹא", "3ms", true);
+        foreach (var position in new[] { 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 19 })
         {
             _db.WordReferents.Add(new WordReferent
             {
@@ -107,6 +110,8 @@ public sealed class HebrewReferentTests : IDisposable
         Align([Ukrainian(3), Ukrainian(4), Ukrainian(5)], Hebrew(15));
         Align([Ukrainian(6), Ukrainian(7)], Hebrew(16));
         Align([English(19), English(20)], Hebrew(17));
+        Align([English(21), English(22), English(23)], Hebrew(18));
+        Align([English(24), English(25)], Hebrew(19));
         Align([Ukrainian(8)], English(14));
         Align([Ukrainian(9)], English(10));
         Align([Ukrainian(10)], English(13));
@@ -204,6 +209,19 @@ public sealed class HebrewReferentTests : IDisposable
         (await Read(_english, 19)).Referents.Should().ContainSingle().Which.Slug.Should().Be("god", "he says the verb's third person singular");
         (await Read(_english, 20)).Referents.Should().BeNull("said renders the verb");
         (await Read(_hebrew, 17)).Referents.Should().BeNull("the verb itself is no word standing for anybody");
+    }
+
+    [Fact]
+    public async Task ASubjectPronounOfAVerbTurnedPassiveIsItsObjectSuffix()
+    {
+        (await Read(_english, 21)).Referents.Should().ContainSingle().Which.Slug.Should().Be("god", "he of 'he was buried' is the one buried");
+    }
+
+    [Fact]
+    public async Task ASubjectPronounIsNotTheVerbsObjectSuffix()
+    {
+        (await Read(_english, 24)).Referents.Should().BeNull("he of 'he brought him' is not the one the suffix names");
+        (await Read(_hebrew, 19)).Referents.Should().ContainSingle().Which.Slug.Should().Be("god");
     }
 
     [Fact]
