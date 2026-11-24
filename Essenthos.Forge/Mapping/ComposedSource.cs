@@ -32,8 +32,9 @@ internal sealed record ComposedPair(
 /// <summary>
 /// The <c>composed</c> file of a pair from files alone: the aligner's answers stored for the pair and for each hop to a middle
 /// text, the middle texts' finals into the target, and the pair's own final, verse links and words (<see cref="CompositionPipeline"/>).
-/// A composition reads its own pair's final, which is made from the file it writes, so no build line runs it: the file is kept
-/// and <c>forge compose</c> draws it again by hand, training what it lacks.
+/// A composition reads its own pair's final, which is made from the file it writes, so no line of the declared graph runs it: the
+/// store build draws a declared pair again after its producers when the pair's other inputs moved or its merge lost composed rows
+/// (<see cref="Redraws"/>), and <c>forge compose</c> draws any pair by hand; both train the hops they lack.
 /// </summary>
 internal sealed class ComposedSource : IPairSource
 {
@@ -99,9 +100,6 @@ internal sealed class ComposedSource : IPairSource
 
     public ComposedSource(IReadOnlyList<ComposedPair>? pairs = null) => _pairs = pairs ?? Pairs;
 
-    /// <summary>Whether a hop whose stored answers were made from other words is trained here (<c>forge compose</c>), or waits.</summary>
-    public bool Trains { get; init; }
-
     public string Method => MappingMethods.Composed;
 
     public string Name => "composed";
@@ -138,7 +136,7 @@ internal sealed class ComposedSource : IPairSource
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
         var composed = Declared(pair);
-        var aligner = new AlignerFiles(texts, new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(log)) { Trains = Trains });
+        var aligner = new AlignerFiles(texts, new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(log)));
         var composer = new CompositionPipeline(texts, aligner, new LineLogger<CompositionPipeline>(log));
         var (_, rows) = composer.Run(composed.From, composed.Vias, composed.To, composed.Minimum, composed.Precision, composed.Unmeasured,
             composed.Daughter, composed.Agreeing, composed.RefuseUnmeasured).GetAwaiter().GetResult();

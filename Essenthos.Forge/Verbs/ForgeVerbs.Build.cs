@@ -93,8 +93,8 @@ internal static partial class ForgeVerbs
 
         if (!args.Contains("--no-products"))
         {
-            var made = await BuildProducts(forge, stages, Option(args, "--producers") is { } producers ? int.Parse(producers, CultureInfo.InvariantCulture) : ProducersAtOnce);
-            if (!made)
+            var atOnce = Option(args, "--producers") is { } producers ? int.Parse(producers, CultureInfo.InvariantCulture) : ProducersAtOnce;
+            if (!await BuildProducts(forge, stages, atOnce) || !await Redraw(forge, stages, atOnce))
             {
                 return 1;
             }
@@ -338,6 +338,79 @@ internal static partial class ForgeVerbs
         finally
         {
             Console.SetOut(console);
+        }
+    }
+
+    /// <summary>
+    /// How many times the store build draws the kept model-drawn files again: a composition through a pair drawn in the same
+    /// round reads that pair's final only once the round's merge made it, so a chain of them takes a round per link.
+    /// </summary>
+    private const int RedrawRounds = 4;
+
+    /// <summary>Compositions drawn again at once; each reads several finals and trains its hops on many cores.</summary>
+    private const int RedrawsAtOnce = 4;
+
+    /// <summary>
+    /// Draws again every composition and kept aligner file that is due (<see cref="Redraws"/>), training what its hops lack, then
+    /// runs the producers again so the merge and everything after it read what was drawn; until none is due or the rounds run
+    /// out. A file whose redraw could not train (<see cref="Loading.ModelRuns"/>) is left as it was and drawn no more this build.
+    /// What is still due at the end is logged as <c>still needs</c> and named in the report; the build goes on.
+    /// </summary>
+    private static async Task<bool> Redraw(ForgeRun forge, List<BuildStage> stages, int atOnce)
+    {
+        var waiting = new Dictionary<string, string>(StringComparer.Ordinal);
+        for (var round = 1; ; round++)
+        {
+            var store = new ProductStore(forge.Resources);
+            var texts = new ProductTexts(store);
+            var due = Redraws.Find(texts, ProductGraph.Read(store)).Where(d => !waiting.ContainsKey(d.Name)).ToList();
+            if (due.Count == 0 || round > RedrawRounds)
+            {
+                foreach (var left in due)
+                {
+                    waiting[left.Name] = left.Why;
+                }
+
+                foreach (var (name, why) in waiting.OrderBy(w => w.Key, StringComparer.Ordinal))
+                {
+                    var (pair, file) = (name.Split(' ')[0], name.Split(' ')[1]);
+                    forge.Logger.LogWarning("redraw: {Pair} still needs {Verb}: {Why}", pair, MappingMethods.Regenerates(file), why);
+                }
+
+                stages.Add(new BuildStage("redraw", "still waiting", TimeSpan.Zero, waiting.Count,
+                    waiting.Count == 0 ? "none: every composition and kept aligner file is drawn from what it reads" : string.Join("; ", waiting.Keys.Order())));
+                return true;
+            }
+
+            var clock = Stopwatch.StartNew();
+            var ready = Redraws.Ready(due);
+            foreach (var later in due.Except(ready))
+            {
+                forge.Logger.LogInformation("redraw: {Name} waits for {Reads}, due in this round too", later.Name, string.Join(",", later.Reads));
+            }
+
+            foreach (var drawn in ready)
+            {
+                forge.Logger.LogInformation("redraw: {Name} is drawn again: {Why}", drawn.Name, drawn.Why);
+            }
+
+            var outcomes = Redraws.Draw(texts, ready, RedrawsAtOnce, line => forge.Logger.LogInformation("{Line}", line));
+            store.Save();
+            foreach (var (drawn, outcome) in outcomes)
+            {
+                forge.Logger.LogInformation("redraw: {File} {Outcome}", drawn.File, outcome.ToString());
+                if (outcome.Waiting is not null)
+                {
+                    waiting[drawn.Name] = outcome.Waiting;
+                }
+            }
+
+            stages.Add(new BuildStage("redraw", $"round {round}", clock.Elapsed, outcomes.Count(o => o.Outcome.Written is not null),
+                string.Join(", ", ready.Select(d => d.Name))));
+            if (!await BuildProducts(forge, stages, atOnce))
+            {
+                return false;
+            }
         }
     }
 

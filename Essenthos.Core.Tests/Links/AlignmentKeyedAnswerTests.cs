@@ -86,7 +86,7 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     }
 
     [Fact]
-    public async Task ABuildFindingNoAnswerForTheWordsAsTheyStandTrainsNothingAndSaysWhichPairWaits()
+    public async Task AReaderThatMayNotTrainFindingNoAnswerForTheWordsAsTheyStandSaysWhichPairWaits()
     {
         Store(_workspace, Lines(Verses), Lines(Rendered("earth", "land")), Crossed);
 
@@ -119,6 +119,33 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
         var again = await _aligner.Answer(_workspace, "ibm4", inputs, AlignmentPipeline.AlignmentFile,
             _ => throw new InvalidOperationException("trained twice"));
         again.Should().Be(folder);
+    }
+
+    [Fact]
+    public async Task TwoPairsNeedingOneAnswerAtOnceTrainItOnce()
+    {
+        var inputs = new List<(string Name, string[] Lines)> { ("source.txt", ["in the begin"]), ("target.txt", ["in the begin"]) };
+        var entered = new TaskCompletionSource();
+        var release = new TaskCompletionSource();
+        var trainings = 0;
+
+        async Task Train(string training)
+        {
+            Interlocked.Increment(ref trainings);
+            entered.TrySetResult();
+            await release.Task;
+            Directory.CreateDirectory(Path.Combine(training, "alignment"));
+            File.WriteAllLines(Path.Combine(training, AlignmentPipeline.AlignmentFile), [Straight]);
+        }
+
+        var first = _aligner.Answer(_workspace, "ibm4", inputs, AlignmentPipeline.AlignmentFile, Train);
+        await entered.Task;
+        var second = _aligner.Answer(_workspace, "ibm4", inputs, AlignmentPipeline.AlignmentFile, Train);
+        release.SetResult();
+
+        var folders = await Task.WhenAll(first, second);
+        folders.Should().AllBe(Path.Combine(_workspace, AlignmentPipeline.Key("ibm4", inputs)));
+        trainings.Should().Be(1, "the second waits for the first and reuses what it stored");
     }
 
     [Fact]

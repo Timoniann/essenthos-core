@@ -43,7 +43,7 @@ internal static partial class ForgeVerbs
             var store = new Products.ProductStore(Option(args, "--from") ?? forge.Resources);
             var outcome = PairSources.WriteVerses(new ProductTexts(store), MappingMethods.Aligner, pair.Name, verses,
                 $"forge align {from} {to} --verses {string.Join(",", verses)}", line => forge.Logger.LogInformation("{Line}", line),
-                [new AlignerSource([pair]) { Trains = true }]);
+                [new AlignerSource([pair])]);
             store.Save();
             var written = outcome.Written!;
             forge.Logger.LogInformation(
@@ -52,7 +52,7 @@ internal static partial class ForgeVerbs
             return Task.FromResult(0);
         }
 
-        return WriteMethodFile(forge, args, MappingMethods.Aligner, pair.Name, new AlignerSource([pair]) { Trains = true });
+        return WriteMethodFile(forge, args, MappingMethods.Aligner, pair.Name, new AlignerSource([pair]));
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ internal static partial class ForgeVerbs
                 .Select(range => Products.VerseRange.Parse(range)).ToList();
             var outcome = PairSources.WriteVerses(texts, MappingMethods.Composed, declared.Name, verses,
                 $"forge compose {from} {string.Join(",", vias)} {to} --verses {string.Join(",", verses)}",
-                line => forge.Logger.LogInformation("{Line}", line), [new ComposedSource([declared]) { Trains = true }]);
+                line => forge.Logger.LogInformation("{Line}", line), [new ComposedSource([declared])]);
             store.Save();
             var written = outcome.Written!;
             forge.Logger.LogInformation(
@@ -110,7 +110,7 @@ internal static partial class ForgeVerbs
         // instead of written from the threshold. Off by default until the owner has seen what it removes (PRB-1607).
         var pair = new ComposedPair(from, vias, to, minimum, precision, args.Contains("--unmeasured"), args.Contains("--daughter"), Agreeing(args),
             args.Contains("--refuse-unmeasured"));
-        return await WriteMethodFile(forge, args, MappingMethods.Composed, pair.Name, new ComposedSource([pair]) { Trains = true });
+        return await WriteMethodFile(forge, args, MappingMethods.Composed, pair.Name, new ComposedSource([pair]));
     }
 
     /// <summary>One pair's method file written by one source that may train its model, whatever the file was made from.</summary>

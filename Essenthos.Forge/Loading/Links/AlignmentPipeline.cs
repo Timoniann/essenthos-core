@@ -54,10 +54,22 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
     private AppDbContext Db => db ?? throw new InvalidOperationException("This alignment reads the store's files, not a database.");
 
     /// <summary>
-    /// Whether a pair whose stored answers were all made from other words is trained again here. The build reads the
-    /// answers it has and never trains (<see cref="StoredAlignmentMissingException"/>); <c>forge align</c> and <c>forge compose</c> train.
+    /// Whether a pair whose stored answers were all made from other words, are empty or are missing is trained here. The store
+    /// build, the pair producers and the verbs train (unless <see cref="ModelRuns"/> refuses the aligner); a reader that must
+    /// run no model says no, and meets <see cref="StoredAlignmentMissingException"/> instead.
     /// </summary>
     internal bool Trains { get; init; } = true;
+
+    /// <summary>
+    /// How many trainings run at once in one process. A training is a <c>machine</c> process of its own that takes minutes and
+    /// gigabytes for an Old Testament pair, and the pair producers run a dozen pairs side by side.
+    /// </summary>
+    private const int TrainingsAtOnce = 3;
+
+    private static readonly SemaphoreSlim Trainings = new(TrainingsAtOnce);
+
+    /// <summary>One gate per answer folder, so two pairs that share a hop train it once and neither clears the other's answer.</summary>
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> Folders = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     /// Measured with <c>score KJV BHSA</c> against the 625,826 correspondences the mapping file
@@ -205,6 +217,31 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         Func<string, string?>? complete = null)
     {
         var keyed = Path.Combine(workspace, Key(modelType, inputs));
+        if (Reusable(keyed, workspace, inputs, answer, complete) is { } reused)
+        {
+            return reused;
+        }
+
+        var gate = Folders.GetOrAdd(Path.GetFullPath(keyed), _ => new SemaphoreSlim(1));
+        await gate.WaitAsync();
+        try
+        {
+            // Another pair sharing this hop may have trained it while this one waited.
+            return Reusable(keyed, workspace, inputs, answer, complete) ?? await Train(keyed, workspace, inputs, answer, train, complete);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    private string? Reusable(
+        string keyed,
+        string workspace,
+        IReadOnlyList<(string Name, string[] Lines)> inputs,
+        string answer,
+        Func<string, string?>? complete)
+    {
         foreach (var folder in new[] { keyed, workspace })
         {
             if (Holds(folder, inputs, answer, complete))
@@ -215,6 +252,17 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
             }
         }
 
+        return null;
+    }
+
+    private async Task<string> Train(
+        string keyed,
+        string workspace,
+        IReadOnlyList<(string Name, string[] Lines)> inputs,
+        string answer,
+        Func<string, Task> train,
+        Func<string, string?>? complete)
+    {
         var standing = Directory.Exists(keyed) ? keyed : workspace;
         var stored = Stored(Path.Combine(standing, answer)) switch
         {
@@ -227,7 +275,12 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
             throw new StoredAlignmentMissingException(Refusal(standing, stored));
         }
 
-        RefuseToTrain(standing, stored);
+        if (ModelRuns.AlignerRefused)
+        {
+            throw new StoredAlignmentMissingException(
+                $"{Refusal(standing, stored)}, and {ModelRuns.Forbidden} is set without {ModelRuns.AlignerAllowed}");
+        }
+
         if (stored != StoredAlignment.None)
         {
             logger.LogWarning(
@@ -243,6 +296,7 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         }
 
         var training = $"{keyed}.training-{Guid.NewGuid().ToString("N")[..8]}";
+        await Trainings.WaitAsync();
         var clock = Stopwatch.StartNew();
         try
         {
@@ -283,6 +337,10 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
             }
 
             throw;
+        }
+        finally
+        {
+            Trainings.Release();
         }
 
         logger.LogInformation(
@@ -899,10 +957,6 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         !File.Exists(file) ? StoredAlignment.None
         : new FileInfo(file).Length == 0 ? StoredAlignment.Empty
         : StoredAlignment.Whole;
-
-    /// <summary>Before the aligner is trained or run (<see cref="ModelRuns"/>).</summary>
-    private static void RefuseToTrain(string workspace, StoredAlignment stored) =>
-        ModelRuns.RefuseAligner(Refusal(workspace, stored));
 
     /// <summary>Why the workspace's answer cannot be reused, and what to do about it.</summary>
     internal static string Refusal(string workspace, StoredAlignment stored) => stored switch

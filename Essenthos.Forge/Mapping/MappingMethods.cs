@@ -223,8 +223,8 @@ internal static partial class MappingMethods
     public static bool StatesAbsence(string method) => method is Stated or Manual or Ruling;
 
     /// <summary>
-    /// The methods a model drew, which a changed verse loses until the pair is aligned again (DOC-0224
-    /// §6.2, the owner's D1): a model trained again is not the same model.
+    /// The methods a model drew, which a changed verse loses until the pair is drawn again: the aligner's answer for a verse is
+    /// not kept once its words moved. The store build draws them again (<see cref="Redraws"/>, and aligner-pairs, which trains).
     /// </summary>
     public static bool Drawn(string method) => method is Aligner or Composed;
 
