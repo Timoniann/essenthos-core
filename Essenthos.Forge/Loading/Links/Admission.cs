@@ -69,6 +69,7 @@ internal sealed class Admission
     private readonly string? _measuredOn;
     private readonly bool _refusesUnmeasured;
     private readonly Added? _added;
+    private readonly IReadOnlySet<Route>? _middlesAlone;
 
     /// <summary>
     /// A middle text added to a composition that stood without it (<see cref="Keeping"/>): its route, its name, and the
@@ -78,7 +79,7 @@ internal sealed class Admission
 
     private Admission(
         IReadOnlyDictionary<Route, RouteFloor> floors, double threshold, double precision, string? measuredOn = null,
-        bool refusesUnmeasured = false, Added? added = null)
+        bool refusesUnmeasured = false, Added? added = null, IReadOnlySet<Route>? middlesAlone = null)
     {
         _floors = floors;
         _threshold = threshold;
@@ -86,6 +87,7 @@ internal sealed class Admission
         _measuredOn = measuredOn;
         _refusesUnmeasured = refusesUnmeasured;
         _added = added;
+        _middlesAlone = middlesAlone;
     }
 
     /// <summary>Every answer from the ordinary threshold, which is what a measurement starts from.</summary>
@@ -96,6 +98,7 @@ internal sealed class Admission
 
     public bool Admits(RoutedLink link) =>
         !Seconded(link)
+        && !MiddlesAlone(link.Route)
         && (_floors.TryGetValue(link.Route, out var floor)
             ? link.Confidence >= floor.Confidence
             : !Unmeasured(link.Route) && link.Confidence >= _threshold);
@@ -116,6 +119,26 @@ internal sealed class Admission
     private bool Unmeasured(Route route) => _refusesUnmeasured && _floors.Count > 0 && Routes.Families(route) == 1;
 
     /// <summary>
+    /// Whether an answer only the middle texts found, with no direct reading, is refused because no hand floor admits its
+    /// combination (<see cref="RefusingMiddlesAlone"/>).
+    /// </summary>
+    private bool MiddlesAlone(Route route) =>
+        _middlesAlone is { } admitted && (route & (Route.Written | Route.Reduced)) == 0 && !admitted.Contains(route);
+
+    /// <summary>
+    /// The same, refusing every answer that reaches the target only through the middle texts, unless a floor set by hand admits
+    /// its combination (NOT-0228). What the middle texts alone find was measured on statements at 79-80% (the King James alone,
+    /// and with the Berean, against the Hebrew), and on the texts that state nothing it is borrowed from proxies whose statements
+    /// sit on content words: hand-read, the King James and Berean routes of three English texts to the Hebrew were right 48-61%
+    /// of the time, the words they write being prepositions, "of" on a genitive and pronouns on a neighbour. A daughter, which
+    /// reaches the target through its middle text by design, is not held to this.
+    /// </summary>
+    /// <param name="hand">The pair's hand floors, as its routes; a middle-text combination among them is judged by its floor.</param>
+    public Admission RefusingMiddlesAlone(IReadOnlyDictionary<Route, RouteFloor> hand) =>
+        new(_floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, _added,
+            hand.Keys.Where(route => (route & (Route.Written | Route.Reduced)) == 0).ToHashSet());
+
+    /// <summary>
     /// The same, with floors measured by hand put before what was measured or borrowed (<c>mapping/&lt;pair&gt;/floors</c>,
     /// PRB-1607). A hand sample reads the words a source states and the words it does not, the pronouns and function words
     /// where composed answers go wrong most, so where one was made it is the better measure of the combination.
@@ -133,7 +156,7 @@ internal sealed class Admission
             floors[route] = floor;
         }
 
-        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, _added);
+        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, _added, _middlesAlone);
     }
 
     /// <summary>
@@ -174,7 +197,7 @@ internal sealed class Admission
             floors[route] = floor with { Basis = $"as before {via} was a middle text{(floor.Basis is null ? string.Empty : $", {floor.Basis}")}" };
         }
 
-        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, new Added(added, via, standing));
+        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, new Added(added, via, standing), _middlesAlone);
     }
 
     /// <summary>
@@ -183,7 +206,7 @@ internal sealed class Admission
     /// composition asks for it: the owner sees what it removes, text by text, before it is turned on (PRB-1607).
     /// </summary>
     public Admission RefusingUnmeasured(bool refuse = true) =>
-        refuse == _refusesUnmeasured ? this : new Admission(_floors, _threshold, _precision, _measuredOn, refuse, _added);
+        refuse == _refusesUnmeasured ? this : new Admission(_floors, _threshold, _precision, _measuredOn, refuse, _added, _middlesAlone);
 
     /// <summary>
     /// Whether a source's statements can measure answers at all: enough of its words have a word they
@@ -350,14 +373,15 @@ internal sealed class Admission
     {
         if (_floors.Count == 0)
         {
-            return $"every answer from {Number(_threshold)}, with nothing stated to measure against";
+            return $"every answer from {Number(_threshold)}, with nothing stated to measure against" +
+                   (_middlesAlone is null ? string.Empty : ", but what only the middle texts found");
         }
 
-        var written = _floors.Where(entry => !entry.Value.Refused)
+        var written = _floors.Where(entry => !entry.Value.Refused && !MiddlesAlone(entry.Key))
             .OrderByDescending(entry => entry.Value.Scored)
             .Select(entry => $"{Name(entry.Key, vias)} from {Number(entry.Value.Confidence)} " +
                              $"({entry.Value.Precision:P0} of {entry.Value.Scored}{Basis(entry.Value)})");
-        var refused = _floors.Where(entry => entry.Value.Refused && entry.Value.Scored > 0)
+        var refused = _floors.Where(entry => (entry.Value.Refused || MiddlesAlone(entry.Key)) && entry.Value.Scored > 0)
             .OrderByDescending(entry => entry.Value.Scored)
             .Select(entry => $"{Name(entry.Key, vias)} ({entry.Value.Precision:P0} of {entry.Value.Scored}{Basis(entry.Value)})");
         var unmeasured = _floors.Where(entry => entry.Value.Scored == 0)
@@ -370,6 +394,7 @@ internal sealed class Admission
         return $"each combination of readings measured against {_precision:P0}{where}; " +
                $"written: {string.Join(", ", written)}; refused: {string.Join(", ", refused)}; " +
                (_added is null ? string.Empty : $"what {_added.Via} found with one other family of readings only where the composition without it writes it; ") +
+               (_middlesAlone is null ? string.Empty : "what only the middle texts found refused, unless a hand floor admits it; ") +
                (unmeasured.Count == 0 ? string.Empty : $"refused as measured on neither: {string.Join(", ", unmeasured)}; ") +
                (_refusesUnmeasured ? "anything else one family of readings found is refused as measured by nothing, the rest " : "anything else ") +
                $"from {Number(_threshold)}";
