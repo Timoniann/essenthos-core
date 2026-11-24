@@ -275,7 +275,11 @@ internal record EventListItemResponse(
 /// <summary>One reckoning's year for an event in a list, as <see cref="EventDateResponse"/> gives it, without the workings.</summary>
 internal record EventListDateResponse(string Chronology, string Name, int? Year, int? BceYear, string Era);
 
-internal record EventRefResponse(string Slug, string Name);
+internal record EventRefResponse(string Slug, string Name)
+{
+    /// <summary>The title in the reader's language, as <see cref="EventResponse.LocalName"/>; null where none is held.</summary>
+    public string? LocalName { get; init; }
+}
 
 /// <summary>A person or a place, named just enough to link to.</summary>
 internal record NamedEntityResponse(string Slug, string Name, string? Distinguisher);
@@ -316,6 +320,10 @@ internal record PeriodResponse(
 
     /// <summary>The name in the reader's language, as <see cref="TimelinePeriodResponse.LocalName"/>.</summary>
     public string? LocalName { get; init; }
+
+    /// <summary>The dataset the period's page credits, as <see cref="DatasetCredits"/> names it; on one period's answer alone.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<DatasetCreditResponse>? Credits { get; init; }
 }
 
 /// <param name="LastAnnoMundiBeforeTheCommonEra">The base reckoning's, as the timeline sends it.</param>

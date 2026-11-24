@@ -104,7 +104,7 @@ internal sealed partial class PageLoader
     private async Task<PageContent?> Period(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
         var language = address.Language;
-        var detail = await EncyclopediaEndpoints.PeriodDetail(db, address.Slug!, cancellationToken, language.Corpus);
+        var detail = await EncyclopediaEndpoints.PeriodDetail(db, address.Slug!, cancellationToken, language.Corpus, language.Corpus, settings);
         if (detail is null)
         {
             return null;
@@ -165,8 +165,8 @@ internal sealed partial class PageLoader
             Parent = detail.Parent is { } parent ? new PageLink($"/periods/{parent.Slug}", parent.LocalName ?? parent.Name) : null,
             Person = person,
             Spans = spans,
-            Opens = detail.Opens is { } opens ? new PageLink($"/events/{opens.Slug}", opens.Name) : null,
-            Closes = detail.Closes is { } closes ? new PageLink($"/events/{closes.Slug}", closes.Name) : null,
+            Opens = detail.Opens is { } opens ? new PageLink($"/events/{opens.Slug}", opens.LocalName ?? opens.Name) : null,
+            Closes = detail.Closes is { } closes ? new PageLink($"/events/{closes.Slug}", closes.LocalName ?? closes.Name) : null,
             Inside = inside,
             InsideTotal = total,
             Nested = [.. detail.Inside.Select(child => new PageLink($"/periods/{child.Slug}", child.LocalName ?? child.Name))],

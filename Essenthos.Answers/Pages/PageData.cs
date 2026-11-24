@@ -39,7 +39,7 @@ internal static class PageData
         $"/v1/events/{Uri.EscapeDataString(slug)}?language={language.Corpus}&prose={language.Corpus}";
 
     public static string PeriodAddress(string slug, SiteLanguage language) =>
-        $"/v1/periods/{Uri.EscapeDataString(slug)}?language={language.Corpus}";
+        $"/v1/periods/{Uri.EscapeDataString(slug)}?language={language.Corpus}&prose={language.Corpus}";
 
     public static string StrongAddress(string number, SiteLanguage language) =>
         $"/v1/strong/{Uri.EscapeDataString(number)}?language={language.Corpus}";

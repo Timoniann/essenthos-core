@@ -17,9 +17,11 @@ internal static partial class EncyclopediaEndpoints
         routes.MapGet("/periods/{slug}", async (
             string slug,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
+            SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
-            await PeriodDetail(db, slug, cancellationToken, language) is { } found
+            await PeriodDetail(db, slug, cancellationToken, language, prose, settings) is { } found
                 ? Results.Ok(found)
                 : Results.NotFound());
 
@@ -117,12 +119,18 @@ internal static partial class EncyclopediaEndpoints
         }).KeptUntilRelease();
     }
 
-    /// <summary>One period as <c>/v1/periods/{slug}</c> answers it; null where there is none.</summary>
+    /// <summary>
+    /// One period as <c>/v1/periods/{slug}</c> answers it; null where there is none. The events that open and close it
+    /// are titled in <paramref name="prose"/> where a rendering is held, and with <paramref name="settings"/> the answer
+    /// carries the credit of its source.
+    /// </summary>
     internal static async Task<PeriodResponse?> PeriodDetail(
         AppDbContext db,
         string slug,
         CancellationToken cancellationToken,
-        string? language = null)
+        string? language = null,
+        string? prose = null,
+        SiteSettingsFile? settings = null)
     {
         var period = await db.Periods
             .Where(p => p.Slug == slug)
@@ -182,6 +190,9 @@ internal static partial class EncyclopediaEndpoints
         }
 
         var local = await PeriodNames.Of(db, named, language, cancellationToken);
+        var titles = await TextTranslations.Of(
+            db, [period.Opens?.Name, period.Closes?.Name], ReaderLanguages.Prose(prose, language), cancellationToken);
+        var sourceId = Datasets.Of(period.Source);
 
         return new PeriodResponse(
             period.Slug,
@@ -193,7 +204,7 @@ internal static partial class EncyclopediaEndpoints
             period.Uri,
             period.Notes,
             period.Source,
-            Datasets.Of(period.Source),
+            sourceId,
             period.Parent is null ? null : new PeriodRefResponse(
                 period.Parent.Slug, period.Parent.Name, null, null, null)
             {
@@ -201,14 +212,21 @@ internal static partial class EncyclopediaEndpoints
             },
             period.Entity is null ? null : new NamedEntityResponse(
                 period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
-            period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, EventMarks.Unstarred(period.Opens.Name)),
-            period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, EventMarks.Unstarred(period.Closes.Name)),
+            period.Opens is null ? null : Bound(period.Opens.Slug, period.Opens.Name, titles),
+            period.Closes is null ? null : Bound(period.Closes.Slug, period.Closes.Name, titles),
             [.. children.Select(c => c.Ref with { LocalName = local.GetValueOrDefault(c.Ref.Slug) })])
         {
             Years = Span(years, period.StartEventId, period.EndEventId, period.StartYear, period.EndYear),
             LocalName = local.GetValueOrDefault(period.Slug),
+            Credits = settings is null ? null : DatasetCredits.Of([sourceId], settings),
         };
     }
+
+    private static EventRefResponse Bound(string slug, string name, IReadOnlyDictionary<string, string> titles) =>
+        new(slug, EventMarks.Unstarred(name))
+        {
+            LocalName = EventMarks.UnstarredOrNull(TextTranslations.In(titles, name)),
+        };
 
     internal static async Task<IList<ChronologyResponse>> Chronologies(
         AppDbContext db,
