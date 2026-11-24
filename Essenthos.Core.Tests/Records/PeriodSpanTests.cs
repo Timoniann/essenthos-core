@@ -112,6 +112,37 @@ public sealed class PeriodSpanTests : IDisposable
         named.Should().ContainKey("world-trojanwar").WhoseValue.Should().Be("Троянська війна");
     }
 
+    [Fact]
+    public async Task AnEventCarriesThePeriodsItsYearFallsInAndTheCreditsOfItsSource()
+    {
+        var counted = Reckoning("bibledata", 1);
+        var opens = Happening("beginflood", "The Flood began");
+        var closes = Happening("endflood", "The Flood ended");
+        var before = Happening("birthnoah", "Noah was born");
+        var after = Happening("deathnoah", "Noah died");
+        var sacrifice = new Event { Slug = "noahsacrifice", Name = "Noah built an altar", Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0", YearFromCreation = 1657 };
+        _db.Events.Add(sacrifice);
+        await _db.SaveChangesAsync();
+
+        Dated(opens, counted, 1656);
+        Dated(closes, counted, 1657);
+        Dated(before, counted, 1056);
+        Dated(after, counted, 1100);
+        _db.Periods.AddRange(
+            new Period { Slug = "the-flood", Name = "The Flood", Level = 1, StartEvent = opens, EndEvent = closes, Source = "test" },
+            new Period { Slug = "an-earlier-span", Name = "An earlier span", Level = 1, StartEvent = before, EndEvent = after, Source = "test" });
+        await _db.SaveChangesAsync();
+
+        var settings = new SiteSettingsFile(
+            Path.Combine(Path.GetTempPath(), $"no-settings-{Guid.NewGuid():N}.json"),
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<SiteSettingsFile>.Instance);
+        var shown = await EncyclopediaEndpoints.EventDetail(_db, settings, "noahsacrifice", "eng", "eng", default);
+
+        shown!.Periods!.Select(p => p.Slug).Should().Equal("the-flood");
+        shown.Credits!.Select(c => c.Id).Should().Equal("bibledata");
+        shown.Credits![0].Licence.Should().Be("CC BY 4.0");
+    }
+
     private Chronology Reckoning(string slug, int position)
     {
         var chronology = new Chronology

@@ -95,8 +95,11 @@ internal sealed partial class PageLoader
     private readonly PageCache cache;
     private readonly DownloadsCatalogue downloads;
     private readonly PlacePictures? places;
+    private readonly PeriodLists? periods;
 
-    public PageLoader(AppDbContext db, ICanonIndex canon, SiteSettingsFile settings, PageCache cache, DownloadsCatalogue downloads, PlacePictures? places = null)
+    public PageLoader(
+        AppDbContext db, ICanonIndex canon, SiteSettingsFile settings, PageCache cache, DownloadsCatalogue downloads,
+        PlacePictures? places = null, PeriodLists? periods = null)
     {
         this.db = db;
         this.canon = canon;
@@ -104,6 +107,7 @@ internal sealed partial class PageLoader
         this.cache = cache;
         this.downloads = downloads;
         this.places = places;
+        this.periods = periods;
     }
 
     /// <summary>How many of a record's verses its page links to; the page itself lists them all.</summary>

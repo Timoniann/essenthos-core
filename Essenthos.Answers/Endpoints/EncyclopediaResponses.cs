@@ -249,6 +249,10 @@ internal record EntityResponse(
     /// <summary>The place this one is only another name for, where the gazetteer says so.</summary>
     public EntityTribeResponse? AnotherNameFor { get; init; }
 
+    /// <summary>The datasets the page credits, as <see cref="DatasetCredits"/> names them.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<DatasetCreditResponse>? Credits { get; init; }
+
     /// <summary>The place whose site this town was built on, standing at the same point on the map.</summary>
     public EntityTribeResponse? BuiltOnSiteOf { get; init; }
 

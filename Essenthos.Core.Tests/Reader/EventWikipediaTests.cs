@@ -15,6 +15,10 @@ namespace Essenthos.Core.Tests.Reader;
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EventWikipediaTests : IDisposable
 {
+    private static readonly SiteSettingsFile Settings = new(
+        Path.Combine(Path.GetTempPath(), $"no-settings-{Guid.NewGuid():N}.json"),
+        Microsoft.Extensions.Logging.Abstractions.NullLogger<SiteSettingsFile>.Instance);
+
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
 
@@ -46,7 +50,7 @@ public sealed class EventWikipediaTests : IDisposable
     public async Task AWorldEventLinksToTheArticleOfTheReadersLanguageOrTheEnglishOne(
         string language, string wikipedia, string title, string url)
     {
-        var shown = await EncyclopediaEndpoints.EventDetail(_db, "brunaboinne", language, language, default);
+        var shown = await EncyclopediaEndpoints.EventDetail(_db, Settings, "brunaboinne", language, language, default);
 
         shown!.Wikipedia.Should().Be(new EntityWikipediaResponse(wikipedia, title, url));
     }
@@ -54,7 +58,7 @@ public sealed class EventWikipediaTests : IDisposable
     [Fact]
     public async Task AScriptureEventLinksToNoArticle()
     {
-        var shown = await EncyclopediaEndpoints.EventDetail(_db, "beginflood", "ukr", "ukr", default);
+        var shown = await EncyclopediaEndpoints.EventDetail(_db, Settings, "beginflood", "ukr", "ukr", default);
 
         shown!.Wikipedia.Should().BeNull();
     }
