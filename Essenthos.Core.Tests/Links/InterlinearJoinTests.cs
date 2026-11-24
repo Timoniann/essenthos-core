@@ -533,11 +533,12 @@ public class InterlinearJoinTests
     }
 
     /// <summary>
-    /// 1 Corinthians 1:2 in the Segond alignment counts both «à» as the first of two over the first of three ἐν. Pieces that
-    /// count one word twice state no one group, so each stays the link it was.
+    /// 1 Corinthians 1:2 in the Segond alignment counts both «à» as the first of two over the first of three ἐν: the source
+    /// copied both counts, so neither says which «à» is which ἐν, and the first is a dative no ἐν stands for. Both are
+    /// refused, and the cursor still moves past them.
     /// </summary>
     [Fact]
-    public void PiecesThatCountOneTranslatedWordTwiceStayLinksOfTheirOwn()
+    public void SpansThatRepeatATranslatedCountOverTheSameOriginalWordAreRefused()
     {
         const string verse =
             """
@@ -554,9 +555,67 @@ public class InterlinearJoinTests
              Word(105, Greek("ἐν")), Word(106, Greek("ἐν"))],
             pairs, account);
 
-        pairs.Where(pair => pair.To.SequenceEqual([103L])).Select(pair => pair.From.Single()).Should().Equal(1, 5);
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("2", "102"), ("6", "104"));
+        account.SpanFailures[InterlinearSpanFailure.TranslatedCountCopied].Should().Be(2);
         account.GroupPiecesJoined.Should().Be(0);
-        account.GroupPiecesApart.Should().Be(1);
+    }
+
+    /// <summary>Romans 2:14 in the ULT counts «having» 1 of 1 twice, over ἔχοντα and over ἔχοντες: each still names its word.</summary>
+    [Fact]
+    public void SpansThatRepeatATranslatedCountOverDifferentOriginalWordsStillJoin()
+    {
+        var (pairs, account) = Join(
+            [English("not"), English("having"), English("they"), English("not"), English("having")],
+            [Greek("μὴ"), Greek("ἔχοντα"), Greek("οὗτοι"), Greek("μὴ"), Greek("ἔχοντες")],
+            Span("μὴ", "not", occurrence: 1, occurrences: 2) with { WordOccurrences = [(1, 2)] },
+            Span("ἔχοντα", "having", occurrence: 1, occurrences: 1) with { WordOccurrences = [(1, 1)] },
+            Span("οὗτοι", "they", occurrence: 1, occurrences: 1) with { WordOccurrences = [(1, 1)] },
+            Span("μὴ", "not", occurrence: 2, occurrences: 2) with { WordOccurrences = [(2, 2)] },
+            Span("ἔχοντες", "having", occurrence: 1, occurrences: 1) with { WordOccurrences = [(1, 1)] });
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To)))
+            .Should().Equal(("1", "101"), ("2", "102"), ("3", "103"), ("4", "104"), ("5", "105"));
+        account.SpanFailures.GetValueOrDefault(InterlinearSpanFailure.TranslatedCountCopied).Should().Be(0);
+    }
+
+    /// <summary>
+    /// Hosea 1:9 (ULT): the source counts the לֹא of the name לֹא עַמִּי, which BHSA prints as one word, with the verse's
+    /// other two, so «not» over לֹא 2 of 3 is the first לֹא BHSA prints alone, not the last.
+    /// </summary>
+    [Fact]
+    public void AWordAlsoStandingInsideANameBhsaPrintsWholeIsCountedWithTheNamesParts()
+    {
+        var (pairs, _) = Join(
+            [English("you"), English("not"), English("my"), English("people"), English("I"), English("will"), English("not"), English("be")],
+            [Hebrew("לֹ֣א עַמִּ֑י"), Hebrew("אַתֶּם֙"), Hebrew("לֹ֣א"), Hebrew("עַמִּ֔י"), Hebrew("אָנֹכִ֖י"), Hebrew("לֹא"), Hebrew("אֶהְיֶ֥ה")],
+            Span("אַתֶּם֙", "you"),
+            Span("לֹ֣א", "not", occurrence: 2, occurrences: 3),
+            Span("עַמִּ֔י", "my", "people") with { Occurrence = 2, Occurrences = 2 },
+            Span("אָנֹכִ֖י", "I"),
+            Span("לֹא", "will", "not") with { Occurrence = 1, Occurrences = 1 },
+            Span("אֶהְיֶ֥ה", "be"));
+
+        pairs.Should().Contain(pair => pair.From.SequenceEqual(new long[] { 2 }) && pair.To.SequenceEqual(new long[] { 103 }));
+        pairs.Should().NotContain(pair => pair.To.Contains(106) && pair.From.Contains(2));
+    }
+
+    /// <summary>
+    /// 2 Kings 5:18 (ULT): the second «may» stands over the second יִסְלַח, which BHSA prints inside יִסְלַח־נא. Counted with the
+    /// parts it lands on a part, so it is not put on the first יִסְלַח, the first «may»'s word.
+    /// </summary>
+    [Fact]
+    public void AWordTheCountPutsOnAPartOfANameIsNotPutOnAnotherWordOfItsSpelling()
+    {
+        var (pairs, _) = Join(
+            [English("may"), English("Yahweh"), English("forgive"), English("may"), English("Yahweh"), English("forgive")],
+            [Hebrew("יִסְלַ֥ח"), Hebrew("יְהוָ֖ה"), Hebrew("יִסְלַח־נ֨א"), Hebrew("יְהוָ֤ה")],
+            Span("יִסְלַ֥ח", "may", occurrence: 1, occurrences: 2),
+            Span("יְהוָ֖ה", "Yahweh", occurrence: 1, occurrences: 2),
+            Span("יִסְלַ֥ח", "forgive", occurrence: 1, occurrences: 2),
+            Span("יִסְלַ֥ח", "may", occurrence: 2, occurrences: 2),
+            Span("יְהוָ֤ה", "Yahweh", occurrence: 2, occurrences: 2));
+
+        pairs.Where(pair => pair.To.SequenceEqual(new long[] { 101 })).SelectMany(pair => pair.From).Should().NotContain(4);
     }
 
     [Fact]

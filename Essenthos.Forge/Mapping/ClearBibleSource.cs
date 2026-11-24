@@ -102,6 +102,7 @@ internal sealed class ClearBibleSource : IPairSource
         log($"{joined.Records} records, {joined.Drafts.Count} resolved; {joined.Unresolved} unresolved ({joined.WithoutCounterpart} "
             + $"without a counterpart), {joined.Astray} astray, {joined.Shifted} shifted, {joined.Moved} moved onto the name after them, "
             + $"{joined.MovedOntoWord} moved onto the common word after them and {joined.Slipped} refused as on the word before one, "
+            + $"{joined.Stray} possessives taken off a word they do not render ({joined.StrayRecords} records left with no word), "
             + $"{joined.Misnumbered} misnumbered, {joined.Renumbered} renumbered and {joined.Unplaced} placed on nothing over "
             + $"{joined.Edited} verses numbered over an edited source ({joined.Crossed} identifiers crossed), "
             + $"{joined.Overruled} overruled ({joined.Trimmed} trimmed); {joined.Placed}");
