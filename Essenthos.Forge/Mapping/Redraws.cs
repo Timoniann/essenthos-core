@@ -95,9 +95,9 @@ internal static class Redraws
     {
         var path = store.Find(product);
         var entry = path is null ? null : store.Manifest.Get(path);
-        if (entry is null)
+        if (entry is null || entry.Inputs.Count == 0)
         {
-            return "the manifest does not say what it was drawn from";
+            return "it was never drawn from the store's files (exported, or the manifest names no input)";
         }
 
         var recorded = entry.Inputs.Where(input => !Own(input.Path, pair)).ToDictionary(input => input.Path, input => input.Sha256, StringComparer.Ordinal);
