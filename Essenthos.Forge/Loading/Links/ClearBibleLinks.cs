@@ -66,7 +66,8 @@ internal sealed record ClearBibleJoined(
     int MovedOntoWord = 0,
     int Slipped = 0,
     int Stray = 0,
-    int StrayRecords = 0);
+    int StrayRecords = 0,
+    int Scrambled = 0);
 
 /// <summary>
 /// Clear Bible's hand-made alignments: a second opinion on the Berean, and the only opinion anybody
@@ -167,6 +168,7 @@ internal static partial class ClearBibleLinks
         };
 
         var drafts = new List<Draft>();
+        var joined = new List<ClearBibleRecord>();
         int records = 0, unresolved = 0, withoutCounterpart = 0;
         int astray = 0, shifted = 0, moved = 0, refused = 0, overruledRecords = 0, trimmed = 0, renumbered = 0, unplaced = 0;
         int movedOntoWord = 0, slipped = 0, stray = 0, strayRecords = 0;
@@ -276,11 +278,27 @@ internal static partial class ClearBibleLinks
             }
 
             drafts.Add(new Draft(theirs, ours, move));
+            joined.Add(record);
+        }
+
+        var scrambled = 0;
+        if (set.Function is { } function)
+        {
+            var verses = Scrambled(joined, tokens, sourceTokens, function);
+            for (var i = drafts.Count - 1; i >= 0; i--)
+            {
+                if (ClearBibleAlignment.Verse(joined[i].Target[0]) is { } verse && verses.Contains(verse))
+                {
+                    drafts.RemoveAt(i);
+                    scrambled++;
+                }
+            }
         }
 
         return new ClearBibleJoined(
             drafts, records, unresolved, withoutCounterpart, astray, shifted, moved, refused, overruledRecords, trimmed,
-            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0, movedOntoWord, slipped, stray, strayRecords);
+            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0, movedOntoWord, slipped, stray, strayRecords,
+            scrambled);
     }
 
     /// <summary>
@@ -1092,6 +1110,84 @@ internal static partial class ClearBibleLinks
 
     /// <summary>How many records of a verse must miss their glosses before the verse is taken to be numbered over another text.</summary>
     private const int Unrelated = 2;
+
+    /// <summary>
+    /// The verses, as <see cref="ClearBibleAlignment.Verse(string)"/> writes them, whose records are numbered off as a block:
+    /// records, as the join keeps them, that put a noun, verb or adjective on function words of the translation alone
+    /// (<paramref name="function"/>) which the set seldom renders that source number with, in two or more different renderings
+    /// (<see cref="Misplaced"/>). Of 30 such verses of the Reina-Valera's Old Testament drawn at random and read by hand, all
+    /// 30 had records naming other words than they render, most of them several. The set has
+    /// such verses (1 Sam 17:5: the helmet on «Y», the bronze on «de», the coat of mail on «vestido» and «almete» named by
+    /// nothing), where the records' own ids name other tokens of the verse, so its words that name content words are off too.
+    /// A rendering the set gives the number at least <see cref="Usual"/> of the times it names it (בְּעַד «por», אֶחָד «una»), or
+    /// at least <see cref="Often"/> times (פָּנִים «hacia»), is no sign.
+    /// </summary>
+    internal static HashSet<int> Scrambled(
+        IReadOnlyList<ClearBibleRecord> records,
+        IEnumerable<ClearBibleToken> tokens,
+        IEnumerable<ClearBibleToken> sources,
+        IReadOnlySet<string> function)
+    {
+        var words = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var token in tokens)
+        {
+            words.TryAdd(ClearBibleAlignment.Word(token.Id), token.Text.ToLowerInvariant());
+        }
+
+        var content = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var token in sources)
+        {
+            if (token is { Part: "noun" or "verb" or "adjective", Strong: { Length: > 0 } strong })
+            {
+                content.TryAdd(ClearBibleAlignment.Unit(token.Id), strong);
+            }
+        }
+
+        var named = new Dictionary<string, int>(StringComparer.Ordinal);
+        var rendered = new Dictionary<(string, string), int>();
+        var candidates = new List<(int Verse, string Said, List<string> Numbers)>();
+        foreach (var record in records)
+        {
+            var numbers = record.Source.Select(id => content.GetValueOrDefault(ClearBibleAlignment.Unit(id))).OfType<string>().Distinct().ToList();
+            var said = record.Target.Select(id => words.GetValueOrDefault(ClearBibleAlignment.Word(id))).ToList();
+            var text = string.Join(' ', said);
+            foreach (var number in numbers)
+            {
+                named[number] = named.GetValueOrDefault(number) + 1;
+                rendered[(text, number)] = rendered.GetValueOrDefault((text, number)) + 1;
+            }
+
+            if (numbers.Count > 0 && said.All(word => word is not null && function.Contains(word))
+                && ClearBibleAlignment.Verse(record.Target[0]) is { } verse)
+            {
+                candidates.Add((verse, text, numbers));
+            }
+        }
+
+        var suspects = new Dictionary<int, HashSet<(string, string)>>();
+        foreach (var (verse, said, numbers) in candidates)
+        {
+            if (numbers.FirstOrDefault(number => rendered[(said, number)] is var times && times < Often && times < Usual * named[number])
+                is { } unusual)
+            {
+                (suspects.TryGetValue(verse, out var seen) ? seen : suspects[verse] = []).Add((said, unusual));
+            }
+        }
+
+        return [.. suspects.Where(verse => verse.Value.Count >= Misplaced).Select(verse => verse.Key)];
+    }
+
+    /// <summary>How many records must render a source number with the same function words for that to be the set's way of rendering it.</summary>
+    private const int Often = 10;
+
+    /// <summary>The share of a source number's records a function word must render it in to be the set's way of rendering it.</summary>
+    private const double Usual = 0.1;
+
+    /// <summary>
+    /// How many different renderings of a verse must put a content word on unusual function words before its records are taken
+    /// to be off as a block. One rendering twice is the translator's: «hacia» for both פְּנֵי of Gen 19:28.
+    /// </summary>
+    private const int Misplaced = 2;
 
     /// <summary>The first four letters of each word of an English text, in lower case, which is as near as a gloss and a translation agree on a word's form.</summary>
     private static IEnumerable<string> Stems(string text) =>

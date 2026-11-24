@@ -46,7 +46,7 @@ internal sealed class SourceWords
         [Berean] = [BereanSuppliedConjunction, BereanWawConjunction, BereanOpeningConjunction, BereanSubjectPart, BereanPrefix, BereanPrefixPart,
             BereanOpeningPreposition],
         [ClearBible] = [ClearBibleSpanishAnd, ClearBibleSpanishBefore, ClearBibleFrenchAnd, ClearBibleHindiAnd, ClearBibleHebrewAlso, ClearBibleGreekAlso,
-            ClearBibleSpanishPossessive],
+            ClearBibleSpanishPossessive, ClearBibleSpanishFunction],
     };
 
     public const string MaxfieldAsv = "maxfield-asv";
@@ -69,6 +69,7 @@ internal sealed class SourceWords
     public const string ClearBibleHebrewAlso = "heb-also";
     public const string ClearBibleGreekAlso = "grc-also";
     public const string ClearBibleSpanishPossessive = "spa-possessive";
+    public const string ClearBibleSpanishFunction = "spa-function";
 
     private static readonly ConcurrentDictionary<string, Lazy<SourceWords>> Loaded = new(StringComparer.Ordinal);
 
