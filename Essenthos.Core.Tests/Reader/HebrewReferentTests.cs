@@ -39,7 +39,7 @@ public sealed class HebrewReferentTests : IDisposable
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (2, 2, ["God", "his", "work", "his", "father", "his", "hand", "his", "work", "he", "seed", "unto", "him", "him", "Philistine", "him",
                 "Here", "Here", "he", "said"]));
-        _ukrainian = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (2, 2, ["дочки", "мої", "він", "побачив", "його", "її", "батька"]));
+        _ukrainian = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (2, 2, ["дочки", "мої", "він", "побачив", "його", "її", "батька", "його", "її", "йому"]));
         _db.SaveChanges();
 
         var god = new Entity { Kind = EntityKind.Person, Slug = "god", Name = "God" };
@@ -107,6 +107,10 @@ public sealed class HebrewReferentTests : IDisposable
         Align([Ukrainian(3), Ukrainian(4), Ukrainian(5)], Hebrew(15));
         Align([Ukrainian(6), Ukrainian(7)], Hebrew(16));
         Align([English(19), English(20)], Hebrew(17));
+        Align([Ukrainian(8)], English(14));
+        Align([Ukrainian(9)], English(10));
+        Align([Ukrainian(10)], English(13));
+        Align([Ukrainian(10)], English(14));
         _db.SaveChanges();
     }
 
@@ -200,6 +204,19 @@ public sealed class HebrewReferentTests : IDisposable
         (await Read(_english, 19)).Referents.Should().ContainSingle().Which.Slug.Should().Be("god", "he says the verb's third person singular");
         (await Read(_english, 20)).Referents.Should().BeNull("said renders the verb");
         (await Read(_hebrew, 17)).Referents.Should().BeNull("the verb itself is no word standing for anybody");
+    }
+
+    [Fact]
+    public async Task APronounReachingNoHebrewWordTakesTheReferentOfTheOneKingJamesPronounItRendersWhereTheyAgree()
+    {
+        (await Read(_ukrainian, 8)).Referents.Should().ContainSingle().Which.Should().Be(new ReferentResponse("person", "god", "אֱלֹהִים", Macula)
+        {
+            Suffix = true,
+            Language = "hbo",
+            Through = "KJV",
+        });
+        (await Read(_ukrainian, 9)).Referents.Should().BeNull("її is feminine; he is masculine");
+        (await Read(_ukrainian, 10)).Referents.Should().BeNull("йому is linked to two King James words");
     }
 
     private async Task<TextWordResponse> Read(Text text, int position)

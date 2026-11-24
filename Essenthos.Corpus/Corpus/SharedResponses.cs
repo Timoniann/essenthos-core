@@ -413,6 +413,12 @@ internal record ReferentResponse(string Type, string Slug, string Word, string S
 
     /// <summary>The language of the original's word that refers, where its source says (<c>hbo</c>, <c>arc</c>); null for the Greek.</summary>
     public string? Language { get; init; }
+
+    /// <summary>
+    /// The translation the referent was found through (<c>KJV</c>), where the word reaches no original word itself and takes the
+    /// referent of the one word of that translation it renders; null where the word's own original says it.
+    /// </summary>
+    public string? Through { get; init; }
 }
 
 /// <param name="Occupation">The occupation's slug: <c>physician</c>.</param>
