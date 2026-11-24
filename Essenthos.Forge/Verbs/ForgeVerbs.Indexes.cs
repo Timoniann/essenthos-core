@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Products;
+using Essenthos.Core.StepBible;
 using Npgsql;
 
 namespace Essenthos.Core.Verbs;
@@ -51,6 +52,28 @@ internal static partial class ForgeVerbs
         }
 
         Console.WriteLine($"strong-numbers: {outcomes.Count(o => o.Made)} made, {outcomes.Count(o => !o.Made)} current in {clock.Elapsed}");
+        return Task.FromResult(0);
+    }
+
+    /// <summary>Lays TAGNT's edition flags on the Greek editions' words where an input moved: <c>tagnt-editions [--force]</c>.</summary>
+    private static Task<int> TaggedEditionsVerb(ForgeRun forge, string[] args)
+    {
+        var clock = Stopwatch.StartNew();
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var made = TaggedGreekEditions.Make(store, args.Contains("--force"));
+        store.Save();
+        if (made is not { } written)
+        {
+            Console.WriteLine($"tagnt-editions: current in {clock.Elapsed}");
+            return Task.FromResult(0);
+        }
+
+        foreach (var (slug, joined, flagged) in written.Joins)
+        {
+            Console.WriteLine($"{slug,-8} {joined,7} of {flagged,7} words TAGNT says it holds joined ({100.0 * joined / Math.Max(1, flagged):0.0}%)");
+        }
+
+        Console.WriteLine($"tagnt-editions: {written.Rows} rows in {clock.Elapsed}");
         return Task.FromResult(0);
     }
 

@@ -151,3 +151,5 @@ things in it that the reading of the rights must keep in view:
   256 places the corpus's Stephanus 1550 and Scrivener 1894 differ, it agrees with Stephanus at 223 and
   with Scrivener at 10; where the KJV followed Scrivener against it, TAGNT marks the word with a separate
   `KJV` token (Matthew 2:11: εἶδον `…+Byz+KJV`, εὗρον "in: TR"). Measured 2026-11-24, TSK-0242.
+
+**What the corpus keeps of it** (TSK-0242): `editions/tagnt`, made by `forge tagnt-editions`. One row per TAGNT word: its reference, its Strong number, the editions column as TAGNT writes it, and the word of SBLGNT, WH1881, RP2018 and TR1550 it was joined to (by Strong number, in order, verse by verse). No Greek of TAGNT is kept, nothing of it is served, and the NA27/NA28 flags are stored as written and not shown.
