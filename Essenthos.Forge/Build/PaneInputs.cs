@@ -75,7 +75,8 @@ internal sealed class PaneInputs
     public static PaneInputs Read(ProductStore store, IReadOnlyCollection<string> texts, IReadOnlyList<(string From, string To)> pairs, int parallel)
     {
         var inputs = new PaneInputs();
-        foreach (var text in texts.Order(StringComparer.Ordinal))
+        var through = texts.Any(ChapterReading.ReadThroughKingJames.Contains) ? [ChapterReading.KingJames] : Array.Empty<string>();
+        foreach (var text in texts.Concat(through).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal))
         {
             inputs._texts[text] = new Slices(FrameChapters.Read(store, text));
         }
@@ -235,6 +236,7 @@ internal sealed class PaneInputs
         var whole = Whole(inputs);
         var referring = inputs.Any(i => ProductOf(i.Path) == Referents);
         var numbered = inputs.Any(i => ProductOf(i.Path) == StrongNumberFiles.Product(text));
+        var through = ChapterReading.ReadThroughKingJames.Contains(text) ? _texts[ChapterReading.KingJames] : null;
         var chapters = new Dictionary<(int, int), byte[]>();
         var keys = new Dictionary<(int, int), string>();
         Span<byte> ints = stackalloc byte[20];
@@ -251,7 +253,7 @@ internal sealed class PaneInputs
                 hash.AppendData(ints);
                 if (!chapters.TryGetValue((book, chapter), out var key))
                 {
-                    chapters[(book, chapter)] = key = Chapter(slices, whole, (book, chapter), referring, numbered);
+                    chapters[(book, chapter)] = key = Chapter(slices, whole, (book, chapter), referring, numbered, through);
                 }
 
                 hash.AppendData(key);
@@ -286,11 +288,16 @@ internal sealed class PaneInputs
         return dot > name.LastIndexOf('/') ? name[..dot] : name;
     }
 
-    private byte[] Chapter(Slices slices, byte[] whole, (int, int) chapter, bool referring, bool numbered)
+    private byte[] Chapter(Slices slices, byte[] whole, (int, int) chapter, bool referring, bool numbered, Slices? through)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         hash.AppendData(whole);
         Part(hash, "links", slices.Links.GetValueOrDefault(chapter));
+        if (through is not null)
+        {
+            Part(hash, "through-king-james", through.Links.GetValueOrDefault(chapter));
+        }
+
         Part(hash, "names", slices.Names.GetValueOrDefault(chapter));
         Part(hash, "occupation-words", slices.OccupationWords.GetValueOrDefault(chapter));
         if (numbered)

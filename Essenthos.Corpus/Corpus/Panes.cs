@@ -37,7 +37,8 @@ internal sealed record PaneBody(int Book, int Chapter, byte[] Gzip, string Hash,
 ///         Ukrainian, "e"/"u" the line under the word, "g" Greek words, "mo" morphology, "c" confidence, "by" model, "on" day }
 ///         a Ge'ez word as a model read it in context, "at" { "kind", "headId", "head" }, "ro" [{ "occupation",
 ///         "category", "person" }], "rf" [{ "r" record index, "w" the original's word referred to, "src" source index, "sf" 1 when the
-///         original's word refers by its pronoun suffix, "lg" the referring original's language where not Greek }]
+///         original's word refers by its pronoun suffix, "lg" the referring original's language where not Greek, "th" the translation
+///         the referent was found through }]
 ///         the records the word refers to without naming them }
 /// card: { "r" record index, "m" method, "c" confidence, "src" source index, "via" route, "as" named as, "role", "origin" }
 /// </code>
@@ -498,6 +499,7 @@ internal static class Panes
                 }
 
                 Optional(json, "lg", referent.Language);
+                Optional(json, "th", referent.Through);
                 json.WriteEndObject();
             }
 

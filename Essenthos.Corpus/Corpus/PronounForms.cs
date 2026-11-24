@@ -69,6 +69,15 @@ internal readonly record struct Agreement(char? Person, char? Number, char? Gend
         || (original.Number == 's' && Gender is { } gender && original.Gender is 'm' or 'f' && gender != original.Gender);
 
     /// <summary>
+    /// Whether two translations' pronouns can stand for the same one: the same person, and neither another number nor another
+    /// gender where both say one (<em>мій</em> and <em>my</em>; <em>його</em> and <em>his</em>, not <em>її</em> and <em>his</em>).
+    /// </summary>
+    public bool Agrees(Agreement other) =>
+        Person is { } person && person == other.Person
+        && !(Number is { } number && other.Number is { } theirs && number != theirs)
+        && !(Gender is { } gender && other.Gender is { } hers && gender != hers);
+
+    /// <summary>
     /// Whether a translation's pronoun saying this says what an original's pronoun suffix says: the same person, and neither
     /// another number nor, of one person, masculine against feminine.
     /// </summary>

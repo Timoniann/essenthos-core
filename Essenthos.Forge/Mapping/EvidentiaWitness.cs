@@ -179,6 +179,7 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
             .Select(chapter => chapter.ToList())
             .ToList();
         var placements = new List<Placement>();
+        var refusals = new List<Placement>();
         var explore = new List<string>();
         var parsedWords = 0;
         var unplaced = new Dictionary<Part, int>();
@@ -228,7 +229,8 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
                 words[part] = words.GetValueOrDefault(part) + verseWords.Count;
                 unplaced[part] = unplaced.GetValueOrDefault(part) + verseWords.Count(word => !reaching.Contains((int)word.Id));
                 var verseUnplaced = verseWords.Where(word => !reaching.Contains((int)word.Id)).ToList();
-                foreach (var proposal in EvidentiaSlavicAttachedWords.Place(language, verseWords, verseUnplaced, originalWords, placed))
+                foreach (var proposal in EvidentiaSlavicAttachedWords.Place(language, verseWords, verseUnplaced, originalWords, placed,
+                    refusal => refusals.Add(new Placement((int)refusal.Word, (int)refusal.Original, refusal.Rule, (int)refusal.Head))))
                 {
                     placements.Add(new Placement((int)proposal.Word, (int)proposal.Original, proposal.Rule, (int)proposal.Head));
                 }
@@ -275,6 +277,16 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
             report.AppendLine(line.ToString());
         }
 
+        var refused = refusals.Select(placement => new Outcome(placement.Rule, PartOf(translation.Words[placement.Word].Key.Verse),
+            Verdict(placement, gold))).ToList();
+        foreach (var rule in refused.GroupBy(outcome => outcome.Rule).OrderBy(group => group.Key, StringComparer.Ordinal))
+        {
+            var scored = rule.Where(outcome => outcome.Part != Part.Unstated).ToList();
+            report.AppendLine(CultureInfo.InvariantCulture,
+                $"    refused as another phrase's or sentence's: {rule.Key}: unstated {rule.Count(outcome => outcome.Part == Part.Unstated):N0}; "
+                + $"scored {scored.Count(outcome => outcome.Verdict == "right")}/{scored.Count(outcome => outcome.Verdict == "wrong")}/{scored.Count(outcome => outcome.Verdict == "unaligned")} right/wrong/unaligned");
+        }
+
         if (outFolder is not null)
         {
             Directory.CreateDirectory(outFolder);
@@ -284,6 +296,12 @@ internal sealed class EvidentiaWitness(ProductStore store, UdpipeAnnotator annot
             await File.WriteAllLinesAsync(Path.Combine(outFolder, $"{pair}-placements.tsv"),
                 ["rule\tpart\tverdict\tverse\tcontext\tword\thead\toriginal\toriginal_parse\tgold",
                  .. placements.Zip(outcomes).Where(pair2 => !IsHeld(pair2.Second.Part))
+                     .OrderBy(_ => random.Next())
+                     .Select(pair2 => Line(translation, original, pair2.First, pair2.Second, gold))],
+                cancellationToken);
+            await File.WriteAllLinesAsync(Path.Combine(outFolder, $"{pair}-refused.tsv"),
+                ["rule	part	verdict	verse	context	word	head	original	original_parse	gold",
+                 .. refusals.Zip(refused).Where(pair2 => !IsHeld(pair2.Second.Part))
                      .OrderBy(_ => random.Next())
                      .Select(pair2 => Line(translation, original, pair2.First, pair2.Second, gold))],
                 cancellationToken);

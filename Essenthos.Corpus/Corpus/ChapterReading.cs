@@ -374,6 +374,9 @@ internal static class ChapterReading
                 : null));
 
         var witnesses = own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached);
+        var referents = await Referents(
+            db, witnesses, forms, attached.Where(row => row.Role != null).ToLookup(row => row.WordId, row => row.HeadId), cancellationToken);
+        await ThroughKingJames(db, forms, witnesses, referents, cancellationToken);
         return new Reached(
             witnesses,
             strongest,
@@ -405,9 +408,110 @@ internal static class ChapterReading
                     group => (IReadOnlyList<WordRoleResponse>)[.. group
                         .OrderBy(row => row.Person, StringComparer.Ordinal).ThenBy(row => row.Occupation, StringComparer.Ordinal)
                         .Select(row => new WordRoleResponse(row.Occupation, row.Category, row.Person))]),
-            Referents = await Referents(
-                db, witnesses, forms, attached.Where(row => row.Role != null).ToLookup(row => row.WordId, row => row.HeadId), cancellationToken),
+            Referents = referents,
         };
+    }
+
+    /// <summary>
+    /// The translations whose pronouns that reach no original word may take whom the King James pronoun they render refers to
+    /// (<see cref="ThroughKingJames"/>), each measured at 97% right or better before it was listed.
+    /// </summary>
+    internal static readonly HashSet<string> ReadThroughKingJames = new(StringComparer.Ordinal) { "UBIO", "RUSV" };
+
+    internal const string KingJames = "KJV";
+
+    /// <summary>
+    /// Gives a pronoun of a text in <see cref="ReadThroughKingJames"/> that reaches no original word, and so no referent of its
+    /// own, the referent of the King James word it renders: only where that is the one King James word it is linked to, the
+    /// King James word is a pronoun shown a referent in its own reading, and the two agree in person, number and gender
+    /// (<see cref="PronounForms"/>). Ohienko's «мій» of Ruth 1:16 renders the King James "my", whose Hebrew suffix refers
+    /// to Ruth. The referent says it came this way (<see cref="ReferentResponse.Through"/>), since the reader never sees the
+    /// step through the other translation.
+    /// </summary>
+    private static async Task ThroughKingJames(
+        AppDbContext db,
+        IReadOnlyDictionary<long, string> forms,
+        ILookup<long, long> witnesses,
+        Dictionary<long, IReadOnlyList<ReferentResponse>> referents,
+        CancellationToken cancellationToken)
+    {
+        var unreached = forms.Where(pair => PronounForms.Listed(pair.Value) && !referents.ContainsKey(pair.Key) && !witnesses[pair.Key].Any())
+            .Select(pair => pair.Key)
+            .ToList();
+        if (unreached.Count == 0)
+        {
+            return;
+        }
+
+        var said = new Dictionary<long, Agreement>();
+        foreach (var row in await db.Words
+                     .Where(w => unreached.Contains(w.Id) && ReadThroughKingJames.Contains(w.Text!.Slug))
+                     .Select(w => new { w.Id, w.Text!.Language })
+                     .ToListAsync(cancellationToken))
+        {
+            if (PronounForms.Of(row.Language, forms[row.Id]) is { } agreement)
+            {
+                said[row.Id] = agreement;
+            }
+        }
+
+        if (said.Count == 0)
+        {
+            return;
+        }
+
+        var pronouns = said.Keys.ToList();
+        var linked = (await (
+                from side in db.LinkWords
+                where pronouns.Contains(side.WordId)
+                join other in db.LinkWords on side.LinkId equals other.LinkId
+                where other.Side != side.Side
+                join verse in db.Verses on other.VerseId equals verse.Id
+                where verse.Text!.Slug == KingJames
+                select new { side.WordId, Other = other.WordId, verse.ChapterId })
+            .ToListAsync(cancellationToken))
+            .GroupBy(row => row.WordId)
+            .Where(group => group.Select(row => row.Other).Distinct().Count() == 1)
+            .ToDictionary(group => group.Key, group => group.First());
+        if (linked.Count == 0)
+        {
+            return;
+        }
+
+        // The King James words are read as the King James reading of their chapters reads them, so that what each shows is
+        // what its own pane shows.
+        var chapters = linked.Values.Select(row => row.ChapterId).Distinct().ToList();
+        var words = await db.Words
+            .Where(w => chapters.Contains(w.Verse!.ChapterId))
+            .Select(w => new { w.Id, w.VerseId, w.Surface })
+            .ToListAsync(cancellationToken);
+        var kingJames = words.ToDictionary(w => w.Id, w => w.Surface.ToLowerInvariant());
+        var verses = words.Select(w => w.VerseId).Distinct().ToList();
+        var reached = await (
+                from side in db.LinkWords
+                where verses.Contains(side.VerseId)
+                join other in db.LinkWords on side.LinkId equals other.LinkId
+                where other.Side != side.Side
+                join verse in db.Verses on other.VerseId equals verse.Id
+                where verse.Text!.Kind != TextKind.Translation
+                select new { side.WordId, Reached = other.WordId })
+            .ToListAsync(cancellationToken);
+        var heads = await db.LinkWords
+            .Where(side => verses.Contains(side.VerseId) && side.Role != null && side.HeadWordId != null)
+            .Select(side => new { side.WordId, HeadId = side.HeadWordId!.Value })
+            .ToListAsync(cancellationToken);
+        var shown = await Referents(
+            db, reached.ToLookup(row => row.WordId, row => row.Reached), kingJames, heads.ToLookup(row => row.WordId, row => row.HeadId), cancellationToken);
+
+        foreach (var (word, link) in linked)
+        {
+            if (shown.TryGetValue(link.Other, out var theirs)
+                && PronounForms.Of("eng", kingJames[link.Other]) is { } english
+                && said[word].Agrees(english))
+            {
+                referents[word] = [.. theirs.Select(referent => referent with { Through = KingJames })];
+            }
+        }
     }
 
     /// <summary>How many words a chain of references back is followed through before it is given up.</summary>

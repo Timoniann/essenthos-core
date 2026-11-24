@@ -296,7 +296,8 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     /// the records; the Strong candidates; the Strong number each of its words renders; the word ids'
     /// collisions; for Greek, every Greek text's words (a gloss by spelling) and the lexicon; for Ge'ez, the lexicons; for a
     /// text paired with the text whose words refer back to others, those references, the same source's parsings and that
-    /// text's names on the words referred to.
+    /// text's names on the words referred to; for a text that reads referents through the King James, every pair the King
+    /// James is in, with the other text's words.
     /// </summary>
     internal List<ProductInput> Inputs(TextRow text, IReadOnlyList<TextRow> texts, IReadOnlyList<(string From, string To)> pairs)
     {
@@ -311,6 +312,15 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
             products.Add(MappingProducts.Of(MappingProducts.Pair(from, to), MappingProducts.Final));
             products.Add($"texts/{other}/words");
             products.Add($"texts/{other}/text");
+        }
+
+        if (ChapterReading.ReadThroughKingJames.Contains(text.Slug))
+        {
+            foreach (var (from, to) in pairs.Where(p => p.From == ChapterReading.KingJames || p.To == ChapterReading.KingJames))
+            {
+                products.Add(MappingProducts.Of(MappingProducts.Pair(from, to), MappingProducts.Final));
+                products.Add($"texts/{(from == ChapterReading.KingJames ? to : from)}/words");
+            }
         }
 
         products.AddRange(PaneInputs.RecordProducts);
