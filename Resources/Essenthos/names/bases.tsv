@@ -18,6 +18,10 @@ AVD1865	1-39	BHSA	the default for the book
 AVD1865	40-66	NESTLE1904	the default for the book
 BBE	1-39	BHSA	same-family-as BHSA
 BBE	40-66	NESTLE1904	the default for the book
+BG1881	1-39	BHSA	the default for the book
+BG1881	40-66	NESTLE1904	the default for the book
+BKR1613	1-39	BHSA	the default for the book
+BKR1613	40-66	NESTLE1904	the default for the book
 BRENTON	1-39	GRCBRENT	translated-from GRCBRENT
 BRENTON	67-68	GRCBRENT	the default for the book
 BRENTON	70-81	GRCBRENT	the default for the book
@@ -26,6 +30,8 @@ BSB	1-39	BHSA	the default for the book
 BSB	40-66	NESTLE1904	the default for the book
 CSLELIZABETH	1-39	BHSA	the default for the book
 CSLELIZABETH	40-66	NESTLE1904	the default for the book
+CSP2009	1-39	BHSA	the default for the book
+CSP2009	40-66	NESTLE1904	the default for the book
 CUV	1-39	BHSA	the default for the book
 CUV	40-66	NESTLE1904	the default for the book
 CUVS	1-39	BHSA	the default for the book
@@ -75,6 +81,7 @@ LSG1910	40-66	TR1894	for the words NESTLE1904 does not link
 LUTH1912	1-39	BHSA	same-family-as BHSA
 LUTH1912	40-66	TR1894	same-family-as TR1550, which is same-family-as TR1894 or the other way
 LUTH1912	40-66	NESTLE1904	for the words TR1894 does not link
+NPK2023	40-66	NESTLE1904	the default for the book
 NPU2022	19	BHSA	the default for the book
 NPU2022	40-66	NESTLE1904	the default for the book
 OHCB	1-39	BHSA	the default for the book
@@ -129,6 +136,8 @@ TR1550	54	NESTLE1904	for the words TR1894 does not link
 TR1550	58-62	NESTLE1904	for the words TR1894 does not link
 TR1550	65-66	NESTLE1904	for the words TR1894 does not link
 TYN1534	40-66	NESTLE1904	the default for the book
+UBG2018	1-39	BHSA	the default for the book
+UBG2018	40-66	NESTLE1904	the default for the book
 UBIO	1-39	BHSA	same-family-as BHSA
 UBIO	40-66	NESTLE1904	the default for the book
 UBIO	40-66	TR1894	for the words NESTLE1904 does not link

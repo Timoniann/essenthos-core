@@ -205,6 +205,31 @@ internal static class TextTaglines
                 "Новий переклад сучасною українською: Новий Заповіт і Псалми.",
                 "Eine neue Übersetzung ins heutige Ukrainisch: das Neue Testament und die Psalmen.",
                 "Una nueva traducción al ucraniano actual: el Nuevo Testamento y los Salmos."),
+            ["NPK2023"] = Say(
+                "Biblica's New Testament in present-day Slovak, in plain sentences.",
+                "Новий Заповіт сучасною словацькою від Biblica, простими реченнями.",
+                "Biblicas Neues Testament im heutigen Slowakisch, in schlichten Sätzen.",
+                "El Nuevo Testamento de Biblica en eslovaco actual, en frases sencillas."),
+            ["CSP2009"] = Say(
+                "A Czech translation made to be studied, with notes on the literal wording.",
+                "Чеський переклад для вивчення, з примітками про буквальне формулювання.",
+                "Eine tschechische Übersetzung zum Studieren, mit Anmerkungen zum wörtlichen Wortlaut.",
+                "Una traducción checa hecha para estudiar, con notas sobre la formulación literal."),
+            ["BKR1613"] = Say(
+                "The Czech Bible of the Unity of the Brethren, in its edition of 1613.",
+                "Чеська Біблія Єдності братів у виданні 1613 року.",
+                "Die tschechische Bibel der Brüderunität in der Ausgabe von 1613.",
+                "La Biblia checa de la Unidad de los Hermanos, en su edición de 1613."),
+            ["UBG2018"] = Say(
+                "The Gdańsk Bible of 1632 brought into present-day Polish.",
+                "Ґданська Біблія 1632 року, переведена на сучасну польську.",
+                "Die Danziger Bibel von 1632 im heutigen Polnisch.",
+                "La Biblia de Gdansk de 1632 llevada al polaco actual."),
+            ["BG1881"] = Say(
+                "The Polish Protestant Bible of 1632, in the edition of 1881.",
+                "Польська протестантська Біблія 1632 року у виданні 1881 року.",
+                "Die polnische protestantische Bibel von 1632 in der Ausgabe von 1881.",
+                "La Biblia protestante polaca de 1632, en la edición de 1881."),
             ["LSG1910"] = Say(
                 "Louis Segond's French Bible in the 1910 revision, long the Bible of French Protestants.",
                 "Французька Біблія Луї Сегона в редакції 1910 року, що довго була Біблією французьких протестантів.",

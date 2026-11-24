@@ -56,6 +56,8 @@ internal sealed class NamesFirstSource : IPairSource
         "UBIO-NESTLE1904", "UKR1871-BHSA", "UKR1871-NESTLE1904", "ULT-BHSA", "ULT-NESTLE1904", "UST-BHSA", "UST-NESTLE1904",
         "VAT-NESTLE1904", "VIGLT-BHSA", "VIGLT-NESTLE1904", "VULGCLEM-BHSA", "VULGCLEM-NESTLE1904", "WEB-BHSA", "WEB-NESTLE1904",
         "WH1881-NESTLE1904", "YLT-BHSA", "YLT-NESTLE1904",
+        "NPK2023-NESTLE1904", "CSP2009-BHSA", "CSP2009-NESTLE1904", "BKR1613-BHSA", "BKR1613-NESTLE1904", "UBG2018-BHSA",
+        "UBG2018-NESTLE1904", "BG1881-BHSA", "BG1881-NESTLE1904",
     };
 
     /// <summary>The methods whose links a name is never placed across: every method file of the pair that does not read this one.</summary>
