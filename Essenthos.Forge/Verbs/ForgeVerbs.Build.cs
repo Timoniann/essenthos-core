@@ -343,9 +343,10 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// How many times the store build draws the kept model-drawn files again: a composition through a pair drawn in the same
-    /// round reads that pair's final only once the round's merge made it, so a chain of them takes a round per link.
+    /// round reads that pair's final only once the round's merge made it, so a chain of them takes a round per link, and the
+    /// compositions that read each other's finals as proxies take a round more to settle once drawn together.
     /// </summary>
-    private const int RedrawRounds = 4;
+    private const int RedrawRounds = 6;
 
     /// <summary>Compositions drawn again at once; each reads several finals and trains its hops on many cores.</summary>
     private const int RedrawsAtOnce = 4;

@@ -160,6 +160,8 @@ internal static class PairSources
             log($"{pair} {source.Name}: {rows.Count - before} rows");
         }
 
+        // An answer the aligner trained while the rows were made is read by the file too.
+        inputs = Inputs(store, pair, sources);
         var yielded = rows.Where(row => row.Status == MappingStatus.YieldsToStated).ToList();
         rows.RemoveAll(row => row.Status == MappingStatus.YieldsToStated);
 
@@ -186,13 +188,13 @@ internal static class PairSources
     {
         var store = texts.Store;
         var sources = registry.Where(source => source.File == file && source.States(store, pair)).ToList();
-        var inputs = Inputs(store, pair, sources);
         var rows = new List<MappingRow>();
         foreach (var source in sources)
         {
             rows.AddRange(source.Rows(texts, pair, line => log($"{pair} {source.Name}: {line}")));
         }
 
+        var inputs = Inputs(store, pair, sources);
         var (written, held) = MethodFiles.WriteVerses(store, pair, file, rows, verses, producer, inputs);
         log($"{pair}: {rows.Count(row => MethodFiles.Within(row.From, verses))} of the sources' {rows.Count} rows stand in {string.Join(",", verses)}"
             + (held == 0 ? string.Empty : $"; {held} of them cite a verse the pair's hashes hold otherwise, and the merge will hold them stale"));

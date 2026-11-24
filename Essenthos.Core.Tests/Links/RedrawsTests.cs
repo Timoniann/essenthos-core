@@ -81,6 +81,16 @@ public sealed class RedrawsTests : IDisposable
     }
 
     [Fact]
+    public void A_composition_drawn_again_reads_the_answer_it_trained_and_is_not_due_after()
+    {
+        _source.Trains = true;
+        PairSources.Write(new ProductTexts(_store), MappingMethods.Composed, Pair, force: true, _ => { }, [_source]).Written.Should().NotBeNull();
+        _store.Save();
+
+        Due().Should().BeEmpty("the answer trained while it was drawn is among what it read");
+    }
+
+    [Fact]
     public void A_composition_waits_while_a_pair_whose_final_it_reads_is_due_itself()
     {
         var middle = new Redraws.Due("KJV-BHSA", MappingMethods.Composed, "moved", []);
@@ -107,6 +117,11 @@ public sealed class RedrawsTests : IDisposable
     /// <summary>A composition of RUSV through KJV that reads its own final and the middle text's, as a declared one does.</summary>
     private sealed class Composition : IPairSource
     {
+        private const string Hop = "Alignments/RUSV-KJV/inputs-0123456789abcdef/alignment/pharaoh.txt";
+
+        /// <summary>Whether drawing it trains its hop to KJV, storing an answer it reads from then on.</summary>
+        public bool Trains { get; set; }
+
         public string Method => MappingMethods.Composed;
 
         public string Name => "composed";
@@ -116,9 +131,21 @@ public sealed class RedrawsTests : IDisposable
         public bool Makes(string source) => true;
 
         public IEnumerable<string> Inputs(ProductStore store, string pair) =>
-            [$"{ProductStore.EssenthosFolder}/mapping/{Pair}/final.tsv", $"{ProductStore.EssenthosFolder}/mapping/KJV-BHSA/final.tsv"];
+        [
+            $"{ProductStore.EssenthosFolder}/mapping/{Pair}/final.tsv", $"{ProductStore.EssenthosFolder}/mapping/KJV-BHSA/final.tsv",
+            .. File.Exists(Path.Combine(store.ResourcesPath, Hop)) ? [Hop] : Array.Empty<string>(),
+        ];
 
-        public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log) =>
-            [new("1.1:1.2", "1.1:1.2", "renders", MappingMethods.Composed, 0.5, "SIL.Machine, aligned as stems and through KJV", null, null, null)];
+        public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
+        {
+            if (Trains)
+            {
+                var answer = Path.Combine(texts.Store.ResourcesPath, Hop);
+                Directory.CreateDirectory(Path.GetDirectoryName(answer)!);
+                File.WriteAllText(answer, "0-0:0.9:0.9");
+            }
+
+            return [new("1.1:1.2", "1.1:1.2", "renders", MappingMethods.Composed, 0.5, "SIL.Machine, aligned as stems and through KJV", null, null, null)];
+        }
     }
 }
