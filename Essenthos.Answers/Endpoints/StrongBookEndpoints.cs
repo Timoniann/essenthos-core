@@ -81,7 +81,7 @@ internal static class StrongBookEndpoints
 
             return Results.Ok(new StrongBookPhrasesResponse(
                 canonical, book, BookReferences.Name(book), BookReferences.Slug(book), renderings));
-        }).RequireRateLimiting(RateLimits.Expensive);
+        }).RequireRateLimiting(RateLimitPolicies.Expensive);
     }
 
     /// <summary>The texts asked for, as <c>KJV,UBIO</c>; the King James where none is named.</summary>

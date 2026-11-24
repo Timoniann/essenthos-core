@@ -101,6 +101,6 @@ internal static class SettingsEndpoints
                 ? new JsonObject { ["id"] = licence.Id, ["name"] = licence.Name, ["url"] = licence.Url }
                 : null;
 
-            return Results.Json(served, AppJsonSerializerContext.Default.JsonObject);
+            return Results.Json(served, AnswerJsonContext.Default.JsonObject);
         });
 }

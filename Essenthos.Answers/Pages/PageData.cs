@@ -25,7 +25,7 @@ internal static class PageData
     /// <summary>How many of an occupation's people the reader's page asks for at a time.</summary>
     public const int OccupationPeople = 40;
 
-    private static readonly JsonSerializerOptions Writing = new(AppJsonSerializerContext.Default.Options)
+    private static readonly JsonSerializerOptions Writing = new(AnswerJsonContext.Default.Options)
     {
         // Nothing in an answer can close the script element or start markup; the rest of Unicode is
         // written as itself, so Hebrew and Cyrillic cost a byte or two a letter rather than six.

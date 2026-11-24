@@ -70,7 +70,7 @@ internal static class RateLimits
     public const string ConfigurationKey = "RateLimits";
 
     /// <summary>The endpoint policy for the queries that cost seconds rather than milliseconds.</summary>
-    public const string Expensive = "expensive";
+    public const string Expensive = RateLimitPolicies.Expensive;
 
     /// <summary>The endpoint policy for a browser's Content-Security-Policy reports.</summary>
     public const string Reports = "reports";

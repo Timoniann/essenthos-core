@@ -328,7 +328,7 @@ and never the page; it is answered as 503 with `Retry-After: 120`, so a search e
 instead of indexing the bare application as it. A slow answer is waited for: the two seconds bound only the
 retries of a refused connection. `/v1/pages` draws on its own rate limit (`RateLimits:Pages`, 300 a minute,
 a burst of 100 per address), apart from the API calls the page's script makes.
-A new public page of the reader needs its address in `PageSections` (`Essenthos.Api/Pages/PageAddress.cs`).
+A new public page of the reader needs its address in `PageSections` (`Essenthos.Answers/Pages/PageAddress.cs`).
 
 ### Search engines: once, by the owner
 

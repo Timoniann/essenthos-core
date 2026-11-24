@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Answers</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
+        <!-- Pictures are measured for a page, and their smaller copies made on request (MIT). -->
+        <PackageReference Include="SkiaSharp" Version="4.152.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Essenthos.Api" />
+        <InternalsVisibleTo Include="Essenthos.Forge" />
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- What each page is called in each language, as the reader's own meta.json words it; read
+             from the web container where it publishes them, and from here where it does not. -->
+        <EmbeddedResource Include="Pages\Wording\*.json" LogicalName="Wording.%(Filename).json" />
+        <!-- The passages that tell what happened where, which decide a record's story places (TSK-1235). -->
+        <EmbeddedResource Include="Endpoints\NarrativePassages.tsv" LogicalName="NarrativePassages.tsv" />
+        <EmbeddedResource Include="Pages\MovedChapters.tsv" LogicalName="MovedChapters.tsv" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- The web SDK's implicit global usings, which the code moved here from the API was written against. -->
+        <Using Include="Microsoft.AspNetCore.Builder" />
+        <Using Include="Microsoft.AspNetCore.Hosting" />
+        <Using Include="Microsoft.AspNetCore.Http" />
+        <Using Include="Microsoft.AspNetCore.Routing" />
+        <Using Include="Microsoft.Extensions.Configuration" />
+        <Using Include="Microsoft.Extensions.DependencyInjection" />
+        <Using Include="Microsoft.Extensions.Hosting" />
+        <Using Include="Microsoft.Extensions.Logging" />
+        <Using Include="System.Net.Http.Json" />
+        <Using Include="Essenthos.Core.Descriptions" />
+        <Using Include="Essenthos.Core.Context" />
+    </ItemGroup>
+
+</Project>

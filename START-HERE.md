@@ -61,14 +61,15 @@ The password is in two untracked places that must agree: `.env` beside `compose.
 
 **Resources are this project's own.** They live in `essenthos-core/Resources` and are read through configuration — `Dataset:ResourcesPath`. With nothing set, `../Resources` is tried against the content root and then every directory above it is searched for a `Resources` folder holding `MANIFEST.json` — the build copies `Resources/WorldHistory` beside the assembly, and a search that took the first folder of that name loaded from it — so the same default holds whether the process was started from the project, from the repository root or from an output folder. Only `Essenthos.Forge` reads them; the API never opens a file. Nothing here reads `essenthos-api` any more, and a bare `dotnet test` needs no environment variable.
 
-## The four projects
+## The projects
 
 Split out of the single `Essenthos.Core` project on 2026-09-18, because a server that serves the corpus was shipping fifty thousand lines of loaders, both SIL.Machine packages and a hosted service whose job was to open files that are not there. DOC-0203 is the argument; the short version is below.
 
 | | |
 |---|---|
 | `Essenthos.Corpus` | The schema, the migrations, the connection string, and the vocabulary both sides have to agree on — canonical references, text aliases, folding, the relationship words, the response shapes. |
-| `Essenthos.Api` | The `/v1` read surface. **It does not reference `Essenthos.Forge`, and the compiler is what enforces that.** Three packages, no parser, no `Resources/`. |
+| `Essenthos.Answers` | The answers the `/v1` surface gives and the pages written from them: the read endpoints and their composition, `PageLoader` and the page views. Both the API and the Forge reference it, because the build stores the pages the API would compose (`PageDocumentBuild`, `ReleaseFactsBuild`). |
+| `Essenthos.Api` | The host of the `/v1` read surface: start-up, accounts, sign-in, rate limits, sitemaps and the endpoints that write. **It does not reference `Essenthos.Forge`, nor the Forge it, and the compiler is what enforces that.** No parser, no `Resources/`. |
 | `Essenthos.Accounts` | The database the API owns and writes. Empty until accounts arrive; it exists so the boundary is drawn before there is anything to put behind it. |
 | `Essenthos.Forge` | Every loader, parser, aligner, EVIDENTIA pass and the verification. A console application, run here and never deployed. |
 

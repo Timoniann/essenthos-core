@@ -16,10 +16,12 @@ WORKDIR /src
 COPY ["Essenthos.Api/Essenthos.Api.csproj", "Essenthos.Api/"]
 COPY ["Essenthos.Corpus/Essenthos.Corpus.csproj", "Essenthos.Corpus/"]
 COPY ["Essenthos.Accounts/Essenthos.Accounts.csproj", "Essenthos.Accounts/"]
+COPY ["Essenthos.Answers/Essenthos.Answers.csproj", "Essenthos.Answers/"]
 RUN dotnet restore "Essenthos.Api/Essenthos.Api.csproj"
 COPY Essenthos.Api/ Essenthos.Api/
 COPY Essenthos.Corpus/ Essenthos.Corpus/
 COPY Essenthos.Accounts/ Essenthos.Accounts/
+COPY Essenthos.Answers/ Essenthos.Answers/
 WORKDIR "/src/Essenthos.Api"
 RUN dotnet build "Essenthos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
