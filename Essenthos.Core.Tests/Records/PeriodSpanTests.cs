@@ -143,6 +143,53 @@ public sealed class PeriodSpanTests : IDisposable
         shown.Credits![0].Licence.Should().Be("CC BY 4.0");
     }
 
+    [Fact]
+    public async Task APeriodTitlesItsBoundsInTheReadersLanguageAndCarriesTheCreditOfItsSource()
+    {
+        var opens = Happening("endconquest", "Israel's conquest of the Land of Canaan ended");
+        var closes = Happening("beginsaul", "Saul's reign as king began*");
+        _db.Periods.Add(new Period
+        {
+            Slug = "era-judges",
+            Name = "The judges",
+            Kind = "era",
+            Level = 0,
+            StartEvent = opens,
+            EndEvent = closes,
+            Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0",
+        });
+        _db.TextTranslations.AddRange(
+            new TextTranslation
+            {
+                Language = "ukr",
+                EnglishSha256 = Essenthos.Core.Corpus.EnglishNotes.Digest("Israel's conquest of the Land of Canaan ended"),
+                Text = "Завершення завоювання Ізраїлем землі Ханаанської",
+                Source = "a test rendering",
+            },
+            new TextTranslation
+            {
+                Language = "ukr",
+                EnglishSha256 = Essenthos.Core.Corpus.EnglishNotes.Digest("Saul's reign as king began*"),
+                Text = "Початок царювання Саула*",
+                Source = "a test rendering",
+            });
+        await _db.SaveChangesAsync();
+        var settings = new SiteSettingsFile(
+            Path.Combine(Path.GetTempPath(), $"no-settings-{Guid.NewGuid():N}.json"),
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<SiteSettingsFile>.Instance);
+
+        // The names come from the chosen text, the titles from the interface: a reader of the Synodal on a Ukrainian page.
+        var page = await EncyclopediaEndpoints.PeriodDetail(_db, "era-judges", default, "rus", "ukr", settings);
+
+        page!.Opens!.LocalName.Should().Be("Завершення завоювання Ізраїлем землі Ханаанської");
+        page.Closes!.Name.Should().Be("Saul's reign as king began");
+        page.Closes.LocalName.Should().Be("Початок царювання Саула");
+        page.Credits!.Select(c => c.Id).Should().Equal("bibledata");
+
+        var english = await EncyclopediaEndpoints.PeriodDetail(_db, "era-judges", default, "eng", "eng", settings);
+        english!.Opens!.LocalName.Should().BeNull("the English is the title");
+    }
+
     private Chronology Reckoning(string slug, int position)
     {
         var chronology = new Chronology

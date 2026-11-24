@@ -378,4 +378,26 @@ public sealed class DatasetAttributionTests
         berean.WordGlosses.Should().Be(NestleTextSource.Slug);
         berean.Author.Should().Contain("Bible Hub");
     }
+    /// <summary>
+    /// The map's credit line names the datasets that measured some of its points, and the place map prints the sentence
+    /// a licence asks to be carried; the small answer it reads holds those and no dataset that measured none.
+    /// </summary>
+    [Fact]
+    public void TheMapsCreditReadsOnlyTheDatasetsThatMeasuredPoints()
+    {
+        var settings = new SiteSettingsFile(
+            Path.Combine(Path.GetTempPath(), $"no-settings-{Guid.NewGuid():N}.json"),
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<SiteSettingsFile>.Instance);
+        var none = new DatasetCounts(5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        var measuring = DatasetEndpoints.Measuring(
+            [(Of("bibledata"), none), (Of("pcgn"), none with { Points = 3 })], settings);
+
+        var pcgn = measuring.Should().ContainSingle().Which;
+        pcgn.Id.Should().Be("pcgn");
+        pcgn.Points.Should().Be(3);
+        pcgn.Licence.Should().Be(Of("pcgn").Licence);
+        pcgn.Citation.Should().Be(Of("pcgn").Citation);
+        pcgn.Obliges.Should().Be(Of("pcgn").Obliges);
+    }
 }
