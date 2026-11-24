@@ -122,3 +122,32 @@ on that list.
 The pairing of an English word to a Hebrew morpheme is still this project's inference either way.
 What TAHOT changes is what the inference stands on, and every match it supports carries a second
 claim naming it.
+
+## TAGNT, the Greek half (fetched 2026-11-24)
+
+`TAGNT Mat-Jhn` and `TAGNT Act-Rev` — *Translators Amalgamated Greek NT* — come from the same
+repository at the same commit as the four TAHOT volumes (STEPBible-Data
+`89ece29525e3c51d61850b28b4d4cf27ef9cd321`), and `scripts/fetch-stepbible.ps1` now pins all six files
+by SHA-256 (`scripts/fetch-stepbible.sha256`). Their header block is TAHOT's, word for word where it
+matters, so the three statements above and the reading of them cover TAGNT unchanged:
+
+> Data created by www.STEPBible.org based on work at Tyndale House Cambridge (CC BY 4.0)
+>
+> * Refer others to github.com/STEPBible as the source of the data. Please do not redistribute it yourself.
+
+The header calls the file "TAGNT Mat-Jhn - Translators Amalgamated Greek NT - STEPBible.org CC BY 4.0"
+and says it is split "because a single file too large for Hithub".
+
+What TAGNT is: every word of the standard Greek editions, each row naming the editions that print it —
+NA27, NA28, Tyndale House (Tyn), SBL, Westcott-Hort (WH), Tregelles (Treg), TR and Byzantine (Byz, "based
+on RP 2005") — with Strong numbers, grammar, a gloss and the variants that change a translation. Two
+things in it that the reading of the rights must keep in view:
+
+- **Its Greek is spelled by NA28.** The header: "Spelling comes from NA28 when available, then from TR or
+  the Other edition that has the word", and "Text follows NA27". Copying TAGNT's words as a text would
+  reproduce the Nestle-Aland text, which is not ours to show (the owner, 2026-11-24: NA27/NA28 flags may
+  be stored, not shown, and no NA text is reproduced). The edition flags are the data that is wanted.
+- **Its `TR` flag is not Scrivener's 1894, whatever the header says** ("TR= Scrivener's 1894"). At the
+  256 places the corpus's Stephanus 1550 and Scrivener 1894 differ, it agrees with Stephanus at 223 and
+  with Scrivener at 10; where the KJV followed Scrivener against it, TAGNT marks the word with a separate
+  `KJV` token (Matthew 2:11: εἶδον `…+Byz+KJV`, εὗρον "in: TR"). Measured 2026-11-24, TSK-0242.

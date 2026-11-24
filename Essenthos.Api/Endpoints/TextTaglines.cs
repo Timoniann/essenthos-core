@@ -225,6 +225,26 @@ internal static class TextTaglines
                 "Ґданська Біблія 1632 року, переведена на сучасну польську.",
                 "Die Danziger Bibel von 1632 im heutigen Polnisch.",
                 "La Biblia de Gdansk de 1632 llevada al polaco actual."),
+            ["PESHITTA"] = Say(
+                "The Syriac Old Testament, translated from the Hebrew.",
+                "Сирійський Старий Завіт, перекладений з єврейської.",
+                "Das syrische Alte Testament, aus dem Hebräischen übersetzt.",
+                "El Antiguo Testamento siríaco, traducido del hebreo."),
+            ["ONKELOS"] = Say(
+                "The Aramaic Torah read in the synagogue.",
+                "Арамейська Тора, яку читали в синагозі.",
+                "Die aramäische Tora der Synagoge.",
+                "La Torá aramea leída en la sinagoga."),
+            ["TGJONATHAN"] = Say(
+                "The Aramaic translation of the Prophets.",
+                "Арамейський переклад Пророків.",
+                "Die aramäische Übersetzung der Propheten.",
+                "La traducción aramea de los Profetas."),
+            ["TGWRITINGS"] = Say(
+                "Aramaic translations of the Psalms, Job, Proverbs and the Scrolls.",
+                "Арамейські переклади Псалмів, Йова, Приповістей і Сувоїв.",
+                "Aramäische Übersetzungen der Psalmen, Hiobs, der Sprüche und der Rollen.",
+                "Traducciones arameas de los Salmos, Job, Proverbios y los Rollos."),
             ["BG1881"] = Say(
                 "The Polish Protestant Bible of 1632, in the edition of 1881.",
                 "Польська протестантська Біблія 1632 року у виданні 1881 року.",
