@@ -121,6 +121,50 @@ public class EvidentiaSlavicAttachedWordsTests
     }
 
     [Fact]
+    public void APrepositionIsNotPlacedOnAnotherPhrasesPreposition()
+    {
+        // шлях у поган over Εἰς ὁδὸν ἐθνῶν: Εἰς governs ὁδὸν, which «шлях» renders outside the phrase «у поган».
+        var way = Word(1, "шлях");
+        var to = Word(2, "у", head: 3, relation: "case");
+        var nations = Word(3, "поган");
+        var eis = Greek(101, "Εἰς", "G1519", ("pos", "prep"));
+        var road = Greek(102, "ὁδὸν", "G3598", ("pos", "noun"), ("case", "accusative"));
+        var gentiles = Greek(103, "ἐθνῶν", "G1484", ("pos", "noun"), ("case", "genitive"));
+
+        Place([way, to, nations], [to], [eis, road, gentiles], (1, 102), (3, 103)).Should().BeEmpty();
+        Place([way, to, nations], [to], [eis, road, gentiles], (3, 103)).Should().BeEmpty("Εἰς governs ὁδὸν by its case, rendered or not");
+
+        // у святому місті over ἐν ἁγίᾳ πόλει: the word between renders inside the phrase.
+        var at = Word(1, "у", head: 3, relation: "case");
+        var holy = Word(2, "святому", head: 3, relation: "amod");
+        var city = Word(3, "місті");
+        var en = Greek(101, "ἐν", "G1722", ("pos", "prep"));
+        var adjective = Greek(102, "ἁγίᾳ", "G40", ("pos", "adj"), ("case", "dative"));
+        var noun = Greek(103, "πόλει", "G4172", ("pos", "noun"), ("case", "dative"));
+
+        Place([at, holy, city], [at], [en, adjective, noun], (2, 102), (3, 103)).Should().ContainSingle()
+            .Which.Original.Should().Be(101);
+    }
+
+    [Fact]
+    public void APrepositionIsNotPlacedOnAPrepositionOfAnotherSentenceOfTheOriginal()
+    {
+        // «Павло у ньому. Прийшов» over Παῦλος· ἦλθεν ἐν αὐτῷ: ἐν stands in the sentence «Прийшов», the next one, renders.
+        var paul = Word(1, "Павло");
+        var at = Word(2, "у", head: 3, relation: "case");
+        var him = Word(3, "ньому");
+        var came = Word(4, "прийшов");
+        var paulos = Greek(101, "Παῦλος", "G3972", ("pos", "noun"), ("case", "nominative")) with { Trailer = "·" };
+        var elthen = Greek(102, "ἦλθεν", "G2064", ("pos", "verb"));
+        var en = Greek(103, "ἐν", "G1722", ("pos", "prep"));
+        var auto = Greek(104, "αὐτῷ", "G846", ("pos", "pron"), ("case", "dative"));
+
+        Place([paul, at, him with { Trailer = "." }, came], [at], [paulos, elthen, en, auto], (1, 101), (3, 104), (4, 102)).Should().BeEmpty();
+        Place([paul, at, him, came], [at], [paulos, elthen, en, auto], (1, 101), (3, 104), (4, 102)).Should().ContainSingle()
+            .Which.Original.Should().Be(103);
+    }
+
+    [Fact]
     public void ANegationGoesOnTheFreeNegationBeforeItsHeadsRendering()
     {
         var not = Word(1, "не", head: 2, relation: "advmod");

@@ -24,6 +24,24 @@ internal static class EvidentiaSlavicAttachedWords
     /// </summary>
     private const int SubjectReach = 3;
 
+    /// <summary>How many steps up the translation's parse a word may stand below a noun and still be of the noun's phrase.</summary>
+    private const int PhraseDepth = 3;
+
+    /// <summary>The marks after a word that end a sentence or a colon, in the translation and in the original alike.</summary>
+    private static readonly char[] SentenceMarks = ['.', ';', ':', '!', '?', '·', '·'];
+
+    /// <summary>The translation's classes of word that run on after a noun as its modifiers (UD UPOS).</summary>
+    private static readonly HashSet<string> Modifiers = new(StringComparer.Ordinal) { "ADJ", "DET", "NUM", "PROPN" };
+
+    /// <summary>The UD relations by which a word modifies the noun it hangs on, and so stands in its phrase.</summary>
+    private static readonly HashSet<string> ModifierRelations = new(StringComparer.Ordinal)
+    {
+        "amod", "det", "nmod", "nummod", "flat", "fixed", "compound", "case",
+    };
+
+    /// <summary>The original's classes of word that join or mark a phrase rather than make one of their own.</summary>
+    private static readonly HashSet<string> Linking = new(StringComparer.Ordinal) { "conj", "ptcl", "det", "intj" };
+
     private const string GreekArticle = "G3588";
 
     private const string GreekDe = "G1161";
@@ -107,7 +125,8 @@ internal static class EvidentiaSlavicAttachedWords
         IReadOnlyList<EvidentiaToken> verse,
         IReadOnlyList<EvidentiaToken> unplaced,
         IReadOnlyList<EvidentiaToken> original,
-        IReadOnlyDictionary<long, IReadOnlyList<long>> placed)
+        IReadOnlyDictionary<long, IReadOnlyList<long>> placed,
+        Action<EvidentiaSlavicPlacement>? refused = null)
     {
         var words = language.Words;
         var byId = verse.ToDictionary(token => token.Id);
@@ -180,7 +199,15 @@ internal static class EvidentiaSlavicAttachedWords
                 {
                     if (Free(preposition.Id, word.Id))
                     {
-                        placement = new(word.Id, preposition.Id, "preposition-before-noun", head.Id);
+                        var found = new EvidentiaSlavicPlacement(word.Id, preposition.Id, "preposition-before-noun", head.Id);
+                        if (Governs(word, head, preposition, noun, around, verse, byId, placed, reachedBy))
+                        {
+                            placement = found;
+                        }
+                        else
+                        {
+                            refused?.Invoke(found);
+                        }
                     }
                 }
                 else if (Case(noun) is { } nounCase && prepositions.Any(row => row.Case!.Split('|').Contains(nounCase)))
@@ -240,6 +267,120 @@ internal static class EvidentiaSlavicAttachedWords
                 yield return placement;
             }
         }
+    }
+
+    /// <summary>
+    /// Whether the original's preposition before a noun's rendering is the one of the small word's own phrase. No original word
+    /// between the two may be rendered by a translation word outside that phrase (<em>на путь до поган</em> over
+    /// <em>Εἰς ὁδὸν ἐθνῶν</em>: Εἰς governs ὁδὸν, which «путь» renders).
+    /// A conjunction, particle or article between them (<em>Περὶ δὲ τῆς</em>) is no other phrase's. And where the original's
+    /// sentence holding the preposition is rendered by other words of the translation, one of them must stand in the small word's
+    /// own sentence (<em>ті, хто з ним був</em> is not served by <em>ἀπ' αὐτῶν</em> of the next sentence, «відлучившись від них»).
+    /// </summary>
+    private static bool Governs(
+        EvidentiaToken word,
+        EvidentiaToken head,
+        EvidentiaToken preposition,
+        EvidentiaToken noun,
+        List<EvidentiaToken> around,
+        IReadOnlyList<EvidentiaToken> verse,
+        Dictionary<long, EvidentiaToken> byId,
+        IReadOnlyDictionary<long, IReadOnlyList<long>> placed,
+        Dictionary<long, HashSet<long>> reachedBy)
+    {
+        var ordered = verse.OrderBy(token => token.Position).ToList();
+        var last = Math.Max(word.Position, head.Position);
+        foreach (var next in ordered.Where(token => token.Position > last))
+        {
+            if (next.Position != last + 1 || !Modifiers.Contains(next.PartOfSpeech ?? ""))
+            {
+                break;
+            }
+
+            last = next.Position;
+        }
+
+        // The phrase is the small word, its noun and what stands between them, the modifiers running on after the noun
+        // (від Духа Святого), and the words the parse hangs on the noun as its modifiers; not the whole clause a copular noun
+        // heads (в Дамаску був учень).
+        bool InPhrase(EvidentiaToken other)
+        {
+            if (other.Position >= Math.Min(word.Position, head.Position) && other.Position <= last)
+            {
+                return true;
+            }
+
+            var current = other;
+            for (var step = 0; step < PhraseDepth && current.SyntacticHead is { } up && up != current.Id && byId.TryGetValue(up, out var parent)
+                 && current.Relation is { } relation && ModifierRelations.Contains(relation.Split(':')[0]); step++)
+            {
+                if (parent.Id == head.Id)
+                {
+                    return true;
+                }
+
+                current = parent;
+            }
+
+            return false;
+        }
+
+        var from = around.FindIndex(token => token.Id == preposition.Id);
+        var to = around.FindIndex(token => token.Id == noun.Id);
+
+        // The preposition governs the first word after it, past an article, that has a case; a noun in another case than the
+        // noun's, which no word of the phrase renders, begins another phrase (Εἰς ὁδὸν ἐθνῶν: Εἰς takes ὁδὸν, not ἐθνῶν). An
+        // adjective or pronoun there (ἐν μέσῳ αὐτῶν, «серед них») is the preposition's own compound.
+        if (Case(noun) is { } nounCase
+            && around.Skip(from + 1).Take(to - from - 1)
+                .FirstOrDefault(token => Case(token) is not null && token.StrongNumber != GreekArticle && token.PartOfSpeech != "det") is { } governed
+            && governed.PartOfSpeech == "noun" && Case(governed) != nounCase
+            && !(reachedBy.TryGetValue(governed.Id, out var governing) && governing.Any(id => byId.TryGetValue(id, out var other) && InPhrase(other))))
+        {
+            return false;
+        }
+
+        for (var index = from + 1; index < to; index++)
+        {
+            if (!Linking.Contains(around[index].PartOfSpeech ?? "") && around[index].StrongNumber != GreekArticle
+                && reachedBy.TryGetValue(around[index].Id, out var by)
+                && by.Any(id => byId.TryGetValue(id, out var other) && !InPhrase(other)))
+            {
+                return false;
+            }
+        }
+
+        // A sentence is told by its marks, which the translation sets where the original has none (a colon before speech), so
+        // it refuses only where the small word's own sentence is rendered elsewhere in the original and the preposition's
+        // sentence by another sentence of the translation.
+        var inVerse = around.Select(token => token.Id).ToHashSet();
+        var own = Sentence(ordered, word).Where(other => !InPhrase(other)).ToList();
+        var ownRendered = own.Where(other => placed.ContainsKey(other.Id)).SelectMany(other => placed[other.Id]).Where(inVerse.Contains).ToList();
+        var sentence = Sentence(around, preposition).Select(token => token.Id).ToHashSet();
+        var ownIds = own.Select(other => other.Id).ToHashSet();
+        var elsewhere = sentence.SelectMany(id => reachedBy.GetValueOrDefault(id) ?? [])
+            .Any(id => byId.TryGetValue(id, out var other) && !ownIds.Contains(id) && !InPhrase(other));
+        return ownRendered.Count == 0 || ownRendered.Any(sentence.Contains) || !elsewhere;
+    }
+
+    /// <summary>The words of a verse in the same sentence or colon as a word, as far as the verse goes.</summary>
+    private static List<EvidentiaToken> Sentence(IReadOnlyList<EvidentiaToken> verse, EvidentiaToken word)
+    {
+        var ordered = verse.OrderBy(token => token.Position).ToList();
+        var at = ordered.FindIndex(token => token.Id == word.Id);
+        var start = at;
+        while (start > 0 && ordered[start - 1].Trailer.IndexOfAny(SentenceMarks) < 0)
+        {
+            start--;
+        }
+
+        var end = at;
+        while (end < ordered.Count - 1 && ordered[end].Trailer.IndexOfAny(SentenceMarks) < 0)
+        {
+            end++;
+        }
+
+        return ordered.GetRange(start, end - start + 1);
     }
 
     /// <summary>The words before a word of the original, nearest first, as far as <see cref="Reach"/>.</summary>
