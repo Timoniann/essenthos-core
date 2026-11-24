@@ -126,7 +126,9 @@ try {
         $pinned = @($Pins.Keys | Where-Object { $_.StartsWith("$($text.Folder)/") } | Sort-Object)
         if ($pinned.Count -eq 0) { throw "fetch-west-slavic.sha256 pins no file of $($text.Folder)." }
 
-        if (Test-Path $root) {
+        # The folder may hold only the LICENCE.md git keeps; that is a folder never fetched, not a partial fetch.
+        $present = @($pinned | Where-Object { Test-Path -LiteralPath (Join-Path $resources $_) })
+        if ($present.Count -gt 0) {
             $differ = @($pinned | Where-Object {
                 $path = Join-Path $resources $_
                 -not (Test-Path -LiteralPath $path) -or (Get-Hash $path) -ne $Pins[$_]
@@ -203,7 +205,8 @@ try {
             throw "These differ from the pinned bytes although the archive matched: $($differ -join ', '). Nothing was installed."
         }
 
-        Move-Item -LiteralPath $built -Destination $root
+        if (Test-Path $root) { Get-ChildItem -LiteralPath $built | Move-Item -Destination $root }
+        else { Move-Item -LiteralPath $built -Destination $root }
         $size = (Get-ChildItem $root -Recurse -File | Measure-Object -Property Length -Sum).Sum / 1MB
         Write-Host ("  {0} files, {1:N1} MB in {2}" -f $pinned.Count, $size, $root)
     }
