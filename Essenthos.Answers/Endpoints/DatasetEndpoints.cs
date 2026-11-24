@@ -59,7 +59,25 @@ public static class DatasetEndpoints
 
             return Results.Ok(new DatasetListResponse(answers, [.. tally.Undeclared]));
         }).KeptUntilRelease();
+
+        // The datasets that measured some of the map's points, for the credit line under every map: a few entries
+        // where the whole list is every dataset's counts and every undeclared source.
+        routes.MapGet("/datasets/points", async (DatasetCountsCache counts, SiteSettingsFile settings, CancellationToken cancellationToken) =>
+            Results.Ok(Measuring((await counts.Get(cancellationToken)).Counted, settings))).KeptUntilRelease();
     }
+
+    /// <summary>The datasets among <paramref name="counted"/> that measured points on the map, in the order they are declared.</summary>
+    internal static IList<MeasuringDatasetResponse> Measuring(
+        IEnumerable<(Datasets.Dataset Dataset, DatasetCounts Counts)> counted, SiteSettingsFile settings) =>
+    [
+        .. counted.Where(one => one.Counts.Points > 0).Select(one =>
+        {
+            var (licence, url) = DatasetCredits.Licence(one.Dataset, settings);
+            return new MeasuringDatasetResponse(
+                one.Dataset.Id, one.Dataset.Name, one.Dataset.Author, licence, url, one.Dataset.Url,
+                one.Dataset.Citation, one.Dataset.Obliges, one.Counts.Points);
+        }),
+    ];
 
     /// <summary>
     /// Every declared dataset with the rows it accounts for, leaving out those with none, and the rows
@@ -335,6 +353,21 @@ public record DatasetCounts(
 public record UndeclaredResponse(string Source, int Rows);
 
 public record DatasetListResponse(IList<DatasetResponse> Items, IList<UndeclaredResponse> Undeclared);
+
+/// <summary>
+/// A dataset that measured points on the map, as the map's credit names it: the credit, how the author asked to be cited
+/// and what the terms ask of a reuser (<see cref="DatasetResponse"/>), and how many points are its.
+/// </summary>
+internal record MeasuringDatasetResponse(
+    string Id,
+    string Name,
+    string Author,
+    string? Licence,
+    string? LicenceUrl,
+    string Url,
+    string? Citation,
+    string? Obliges,
+    int Points);
 
 /// <summary>A dataset as a credit names it: whose a row is and under what licence, with a link to each.</summary>
 internal record DatasetCreditResponse(string Id, string Name, string Author, string? Licence, string? LicenceUrl, string Url);

@@ -435,6 +435,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<ParallelVerseResponse>))]
 [JsonSerializable(typeof(List<ParallelVerseResponse>))]
 [JsonSerializable(typeof(DatasetListResponse))]
+[JsonSerializable(typeof(MeasuringDatasetResponse))]
+[JsonSerializable(typeof(IList<MeasuringDatasetResponse>))]
 [JsonSerializable(typeof(DatasetResponse))]
 [JsonSerializable(typeof(IList<DatasetResponse>))]
 [JsonSerializable(typeof(List<DatasetResponse>))]
