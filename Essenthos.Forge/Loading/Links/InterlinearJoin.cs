@@ -41,6 +41,13 @@ internal enum InterlinearSpanFailure
     /// as many times as the source counts, so which one the source means cannot be told.
     /// </summary>
     OriginalOccurrenceUnresolved,
+
+    /// <summary>
+    /// A translated word of the span carries a spelling and occurrence another span of the verse carries too, over the
+    /// same original words at the same occurrences: the source copied both counts. The Segond's alignment puts all five
+    /// «à» of 1 Corinthians 1:2 at 1 of 2 under ἐν 1 of 3, and four of them are datives no ἐν stands for.
+    /// </summary>
+    TranslatedCountCopied,
 }
 
 /// <summary>
@@ -249,9 +256,10 @@ internal static class InterlinearJoin
         var made = 0;
         var here = new TranslatedCursor(0, string.Empty);
         var taken = new HashSet<int>();
-        var groups = new Dictionary<string, (int Pair, HashSet<(string, int)> Counted)>(StringComparer.Ordinal);
+        var groups = new Dictionary<string, int>(StringComparer.Ordinal);
         var language = original[0].Language;
         var writings = original.Select(word => Written(word.Written, language)).ToArray();
+        var copied = Copied(verse);
 
         for (var index = 0; index < verse.Spans.Count; index++)
         {
@@ -269,6 +277,11 @@ internal static class InterlinearJoin
             var left = false;
             AlignedOriginal? missing = null;
             IReadOnlyList<AlignedOriginal> lacking = [];
+            if (failure == InterlinearSpanFailure.None && copied.Contains(index))
+            {
+                failure = InterlinearSpanFailure.TranslatedCountCopied;
+            }
+
             if (failure == InterlinearSpanFailure.None)
             {
                 (theirs, loose, byNumber, failure, missing, lacking, var asOne, var beside, left) =
@@ -314,6 +327,7 @@ internal static class InterlinearJoin
                 // words were not found leaves the cursor where it was. Either way the next span's first piece cannot be the
                 // rest of a word of the refused span.
                 here = failure is InterlinearSpanFailure.OriginalWordAbsent or InterlinearSpanFailure.OriginalOccurrenceUnresolved
+                    or InterlinearSpanFailure.TranslatedCountCopied
                     ? afterOurs with { Rest = string.Empty }
                     : here with { Rest = string.Empty };
                 continue;
@@ -351,20 +365,17 @@ internal static class InterlinearJoin
             // translationCore ties one group of original words to one group of translated words. Where the translated
             // words do not stand together it writes the group's milestones again around each piece (2 Timothy 3:13 in the
             // Ukrainian: {А ... лихі} = πονηροὶ δὲ), so a piece over the same original words, at the same occurrences, as an
-            // earlier piece of the verse is the rest of that group and joins its link. Pieces whose translated words repeat
-            // a spelling at an occurrence the source already counted state no one group (the Segond's copied counts), and
-            // a piece that landed on other witness words is not the same group here: each stays a link of its own.
+            // earlier piece of the verse is the rest of that group and joins its link. A piece that landed on other witness
+            // words is not the same group here: each stays a link of its own.
             var to = theirs.Select(index => original[index].Id).ToList();
-            var counted = Counted(span);
-            var group = counted is null ? null : Group(span);
+            var group = Counted(span) is null ? null : Group(span);
             var joinedToGroup = false;
             if (group is not null && groups.TryGetValue(group, out var first))
             {
-                if (pairs[first.Pair].To.SequenceEqual(to) && !counted!.Overlaps(first.Counted))
+                if (pairs[first].To.SequenceEqual(to))
                 {
-                    var from = pairs[first.Pair].From;
+                    var from = pairs[first].From;
                     from.AddRange(ours.Select(index => translated[index].Id).Where(id => !from.Contains(id)));
-                    first.Counted.UnionWith(counted!);
                     account.GroupPiecesJoined++;
                     joinedToGroup = true;
                 }
@@ -387,7 +398,7 @@ internal static class InterlinearJoin
                 pairs.Add(new InterlinearPair([.. ours.Select(index => translated[index].Id)], to));
                 if (group is not null)
                 {
-                    groups.TryAdd(group, (pairs.Count - 1, counted!));
+                    groups.TryAdd(group, pairs.Count - 1);
                 }
             }
 
@@ -531,36 +542,14 @@ internal static class InterlinearJoin
             return null;
         }
 
-        var cut = new List<InterlinearWord>(words.Count + 4);
-        var of = new List<(int Word, int Part, int Parts)>(words.Count + 4);
-        for (var at = 0; at < words.Count; at++)
-        {
-            var parts = words[at].Written.Split(PartBreaks);
-            if (parts.Length == 1 || parts.Any(part => part.Length == 0))
-            {
-                cut.Add(words[at]);
-                of.Add((at, 0, 1));
-                continue;
-            }
-
-            for (var part = 0; part < parts.Length; part++)
-            {
-                cut.Add(words[at] with
-                {
-                    Written = parts[part], Folded = WordFolding.Fold(parts[part], language),
-                    Attached = part == parts.Length - 1 && words[at].Attached,
-                });
-                of.Add((at, part, parts.Length));
-            }
-        }
-
+        var (cut, of) = Cut(words, language);
         var writings = cut.Select(word => Written(word.Written, language)).ToArray();
         var placed = new List<(int Span, List<int> Place)>();
         for (var span = 0; span < spans.Count; span++)
         {
             foreach (var one in spans[span])
             {
-                var (place, _, failure) = FindOriginal(cut, writings, one, language);
+                var (place, _, failure) = FindPrinted(cut, writings, one, language);
                 if (failure != InterlinearSpanFailure.None)
                 {
                     return null;
@@ -700,7 +689,7 @@ internal static class InterlinearJoin
                 Folded = word.Folded.Replace(" ", string.Empty), Written = word.Written.Replace(" ", string.Empty),
             }).ToList();
             var together = new AlignedOriginal(all[^1].Strong, string.Join('\u2060', all.Select(one => one.Content)), 1, 1);
-            var (whole, wholeLoose, wholeFailure) = FindOriginal(
+            var (whole, wholeLoose, wholeFailure) = FindPrinted(
                 unspaced, [.. unspaced.Select(word => Written(word.Written, language))], together, language);
             if (wholeFailure == InterlinearSpanFailure.None && whole.Count > 0)
             {
@@ -752,6 +741,101 @@ internal static class InterlinearJoin
     /// on another letter (BHSA's יֹואָב, the source's יוֹאָב).
     /// </summary>
     private static (List<int> Words, bool Loose, InterlinearSpanFailure Failure) FindOriginal(
+        IReadOnlyList<InterlinearWord> words,
+        string[] writings,
+        AlignedOriginal span,
+        string language)
+    {
+        if (Parts(words, language) is not { } parts)
+        {
+            return FindPrinted(words, writings, span, language);
+        }
+
+        var (place, loose, failure) = FindPrinted(parts.Words, parts.Writings, span, language);
+        if (failure != InterlinearSpanFailure.None)
+        {
+            return FindPrinted(words, writings, span, language);
+        }
+
+        return place.Any(at => parts.Of[at].Parts > 1)
+            ? ([], false, InterlinearSpanFailure.OriginalWordAbsent)
+            : ([.. place.Select(at => parts.Of[at].Word).Distinct()], loose, InterlinearSpanFailure.None);
+    }
+
+    /// <summary>
+    /// A verse's witness words cut at the maqaf and the space inside a word BHSA prints whole (בֶּן־הֲדַד, לֹא עַמִּי), each
+    /// part with the word it is part of; null where no word of the verse is so, or the language is not Hebrew or Aramaic.
+    /// The source prints the parts as words and counts each with the verse's other words of its spelling, so a word that
+    /// also stands inside such a name is counted against the parts (2 Kings 5:18, יִסְלַח beside יִסְלַח־נא; Hosea 1:9, לֹא
+    /// beside לֹא עַמִּי). The last verse's parts are kept, as every span of a verse asks for them.
+    /// </summary>
+    private static (List<InterlinearWord> Words, string[] Writings, List<(int Word, int Part, int Parts)> Of)? Parts(
+        IReadOnlyList<InterlinearWord> words, string language)
+    {
+        if (language is not ("hbo" or "arc"))
+        {
+            return null;
+        }
+
+        var key = (words.Count, words.Count == 0 ? 0 : words[0].Id, words.Count == 0 ? 0 : words[^1].Id);
+        if (ReferenceEquals(lastParted, words) && lastKey == key)
+        {
+            return lastParts;
+        }
+
+        (List<InterlinearWord>, string[], List<(int, int, int)>)? parts = null;
+        if (words.Any(word => word.Written.IndexOfAny(PartBreaks) >= 0 && word.Written.Split(PartBreaks).All(part => part.Length > 0)))
+        {
+            var (cut, of) = Cut(words, language);
+            parts = (cut, [.. cut.Select(word => Written(word.Written, language))], of);
+        }
+
+        (lastParted, lastKey, lastParts) = (words, key, parts);
+        return parts;
+    }
+
+    [ThreadStatic]
+    private static IReadOnlyList<InterlinearWord>? lastParted;
+
+    [ThreadStatic]
+    private static (int, long, long) lastKey;
+
+    [ThreadStatic]
+    private static (List<InterlinearWord> Words, string[] Writings, List<(int Word, int Part, int Parts)> Of)? lastParts;
+
+    /// <summary>The witness words cut into their parts at the maqaf and the space, each part with its word.</summary>
+    private static (List<InterlinearWord> Cut, List<(int Word, int Part, int Parts)> Of) Cut(IReadOnlyList<InterlinearWord> words, string language)
+    {
+        var cut = new List<InterlinearWord>(words.Count + 4);
+        var of = new List<(int Word, int Part, int Parts)>(words.Count + 4);
+        for (var at = 0; at < words.Count; at++)
+        {
+            var parts = words[at].Written.Split(PartBreaks);
+            if (parts.Length == 1 || parts.Any(part => part.Length == 0))
+            {
+                cut.Add(words[at]);
+                of.Add((at, 0, 1));
+                continue;
+            }
+
+            for (var part = 0; part < parts.Length; part++)
+            {
+                cut.Add(words[at] with
+                {
+                    Written = parts[part], Folded = WordFolding.Fold(parts[part], language),
+                    Attached = part == parts.Length - 1 && words[at].Attached,
+                });
+                of.Add((at, part, parts.Length));
+            }
+        }
+
+        return (cut, of);
+    }
+
+    /// <summary>
+    /// <see cref="FindOriginal"/> over the words as given: each one a printed word of the count.
+    /// </summary>
+    private static (List<int> Words, bool Loose, InterlinearSpanFailure Failure) FindPrinted(
         IReadOnlyList<InterlinearWord> words,
         string[] writings,
         AlignedOriginal span,
@@ -1168,6 +1252,42 @@ internal static class InterlinearJoin
         }
 
         return [.. span.Words.Select((word, index) => (word, occurrences[index].Occurrence))];
+    }
+
+    /// <summary>
+    /// The spans of a verse, by index, that carry a translated word at a spelling and occurrence another span of the verse
+    /// carries too, over the same original words at the same occurrences. The pieces of one group never do (each piece
+    /// counts its own words), so this is the source writing both counts again: which word of either side such a span meant
+    /// is said by neither count, and all of them are refused. Two spans repeating a translated count over different
+    /// original words (Romans 2:14 in the ULT, «having» 1 of 1 over ἔχοντα and over ἔχοντες) still say which word each is.
+    /// </summary>
+    private static HashSet<int> Copied(AlignedVerse verse)
+    {
+        var spans = new Dictionary<(string, int), List<(int Index, string Group)>>();
+        for (var index = 0; index < verse.Spans.Count; index++)
+        {
+            if (Counted(verse.Spans[index]) is not { } counted || Group(verse.Spans[index]) is not { } group)
+            {
+                continue;
+            }
+
+            foreach (var word in counted)
+            {
+                if (!spans.TryGetValue(word, out var list))
+                {
+                    spans[word] = list = [];
+                }
+
+                list.Add((index, group));
+            }
+        }
+
+        return
+        [
+            .. spans.Values.Where(list => list.Count > 1)
+                .SelectMany(list => list.GroupBy(one => one.Group, StringComparer.Ordinal).Where(same => same.Count() > 1))
+                .SelectMany(same => same.Select(one => one.Index)),
+        ];
     }
 
     /// <summary>
