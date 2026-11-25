@@ -73,6 +73,8 @@ public sealed class MappingRoundTripTests : IDisposable
         var connectionString = _database.NewConnection().ConnectionString;
         var store = new ProductStore(Path.Combine(_root, "first"));
         await MappingExport.Run(connectionString, store, null, (_, _) => true, 1, NullLogger.Instance, CancellationToken.None);
+        File.WriteAllLines(Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, MappingProducts.Folder, "KJV-BHSA", "floors.tsv"),
+            ["# producer   by hand", "readings\tfrom\tright\tscored\tbasis", "every other combination\tas measured\t\t\tnot read"]);
         var methodFiles = MappingProducts.Methods(store, "KJV-BHSA").ToDictionary(m => m, m => store.ProductInput(MappingProducts.Of("KJV-BHSA", m)).Sha256);
         var merged = MappingFiles.Merge(store, "KJV-BHSA", force: false);
         var before = await Stored();
