@@ -12,7 +12,7 @@ What a correct link is. These are the rules the owner and the board have settled
 
 Principles
 - A link says the {slug} word(s) render the original word(s), in this verse, at this occurrence. One word may link to several and several to one when together they render together (a verb with its pronoun suffix; one word for עֹבֵד אֲדָמָה "worker of the soil"; a compound number whole to whole, "twelve" = שְׁתַּיִם עֶשְׂרֵה).
-- A word with no counterpart stays unlinked; that is correct, not an error: words the translator supplied, words the edition marks as supplied.
+- Map by intent (owner's rule): when the original carries a meaning (an action, a person, a relation) that the translation says in several words, every one of those words links to the original word that carries it, even with no word of its own in the original. A word the translator added with no such intent in the original stays unlinked; that is correct, not an error (also words the edition marks as supplied).
 - Judge the words themselves. The method and confidence on the sheet are no evidence, and links the edition states can be wrong too.
 - A point marked "undecided" below: leave such a link as it stands (neither refuse nor accept it).
 
@@ -23,13 +23,13 @@ Always wrong (refuse)
 - A pronoun linked to the noun it refers to rather than to the word that carries the pronoun. (The other way round, a name the translation writes where the original has a pronoun renders that pronoun.)
 
 Hebrew ({ot} writes the conjunction ו, the prefixes בְּ לְ כְּ מִ(ן) and the article ה as words of their own)
-- Prepositions link to the prefix word or preposition they render, not to the noun ("in the beginning": "in" → בְּ, "beginning" → רֵאשִׁית). A function word goes only on a prefix of its own kind: and → ו, to/for → ל, in/with/by → ב, as → כ, from/than → מִן; "for" never on ו. A dative or instrumental case ending can render a prefix: one word then links to the prefix and its noun ("to the LORD" in one word → לַ + יהוָה). A preposition the translation supplies where the Hebrew has none (an adverbial accusative of time, place or manner: "in all the days" for כָּל־יְמֵי) stays unlinked; linked to the noun it is wrong.
+- Prepositions link to the prefix word or preposition they render, not to the noun ("in the beginning": "in" → בְּ, "beginning" → רֵאשִׁית). A function word goes only on a prefix of its own kind: and → ו, to/for → ל, in/with/by → ב, as → כ, from/than → מִן; "for" never on ו. A dative or instrumental case ending can render a prefix: one word then links to the prefix and its noun ("to the LORD" in one word → לַ + יהוָה). A preposition the translation supplies for an adverbial accusative of time, place or manner (the Hebrew noun alone means in/on/at: "in all the days" for כָּל־יְמֵי, «в той день» for הַיּוֹם) expresses the original's intent and links to that noun; a preposition added with no such meaning stays unlinked.
 - The article (also [elided] inside בַּ/לַ) and the object marker אֵת (H853) have no counterpart; a word on them is wrong. A suffixed אֹתוֹ/אֹתָם carries a pronoun, and that pronoun links to it. אֵת H854 "with" is a preposition.
 - A possessive or object pronoun links to the word carrying the suffix ("his wife" → both words on אִשְׁתּוֹ; "to you" → לָךְ; "him" → the verb carrying the object suffix). It agrees with the suffix's person and number, not with its noun's; never on a prefix, conjunction or article.
 - The form principle (owner): words a language needs for what one original word carries in its form link, with the content word, to that word: a subject pronoun in the verb's ending ("she conceived" → תַּהַר), a tense or mood auxiliary ("let there be" → יְהִי, "will feed" → ποιμανεῖ). Where the original writes the pronoun as a word (הוּא, אֲנִי, ἐγώ, αὐτός), the translation's pronoun links to that word.
-- "Be" that renders a written היה or εἰμί links to it (וַיְהִי: "and" → וַ, "it came to pass"/"was" → יְהִי). A copula supplied in a nominal clause with no verb in the original: undecided.
+- "Be" that renders a written היה or εἰμί links to it (וַיְהִי: "and" → וַ, "it came to pass"/"was" → יְהִי). A copula supplied in a nominal clause with no verb in the original links to the predicate when the clause asserts it («Господь є пастир мій» for יְהוָה רֹעִי: «є» → רֹעִי).
 - Infinitive absolute with its finite verb: a single word renders the finite verb; a word of its own for the emphasis renders the infinitive ("surely die": "surely" → מוֹת, "die" → תָּמוּת).
-- Construct chains: each noun links to its own noun; an adjective rendering a genitive noun links to that noun ("my holy mountain" for הַר־קָדְשִׁי: "holy" and "my" → קָדְשִׁי).
+- Construct chains: each noun links to its own noun; English "of" rendering the construct state links to the construct noun, with a "the" before it ("the word of the LORD": "the word of" → דְּבַר, "the LORD" → יְהוָה); an adjective rendering a genitive noun links to that noun ("my holy mountain" for הַר־קָדְשִׁי: "holy" and "my" → קָדְשִׁי).
 - מִן of comparison takes "than". A negation links to לֹא, אַל, אֵין.
 
 Greek
@@ -39,7 +39,7 @@ Greek
 - One negation for οὐ μή links to both.
 
 Names and numbers
-- A name links to the word naming the same person or place. In a genealogy "son" links to υἱός, never to a name. Names in a list match by identity, not by order.
+- A name links to the word naming the same person or place. A name the translation supplies where the original has neither name nor pronoun, only the person of the verb («і сказав Ісус» for εἶπεν), stays unlinked; a pronoun for the verb's person («сказав він» for וַיֹּאמֶר) links to the verb. In a genealogy "son" links to υἱός, never to a name. Names in a list match by identity, not by order.
 - The link follows what the word renders: "Lord" usually renders יְהוָה and "God" אֱלֹהִים, "LORD God" = יְהוָה אֱלֹהִים word for word, but a translation may write "God" for יְהוָה, and then that link is right. In אֲדֹנָי יְהוִה the first word renders אֲדֹנָי and the second יְהוִה. A vocative "O" goes with the noun addressed.
 - A number that differs from the original's stays unlinked (say so in the note).
 
