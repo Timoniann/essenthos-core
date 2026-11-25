@@ -330,15 +330,19 @@ internal static class VerseSearch
                 term, folded, TermMatching.Substring, [LikePatterns.Containing(folded)], Like, false, null, 0);
         }
 
+        string[] sameWord = term.Phrase is null ? [folded, .. SearchSynonyms.Others(folded, language)] : [folded];
         var count = counted
             ? await Scalar<long>(
                 connection,
-                "SELECT coalesce(sum(occurrences), 0)::bigint FROM text_form WHERE text_id = @text AND form = @form",
-                cancellationToken, ("text", textId), ("form", folded))
-            : await words.LongCountAsync(w => w.NormalisedText == folded, cancellationToken);
+                "SELECT coalesce(sum(occurrences), 0)::bigint FROM text_form WHERE text_id = @text AND form = ANY(@forms)",
+                cancellationToken, ("text", textId), ("forms", sameWord))
+            : await words.LongCountAsync(w => sameWord.Contains(w.NormalisedText), cancellationToken);
         if (count > 0 || term.Phrase is not null)
         {
-            return new ResolvedTerm(term, folded, TermMatching.Folded, [folded], Normalised, false, null, count);
+            return new ResolvedTerm(term, folded, TermMatching.Folded, sameWord, Normalised, false, null, count)
+            {
+                Tiers = sameWord.Length > 1 ? [FormTier.Typed, .. sameWord.Skip(1).Select(_ => FormTier.SameWord)] : [],
+            };
         }
 
         // No row is that word. A row is a morpheme, and Hebrew prints several together: בראשית is
@@ -391,6 +395,42 @@ internal static class VerseSearch
         bool widen,
         CancellationToken cancellationToken)
     {
+        var found = new Dictionary<string, RankedForm>(StringComparer.Ordinal);
+        var stem = await FormsOf(connection, textId, language, folded, FormTier.Typed, paradigm, widen, found, cancellationToken);
+        foreach (var other in SearchSynonyms.Others(folded, language))
+        {
+            await FormsOf(connection, textId, language, other, FormTier.SameWord, paradigm, widen, found, cancellationToken);
+        }
+
+        var forms = found.Values
+            .OrderBy(form => form.Tier)
+            .ThenByDescending(form => form.Occurrences)
+            .ThenBy(form => form.Form, StringComparer.Ordinal)
+            .ToList();
+        return new Ranked(
+            stem,
+            forms,
+            forms.Where(form => form.Tier <= FormTier.SameWord || (paradigm is null && form.Stemmed))
+                .Sum(form => (long)form.Occurrences));
+    }
+
+    /// <summary>
+    /// Adds to <paramref name="found"/> the forms of the text one spelling matches, none nearer than
+    /// <paramref name="nearest"/>: the word typed is <see cref="FormTier.Typed"/>, and another spelling of
+    /// it (<see cref="SearchSynonyms"/>) and its forms rank as forms of the word typed. Returns the
+    /// spelling's stem.
+    /// </summary>
+    private static async Task<string?> FormsOf(
+        NpgsqlConnection connection,
+        int textId,
+        string language,
+        string folded,
+        int nearest,
+        FormIndex? paradigm,
+        bool widen,
+        Dictionary<string, RankedForm> found,
+        CancellationToken cancellationToken)
+    {
         string? stem = null;
         if (SearchWords.Stems(language))
         {
@@ -402,7 +442,14 @@ internal static class VerseSearch
                 ("form", folded));
         }
 
-        var found = new Dictionary<string, RankedForm>(StringComparer.Ordinal);
+        void Add(RankedForm form)
+        {
+            form = form with { Tier = Math.Max(form.Tier, nearest) };
+            found[form.Form] = found.TryGetValue(form.Form, out var known)
+                ? known with { Tier = Math.Min(known.Tier, form.Tier), Stemmed = known.Stemmed || form.Stemmed }
+                : form;
+        }
+
         await using (var command = new NpgsqlCommand { Connection = connection })
         {
             command.Parameters.AddWithValue("text", textId);
@@ -434,28 +481,16 @@ internal static class VerseSearch
                     : stemmed && paradigm is null ? FormTier.SameWord
                     : stemmed || form.StartsWith(folded, StringComparison.Ordinal) ? FormTier.Begins
                     : FormTier.Inside;
-                found[form] = new RankedForm(form, tier, stemmed, reader.GetInt32(1));
+                Add(new RankedForm(form, tier, stemmed, reader.GetInt32(1)));
             }
         }
 
         foreach (var form in paradigm?.Matching(folded, exact: false) ?? [])
         {
-            var tier = form.Text == folded ? FormTier.Typed : FormTier.SameWord;
-            found[form.Text] = found.TryGetValue(form.Text, out var known)
-                ? known with { Tier = Math.Min(known.Tier, tier) }
-                : new RankedForm(form.Text, tier, false, form.Count);
+            Add(new RankedForm(form.Text, form.Text == folded ? FormTier.Typed : FormTier.SameWord, false, form.Count));
         }
 
-        var forms = found.Values
-            .OrderBy(form => form.Tier)
-            .ThenByDescending(form => form.Occurrences)
-            .ThenBy(form => form.Form, StringComparer.Ordinal)
-            .ToList();
-        return new Ranked(
-            stem,
-            forms,
-            forms.Where(form => form.Tier <= FormTier.SameWord || (paradigm is null && form.Stemmed))
-                .Sum(form => (long)form.Occurrences));
+        return stem;
     }
 
     internal sealed record Hit(int Verse, bool Phrase);

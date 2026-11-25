@@ -23,6 +23,7 @@ public sealed class VerseSearchTests : IAsyncLifetime
     private readonly AppDbContext _db;
     private readonly Text _ohienko;
     private readonly Text _english;
+    private readonly Text _modern;
 
     public VerseSearchTests(WitnessDatabase database)
     {
@@ -46,6 +47,12 @@ public sealed class VerseSearchTests : IAsyncLifetime
             (1, 14, ["щоб", "світити", "на", "землю"]),
             (1, 15, ["світу", "цього"]),
             (1, 16, ["Бог", "так", "полюбив", "світ"]));
+        _modern = Corpus.Add(_db, "NPU2022", TextKind.Translation, "ukr",
+            (1, 1, ["написано", "гебрейською", "мовою"]),
+            (1, 2, ["промовив", "єврейською", "мовою"]),
+            (1, 3, ["у", "гебрейському", "тексті"]),
+            (1, 4, ["давньоєврейська", "мова"]),
+            (1, 5, ["грецький", "текст"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["God", "so", "loved", "the", "world"]),
             (1, 2, ["love", "thy", "neighbour"]),
@@ -245,6 +252,33 @@ public sealed class VerseSearchTests : IAsyncLifetime
     [Fact]
     public async Task AWordPrintedOftenEnoughIsNotSecondGuessed() =>
         (await Search(_ohienko, "воскресення")).Suggestion.Should().BeNull();
+
+    /// <summary>
+    /// Ukrainian names Hebrew three ways — «гебрейський», which the site uses, «єврейський» and
+    /// «давньоєврейський» — and a reader typing any of them, in any case, finds the verses the others
+    /// find; the form typed still comes first.
+    /// </summary>
+    [Theory]
+    [InlineData("гебрейською", 1)]
+    [InlineData("єврейською", 2)]
+    [InlineData("Давньоєврейською", 0)]
+    [InlineData("гебрейський", 0)]
+    public async Task EveryUkrainianNameOfHebrewFindsWhatTheOthersFind(string query, int first)
+    {
+        var found = await Search(_modern, query);
+
+        Verses(found).Should().BeEquivalentTo([1, 2, 3, 4]);
+        if (first > 0)
+        {
+            Verses(found)[0].Should().Be(first);
+        }
+
+        Verses(await Search(_modern, query, widening: SearchWidening.WholeWordOnly)).Should().BeEquivalentTo([1, 2, 3, 4]);
+    }
+
+    [Fact]
+    public async Task AnotherNameOfHebrewIsSoughtOnlyInUkrainian() =>
+        Verses(await Search(_english, "єврейською")).Should().BeEmpty();
 
     [Theory]
     [InlineData("«воскресення життя» Ісус", new[] { "воскресення", "життя", "Ісус" }, new[] { 0, 0, -1 })]
