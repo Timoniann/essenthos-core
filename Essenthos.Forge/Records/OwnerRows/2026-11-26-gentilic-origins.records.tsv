@@ -1,0 +1,8 @@
+# producer   by hand: the Chaldeans and the Kenites lose the origin Strong's 'patronymically from' gave them, which no verse states, applied by forge owner-rows
+# by         Essenthos: the project owner's word of 2026-11-26 (PRB-2057), read against GEN 11:28, GEN 22:22, NUM 24:21-22, JDG 4:11 and 1CH 2:55 by claude-opus-5-5 on 2026-11-26
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	record	values	why
+PRB-2057	records/records	amend	chaldeans	{"origin": null}	No verse makes the Chaldeans descendants of Kesed son of Nahor (GEN 22:22); Ur of the Chaldees stands in GEN 11:28 before he is born. Strong's 'patronymically from' describes how the word is formed, not a genealogy.
+PRB-2057	records/records	amend	kenites	{"origin": null}	No verse makes the Kenites descendants of Cain the son of Adam; Qayin (H7014) is also the tribe's own name (NUM 24:22, JDG 4:11).
+PRB-2057	records/facts/gentilics	amend	H3778	{"origin_strong": "H3777", "kind": "patronymic", "origin": null}	Strong's etymology of Kasdiy stays as his statement; no record is made the Chaldeans' forefather on it (GEN 11:28, GEN 22:22).
+PRB-2057	records/facts/gentilics	amend	H7017	{"origin_strong": "H7014", "kind": "patronymic", "origin": null}	Strong's etymology of Qeyniy stays as his statement; Cain the son of Adam is not made the Kenites' forefather on it (NUM 24:22, JDG 4:11).
