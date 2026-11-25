@@ -177,7 +177,7 @@ public sealed class EvenSplitTests : IDisposable
             "held\t0.6\t0.7\t40\t28 of 40 refused were wrong",
         ]);
 
-        HandFloors.Read(store, "NPU2022-NESTLE1904").Select(floor => floor.Name).Should().Equal("as written", HandFloors.MiddlesAlone);
+        HandFloors.Read(store, "NPU2022-NESTLE1904").Select(floor => floor.Name).Should().Equal("as written", HandFloors.Others);
         HandFloors.Hold(store, "NPU2022-NESTLE1904").Should().Be(new HandHold(0.6, 0.7, 40, "28 of 40 refused were wrong"));
         HandFloors.Hold(store, "UBIO-NESTLE1904").Should().BeNull();
     }
