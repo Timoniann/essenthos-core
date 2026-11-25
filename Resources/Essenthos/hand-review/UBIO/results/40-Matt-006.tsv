@@ -1,0 +1,113 @@
+kind	from	to	relation	reason
+fixed	40.6:1			missing links added
+accept	40.6:1.2	40.6:1.7	renders	display = poiein
+accept	40.6:1.3	40.6:1.5	renders	your = hymon
+accept	40.6:1.7	40.6:1.11	renders	so that = pros
+accept	40.6:1.10	40.6:1.16	renders	a = de
+accept	40.6:1.11	40.6:1.15	renders	yak = ei
+accept	40.6:1.12	40.6:1.17	renders	ni = mege
+accept	40.6:1.14	40.6:1.19	renders	ne = ouk
+fixed	40.6:2			add sebe
+accept	40.6:2.9	40.6:2.8	renders	sebe = sou
+ok	40.6:3			
+fixed	40.6:4			add bula
+accept	40.6:4.3	40.6:4.2	renders	bula = e
+fixed	40.6:5			missing links added
+accept	40.6:5.19	40.6:5.19	renders	crossroads = corners of streets
+accept	40.6:5.6	40.6:5.5	renders	budte = esesthe
+accept	40.6:5.10	40.6:5.9	renders	shcho = hoti
+accept	40.6:5.22	40.6:5.23	renders	seen = phanosin
+fixed	40.6:6			missing links added
+accept	40.6:6.7	40.6:6.9	renders	svoyei = sou
+accept	40.6:6.12	40.6:6.10	renders	i = kai
+fixed	40.6:7			missing links added
+accept	40.6:7.11	40.6:7.8	renders	think = dokousin
+accept	40.6:7.14	40.6:7.15	renders	future aux of heard
+accept	40.6:7.16	40.6:7.11	renders	za = en
+fixed	40.6:8			missing links added
+accept	40.6:8.10	40.6:8.12	renders	need have = chreian echete
+accept	40.6:8.9	40.6:8.10	renders	what = hon
+accept	40.6:8.12,40.6:8.13	40.6:8.13	renders	ranishe za = pro
+accept	40.6:8.15	40.6:8.16	renders	asking = aitesai
+fixed	40.6:9			add zh
+accept	40.6:9.2	40.6:9.2	renders	zh = oun
+ok	40.6:10			
+ok	40.6:11			
+ok	40.6:12			
+ok	40.6:13			
+ok	40.6:14			
+fixed	40.6:15			vam has no counterpart; missing links added
+refuse	40.6:15.14	40.6:15.14		vam: no Greek word; hymon is vashykh
+accept	40.6:15.3,40.6:15.5,40.6:15.7	40.6:15.4	renders	ne budete proshchaty = aphete
+accept	40.6:15.9,40.6:15.12	40.6:15.7	renders	y ... ne = oude
+accept	40.6:15.15	40.6:15.13	renders	trespasses
+fixed	40.6:16			missing links added
+accept	40.6:16.15	40.6:16.14	renders	svoi = auton
+accept	40.6:16.17	40.6:16.16	renders	seen = phanosin
+ok	40.6:17			
+fixed	40.6:18			missing links added
+accept	40.6:18.6	40.6:18.3	renders	show = phanes
+accept	40.6:18.10	40.6:18.10	renders	svoyemu = sou
+fixed	40.6:19			missing links added
+accept	40.6:19.2	40.6:19.2	renders	store up
+accept	40.6:19.4	40.6:19.3	renders	sobi = hymin
+accept	40.6:19.8	40.6:19.12	renders	destroy
+fixed	40.6:20			missing links added
+accept	40.6:20.1	40.6:20.1	renders	store up
+accept	40.6:20.3	40.6:20.3	renders	sobi = hymin
+accept	40.6:20.14	40.6:20.12	renders	destroy
+accept	40.6:20.22	40.6:20.18	renders	ta ne = oude
+ok	40.6:21			
+fixed	40.6:22			missing links added
+accept	40.6:22.10	40.6:22.10	renders	bude = e
+accept	40.6:22.14	40.6:22.15	renders	use = holon
+fixed	40.6:23			missing links added
+accept	40.6:23.7	40.6:23.7	renders	bulo = e
+accept	40.6:23.10	40.6:23.8	renders	use = holon
+accept	40.6:23.13	40.6:23.13	renders	bude = estai
+accept	40.6:23.24,40.6:23.27	40.6:23.25	renders	yaka velyka = poson
+fixed	40.6:24			add bude
+accept	40.6:24.13	40.6:24.14	renders	future aux of love
+fixed	40.6:25			missing links added
+accept	40.6:25.9	40.6:25.9	renders	svoye = hymon
+accept	40.6:25.20	40.6:25.18	renders	svoye = hymon
+accept	40.6:25.14	40.6:25.13	renders	shcho = ti
+accept	40.6:25.13	40.6:25.12	renders	ta = e
+accept	40.6:25.11	40.6:25.11	renders	future aux eat
+accept	40.6:25.15	40.6:25.14	renders	future aux drink
+accept	40.6:25.31	40.6:25.28	renders	a = kai
+accept	40.6:25.32	40.6:25.32	renders	comparative vid, as 28
+fixed	40.6:26			missing links added
+accept	40.6:26.20	40.6:26.22	renders	feeds
+accept	40.6:26.5	40.6:26.7	renders	shcho = hoti
+accept	40.6:26.26	40.6:26.27	renders	more valuable
+accept	40.6:26.25	40.6:26.26	renders	bahato = mallon
+accept	40.6:26.27	40.6:26.28	renders	comparative za
+fixed	40.6:27			missing links added
+accept	40.6:27.1	40.6:27.1	renders	who = tis
+accept	40.6:27.2	40.6:27.2	renders	zh = de
+fixed	40.6:28			add polovi
+accept	40.6:28.9	40.6:28.10	renders	field = agrou
+fixed	40.6:29			missing links added
+accept	40.6:29.6,40.6:29.13	40.6:29.5	renders	y ... ne = oude
+accept	40.6:29.19	40.6:29.15	renders	them = touton
+fixed	40.6:30			missing links added
+accept	40.6:30.17	40.6:30.17	renders	clothes
+accept	40.6:30.1	40.6:30.2	renders	i = de
+accept	40.6:30.18	40.6:30.19	renders	skilky = pollo
+accept	40.6:30.20	40.6:30.20	renders	krashche = mallon
+fixed	40.6:31			add third shcho
+accept	40.6:31.15	40.6:31.11	renders	shcho = ti
+fixed	40.6:32			missing links added
+accept	40.6:32.1	40.6:32.2	renders	bo = gar
+accept	40.6:32.3	40.6:32.3	renders	tohe = tauta
+accept	40.6:32.12	40.6:32.17	renders	all = hapanton
+accept	40.6:32.13	40.6:32.16	renders	these = touton
+ok	40.6:33			
+fixed	40.6:34			poklopochetsya is merimnesei not arketon
+refuse	40.6:34.12	40.6:34.12		worry != sufficient
+accept	40.6:34.12	40.6:34.10	renders	will worry
+accept	40.6:34.6	40.6:34.6	renders	den with zavtrashniy = aurion
+accept	40.6:34.4	40.6:34.4	renders	pro = eis
+accept	40.6:34.16	40.6:34.12	renders	dosyt = arketon
+accept	40.6:34.18	40.6:34.16	renders	trouble = kakia

@@ -1,0 +1,88 @@
+kind	from	to	relation	reason
+fixed	40.17:1			added osibno
+fixed	40.17:2			added zasiyalo
+ok	40.17:3			
+fixed	40.17:4			added missing
+fixed	40.17:5			added vin
+fixed	40.17:6			added sylno
+ok	40.17:7			
+fixed	40.17:8			added zh, ei me
+fixed	40.17:9			added missing
+fixed	40.17:10			added shcho
+fixed	40.17:11			added missing
+fixed	40.17:12			nym wrong occurrence, added missing
+ok	40.17:13			
+fixed	40.17:14			added verbs
+fixed	40.17:15			added missing
+ok	40.17:16			
+fixed	40.17:17			added missing
+ok	40.17:18			
+fixed	40.17:19			added missing
+fixed	40.17:20			added missing
+ok	40.17:21			
+fixed	40.17:22			added bude
+fixed	40.17:23			added missing
+fixed	40.17:24			swapped zbyrachi/drachm, added missing
+fixed	40.17:25			added verbs
+fixed	40.17:26			added missing
+fixed	40.17:27			swapped vudku/zakyn, added missing
+accept	40.17:1.18	40.17:1.23,40.17:1.24	renders	osibno = kat idian
+accept	40.17:2.11	40.17:2.6	renders	shone
+accept	40.17:4.16	40.17:4.16	renders	I will make
+accept	40.17:4.11	40.17:4.13	renders	to be
+accept	40.17:4.1	40.17:4.2	renders	conjunction de
+accept	40.17:5.2	40.17:5.2	renders	genitive absolute subject
+accept	40.17:6.8	40.17:6.11	renders	greatly
+accept	40.17:8.2	40.17:8.2	renders	de
+accept	40.17:8.9	40.17:8.9	renders	okrim = ei me
+accept	40.17:9.6	40.17:9.7	renders	commanded
+accept	40.17:9.18	40.17:9.16	renders	až poky = heos
+accept	40.17:9.21	40.17:9.22	renders	ek
+accept	40.17:10.6	40.17:10.7	renders	why
+accept	40.17:11.2	40.17:11.1	renders	ho de = and he
+accept	40.17:11.11	40.17:11.9	renders	will restore
+refuse	40.17:12.15	40.17:12.11		nym renders auto (15), not auton
+accept	40.17:12.15	40.17:12.15	renders	en auto
+accept	40.17:12.10	40.17:12.11	renders	him (object of knew)
+accept	40.17:12.17,40.17:12.18	40.17:12.16	renders	whatever
+accept	40.17:12.24	40.17:12.24	renders	is about
+accept	40.17:14.6	40.17:14.2	renders	having come
+accept	40.17:14.12	40.17:14.6	renders	came to
+accept	40.17:14.15	40.17:14.9	renders	navkolishky vpav = gonypeton
+accept	40.17:15.13	40.17:15.12	renders	kakos echei = suffers
+accept	40.17:15.19	40.17:15.16	renders	eis
+accept	40.17:17.1	40.17:17.2	renders	de
+accept	40.17:17.11	40.17:17.11,40.17:17.12	renders	heos pote
+accept	40.17:17.12	40.17:17.15	renders	will be
+accept	40.17:17.16	40.17:17.16,40.17:17.17	renders	heos pote
+accept	40.17:19.4	40.17:19.7,40.17:19.8	renders	kat idian
+accept	40.17:19.9	40.17:19.10	renders	dia ti
+accept	40.17:20.2	40.17:20.1	renders	ho de = and he
+accept	40.17:20.4	40.17:20.3	renders	said
+accept	40.17:20.25	40.17:20.23	renders	move
+accept	40.17:20.26	40.17:20.24	renders	from here
+accept	40.17:20.30	40.17:20.27	renders	will move
+accept	40.17:22.12	40.17:22.11	renders	mellei
+accept	40.17:23.5	40.17:23.4	renders	kai
+accept	40.17:23.11	40.17:23.11	renders	deeply
+refuse	40.17:24.10	40.17:24.9		collectors is lambanontes
+refuse	40.17:24.11	40.17:24.10		didrachm is didrachma
+accept	40.17:24.10	40.17:24.10	renders	collecting
+accept	40.17:24.11	40.17:24.9	renders	didrachmas
+accept	40.17:24.3	40.17:24.2	renders	de
+accept	40.17:24.4	40.17:24.3	renders	they
+accept	40.17:24.19	40.17:24.19	renders	pays
+accept	40.17:25.2	40.17:25.1	renders	says
+accept	40.17:25.7	40.17:25.4	renders	having entered
+accept	40.17:25.16	40.17:25.13	renders	ti = what/how
+accept	40.17:25.24	40.17:25.23	renders	receive
+accept	40.17:26.1	40.17:26.2	renders	de
+accept	40.17:26.8	40.17:26.6	renders	said
+refuse	40.17:27.10	40.17:27.9		hook is ankistron
+refuse	40.17:27.11	40.17:27.10		cast is bale
+accept	40.17:27.10	40.17:27.10	renders	hook
+accept	40.17:27.11	40.17:27.9	renders	cast
+accept	40.17:27.1	40.17:27.2	renders	de
+accept	40.17:27.25	40.17:27.25	renders	having taken
+accept	40.17:27.27	40.17:27.24	renders	that one
+accept	40.17:27.35	40.17:27.31	renders	you

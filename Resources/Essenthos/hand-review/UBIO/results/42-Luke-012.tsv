@@ -1,0 +1,255 @@
+kind	from	to	relation	reason
+fixed	42.12:1			add speak
+accept	42.12:1.15	42.12:1.12	renders	promovlyaty = legein
+fixed	42.12:2			add missing
+accept	42.12:2.4	42.12:2.3	renders	concealed
+accept	42.12:2.2	42.12:2.4	renders	nemaye = is (with ouden)
+accept	42.12:2.8	42.12:2.8	renders	ni = kai (nor)
+accept	42.12:2.9	42.12:2.9	renders	hidden
+fixed	42.12:3			fix proclaimed, add missing
+refuse	42.12:3.19	42.12:3.20		proclaimed is not inner rooms
+accept	42.12:3.1	42.12:3.1,42.12:3.2	renders	anth hon = therefore
+accept	42.12:3.2,42.12:3.3	42.12:3.3	renders	vse shcho = hosa
+accept	42.12:3.6	42.12:3.6	renders	darkness
+accept	42.12:3.12	42.12:3.17	renders	whispered = spoke
+accept	42.12:3.16	42.12:3.20	renders	inner rooms
+accept	42.12:3.19,42.12:3.20	42.12:3.21	renders	will be proclaimed
+fixed	42.12:4			add missing
+accept	42.12:4.4	42.12:4.6	renders	my
+accept	42.12:4.13	42.12:4.16	renders	meta tauta
+accept	42.12:4.15	42.12:4.20	renders	anything
+accept	42.12:4.17	42.12:4.18	renders	able
+accept	42.12:4.18	42.12:4.21	renders	to do
+fixed	42.12:5			add missing
+accept	42.12:5.12	42.12:5.8,42.12:5.10	renders	after killing
+accept	42.12:5.16	42.12:5.17	renders	yes
+fixed	42.12:6			add coin
+accept	42.12:6.9	42.12:6.5	renders	assarion
+fixed	42.12:7			add missing
+accept	42.12:7.4	42.12:7.7	renders	your
+accept	42.12:7.11	42.12:7.14	renders	more valuable
+fixed	42.12:8			add missing
+accept	42.12:8.4	42.12:8.4	renders	everyone
+accept	42.12:8.5	42.12:8.5	renders	who
+accept	42.12:8.10	42.12:8.20	renders	him
+fixed	42.12:9			add missing
+accept	42.12:9.1	42.12:9.1	renders	ho = the one who
+accept	42.12:9.4	42.12:9.3	renders	denied
+fixed	42.12:10			add missing
+accept	42.12:10.2	42.12:10.2	renders	everyone
+accept	42.12:10.3	42.12:10.3	renders	who
+accept	42.12:10.12	42.12:10.13	renders	to the one who
+fixed	42.12:11			add say
+accept	42.12:11.21	42.12:11.22	renders	say
+fixed	42.12:12			add must
+accept	42.12:12.9	42.12:12.12	renders	dei
+fixed	42.12:13			add missing
+accept	42.12:13.1	42.12:13.2	renders	de
+accept	42.12:13.7	42.12:13.6	renders	crowd
+fixed	42.12:14			add missing
+accept	42.12:14.2	42.12:14.1	renders	ho de = he
+accept	42.12:14.7	42.12:14.8	renders	appointed
+fixed	42.12:15			add missing
+accept	42.12:15.1	42.12:15.2	renders	de
+accept	42.12:15.5	42.12:15.5	renders	beware
+accept	42.12:15.6	42.12:15.7	renders	keep yourselves
+accept	42.12:15.11	42.12:15.16	renders	anyone
+accept	42.12:15.16	42.12:15.23	renders	possessions
+accept	42.12:15.17	42.12:15.24	renders	his
+fixed	42.12:16			fix field, add missing
+refuse	42.12:16.11	42.12:16.10		field is chora
+accept	42.12:16.1	42.12:16.2	renders	de
+accept	42.12:16.3	42.12:16.1	renders	spoke
+accept	42.12:16.4	42.12:16.5	renders	them
+accept	42.12:16.8	42.12:16.8	renders	certain
+accept	42.12:16.9	42.12:16.7	renders	rich man
+accept	42.12:16.11	42.12:16.12	renders	ground
+accept	42.12:16.12	42.12:16.10	renders	brought forth
+fixed	42.12:17			fix reasoned, add missing
+refuse	42.12:17.2	42.12:17.3		verb is dielogizeto
+accept	42.12:17.2	42.12:17.2	renders	was reasoning
+accept	42.12:17.13	42.12:17.11	renders	where
+accept	42.12:17.14	42.12:17.12	renders	store up
+accept	42.12:17.16	42.12:17.15	renders	my
+fixed	42.12:18			add missing
+accept	42.12:18.8	42.12:18.6	renders	my
+accept	42.12:18.11	42.12:18.11	renders	build
+accept	42.12:18.19	42.12:18.21	renders	my
+accept	42.12:18.20	42.12:18.20	renders	goods
+fixed	42.12:19			add missing
+accept	42.12:19.5	42.12:19.5	renders	my
+accept	42.12:19.13	42.12:19.10	renders	laid up
+fixed	42.12:20			add missing
+accept	42.12:20.6	42.12:20.6	renders	fool
+accept	42.12:20.15	42.12:20.17	renders	de
+accept	42.12:20.16	42.12:20.19	renders	to whom
+accept	42.12:20.17	42.12:20.20	renders	will be
+accept	42.12:20.18,42.12:20.19	42.12:20.16	renders	what
+accept	42.12:20.21,42.12:20.22	42.12:20.18	renders	prepared
+fixed	42.12:21			add missing
+accept	42.12:21.5,42.12:21.6	42.12:21.2	renders	the one who
+accept	42.12:21.7	42.12:21.3	renders	treasuring
+accept	42.12:21.8,42.12:21.9	42.12:21.4	renders	for himself
+accept	42.12:21.13	42.12:21.7	renders	eis
+fixed	42.12:22			add missing
+accept	42.12:22.1	42.12:22.2	renders	de
+accept	42.12:22.18,42.12:22.19	42.12:22.17	renders	nor
+ok	42.12:23			
+fixed	42.12:24			drop particle, add missing
+refuse	42.12:24.20	42.12:24.20		particle zh, not poso
+accept	42.12:24.4	42.12:24.4	renders	that
+accept	42.12:24.7	42.12:24.7	renders	nor
+accept	42.12:24.9	42.12:24.10,42.12:24.11	renders	there is not
+accept	42.12:24.10,42.12:24.11	42.12:24.9	renders	to them
+accept	42.12:24.13	42.12:24.13	renders	nor
+accept	42.12:24.15	42.12:24.15	renders	kai
+accept	42.12:24.18	42.12:24.18	renders	feeds
+accept	42.12:24.25	42.12:24.23	renders	are valuable
+fixed	42.12:25			fix add-verb, add missing
+refuse	42.12:25.7	42.12:25.7		add is prostheinai
+accept	42.12:25.7	42.12:25.11	renders	to add
+accept	42.12:25.1	42.12:25.1	renders	who
+accept	42.12:25.2	42.12:25.2	renders	de
+fixed	42.12:26			add missing
+accept	42.12:26.4,42.12:26.6	42.12:26.3	renders	not even
+accept	42.12:26.13	42.12:26.9	renders	rest
+fixed	42.12:27			add missing
+accept	42.12:27.8	42.12:27.5	renders	oute
+accept	42.12:27.10	42.12:27.7	renders	oute
+accept	42.12:27.12	42.12:27.10	renders	de
+accept	42.12:27.13	42.12:27.9	renders	say
+accept	42.12:27.16,42.12:27.23	42.12:27.12	renders	not even
+accept	42.12:27.29	42.12:27.22	renders	of these
+fixed	42.12:28			drop particle, add missing
+refuse	42.12:28.18	42.12:28.18		particle zh, not poso
+accept	42.12:28.1	42.12:28.2	renders	de
+accept	42.12:28.16	42.12:28.17	renders	clothes
+accept	42.12:28.19	42.12:28.19	renders	more
+fixed	42.12:29			add or
+accept	42.12:29.7	42.12:29.7	renders	kai
+fixed	42.12:30			add missing
+accept	42.12:30.5	42.12:30.5	renders	nations
+accept	42.12:30.14	42.12:30.16	renders	of these
+ok	42.12:31			
+ok	42.12:32			
+fixed	42.12:33			add missing
+accept	42.12:33.3	42.12:33.4	renders	your
+accept	42.12:33.7	42.12:33.8	renders	make
+accept	42.12:33.17	42.12:33.18	renders	where
+accept	42.12:33.19	42.12:33.21	renders	draw near
+accept	42.12:33.21,42.12:33.24	42.12:33.22	renders	nor
+accept	42.12:33.25	42.12:33.24	renders	destroy
+fixed	42.12:34			add will be
+accept	42.12:34.6	42.12:34.12	renders	will be
+fixed	42.12:35			add let
+accept	42.12:35.1	42.12:35.1	renders	let be
+fixed	42.12:36			add own
+accept	42.12:36.9	42.12:36.8	renders	their own
+fixed	42.12:37			add missing
+accept	42.12:37.19	42.12:37.18	renders	them
+accept	42.12:37.20	42.12:37.17	renders	make recline
+accept	42.12:37.22	42.12:37.20	renders	having come up
+accept	42.12:37.23	42.12:37.21	renders	will serve
+fixed	42.12:38			add missing
+accept	42.12:38.1	42.12:38.1	renders	kan
+accept	42.12:38.3,42.12:38.7	42.12:38.10	renders	comes, both clauses
+accept	42.12:38.6	42.12:38.5	renders	kan
+accept	42.12:38.10	42.12:38.9	renders	watch
+accept	42.12:38.14	42.12:38.13	renders	thus
+accept	42.12:38.16	42.12:38.16	renders	those
+fixed	42.12:39			add missing
+accept	42.12:39.6,42.12:39.7	42.12:39.6	renders	had known
+accept	42.12:39.21	42.12:39.15	renders	an
+accept	42.12:39.23	42.12:39.14	renders	not
+accept	42.12:39.24	42.12:39.16	renders	allowed
+accept	42.12:39.25	42.12:39.17	renders	broken into
+fixed	42.12:40			add when
+accept	42.12:40.12	42.12:40.6	renders	in which
+fixed	42.12:41			add missing
+accept	42.12:41.2	42.12:41.2	renders	de
+accept	42.12:41.8	42.12:41.11	renders	speak
+fixed	42.12:42			add missing
+accept	42.12:42.1	42.12:42.1	renders	kai
+accept	42.12:42.14	42.12:42.13	renders	whom
+accept	42.12:42.17	42.12:42.19	renders	household
+accept	42.12:42.22	42.12:42.23,42.12:42.24	renders	in season
+fixed	42.12:43			add that
+accept	42.12:43.2	42.12:43.4	renders	that
+fixed	42.12:44			add missing
+accept	42.12:44.1	42.12:44.1	renders	truly
+accept	42.12:44.7	42.12:44.8	renders	possessions
+accept	42.12:44.8	42.12:44.9	renders	his
+accept	42.12:44.10	42.12:44.10	renders	will set
+fixed	42.12:45			add missing
+accept	42.12:45.4	42.12:45.6	renders	that
+accept	42.12:45.16	42.12:45.20	renders	men-servants
+fixed	42.12:46			add missing
+accept	42.12:46.4	42.12:46.6	renders	that
+accept	42.12:46.15	42.12:46.15	renders	which
+accept	42.12:46.21	42.12:46.19	renders	cut in two
+accept	42.12:46.23	42.12:46.28	renders	will appoint
+fixed	42.12:47			add missing
+accept	42.12:47.3	42.12:47.1	renders	that
+accept	42.12:47.4	42.12:47.5	renders	the one who
+accept	42.12:47.7	42.12:47.11	renders	his
+accept	42.12:47.8	42.12:47.10	renders	master
+accept	42.12:47.9	42.12:47.12	renders	kai
+accept	42.12:47.12	42.12:47.15	renders	nor
+accept	42.12:47.19	42.12:47.22	renders	many blows
+accept	42.12:47.20	42.12:47.21	renders	beaten
+fixed	42.12:48			kai belongs to next clause, add missing
+refuse	42.12:48.21	42.12:48.20		kai starts next clause
+accept	42.12:48.23	42.12:48.20	renders	kai
+accept	42.12:48.1	42.12:48.1	renders	the one who
+accept	42.12:48.7	42.12:48.7	renders	worthy
+accept	42.12:48.11	42.12:48.9	renders	beaten
+accept	42.12:48.12	42.12:48.12	renders	de
+accept	42.12:48.14	42.12:48.11	renders	everyone
+accept	42.12:48.15	42.12:48.13	renders	to whom
+accept	42.12:48.22	42.12:48.17	renders	will be required
+accept	42.12:48.26	42.12:48.22	renders	committed
+accept	42.12:48.28	42.12:48.26	renders	him
+accept	42.12:48.31	42.12:48.25	renders	will ask
+fixed	42.12:49			add missing
+accept	42.12:49.8	42.12:49.8	renders	how
+accept	42.12:49.10	42.12:49.9	renders	wish
+accept	42.12:49.11	42.12:49.10	renders	ei
+fixed	42.12:50			add missing
+accept	42.12:50.9	42.12:50.7	renders	distressed
+accept	42.12:50.10	42.12:50.9	renders	heos hotou
+accept	42.12:50.12	42.12:50.10	renders	accomplished
+fixed	42.12:51			add no
+accept	42.12:51.11	42.12:51.9	renders	no
+fixed	42.12:52			add missing
+accept	42.12:52.1	42.12:52.3,42.12:52.5	renders	from now
+accept	42.12:52.8	42.12:52.1	renders	will be
+fixed	42.12:53			add her
+accept	42.12:53.19	42.12:53.21	renders	her
+fixed	42.12:54			add missing
+accept	42.12:54.13	42.12:54.9	renders	rising
+accept	42.12:54.17	42.12:54.16	renders	is coming
+accept	42.12:54.18	42.12:54.15	renders	shower
+accept	42.12:54.22	42.12:54.18	renders	happens
+fixed	42.12:55			add missing
+accept	42.12:55.8	42.12:55.8	renders	will be
+accept	42.12:55.11	42.12:55.10	renders	happens
+fixed	42.12:56			add missing
+accept	42.12:56.6	42.12:56.10	renders	discern
+accept	42.12:56.8	42.12:56.9	renders	know how
+accept	42.12:56.9	42.12:56.15	renders	how
+fixed	42.12:57			add missing
+accept	42.12:57.2	42.12:57.2	renders	de
+accept	42.12:57.11	42.12:57.9	renders	right
+fixed	42.12:58			add missing
+accept	42.12:58.2	42.12:58.1	renders	as
+accept	42.12:58.3	42.12:58.8	renders	before
+accept	42.12:58.4	42.12:58.9	renders	magistrate
+accept	42.12:58.8	42.12:58.7	renders	your
+accept	42.12:58.10	42.12:58.13,42.12:58.14	renders	give earnestness
+accept	42.12:58.13	42.12:58.15	renders	be set free
+accept	42.12:58.26	42.12:58.31	renders	officer
+accept	42.12:58.29	42.12:58.28	renders	you
+accept	42.12:58.34	42.12:58.36	renders	cast
+fixed	42.12:59			mi belongs to ou mi
+refuse	42.12:59.8	42.12:59.4		mi is part of ou mi
+accept	42.12:59.4	42.12:59.4	renders	ou mi

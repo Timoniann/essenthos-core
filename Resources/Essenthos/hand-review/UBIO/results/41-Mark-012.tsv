@@ -1,0 +1,184 @@
+kind	from	to	relation	reason
+fixed	41.12:1			swapped муром/обгородив, added verbs
+fixed	41.12:2			added в = παρὰ
+fixed	41.12:3			added і, ні з чим
+fixed	41.12:4			added missing
+fixed	41.12:5			added missing
+fixed	41.12:6			added Наостанок, того
+fixed	41.12:7			міркували relinked
+fixed	41.12:8			added за
+ok	41.12:9			
+fixed	41.12:10			added будівничі, той
+ok	41.12:11			
+fixed	41.12:12			added зрозуміли
+fixed	41.12:13			added missing
+fixed	41.12:14			на refused, many added
+fixed	41.12:15			added гріш
+fixed	41.12:16			added missing
+fixed	41.12:17			swapped Богові/Боже, added missing
+fixed	41.12:18			added μὴ
+fixed	41.12:19			added missing
+fixed	41.12:20			added missing
+fixed	41.12:21			added missing
+fixed	41.12:22			added missing
+fixed	41.12:23			added буде
+fixed	41.12:24			added missing
+fixed	41.12:25			added будуть
+fixed	41.12:26			added Щождо
+ok	41.12:27			
+fixed	41.12:28			added missing
+fixed	41.12:29			second Бог relinked
+fixed	41.12:30			added missing
+fixed	41.12:31			added missing
+fixed	41.12:32			added missing
+fixed	41.12:33			added цілої
+fixed	41.12:34			не relinked, added missing
+fixed	41.12:35			added що
+fixed	41.12:36			Адже refused, added missing
+fixed	41.12:37			зве relinked, added missing
+ok	41.12:38			
+fixed	41.12:39			added missing
+fixed	41.12:40			three misaligned links relinked
+fixed	41.12:41			added вкидає
+fixed	41.12:42			added цебто
+fixed	41.12:43			added missing
+fixed	41.12:44			added missing
+refuse	41.12:1.14	41.12:1.11		муром = fence, not verb
+refuse	41.12:1.15	41.12:1.12		обгородив = verb, not noun
+accept	41.12:1.14	41.12:1.12	renders	муром = φραγμὸν
+accept	41.12:1.15	41.12:1.11	renders	обгородив = περιέθηκεν
+accept	41.12:1.6,41.12:1.7	41.12:1.3	renders	до них = αὐτοῖς
+accept	41.12:1.9	41.12:1.9	renders	planted
+accept	41.12:1.16	41.12:1.14	renders	dug
+accept	41.12:1.19	41.12:1.15	renders	wine vat
+accept	41.12:1.21	41.12:1.17	renders	built
+accept	41.12:1.23	41.12:1.20	renders	rented out
+accept	41.12:2.16	41.12:2.10	renders	в = παρὰ
+accept	41.12:3.8	41.12:3.5	renders	and
+accept	41.12:3.10,41.12:3.11,41.12:3.12	41.12:3.7	renders	empty-handed
+accept	41.12:4.9,41.12:4.10	41.12:4.8	renders	та й того = κἀκεῖνον
+accept	41.12:4.13	41.12:4.9	renders	зранили в голову
+accept	41.12:4.17	41.12:4.11	renders	treated shamefully
+accept	41.12:5.5	41.12:5.4	renders	і того = κἀκεῖνον
+accept	41.12:5.8	41.12:5.5	renders	killed
+accept	41.12:5.14	41.12:5.9	renders	some
+accept	41.12:5.16	41.12:5.12	renders	some
+accept	41.12:6.8	41.12:6.8	renders	last
+accept	41.12:6.11	41.12:6.7	renders	him
+refuse	41.12:7.4	41.12:7.5		verb not preposition
+accept	41.12:7.4	41.12:7.7	renders	міркували собі = πρὸς ἑαυτοὺς εἶπαν
+accept	41.12:7.8	41.12:7.13	renders	come
+accept	41.12:7.14	41.12:7.18	renders	will be
+accept	41.12:8.11	41.12:8.8	renders	за = ἔξω
+accept	41.12:10.10	41.12:10.10	renders	builders
+accept	41.12:10.12	41.12:10.11	renders	this one
+accept	41.12:12.11	41.12:12.9	renders	knew
+accept	41.12:13.3	41.12:13.2	renders	send
+accept	41.12:13.15	41.12:13.12	renders	Him
+refuse	41.12:14.29	41.12:14.23		на goes with дорогу; ἐπ' ἀληθείας = правдиво
+accept	41.12:14.32	41.12:14.23,41.12:14.24	renders	ἐπ' ἀληθείας = правдиво
+accept	41.12:14.6	41.12:14.3	renders	say
+accept	41.12:14.13	41.12:14.8	renders	true
+accept	41.12:14.12	41.12:14.9	renders	You are
+accept	41.12:14.16	41.12:14.12,41.12:14.13	renders	не зважаєш = οὐ μέλει σοι
+accept	41.12:14.18,41.12:14.20	41.12:14.15	renders	ні на кого = περὶ οὐδενός
+accept	41.12:14.19	41.12:14.14	renders	about
+accept	41.12:14.22	41.12:14.19	renders	на = εἰς
+accept	41.12:14.23	41.12:14.21	renders	of men
+accept	41.12:14.26	41.12:14.18	renders	look
+accept	41.12:14.28	41.12:14.29	renders	teach
+accept	41.12:14.43	41.12:14.37	renders	or
+accept	41.12:14.44	41.12:14.38	renders	not
+accept	41.12:15.14	41.12:15.14	renders	гріш = δηνάριον
+accept	41.12:16.1	41.12:16.2	renders	δὲ
+accept	41.12:16.3	41.12:16.1	renders	οἱ = they
+accept	41.12:16.7	41.12:16.6	renders	до них = αὐτοῖς
+accept	41.12:16.14	41.12:16.14	renders	οἱ = they
+accept	41.12:16.15	41.12:16.15	renders	δὲ
+refuse	41.12:17.11	41.12:17.13		Богові = τῷ Θεῷ
+refuse	41.12:17.12	41.12:17.15		Боже = τὰ τοῦ Θεοῦ
+accept	41.12:17.11	41.12:17.15	renders	to God
+accept	41.12:17.12	41.12:17.13	renders	the things of God
+accept	41.12:17.7	41.12:17.8	renders	give back
+accept	41.12:17.8	41.12:17.7	renders	Caesar's things
+accept	41.12:17.10	41.12:17.10	renders	and
+accept	41.12:18.10	41.12:18.9	renders	нема = μὴ εἶναι
+accept	41.12:19.7	41.12:19.7	renders	of anyone
+accept	41.12:19.13	41.12:19.16	renders	child
+accept	41.12:19.29	41.12:19.29	renders	of him
+accept	41.12:20.1	41.12:20.3	renders	were
+accept	41.12:20.6	41.12:20.7	renders	took
+accept	41.12:20.9	41.12:20.10	renders	dying
+accept	41.12:20.12	41.12:20.13	renders	seed = children
+accept	41.12:21.11	41.12:21.9	renders	left
+accept	41.12:21.12	41.12:21.10	renders	seed = children
+accept	41.12:22.6	41.12:22.6	renders	seed = children
+accept	41.12:22.8	41.12:22.7	renders	по всіх = ἔσχατον πάντων
+accept	41.12:23.13	41.12:23.8	renders	will be
+accept	41.12:24.3	41.12:24.1	renders	said
+accept	41.12:24.7	41.12:24.6	renders	тому = διὰ τοῦτο
+accept	41.12:25.14	41.12:25.11	renders	are
+accept	41.12:26.1	41.12:26.1	renders	concerning
+accept	41.12:28.9	41.12:28.7	renders	them
+accept	41.12:28.10	41.12:28.8	renders	disputing
+accept	41.12:28.12	41.12:28.9	renders	having seen
+accept	41.12:28.13	41.12:28.10	renders	that
+refuse	41.12:29.9	41.12:29.11		second Бог renders Κύριος (13), not Θεὸς
+accept	41.12:29.9	41.12:29.13	renders	translator's rendering of Κύριος εἷς
+accept	41.12:30.6	41.12:30.8	renders	all
+accept	41.12:30.8	41.12:30.11	renders	your
+accept	41.12:30.12	41.12:30.17	renders	your
+accept	41.12:30.15	41.12:30.23	renders	your
+accept	41.12:31.7	41.12:31.6	renders	your
+accept	41.12:31.12	41.12:31.13,41.12:31.14	renders	there is not
+accept	41.12:32.8	41.12:32.8,41.12:32.9	renders	in truth
+accept	41.12:32.10	41.12:32.11	renders	that
+accept	41.12:32.12	41.12:32.13	renders	He is
+accept	41.12:32.14	41.12:32.15,41.12:32.16	renders	there is not
+accept	41.12:32.16	41.12:32.18	renders	besides
+accept	41.12:33.15	41.12:33.16	renders	all
+refuse	41.12:34.19	41.12:34.20		не pairs with вже = οὐκέτι
+accept	41.12:34.19,41.12:34.21	41.12:34.21	renders	не ... вже = οὐκέτι
+accept	41.12:34.6	41.12:34.5	renders	him
+accept	41.12:34.8	41.12:34.8	renders	відповідь дав = ἀπεκρίθη
+accept	41.12:34.10	41.12:34.10	renders	до нього = αὐτῷ
+accept	41.12:34.12	41.12:34.13	renders	are you
+accept	41.12:34.13	41.12:34.11	renders	недалеко = Οὐ μακρὰν
+accept	41.12:35.13	41.12:35.14	renders	that
+refuse	41.12:36.1	41.12:36.1		Адже renders TR γάρ, not αὐτὸς
+accept	41.12:36.14	41.12:36.18	renders	until
+accept	41.12:36.16	41.12:36.20	renders	I place
+accept	41.12:36.20	41.12:36.24	renders	footstool
+refuse	41.12:37.5	41.12:37.7		зве = λέγει, not πόθεν
+accept	41.12:37.5	41.12:37.3	renders	calls
+accept	41.12:37.6	41.12:37.7	renders	how
+accept	41.12:37.8	41.12:37.9	renders	is He
+accept	41.12:37.13	41.12:37.14	renders	crowd
+accept	41.12:39.2	41.12:39.2	renders	перші лавки = πρωτοκαθεδρίας
+accept	41.12:39.9	41.12:39.8	renders	at
+refuse	41.12:40.2	41.12:40.2		вдовині = χηρῶν
+refuse	41.12:40.6	41.12:40.8		моляться = προσευχόμενοι
+refuse	41.12:40.8	41.12:40.9		напоказ = προφάσει
+accept	41.12:40.2	41.12:40.6	renders	widows
+accept	41.12:40.4	41.12:40.2	renders	devouring
+accept	41.12:40.6	41.12:40.10	renders	praying
+accept	41.12:40.7	41.12:40.9	renders	at length
+accept	41.12:40.8	41.12:40.8	renders	pretext
+accept	41.12:40.9	41.12:40.11	renders	these
+accept	41.12:40.10	41.12:40.13	renders	greater
+accept	41.12:40.11	41.12:40.14	renders	judgment
+accept	41.12:41.13	41.12:41.10	renders	cast
+accept	41.12:42.10	41.12:42.9,41.12:42.10	renders	which is
+accept	41.12:43.9	41.12:43.7	renders	до них = αὐτοῖς
+accept	41.12:43.18	41.12:43.19	renders	cast
+accept	41.12:43.19	41.12:43.17	renders	more
+accept	41.12:43.23	41.12:43.21	renders	casting
+accept	41.12:44.3	41.12:44.7	renders	cast
+accept	41.12:44.4	41.12:44.3	renders	out of
+accept	41.12:44.6	41.12:44.6	renders	their (dative)
+accept	41.12:44.8	41.12:44.8	renders	she
+accept	41.12:44.9	41.12:44.17	renders	cast
+accept	41.12:44.10	41.12:44.10	renders	out of
+accept	41.12:44.11	41.12:44.12	renders	poverty
+accept	41.12:44.12	41.12:44.13	renders	her
+accept	41.12:44.16	41.12:44.21	renders	her

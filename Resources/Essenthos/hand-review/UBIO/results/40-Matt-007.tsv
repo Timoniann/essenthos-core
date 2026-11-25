@@ -1,0 +1,98 @@
+kind	from	to	relation	reason
+ok	40.7:1			
+fixed	40.7:2			clause kai and measure verbs swapped; added missing
+refuse	40.7:2.9	40.7:2.7		i here is also you, not clause kai
+accept	40.7:2.11	40.7:2.7	renders	clause-joining and
+refuse	40.7:2.15	40.7:2.12		active measure is metreite
+accept	40.7:2.14,40.7:2.15	40.7:2.11	renders	you measure
+refuse	40.7:2.17	40.7:2.11		passive future is metrethesetai
+accept	40.7:2.17	40.7:2.12	renders	will be measured
+accept	40.7:2.2	40.7:2.1,40.7:2.2	renders	by which
+accept	40.7:2.5	40.7:2.5	renders	with sudyty = krinete
+accept	40.7:2.8	40.7:2.6	renders	will be judged
+accept	40.7:2.12	40.7:2.8,40.7:2.9	renders	with which
+fixed	40.7:3			added missing links
+accept	40.7:3.1	40.7:3.2	renders	de
+accept	40.7:3.4	40.7:3.9	renders	eye
+accept	40.7:3.13	40.7:3.17	renders	your own
+accept	40.7:3.14	40.7:3.18	renders	eye
+accept	40.7:3.16	40.7:3.21	renders	notice
+fixed	40.7:4			added missing links
+accept	40.7:4.8	40.7:4.7	renders	let
+accept	40.7:4.10	40.7:4.8	renders	I of verb
+accept	40.7:4.19	40.7:4.22	renders	your own
+accept	40.7:4.20	40.7:4.21	renders	eye
+fixed	40.7:5			vyinyaty linked to wrong verb
+refuse	40.7:5.12	40.7:5.12		vyinyaty is ekbalein
+accept	40.7:5.12	40.7:5.13	renders	to cast out
+accept	40.7:5.6	40.7:5.7	renders	your own
+accept	40.7:5.9	40.7:5.11	renders	then
+fixed	40.7:6			added missing links
+accept	40.7:6.5	40.7:6.7	renders	and not = mede
+accept	40.7:6.7	40.7:6.8	renders	cast
+accept	40.7:6.9	40.7:6.11	renders	your
+accept	40.7:6.12	40.7:6.16	renders	lest
+fixed	40.7:7			added bude
+accept	40.7:7.3	40.7:7.3	renders	will be given
+ok	40.7:8			
+fixed	40.7:9			added asks
+accept	40.7:9.15	40.7:9.8	renders	will ask
+fixed	40.7:10			added give
+accept	40.7:10.6	40.7:10.7	renders	will give
+fixed	40.7:11			particle zh wrongly linked; added missing
+refuse	40.7:11.13	40.7:11.13		emphatic particle, not posoi
+accept	40.7:11.2	40.7:11.1	renders	if/since
+accept	40.7:11.9	40.7:11.12	renders	your
+accept	40.7:11.11	40.7:11.9	renders	to give
+fixed	40.7:12			added missing links
+accept	40.7:12.3	40.7:12.3	renders	whatever
+accept	40.7:12.4	40.7:12.4	renders	ean
+accept	40.7:12.10,40.7:12.11	40.7:12.11	renders	so
+fixed	40.7:13			added missing links
+accept	40.7:13.3	40.7:13.5	renders	gate
+accept	40.7:13.15	40.7:13.25	renders	through it
+accept	40.7:13.17	40.7:13.23	renders	entering
+ok	40.7:14			
+fixed	40.7:15			added missing links
+accept	40.7:15.8	40.7:15.9	renders	in
+accept	40.7:15.11	40.7:15.13	renders	de
+accept	40.7:15.12	40.7:15.12	renders	inwardly
+fixed	40.7:16			added missing links
+accept	40.7:16.8	40.7:16.7	renders	question particle
+accept	40.7:16.11	40.7:16.9	renders	from thorns
+fixed	40.7:17			good adjectives swapped
+refuse	40.7:17.4	40.7:17.4		dobri modifies fruits = kalous
+accept	40.7:17.4	40.7:17.6	renders	good fruits
+refuse	40.7:17.8	40.7:17.6		dobre modifies tree = agathon
+accept	40.7:17.8	40.7:17.4	renders	good tree
+accept	40.7:17.11	40.7:17.10	renders	bad tree
+accept	40.7:17.13	40.7:17.14	renders	produces
+fixed	40.7:18			added missing links
+accept	40.7:18.3	40.7:18.7	renders	produce
+accept	40.7:18.10	40.7:18.10	renders	bad
+ok	40.7:19			
+fixed	40.7:20			added arage
+accept	40.7:20.1,40.7:20.2,40.7:20.3	40.7:20.1	renders	then surely
+ok	40.7:21			
+fixed	40.7:22			added Your
+accept	40.7:22.12	40.7:22.12	renders	Your
+ok	40.7:23			
+fixed	40.7:24			added missing links
+accept	40.7:24.3	40.7:24.3	renders	whoever
+accept	40.7:24.20	40.7:24.22	renders	rock
+fixed	40.7:25			added missing links
+accept	40.7:25.9	40.7:25.10	renders	blew
+accept	40.7:25.13	40.7:25.17	renders	that
+accept	40.7:25.20	40.7:25.25	renders	rock
+accept	40.7:25.21	40.7:25.21	renders	had been founded
+fixed	40.7:26			added built
+accept	40.7:26.20	40.7:26.17	renders	built
+fixed	40.7:27			added missing links
+accept	40.7:27.9	40.7:27.10	renders	blew
+accept	40.7:27.13	40.7:27.17	renders	that
+accept	40.7:27.22	40.7:27.23	renders	fall
+fixed	40.7:28			added missing links
+accept	40.7:28.6	40.7:28.9	renders	these
+accept	40.7:28.10	40.7:28.10	renders	were astonished
+fixed	40.7:29			added echon
+accept	40.7:29.6	40.7:29.7	renders	having authority

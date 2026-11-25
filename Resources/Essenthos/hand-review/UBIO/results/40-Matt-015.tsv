@@ -1,0 +1,140 @@
+kind	from	to	relation	reason
+fixed	40.15:1			added verb
+fixed	40.15:2			added verb, Dia
+fixed	40.15:3			added links
+fixed	40.15:4			added links
+fixed	40.15:5			added relatives
+fixed	40.15:6			wrong kai; added
+ok	40.15:7			
+fixed	40.15:8			added TR-shared words
+fixed	40.15:9			added
+ok	40.15:10			
+fixed	40.15:11			added relatives
+ok	40.15:12			
+fixed	40.15:13			added
+fixed	40.15:14			wrong blind occurrences
+fixed	40.15:15			added de
+fixed	40.15:16			added
+fixed	40.15:17			stomach wrong
+fixed	40.15:18			added
+fixed	40.15:19			added
+fixed	40.15:20			added
+fixed	40.15:21			added
+fixed	40.15:22			added many
+fixed	40.15:23			added
+fixed	40.15:24			added
+fixed	40.15:25			added
+fixed	40.15:26			added
+fixed	40.15:27			added
+fixed	40.15:28			added
+ok	40.15:29			
+fixed	40.15:30			added
+fixed	40.15:31			added
+fixed	40.15:32			zo wrong; added
+fixed	40.15:33			added
+fixed	40.15:34			added
+fixed	40.15:35			added
+fixed	40.15:36			added
+fixed	40.15:37			added
+fixed	40.15:38			added
+fixed	40.15:39			added
+accept	40.15:1.4	40.15:1.2	renders	came
+accept	40.15:2.4	40.15:2.6	renders	break
+accept	40.15:2.1	40.15:2.1	renders	Dia ti = why
+accept	40.15:3.2	40.15:3.1	renders	ho de = he
+accept	40.15:3.9	40.15:3.6	renders	Dia ti = why
+accept	40.15:3.15	40.15:3.15	renders	dia = for the sake of
+accept	40.15:4.3	40.15:4.4	renders	said/commanded
+accept	40.15:4.9	40.15:4.12	renders	ho = whoever
+accept	40.15:5.6	40.15:5.4	renders	hos = whoever
+accept	40.15:5.11	40.15:5.13	renders	ho = what
+refuse	40.15:6.4	40.15:6.11		TR kai, not the later kai
+accept	40.15:6.5	40.15:6.2	renders	ou me
+accept	40.15:6.15	40.15:6.17	renders	dia
+accept	40.15:8.3	40.15:8.5	renders	lips
+accept	40.15:8.4	40.15:8.7	renders	honors
+accept	40.15:9.4	40.15:9.3	renders	worship
+accept	40.15:9.1,40.15:9.2	40.15:9.2	renders	de
+accept	40.15:11.2,40.15:11.3	40.15:11.2	renders	to = what
+accept	40.15:11.10,40.15:11.11	40.15:11.11	renders	to = what
+accept	40.15:13.2	40.15:13.1	renders	ho de = he
+accept	40.15:13.16	40.15:13.15	renders	part of rooted up
+refuse	40.15:14.8	40.15:14.7		wrong tuphlos
+accept	40.15:14.8	40.15:14.6	renders	of the blind
+refuse	40.15:14.11	40.15:14.9		wrong tuphlos
+accept	40.15:14.11	40.15:14.7	renders	blind (subject)
+accept	40.15:14.12	40.15:14.11	renders	leads
+accept	40.15:14.17	40.15:14.15	renders	will fall
+accept	40.15:15.1	40.15:15.2	renders	de
+accept	40.15:16.2	40.15:16.1	renders	ho de = he
+accept	40.15:16.9	40.15:16.7	renders	a-sunetoi negation
+accept	40.15:16.10	40.15:16.8	renders	este
+refuse	40.15:17.15	40.15:17.13		chorei is goes
+accept	40.15:17.15	40.15:17.12	renders	stomach
+accept	40.15:17.13	40.15:17.13	renders	goes
+accept	40.15:17.8,40.15:17.9	40.15:17.5	renders	to = that which
+accept	40.15:17.19	40.15:17.17	renders	is cast out
+accept	40.15:18.1	40.15:18.1	renders	ta = what
+accept	40.15:18.7	40.15:18.10	renders	comes forth
+accept	40.15:18.10	40.15:18.11	renders	kai of kakeina
+accept	40.15:19.12	40.15:19.12	renders	false testimonies
+accept	40.15:20.2,40.15:20.3	40.15:20.3	renders	ta = what
+accept	40.15:21.7	40.15:21.9	renders	mere = region
+accept	40.15:22.7	40.15:22.8	renders	those
+accept	40.15:22.8	40.15:22.7	renders	region
+accept	40.15:22.9	40.15:22.9	renders	having come
+accept	40.15:22.14	40.15:22.11	renders	saying
+accept	40.15:22.16	40.15:22.13	renders	over me
+accept	40.15:22.21,40.15:22.25	40.15:22.21	renders	is demon-possessed
+accept	40.15:22.22	40.15:22.20	renders	badly
+accept	40.15:23.2	40.15:23.1	renders	ho de = he
+accept	40.15:23.3	40.15:23.5	renders	her
+accept	40.15:23.5	40.15:23.4	renders	answered
+accept	40.15:23.11	40.15:23.8	renders	having come
+accept	40.15:23.20,40.15:23.21	40.15:23.19	renders	after
+accept	40.15:24.2	40.15:24.1	renders	ho de = he
+accept	40.15:24.8	40.15:24.7	renders	ei me = only
+accept	40.15:25.1	40.15:25.2	renders	de
+accept	40.15:25.2	40.15:25.1	renders	he = she
+accept	40.15:26.2	40.15:26.1	renders	ho de = he
+accept	40.15:26.7	40.15:26.6,40.15:26.7	renders	it is right
+accept	40.15:27.1	40.15:27.1	renders	he = she
+accept	40.15:27.2	40.15:27.2	renders	de
+accept	40.15:27.4	40.15:27.4	renders	yes
+accept	40.15:27.8	40.15:27.6	renders	kai = even
+accept	40.15:27.12	40.15:27.13	renders	crumbs
+accept	40.15:27.14	40.15:27.15	renders	falling
+accept	40.15:28.12	40.15:28.13	renders	let it be
+accept	40.15:30.19	40.15:30.17	renders	placed
+accept	40.15:30.22	40.15:30.22	renders	his = Jesus
+accept	40.15:31.4,40.15:31.6	40.15:31.4	renders	marveled idiom
+accept	40.15:31.13	40.15:31.9	renders	become whole
+refuse	40.15:32.16	40.15:32.17		zo renders moi
+accept	40.15:32.16	40.15:32.18	renders	with me
+accept	40.15:32.1	40.15:32.2	renders	de
+accept	40.15:32.9	40.15:32.9	renders	I am moved
+accept	40.15:32.11	40.15:32.12	renders	crowd
+accept	40.15:32.13	40.15:32.14	renders	already
+accept	40.15:32.18	40.15:32.17	renders	remain
+accept	40.15:32.19	40.15:32.19	renders	kai
+accept	40.15:32.23	40.15:32.22	renders	what
+accept	40.15:32.26,40.15:32.27	40.15:32.27	renders	hungry
+accept	40.15:32.30	40.15:32.31	renders	lest
+accept	40.15:32.33	40.15:32.32	renders	faint
+accept	40.15:33.4	40.15:33.2	renders	say
+accept	40.15:33.5	40.15:33.6	renders	whence
+accept	40.15:33.12	40.15:33.12	renders	so as
+accept	40.15:33.13	40.15:33.13	renders	to satisfy
+accept	40.15:34.3	40.15:34.2	renders	says
+accept	40.15:34.8	40.15:34.9	renders	hoi = they
+accept	40.15:34.9	40.15:34.10	renders	de
+accept	40.15:34.13	40.15:34.14	renders	a few
+accept	40.15:35.7	40.15:35.4	renders	crowd
+accept	40.15:36.7	40.15:36.9	renders	gave thanks
+accept	40.15:36.17	40.15:36.19	renders	crowds
+accept	40.15:37.9	40.15:37.10	renders	fragments
+accept	40.15:38.1	40.15:38.3	renders	eating
+accept	40.15:38.2	40.15:38.2	renders	de
+accept	40.15:39.4	40.15:39.5	renders	embarked
+accept	40.15:39.6	40.15:39.6	renders	into
+accept	40.15:39.11	40.15:39.13	renders	region

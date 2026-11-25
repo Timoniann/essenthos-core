@@ -1,0 +1,196 @@
+kind	from	to	relation	reason
+fixed	40.5:1			pronouns swapped; add missing verbs
+refuse	40.5:1.12	40.5:1.13		Його is the possessive of disciples
+refuse	40.5:1.15	40.5:1.16		до Нього is the dative
+accept	40.5:1.12	40.5:1.16	renders	his disciples
+accept	40.5:1.14,40.5:1.15	40.5:1.13	renders	to Him
+accept	40.5:1.5	40.5:1.5	renders	went up
+accept	40.5:1.10	40.5:1.10	renders	sat down
+accept	40.5:1.1	40.5:1.2	renders	renders de
+fixed	40.5:2			add auxiliary
+accept	40.5:2.8	40.5:2.6	renders	periphrastic imperfect
+ok	40.5:3			
+fixed	40.5:4			add missing
+accept	40.5:4.2	40.5:4.3	renders	mourning
+accept	40.5:4.5	40.5:4.6	renders	future passive
+ok	40.5:5			
+fixed	40.5:6			add auxiliary
+accept	40.5:6.9	40.5:6.10	renders	future passive
+fixed	40.5:7			add auxiliary
+accept	40.5:7.6	40.5:7.6	renders	future passive
+fixed	40.5:8			add auxiliary
+accept	40.5:8.6	40.5:8.10	renders	future
+fixed	40.5:9			add verb
+accept	40.5:9.7	40.5:9.8	renders	will be called
+fixed	40.5:10			add participle
+accept	40.5:10.2	40.5:10.3	renders	persecuted
+fixed	40.5:11			say vs lying swapped
+refuse	40.5:11.14	40.5:11.14		наговорювати renders eipōsin, not pseudomenoi
+accept	40.5:11.10,40.5:11.14	40.5:11.9	renders	shall say
+accept	40.5:11.11	40.5:11.14	renders	lying
+accept	40.5:11.2	40.5:11.2	renders	you are
+accept	40.5:11.4	40.5:11.4	renders	insult
+ok	40.5:12			
+fixed	40.5:13			misaligned verbs
+refuse	40.5:13.12	40.5:13.15		придасться renders ischyei
+refuse	40.5:13.18	40.5:13.17		надвір renders exō
+accept	40.5:13.12	40.5:13.17	renders	is potent
+accept	40.5:13.18	40.5:13.22	renders	out
+accept	40.5:13.15	40.5:13.15	renders	eis ouden
+accept	40.5:13.14	40.5:13.18	renders	any longer
+accept	40.5:13.16,40.5:13.17	40.5:13.19,40.5:13.20	renders	ei mē
+accept	40.5:13.20	40.5:13.21	renders	cast
+fixed	40.5:14			add missing
+accept	40.5:14.12	40.5:14.11	renders	on top of
+accept	40.5:14.10	40.5:14.13	renders	lying
+fixed	40.5:15			add verbs
+accept	40.5:15.1	40.5:15.1	renders	oude
+accept	40.5:15.3	40.5:15.2	renders	light
+accept	40.5:15.6	40.5:15.5	renders	put
+accept	40.5:15.14	40.5:15.15	renders	shines
+fixed	40.5:16			add imperative particle
+accept	40.5:16.4	40.5:16.2	renders	3rd imperative
+fixed	40.5:17			add missing
+accept	40.5:17.2	40.5:17.2	renders	think
+accept	40.5:17.3	40.5:17.3	renders	that
+fixed	40.5:18			misaligned clause
+refuse	40.5:18.9	40.5:18.18		this не is in the until clause
+refuse	40.5:18.10	40.5:18.13		минеться is parelthē
+refuse	40.5:18.11	40.5:18.13		ані is not iota
+refuse	40.5:18.13	40.5:18.13		єдина is hen
+accept	40.5:18.10	40.5:18.7	renders	pass away
+accept	40.5:18.13	40.5:18.14	renders	one
+accept	40.5:18.2	40.5:18.2	renders	gar
+accept	40.5:18.5	40.5:18.5	renders	until
+accept	40.5:18.14	40.5:18.15	renders	or
+accept	40.5:18.15	40.5:18.16	renders	one
+accept	40.5:18.16	40.5:18.17	renders	stroke
+accept	40.5:18.19	40.5:18.18,40.5:18.19	renders	ou mē
+accept	40.5:18.20	40.5:18.20	renders	pass away
+accept	40.5:18.24	40.5:18.27	renders	happen
+fixed	40.5:19			add missing
+accept	40.5:19.2	40.5:19.3	renders	oun
+accept	40.5:19.15	40.5:19.17	renders	will be called
+accept	40.5:19.21	40.5:19.23	renders	whoever
+accept	40.5:19.26	40.5:19.29	renders	this one
+accept	40.5:19.27	40.5:19.31	renders	will be called
+fixed	40.5:20			add auxiliary
+accept	40.5:20.9	40.5:20.7	renders	abound
+fixed	40.5:21			ancients misaligned
+refuse	40.5:21.5	40.5:21.3		стародавнім is archaiois
+accept	40.5:21.5	40.5:21.5	renders	ancients
+accept	40.5:21.4,40.5:21.6	40.5:21.3	renders	was said
+accept	40.5:21.10	40.5:21.8	renders	whoever
+fixed	40.5:22			add missing
+accept	40.5:22.14	40.5:22.15	renders	judgment
+accept	40.5:22.16	40.5:22.16	renders	whoever
+accept	40.5:22.26	40.5:22.28	renders	whoever
+accept	40.5:22.22	40.5:22.24	renders	liable
+accept	40.5:22.23,40.5:22.24	40.5:22.27	renders	Sanhedrin
+fixed	40.5:23			ти misaligned; add missing
+refuse	40.5:23.4	40.5:23.6		ти is the verb subject; свого is sou
+accept	40.5:23.7	40.5:23.6	renders	your gift
+accept	40.5:23.8	40.5:23.5	renders	gift
+accept	40.5:23.3,40.5:23.4	40.5:23.3	renders	you offer
+accept	40.5:23.1	40.5:23.2	renders	oun
+accept	40.5:23.9,40.5:23.10	40.5:23.10	renders	and there
+accept	40.5:23.15	40.5:23.17	renders	something
+fixed	40.5:24			add missing
+accept	40.5:24.2	40.5:24.2	renders	there
+fixed	40.5:25			Зо misaligned; add missing
+refuse	40.5:25.1	40.5:25.2		Зо is not the verb
+accept	40.5:25.5	40.5:25.1,40.5:25.2	renders	be agreeing
+accept	40.5:25.2	40.5:25.5	renders	your
+accept	40.5:25.6	40.5:25.7,40.5:25.8	renders	while
+accept	40.5:25.12	40.5:25.9	renders	you are
+accept	40.5:25.13,40.5:25.17	40.5:25.15,40.5:25.16	renders	lest
+accept	40.5:25.22	40.5:25.27	renders	officer
+fixed	40.5:26			add verb
+accept	40.5:26.9	40.5:26.10	renders	pay
+ok	40.5:27			
+fixed	40.5:28			add missing
+accept	40.5:28.15	40.5:28.15	renders	committed adultery
+accept	40.5:28.10	40.5:28.8	renders	looking
+accept	40.5:28.12	40.5:28.12	renders	to lust
+fixed	40.5:29			add missing
+accept	40.5:29.8	40.5:29.10	renders	pluck out
+accept	40.5:29.12	40.5:29.15	renders	from you
+accept	40.5:29.25	40.5:29.27	renders	whole
+fixed	40.5:30			add missing
+accept	40.5:30.2	40.5:30.2	renders	if
+accept	40.5:30.12	40.5:30.14	renders	from you
+accept	40.5:30.25	40.5:30.26	renders	whole
+accept	40.5:30.3	40.5:30.6	renders	hand
+fixed	40.5:31			add missing
+accept	40.5:31.1	40.5:31.2	renders	de
+accept	40.5:31.3	40.5:31.3	renders	whoever
+accept	40.5:31.6	40.5:31.5	renders	divorce
+accept	40.5:31.7	40.5:31.9	renders	let him give
+fixed	40.5:32			add missing
+accept	40.5:32.6	40.5:32.6	renders	everyone
+accept	40.5:32.12	40.5:32.13	renders	logou
+accept	40.5:32.15	40.5:32.15	renders	causes
+accept	40.5:32.18	40.5:32.17	renders	commit adultery
+accept	40.5:32.20	40.5:32.19	renders	whoever
+accept	40.5:32.23	40.5:32.22	renders	marry
+fixed	40.5:33			ancients misaligned; add missing
+refuse	40.5:33.6	40.5:33.4		стародавнім is archaiois
+accept	40.5:33.6	40.5:33.6	renders	ancients
+accept	40.5:33.5,40.5:33.7	40.5:33.4	renders	was said
+accept	40.5:33.9,40.5:33.10	40.5:33.8	renders	swear falsely
+accept	40.5:33.11	40.5:33.10	renders	de
+accept	40.5:33.12	40.5:33.9	renders	keep
+fixed	40.5:34			add missing
+accept	40.5:34.7	40.5:34.7	renders	at all
+ok	40.5:35			
+fixed	40.5:36			add missing
+accept	40.5:36.2	40.5:36.6	renders	swear
+accept	40.5:36.8	40.5:36.11	renders	hair
+fixed	40.5:37			add missing
+accept	40.5:37.6	40.5:37.7	renders	second yes
+accept	40.5:37.7	40.5:37.9	renders	second no
+accept	40.5:37.4,40.5:37.5	40.5:37.1	renders	let be
+accept	40.5:37.8	40.5:37.11	renders	de
+fixed	40.5:38			add missing
+accept	40.5:38.11	40.5:38.10	renders	tooth
+fixed	40.5:39			cheek misaligned
+refuse	40.5:39.15	40.5:39.10		cheek is siagona
+accept	40.5:39.15	40.5:39.16	renders	cheek
+accept	40.5:39.12	40.5:39.10	renders	whoever
+accept	40.5:39.17	40.5:39.18	renders	turn
+fixed	40.5:40			add missing
+accept	40.5:40.3	40.5:40.3	renders	willing
+accept	40.5:40.7	40.5:40.10	renders	take
+accept	40.5:40.8	40.5:40.8	renders	tunic
+accept	40.5:40.10	40.5:40.11	renders	yield
+fixed	40.5:41			verb misaligned
+refuse	40.5:41.3	40.5:41.2		compel is angareusei
+accept	40.5:41.3,40.5:41.5	40.5:41.4	renders	shall compel
+fixed	40.5:42			from wrongly on apo
+refuse	40.5:42.15	40.5:42.8		from him is in the verb, not apo sou
+fixed	40.5:43			add possessives
+accept	40.5:43.6	40.5:43.7	renders	your
+accept	40.5:43.10	40.5:43.12	renders	your
+fixed	40.5:44			you in TR-only clause
+refuse	40.5:44.11	40.5:44.8		belongs to a Received Text clause
+accept	40.5:44.7	40.5:44.8	renders	your enemies
+fixed	40.5:45			add missing
+accept	40.5:45.10	40.5:45.10	renders	for
+accept	40.5:45.11,40.5:45.12	40.5:45.14	renders	makes rise
+accept	40.5:45.16	40.5:45.16	renders	evil
+accept	40.5:45.18	40.5:45.15	renders	on
+accept	40.5:45.26	40.5:45.21	renders	on
+fixed	40.5:46			add missing
+accept	40.5:46.5	40.5:46.4	renders	those
+accept	40.5:46.10	40.5:46.7	renders	what
+accept	40.5:46.14	40.5:46.10	renders	ouchi
+accept	40.5:46.16,40.5:46.17	40.5:46.15	renders	same
+accept	40.5:46.20	40.5:46.16	renders	do
+fixed	40.5:47			add missing
+accept	40.5:47.7	40.5:47.6	renders	your
+accept	40.5:47.11	40.5:47.9	renders	extraordinary
+accept	40.5:47.13,40.5:47.16	40.5:47.11	renders	ouchi
+accept	40.5:47.15	40.5:47.14	renders	Gentiles
+fixed	40.5:48			add missing
+accept	40.5:48.2	40.5:48.1	renders	shall be
+accept	40.5:48.8	40.5:48.10	renders	heavenly

@@ -1,0 +1,121 @@
+kind	from	to	relation	reason
+ok	43.15:1			
+fixed	43.15:2			added missing verbs and words
+accept	43.15:2.8	43.15:2.6	renders	bears
+accept	43.15:2.9	43.15:2.8	renders	subject of verb
+accept	43.15:2.11	43.15:2.10	renders	kai as but
+accept	43.15:2.15	43.15:2.14	renders	bears
+accept	43.15:2.19	43.15:2.19	renders	more
+fixed	43.15:3			swapped you pronouns, added already
+refuse	43.15:3.5	43.15:3.2		vam is hymin not hymeis
+refuse	43.15:3.7	43.15:3.10		vy is hymeis not hymin
+accept	43.15:3.5	43.15:3.10	renders	to you
+accept	43.15:3.7	43.15:3.2	renders	you
+accept	43.15:3.8	43.15:3.1	renders	already
+fixed	43.15:4			added missing
+accept	43.15:4.4	43.15:4.4	renders	kai of kago
+accept	43.15:4.13	43.15:4.13	renders	to bear
+accept	43.15:4.15,43.15:4.17	43.15:4.15	renders	of itself
+accept	43.15:4.24	43.15:4.23	renders	oude
+accept	43.15:4.26	43.15:4.25	renders	if
+accept	43.15:4.31	43.15:4.29	renders	future auxiliary
+fixed	43.15:5			added missing
+accept	43.15:5.15	43.15:5.16	renders	bears fruit
+accept	43.15:5.14	43.15:5.18	renders	much
+accept	43.15:5.5	43.15:5.8	renders	the one
+accept	43.15:5.9	43.15:5.12	renders	kai of kago
+accept	43.15:5.23	43.15:5.23	renders	subject of verb
+fixed	43.15:6			added missing verbs
+accept	43.15:6.2	43.15:6.3	renders	anyone
+accept	43.15:6.5	43.15:6.4	renders	future auxiliary
+accept	43.15:6.9	43.15:6.7	renders	auxiliary
+accept	43.15:6.11	43.15:6.8	renders	out
+accept	43.15:6.17	43.15:6.15	renders	gather
+accept	43.15:6.20	43.15:6.21	renders	cast
+accept	43.15:6.24	43.15:6.23	renders	burned
+fixed	43.15:7			added missing
+accept	43.15:7.6	43.15:7.2	renders	subject of verb
+accept	43.15:7.7	43.15:7.2	renders	future auxiliary
+accept	43.15:7.16	43.15:7.12	renders	whatever
+accept	43.15:7.19	43.15:7.17	renders	will come to pass
+fixed	43.15:8			added missing
+accept	43.15:8.5	43.15:8.2	renders	this
+accept	43.15:8.6	43.15:8.7	renders	hina
+accept	43.15:8.8	43.15:8.8,43.15:8.10	renders	bear fruit
+accept	43.15:8.10	43.15:8.12	renders	shall be
+accept	43.15:8.12	43.15:8.13	renders	my
+fixed	43.15:9			added kai of kago
+accept	43.15:9.6	43.15:9.6	renders	kai of kago
+fixed	43.15:10			added missing
+accept	43.15:10.2	43.15:10.5	renders	future auxiliary
+accept	43.15:10.17	43.15:10.15	renders	my
+fixed	43.15:11			added missing
+accept	43.15:11.8	43.15:11.11	renders	may be
+accept	43.15:11.14	43.15:11.16	renders	may be full
+fixed	43.15:12			added subject
+accept	43.15:12.8	43.15:12.8	renders	subject of verb
+fixed	43.15:13			added missing
+accept	43.15:13.4	43.15:13.4	renders	double negation of oudeis
+accept	43.15:13.6,43.15:13.7	43.15:13.2	renders	than this
+accept	43.15:13.8	43.15:13.6	renders	hina
+accept	43.15:13.9	43.15:13.7	renders	anyone
+accept	43.15:13.12,43.15:13.13	43.15:13.11	renders	should lay down
+ok	43.15:14			
+fixed	43.15:15			wrong pronoun link, added missing
+refuse	43.15:15.23	43.15:15.26		Ya is subject of egnorisa not mou
+accept	43.15:15.23	43.15:15.27	renders	subject of verb
+accept	43.15:15.1	43.15:15.2	renders	subject of verb
+accept	43.15:15.2,43.15:15.3	43.15:15.1	renders	no longer
+accept	43.15:15.5	43.15:15.2	renders	future auxiliary
+accept	43.15:15.11	43.15:15.9	renders	knows
+accept	43.15:15.21	43.15:15.17	renders	subject of verb
+accept	43.15:15.31	43.15:15.26	renders	my
+fixed	43.15:16			added missing
+accept	43.15:16.11	43.15:16.10	renders	appointed
+accept	43.15:16.27	43.15:16.24,43.15:16.25	renders	whatever
+accept	43.15:16.28	43.15:16.26	renders	an
+fixed	43.15:17			added subject
+accept	43.15:17.9	43.15:17.5	renders	subject of verb
+ok	43.15:18			
+fixed	43.15:19			added missing
+accept	43.15:19.11	43.15:19.8	renders	an
+accept	43.15:19.3	43.15:19.5	renders	subject of verb
+accept	43.15:19.14	43.15:19.18	renders	subject of verb
+accept	43.15:19.21	43.15:19.23	renders	out of
+accept	43.15:19.24	43.15:19.26,43.15:19.27	renders	dia touto
+fixed	43.15:20			added missing
+accept	43.15:20.14	43.15:20.15	renders	if
+accept	43.15:20.21	43.15:20.20	renders	future auxiliary
+accept	43.15:20.22	43.15:20.21	renders	if
+accept	43.15:20.28	43.15:20.28	renders	yours
+fixed	43.15:21			added missing
+accept	43.15:21.12	43.15:21.14	renders	the one
+fixed	43.15:22			added missing
+accept	43.15:22.7	43.15:22.6	renders	dative to them
+accept	43.15:22.9	43.15:22.2	renders	me governs both verbs
+accept	43.15:22.10	43.15:22.5	renders	spoken
+accept	43.15:22.21	43.15:22.14	renders	subject of verb
+accept	43.15:22.23	43.15:22.18	renders	their
+fixed	43.15:23			added missing
+accept	43.15:23.1	43.15:23.1	renders	the one
+fixed	43.15:24			added missing
+accept	43.15:24.3	43.15:24.5	renders	subject of verb
+accept	43.15:24.8	43.15:24.5	renders	pluperfect auxiliary
+accept	43.15:24.11	43.15:24.8	renders	which
+accept	43.15:24.12,43.15:24.14	43.15:24.9	renders	no one
+accept	43.15:24.21	43.15:24.16	renders	de
+accept	43.15:24.23	43.15:24.18	renders	subject of verb
+fixed	43.15:25			added missing
+accept	43.15:25.1	43.15:25.1	renders	but
+accept	43.15:25.11	43.15:25.15	renders	without cause
+accept	43.15:25.12	43.15:25.13	renders	hated
+fixed	43.15:26			added missing
+accept	43.15:26.6	43.15:26.5	renders	whom
+accept	43.15:26.16	43.15:26.20	renders	goes forth
+accept	43.15:26.19	43.15:26.21	renders	ekeinos
+fixed	43.15:27			ta=de, i=kai
+refuse	43.15:27.1	43.15:27.1		Ta renders de; kai is the also (i)
+accept	43.15:27.1	43.15:27.3	renders	de
+accept	43.15:27.3	43.15:27.1	renders	also
+accept	43.15:27.4	43.15:27.2	renders	you
+accept	43.15:27.6	43.15:27.10	renders	subject of este

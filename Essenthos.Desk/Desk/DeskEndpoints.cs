@@ -201,6 +201,8 @@ internal static class DeskEndpoints
     {
         routes.MapGet("/texts/pages", (PageReadings readings) => readings.Read());
 
+        routes.MapGet("/texts/reviews", (HandReviews reviews) => reviews.Read());
+
         routes.MapGet("/texts", (TextBoard board, AppDbContext db, CancellationToken cancellationToken) =>
             board.List(db, cancellationToken));
 

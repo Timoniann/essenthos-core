@@ -1,0 +1,117 @@
+kind	from	to	relation	reason
+ok	41.3:1			
+fixed	41.3:2			object pronouns and verbs realigned
+fixed	41.3:3			missing links added
+fixed	41.3:4			missing links added
+fixed	41.3:5			missing links added
+fixed	41.3:6			conjunction realigned, missing links
+fixed	41.3:7			follow phrase realigned
+fixed	41.3:8			missing links added
+fixed	41.3:9			missing link added
+fixed	41.3:10			missing links added
+fixed	41.3:11			missing links added
+fixed	41.3:12			missing links added
+fixed	41.3:13			missing links added
+fixed	41.3:14			missing links added
+ok	41.3:15			
+fixed	41.3:16			missing links added
+fixed	41.3:17			cebto realigned, missing link
+ok	41.3:18			
+ok	41.3:19			
+fixed	41.3:20			missing links added
+fixed	41.3:21			missing link added
+fixed	41.3:22			two demons swapped, missing links
+fixed	41.3:23			missing link added
+fixed	41.3:24			missing link added
+fixed	41.3:25			missing link added
+fixed	41.3:26			missing links added
+fixed	41.3:27			missing links added
+fixed	41.3:28			missing links added
+fixed	41.3:29			missing links added
+fixed	41.3:30			missing link added
+fixed	41.3:31			missing link added
+ok	41.3:32			
+ok	41.3:33			
+fixed	41.3:34			missing links added
+fixed	41.3:35			missing link added
+refuse	41.3:2.3	41.3:2.2		obvynuvatyty is accuse not watch
+accept	41.3:2.3	41.3:2.10	renders	accuse
+accept	41.3:2.5	41.3:2.2	renders	were watching
+refuse	41.3:2.4	41.3:2.3		Його is object of accuse
+accept	41.3:2.4	41.3:2.11	renders	Him (accuse)
+refuse	41.3:2.7	41.3:2.8		Ним is object of watch
+accept	41.3:2.7	41.3:2.3	renders	Him (watch)
+accept	41.3:2.12	41.3:2.8	renders	him (heal)
+accept	41.3:2.2	41.3:2.9	renders	in order that
+accept	41.3:2.8	41.3:2.4	renders	whether
+accept	41.3:3.7	41.3:3.9	renders	withered
+accept	41.3:3.9	41.3:3.10	renders	arise
+accept	41.3:3.10	41.3:3.11,41.3:3.13	renders	into the midst
+accept	41.3:4.16	41.3:4.14	renders	to kill
+accept	41.3:4.17	41.3:4.15	renders	hoi de = they
+accept	41.3:5.7	41.3:5.3	renders	them
+accept	41.3:5.10	41.3:5.12	renders	their
+accept	41.3:5.24,41.3:5.25	41.3:5.22	renders	was restored
+refuse	41.3:6.5	41.3:6.1		ta joins verbs, initial kai is ж
+accept	41.3:6.2	41.3:6.1	renders	connective kai
+accept	41.3:6.9	41.3:6.10	renders	gave counsel
+accept	41.3:6.12	41.3:6.13	renders	how
+refuse	41.3:7.14	41.3:7.4		za belongs to followed, not with
+accept	41.3:7.12,41.3:7.14	41.3:7.18	renders	followed
+accept	41.3:7.6	41.3:7.8	renders	withdrew
+accept	41.3:8.8	41.3:8.9	renders	beyond
+accept	41.3:8.18,41.3:8.19	41.3:8.20	renders	how much
+accept	41.3:8.22	41.3:8.22	renders	came
+accept	41.3:9.7	41.3:9.8	renders	boat to wait ready
+accept	41.3:10.5,41.3:10.6	41.3:10.4	renders	so that
+accept	41.3:10.7,41.3:10.8	41.3:10.10	renders	as many as
+accept	41.3:10.9	41.3:10.12	renders	diseases
+accept	41.3:10.12	41.3:10.5	renders	press upon
+accept	41.3:11.5	41.3:11.6	renders	whenever
+accept	41.3:11.9	41.3:11.9	renders	fell down before
+accept	41.3:12.3	41.3:12.4	renders	them
+accept	41.3:12.5	41.3:12.3	renders	rebuked/charged
+accept	41.3:12.10	41.3:12.8,41.3:12.9	renders	make known
+accept	41.3:13.3	41.3:13.2	renders	goes up
+accept	41.3:13.12	41.3:13.11	renders	connective kai
+accept	41.3:13.13	41.3:13.12	renders	went
+accept	41.3:14.2	41.3:14.2	renders	appointed
+accept	41.3:14.7	41.3:14.5	renders	might be
+accept	41.3:16.2	41.3:16.2	renders	appointed
+accept	41.3:16.8	41.3:16.6	renders	added (gave) name
+refuse	41.3:17.13	41.3:17.16		cebto = which is, not Boanerges
+accept	41.3:17.13	41.3:17.17,41.3:17.18	renders	which is
+accept	41.3:17.9	41.3:17.13	renders	added (gave)
+accept	41.3:20.4	41.3:20.4	renders	house
+accept	41.3:20.10	41.3:20.10	renders	so that
+accept	41.3:20.11	41.3:20.13	renders	them
+accept	41.3:20.14	41.3:20.14	renders	even
+accept	41.3:21.9	41.3:21.7	renders	to seize
+refuse	41.3:22.13	41.3:22.18		object demons is 21
+accept	41.3:22.13	41.3:22.21	renders	demons (object)
+refuse	41.3:22.16	41.3:22.21		demons of prince is 18
+accept	41.3:22.16	41.3:22.18	renders	of the demons
+accept	41.3:22.4	41.3:22.7	renders	having come down
+accept	41.3:22.14	41.3:22.14	renders	by (instrumental)
+accept	41.3:23.9	41.3:23.6	renders	was speaking
+accept	41.3:24.10	41.3:24.12	renders	that
+accept	41.3:25.10	41.3:25.11	renders	that
+accept	41.3:26.8	41.3:26.5	renders	rose up
+accept	41.3:26.17	41.3:26.14,41.3:26.15	renders	has an end
+accept	41.3:27.5	41.3:27.10	renders	having entered
+accept	41.3:27.8	41.3:27.9	renders	strong man
+accept	41.3:27.12	41.3:27.12	renders	goods
+accept	41.3:27.18	41.3:27.19	renders	strong man
+accept	41.3:27.23	41.3:27.24	renders	house
+accept	41.3:28.4	41.3:28.4	renders	that
+accept	41.3:28.12,41.3:28.13,41.3:28.14	41.3:28.16,41.3:28.17	renders	as many as ever
+accept	41.3:29.2	41.3:29.1	renders	whoever
+accept	41.3:29.6	41.3:29.13,41.3:29.15	renders	to the age
+accept	41.3:29.9	41.3:29.11,41.3:29.12	renders	has forgiveness
+accept	41.3:29.11	41.3:29.20	renders	sin
+accept	41.3:29.14	41.3:29.17,41.3:29.18	renders	is guilty
+accept	41.3:30.1	41.3:30.1	renders	for
+accept	41.3:31.10	41.3:31.12	renders	standing
+accept	41.3:34.4,41.3:34.5	41.3:34.3	renders	those who
+accept	41.3:34.6	41.3:34.6	renders	in a circle
+accept	41.3:35.2	41.3:35.1,41.3:35.2	renders	whoever

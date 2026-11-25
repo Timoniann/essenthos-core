@@ -1,0 +1,103 @@
+kind	from	to	relation	reason
+fixed	40.16:1			added asked
+accept	40.16:1.8	40.16:1.8	renders	asked
+fixed	40.16:2			added A, He, evening
+accept	40.16:2.1	40.16:2.2	renders	de
+accept	40.16:2.2	40.16:2.1	renders	article as pronoun he
+accept	40.16:2.9	40.16:2.6,40.16:2.7	renders	evening having come
+fixed	40.16:3			added missing words
+accept	40.16:3.13	40.16:3.15	renders	know how
+accept	40.16:3.9	40.16:3.16	renders	discern
+accept	40.16:3.8	40.16:3.7	renders	overcast
+accept	40.16:3.16	40.16:3.18	renders	de
+fixed	40.16:4			added missing words
+accept	40.16:4.11	40.16:4.10	renders	will be given
+accept	40.16:4.12	40.16:4.12,40.16:4.13	renders	ei me = except
+accept	40.16:4.17	40.16:4.19	renders	them
+fixed	40.16:5			added take
+accept	40.16:5.9	40.16:5.10	renders	to take
+ok	40.16:6			
+fixed	40.16:7			added missing words
+accept	40.16:7.1	40.16:7.1	renders	article as pronoun they
+accept	40.16:7.2	40.16:7.2	renders	de
+accept	40.16:7.6	40.16:7.6	renders	saying
+accept	40.16:7.11	40.16:7.10	renders	we took
+fixed	40.16:8			added missing words
+accept	40.16:8.1	40.16:8.2	renders	de
+accept	40.16:8.9	40.16:8.7	renders	reason
+accept	40.16:8.12	40.16:8.11	renders	hoti
+fixed	40.16:9			refused pro, added gathered
+refuse	40.16:9.10	40.16:9.4		preposition has no Greek counterpart
+accept	40.16:9.20	40.16:9.13	renders	gathered
+fixed	40.16:10			added gathered
+accept	40.16:10.12	40.16:10.10	renders	gathered
+ok	40.16:11			
+fixed	40.16:12			added missing words
+accept	40.16:12.8	40.16:12.6	renders	to beware
+accept	40.16:12.11	40.16:12.11	renders	of bread
+fixed	40.16:13			added missing words
+accept	40.16:13.1	40.16:13.1	renders	having come
+accept	40.16:13.2	40.16:13.2	renders	de
+accept	40.16:13.5	40.16:13.7	renders	district
+accept	40.16:13.15	40.16:13.19	renders	men
+accept	40.16:13.16	40.16:13.17	renders	say/consider
+fixed	40.16:14			added missing words
+accept	40.16:14.4	40.16:14.4	renders	hoi = some
+accept	40.16:14.1	40.16:14.1	renders	article as pronoun they
+accept	40.16:14.2	40.16:14.2	renders	de
+accept	40.16:14.3	40.16:14.3	renders	said
+accept	40.16:14.8	40.16:14.9	renders	others
+accept	40.16:14.12	40.16:14.13	renders	de
+fixed	40.16:15			added consider
+accept	40.16:15.10	40.16:15.7	renders	say/consider
+ok	40.16:16			
+fixed	40.16:17			added A, revealed
+accept	40.16:17.1	40.16:17.2	renders	de
+accept	40.16:17.20	40.16:17.16	renders	revealed
+fixed	40.16:18			fixed My, hades, rock
+refuse	40.16:18.13	40.16:18.15		subject I, not possessive mou
+accept	40.16:18.15	40.16:18.15	renders	my church
+refuse	40.16:18.18	40.16:18.19		hades adjective, not gates
+accept	40.16:18.18	40.16:18.20	renders	of hades
+accept	40.16:18.17	40.16:18.19	renders	translator renders gates as powers
+accept	40.16:18.7	40.16:18.8	renders	Petros rendered as rock
+fixed	40.16:19			bind/loose moved off ean
+refuse	40.16:19.13	40.16:19.11		verb is desesis not ean
+accept	40.16:19.13	40.16:19.12	renders	bind
+refuse	40.16:19.24	40.16:19.23		verb is lyses not ean
+accept	40.16:19.24	40.16:19.24	renders	loose
+accept	40.16:19.9	40.16:19.10,40.16:19.11	renders	whatever
+accept	40.16:19.20	40.16:19.22,40.16:19.23	renders	whatever
+accept	40.16:19.19	40.16:19.21	renders	kai
+ok	40.16:20			
+fixed	40.16:21			added missing words
+accept	40.16:21.2,40.16:21.3	40.16:21.2	renders	that time
+accept	40.16:21.5	40.16:21.3	renders	began
+accept	40.16:21.6	40.16:21.6	renders	to show
+accept	40.16:21.10	40.16:21.12	renders	him
+accept	40.16:21.26	40.16:21.27	renders	passive to be killed
+fixed	40.16:22			added missing words
+accept	40.16:22.2,40.16:22.3	40.16:22.2	renders	having taken aside
+accept	40.16:22.6	40.16:22.6	renders	began
+accept	40.16:22.11	40.16:22.10	renders	hileos
+accept	40.16:22.13	40.16:22.17	renders	this
+fixed	40.16:23			added missing words
+accept	40.16:23.2	40.16:23.1	renders	article as pronoun he
+accept	40.16:23.7	40.16:23.7	renders	get away
+accept	40.16:23.8	40.16:23.8	renders	behind/from
+accept	40.16:23.15	40.16:23.16	renders	think
+fixed	40.16:24			added missing words
+accept	40.16:24.9	40.16:24.13	renders	to come
+accept	40.16:24.18	40.16:24.17	renders	imperative take
+accept	40.16:24.24	40.16:24.22	renders	follow
+fixed	40.16:25			added de
+accept	40.16:25.11	40.16:25.12	renders	de
+fixed	40.16:26			added zh, if
+accept	40.16:26.2	40.16:26.2	renders	gar
+accept	40.16:26.5	40.16:26.5	renders	ean
+fixed	40.16:27			added z of zgidno z
+accept	40.16:27.17	40.16:27.22	renders	kata
+fixed	40.16:28			added missing words
+accept	40.16:28.4	40.16:28.4	renders	hoti
+accept	40.16:28.7	40.16:28.8	renders	here
+accept	40.16:28.8	40.16:28.9	renders	standing

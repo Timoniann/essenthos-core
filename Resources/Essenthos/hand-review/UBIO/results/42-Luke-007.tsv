@@ -1,0 +1,203 @@
+kind	from	to	relation	reason
+ok	42.7:1			
+fixed	42.7:2			mav to emellen; added missing
+refuse	42.7:2.15	42.7:2.6		wrong target
+accept	42.7:2.15	42.7:2.7	renders	mav = was about
+accept	42.7:2.13	42.7:2.8	renders	die
+accept	42.7:2.4	42.7:2.1	renders	centurion
+accept	42.7:2.5	42.7:2.5	renders	badly
+accept	42.7:2.7	42.7:2.6	renders	kakos echon = fell sick
+accept	42.7:2.10	42.7:2.12	renders	valued
+accept	42.7:2.2	42.7:2.3	renders	certain
+accept	42.7:2.3	42.7:2.2	renders	de
+ok	42.7:3			
+fixed	42.7:4			added missing
+accept	42.7:4.12	42.7:4.10	renders	saying
+accept	42.7:4.8	42.7:4.9	renders	earnestly
+accept	42.7:4.19	42.7:4.14	renders	to whom
+fixed	42.7:5			added verb
+accept	42.7:5.11	42.7:5.10	renders	built
+fixed	42.7:6			added missing
+accept	42.7:6.11	42.7:6.7	renders	already
+accept	42.7:6.25	42.7:6.25,42.7:6.27	renders	not worthy
+accept	42.7:6.27	42.7:6.34	renders	enter
+fixed	42.7:7			added missing
+accept	42.7:7.5	42.7:7.2	renders	neither
+accept	42.7:7.6	42.7:7.4	renders	counted worthy
+accept	42.7:7.19	42.7:7.14	renders	servant
+accept	42.7:7.14	42.7:7.8	renders	but
+fixed	42.7:8			added missing
+accept	42.7:8.5	42.7:8.7	renders	under authority
+accept	42.7:8.9	42.7:8.11	renders	myself
+accept	42.7:8.2	42.7:8.1	renders	kai gar
+accept	42.7:8.19	42.7:8.19	renders	kai
+accept	42.7:8.17	42.7:8.18	renders	goes
+accept	42.7:8.16	42.7:8.17	renders	kai
+accept	42.7:8.20	42.7:8.20	renders	another
+accept	42.7:8.13	42.7:8.15	renders	this one
+accept	42.7:8.25	42.7:8.27	renders	my
+accept	42.7:8.28	42.7:8.29	renders	this
+fixed	42.7:9			added missing
+accept	42.7:9.19,42.7:9.23	42.7:9.17	renders	not even
+accept	42.7:9.3	42.7:9.3	renders	these
+accept	42.7:9.26	42.7:9.21	renders	such great
+accept	42.7:9.2	42.7:9.2	renders	de
+fixed	42.7:10			added missing
+accept	42.7:10.3	42.7:10.7	renders	those sent
+fixed	42.7:11			added missing
+accept	42.7:11.3	42.7:11.5	renders	next
+fixed	42.7:12			nyeyu to syn autei
+refuse	42.7:12.20	42.7:12.18		wrong target
+accept	42.7:12.20	42.7:12.28	renders	with her
+accept	42.7:12.19	42.7:12.27	renders	with
+accept	42.7:12.7	42.7:12.3	renders	drew near
+accept	42.7:12.9	42.7:12.10	renders	carried out
+accept	42.7:12.17	42.7:12.19	renders	was
+accept	42.7:12.21	42.7:12.26	renders	was
+accept	42.7:12.23	42.7:12.25	renders	considerable
+fixed	42.7:13			added missing
+accept	42.7:13.9	42.7:13.8	renders	her
+fixed	42.7:14			added missing
+accept	42.7:14.7	42.7:14.5	renders	bier
+accept	42.7:14.9	42.7:14.7	renders	de
+accept	42.7:14.10	42.7:14.9	renders	stopped
+accept	42.7:14.11	42.7:14.10	renders	kai
+fixed	42.7:15			added missing
+accept	42.7:15.3	42.7:15.2	renders	sat up
+fixed	42.7:16			added missing
+accept	42.7:16.7	42.7:16.6	renders	glorified
+accept	42.7:16.10	42.7:16.9	renders	saying
+accept	42.7:16.13	42.7:16.13	renders	risen
+ok	42.7:17			
+fixed	42.7:18			added missing
+accept	42.7:18.4	42.7:18.9	renders	these
+accept	42.7:18.5	42.7:18.2	renders	reported
+accept	42.7:18.10	42.7:18.11	renders	called
+accept	42.7:18.15	42.7:18.16	renders	his
+ok	42.7:19			
+fixed	42.7:20			added missing
+accept	42.7:20.3	42.7:20.1	renders	having come
+accept	42.7:20.1	42.7:20.2	renders	de
+fixed	42.7:21			added missing
+accept	42.7:21.2,42.7:21.3	42.7:21.1,42.7:21.2,42.7:21.4	renders	that very hour
+accept	42.7:21.5	42.7:21.5	renders	healed
+accept	42.7:21.9	42.7:21.8	renders	diseases
+accept	42.7:21.11	42.7:21.10	renders	afflictions
+accept	42.7:21.19,42.7:21.20	42.7:21.17,42.7:21.18	renders	granted sight
+fixed	42.7:22			added missing
+accept	42.7:22.21	42.7:22.16	renders	lepers
+accept	42.7:22.30,42.7:22.31	42.7:22.24	renders	gospel preached
+ok	42.7:23			
+fixed	42.7:24			added missing
+accept	42.7:24.15	42.7:24.18	renders	to see
+fixed	42.7:25			added missing
+accept	42.7:25.1	42.7:25.1	renders	but
+accept	42.7:25.17	42.7:25.13	renders	clothing
+accept	42.7:25.20	42.7:25.16	renders	luxury
+accept	42.7:25.21	42.7:25.17	renders	living
+accept	42.7:25.22	42.7:25.18	renders	in
+accept	42.7:25.23	42.7:25.20	renders	palaces
+fixed	42.7:26			added missing
+accept	42.7:26.9	42.7:26.6	renders	yes
+accept	42.7:26.12	42.7:26.9	renders	and/even
+fixed	42.7:27			added missing
+accept	42.7:27.5	42.7:27.4	renders	whom
+accept	42.7:27.12	42.7:27.10	renders	my
+accept	42.7:27.14	42.7:27.14	renders	who
+accept	42.7:27.18	42.7:27.18	renders	your
+fixed	42.7:28			added missing
+accept	42.7:28.7	42.7:28.8,42.7:28.9	renders	no one is
+accept	42.7:28.11	42.7:28.11	renders	de
+fixed	42.7:29			added missing
+accept	42.7:29.8,42.7:29.12	42.7:29.9	renders	declared righteous
+fixed	42.7:30			added missing
+accept	42.7:30.7	42.7:30.8	renders	counsel
+fixed	42.7:31			added missing
+accept	42.7:31.4,42.7:31.5	42.7:31.1	renders	to what
+accept	42.7:31.12,42.7:31.13	42.7:31.10	renders	to what
+accept	42.7:31.6	42.7:31.2	renders	oun
+accept	42.7:31.15	42.7:31.11	renders	are
+fixed	42.7:32			added missing
+accept	42.7:32.2	42.7:32.2	renders	are
+accept	42.7:32.23,42.7:32.24	42.7:32.18	renders	sang dirge
+accept	42.7:32.19	42.7:32.15	renders	kai
+accept	42.7:32.20	42.7:32.17	renders	you danced
+fixed	42.7:33			added missing
+accept	42.7:33.11	42.7:33.9	renders	nor
+accept	42.7:33.14	42.7:33.13	renders	you say
+fixed	42.7:34			tsey is not glutton
+refuse	42.7:34.13	42.7:34.13		wrong target
+accept	42.7:34.10	42.7:34.10	renders	you say
+fixed	42.7:35			added possessive
+accept	42.7:35.5	42.7:35.9	renders	her
+fixed	42.7:36			added missing
+accept	42.7:36.13	42.7:36.12	renders	having entered
+fixed	42.7:37			pharisee word fixed
+refuse	42.7:37.15	42.7:37.13		wrong target
+accept	42.7:37.15	42.7:37.18	renders	Pharisee
+accept	42.7:37.17	42.7:37.13	renders	reclined
+accept	42.7:37.23	42.7:37.19	renders	having taken
+accept	42.7:37.21	42.7:37.20	renders	alabaster flask
+fixed	42.7:38			hair/wiped swapped; pripavshy
+refuse	42.7:38.2	42.7:38.4		wrong target
+refuse	42.7:38.14	42.7:38.22		wrong target
+refuse	42.7:38.16	42.7:38.20		wrong target
+accept	42.7:38.2	42.7:38.2	renders	stood
+accept	42.7:38.6	42.7:38.3	renders	behind
+accept	42.7:38.14	42.7:38.18	renders	hair
+accept	42.7:38.16	42.7:38.22	renders	wiped
+accept	42.7:38.15	42.7:38.21	renders	her
+fixed	42.7:39			added missing
+accept	42.7:39.7	42.7:39.8	renders	spoke within
+accept	42.7:39.5	42.7:39.6	renders	invited
+accept	42.7:39.12	42.7:39.14	renders	were
+accept	42.7:39.17	42.7:39.16	renders	would know
+accept	42.7:39.16	42.7:39.17	renders	an
+accept	42.7:39.21	42.7:39.20	renders	what sort
+accept	42.7:39.25	42.7:39.24	renders	touches
+accept	42.7:39.26	42.7:39.26	renders	for
+fixed	42.7:40			vidkazav is phesin
+refuse	42.7:40.16	42.7:40.16		wrong target
+accept	42.7:40.16	42.7:40.17	renders	he says
+accept	42.7:40.17	42.7:40.16	renders	say
+accept	42.7:40.15	42.7:40.13	renders	he (article)
+fixed	42.7:41			added missing
+accept	42.7:41.4	42.7:41.3	renders	were
+accept	42.7:41.8	42.7:41.5	renders	certain
+accept	42.7:41.10	42.7:41.7	renders	one
+accept	42.7:41.11,42.7:41.12	42.7:41.8	renders	owed
+fixed	42.7:42			added missing
+accept	42.7:42.5	42.7:42.2	renders	having
+accept	42.7:42.6	42.7:42.4	renders	pay
+accept	42.7:42.2	42.7:42.3	renders	they
+accept	42.7:42.9	42.7:42.5	renders	both
+accept	42.7:42.11	42.7:42.8	renders	oun
+accept	42.7:42.15	42.7:42.10	renders	more
+fixed	42.7:43			added missing
+accept	42.7:43.7	42.7:43.8	renders	more
+accept	42.7:43.15	42.7:43.14	renders	rightly
+accept	42.7:43.9	42.7:43.11	renders	de
+fixed	42.7:44			wiped/hair swapped
+refuse	42.7:44.34	42.7:44.34		wrong target
+refuse	42.7:44.35	42.7:44.36		wrong target
+accept	42.7:44.34	42.7:44.36	renders	wiped
+accept	42.7:44.35	42.7:44.34	renders	hair
+accept	42.7:44.36	42.7:44.35	renders	her
+accept	42.7:44.11	42.7:44.9	renders	see
+accept	42.7:44.15	42.7:44.13	renders	entered
+accept	42.7:44.17	42.7:44.14	renders	your
+fixed	42.7:45			kisses, not ceased
+refuse	42.7:45.13	42.7:45.11		wrong target
+accept	42.7:45.13	42.7:45.12	renders	kissing
+accept	42.7:45.14	42.7:45.10	renders	not ceased
+accept	42.7:45.7	42.7:45.5	renders	she
+fixed	42.7:46			added missing
+accept	42.7:46.8	42.7:46.7	renders	she
+fixed	42.7:47			added missing
+accept	42.7:47.1,42.7:47.2	42.7:47.1,42.7:47.2	renders	therefore
+accept	42.7:47.3	42.7:47.3	renders	say
+accept	42.7:47.6	42.7:47.10	renders	many
+ok	42.7:48			
+fixed	42.7:49			added missing
+accept	42.7:49.2	42.7:49.3	renders	those
+ok	42.7:50			

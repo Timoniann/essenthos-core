@@ -1,0 +1,136 @@
+kind	from	to	relation	reason
+fixed	40.18:1			added missing links
+accept	40.18:1.7	40.18:1.10	renders	pytaiuchy = legontes
+accept	40.18:1.4	40.18:1.1,40.18:1.2,40.18:1.4	renders	todi = in that hour
+fixed	40.18:2			added
+accept	40.18:2.8	40.18:2.7	renders	sered = en meso
+fixed	40.18:3			added
+accept	40.18:3.11	40.18:3.7	renders	second ne shares me
+accept	40.18:3.12	40.18:3.10	renders	stanete = genesthe
+accept	40.18:3.16	40.18:3.15	renders	ou me double negative
+fixed	40.18:4			added
+accept	40.18:4.2	40.18:4.1	renders	khto = hostis
+accept	40.18:4.3	40.18:4.3,40.18:4.4	renders	reflexive verb = humble himself
+ok	40.18:5			
+fixed	40.18:6			wrong pronoun and particle links
+refuse	40.18:6.18	40.18:6.17		particle b is not millstone
+accept	40.18:6.17	40.18:6.15	renders	koly b = hina
+refuse	40.18:6.23	40.18:6.14		yomu on neck = autou, not autoi
+accept	40.18:6.23	40.18:6.22	renders	neck of him
+accept	40.18:6.15	40.18:6.14	renders	takomu = for him
+accept	40.18:6.20	40.18:6.18	renders	mlynove = onikos
+accept	40.18:6.24	40.18:6.16	renders	pochepyty = be hung
+accept	40.18:6.29	40.18:6.29	renders	morskii = of the sea
+fixed	40.18:7			added
+accept	40.18:7.2	40.18:7.6	renders	spokus = skandalon
+accept	40.18:7.6	40.18:7.7	renders	musiat = ananke
+accept	40.18:7.7	40.18:7.11	renders	spokusy = skandala
+accept	40.18:7.13	40.18:7.16	renders	vid = di
+accept	40.18:7.14	40.18:7.17	renders	nei = hou
+fixed	40.18:8			added
+accept	40.18:8.15	40.18:8.17	renders	sebe = sou
+accept	40.18:8.32	40.18:8.35	renders	buty vkynenomu = blethenai
+fixed	40.18:9			added
+accept	40.18:9.5	40.18:9.7	renders	tebe = se
+accept	40.18:9.8	40.18:9.8	renders	vybery = exele
+accept	40.18:9.12	40.18:9.13	renders	sebe = sou
+accept	40.18:9.16	40.18:9.21	renders	vviity = eiselthein
+accept	40.18:9.23	40.18:9.26	renders	buty vkynenomu = blethenai
+fixed	40.18:10			added
+accept	40.18:10.1	40.18:10.1	renders	Sterezhitsia = horate
+accept	40.18:10.18	40.18:10.17	renders	dia pantos
+ok	40.18:11			TR-only verse, no Nestle counterpart
+fixed	40.18:12			added
+accept	40.18:12.1	40.18:12.1	renders	iak = ti
+accept	40.18:12.5	40.18:12.5	renders	maie = genetai tini
+accept	40.18:12.6	40.18:12.6	renders	iakyi = tini
+accept	40.18:12.18	40.18:12.15	renders	ne = ouchi
+accept	40.18:12.27	40.18:12.24	renders	pide = poreutheis
+fixed	40.18:13			added
+accept	40.18:13.9	40.18:13.9	renders	shcho = hoti
+accept	40.18:13.16	40.18:13.15	renders	za = epi
+accept	40.18:13.20	40.18:13.20,40.18:13.21	renders	nezabludlykh = me peplanemenois
+fixed	40.18:14			added
+accept	40.18:14.3	40.18:14.2,40.18:14.3	renders	nema = ouk estin
+fixed	40.18:15			pronoun link moved
+refuse	40.18:15.7	40.18:15.6		proty tebe is TR-only; sou belongs to brother
+accept	40.18:15.4	40.18:15.6	renders	tvii = sou
+fixed	40.18:16			added
+accept	40.18:16.9	40.18:16.7	renders	soboiu = sou
+accept	40.18:16.10	40.18:16.8	renders	shche = eti
+accept	40.18:16.15	40.18:16.21	renders	sprava = rhema
+fixed	40.18:17			added
+accept	40.18:17.4	40.18:17.3	renders	ne poslukhaie = parakouse
+accept	40.18:17.14	40.18:17.14	renders	khai bude = esto
+fixed	40.18:18			added
+accept	40.18:18.5	40.18:18.5	renders	shcho tilky = hosa ean
+accept	40.18:18.15	40.18:18.16	renders	shcho tilky = hosa ean
+accept	40.18:18.10	40.18:18.10	renders	bude = estai
+accept	40.18:18.20	40.18:18.21	renders	bude = estai
+fixed	40.18:19			added
+accept	40.18:19.13	40.18:19.8	renders	pohodylys = symphonesosin
+accept	40.18:19.18	40.18:19.18	renders	koly = ean
+accept	40.18:19.23	40.18:19.17	renders	nei = hou
+fixed	40.18:20			added
+accept	40.18:20.11	40.18:20.13	renders	Ya = eimi
+accept	40.18:20.12	40.18:20.15	renders	sered = en meso
+fixed	40.18:21			added
+accept	40.18:21.5	40.18:21.5	renders	zapytavsia = eipen
+accept	40.18:21.11	40.18:21.14	renders	mii = mou
+accept	40.18:21.17,40.18:21.18	40.18:21.16	renders	ya maiu proshchaty = aphieso
+accept	40.18:21.22	40.18:21.18	renders	do = heos
+fixed	40.18:22			added
+accept	40.18:22.8	40.18:22.8	renders	do = heos
+fixed	40.18:23			split obrakhunok zrobyty
+refuse	40.18:23.10	40.18:23.12		obrakhunok is logon
+accept	40.18:23.10	40.18:23.13	renders	obrakhunok = logon
+accept	40.18:23.11	40.18:23.12	renders	zrobyty = synarai
+accept	40.18:23.1,40.18:23.2	40.18:23.1,40.18:23.2	renders	tym to = dia touto
+fixed	40.18:24			pronoun fix
+refuse	40.18:24.7	40.18:24.3		yomu = auto, not autou
+accept	40.18:24.7	40.18:24.7	renders	yomu = auto
+accept	40.18:24.3	40.18:24.3	renders	vin = autou
+accept	40.18:24.2	40.18:24.2	renders	zh = de
+fixed	40.18:25			added
+accept	40.18:25.9	40.18:25.6	renders	nakazav = ekeleusen
+accept	40.18:25.12	40.18:25.7	renders	yoho = auton
+ok	40.18:26			
+fixed	40.18:27			added
+accept	40.18:27.1	40.18:27.2	renders	I = de
+accept	40.18:27.6	40.18:27.7	renders	tym = ekeinou
+fixed	40.18:28			added
+accept	40.18:28.7	40.18:28.6	renders	spitkav = heuren
+accept	40.18:28.20	40.18:28.17	renders	skhopyvshy = kratesas
+accept	40.18:28.23	40.18:28.19	renders	dushyv = epnigen
+fixed	40.18:29			pronoun fix
+refuse	40.18:29.7	40.18:29.5		u nohy yomu is TR-only; autou is of servant
+accept	40.18:29.3	40.18:29.5	renders	tovarysh yoho = autou
+fixed	40.18:30			added
+accept	40.18:30.1	40.18:30.2	renders	Ta = de
+accept	40.18:30.2	40.18:30.1	renders	toi = ho
+accept	40.18:30.8	40.18:30.7	renders	vsadyv = ebalen
+accept	40.18:30.17	40.18:30.12	renders	verne = apodo
+accept	40.18:30.15	40.18:30.14	renders	borhu = opheilomenon
+fixed	40.18:31			added
+accept	40.18:31.3	40.18:31.2	renders	zh = oun
+accept	40.18:31.16	40.18:31.15	renders	svoiemu = heauton
+accept	40.18:31.17	40.18:31.14	renders	panovi = kurio
+fixed	40.18:32			swapped pronouns
+refuse	40.18:32.3	40.18:32.3		pan yoho = autou
+refuse	40.18:32.5	40.18:32.6		klyche yoho = auton
+accept	40.18:32.3	40.18:32.6	renders	pan yoho = autou
+accept	40.18:32.5	40.18:32.3	renders	klyche yoho = auton
+accept	40.18:32.4	40.18:32.2	renders	klyche = proskalesamenos
+accept	40.18:32.18	40.18:32.14	renders	toi = ekeinen
+fixed	40.18:33			added
+accept	40.18:33.5	40.18:33.2	renders	nalezhalo = edei
+accept	40.18:33.8	40.18:33.8	renders	svoim = sou
+accept	40.18:33.11,40.18:33.12	40.18:33.10	renders	i ya = kago
+fixed	40.18:34			added
+accept	40.18:34.9,40.18:34.10	40.18:34.10,40.18:34.11	renders	azh poky = heos hou
+accept	40.18:34.11	40.18:34.16	renders	yomu = auto
+accept	40.18:34.13	40.18:34.12	renders	viddast = apodo
+accept	40.18:34.15	40.18:34.15	renders	borhu = opheilomenon
+fixed	40.18:35			added
+accept	40.18:35.2	40.18:35.1	renders	tak samo = houtos
+accept	40.18:35.20	40.18:35.20	renders	svoho = hymon

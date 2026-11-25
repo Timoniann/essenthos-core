@@ -1,0 +1,148 @@
+kind	from	to	relation	reason
+fixed	41.5:1			added missing
+accept	41.5:1.3	41.5:1.5	renders	other side
+fixed	41.5:2			added missing
+accept	41.5:2.4	41.5:2.3	renders	He = autou
+accept	41.5:2.5	41.5:2.4	renders	out of
+accept	41.5:2.10	41.5:2.8	renders	met
+accept	41.5:2.14	41.5:2.12	renders	tombs
+fixed	41.5:3			added missing
+accept	41.5:3.1	41.5:3.1	renders	who
+accept	41.5:3.4	41.5:3.5	renders	in
+fixed	41.5:4			his/him swapped
+refuse	41.5:4.7	41.5:4.12		object is auton 3
+accept	41.5:4.7	41.5:4.3	renders	him bound
+accept	41.5:4.9	41.5:4.12	renders	by him
+accept	41.5:4.1	41.5:4.1	renders	because
+accept	41.5:4.3	41.5:4.5	renders	shackles
+accept	41.5:4.6	41.5:4.8	renders	bound
+accept	41.5:4.10	41.5:4.10	renders	torn apart
+accept	41.5:4.11	41.5:4.14	renders	chains
+accept	41.5:4.13	41.5:4.17	renders	shackles
+accept	41.5:4.16	41.5:4.20	renders	no one
+fixed	41.5:5			added missing
+accept	41.5:5.3	41.5:5.2,41.5:5.3	renders	constantly
+accept	41.5:5.4	41.5:5.14	renders	was
+accept	41.5:5.8	41.5:5.7	renders	in
+accept	41.5:5.14	41.5:5.15	renders	crying out
+accept	41.5:5.15	41.5:5.16	renders	and
+fixed	41.5:6			added missing
+accept	41.5:6.1	41.5:6.1	renders	and
+accept	41.5:6.8	41.5:6.7	renders	ran
+fixed	41.5:7			added missing
+accept	41.5:7.16	41.5:7.16	renders	adjure
+fixed	41.5:8			added missing
+accept	41.5:8.6	41.5:8.6	renders	spirit
+fixed	41.5:9			added missing
+accept	41.5:9.5	41.5:9.4	renders	what
+accept	41.5:9.11	41.5:9.8	renders	said
+accept	41.5:9.13	41.5:9.12	renders	to me
+accept	41.5:9.17	41.5:9.15	renders	we are
+fixed	41.5:10			added missing
+accept	41.5:10.4	41.5:10.4	renders	much
+accept	41.5:10.10	41.5:10.9	renders	out of
+fixed	41.5:11			added missing
+accept	41.5:11.1	41.5:11.10	renders	feeding
+accept	41.5:11.2	41.5:11.2	renders	de
+ok	41.5:12			
+fixed	41.5:13			added missing
+accept	41.5:13.12	41.5:13.10	renders	entered
+accept	41.5:13.15	41.5:13.15	renders	rushed
+accept	41.5:13.16	41.5:13.18	renders	down from
+accept	41.5:13.22	41.5:13.24	renders	about
+fixed	41.5:14			added missing
+accept	41.5:14.1	41.5:14.1	renders	and
+accept	41.5:14.3	41.5:14.3	renders	herdsmen
+accept	41.5:14.10	41.5:14.14	renders	country
+accept	41.5:14.11	41.5:14.7	renders	reported
+accept	41.5:14.13	41.5:14.16	renders	came
+fixed	41.5:15			clothed/sane swapped
+refuse	41.5:15.13	41.5:15.13		clothed is 11
+accept	41.5:15.13	41.5:15.11	renders	clothed
+refuse	41.5:15.17	41.5:15.11		sound mind is 13
+accept	41.5:15.16,41.5:15.17	41.5:15.13	renders	in right mind
+fixed	41.5:16			added missing
+accept	41.5:16.1	41.5:16.5	renders	those who saw
+accept	41.5:16.5	41.5:16.6	renders	how
+accept	41.5:16.10	41.5:16.10	renders	and
+fixed	41.5:17			added missing
+accept	41.5:17.3	41.5:17.2	renders	began
+accept	41.5:17.11	41.5:17.8	renders	region
+fixed	41.5:18			added missing
+accept	41.5:18.4	41.5:18.2	renders	embarking
+accept	41.5:18.10	41.5:18.7	renders	begged
+accept	41.5:18.13	41.5:18.14	renders	be
+fixed	41.5:19			added missing
+accept	41.5:19.13	41.5:19.12	renders	your
+accept	41.5:19.15	41.5:19.15	renders	your own
+accept	41.5:19.18	41.5:19.17	renders	report
+accept	41.5:19.19	41.5:19.19	renders	how much
+fixed	41.5:20			added missing
+accept	41.5:20.9	41.5:20.9	renders	how much
+fixed	41.5:21			added missing
+accept	41.5:21.7	41.5:21.11	renders	other side
+fixed	41.5:22			added missing
+accept	41.5:22.5	41.5:22.5	renders	synagogue rulers
+fixed	41.5:23			added missing
+accept	41.5:23.9	41.5:23.10,41.5:23.11	renders	at the end
+fixed	41.5:24			added missing
+accept	41.5:24.10	41.5:24.6	renders	followed
+fixed	41.5:25			added missing
+accept	41.5:25.9	41.5:25.5	renders	flux of blood
+accept	41.5:25.10	41.5:25.3	renders	being
+accept	41.5:25.8	41.5:25.4	renders	with
+fixed	41.5:26			added missing
+accept	41.5:26.2	41.5:26.2	renders	much
+accept	41.5:26.11	41.5:26.11	renders	her
+accept	41.5:26.13	41.5:26.14	renders	nothing
+accept	41.5:26.14	41.5:26.15	renders	benefited
+accept	41.5:26.21	41.5:26.17	renders	rather
+ok	41.5:27			
+fixed	41.5:28			added missing
+accept	41.5:28.6	41.5:28.4	renders	if
+accept	41.5:28.7	41.5:28.6	renders	even
+fixed	41.5:29			added missing
+accept	41.5:29.3,41.5:29.4	41.5:29.2	renders	immediately
+accept	41.5:29.6	41.5:29.7	renders	blood
+fixed	41.5:30			added missing
+accept	41.5:30.2,41.5:30.3	41.5:30.2	renders	immediately
+accept	41.5:30.16	41.5:30.14	renders	in the crowd
+ok	41.5:31			
+fixed	41.5:32			added missing
+accept	41.5:32.3	41.5:32.2	renders	looking around
+accept	41.5:32.7	41.5:32.4	renders	the one
+fixed	41.5:33			kai occurrence
+refuse	41.5:33.11	41.5:33.12		kai 12 is the second i
+accept	41.5:33.14	41.5:33.12	renders	and fell
+accept	41.5:33.1	41.5:33.2	renders	de
+fixed	41.5:34			added missing
+accept	41.5:34.16	41.5:34.15	renders	be
+fixed	41.5:35			added missing
+accept	41.5:35.2	41.5:35.2	renders	he
+fixed	41.5:36			added missing
+accept	41.5:36.1	41.5:36.2	renders	de
+accept	41.5:36.4	41.5:36.4	renders	heard
+fixed	41.5:37			added missing
+accept	41.5:37.5	41.5:37.7	renders	follow
+accept	41.5:37.7	41.5:37.6	renders	him
+accept	41.5:37.9	41.5:37.8,41.5:37.9	renders	except
+fixed	41.5:38			added missing
+accept	41.5:38.14	41.5:38.12	renders	weeping
+accept	41.5:38.16	41.5:38.14	renders	wailing
+fixed	41.5:39			added missing
+accept	41.5:39.2	41.5:39.2	renders	having entered
+fixed	41.5:40			added missing
+accept	41.5:40.7	41.5:40.4	renders	he
+accept	41.5:40.16	41.5:40.17	renders	those
+accept	41.5:40.22	41.5:40.21	renders	enters
+fixed	41.5:41			added missing
+accept	41.5:41.2	41.5:41.2	renders	took
+accept	41.5:41.15	41.5:41.12,41.5:41.13	renders	is translated
+fixed	41.5:42			added missing
+accept	41.5:42.2,41.5:42.3	41.5:42.2	renders	immediately
+accept	41.5:42.5	41.5:42.3	renders	arose
+accept	41.5:42.11	41.5:42.8	renders	was
+accept	41.5:42.17	41.5:42.13	renders	amazed
+accept	41.5:42.19	41.5:42.15	renders	amazement
+fixed	41.5:43			added missing
+accept	41.5:43.5	41.5:43.4	renders	strictly

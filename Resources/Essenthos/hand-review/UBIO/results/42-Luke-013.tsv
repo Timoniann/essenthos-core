@@ -1,0 +1,181 @@
+kind	from	to	relation	reason
+fixed	42.13:1			added verbs, pronoun
+accept	42.13:1.3,42.13:1.4	42.13:1.1	renders	pluperfect came = were present
+accept	42.13:1.17	42.13:1.17	renders	auxiliary of had mingled
+accept	42.13:1.13	42.13:1.13	renders	whose
+fixed	42.13:2			added so, were
+accept	42.13:2.14	42.13:2.17	renders	so = such things
+accept	42.13:2.17	42.13:2.15	renders	were
+fixed	42.13:3			added no, but, likewise
+accept	42.13:3.1	42.13:3.1	renders	no
+accept	42.13:3.4	42.13:3.4	renders	but
+accept	42.13:3.11	42.13:3.9	renders	likewise
+fixed	42.13:4			eighteen, whom, misc
+accept	42.13:4.3	42.13:4.5	renders	eighteen = ten eight
+accept	42.13:4.7	42.13:4.7	renders	on whom
+accept	42.13:4.9	42.13:4.8	renders	auxiliary of fell
+accept	42.13:4.10	42.13:4.11	renders	in
+accept	42.13:4.18	42.13:4.19	renders	those
+accept	42.13:4.19	42.13:4.20	renders	debtors
+accept	42.13:4.21	42.13:4.22	renders	more than
+accept	42.13:4.27	42.13:4.27	renders	dwelling
+fixed	42.13:5			added no, but, likewise
+accept	42.13:5.1	42.13:5.1	renders	no
+accept	42.13:5.4	42.13:5.4	renders	but
+accept	42.13:5.11	42.13:5.9	renders	likewise
+fixed	42.13:6			added verb, conj, man
+accept	42.13:6.1	42.13:6.2	renders	de
+accept	42.13:6.3	42.13:6.1	renders	was speaking
+accept	42.13:6.2	42.13:6.1	renders	subject in verb
+accept	42.13:6.7	42.13:6.8	renders	certain man
+accept	42.13:6.17	42.13:6.15	renders	subject in verb
+accept	42.13:6.22	42.13:6.20	renders	kai
+fixed	42.13:7			added behold, three years, etc
+accept	42.13:7.1	42.13:7.2	renders	de
+accept	42.13:7.4	42.13:7.6	renders	behold
+accept	42.13:7.5	42.13:7.7	renders	three
+accept	42.13:7.6	42.13:7.8	renders	years
+accept	42.13:7.7	42.13:7.9,42.13:7.10	renders	since
+accept	42.13:7.8	42.13:7.11	renders	I come
+accept	42.13:7.15	42.13:7.18	renders	kai
+accept	42.13:7.20	42.13:7.23	renders	hina ti = why
+accept	42.13:7.23	42.13:7.28	renders	uses up
+accept	42.13:7.24	42.13:7.28	renders	subject in verb
+fixed	42.13:8			added he, let alone, it, until
+accept	42.13:8.2	42.13:8.1	renders	ho de = he
+accept	42.13:8.7	42.13:8.7	renders	let alone
+accept	42.13:8.16	42.13:8.17	renders	around it
+accept	42.13:8.15	42.13:8.14	renders	heos hotou
+fixed	42.13:9			added bear, following, de
+accept	42.13:9.6	42.13:9.3	renders	bear
+accept	42.13:9.7	42.13:9.3	renders	subject in verb
+accept	42.13:9.3	42.13:9.7	renders	the coming (time)
+accept	42.13:9.9	42.13:9.9	renders	de
+fixed	42.13:10			added de, he was
+accept	42.13:10.1	42.13:10.2	renders	de
+accept	42.13:10.3	42.13:10.1	renders	he was (periphrastic)
+fixed	42.13:11			eighteen, was, at all
+accept	42.13:11.8	42.13:11.9	renders	eighteen = ten eight
+accept	42.13:11.14	42.13:11.11	renders	was
+accept	42.13:11.19	42.13:11.17,42.13:11.19	renders	eis to panteles
+fixed	42.13:12			ti was linked to sou
+refuse	42.13:12.15	42.13:12.14		ti is subject of verb, not sou
+accept	42.13:12.15	42.13:12.11	renders	subject of you have been freed
+accept	42.13:12.17	42.13:12.13	renders	sickness
+accept	42.13:12.18	42.13:12.14	renders	of you
+fixed	42.13:13			added subjects, began
+accept	42.13:13.2	42.13:13.2	renders	subject in verb
+accept	42.13:13.8	42.13:13.8	renders	subject in verb
+accept	42.13:13.12	42.13:13.10	renders	inchoative imperfect
+fixed	42.13:14			added missing words
+accept	42.13:14.2	42.13:14.2	renders	de
+accept	42.13:14.3	42.13:14.4	renders	ruler of synagogue
+accept	42.13:14.5	42.13:14.5	renders	indignant
+accept	42.13:14.6	42.13:14.6	renders	hoti
+accept	42.13:14.18	42.13:14.19,42.13:14.20	renders	in which
+accept	42.13:14.19	42.13:14.22	renders	to work
+accept	42.13:14.21	42.13:14.26	renders	coming
+accept	42.13:14.22	42.13:14.23,42.13:14.24	renders	in them = then
+accept	42.13:14.24	42.13:14.27	renders	be healed
+fixed	42.13:15			added de, him, ox
+accept	42.13:15.1	42.13:15.2	renders	de
+accept	42.13:15.7	42.13:15.3	renders	him
+accept	42.13:15.19	42.13:15.16	renders	ox
+fixed	42.13:16			eighteen, auxiliary
+accept	42.13:16.10	42.13:16.11,42.13:16.12,42.13:16.13	renders	ten and eight
+accept	42.13:16.8	42.13:16.7	renders	auxiliary of has bound
+fixed	42.13:17			added gen. absolute, done, things
+accept	42.13:17.3	42.13:17.4	renders	subject of gen absolute
+accept	42.13:17.18	42.13:17.22	renders	by Him
+accept	42.13:17.19	42.13:17.20	renders	being done
+accept	42.13:17.16	42.13:17.18	renders	glorious things
+fixed	42.13:18			added to what, he, oun
+accept	42.13:18.1	42.13:18.1	renders	subject in verb
+accept	42.13:18.2	42.13:18.2	renders	oun
+accept	42.13:18.4,42.13:18.5	42.13:18.3	renders	to what
+accept	42.13:18.10,42.13:18.11	42.13:18.11	renders	to what
+fixed	42.13:19			added it is, cast, his, grew subject
+accept	42.13:19.2	42.13:19.2	renders	it is
+accept	42.13:19.10	42.13:19.8	renders	cast/sowed
+accept	42.13:19.13	42.13:19.11	renders	his own
+accept	42.13:19.16	42.13:19.13	renders	subject in verb
+fixed	42.13:20			added to what, I
+accept	42.13:20.5,42.13:20.6	42.13:20.4	renders	to what
+accept	42.13:20.8	42.13:20.5	renders	subject in verb
+fixed	42.13:21			measures linked to meal
+refuse	42.13:21.12	42.13:21.9		mirky = measures, not meal
+accept	42.13:21.12	42.13:21.10	renders	measures
+accept	42.13:21.13	42.13:21.9	renders	meal
+accept	42.13:21.5	42.13:21.4	renders	which (resumptive)
+accept	42.13:21.6	42.13:21.5	renders	having taken
+accept	42.13:21.9	42.13:21.7	renders	hid/puts
+accept	42.13:21.15	42.13:21.13	renders	heos hou
+accept	42.13:21.16	42.13:21.15	renders	all
+fixed	42.13:22			added verb, making
+accept	42.13:22.2	42.13:22.2	renders	was going through
+accept	42.13:22.6	42.13:22.2	renders	subject in verb
+accept	42.13:22.11	42.13:22.10	renders	poreian poioumenos
+fixed	42.13:23			added de, ei, he
+accept	42.13:23.1	42.13:23.2	renders	de
+accept	42.13:23.7	42.13:23.6	renders	interrogative ei
+accept	42.13:23.12	42.13:23.10	renders	ho de = he
+fixed	42.13:24			added future aux
+accept	42.13:24.9	42.13:24.11	renders	future auxiliary of will seek
+fixed	42.13:25			added when, rise, begin, stand, etc
+accept	42.13:25.1	42.13:25.1,42.13:25.2	renders	aph hou = when
+accept	42.13:25.2	42.13:25.4	renders	shall have risen
+accept	42.13:25.7	42.13:25.12	renders	subject in verb
+accept	42.13:25.8	42.13:25.12	renders	begin
+accept	42.13:25.9	42.13:25.14	renders	to stand
+accept	42.13:25.21	42.13:25.25	renders	subject in verb
+accept	42.13:25.31	42.13:25.31	renders	are
+fixed	42.13:26			added you, say
+accept	42.13:26.3	42.13:26.2	renders	subject in verb
+accept	42.13:26.4	42.13:26.3	renders	to say
+fixed	42.13:27			added saying, workers of iniquity
+accept	42.13:27.2	42.13:27.2	renders	subject in verb
+accept	42.13:27.5	42.13:27.3	renders	saying
+accept	42.13:27.9	42.13:27.6	renders	subject in verb
+accept	42.13:27.11	42.13:27.8	renders	are
+accept	42.13:27.16,42.13:27.17	42.13:27.13	renders	workers
+accept	42.13:27.18	42.13:27.14	renders	of unrighteousness
+fixed	42.13:28			added you, de
+accept	42.13:28.21	42.13:28.26	renders	you
+accept	42.13:28.22	42.13:28.27	renders	de
+fixed	42.13:29			added recline at table
+accept	42.13:29.13,42.13:29.14	42.13:29.13	renders	recline at table
+ok	42.13:30			
+fixed	42.13:31			added proceed, desires
+accept	42.13:31.13	42.13:31.12	renders	proceed
+accept	42.13:31.15	42.13:31.16	renders	desires
+fixed	42.13:32			added he, that, I, day, perfected
+accept	42.13:32.2	42.13:32.2	renders	subject in verb
+accept	42.13:32.8	42.13:32.8	renders	that
+accept	42.13:32.12	42.13:32.10	renders	subject in verb
+accept	42.13:32.22	42.13:32.20	renders	third [day]
+accept	42.13:32.23	42.13:32.21	renders	I am perfected
+fixed	42.13:33			added proceed, following, possible
+accept	42.13:33.4	42.13:33.10	renders	to proceed
+accept	42.13:33.10	42.13:33.9	renders	following
+accept	42.13:33.14	42.13:33.13	renders	it is possible
+fixed	42.13:34			added her, hen, brood etc
+accept	42.13:34.10	42.13:34.12	renders	her = Jerusalem
+accept	42.13:34.13	42.13:34.14	renders	subject in verb
+accept	42.13:34.18	42.13:34.19,42.13:34.20	renders	in the way that
+accept	42.13:34.20	42.13:34.21	renders	hen
+accept	42.13:34.24	42.13:34.24	renders	brood
+accept	42.13:34.25	42.13:34.23	renders	her own
+accept	42.13:34.27	42.13:34.30	renders	subject in verb
+fixed	42.13:35			your/to you swapped
+refuse	42.13:35.2	42.13:35.3		vash = hymon (your), not hymin
+refuse	42.13:35.7	42.13:35.6		dlia vas = hymin, not hymon
+accept	42.13:35.2	42.13:35.6	renders	your
+accept	42.13:35.6,42.13:35.7	42.13:35.3	renders	to/for you
+accept	42.13:35.4	42.13:35.2	renders	is left
+accept	42.13:35.8	42.13:35.7	renders	I say
+accept	42.13:35.10	42.13:35.7	renders	subject in verb
+accept	42.13:35.12	42.13:35.12	renders	subject in verb
+accept	42.13:35.14	42.13:35.11	renders	ou me
+accept	42.13:35.19	42.13:35.15	renders	comes
+accept	42.13:35.20	42.13:35.16	renders	when
+accept	42.13:35.23	42.13:35.19	renders	the One

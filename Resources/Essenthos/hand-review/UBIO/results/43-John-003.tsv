@@ -1,0 +1,92 @@
+kind	from	to	relation	reason
+ok	43.3:1			
+fixed	43.3:2			added missing links
+fixed	43.3:3			added missing links
+fixed	43.3:4			added missing links
+fixed	43.3:5			added missing links
+ok	43.3:6			
+fixed	43.3:7			added zgory
+fixed	43.3:8			added missing links
+ok	43.3:9			
+ok	43.3:10			
+fixed	43.3:11			added missing links
+fixed	43.3:12			added verbs
+fixed	43.3:13			refused na=ek; added links
+ok	43.3:14			
+ok	43.3:15			
+fixed	43.3:16			added shcho=hoste
+ok	43.3:17			
+fixed	43.3:18			added bude
+fixed	43.3:19			added missing links
+ok	43.3:20			
+fixed	43.3:21			added bo
+fixed	43.3:22			added prozhyvav
+fixed	43.3:23			added poblyzu
+fixed	43.3:24			added ne buv
+ok	43.3:25			
+fixed	43.3:26			moved i to the right kai; added links
+fixed	43.3:27			added yak=ean
+fixed	43.3:28			added missing links
+unsure	43.3:29			Taka/otse vs haute unclear
+fixed	43.3:30			added missing links
+fixed	43.3:31			added pozemnomu
+ok	43.3:32			
+ok	43.3:33			
+fixed	43.3:34			added bez=ou
+ok	43.3:35			
+fixed	43.3:36			ne viruie = apeithon; ne=ouk moved
+refuse	43.3:13.16	43.3:13.10		TR-only phrase 'on heaven', not ek
+refuse	43.3:26.26	43.3:26.23		this i is 'also'; kai is rendered by the next i
+refuse	43.3:36.13	43.3:36.14		ouk belongs to 'ne pobachyt'
+accept	43.3:2.1	43.3:2.1	renders	Vin = houtos
+accept	43.3:2.15	43.3:2.14	renders	subject of eleluthas
+accept	43.3:2.24	43.3:2.19	renders	takykh = tauta
+accept	43.3:2.30	43.3:2.26	renders	koly = ean
+accept	43.3:2.35	43.3:2.28	renders	bude = e
+accept	43.3:3.10	43.3:3.8	renders	subject of lego
+accept	43.3:3.12	43.3:3.10	renders	koly = ean
+accept	43.3:3.13	43.3:3.12	renders	khto = tis
+accept	43.3:3.16	43.3:3.14	renders	zgory = anothen
+accept	43.3:4.7	43.3:4.9	renders	rodytysia = gennethenai
+accept	43.3:4.8	43.3:4.11	renders	buvshy = on
+accept	43.3:4.10	43.3:4.12	renders	khiba = me
+accept	43.3:4.18	43.3:4.20	renders	znovu = deuteron
+accept	43.3:5.6	43.3:5.5	renders	subject of lego
+accept	43.3:5.9	43.3:5.9	renders	khto = tis
+accept	43.3:5.11	43.3:5.10	renders	rodytsia = gennethe
+accept	43.3:7.11	43.3:7.9	renders	zgory = anothen
+accept	43.3:8.10	43.3:8.11	renders	ta = all
+accept	43.3:8.12	43.3:8.13	renders	vidaiesh = oidas
+accept	43.3:8.21	43.3:8.20	renders	buvaie = estin
+accept	43.3:11.17	43.3:11.11	renders	subject of heorakamen
+accept	43.3:11.19	43.3:11.13	renders	ale renders kai
+accept	43.3:12.2,43.3:12.3	43.3:12.4	renders	Ya govoryv = eipon
+accept	43.3:12.17,43.3:12.18	43.3:12.11	renders	Ya govorytymu = eipo
+accept	43.3:13.3	43.3:13.3	renders	skhodyv = anabebeken
+accept	43.3:13.7	43.3:13.7	renders	tilky = ei me
+accept	43.3:16.6	43.3:16.8	renders	shcho = hoste
+accept	43.3:18.6	43.3:18.6	renders	bude zasudzhenyi = krinetai
+accept	43.3:19.3	43.3:19.1	renders	takyi = haute
+accept	43.3:19.10	43.3:19.13	renders	zh renders kai
+accept	43.3:19.14	43.3:19.20	renders	yak = e
+accept	43.3:21.14	43.3:21.15	renders	bo = hoti
+accept	43.3:22.14,43.3:22.16	43.3:22.16	renders	Vin prozhyvav = dietriben
+accept	43.3:23.7	43.3:23.8	renders	poblyzu = engys
+accept	43.3:24.5	43.3:24.1	renders	ne shche = oupo
+accept	43.3:24.6	43.3:24.3	renders	buv = en
+accept	43.3:26.28	43.3:26.23	renders	i = kai
+accept	43.3:26.11,43.3:26.12	43.3:26.10	renders	Toi Khto = hos
+accept	43.3:26.16,43.3:26.17	43.3:26.14	renders	po toi bik = peran
+accept	43.3:26.27	43.3:26.21	renders	Vin = houtos
+accept	43.3:27.10	43.3:27.10	renders	yak ... ne = ean me
+accept	43.3:28.13	43.3:28.15	renders	ya = eimi
+accept	43.3:28.15	43.3:28.17	renders	Nym = ekeinou
+accept	43.3:29.14	43.3:29.17	renders	duzhe tishytsia = chara chairei
+accept	43.3:29.21	43.3:29.29	renders	moia = eme
+accept	43.3:30.1	43.3:30.1	renders	Vin = ekeinon
+accept	43.3:30.2	43.3:30.2	renders	maie = dei
+accept	43.3:30.3	43.3:30.3	renders	rosty = auxanein
+accept	43.3:31.16	43.3:31.17,43.3:31.19	renders	pozemnomu = ek tes ges
+accept	43.3:34.13	43.3:34.11	renders	bez = ou ek
+accept	43.3:36.13,43.3:36.14	43.3:36.11	renders	ne viruie = apeithon
+accept	43.3:36.17	43.3:36.14	renders	ne = ouk

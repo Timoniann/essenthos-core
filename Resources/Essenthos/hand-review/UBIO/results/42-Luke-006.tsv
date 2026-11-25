@@ -1,0 +1,236 @@
+kind	from	to	relation	reason
+fixed	42.6:1			Його to αὐτοῦ; added missing
+refuse	42.6:1.9	42.6:1.6		Його is αὐτοῦ of disciples
+accept	42.6:1.9	42.6:1.13	renders	his disciples
+accept	42.6:1.4	42.6:1.6	renders	He
+accept	42.6:1.5	42.6:1.5	renders	passing
+accept	42.6:1.6	42.6:1.8	renders	grainfields
+accept	42.6:1.1	42.6:1.2	renders	and it came
+ok	42.6:2			
+fixed	42.6:3			added missing
+accept	42.6:3.5,42.6:3.6	42.6:3.2	renders	answering
+accept	42.6:3.11	42.6:3.9	renders	this
+accept	42.6:3.17	42.6:3.16	renders	himself
+accept	42.6:3.19	42.6:3.17	renders	and
+accept	42.6:3.22	42.6:3.21	renders	being
+fixed	42.6:4			eat/ate swapped
+refuse	42.6:4.13	42.6:4.14		їсти is infinitive φαγεῖν
+refuse	42.6:4.20	42.6:4.23		споживав is ἔφαγεν
+accept	42.6:4.13	42.6:4.23	renders	to eat
+accept	42.6:4.20	42.6:4.14	renders	ate
+accept	42.6:4.9	42.6:4.13	renders	having taken
+accept	42.6:4.12	42.6:4.20	renders	which
+accept	42.6:4.17	42.6:4.24	renders	εἰ μή = only
+accept	42.6:4.23	42.6:4.17	renders	those
+ok	42.6:5			
+fixed	42.6:6			added missing
+accept	42.6:6.1	42.6:6.2	renders	and it came
+accept	42.6:6.13	42.6:6.14	renders	there was
+accept	42.6:6.17	42.6:6.19	renders	right hand
+fixed	42.6:7			added missing
+accept	42.6:7.5	42.6:7.1	renders	watched closely
+accept	42.6:7.14	42.6:7.16	renders	against = accuse
+fixed	42.6:8			refused loose і; added missing
+refuse	42.6:8.19	42.6:8.22		καί precedes participle; і joins підвівся/став
+accept	42.6:8.2	42.6:8.1	renders	He
+accept	42.6:8.6	42.6:8.8	renders	δέ = and
+accept	42.6:8.13	42.6:8.16	renders	Arise
+accept	42.6:8.18	42.6:8.23	renders	having risen
+fixed	42.6:9			added missing
+accept	42.6:9.7	42.6:9.7	renders	I in verb
+accept	42.6:9.13	42.6:9.13	renders	do good
+fixed	42.6:10			added missing
+accept	42.6:10.7	42.6:10.6	renders	to him
+accept	42.6:10.9	42.6:10.10	renders	your
+accept	42.6:10.11	42.6:10.11	renders	ὁ δέ
+accept	42.6:10.16	42.6:10.15	renders	was restored
+fixed	42.6:11			added missing
+accept	42.6:11.2	42.6:11.1	renders	they
+accept	42.6:11.6,42.6:11.8	42.6:11.8	renders	one another
+accept	42.6:11.7	42.6:11.7	renders	with
+fixed	42.6:12			added missing
+accept	42.6:12.1	42.6:12.2	renders	and
+accept	42.6:12.4	42.6:12.5	renders	days
+accept	42.6:12.5	42.6:12.6	renders	those
+accept	42.6:12.6	42.6:12.8	renders	He
+fixed	42.6:13			added missing
+accept	42.6:13.17,42.6:13.18	42.6:13.17	renders	He named
+fixed	42.6:14			added missing
+accept	42.6:14.5,42.6:14.6	42.6:14.4	renders	He named
+ok	42.6:15			
+fixed	42.6:16			added missing
+accept	42.6:16.9	42.6:16.8	renders	became
+fixed	42.6:17			refused з; added missing
+refuse	42.6:17.26	42.6:17.27		preposition з not παραλίου
+accept	42.6:17.9	42.6:17.8	renders	level
+accept	42.6:17.11	42.6:17.9	renders	and
+accept	42.6:17.13	42.6:17.11	renders	large
+fixed	42.6:18			added missing
+accept	42.6:18.1	42.6:18.1	renders	who
+accept	42.6:18.2	42.6:18.2	renders	came
+accept	42.6:18.9	42.6:18.9	renders	diseases
+accept	42.6:18.10	42.6:18.10	renders	their
+accept	42.6:18.11	42.6:18.11	renders	and
+accept	42.6:18.12	42.6:18.12	renders	those
+accept	42.6:18.17	42.6:18.13	renders	troubled
+fixed	42.6:19			added missing
+accept	42.6:19.1	42.6:19.2	renders	all
+accept	42.6:19.2	42.6:19.1	renders	connective καί
+accept	42.6:19.12	42.6:19.12	renders	went out
+ok	42.6:20			
+fixed	42.6:21			added missing
+accept	42.6:21.5,42.6:21.7	42.6:21.6	renders	you will be filled
+accept	42.6:21.9	42.6:21.9	renders	weeping
+accept	42.6:21.10	42.6:21.10	renders	now
+fixed	42.6:22			added missing
+accept	42.6:22.2,42.6:22.3	42.6:22.2	renders	you are
+accept	42.6:22.15	42.6:22.15	renders	cast out
+accept	42.6:22.17	42.6:22.20	renders	evil
+fixed	42.6:23			added missing
+accept	42.6:23.5	42.6:23.7	renders	leap for joy
+accept	42.6:23.13,42.6:23.14	42.6:23.17,42.6:23.18,42.6:23.19	renders	likewise
+accept	42.6:23.15	42.6:23.21	renders	did
+fixed	42.6:24			added missing
+accept	42.6:24.2	42.6:24.1	renders	But
+accept	42.6:24.6	42.6:24.9	renders	comfort
+accept	42.6:24.7	42.6:24.10	renders	your
+accept	42.6:24.8,42.6:24.9,42.6:24.10	42.6:24.7	renders	have received
+fixed	42.6:25			added missing
+accept	42.6:25.6,42.6:25.8	42.6:25.7	renders	you will hunger
+accept	42.6:25.15	42.6:25.13	renders	will mourn
+fixed	42.6:26			added missing
+accept	42.6:26.11,42.6:26.12	42.6:26.9,42.6:26.10,42.6:26.11	renders	likewise
+accept	42.6:26.13	42.6:26.13	renders	did
+fixed	42.6:27			added missing
+accept	42.6:27.8	42.6:27.9	renders	your
+accept	42.6:27.12	42.6:27.12	renders	those
+fixed	42.6:28			тих wrong targets
+refuse	42.6:28.2	42.6:28.3		тих is article
+refuse	42.6:28.9	42.6:28.8		тих is article
+accept	42.6:28.2	42.6:28.2	renders	those
+accept	42.6:28.9	42.6:28.7	renders	those
+accept	42.6:28.13	42.6:28.8	renders	mistreating
+fixed	42.6:29			щоці wrong; added missing
+refuse	42.6:29.5	42.6:29.7		щоці is cheek
+accept	42.6:29.5	42.6:29.6	renders	cheek
+accept	42.6:29.6	42.6:29.7	renders	offer
+accept	42.6:29.1	42.6:29.1	renders	the one
+accept	42.6:29.19	42.6:29.20	renders	tunic
+fixed	42.6:30			added missing
+accept	42.6:30.10	42.6:30.7	renders	the one
+accept	42.6:30.12	42.6:30.10	renders	yours
+accept	42.6:30.14	42.6:30.12	renders	ask back
+ok	42.6:31			
+fixed	42.6:32			love verbs misplaced
+refuse	42.6:32.20	42.6:32.18		любить is participle ἀγαπῶντας
+accept	42.6:32.20	42.6:32.16	renders	loving
+accept	42.6:32.13	42.6:32.18	renders	love
+accept	42.6:32.1	42.6:32.1	renders	And
+accept	42.6:32.4	42.6:32.4	renders	those
+accept	42.6:32.8	42.6:32.7	renders	what
+accept	42.6:32.17	42.6:32.15	renders	those
+fixed	42.6:33			Бо wrong γάρ; added missing
+refuse	42.6:33.15	42.6:33.2		γάρ of first clause; Бо follows TR second clause
+accept	42.6:33.5	42.6:33.5	renders	to those
+accept	42.6:33.8	42.6:33.6	renders	doing good
+accept	42.6:33.10	42.6:33.8	renders	what
+accept	42.6:33.16	42.6:33.15	renders	the same
+fixed	42.6:34			added missing
+accept	42.6:34.7	42.6:34.4	renders	from
+accept	42.6:34.8	42.6:34.5	renders	whom
+accept	42.6:34.10	42.6:34.7	renders	receive
+accept	42.6:34.11	42.6:34.8	renders	what
+accept	42.6:34.23,42.6:34.24	42.6:34.19	renders	as much
+fixed	42.6:35			added missing
+accept	42.6:35.1	42.6:35.1	renders	But
+accept	42.6:35.3	42.6:35.5	renders	your
+accept	42.6:35.5	42.6:35.7	renders	do good
+accept	42.6:35.8	42.6:35.10	renders	nothing
+accept	42.6:35.11	42.6:35.11	renders	ἀπ- back
+accept	42.6:35.22,42.6:35.23	42.6:35.19	renders	you will be
+accept	42.6:35.24	42.6:35.24	renders	kind
+fixed	42.6:36			added missing
+accept	42.6:36.3	42.6:36.2	renders	merciful
+fixed	42.6:37			added missing
+accept	42.6:37.1	42.6:37.1	renders	And
+accept	42.6:37.8	42.6:37.7	renders	you judged
+accept	42.6:37.14	42.6:37.14	renders	you condemned
+accept	42.6:37.21	42.6:37.17	renders	you forgiven
+fixed	42.6:38			measure verbs swapped
+refuse	42.6:38.19	42.6:38.19		міряєте is μετρεῖτε
+refuse	42.6:38.21	42.6:38.18		відміряють is ἀντιμετρηθήσεται
+accept	42.6:38.17,42.6:38.19	42.6:38.18	renders	you measure
+accept	42.6:38.21	42.6:38.19	renders	measured back
+accept	42.6:38.10	42.6:38.9	renders	running over
+accept	42.6:38.16	42.6:38.15	renders	with which
+fixed	42.6:39			blind cases swapped
+refuse	42.6:39.9	42.6:39.8		сліпого is accusative τυφλόν
+refuse	42.6:39.10	42.6:39.9		сліпий is nominative τυφλός
+accept	42.6:39.9	42.6:39.9	renders	blind obj
+accept	42.6:39.10	42.6:39.8	renders	blind subj
+accept	42.6:39.1	42.6:39.1	renders	spoke
+accept	42.6:39.2	42.6:39.3	renders	also
+accept	42.6:39.3	42.6:39.4	renders	parable
+accept	42.6:39.5	42.6:39.6	renders	Μήτι
+accept	42.6:39.8	42.6:39.10	renders	lead
+accept	42.6:39.11	42.6:39.11	renders	οὐχί
+accept	42.6:39.16	42.6:39.15	renders	will fall
+ok	42.6:40			
+fixed	42.6:41			added missing
+accept	42.6:41.2	42.6:41.2	renders	now
+accept	42.6:41.4	42.6:41.9	renders	eye
+accept	42.6:41.7	42.6:41.3	renders	you see
+accept	42.6:41.14	42.6:41.20	renders	eye
+accept	42.6:41.16	42.6:41.22	renders	notice
+fixed	42.6:42			вийняти wrong; added missing
+refuse	42.6:42.35	42.6:42.37		вийняти is ἐκβαλεῖν
+accept	42.6:42.35	42.6:42.47	renders	to cast out
+accept	42.6:42.2	42.6:42.2	renders	you can
+accept	42.6:42.8	42.6:42.8	renders	let
+accept	42.6:42.10	42.6:42.9	renders	I cast out
+accept	42.6:42.20	42.6:42.21	renders	eye
+accept	42.6:42.23	42.6:42.25	renders	seeing
+accept	42.6:42.29	42.6:42.34	renders	your own
+accept	42.6:42.32	42.6:42.36	renders	then
+fixed	42.6:43			added missing
+accept	42.6:43.1	42.6:43.1,42.6:43.3	renders	there is no
+accept	42.6:43.5	42.6:43.6	renders	producing
+accept	42.6:43.11	42.6:43.12	renders	bad
+accept	42.6:43.13	42.6:43.13	renders	producing
+fixed	42.6:44			added missing
+accept	42.6:44.2	42.6:44.2	renders	for
+accept	42.6:44.7	42.6:44.8	renders	is known
+accept	42.6:44.12	42.6:44.11	renders	from
+accept	42.6:44.14	42.6:44.18	renders	grapes
+accept	42.6:44.18	42.6:44.15	renders	nor
+accept	42.6:44.16	42.6:44.16	renders	from
+accept	42.6:44.17	42.6:44.17	renders	bramble
+accept	42.6:44.19	42.6:44.19	renders	gather
+fixed	42.6:45			added missing
+accept	42.6:45.13	42.6:45.19	renders	brings forth
+accept	42.6:45.18	42.6:45.24	renders	abundance
+fixed	42.6:46			added missing
+accept	42.6:46.1	42.6:46.1	renders	Why
+accept	42.6:46.2	42.6:46.4	renders	call
+accept	42.6:46.13	42.6:46.11	renders	I say
+fixed	42.6:47			added missing
+accept	42.6:47.1	42.6:47.14	renders	I will show
+fixed	42.6:48			dug/deepened swapped; added missing
+refuse	42.6:48.9	42.6:48.7		глибоко is ἐβάθυνεν
+accept	42.6:48.9	42.6:48.9	renders	deepened
+accept	42.6:48.10	42.6:48.7	renders	dug
+accept	42.6:48.5	42.6:48.6	renders	who
+accept	42.6:48.14	42.6:48.15	renders	rock
+accept	42.6:48.17	42.6:48.17	renders	then
+accept	42.6:48.18	42.6:48.16	renders	flood
+accept	42.6:48.19	42.6:48.18	renders	having come
+accept	42.6:48.20	42.6:48.21	renders	stream
+accept	42.6:48.21	42.6:48.19	renders	burst
+accept	42.6:48.23	42.6:48.24	renders	that
+accept	42.6:48.31	42.6:48.30	renders	because
+accept	42.6:48.32,42.6:48.35	42.6:48.33	renders	had been built
+accept	42.6:48.34	42.6:48.34	renders	it
+fixed	42.6:49			added missing
+accept	42.6:49.20	42.6:49.18	renders	burst
+accept	42.6:49.22	42.6:49.17	renders	on which
+accept	42.6:49.26,42.6:49.27	42.6:49.23	renders	it fell

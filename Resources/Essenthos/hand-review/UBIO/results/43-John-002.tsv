@@ -1,0 +1,86 @@
+kind	from	to	relation	reason
+ok	43.2:1			
+fixed	43.2:2			added preposition, also, auxiliary
+accept	43.2:2.1	43.2:2.10	renders	на = εἰς
+accept	43.2:2.4	43.2:2.1	renders	був запрошений = ἐκλήθη
+accept	43.2:2.5	43.2:2.3	renders	теж = καὶ also
+ok	43.2:3			
+fixed	43.2:4			added verb, not yet, came, my
+accept	43.2:4.3	43.2:4.2	renders	відказує = λέγει
+accept	43.2:4.10	43.2:4.11	renders	не...ще = οὔπω
+accept	43.2:4.11	43.2:4.12	renders	прийшла = ἥκει
+accept	43.2:4.14	43.2:4.15	renders	Моя = μου
+fixed	43.2:5			added do, whatever, say
+accept	43.2:5.7	43.2:5.12	renders	Зробіть = ποιήσατε
+accept	43.2:5.10	43.2:5.7,43.2:5.8	renders	що = ὅ τι
+accept	43.2:5.11,43.2:5.13	43.2:5.10	renders	Він скаже = λέγῃ
+fixed	43.2:6			added standing, holding, second по
+accept	43.2:6.9	43.2:6.12	renders	стояли = κείμεναι
+accept	43.2:6.20	43.2:6.13	renders	вміщали = χωροῦσαι
+accept	43.2:6.18	43.2:6.14	renders	по = ἀνὰ distributive
+fixed	43.2:7			verbs linked to wrong words
+refuse	43.2:7.5	43.2:7.7		Наповніть is the verb, not jars
+accept	43.2:7.5	43.2:7.5	renders	Наповніть = Γεμίσατε
+accept	43.2:7.7	43.2:7.7	renders	посудини = ὑδρίας
+refuse	43.2:7.10	43.2:7.12		поналивали is the verb, not ἕως
+accept	43.2:7.10	43.2:7.10	renders	поналивали = ἐγέμισαν
+accept	43.2:7.11	43.2:7.12	renders	вщерть = ἕως ἄνω
+accept	43.2:7.4	43.2:7.2	renders	слуг = αὐτοῖς referent
+fixed	43.2:8			added subject, master of feast, δὲ
+accept	43.2:8.2	43.2:8.2	renders	Він = subject of λέγει
+accept	43.2:8.11,43.2:8.12	43.2:8.9	renders	весільний староста = ἀρχιτρικλίνῳ
+accept	43.2:8.13	43.2:8.11	renders	І = δὲ
+fixed	43.2:9			added missing links
+accept	43.2:9.2	43.2:9.5	renders	весільний староста = ἀρχιτρίκλινος
+accept	43.2:9.3	43.2:9.2	renders	же = δὲ
+accept	43.2:9.11	43.2:9.12	renders	він = subject of ᾔδει
+accept	43.2:9.15	43.2:9.14	renders	воно = ἐστίν
+accept	43.2:9.23	43.2:9.27	renders	староста = ἀρχιτρίκλινος
+fixed	43.2:10			added sets out, na-dosi
+accept	43.2:10.7	43.2:10.10	renders	подає = τίθησιν
+accept	43.2:10.21	43.2:10.22	renders	на досі = ἄρτι
+fixed	43.2:11			added this, in
+accept	43.2:11.1	43.2:11.1	renders	Такий = Ταύτην
+accept	43.2:11.15	43.2:11.19	renders	в = εἰς
+fixed	43.2:12			added He, stayed, few
+accept	43.2:12.4	43.2:12.6	renders	Він Сам = αὐτὸς
+accept	43.2:12.19	43.2:12.20	renders	перебули = ἔμειναν
+accept	43.2:12.20	43.2:12.21,43.2:12.22	renders	небагато = οὐ πολλὰς
+fixed	43.2:13			added near was
+accept	43.2:13.2	43.2:13.2,43.2:13.3	renders	зближалася = ἐγγὺς ἦν
+ok	43.2:14			
+fixed	43.2:15			added verbs, subject, money changers
+accept	43.2:15.6	43.2:15.7	renders	Він = subject of ἐξέβαλεν
+accept	43.2:15.15	43.2:15.19	renders	міняльникам = κολλυβιστῶν
+accept	43.2:15.17	43.2:15.20	renders	розсипав = ἐξέχεεν
+accept	43.2:15.19	43.2:15.26	renders	поперевертав = ἀνέτρεψεν
+fixed	43.2:16			added make
+accept	43.2:16.10	43.2:16.11	renders	робіть = ποιεῖτε
+ok	43.2:17			
+fixed	43.2:18			added You, these things
+accept	43.2:18.12	43.2:18.14	renders	Ти = subject of ποιεῖς
+accept	43.2:18.15	43.2:18.13	renders	таке = ταῦτα
+fixed	43.2:19			added I
+accept	43.2:19.14	43.2:19.14	renders	Я = subject of ἐγερῶ
+fixed	43.2:20			added ж, was built, this
+accept	43.2:20.2	43.2:20.2	renders	ж = οὖν
+accept	43.2:20.7	43.2:20.9	renders	будувався = οἰκοδομήθη
+accept	43.2:20.8	43.2:20.12	renders	цей = οὗτος
+fixed	43.2:21			added He
+accept	43.2:21.2	43.2:21.1	renders	Він = ἐκεῖνος
+fixed	43.2:22			added ж, He, auxiliary
+accept	43.2:22.2	43.2:22.2	renders	ж = οὖν
+accept	43.2:22.12	43.2:22.12	renders	Він = subject of ἔλεγεν
+accept	43.2:22.24	43.2:22.21	renders	сказав був = εἶπεν pluperfect
+fixed	43.2:23			added He was
+accept	43.2:23.5,43.2:23.6	43.2:23.3	renders	Він був = ἦν
+fixed	43.2:24			їм linked to Himself
+refuse	43.2:24.4	43.2:24.6		їм is αὐτοῖς, not αὑτὸν
+accept	43.2:24.4	43.2:24.7	renders	їм = αὐτοῖς
+accept	43.2:24.2	43.2:24.1	renders	Сам = αὐτὸς
+accept	43.2:24.6	43.2:24.5,43.2:24.6	renders	звірявся = ἐπίστευεν αὑτὸν
+accept	43.2:24.7	43.2:24.8	renders	бо = διὰ
+fixed	43.2:25			Йому wrongly on αὐτὸς
+refuse	43.2:25.8	43.2:25.12		Йому has no counterpart; αὐτὸς is Сам
+accept	43.2:25.13	43.2:25.12	renders	Сам = αὐτὸς
+accept	43.2:25.6	43.2:25.7	renders	хто = τις

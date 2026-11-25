@@ -1,0 +1,125 @@
+kind	from	to	relation	reason
+fixed	43.17:1			added missing links
+accept	43.17:1.2	43.17:1.2	renders	speech renders elalesen
+accept	43.17:1.10	43.17:1.4	renders	kai
+accept	43.17:1.17	43.17:1.18	renders	possessive su
+fixed	43.17:2			swapped verbs and pronouns
+refuse	43.17:2.11	43.17:2.10		wrong verb: he give = dose
+accept	43.17:2.11	43.17:2.12	renders	dose
+refuse	43.17:2.17	43.17:2.12		wrong verb
+accept	43.17:2.17	43.17:2.10	renders	dedokas
+refuse	43.17:2.15	43.17:2.11		wrong pronoun
+accept	43.17:2.15	43.17:2.13	renders	autois
+refuse	43.17:2.19	43.17:2.13		wrong pronoun
+accept	43.17:2.19	43.17:2.11	renders	auto
+accept	43.17:2.14	43.17:2.8	renders	pan
+accept	43.17:2.10	43.17:2.12	renders	subject of dose
+accept	43.17:2.18	43.17:2.10	renders	subject of dedokas
+fixed	43.17:3			added de
+accept	43.17:3.2	43.17:3.2	renders	de
+ok	43.17:4			
+fixed	43.17:5			added missing links
+accept	43.17:5.6	43.17:5.5	renders	su emphatic
+accept	43.17:5.7	43.17:5.7	renders	para
+accept	43.17:5.16	43.17:5.13	renders	pro
+accept	43.17:5.19	43.17:5.17	renders	einai
+fixed	43.17:6			fixed kai occurrences, added links
+refuse	43.17:6.16	43.17:6.18		wrong kai
+accept	43.17:6.16,43.17:6.20	43.17:6.15	renders	kamoi
+accept	43.17:6.21	43.17:6.18	renders	kai
+accept	43.17:6.19	43.17:6.16	renders	autous
+accept	43.17:6.17	43.17:6.17	renders	subject of edokas
+accept	43.17:6.8	43.17:6.8	renders	subject of edokas
+accept	43.17:6.1	43.17:6.1	renders	subject of ephanerosa
+accept	43.17:6.23	43.17:6.22	renders	teterekan
+accept	43.17:6.22	43.17:6.22	renders	subject
+accept	43.17:6.24	43.17:6.21	renders	su
+accept	43.17:6.15	43.17:6.14	renders	subject of esan
+fixed	43.17:7			added missing links
+accept	43.17:7.3	43.17:7.2	renders	subject
+accept	43.17:7.7	43.17:7.5	renders	hosa
+accept	43.17:7.8	43.17:7.6	renders	subject
+accept	43.17:7.13	43.17:7.10	renders	eisin predicate
+fixed	43.17:8			added missing links
+accept	43.17:8.7,43.17:8.9	43.17:8.7	renders	dedoka
+accept	43.17:8.5	43.17:8.5	renders	subject
+accept	43.17:8.14	43.17:8.13	renders	egnosan
+accept	43.17:8.15	43.17:8.14	renders	alethos
+accept	43.17:8.17	43.17:8.18	renders	subject of exelthon
+fixed	43.17:9			added missing links
+accept	43.17:9.8	43.17:9.9	renders	subject of erota
+accept	43.17:9.12,43.17:9.13	43.17:9.12	renders	hon those whom
+accept	43.17:9.19	43.17:9.17	renders	eisin subject
+fixed	43.17:10			added subject
+accept	43.17:10.12	43.17:10.12	renders	subject
+fixed	43.17:11			added missing links
+accept	43.17:11.2,43.17:11.5	43.17:11.2	renders	ouketi
+accept	43.17:11.6	43.17:11.3	renders	eimi
+accept	43.17:11.8	43.17:11.8	renders	autoi
+accept	43.17:11.12,43.17:11.13	43.17:11.13	renders	kago
+accept	43.17:11.14	43.17:11.16	renders	erchomai
+accept	43.17:11.23	43.17:11.20	renders	autous
+accept	43.17:11.26	43.17:11.26	renders	subject
+accept	43.17:11.32	43.17:11.29	renders	osin
+fixed	43.17:12			fixed ego, ei me
+refuse	43.17:12.6	43.17:12.5		ego belongs to eteroun clause
+accept	43.17:12.6,43.17:12.7	43.17:12.2	renders	emen
+accept	43.17:12.8	43.17:12.5	renders	ego
+refuse	43.17:12.25	43.17:12.23		me is part of ei me, not negation of perished
+accept	43.17:12.27	43.17:12.23	renders	ei me = except
+accept	43.17:12.17	43.17:12.13	renders	subject
+fixed	43.17:13			added missing links
+accept	43.17:13.2	43.17:13.2	renders	de
+accept	43.17:13.7	43.17:13.6	renders	kai
+accept	43.17:13.20	43.17:13.18	renders	pepleromenen
+fixed	43.17:14			added missing links
+accept	43.17:14.6	43.17:14.7	renders	kai
+accept	43.17:14.11	43.17:14.14	renders	eisin subject
+fixed	43.17:15			added missing links
+accept	43.17:15.4	43.17:15.4	renders	subject of ares
+accept	43.17:15.6	43.17:15.6	renders	ek
+fixed	43.17:16			added subject
+accept	43.17:16.4	43.17:16.5	renders	eisin subject
+fixed	43.17:17			added subject
+accept	43.17:17.2	43.17:17.1	renders	subject of hagiason
+fixed	43.17:18			added kai
+accept	43.17:18.8	43.17:18.7	renders	kai part of kago
+fixed	43.17:19			added osin
+accept	43.17:19.13	43.17:19.8	renders	osin
+fixed	43.17:20			added missing links
+accept	43.17:20.1	43.17:20.4	renders	de
+accept	43.17:20.3	43.17:20.6	renders	monon
+accept	43.17:20.5	43.17:20.3	renders	touton
+accept	43.17:20.8	43.17:20.7	renders	alla
+accept	43.17:20.11	43.17:20.10	renders	substantive article those
+accept	43.17:20.13	43.17:20.12	renders	dia
+fixed	43.17:21			added missing links
+accept	43.17:21.2	43.17:21.4	renders	osin
+accept	43.17:21.10	43.17:21.10	renders	kai part of kago
+accept	43.17:21.16	43.17:21.18	renders	osin
+fixed	43.17:22			added missing links
+accept	43.17:22.8	43.17:22.1	renders	ego part of kago
+accept	43.17:22.10	43.17:22.7	renders	dedoka
+accept	43.17:22.13	43.17:22.10	renders	osin
+fixed	43.17:23			added subject
+accept	43.17:23.25	43.17:23.22	renders	subject of egapesas
+fixed	43.17:24			fixed wrong pronoun links
+refuse	43.17:24.2	43.17:24.4		I is not moi
+accept	43.17:24.1,43.17:24.2	43.17:24.5	renders	thelo
+refuse	43.17:24.10	43.17:24.9		to me is moi not ego
+accept	43.17:24.10	43.17:24.4	renders	moi
+accept	43.17:24.16	43.17:24.8	renders	eimi
+accept	43.17:24.17	43.17:24.9	renders	ego
+accept	43.17:24.5,43.17:24.6	43.17:24.10	renders	kakeinoi
+accept	43.17:24.14	43.17:24.11	renders	osin
+accept	43.17:24.19	43.17:24.15	renders	theorosin
+accept	43.17:24.30	43.17:24.26	renders	pro
+fixed	43.17:25			added missing links
+accept	43.17:25.3	43.17:25.3	renders	kai although
+accept	43.17:25.8	43.17:25.10	renders	de
+accept	43.17:25.14	43.17:25.14	renders	houtoi
+fixed	43.17:26			added missing links
+accept	43.17:26.1,43.17:26.6	43.17:26.2	renders	egnorisa
+accept	43.17:26.13	43.17:26.12	renders	hen with which
+accept	43.17:26.16	43.17:26.17	renders	e
+accept	43.17:26.19	43.17:26.18	renders	kai part of kago

@@ -1,0 +1,188 @@
+kind	from	to	relation	reason
+fixed	41.15:1			added participle and led away
+accept	41.15:1.13	41.15:1.5	renders	having formed
+accept	41.15:1.16	41.15:1.20	renders	led away
+fixed	41.15:2			added answered phrase, he
+accept	41.15:2.12	41.15:2.14	renders	v vidpovid = answering
+accept	41.15:2.10	41.15:2.12	renders	article as pronoun he
+fixed	41.15:3			added verb and adverb
+accept	41.15:3.5	41.15:3.2	renders	accused
+accept	41.15:3.3	41.15:3.6	renders	much
+fixed	41.15:4			added missing words
+accept	41.15:4.1	41.15:4.2	renders	conjunction de
+accept	41.15:4.8	41.15:4.9	renders	you in answer verb
+accept	41.15:4.11	41.15:4.9	renders	answer
+accept	41.15:4.13,41.15:4.14	41.15:4.12	renders	how many
+accept	41.15:4.15	41.15:4.14	renders	testify against
+fixed	41.15:5			added no longer, so that
+accept	41.15:5.3	41.15:5.4	renders	no longer
+accept	41.15:5.8	41.15:5.7	renders	so that
+fixed	41.15:6			added missing words
+accept	41.15:6.3	41.15:6.2	renders	de
+accept	41.15:6.4,41.15:6.7	41.15:6.4	renders	subject and tense of released
+accept	41.15:6.11	41.15:6.8	renders	whom
+accept	41.15:6.12,41.15:6.13	41.15:6.9	renders	they requested
+fixed	41.15:7			added missing words
+accept	41.15:7.2	41.15:7.2	renders	de
+accept	41.15:7.7	41.15:7.9	renders	bound
+accept	41.15:7.8,41.15:7.9	41.15:7.6	renders	with
+accept	41.15:7.10	41.15:7.8	renders	rebels
+accept	41.15:7.11	41.15:7.10	renders	who
+accept	41.15:7.12	41.15:7.11	renders	in the insurrection
+accept	41.15:7.15	41.15:7.15	renders	pluperfect auxiliary
+fixed	41.15:8			added he did
+accept	41.15:8.11	41.15:8.8	renders	subject of did
+fixed	41.15:9			added u vidpovid
+accept	41.15:9.5	41.15:9.4	renders	part of answered
+fixed	41.15:10			added Him
+accept	41.15:10.5	41.15:10.7	renders	Him
+fixed	41.15:11			added release
+accept	41.15:11.7	41.15:11.11	renders	release
+fixed	41.15:12			added missing words
+accept	41.15:12.6	41.15:12.5	renders	part of answering
+accept	41.15:12.10	41.15:12.9	renders	oun
+accept	41.15:12.16	41.15:12.11	renders	relative whom
+accept	41.15:12.17	41.15:12.12	renders	subject of call
+fixed	41.15:13			added they, de
+accept	41.15:13.1	41.15:13.1	renders	article as pronoun
+accept	41.15:13.2	41.15:13.2	renders	de
+fixed	41.15:14			added missing words
+accept	41.15:14.5	41.15:14.6	renders	what
+accept	41.15:14.6	41.15:14.7	renders	gar
+accept	41.15:14.9	41.15:14.8	renders	subject of did
+accept	41.15:14.11	41.15:14.10	renders	article as pronoun
+accept	41.15:14.12	41.15:14.12	renders	much more
+fixed	41.15:15			added missing words
+accept	41.15:15.2	41.15:15.2	renders	de
+accept	41.15:15.3	41.15:15.4	renders	desiring
+accept	41.15:15.4	41.15:15.8,41.15:15.9	renders	to satisfy
+accept	41.15:15.16	41.15:15.20	renders	passive auxiliary
+fixed	41.15:16			added missing words
+accept	41.15:16.2	41.15:16.2	renders	de
+accept	41.15:16.3	41.15:16.4	renders	led away
+accept	41.15:16.5,41.15:16.6	41.15:16.6	renders	into
+accept	41.15:16.8	41.15:16.9,41.15:16.10	renders	that is
+fixed	41.15:17			added they, of thorns, placed
+accept	41.15:17.2	41.15:17.2	renders	subject of put on
+accept	41.15:17.9	41.15:17.9	renders	of thorns
+accept	41.15:17.12	41.15:17.6	renders	placed on
+ok	41.15:18			
+fixed	41.15:19			added bending knees
+accept	41.15:19.12	41.15:19.13	renders	knees
+accept	41.15:19.13	41.15:19.11	renders	bending
+fixed	41.15:20			added put on, led out
+accept	41.15:20.11	41.15:20.10	renders	put on
+accept	41.15:20.18	41.15:20.16	renders	led out
+fixed	41.15:21			compelled linked to Rufus; added missing
+refuse	41.15:21.14	41.15:21.14		compelled is not Rufus
+accept	41.15:21.14	41.15:21.2	renders	compel
+accept	41.15:21.2	41.15:21.4	renders	one
+accept	41.15:21.3	41.15:21.3	renders	passing by
+accept	41.15:21.6	41.15:21.9	renders	country
+accept	41.15:21.7	41.15:21.7	renders	coming
+accept	41.15:21.9	41.15:21.6	renders	of Cyrene
+accept	41.15:21.18	41.15:21.16	renders	carry
+fixed	41.15:22			added brought, means, place
+accept	41.15:22.3	41.15:22.2	renders	bring
+accept	41.15:22.8	41.15:22.9,41.15:22.10	renders	is translated
+accept	41.15:22.9	41.15:22.12	renders	Skull Place
+fixed	41.15:23			added He
+accept	41.15:23.10	41.15:23.6	renders	relative he
+fixed	41.15:24			added missing words
+accept	41.15:24.5	41.15:24.5	renders	divided
+accept	41.15:24.10	41.15:24.11	renders	for
+accept	41.15:24.11	41.15:24.12	renders	them
+accept	41.15:24.12	41.15:24.13	renders	who
+accept	41.15:24.13	41.15:24.14	renders	what
+fixed	41.15:25			added de
+accept	41.15:25.2	41.15:25.2	renders	de
+fixed	41.15:26			added written
+accept	41.15:26.3	41.15:26.8	renders	having been written
+fixed	41.15:27			added crucify, one
+accept	41.15:27.2	41.15:27.4	renders	crucify
+accept	41.15:27.10	41.15:27.11	renders	second one
+ok	41.15:28			
+fixed	41.15:29			three shifted links corrected
+refuse	41.15:29.3	41.15:29.4		pobich is not railing
+refuse	41.15:29.7	41.15:29.6		railed is not shaking
+refuse	41.15:29.10	41.15:29.12		shook is not Aha
+accept	41.15:29.3	41.15:29.3	renders	passing by
+accept	41.15:29.7	41.15:29.4	renders	railed
+accept	41.15:29.10	41.15:29.6	renders	shaking
+accept	41.15:29.13	41.15:29.12	renders	Aha
+accept	41.15:29.2	41.15:29.2	renders	article those
+accept	41.15:29.15	41.15:29.13	renders	article the one
+ok	41.15:30			
+fixed	41.15:31			do linked to meta; added missing
+refuse	41.15:31.9	41.15:31.8		do is not with
+accept	41.15:31.9	41.15:31.6	renders	pros among
+accept	41.15:31.8,41.15:31.10	41.15:31.7	renders	one another
+accept	41.15:31.1	41.15:31.1	renders	likewise
+fixed	41.15:32			added missing words
+accept	41.15:32.4	41.15:32.6	renders	imperative let
+accept	41.15:32.15	41.15:32.15	renders	kai even
+accept	41.15:32.16	41.15:32.16	renders	those
+accept	41.15:32.18	41.15:32.18	renders	with
+accept	41.15:32.23	41.15:32.20	renders	upbraided
+ok	41.15:33			
+fixed	41.15:34			vymovyv and first Eloi wrong
+refuse	41.15:34.11	41.15:34.11		said has no Nestle word
+refuse	41.15:34.12	41.15:34.11		first Eloi is position 10
+accept	41.15:34.12	41.15:34.10	renders	first Eloi
+accept	41.15:34.3	41.15:34.1	renders	kai
+accept	41.15:34.6	41.15:34.5	renders	cried out
+accept	41.15:34.17	41.15:34.16	renders	part of translated
+accept	41.15:34.19	41.15:34.15	renders	is
+accept	41.15:34.24	41.15:34.23	renders	eis ti
+accept	41.15:34.26	41.15:34.25	renders	subject of forsaken
+fixed	41.15:35			added missing words
+accept	41.15:35.2	41.15:35.1	renders	kai
+accept	41.15:35.3,41.15:35.4	41.15:35.3	renders	of those
+accept	41.15:35.7	41.15:35.4	renders	standing by
+fixed	41.15:36			added drink
+accept	41.15:36.15	41.15:36.10	renders	gave to drink
+ok	41.15:37			
+fixed	41.15:38			added in two, to bottom
+accept	41.15:38.6	41.15:38.7,41.15:38.8	renders	into two
+accept	41.15:38.9	41.15:38.11	renders	until
+accept	41.15:38.10	41.15:38.12	renders	bottom
+fixed	41.15:39			added missing words
+accept	41.15:39.3	41.15:39.5	renders	article who
+accept	41.15:39.4	41.15:39.7	renders	ex enantias
+accept	41.15:39.10	41.15:39.12	renders	subject of breathed
+accept	41.15:39.18	41.15:39.20	renders	was
+accept	41.15:39.19	41.15:39.14	renders	truly
+fixed	41.15:40			added missing words
+accept	41.15:40.2	41.15:40.2	renders	de
+accept	41.15:40.7	41.15:40.5	renders	apo makrothen
+accept	41.15:40.9	41.15:40.9	renders	whom
+accept	41.15:40.16	41.15:40.19	renders	the less
+accept	41.15:40.18	41.15:40.21	renders	Joses
+fixed	41.15:41			added missing words
+accept	41.15:41.2	41.15:41.1	renders	who
+accept	41.15:41.4	41.15:41.3	renders	subject of was
+accept	41.15:41.8	41.15:41.7	renders	followed
+accept	41.15:41.17	41.15:41.15	renders	those
+accept	41.15:41.21	41.15:41.16	renders	syn- prefix
+fixed	41.15:42			Preparation linked to prosabbaton
+refuse	41.15:42.9	41.15:42.10		Preparation is Paraskeue
+accept	41.15:42.9	41.15:42.7	renders	Preparation
+accept	41.15:42.5,41.15:42.6,41.15:42.7	41.15:42.5	renders	since
+accept	41.15:42.10	41.15:42.8,41.15:42.9	renders	that is
+fixed	41.15:43			radnyk and povazhnyi swapped
+refuse	41.15:43.5	41.15:43.6		counsellor is bouleutes
+refuse	41.15:43.6	41.15:43.7		honourable is euschemon
+accept	41.15:43.5	41.15:43.7	renders	council member
+accept	41.15:43.6	41.15:43.6	renders	prominent
+accept	41.15:43.3	41.15:43.4	renders	from
+fixed	41.15:44			added He, long ago
+accept	41.15:44.5	41.15:44.7	renders	subject of were dead
+accept	41.15:44.15	41.15:44.15	renders	palai
+fixed	41.15:45			added he
+accept	41.15:45.5	41.15:45.6	renders	subject of granted
+fixed	41.15:46			added was
+accept	41.15:46.19	41.15:46.15	renders	was
+fixed	41.15:47			added missing words
+accept	41.15:47.2	41.15:47.2	renders	de
+accept	41.15:47.8	41.15:47.10	renders	watching
+accept	41.15:47.10,41.15:47.11	41.15:47.12	renders	he was laid

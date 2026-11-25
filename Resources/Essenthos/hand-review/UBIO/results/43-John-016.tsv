@@ -1,0 +1,115 @@
+kind	from	to	relation	reason
+fixed	43.16:1			added verb and pronoun links
+accept	43.16:1.2,43.16:1.3	43.16:1.2	renders	I said = lelaleka
+accept	43.16:1.6	43.16:1.6	renders	pronoun of verb
+fixed	43.16:2			zapodiie moved; verbs added
+refuse	43.16:2.13	43.16:2.12		zapodiie is not dokse
+accept	43.16:2.12,43.16:2.13	43.16:2.10	renders	kill = apokteinas
+accept	43.16:2.15	43.16:2.12	renders	will think = dokse
+accept	43.16:2.18	43.16:2.14	renders	offer = prospherein
+accept	43.16:2.8	43.16:2.7	renders	when = hina
+ok	43.16:3			
+fixed	43.16:4			pro te to auton; said links
+refuse	43.16:4.8	43.16:4.11		pro belongs to the object auton
+accept	43.16:4.2,43.16:4.4	43.16:4.3	renders	I said = lelaleka
+accept	43.16:4.8,43.16:4.9	43.16:4.12	renders	pro te = auton
+accept	43.16:4.12	43.16:4.15	renders	spoke = eipon
+ok	43.16:5			
+fixed	43.16:6			added alla and verb
+accept	43.16:6.1	43.16:6.1	renders	but = all
+accept	43.16:6.6,43.16:6.7	43.16:6.4	renders	I said = lelaleka
+fixed	43.16:7			added missing verbs
+accept	43.16:7.7	43.16:7.8	renders	for you = hymin
+accept	43.16:7.10	43.16:7.11	renders	go away = apeltho
+accept	43.16:7.25	43.16:7.25	renders	go = poreutho
+fixed	43.16:8			added He and convict
+accept	43.16:8.4	43.16:8.3	renders	He = ekeinos
+accept	43.16:8.6	43.16:8.4	renders	convict = elegxei
+ok	43.16:9			
+fixed	43.16:10			added de and ouketi
+accept	43.16:10.1	43.16:10.3	renders	and = de
+accept	43.16:10.12,43.16:10.14	43.16:10.10	renders	no more = ouketi
+fixed	43.16:11			added de
+accept	43.16:11.1	43.16:11.2	renders	and = de
+fixed	43.16:12			added but
+accept	43.16:12.7	43.16:12.6	renders	but = all
+fixed	43.16:13			added He, speak, whatever
+accept	43.16:13.4	43.16:13.4	renders	He = ekeinos
+accept	43.16:13.16,43.16:13.17	43.16:13.17	renders	will speak = lalesei
+accept	43.16:13.22	43.16:13.21	renders	whatever = hosa
+fixed	43.16:14			added He, Mine, declare
+accept	43.16:14.1	43.16:14.1	renders	He = ekeinos
+accept	43.16:14.8	43.16:14.7	renders	Mine = emou
+accept	43.16:14.12	43.16:14.10	renders	declare = anangelei
+fixed	43.16:15			added Mine, declare
+accept	43.16:15.16	43.16:15.14	renders	Mine = emou
+accept	43.16:15.20	43.16:15.17	renders	declare = anangelei
+fixed	43.16:16			added vzhe
+accept	43.16:16.4	43.16:16.3	renders	vzhe ne = ouketi
+fixed	43.16:17			added oun, one another, to us
+accept	43.16:17.1	43.16:17.2	renders	A = oun
+accept	43.16:17.7,43.16:17.9	43.16:17.8	renders	one another = allelous
+accept	43.16:17.15	43.16:17.14	renders	do nas = hemin
+fixed	43.16:18			added laleі
+accept	43.16:18.10	43.16:18.13	renders	says = lalei
+fixed	43.16:19			mirkuiete moved to zeteite
+refuse	43.16:19.16	43.16:19.14		mirkuiete is zeteite, not allelon
+accept	43.16:19.16	43.16:19.12	renders	inquire = zeteite
+accept	43.16:19.14	43.16:19.13	renders	among = met
+accept	43.16:19.27	43.16:19.20	renders	budete bachyty = theoreite
+fixed	43.16:20			added future auxiliaries
+accept	43.16:20.7	43.16:20.6	renders	future aux of klausete
+accept	43.16:20.13	43.16:20.13	renders	future aux of charesetai
+accept	43.16:20.17	43.16:20.15	renders	future aux of lypethesesthe
+fixed	43.16:21			added missing content words
+accept	43.16:21.1	43.16:21.5,43.16:21.6	renders	grieves = lypen echei
+accept	43.16:21.4	43.16:21.4	renders	gives birth = tikte
+accept	43.16:21.6	43.16:21.8	renders	came = elthen
+accept	43.16:21.10	43.16:21.16	renders	child = paidion
+accept	43.16:21.15,43.16:21.16	43.16:21.17	renders	no longer = ouketi
+accept	43.16:21.18	43.16:21.20	renders	anguish = thlipseos
+fixed	43.16:22			added oun, echete, de, airei
+accept	43.16:22.1	43.16:22.3	renders	so = oun
+accept	43.16:22.2	43.16:22.7	renders	sorrow = lypen echete
+accept	43.16:22.7	43.16:22.9	renders	but = de
+accept	43.16:22.21	43.16:22.22	renders	take away = airei
+fixed	43.16:23			added nothing, that, whatever
+accept	43.16:23.1,43.16:23.3	43.16:23.9	renders	ni shcho = ouden
+accept	43.16:23.5	43.16:23.3	renders	that = ekeine
+accept	43.16:23.15	43.16:23.15	renders	whatever = ti
+fixed	43.16:24			added until now, be
+accept	43.16:24.4	43.16:24.1,43.16:24.2	renders	until now = heos arti
+accept	43.16:24.14	43.16:24.17	renders	be = e
+fixed	43.16:25			second half linked
+accept	43.16:25.6	43.16:25.5	renders	do vas = hymin
+accept	43.16:25.9	43.16:25.6	renders	is coming = erchetai
+accept	43.16:25.11	43.16:25.8	renders	when = hote
+accept	43.16:25.12	43.16:25.11	renders	allegories = paroimiais
+accept	43.16:25.14,43.16:25.15	43.16:25.9	renders	no more = ouketi
+accept	43.16:25.16,43.16:25.19	43.16:25.12	renders	will speak = laleso
+accept	43.16:25.17	43.16:25.13	renders	do vas = hymin
+accept	43.16:25.20	43.16:25.14	renders	but = alla
+accept	43.16:25.21	43.16:25.15	renders	plainly = parresia
+accept	43.16:25.22	43.16:25.19	renders	report = apangelo
+fixed	43.16:26			ego is the second Ya
+refuse	43.16:26.9	43.16:26.15		first Ya is subject of lego; ego is the second Ya
+accept	43.16:26.16	43.16:26.15	renders	I = ego
+accept	43.16:26.9	43.16:26.12	renders	subject of lego
+fixed	43.16:27			added autos
+accept	43.16:27.4	43.16:27.1	renders	Himself = autos
+ok	43.16:28			
+fixed	43.16:29			added openly
+accept	43.16:29.8	43.16:29.7,43.16:29.8	renders	openly = en parresia
+fixed	43.16:30			added know, anyone, therefore
+accept	43.16:30.2	43.16:30.2	renders	know = oidamen
+accept	43.16:30.14	43.16:30.11	renders	anyone = tis
+accept	43.16:30.16	43.16:30.14,43.16:30.15	renders	therefore = en touto
+ok	43.16:31			
+fixed	43.16:32			added hina, kame, eimi
+accept	43.16:32.7	43.16:32.6	renders	that = hina
+accept	43.16:32.14,43.16:32.15	43.16:32.12	renders	and Me = kame
+accept	43.16:32.22	43.16:32.17	renders	I am = eimi
+fixed	43.16:33			added spoken, tribulation, have
+accept	43.16:33.2,43.16:33.4	43.16:33.2	renders	I told = lelaleka
+accept	43.16:33.11	43.16:33.12	renders	tribulation = thlipsin
+accept	43.16:33.12	43.16:33.13	renders	have = echete

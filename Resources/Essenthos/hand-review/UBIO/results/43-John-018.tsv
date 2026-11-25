@@ -1,0 +1,152 @@
+kind	from	to	relation	reason
+fixed	43.18:1			added na toi
+ok	43.18:2			
+unsure	43.18:3			torches/lanterns order vs lexical sense unclear (fanon/lampadon)
+fixed	43.18:4			added verbs
+fixed	43.18:5			swapped pronouns
+fixed	43.18:6			added
+fixed	43.18:7			added
+fixed	43.18:8			added
+fixed	43.18:9			added
+fixed	43.18:10			added
+ok	43.18:11			
+fixed	43.18:12			added
+fixed	43.18:13			added
+fixed	43.18:14			added
+fixed	43.18:15			added
+fixed	43.18:16			added
+fixed	43.18:17			added
+fixed	43.18:18			verb relinked
+ok	43.18:19			
+fixed	43.18:20			added
+fixed	43.18:21			added
+fixed	43.18:22			added
+fixed	43.18:23			added
+fixed	43.18:24			added
+fixed	43.18:25			negation relinked
+fixed	43.18:26			added
+fixed	43.18:27			swapped
+fixed	43.18:28			added
+fixed	43.18:29			added
+fixed	43.18:30			negations relinked
+fixed	43.18:31			added
+fixed	43.18:32			added
+ok	43.18:33			
+fixed	43.18:34			added
+fixed	43.18:35			added
+fixed	43.18:36			added
+fixed	43.18:37			pronouns relinked
+fixed	43.18:38			added
+fixed	43.18:39			added
+fixed	43.18:40			added
+accept	43.18:1.8,43.18:1.9	43.18:1.9	renders	na toi bik = peran
+accept	43.18:3.3	43.18:3.4	renders	uzyavshy = labon
+accept	43.18:3.5	43.18:3.6	renders	viddil viiska = speiran
+accept	43.18:4.4	43.18:4.3	renders	vidavshy = eidos
+accept	43.18:4.8,43.18:4.9	43.18:4.6	renders	statysya maye = erchomena
+refuse	43.18:5.14	43.18:5.16		nymy is auton(18) not auton(16)
+refuse	43.18:5.19	43.18:5.18		Yoho is auton(16)
+accept	43.18:5.14	43.18:5.18	renders	nymy = meta auton
+accept	43.18:5.19	43.18:5.16	renders	vydav Yoho = auton
+accept	43.18:6.2,43.18:6.3	43.18:6.1	renders	yak tilky = hos
+accept	43.18:6.9	43.18:6.7	renders	podalysya = apelthan
+accept	43.18:6.13,43.18:6.14	43.18:6.13	renders	na zemlyu = chamai
+accept	43.18:7.9	43.18:7.7	renders	vony = hoi
+accept	43.18:7.10	43.18:7.8	renders	zh = de
+accept	43.18:8.10	43.18:8.8	renders	yak = ei
+accept	43.18:8.15	43.18:8.12	renders	daite = aphete
+accept	43.18:9.13	43.18:9.13	renders	iz = ex
+accept	43.18:9.14	43.18:9.14	renders	tykh = auton
+accept	43.18:9.15	43.18:9.8	renders	koho = hous
+accept	43.18:10.14	43.18:10.20	renders	prave = dexion
+accept	43.18:10.17	43.18:10.22	renders	A = de
+accept	43.18:10.21	43.18:10.21	renders	bulo = en
+accept	43.18:12.2	43.18:12.2	renders	zhe = oun
+accept	43.18:12.3	43.18:12.3	renders	viddil viiska = speira
+accept	43.18:13.2	43.18:13.2	renders	povely = egagon
+accept	43.18:13.13	43.18:13.12	renders	buv = en
+accept	43.18:14.2	43.18:14.2	renders	zh = de
+accept	43.18:14.3	43.18:14.1	renders	buv = en
+accept	43.18:14.10	43.18:14.9	renders	lipshe = sympherei
+accept	43.18:15.8,43.18:15.10	43.18:15.1	renders	ishly za slidom = ekolouthei
+accept	43.18:15.11	43.18:15.13	renders	Toi = ekeinos
+accept	43.18:15.12	43.18:15.11	renders	zhe = de
+accept	43.18:15.14	43.18:15.15	renders	vidomyi = gnostos
+accept	43.18:15.15	43.18:15.14	renders	buv = en
+accept	43.18:15.18,43.18:15.22	43.18:15.19	renders	uviishov iz = syneiselthen
+accept	43.18:16.4	43.18:16.7	renders	vorit = thyra
+accept	43.18:17.4	43.18:17.8	renders	vorotarka = thyroros
+accept	43.18:17.13	43.18:17.20	renders	Toi = ekeinos
+accept	43.18:17.14	43.18:17.19	renders	vidkazuye = legei
+refuse	43.18:18.5	43.18:18.8		rozklavshy is pepoiekotes
+accept	43.18:18.5	43.18:18.9	renders	rozklavshy = pepoiekotes
+accept	43.18:18.10	43.18:18.14	renders	grilysya = ethermainonto
+accept	43.18:18.12	43.18:18.12	renders	buv = en
+accept	43.18:20.4	43.18:20.1	renders	vidpovid dav = apekrithe
+accept	43.18:20.8	43.18:20.6	renders	kazav = lelaleka
+accept	43.18:20.20	43.18:20.22	renders	zbyrayutsya = synerchontai
+accept	43.18:20.23	43.18:20.27	renders	nichoho = ouden
+accept	43.18:20.26	43.18:20.26	renders	hovoryv = elalesa
+accept	43.18:21.6	43.18:21.5	renders	tykh = tous
+accept	43.18:21.15	43.18:21.11	renders	vony = houtoi
+accept	43.18:22.11	43.18:22.8	renders	sluzhby = hyperetwn
+accept	43.18:22.12	43.18:22.9,43.18:22.10	renders	vdaryv = edoken rhapisma
+accept	43.18:23.4	43.18:23.1	renders	vidpovid dav = apekrithe
+accept	43.18:23.8	43.18:23.6	renders	skazav = elalesa
+accept	43.18:23.9	43.18:23.7	renders	pokazhy = martyreson
+accept	43.18:23.16,43.18:23.17	43.18:23.14	renders	za shcho = ti
+accept	43.18:24.6	43.18:24.10	renders	pervosvyashchenykovi = archierea
+refuse	43.18:25.13	43.18:25.23		ne is Me(11)
+accept	43.18:25.13	43.18:25.11	renders	ne = Me
+accept	43.18:25.17	43.18:25.20	renders	Vin = ekeinos
+accept	43.18:25.21	43.18:25.23	renders	Ni = ouk
+accept	43.18:26.12	43.18:26.11	renders	vidtyav = apekopsen
+accept	43.18:26.14	43.18:26.17	renders	tebe = se
+refuse	43.18:27.6	43.18:27.7		zaspivav is ephonesen
+refuse	43.18:27.7	43.18:27.8		piven is alektor
+accept	43.18:27.6	43.18:27.8	renders	zaspivav = ephonesen
+accept	43.18:27.7	43.18:27.7	renders	piven = alektor
+accept	43.18:27.8,43.18:27.9	43.18:27.6	renders	khvyli tiyei = eutheos
+accept	43.18:28.9	43.18:28.12	renders	zhe = de
+accept	43.18:28.10	43.18:28.13	renders	ranok = proi
+accept	43.18:28.12	43.18:28.15	renders	vony = autoi
+accept	43.18:29.4	43.18:29.5	renders	nazovni = exo
+accept	43.18:29.8	43.18:29.9	renders	skazav = phesin
+accept	43.18:29.9	43.18:29.10	renders	Yaku = tina
+refuse	43.18:30.11	43.18:30.11		first ne is me(6)
+accept	43.18:30.11	43.18:30.6	renders	ne = me
+accept	43.18:30.17	43.18:30.11	renders	ne = ouk
+accept	43.18:30.10	43.18:30.9,43.18:30.10	renders	zlochyntsem = kakon poion
+accept	43.18:30.12	43.18:30.7	renders	buv = en
+accept	43.18:30.14	43.18:30.12	renders	b = an
+accept	43.18:30.18	43.18:30.14	renders	vydavaly = paredokamen
+accept	43.18:31.19	43.18:31.22	renders	vilno = exestin
+accept	43.18:32.10	43.18:32.10	renders	yakoyu = poio
+accept	43.18:32.14	43.18:32.12	renders	maye = emellen
+accept	43.18:34.7	43.18:34.7	renders	pytayesh = legeis
+accept	43.18:34.14	43.18:34.10	renders	hovoryly = eipon
+accept	43.18:35.3,43.18:35.4	43.18:35.4	renders	chy zh = meti
+accept	43.18:35.5	43.18:35.6	renders	yudeyanyn = Ioudaios
+accept	43.18:35.7	43.18:35.11	renders	Tvii = son
+accept	43.18:36.3	43.18:36.6	renders	Moye = eme
+accept	43.18:36.13	43.18:36.18	renders	bulo = en
+accept	43.18:36.14	43.18:36.22	renders	Moye = eme
+accept	43.18:36.18	43.18:36.27	renders	Moya = emoi
+accept	43.18:36.20	43.18:36.25	renders	b = an
+accept	43.18:36.27	43.18:36.35	renders	Ta = de
+accept	43.18:36.29	43.18:36.39	renders	Moye = eme
+refuse	43.18:37.16	43.18:37.18		Ya Tsar = eimi
+refuse	43.18:37.17	43.18:37.40		Ya is ego(18)
+accept	43.18:37.16	43.18:37.17	renders	Ya (Tsar) = eimi
+accept	43.18:37.17	43.18:37.18	renders	Ya = ego
+accept	43.18:37.2	43.18:37.2	renders	zhe = oun
+accept	43.18:37.6	43.18:37.6	renders	Tak = oukoun
+accept	43.18:37.7	43.18:37.9	renders	Ty = sy
+accept	43.18:37.18	43.18:37.19	renders	na = eis
+accept	43.18:37.22	43.18:37.23	renders	na = eis
+accept	43.18:38.26	43.18:38.20	renders	niyakoi = oudemian
+accept	43.18:39.1	43.18:39.2	renders	Ta = de
+accept	43.18:40.4,43.18:40.5	43.18:40.1	renders	znyaly kryk = ekraugasan
+accept	43.18:40.8	43.18:40.6	renders	Yoho = touton
+accept	43.18:40.13	43.18:40.10	renders	buv = en
+accept	43.18:40.14	43.18:40.14	renders	zlochynets = lestes

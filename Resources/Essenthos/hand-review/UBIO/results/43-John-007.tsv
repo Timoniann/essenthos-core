@@ -1,0 +1,202 @@
+kind	from	to	relation	reason
+ok	43.7:1			
+accept	43.7:2.2	43.7:2.1,43.7:2.3	renders	was near = drew near
+fixed	43.7:2			added verb
+accept	43.7:3.7	43.7:3.8	renders	depart
+accept	43.7:3.21	43.7:3.25	renders	subject of verb
+fixed	43.7:3			added missing links
+accept	43.7:4.1	43.7:4.4,43.7:4.5	renders	in secret
+accept	43.7:4.5	43.7:4.3	renders	anything
+accept	43.7:4.6	43.7:4.1	renders	no one
+accept	43.7:4.7	43.7:4.7	renders	kai
+accept	43.7:4.9	43.7:4.8	renders	seeks
+accept	43.7:4.11	43.7:4.10,43.7:4.11	renders	in public
+accept	43.7:4.14	43.7:4.14	renders	these things
+accept	43.7:4.17	43.7:4.16	renders	show
+fixed	43.7:4			added missing links
+refuse	43.7:5.5	43.7:5.5		Him is auton not autou
+accept	43.7:5.5	43.7:5.8	renders	in Him
+refuse	43.7:5.8	43.7:5.8		His is autou not auton
+accept	43.7:5.8	43.7:5.5	renders	his brothers
+accept	43.7:5.2,43.7:5.6	43.7:5.1	renders	not even
+fixed	43.7:5			swapped pronouns, added oude
+accept	43.7:6.6	43.7:6.10	renders	not yet
+accept	43.7:6.7	43.7:6.11	renders	is come
+fixed	43.7:6			added missing links
+ok	43.7:7			
+accept	43.7:8.1	43.7:8.2	renders	go up
+accept	43.7:8.2	43.7:8.3	renders	to
+accept	43.7:8.10	43.7:8.9	renders	to
+accept	43.7:8.9	43.7:8.8	renders	go up
+accept	43.7:8.8	43.7:8.7	renders	not yet
+fixed	43.7:8			added missing links
+accept	43.7:9.5,43.7:9.6	43.7:9.5	renders	He remained
+fixed	43.7:9			added verb
+accept	43.7:10.1	43.7:10.1	renders	when
+accept	43.7:10.3	43.7:10.3	renders	went up
+accept	43.7:10.11	43.7:10.12	renders	He himself
+accept	43.7:10.17	43.7:10.18,43.7:10.19	renders	in secret
+fixed	43.7:10			added missing links
+accept	43.7:11.10	43.7:11.13	renders	he
+fixed	43.7:11			added pronoun
+accept	43.7:12.3	43.7:12.6	renders	much
+accept	43.7:12.6	43.7:12.7	renders	among
+accept	43.7:12.8	43.7:12.5	renders	was
+accept	43.7:12.9	43.7:12.10	renders	some
+accept	43.7:12.13	43.7:12.17	renders	de
+accept	43.7:12.19,43.7:12.20	43.7:12.21	renders	leads astray idiom
+fixed	43.7:12			added missing links
+accept	43.7:13.7	43.7:13.4	renders	was speaking
+accept	43.7:13.8	43.7:13.7	renders	because of
+fixed	43.7:13			added missing links
+accept	43.7:14.2	43.7:14.5	renders	being in the middle
+accept	43.7:14.3	43.7:14.1	renders	already
+accept	43.7:14.8	43.7:14.6	renders	went up
+fixed	43.7:14			added missing links
+accept	43.7:15.7	43.7:15.7	renders	this one
+accept	43.7:15.9	43.7:15.8	renders	writings
+accept	43.7:15.11	43.7:15.11	renders	having studied
+fixed	43.7:15			added missing links
+accept	43.7:16.9	43.7:16.12	renders	mine
+accept	43.7:16.11	43.7:16.14	renders	of the One
+fixed	43.7:16			added missing links
+accept	43.7:17.2	43.7:17.3	renders	desires
+accept	43.7:17.3	43.7:17.2	renders	anyone
+accept	43.7:17.15	43.7:17.17	renders	or
+accept	43.7:17.19	43.7:17.21	renders	speak
+fixed	43.7:17			added missing links
+accept	43.7:18.1	43.7:18.1	renders	the one
+accept	43.7:18.11	43.7:18.10	renders	the One
+accept	43.7:18.14	43.7:18.15	renders	of the One
+accept	43.7:18.24	43.7:18.26	renders	is not
+fixed	43.7:18			added missing links
+accept	43.7:19.14	43.7:19.8	renders	negative concord
+accept	43.7:19.15	43.7:19.11	renders	keeps
+fixed	43.7:19			added missing links
+accept	43.7:20.4	43.7:20.5	renders	subject of verb
+accept	43.7:20.9	43.7:20.8	renders	seeks
+fixed	43.7:20			added missing links
+ok	43.7:21			
+accept	43.7:22.8	43.7:22.9	renders	tomu shcho = hoti
+fixed	43.7:22			added link
+accept	43.7:23.25	43.7:23.18,43.7:23.19	renders	made sound
+accept	43.7:23.21	43.7:23.16	renders	whole
+accept	43.7:23.20	43.7:23.19	renders	subject of verb
+accept	43.7:23.16	43.7:23.14	renders	subject of verb
+fixed	43.7:23			added missing links
+accept	43.7:24.4	43.7:24.4	renders	appearance
+accept	43.7:24.6	43.7:24.8	renders	judgment
+accept	43.7:24.8	43.7:24.9	renders	judge
+fixed	43.7:24			added missing links
+refuse	43.7:25.9	43.7:25.9		Toi does not render estin
+accept	43.7:25.8	43.7:25.7	renders	not
+fixed	43.7:25			refused wrong link, added ouch
+accept	43.7:26.3	43.7:26.3	renders	publicly
+accept	43.7:26.11,43.7:26.12	43.7:26.9,43.7:26.10	renders	meepote question
+accept	43.7:26.17	43.7:26.16	renders	this
+fixed	43.7:26			added missing links; diisno is TR only
+accept	43.7:27.2	43.7:27.3	renders	subject of verb
+accept	43.7:27.6	43.7:27.5	renders	He is
+accept	43.7:27.14	43.7:27.11	renders	negative concord
+accept	43.7:27.15	43.7:27.12	renders	auxiliary of knows
+accept	43.7:27.17	43.7:27.14	renders	He is
+fixed	43.7:27			added missing links
+accept	43.7:28.9,43.7:28.10	43.7:28.11	renders	kame = and me
+accept	43.7:28.12	43.7:28.12	renders	subject of verb
+accept	43.7:28.16	43.7:28.16	renders	I am
+accept	43.7:28.18	43.7:28.21	renders	subject of verb
+accept	43.7:28.21	43.7:28.19	renders	myself
+accept	43.7:28.22	43.7:28.18	renders	from
+accept	43.7:28.25	43.7:28.22	renders	but
+accept	43.7:28.26	43.7:28.25	renders	the One
+accept	43.7:28.31	43.7:28.28	renders	whom
+fixed	43.7:28			added missing links
+accept	43.7:29.4	43.7:29.7	renders	I am
+accept	43.7:29.8,43.7:29.11	43.7:29.8	renders	and He
+fixed	43.7:29			added missing links
+accept	43.7:30.3	43.7:30.1	renders	subject of verb
+accept	43.7:30.6	43.7:30.3	renders	Him
+fixed	43.7:30			added missing links
+accept	43.7:31.13	43.7:31.15	renders	question particle
+accept	43.7:31.15	43.7:31.18	renders	subject of verb
+accept	43.7:31.19	43.7:31.19	renders	than
+accept	43.7:31.20	43.7:31.21	renders	has done
+fixed	43.7:31			added missing links
+accept	43.7:32.3	43.7:32.9	renders	these things
+fixed	43.7:32			added link
+accept	43.7:33.5	43.7:33.6,43.7:33.7	renders	a little time
+accept	43.7:33.6,43.7:33.7	43.7:33.10	renders	I am
+accept	43.7:33.13	43.7:33.14	renders	the One
+fixed	43.7:33			added missing links
+accept	43.7:34.1,43.7:34.2	43.7:34.1	renders	you will seek
+fixed	43.7:34			added link
+accept	43.7:35.8	43.7:35.8	renders	He
+accept	43.7:35.9	43.7:35.9	renders	is about
+accept	43.7:35.15	43.7:35.16	renders	question particle
+accept	43.7:35.17	43.7:35.22	renders	is about
+accept	43.7:35.18	43.7:35.23	renders	to go
+fixed	43.7:35			added missing links
+accept	43.7:36.5	43.7:36.7	renders	subject of verb
+accept	43.7:36.7,43.7:36.8	43.7:36.8	renders	you will seek
+fixed	43.7:36			added missing links
+accept	43.7:37.1	43.7:37.2	renders	de
+accept	43.7:37.16	43.7:37.19	renders	let him come
+fixed	43.7:37			added missing links
+accept	43.7:38.1	43.7:38.1	renders	the one
+fixed	43.7:38			added link
+accept	43.7:39.4	43.7:39.3	renders	subject of verb
+accept	43.7:39.8	43.7:39.8	renders	were about
+accept	43.7:39.10	43.7:39.7	renders	whom
+accept	43.7:39.11	43.7:39.10	renders	those
+accept	43.7:39.16	43.7:39.16	renders	was
+accept	43.7:39.18	43.7:39.14	renders	not yet
+accept	43.7:39.22	43.7:39.20	renders	not yet
+accept	43.7:39.23	43.7:39.21	renders	auxiliary of passive
+fixed	43.7:39			added missing links
+accept	43.7:40.7	43.7:40.8	renders	these
+accept	43.7:40.9	43.7:40.10	renders	this
+accept	43.7:40.10	43.7:40.12	renders	truly
+fixed	43.7:40			added missing links; bahato is TR only
+accept	43.7:41.3	43.7:41.3	renders	this
+accept	43.7:41.7	43.7:41.7	renders	others
+accept	43.7:41.9	43.7:41.10	renders	question particle
+fixed	43.7:41			added missing links
+accept	43.7:42.10	43.7:42.8	renders	seed
+accept	43.7:42.16	43.7:42.15	renders	where
+fixed	43.7:42			added missing links
+accept	43.7:43.2	43.7:43.3	renders	occurred
+accept	43.7:43.3	43.7:43.1	renders	division
+accept	43.7:43.4	43.7:43.4	renders	in
+fixed	43.7:43			added missing links
+accept	43.7:44.2	43.7:44.1	renders	some
+accept	43.7:44.5,43.7:44.6	43.7:44.3	renders	desired
+accept	43.7:44.7	43.7:44.6	renders	to seize
+accept	43.7:44.9	43.7:44.8	renders	but
+fixed	43.7:44			added missing links
+accept	43.7:45.2	43.7:45.1	renders	came
+accept	43.7:45.12	43.7:45.14,43.7:45.15	renders	why
+accept	43.7:45.15	43.7:45.17	renders	subject of verb
+fixed	43.7:45			added missing links
+accept	43.7:46.8	43.7:46.4	renders	negative concord
+fixed	43.7:46			added link
+accept	43.7:47.5	43.7:47.6	renders	question particle
+accept	43.7:47.8,43.7:47.9	43.7:47.9	renders	led astray idiom
+fixed	43.7:47			added missing links
+accept	43.7:48.1	43.7:48.1	renders	question particle
+fixed	43.7:48			added link
+accept	43.7:49.1	43.7:49.1	renders	but
+accept	43.7:49.4	43.7:49.5	renders	article with participle
+fixed	43.7:49			added missing links
+accept	43.7:50.5	43.7:50.5	renders	the one
+accept	43.7:50.12	43.7:50.11	renders	being
+fixed	43.7:50			added missing links; vnochi is TR only
+accept	43.7:51.1	43.7:51.1	renders	question particle
+accept	43.7:51.6	43.7:51.8	renders	if
+accept	43.7:51.12	43.7:51.9	renders	shared negation
+accept	43.7:51.15	43.7:51.17	renders	subject of verb
+fixed	43.7:51			added missing links
+accept	43.7:52.6	43.7:52.5	renders	question particle
+accept	43.7:52.15	43.7:52.15	renders	that
+accept	43.7:52.17	43.7:52.21	renders	is raised
+fixed	43.7:52			added missing links
+ok	43.7:53			

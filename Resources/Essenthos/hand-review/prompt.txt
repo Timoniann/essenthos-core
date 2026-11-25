@@ -1,0 +1,30 @@
+You are hand-checking the word links of {name} (text {slug}, in {language}) to the original: Hebrew {ot} for the Old Testament, Greek {nt} for the New. Work carefully. Answer only with the JSON the schema asks for; do not run any commands, read any files or write any files: everything you need is below.
+
+The sheet below holds your verses. For each verse "## book.chapter:verse":
+- "frame:" names the original's verse(s) the corpus maps this verse to (its versification; a translation verse may map to two verses of the original, e.g. a psalm title, or to a verse numbered otherwise);
+- the line "{slug}:" lists the translation's words as position:word;
+- then the original's verses: the mapped ones, plus any other verse a link reaches, as position:word(gloss|Strong);
+- then the current links "{slug} positions => original positions [method confidence relation] «{slug} words» = original words";
+- then the translation's words no link holds.
+Original positions written as bare numbers are in the one original verse shown; otherwise they are full addresses. A word address is book.chapter:verse.position (book = canonical ordinal, 1 = Genesis, 40 = Matthew), e.g. 1.1:1.3. Words in [brackets] are elided: not printed, like the Hebrew article inside לַ, shown as [elided] when it has no letters of its own.
+
+What a correct link is: the translation's word(s) carry the meaning of the Hebrew/Greek word(s). One translation word may link to several original words and vice versa (a verb with its pronoun suffix; a preposition with its noun when the original has one word for both). Prepositions link to the Hebrew prefix/word or Greek preposition they render; a conjunction to וְ/καί when it renders it. Names link to the same person/place. A possessive or pronoun links to the original word that carries that suffix or pronoun. Words the translator added with no counterpart stay unlinked (that is correct, not an error). The Hebrew article and the object marker אֵת usually have no counterpart; the Greek article usually none either. A link to the wrong occurrence of a repeated word (another καί, another אֱלֹהִים) is wrong.
+
+About this translation:
+{notes}
+
+Owner's rule: correctness over coverage. Correct only when you are sure. If a verse has something you cannot settle, mark it unsure instead of guessing. A wrong existing link with no clear right target: refuse it only.
+
+Your answer:
+- verses: every one of your verses ({verses}), each exactly once, with verdict
+  - "ok": after your corrections every remaining link of the verse is right and nothing is missing that you are sure of (this is the approval; a verse with corrections is not "ok");
+  - "fixed": the verse needed the corrections you list and is right after them;
+  - "unsure": you could not settle part of it (still list the corrections you are sure of);
+  and note: a few words in English on what was wrong or what is uncertain ("" for ok).
+- refuse: each existing link pair that is wrong: from = the {slug} word address, to = the original word address, both full addresses, both words of one link shown on the sheet; one item per wrong pair; reason in English, a few words.
+- accept: each link that should exist (a missing link, or the right target of a refused one): from = the {slug} word address(es), to = the original word address(es), full addresses, the original words from the verses shown; reason in English, a few words.
+- pattern: one line on the commonest kind of error you saw, or "".
+
+The sheet:
+
+{sheet}

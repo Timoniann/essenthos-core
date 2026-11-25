@@ -1,0 +1,107 @@
+kind	from	to	relation	reason
+ok	41.11:1			
+fixed	41.11:2			added missing links
+accept	41.11:2.12	41.11:2.13	renders	entering
+accept	41.11:2.20	41.11:2.20	renders	relative which
+accept	41.11:2.23	41.11:2.21	renders	no one
+accept	41.11:2.24,41.11:2.27	41.11:2.22	renders	not yet
+accept	41.11:2.26	41.11:2.23	renders	of men
+accept	41.11:2.32	41.11:2.28	renders	bring
+fixed	41.11:3			added missing links
+accept	41.11:3.6	41.11:3.6	renders	what/why
+accept	41.11:3.12	41.11:3.14	renders	need has = потребує
+fixed	41.11:4			added location words
+accept	41.11:4.10	41.11:4.7	renders	at
+accept	41.11:4.11	41.11:4.8	renders	door
+accept	41.11:4.12	41.11:4.9	renders	outside
+accept	41.11:4.14	41.11:4.10	renders	by
+fixed	41.11:5			added verb
+accept	41.11:5.17	41.11:5.10	renders	untying
+fixed	41.11:6			added oi de
+accept	41.11:6.1	41.11:6.1	renders	article as pronoun they
+accept	41.11:6.2	41.11:6.2	renders	de
+fixed	41.11:7			added verb
+accept	41.11:7.8	41.11:7.9	renders	cast upon
+fixed	41.11:8			added missing links
+accept	41.11:8.7	41.11:8.7	renders	on
+accept	41.11:8.9	41.11:8.11	renders	de
+accept	41.11:8.13	41.11:8.12	renders	branches
+accept	41.11:8.14	41.11:8.13	renders	having cut
+fixed	41.11:9			refused wrong Hosanna link; added
+refuse	41.11:9.8	41.11:9.8		behind is not Hosanna
+accept	41.11:9.8	41.11:9.6	renders	following
+accept	41.11:9.4	41.11:9.3	renders	going before
+accept	41.11:9.2	41.11:9.2	renders	those
+accept	41.11:9.9	41.11:9.7	renders	were crying
+accept	41.11:9.12	41.11:9.10	renders	the one
+fixed	41.11:10			added preposition
+accept	41.11:10.9	41.11:10.10	renders	in
+fixed	41.11:11			added missing links
+accept	41.11:11.9	41.11:11.8	renders	kai
+accept	41.11:11.10	41.11:11.9	renders	having looked around
+accept	41.11:11.14	41.11:11.12	renders	already
+accept	41.11:11.15	41.11:11.11	renders	late
+fixed	41.11:12			added subject
+accept	41.11:12.4	41.11:12.5	renders	they
+fixed	41.11:13			added missing links
+accept	41.11:13.10	41.11:13.9	renders	ei if
+accept	41.11:13.15	41.11:13.11	renders	anything
+accept	41.11:13.7	41.11:13.7	renders	leaves
+accept	41.11:13.23	41.11:13.21,41.11:13.22	renders	except
+accept	41.11:13.31	41.11:13.28	renders	was
+fixed	41.11:14			added missing links
+accept	41.11:14.9	41.11:14.5	renders	no more
+accept	41.11:14.14	41.11:14.13	renders	may eat
+accept	41.11:14.15	41.11:14.6	renders	eis forever
+fixed	41.11:15			added verb
+accept	41.11:15.21	41.11:15.32	renders	overturned
+fixed	41.11:16			refused carried=vessel; corrected
+refuse	41.11:16.9	41.11:16.7		carried is not vessel
+accept	41.11:16.9	41.11:16.6	renders	should carry
+accept	41.11:16.7	41.11:16.7	renders	vessel/thing
+fixed	41.11:17			added verb
+accept	41.11:17.13	41.11:17.14	renders	will be (called)
+ok	41.11:18			
+fixed	41.11:19			added missing links
+accept	41.11:19.3	41.11:19.3	renders	late
+accept	41.11:19.8	41.11:19.5	renders	were going out
+ok	41.11:20			
+ok	41.11:21			
+ok	41.11:22			
+fixed	41.11:23			added missing links
+accept	41.11:23.17	41.11:23.19	renders	have doubt = doubt
+accept	41.11:23.29	41.11:23.28	renders	says
+accept	41.11:23.28	41.11:23.27	renders	what
+fixed	41.11:24			added missing links
+accept	41.11:24.3	41.11:24.3	renders	say
+accept	41.11:24.6	41.11:24.6	renders	whatever
+accept	41.11:24.9	41.11:24.7	renders	praying
+accept	41.11:24.15	41.11:24.14	renders	will be
+fixed	41.11:25			added missing links
+accept	41.11:25.5	41.11:25.4	renders	praying
+accept	41.11:25.8	41.11:25.6	renders	if
+accept	41.11:25.10	41.11:25.7	renders	anything
+accept	41.11:25.12	41.11:25.10	renders	anyone
+ok	41.11:26			
+fixed	41.11:27			added missing links
+accept	41.11:27.8	41.11:27.6	renders	kai
+accept	41.11:27.9	41.11:27.11	renders	He (gen. abs.)
+accept	41.11:27.18	41.11:27.22	renders	elders
+fixed	41.11:28			added interrogative
+accept	41.11:28.4	41.11:28.5	renders	what
+fixed	41.11:29			added interrogative
+accept	41.11:29.19	41.11:29.17	renders	what
+ok	41.11:30			
+fixed	41.11:31			added missing links
+accept	41.11:31.6	41.11:31.5	renders	saying
+accept	41.11:31.13	41.11:31.13	renders	oun
+fixed	41.11:32			added missing links
+accept	41.11:32.8	41.11:32.7	renders	crowd
+accept	41.11:32.11	41.11:32.10	renders	held
+accept	41.11:32.12	41.11:32.14	renders	that
+accept	41.11:32.14	41.11:32.16	renders	was
+accept	41.11:32.15	41.11:32.13	renders	truly
+fixed	41.11:33			added missing links
+accept	41.11:33.11	41.11:33.11	renders	says
+accept	41.11:33.13,41.11:33.15	41.11:33.13	renders	neither
+accept	41.11:33.18	41.11:33.18	renders	what

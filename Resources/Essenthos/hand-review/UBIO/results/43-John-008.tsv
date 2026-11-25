@@ -1,0 +1,220 @@
+kind	from	to	relation	reason
+fixed	43.8:1			add же
+accept	43.8:1.2	43.8:1.2	renders	же renders de
+fixed	43.8:2			add над
+accept	43.8:2.2	43.8:2.1	renders	над ранком = orthrou
+fixed	43.8:3			add links
+accept	43.8:3.1	43.8:3.2	renders	І renders de
+accept	43.8:3.15	43.8:3.15	renders	ставлять = stesantes
+accept	43.8:3.14	43.8:3.17	renders	посередині = en meso
+fixed	43.8:4			add links
+accept	43.8:4.3	43.8:4.1	renders	говорять = legousin
+accept	43.8:4.9	43.8:4.8	renders	на гарячому вчинку = epautophoro
+accept	43.8:4.11	43.8:4.8	renders	на гарячому вчинку = epautophoro
+fixed	43.8:5			add побивати
+accept	43.8:5.8	43.8:5.10	renders	побивати камінням = lithoboleisthai
+fixed	43.8:6			add links
+accept	43.8:6.2	43.8:6.2	renders	ж renders de
+accept	43.8:6.12	43.8:6.8	renders	оскарження = kategorein
+fixed	43.8:7			add links
+accept	43.8:7.1	43.8:7.2	renders	А renders de
+accept	43.8:7.2	43.8:7.1	renders	коли = hos
+accept	43.8:7.4	43.8:7.3	renders	не переставали = epemenon
+accept	43.8:7.14	43.8:7.10	renders	Хто = ho (the one)
+accept	43.8:7.19	43.8:7.18	renders	нехай кине = baleto
+fixed	43.8:8			add нахилився
+accept	43.8:8.4	43.8:8.4	renders	нахилився = kypsas
+fixed	43.8:9			add links
+accept	43.8:9.2	43.8:9.1	renders	вони = hoi (de)
+accept	43.8:9.8	43.8:9.9	renders	стали виходити = exerchonto
+accept	43.8:9.10	43.8:9.11	renders	по одному = katheis
+accept	43.8:9.11	43.8:9.11	renders	по одному = katheis
+accept	43.8:9.13	43.8:9.12	renders	почавши = arxamenoi
+accept	43.8:9.17	43.8:9.16	renders	аж до = heos
+fixed	43.8:10			add links
+accept	43.8:10.1	43.8:10.2	renders	І renders de
+accept	43.8:10.6	43.8:10.8	renders	крім = plen
+accept	43.8:10.8	43.8:10.6	renders	не with medena
+accept	43.8:10.19	43.8:10.19	renders	оскаржали = kategoroi
+accept	43.8:10.23	43.8:10.21	renders	не with oudeis
+fixed	43.8:11			add links
+accept	43.8:11.1	43.8:11.2	renders	А renders de
+accept	43.8:11.2	43.8:11.1	renders	вона = he (de)
+accept	43.8:11.6	43.8:11.7	renders	І renders de
+accept	43.8:11.12	43.8:11.11	renders	й with oude
+accept	43.8:11.17	43.8:11.16	renders	але renders kai
+fixed	43.8:12			add links
+accept	43.8:12.1	43.8:12.2	renders	І renders oun
+accept	43.8:12.12	43.8:12.14	renders	Хто = ho
+accept	43.8:12.13	43.8:12.15	renders	йде вслід = akolouthon
+accept	43.8:12.17	43.8:12.18	renders	не = ou me
+accept	43.8:12.18	43.8:12.19	renders	буде ходити = peripatese
+fixed	43.8:13			add links
+accept	43.8:13.2	43.8:13.2	renders	ж renders oun
+accept	43.8:13.13	43.8:13.13,43.8:13.15	renders	неправдиве = ouk alethes
+fixed	43.8:14			Я/Сам wrongly on emautou
+refuse	43.8:14.11	43.8:14.10		Я is ego not emautou
+refuse	43.8:14.12	43.8:14.10		Сам modifies Я, not emautou
+accept	43.8:14.11	43.8:14.7	renders	Я = ego
+accept	43.8:14.7	43.8:14.6	renders	Хоч і = kan
+accept	43.8:14.16	43.8:14.15	renders	Моє = mou
+accept	43.8:14.30	43.8:14.26	renders	відаєте = oidate
+accept	43.8:14.31	43.8:14.27	renders	відкіля = pothen
+accept	43.8:14.34	43.8:14.29	renders	conjunction slot (TR kai)
+ok	43.8:15			
+fixed	43.8:16			add links
+accept	43.8:16.7	43.8:16.9	renders	Мій = eme
+accept	43.8:16.12	43.8:16.15	renders	Я = eimi
+fixed	43.8:17			add й
+accept	43.8:17.2	43.8:17.5	renders	й renders de (also)
+ok	43.8:18			
+fixed	43.8:19			add links
+accept	43.8:19.1	43.8:19.2	renders	І renders oun
+accept	43.8:19.14	43.8:19.11	renders	ні with oute
+accept	43.8:19.27	43.8:19.25	renders	б = an
+fixed	43.8:20			add links
+accept	43.8:20.4	43.8:20.4	renders	казав = elalesen
+accept	43.8:20.13	43.8:20.14	renders	схопив = epiasen
+fixed	43.8:21			add links
+accept	43.8:21.1	43.8:21.2	renders	І renders oun
+accept	43.8:21.9	43.8:21.7	renders	ж renders kai
+accept	43.8:21.12	43.8:21.8	renders	будете with zetesete
+accept	43.8:21.17	43.8:21.14	renders	своїм = hymon
+fixed	43.8:22			add links
+accept	43.8:22.1	43.8:22.2	renders	А renders oun
+accept	43.8:22.4	43.8:22.5	renders	Чи не = meti
+accept	43.8:22.5	43.8:22.5	renders	Чи не = meti
+accept	43.8:22.10	43.8:22.8	renders	коли renders hoti
+fixed	43.8:23			add звисока
+accept	43.8:23.10	43.8:23.10,43.8:23.12	renders	звисока = ek ton ano
+fixed	43.8:24			add links
+accept	43.8:24.1	43.8:24.2	renders	Тому = oun
+accept	43.8:24.8	43.8:24.9	renders	своїх = hymon
+accept	43.8:24.20	43.8:24.21	renders	своїх = hymon
+accept	43.8:24.15	43.8:24.16	renders	то Я = ego eimi
+fixed	43.8:25			add А
+accept	43.8:25.1	43.8:25.2	renders	А renders oun
+fixed	43.8:26			add links
+accept	43.8:26.6	43.8:26.5	renders	говорити = lalein
+accept	43.8:26.10	43.8:26.8	renders	же renders all
+accept	43.8:26.15	43.8:26.14	renders	і = kago
+ok	43.8:27			
+fixed	43.8:28			add links
+accept	43.8:28.13	43.8:28.15	renders	то Я = ego eimi
+accept	43.8:28.19	43.8:28.17	renders	від = ap
+accept	43.8:28.31	43.8:28.23	renders	був навчив = edidaxen
+fixed	43.8:29			add links
+accept	43.8:29.6	43.8:29.7	renders	перебуває = estin
+accept	43.8:29.18	43.8:29.14	renders	що = ta
+accept	43.8:29.20	43.8:29.15	renders	до вподоби = aresta
+ok	43.8:30			
+fixed	43.8:31			add links
+accept	43.8:31.13	43.8:31.17	renders	Моїм = emo
+accept	43.8:31.14	43.8:31.12	renders	позостанетеся = meinete
+accept	43.8:31.17	43.8:31.20	renders	Моїми = mou
+accept	43.8:31.19	43.8:31.21	renders	будете = este
+ok	43.8:32			
+fixed	43.8:33			add links
+accept	43.8:33.2	43.8:33.1	renders	відказали = apekrithesan
+accept	43.8:33.6	43.8:33.4	renders	рід = sperma
+accept	43.8:33.5	43.8:33.6	renders	ми = esmen
+accept	43.8:33.11	43.8:33.9	renders	були невільниками = dedouleukamen
+accept	43.8:33.10	43.8:33.8	renders	не with oudeni
+fixed	43.8:34			add links
+accept	43.8:34.8	43.8:34.9	renders	що = hoti
+accept	43.8:34.10	43.8:34.11	renders	хто = ho
+fixed	43.8:35			add І
+accept	43.8:35.1	43.8:35.2	renders	І renders de
+fixed	43.8:36			add links
+accept	43.8:36.4	43.8:36.6	renders	зробить вільними = eleutherose
+accept	43.8:36.10	43.8:36.9	renders	будете = esesthe
+fixed	43.8:37			add links
+accept	43.8:37.5	43.8:37.3	renders	рід = sperma
+accept	43.8:37.4	43.8:37.5	renders	ви = este
+accept	43.8:37.9	43.8:37.9	renders	смерть заподіяти = apokteinai
+accept	43.8:37.13	43.8:37.12	renders	наука = logos
+fixed	43.8:38			Та/й split kai oun
+refuse	43.8:38.9	43.8:38.8		Та renders oun, й renders kai
+accept	43.8:38.9	43.8:38.10	renders	Та renders oun
+fixed	43.8:39			add в
+accept	43.8:39.4	43.8:39.1	renders	в відповідь = apekrithesan
+fixed	43.8:40			add links
+accept	43.8:40.5	43.8:40.3	renders	хочете = zeteite
+accept	43.8:40.11	43.8:40.11	renders	казав = lelaleka
+fixed	43.8:41			add свого
+accept	43.8:41.5	43.8:41.7	renders	свого = hymon
+fixed	43.8:42			Мене wrongly on ego
+refuse	43.8:42.29	43.8:42.14		Мене is me (29), ego is Я
+accept	43.8:42.29	43.8:42.29	renders	Мене = me
+accept	43.8:42.17	43.8:42.14	renders	Я = ego
+accept	43.8:42.7	43.8:42.10	renders	був = en
+accept	43.8:42.11	43.8:42.12	renders	б = an
+accept	43.8:42.22	43.8:42.24	renders	від = ap
+accept	43.8:42.25	43.8:42.25	renders	Себе Самого = emautou
+accept	43.8:42.24	43.8:42.23	renders	ж renders gar
+accept	43.8:42.30	43.8:42.28	renders	Він = ekeinos
+fixed	43.8:43			add links
+accept	43.8:43.1	43.8:43.1,43.8:43.2	renders	Чому = dia ti
+accept	43.8:43.3	43.8:43.6	renders	Моєї = emen
+accept	43.8:43.6	43.8:43.8	renders	розумієте = ginoskete
+accept	43.8:43.13	43.8:43.16	renders	Мого = emon
+fixed	43.8:44			ви wrongly on hymon
+refuse	43.8:44.8	43.8:44.13		hymon is свого, not ви
+accept	43.8:44.7	43.8:44.13	renders	свого = hymon
+accept	43.8:44.11	43.8:44.16	renders	Він = ekeinos
+accept	43.8:44.14	43.8:44.19	renders	споконвіку = ap arches
+accept	43.8:44.19	43.8:44.26	renders	встояв = esteken
+accept	43.8:44.22	43.8:44.28,43.8:44.29	renders	нема = ouk estin
+accept	43.8:44.31	43.8:44.39	renders	свого = idion
+accept	43.8:44.37	43.8:44.47	renders	батько неправді = pater autou (of it)
+fixed	43.8:45			add Я
+accept	43.8:45.7	43.8:45.1	renders	Я = ego
+fixed	43.8:46			add links
+accept	43.8:46.1	43.8:46.1	renders	Хто = tis
+accept	43.8:46.13	43.8:46.11,43.8:46.12	renders	чом = dia ti
+fixed	43.8:47			add Хто
+accept	43.8:47.1	43.8:47.1	renders	Хто = ho (on)
+ok	43.8:48			
+fixed	43.8:49			Мене wrongly on mou
+refuse	43.8:49.13	43.8:49.11		mou is Свого; Мене = me
+accept	43.8:49.13	43.8:49.15	renders	Мене = me
+accept	43.8:49.9	43.8:49.11	renders	Свого = mou
+accept	43.8:49.7	43.8:49.7	renders	та renders alla
+accept	43.8:49.12	43.8:49.12	renders	ж renders kai
+accept	43.8:49.14	43.8:49.14	renders	зневажаєте = atimazete
+fixed	43.8:50			add links
+accept	43.8:50.3	43.8:50.2	renders	ж renders de
+accept	43.8:50.9	43.8:50.9	renders	Хто = ho
+fixed	43.8:51			add links
+accept	43.8:51.5	43.8:51.5,43.8:51.6	renders	Хто = ean tis
+accept	43.8:51.7	43.8:51.8	renders	Моє = emon
+accept	43.8:51.9	43.8:51.13	renders	не = ou me
+accept	43.8:51.13	43.8:51.17	renders	повік = aiona
+fixed	43.8:52			add links
+accept	43.8:52.19	43.8:52.18,43.8:52.19	renders	Хто = ean tis
+accept	43.8:52.20	43.8:52.21	renders	науку = logon
+accept	43.8:52.23	43.8:52.25	renders	не = ou me
+accept	43.8:52.27	43.8:52.30	renders	повік = aiona
+fixed	43.8:53			add Чи
+accept	43.8:53.1	43.8:53.1	renders	Чи = me (question)
+fixed	43.8:54			Мене wrongly on mou
+refuse	43.8:54.12	43.8:54.15		mou is Мій; Мене = me
+accept	43.8:54.12	43.8:54.18	renders	Мене = me
+accept	43.8:54.15	43.8:54.15	renders	Мій = mou
+accept	43.8:54.13	43.8:54.17	renders	прославляє = doxazon
+fixed	43.8:55			add links
+accept	43.8:55.10	43.8:55.9	renders	А коли = kan
+accept	43.8:55.14	43.8:55.11	renders	що = hoti
+accept	43.8:55.23	43.8:55.19	renders	Та renders alla
+fixed	43.8:56			add радістю
+accept	43.8:56.6	43.8:56.5	renders	радістю = egalliasato
+fixed	43.8:57			add links
+accept	43.8:57.3	43.8:57.2	renders	ж renders oun
+accept	43.8:57.13	43.8:57.9	renders	не іще = oupo
+fixed	43.8:58			add links
+accept	43.8:58.8	43.8:58.8	renders	Перш ніж = prin
+accept	43.8:58.10	43.8:58.10	renders	був = genesthai
+fixed	43.8:59			add links
+accept	43.8:59.1	43.8:59.2	renders	І renders oun
+accept	43.8:59.2	43.8:59.1	renders	схопили = eran
+accept	43.8:59.9	43.8:59.9	renders	Та renders de

@@ -1,0 +1,116 @@
+kind	from	to	relation	reason
+refuse	42.3:1.24	42.3:1.26		tetrarch linked to Ituraea
+accept	42.3:1.24	42.3:1.24	renders	tetrarch = tetrarchountos (Philip)
+accept	42.3:1.16	42.3:1.15	renders	tetrarch = tetrarchountos (Herod)
+accept	42.3:1.30	42.3:1.34	renders	tetrarch = tetrarchountos (Lysanias)
+accept	42.3:1.3	42.3:1.2	renders	year
+accept	42.3:1.4	42.3:1.6	renders	reign
+accept	42.3:1.10	42.3:1.9	renders	governed
+accept	42.3:1.27	42.3:1.29	renders	land = chora
+accept	42.3:1.19	42.3:1.20	renders	a = de
+fixed	42.3:1			tetrarch links fixed, missing nouns added
+accept	42.3:2.6	42.3:2.6	renders	egeneto
+fixed	42.3:2			added bulo
+accept	42.3:3.3	42.3:3.2	renders	went
+accept	42.3:3.5	42.3:3.6	renders	region
+fixed	42.3:3			added verb and region
+accept	42.3:4.18	42.3:4.19	renders	make straight = eutheias poieite
+fixed	42.3:4			added poieite
+refuse	42.3:5.17	42.3:5.21		rough linked to smooth
+accept	42.3:5.17	42.3:5.18	renders	rough
+accept	42.3:5.19	42.3:5.21	renders	smooth
+accept	42.3:5.12	42.3:5.13	renders	crooked
+accept	42.3:5.14	42.3:5.15	renders	made straight
+fixed	42.3:5			rough/smooth corrected
+accept	42.3:6.3	42.3:6.4	renders	flesh = person
+fixed	42.3:6			added sarx
+accept	42.3:7.5	42.3:7.5	renders	crowds
+accept	42.3:7.7	42.3:7.4	renders	coming out
+accept	42.3:7.14	42.3:7.12	renders	forewarned
+fixed	42.3:7			added missing words
+ok	42.3:8			
+accept	42.3:9.2	42.3:9.1	renders	already
+accept	42.3:9.9	42.3:9.11	renders	is laid
+accept	42.3:9.11	42.3:9.13	renders	zh = oun
+fixed	42.3:9			added missing words
+accept	42.3:10.6	42.3:10.6	renders	saying
+accept	42.3:10.8	42.3:10.8	renders	zh = oun
+fixed	42.3:10			added missing words
+accept	42.3:11.12	42.3:11.9	renders	give = metadoto
+accept	42.3:11.13	42.3:11.11,42.3:11.12	renders	not having
+accept	42.3:11.7,42.3:11.8	42.3:11.6	renders	who has
+fixed	42.3:11			added missing words
+refuse	42.3:12.7	42.3:12.8		vid (by) is not pros (to)
+fixed	42.3:12			refused vid=pros
+accept	42.3:13.2	42.3:13.1	renders	ho as he
+accept	42.3:13.5,42.3:13.7	42.3:13.6	renders	nothing
+accept	42.3:13.6	42.3:13.12	renders	collect
+accept	42.3:13.8	42.3:13.7,42.3:13.8	renders	more beyond
+accept	42.3:13.9	42.3:13.9	renders	that
+accept	42.3:13.12	42.3:13.10	renders	appointed
+fixed	42.3:13			added missing words
+accept	42.3:14.2	42.3:14.2	renders	zh = de
+accept	42.3:14.7	42.3:14.6	renders	saying
+accept	42.3:14.15	42.3:14.12	renders	said
+accept	42.3:14.22	42.3:14.17	renders	falsely, part of sykophanteo
+accept	42.3:14.20	42.3:14.16	renders	ne part of mede
+accept	42.3:14.25	42.3:14.22	renders	your
+fixed	42.3:14			added missing words
+accept	42.3:15.2	42.3:15.2	renders	zh = de
+accept	42.3:15.4	42.3:15.4	renders	people
+accept	42.3:15.5	42.3:15.1	renders	expecting
+accept	42.3:15.9	42.3:15.11	renders	their
+accept	42.3:15.10	42.3:15.6	renders	wondering
+fixed	42.3:15			added missing words
+accept	42.3:16.13	42.3:16.15	renders	than me
+accept	42.3:16.15,42.3:16.16	42.3:16.16	renders	of whom
+accept	42.3:16.17	42.3:16.20	renders	untie
+accept	42.3:16.22	42.3:16.18	renders	I am
+accept	42.3:16.23	42.3:16.17,42.3:16.19	renders	not worthy
+fixed	42.3:16			added missing words
+refuse	42.3:17.7	42.3:17.12		i renders TR kai before purge, not Nestle kai
+refuse	42.3:17.12	42.3:17.16		gather linked to eis
+accept	42.3:17.12	42.3:17.13	renders	gather
+accept	42.3:17.8	42.3:17.8	renders	clear
+fixed	42.3:17			verb links corrected
+accept	42.3:18.3	42.3:18.6	renders	exhorting
+accept	42.3:18.7,42.3:18.8	42.3:18.7	renders	preached good news
+fixed	42.3:18			added missing words
+refuse	42.3:19.7	42.3:19.8		autou = by John, not Herod
+accept	42.3:19.5	42.3:19.8	renders	by him = John
+accept	42.3:19.18	42.3:19.20	renders	had done
+fixed	42.3:19			autou moved to John
+accept	42.3:20.3	42.3:20.1	renders	added
+fixed	42.3:20			added verb
+accept	42.3:21.5	42.3:21.6	renders	all
+accept	42.3:21.3	42.3:21.3	renders	en to + inf = when
+fixed	42.3:21			added missing words
+accept	42.3:22.4	42.3:22.2	renders	descended
+accept	42.3:22.16	42.3:22.17	renders	came
+fixed	42.3:22			added verbs
+accept	42.3:23.4	42.3:23.5	renders	beginning
+accept	42.3:23.5	42.3:23.3	renders	was (age)
+accept	42.3:23.7	42.3:23.6	renders	about
+fixed	42.3:23			added missing words
+ok	42.3:24			
+ok	42.3:25			
+ok	42.3:26			
+ok	42.3:27			
+ok	42.3:28			
+ok	42.3:29			
+ok	42.3:30			
+refuse	42.3:31.1	42.3:31.2		son linked to name
+fixed	42.3:31			refused syna
+refuse	42.3:32.5	42.3:32.8		son linked to wrong name
+refuse	42.3:32.7	42.3:32.8		son linked to wrong name
+refuse	42.3:32.9	42.3:32.8		son linked to wrong name
+fixed	42.3:32			refused syna
+ok	42.3:33			
+ok	42.3:34			
+refuse	42.3:35.1	42.3:35.2		son linked to name
+fixed	42.3:35			refused syna
+refuse	42.3:36.7	42.3:36.6		son linked to name
+fixed	42.3:36			refused syna
+ok	42.3:37			
+refuse	42.3:38.1	42.3:38.2		son linked to name
+fixed	42.3:38			refused syna

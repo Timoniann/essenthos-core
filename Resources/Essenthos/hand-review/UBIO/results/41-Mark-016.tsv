@@ -1,0 +1,81 @@
+kind	from	to	relation	reason
+fixed	41.16:1			added piti
+accept	41.16:1.15	41.16:1.18	renders	piti = elthousai
+fixed	41.16:2			added missing
+accept	41.16:2.12	41.16:2.11	renders	grobu = mnema
+accept	41.16:2.11	41.16:2.9	renders	do = epi
+accept	41.16:2.9	41.16:2.12	renders	shodylo = anateilantos
+fixed	41.16:3			added odna odnij
+accept	41.16:3.3,41.16:3.4	41.16:3.3,41.16:3.4	renders	one another = pros heautas
+fixed	41.16:4			added buv zhe
+accept	41.16:4.7	41.16:4.8	renders	buv = en
+accept	41.16:4.8	41.16:4.9	renders	zhe = gar
+ok	41.16:5			
+fixed	41.16:6			added vin, nema
+accept	41.16:6.2	41.16:6.1	renders	article as pronoun he
+accept	41.16:6.15	41.16:6.14,41.16:6.15	renders	nema = ouk estin
+fixed	41.16:7			added ide
+accept	41.16:7.9	41.16:7.11	renders	ide poperedu = proagei
+fixed	41.16:8			obhornuv and nikomu wrong targets
+refuse	41.16:8.14	41.16:8.12		obhornuv is eichen not ekstasis
+accept	41.16:8.14	41.16:8.7	renders	obhornuv = eichen
+accept	41.16:8.13	41.16:8.12	renders	strah = ekstasis
+refuse	41.16:8.18	41.16:8.15		nikomu is oudeni not ouden
+accept	41.16:8.18	41.16:8.14	renders	nikomu = oudeni
+fixed	41.16:9			added relative and pluperfect aux
+accept	41.16:9.15	41.16:9.12	renders	yakoi = hes
+accept	41.16:9.16	41.16:9.13	renders	buv vyhnav pluperfect
+fixed	41.16:10			added missing
+accept	41.16:10.1	41.16:10.2	renders	pishovshy = poreutheisa
+accept	41.16:10.2	41.16:10.1	renders	vona = ekeine
+accept	41.16:10.4	41.16:10.4	renders	tyh = tois
+accept	41.16:10.6	41.16:10.7	renders	buly = genomenois
+fixed	41.16:11			Yoho wrongly on autes
+refuse	41.16:11.10	41.16:11.8		autes is her = vona
+accept	41.16:11.9	41.16:11.8	renders	vona = (hyp) autes
+accept	41.16:11.10	41.16:11.6	renders	He subject of etheathe
+accept	41.16:11.13	41.16:11.9	renders	ne jnyaly viry = epistesan
+accept	41.16:11.1	41.16:11.1	renders	A = kai of kakeinoi
+fixed	41.16:12			v doroz wrongly on en
+refuse	41.16:12.11	41.16:12.9		v dorozi has no en
+accept	41.16:12.9	41.16:12.11	renders	postati = morphe
+accept	41.16:12.14	41.16:12.12	renders	ishly = poreuomenois
+accept	41.16:12.17	41.16:12.14	renders	selo = agron
+fixed	41.16:13			added missing
+accept	41.16:13.1	41.16:13.1	renders	A = kai of kakeinoi
+accept	41.16:13.4	41.16:13.2	renders	vernulysya = apelthontes
+accept	41.16:13.5	41.16:13.5	renders	inshyh = loipois
+accept	41.16:13.8	41.16:13.3	renders	spovistyly = apengeilan
+accept	41.16:13.12	41.16:13.6	renders	j = -de of oude
+accept	41.16:13.13	41.16:13.7	renders	jim = ekeinois
+fixed	41.16:14			jim wrongly on auton
+refuse	41.16:14.12	41.16:14.12		auton is jihnje; jim has no counterpart
+accept	41.16:14.1	41.16:14.1	renders	naresti = hysteron
+accept	41.16:14.6	41.16:14.3	renders	sydily = anakeimenois
+accept	41.16:14.7	41.16:14.4	renders	vony = autois
+accept	41.16:14.21	41.16:14.21	renders	jnyaly viry = episteusan
+accept	41.16:14.23	41.16:14.16	renders	tym = tois
+fixed	41.16:15			added po
+accept	41.16:15.7	41.16:15.5	renders	po = eis
+fixed	41.16:16			added article substantives, aux
+accept	41.16:16.1	41.16:16.1	renders	hto = ho
+accept	41.16:16.8	41.16:16.6	renders	hto = ho
+accept	41.16:16.5	41.16:16.5	renders	bude aux of future
+fixed	41.16:17			added missing
+accept	41.16:17.2	41.16:17.3	renders	tyh = tois
+accept	41.16:17.8	41.16:17.5	renders	taki = tauta
+accept	41.16:17.13	41.16:17.12	renders	bud aux of future
+fixed	41.16:18			added missing
+accept	41.16:18.3	41.16:18.3	renders	a = kai of kan
+accept	41.16:18.6	41.16:18.5	renders	shcho = ti
+accept	41.16:18.8	41.16:18.7	renders	ne = ou me
+accept	41.16:18.9	41.16:18.10	renders	bude aux
+accept	41.16:18.12	41.16:18.14	renders	klastymut = epithesousin
+accept	41.16:18.18,41.16:18.19	41.16:18.17	renders	dobre jim bude = kalos hexousin
+fixed	41.16:19			iz wrongly on meta
+refuse	41.16:19.6	41.16:19.6		iz renders dative, not meta
+accept	41.16:19.5	41.16:19.8	renders	rozmovi = lalesai
+fixed	41.16:20			added missing
+accept	41.16:20.1	41.16:20.2	renders	I = de
+accept	41.16:20.3	41.16:20.1	renders	vony = ekeinoi
+accept	41.16:20.17	41.16:20.15	renders	suprovodyly = epakolouthounton

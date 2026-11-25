@@ -1,0 +1,262 @@
+kind	from	to	relation	reason
+fixed	42.9:1			added I=de
+accept	42.9:1.1	42.9:1.2	renders	I renders de
+ok	42.9:2			
+ok	42.9:3			
+fixed	42.9:4			added missing links
+accept	42.9:4.3	42.9:4.3	renders	relative pronoun
+accept	42.9:4.6	42.9:4.8	renders	remain
+fixed	42.9:5			added missing links
+accept	42.9:5.3	42.9:5.2	renders	whoever
+accept	42.9:5.11	42.9:5.11	renders	that
+accept	42.9:5.12	42.9:5.18	renders	shake off
+accept	42.9:5.16	42.9:5.13	renders	dust
+fixed	42.9:6			wrong kai and heal links
+refuse	42.9:6.1	42.9:6.8		I renders de not this kai
+refuse	42.9:6.14	42.9:6.10		heal is not everywhere
+accept	42.9:6.1	42.9:6.2	renders	I renders de
+accept	42.9:6.12	42.9:6.8	renders	and
+accept	42.9:6.14	42.9:6.9	renders	healing
+accept	42.9:6.13	42.9:6.10	renders	everywhere
+accept	42.9:6.6	42.9:6.3	renders	were passing
+accept	42.9:6.9,42.9:6.10	42.9:6.7	renders	proclaiming good news
+fixed	42.9:7			added missing links
+accept	42.9:7.5	42.9:7.8	renders	all
+accept	42.9:7.11	42.9:7.11	renders	because
+accept	42.9:7.19	42.9:7.18	renders	raised
+fixed	42.9:8			added missing links
+accept	42.9:8.2	42.9:8.2	renders	some
+accept	42.9:8.11	42.9:8.14	renders	arisen
+fixed	42.9:9			added missing links
+accept	42.9:9.7	42.9:9.6	renders	head part of beheaded
+accept	42.9:9.9	42.9:9.8	renders	de
+accept	42.9:9.15	42.9:9.12	renders	whom
+accept	42.9:9.16	42.9:9.14	renders	such things
+fixed	42.9:10			added kat
+accept	42.9:10.17	42.9:10.13	renders	kat idian
+fixed	42.9:11			misaligned need/healing
+refuse	42.9:11.24	42.9:11.21		needed is not healing
+refuse	42.9:11.25	42.9:11.22		healing noun is not verb
+accept	42.9:11.6	42.9:11.5	renders	followed
+accept	42.9:11.15	42.9:11.10	renders	was speaking
+accept	42.9:11.21	42.9:11.18	renders	those
+accept	42.9:11.22	42.9:11.22	renders	was healing
+accept	42.9:11.24	42.9:11.19,42.9:11.20	renders	having need
+accept	42.9:11.25	42.9:11.21	renders	healing noun
+fixed	42.9:12			added missing links
+accept	42.9:12.4	42.9:12.5	renders	decline
+accept	42.9:12.5	42.9:12.7	renders	de
+accept	42.9:12.14	42.9:12.14	renders	crowd
+accept	42.9:12.17	42.9:12.16	renders	having gone
+accept	42.9:12.22	42.9:12.22	renders	countryside
+accept	42.9:12.23	42.9:12.23	renders	lodge
+accept	42.9:12.28	42.9:12.32	renders	we are
+fixed	42.9:13			added missing links
+accept	42.9:13.9	42.9:13.9	renders	article as pronoun
+accept	42.9:13.10	42.9:13.10	renders	de
+accept	42.9:13.12	42.9:13.13	renders	there are
+accept	42.9:13.16	42.9:13.16	renders	than
+accept	42.9:13.22	42.9:13.22,42.9:13.23	renders	unless perhaps
+accept	42.9:13.23	42.9:13.24	renders	having gone
+fixed	42.9:14			added missing links
+accept	42.9:14.2	42.9:14.1	renders	were
+accept	42.9:14.4	42.9:14.3	renders	about
+accept	42.9:14.8	42.9:14.7	renders	de
+accept	42.9:14.14	42.9:14.12	renders	make sit down
+accept	42.9:14.16	42.9:14.14	renders	groups
+accept	42.9:14.17	42.9:14.16	renders	apiece
+fixed	42.9:15			added all
+accept	42.9:15.5	42.9:15.6	renders	all
+fixed	42.9:16			added missing links
+accept	42.9:16.1	42.9:16.2	renders	de
+accept	42.9:16.20	42.9:16.22	renders	set before
+accept	42.9:16.21	42.9:16.24	renders	crowd
+fixed	42.9:17			added missing links
+accept	42.9:17.9	42.9:17.9	renders	surplus
+accept	42.9:17.10	42.9:17.7	renders	taken up
+fixed	42.9:18			z is not kata
+refuse	42.9:18.7	42.9:18.8		z renders syn- of synesan
+accept	42.9:18.4	42.9:18.9	renders	kata monas
+accept	42.9:18.7,42.9:18.10	42.9:18.10	renders	were with
+accept	42.9:18.5	42.9:18.6	renders	He
+fixed	42.9:19			added missing links
+accept	42.9:19.1	42.9:19.1	renders	article as pronoun
+accept	42.9:19.2	42.9:19.2	renders	de
+accept	42.9:19.10	42.9:19.8	renders	others
+fixed	42.9:20			added missing links
+accept	42.9:20.1	42.9:20.2	renders	de
+accept	42.9:20.10	42.9:20.8	renders	pronounce
+accept	42.9:20.12	42.9:20.11	renders	de
+fixed	42.9:21			added missing links
+accept	42.9:21.1	42.9:21.1	renders	article as pronoun
+accept	42.9:21.2	42.9:21.2	renders	de
+accept	42.9:21.7	42.9:21.6	renders	negation in medeni
+fixed	42.9:22			added missing links
+accept	42.9:22.18	42.9:22.20	renders	be killed
+accept	42.9:22.21	42.9:22.21	renders	kai
+accept	42.9:22.25	42.9:22.25	renders	be raised
+fixed	42.9:23			added missing links
+accept	42.9:23.8	42.9:23.6	renders	anyone
+accept	42.9:23.7	42.9:23.7	renders	desires
+accept	42.9:23.9	42.9:23.10	renders	to come
+accept	42.9:23.20	42.9:23.18	renders	kath hemeran
+accept	42.9:23.27	42.9:23.21	renders	follow
+ok	42.9:24			
+unsure	42.9:25			the two verbs may be swapped relative to apolesas/zemiotheis
+accept	42.9:25.2	42.9:25.2	renders	gar
+fixed	42.9:26			added missing links
+accept	42.9:26.3	42.9:26.4	renders	periphrastic be ashamed
+accept	42.9:26.7	42.9:26.9	renders	words
+accept	42.9:26.10	42.9:26.15	renders	will be ashamed
+accept	42.9:26.14	42.9:26.16	renders	when
+fixed	42.9:27			sho is conjunction not relative
+refuse	42.9:27.5	42.9:27.10		conjunction not the relative hoi
+accept	42.9:27.8	42.9:27.8	renders	here
+accept	42.9:27.9	42.9:27.9	renders	standing
+accept	42.9:27.10	42.9:27.12	renders	ou me negation
+fixed	42.9:28			added de
+accept	42.9:28.1	42.9:28.2	renders	de
+fixed	42.9:29			added missing links
+accept	42.9:29.3	42.9:29.6	renders	He
+accept	42.9:29.6	42.9:29.8	renders	appearance
+ok	42.9:30			
+fixed	42.9:31			added missing links
+accept	42.9:31.10	42.9:31.9	renders	which
+accept	42.9:31.14	42.9:31.10	renders	was about
+fixed	42.9:32			added missing links
+accept	42.9:32.4	42.9:32.5	renders	those
+accept	42.9:32.19,42.9:32.20	42.9:32.22	renders	standing with
+fixed	42.9:33			wrong occurrence of from/him
+refuse	42.9:33.4	42.9:33.3		iz renders ap not en
+refuse	42.9:33.5	42.9:33.6		Nym is autou not autous
+accept	42.9:33.4	42.9:33.7	renders	from
+accept	42.9:33.5	42.9:33.8	renders	Him
+accept	42.9:33.7	42.9:33.6	renders	they
+accept	42.9:33.3	42.9:33.3	renders	en to as
+accept	42.9:33.16	42.9:33.20	renders	to be
+accept	42.9:33.23	42.9:33.26	renders	dative for You
+fixed	42.9:34			added missing links
+accept	42.9:34.1	42.9:34.2	renders	de
+accept	42.9:34.9	42.9:34.9	renders	them
+accept	42.9:34.11	42.9:34.11	renders	de
+accept	42.9:34.14	42.9:34.12	renders	en to as
+accept	42.9:34.16	42.9:34.15	renders	they
+fixed	42.9:35			added missing links
+accept	42.9:35.2	42.9:35.3	renders	came
+accept	42.9:35.7,42.9:35.8	42.9:35.7	renders	saying
+fixed	42.9:36			added missing links
+accept	42.9:36.2	42.9:36.2	renders	en to as
+accept	42.9:36.5	42.9:36.4	renders	occurred
+accept	42.9:36.8	42.9:36.7	renders	was found
+accept	42.9:36.14	42.9:36.20	renders	anything
+accept	42.9:36.18	42.9:36.15	renders	told
+fixed	42.9:37			added came down
+accept	42.9:37.5	42.9:37.6	renders	came down
+fixed	42.9:38			added missing links
+accept	42.9:38.6	42.9:38.4	renders	from
+accept	42.9:38.7	42.9:38.6	renders	crowd
+accept	42.9:38.20	42.9:38.19	renders	to me
+fixed	42.9:39			added bruising
+accept	42.9:39.18	42.9:39.19	renders	bruising
+ok	42.9:40			
+fixed	42.9:41			added until when
+accept	42.9:41.11	42.9:41.11,42.9:41.12	renders	heos pote
+fixed	42.9:42			wrong kai occurrence
+refuse	42.9:42.11	42.9:42.9		second Ta renders de not this kai
+accept	42.9:42.9	42.9:42.9	renders	and
+accept	42.9:42.11	42.9:42.12	renders	de
+accept	42.9:42.5	42.9:42.3	renders	coming near
+accept	42.9:42.3	42.9:42.4	renders	he gen abs
+accept	42.9:42.7	42.9:42.5	renders	threw down
+accept	42.9:42.19	42.9:42.22	renders	boy
+fixed	42.9:43			added missing links
+accept	42.9:43.1	42.9:43.2	renders	de
+accept	42.9:43.13	42.9:43.15	renders	pluperfect auxiliary of did
+fixed	42.9:44			added missing links
+accept	42.9:44.1	42.9:44.1	renders	let sink
+accept	42.9:44.4	42.9:44.6	renders	your
+accept	42.9:44.10	42.9:44.15	renders	is about to
+fixed	42.9:45			added de
+accept	42.9:45.1	42.9:45.2	renders	de
+fixed	42.9:46			added missing links
+accept	42.9:46.1	42.9:46.2	renders	de
+accept	42.9:46.2	42.9:46.1	renders	came up
+accept	42.9:46.5	42.9:46.3	renders	thought
+accept	42.9:46.6	42.9:46.7	renders	who
+accept	42.9:46.7	42.9:46.8	renders	an
+accept	42.9:46.11	42.9:46.9	renders	might be
+fixed	42.9:47			added took
+accept	42.9:47.7	42.9:47.10	renders	took hold
+fixed	42.9:48			added missing links
+accept	42.9:48.5	42.9:48.5	renders	ean
+accept	42.9:48.17	42.9:48.18	renders	an
+accept	42.9:48.18	42.9:48.17	renders	whoever
+accept	42.9:48.22	42.9:48.22	renders	article as pronoun
+accept	42.9:48.32	42.9:48.32	renders	he
+fixed	42.9:49			added missing links
+accept	42.9:49.10	42.9:49.8	renders	someone
+accept	42.9:49.25	42.9:49.20	renders	follows
+fixed	42.9:50			added de
+accept	42.9:50.2	42.9:50.2	renders	de
+fixed	42.9:51			added missing links
+accept	42.9:51.1	42.9:51.2	renders	de
+accept	42.9:51.3	42.9:51.3	renders	en to
+accept	42.9:51.5	42.9:51.9	renders	ascension
+accept	42.9:51.6	42.9:51.10	renders	His
+accept	42.9:51.7	42.9:51.5	renders	completing
+accept	42.9:51.8	42.9:51.12	renders	He
+accept	42.9:51.9	42.9:51.14,42.9:51.15	renders	set his face idiom
+fixed	42.9:52			nochivlyu is not hoste
+refuse	42.9:52.17	42.9:52.13		lodging is not hoste
+accept	42.9:52.16	42.9:52.13	renders	so as
+accept	42.9:52.6	42.9:52.6	renders	Himself
+accept	42.9:52.12	42.9:52.9	renders	entered
+fixed	42.9:53			added missing links
+accept	42.9:53.7	42.9:53.10	renders	going
+accept	42.9:53.8	42.9:53.8	renders	His
+accept	42.9:53.9,42.9:53.10	42.9:53.11	renders	toward
+fixed	42.9:54			added missing links
+accept	42.9:54.3	42.9:54.2	renders	de
+accept	42.9:54.14,42.9:54.15	42.9:54.11	renders	we should say
+fixed	42.9:55			wrong pronoun occurrence
+refuse	42.9:55.5	42.9:55.4		nykh goes with turned
+accept	42.9:55.6	42.9:55.4	renders	them
+ok	42.9:56			
+fixed	42.9:57			added missing links
+accept	42.9:57.7	42.9:57.7	renders	pluperfect auxiliary of said
+accept	42.9:57.11,42.9:57.12	42.9:57.11	renders	I will follow
+accept	42.9:57.15,42.9:57.16	42.9:57.14	renders	ean
+accept	42.9:57.18,42.9:57.19	42.9:57.15	renders	You may go
+fixed	42.9:58			swapped foxes holes and nests
+refuse	42.9:58.6	42.9:58.7		holes is not foxes
+refuse	42.9:58.7	42.9:58.8		foxes is not holes
+refuse	42.9:58.9	42.9:58.12		nests is not birds
+accept	42.9:58.6	42.9:58.8	renders	holes
+accept	42.9:58.7	42.9:58.7	renders	foxes
+accept	42.9:58.9	42.9:58.15	renders	nests
+accept	42.9:58.5	42.9:58.9	renders	have
+accept	42.9:58.2	42.9:58.1	renders	kai
+fixed	42.9:59			za is not pros
+refuse	42.9:59.7	42.9:59.3		follow me not pros
+accept	42.9:59.6,42.9:59.7	42.9:59.5	renders	follow
+accept	42.9:59.1	42.9:59.2	renders	de
+accept	42.9:59.4	42.9:59.4	renders	another
+accept	42.9:59.10	42.9:59.7	renders	article as pronoun
+accept	42.9:59.18	42.9:59.17	renders	my
+fixed	42.9:60			added missing links
+accept	42.9:60.2	42.9:60.2	renders	de
+accept	42.9:60.8	42.9:60.10	renders	dead
+accept	42.9:60.9	42.9:60.9	renders	their own
+accept	42.9:60.11	42.9:60.11	renders	you
+fixed	42.9:61			iz is not eis
+refuse	42.9:61.15	42.9:61.14		iz governs dative tois not eis
+accept	42.9:61.4	42.9:61.1	renders	pluperfect auxiliary of said
+accept	42.9:61.6,42.9:61.7	42.9:61.5	renders	I will follow
+accept	42.9:61.10	42.9:61.9	renders	de
+accept	42.9:61.16	42.9:61.17	renders	my
+accept	42.9:61.17	42.9:61.16	renders	household
+fixed	42.9:62			added missing links
+accept	42.9:62.2	42.9:62.2	renders	de
+accept	42.9:62.10	42.9:62.8	renders	laying
+accept	42.9:62.16	42.9:62.17	renders	behind
+accept	42.9:62.19	42.9:62.18	renders	fit

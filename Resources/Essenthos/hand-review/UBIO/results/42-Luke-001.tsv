@@ -1,0 +1,181 @@
+kind	from	to	relation	reason
+ok	42.1:1			
+fixed	42.1:2			add apo to spochatku
+ok	42.1:3			
+ok	42.1:4			
+fixed	42.1:5			link dennoi
+fixed	42.1:6			drop pasais, link I
+fixed	42.1:7			link y
+fixed	42.1:8			en occurrences
+ok	42.1:9			
+ok	42.1:10			
+fixed	42.1:11			I to de
+ok	42.1:12			
+ok	42.1:13			
+ok	42.1:14			
+ok	42.1:15			
+ok	42.1:16			
+ok	42.1:17			
+fixed	42.1:18			vzhe is added
+ok	42.1:19			
+ok	42.1:20			
+ok	42.1:21			
+ok	42.1:22			
+ok	42.1:23			
+ok	42.1:24			
+fixed	42.1:25			link dlia
+ok	42.1:26			
+fixed	42.1:27			link yomu
+ok	42.1:28			
+fixed	42.1:29			link Vona
+ok	42.1:30			
+ok	42.1:31			
+ok	42.1:32			
+ok	42.1:33			
+fixed	42.1:34			A to de
+fixed	42.1:35			link u
+ok	42.1:36			
+ok	42.1:37			
+ok	42.1:38			
+fixed	42.1:39			link meta
+fixed	42.1:40			link y
+ok	42.1:41			
+fixed	42.1:42			link holosom, y
+ok	42.1:43			
+ok	42.1:44			
+ok	42.1:45			
+ok	42.1:46			
+ok	42.1:47			
+ok	42.1:48			
+fixed	42.1:49			link zh
+ok	42.1:50			
+ok	42.1:51			
+ok	42.1:52			
+ok	42.1:53			
+ok	42.1:54			
+fixed	42.1:55			link aux and eis
+fixed	42.1:56			add missing links
+fixed	42.1:57			add verbs
+fixed	42.1:58			add missing links
+fixed	42.1:59			link khotily
+fixed	42.1:60			link Ni, verb
+fixed	42.1:61			add missing links
+fixed	42.1:62			add missing links
+fixed	42.1:63			add missing links
+fixed	42.1:64			add missing links
+fixed	42.1:65			add missing links
+fixed	42.1:66			add missing links
+fixed	42.1:67			add missing links
+fixed	42.1:68			add missing links
+fixed	42.1:69			rih was on verb
+fixed	42.1:70			add missing links
+fixed	42.1:71			nas/nashykh swapped
+fixed	42.1:72			add missing links
+unsure	42.1:73			doderzhyt/nam vs tou dounai hemin unclear
+fixed	42.1:74			link shchob
+ok	42.1:75			
+fixed	42.1:76			add missing links
+fixed	42.1:77			add missing links
+fixed	42.1:78			add missing links
+fixed	42.1:79			add missing links
+fixed	42.1:80			add missing links
+refuse	42.1:6.9	42.1:6.10		pasais not rendered
+refuse	42.1:8.5	42.1:8.3		u renders en of en te taxei
+refuse	42.1:11.1	42.1:11.1		I renders de not verb
+refuse	42.1:18.18	42.1:18.19		vzhe has no counterpart
+refuse	42.1:18.18	42.1:18.20		vzhe has no counterpart
+refuse	42.1:34.7	42.1:34.2		zhe is emphatic, de rendered by A
+refuse	42.1:69.2	42.1:69.2		rih is keras not egeiren
+refuse	42.1:71.6	42.1:71.4		hemon is nashykh 4, nas is added object
+accept	42.1:2.6	42.1:2.5	renders	spochatku = ap arches
+accept	42.1:5.13	42.1:5.14	renders	denna cherha = ephemerias
+accept	42.1:6.1	42.1:6.2	renders	I renders de
+accept	42.1:7.11	42.1:7.11	renders	ta y renders kai
+accept	42.1:8.5	42.1:8.7	renders	u = en te taxei
+accept	42.1:8.4	42.1:8.3	renders	yak renders en to + inf
+accept	42.1:11.1	42.1:11.2	renders	I renders de
+accept	42.1:25.2	42.1:25.3	renders	dlia mene = moi
+accept	42.1:27.10	42.1:27.5	renders	na imia yomu = ho onoma
+accept	42.1:29.1	42.1:29.1	renders	article as pronoun she
+accept	42.1:34.1	42.1:34.2	renders	A renders de
+accept	42.1:35.4	42.1:35.2	renders	u vidpovid = apokritheis
+accept	42.1:39.7	42.1:39.12	renders	pospishayuchy = meta spoudes
+accept	42.1:40.8	42.1:40.7	renders	ta y renders kai
+accept	42.1:42.3	42.1:42.3	renders	holosom = kraugei
+accept	42.1:42.6	42.1:42.5	renders	ta y renders kai
+accept	42.1:49.7	42.1:49.7	renders	zh renders kai
+accept	42.1:55.3,42.1:55.4	42.1:55.2	renders	prorik buv Vin = elalesen
+accept	42.1:55.11	42.1:55.13	renders	azh = eis
+accept	42.1:56.1	42.1:56.2	renders	I renders de
+accept	42.1:56.2	42.1:56.1	renders	zalyshalas = emeinen
+accept	42.1:56.4	42.1:56.5	renders	nei = aute
+accept	42.1:56.6,42.1:56.8	42.1:56.6	renders	shchos zo = hos
+accept	42.1:56.11	42.1:56.9	renders	ta y renders kai
+accept	42.1:56.15	42.1:56.14	renders	svoho = autes
+accept	42.1:57.3	42.1:57.4	renders	nastav = eplesthe
+accept	42.1:57.5	42.1:57.8	renders	rodyty = tekein
+accept	42.1:57.8,42.1:57.9	42.1:57.11	renders	vona porodyla = egennesen
+accept	42.1:58.9	42.1:58.14	renders	Svoiu = autou
+accept	42.1:58.11,42.1:58.14	42.1:58.10	renders	velyku poslav = emegalynen
+accept	42.1:58.12	42.1:58.15	renders	na = met
+accept	42.1:58.13	42.1:58.16	renders	nei = autes
+accept	42.1:58.18,42.1:58.19	42.1:58.18	renders	razom iz = syn- of synechairon
+accept	42.1:59.10	42.1:59.13	renders	conative imperfect ekaloun
+accept	42.1:60.8	42.1:60.7	renders	Ni = Ouchi
+accept	42.1:60.9,42.1:60.11	42.1:60.9	renders	nekhai bude = kletesetai
+accept	42.1:61.6	42.1:61.8	renders	u = ek
+accept	42.1:61.11	42.1:61.12	renders	yakyi = hos
+accept	42.1:61.13	42.1:61.13	renders	nazvanyi buv = kaleitai
+accept	42.1:61.14	42.1:61.16	renders	tym = touto
+accept	42.1:62.1	42.1:62.2	renders	I renders de
+accept	42.1:62.6	42.1:62.7	renders	yak = ti
+accept	42.1:62.8	42.1:62.8	renders	by = an
+accept	42.1:63.2	42.1:63.1	renders	zh renders kai
+accept	42.1:63.5	42.1:63.4	renders	vin in egrapsen
+accept	42.1:63.6	42.1:63.5	renders	slova renders legon
+accept	42.1:64.1	42.1:64.2	renders	I renders de
+accept	42.1:64.2,42.1:64.3	42.1:64.6	renders	v tii khvyli = parachrema
+accept	42.1:64.8	42.1:64.1	renders	rozviazalys = aneochthe
+accept	42.1:64.9	42.1:64.5	renders	yomu covers mouth possessor too
+accept	42.1:64.11,42.1:64.12	42.1:64.12	renders	vin stav hovoryty = elalei
+accept	42.1:65.3	42.1:65.2,42.1:65.3	renders	obhornuv = egeneto epi
+accept	42.1:65.6	42.1:65.7	renders	susidiv = perioikountas
+accept	42.1:65.9	42.1:65.11	renders	vsikh = hole
+accept	42.1:65.10	42.1:65.13	renders	verkhovynakh = oreine
+accept	42.1:66.3	42.1:66.4	renders	shcho = hoi
+accept	42.1:66.5	42.1:66.2	renders	rozvazhaly = ethento
+accept	42.1:66.11	42.1:66.11	renders	Chym = Ti
+accept	42.1:66.12	42.1:66.12	renders	to = ara
+accept	42.1:66.13	42.1:66.16	renders	bude = estai
+accept	42.1:66.21	42.1:66.23	renders	neiu = autou the child
+accept	42.1:67.2	42.1:67.1	renders	zh renders kai
+accept	42.1:67.9	42.1:67.9	renders	ta y renders kai
+accept	42.1:67.10	42.1:67.10	renders	stav prorokuvaty = eprophetusen
+accept	42.1:68.5	42.1:68.7	renders	shcho = hoti
+accept	42.1:68.8	42.1:68.10	renders	vyzvolyv = epoiesen lytrosin
+accept	42.1:69.2	42.1:69.3	renders	rih = keras
+accept	42.1:69.1,42.1:69.4	42.1:69.2	renders	Vin pidnis = egeiren
+accept	42.1:70.2,42.1:70.3	42.1:70.2	renders	buv zapoviv = elalesen
+accept	42.1:70.4	42.1:70.7,42.1:70.8	renders	vidviku = ap aionos
+accept	42.1:71.4	42.1:71.4	renders	nashykh = hemon
+accept	42.1:71.5	42.1:71.1	renders	vyzvolyt renders soterian
+accept	42.1:72.3	42.1:72.1	renders	Vin in poiesai
+accept	42.1:72.8	42.1:72.8	renders	bude prypaduvaty = mnesthenai
+accept	42.1:72.10	42.1:72.11	renders	Sviy = autou
+accept	42.1:73.7	42.1:73.2	renders	yakoiu = hon
+accept	42.1:73.8	42.1:73.3	renders	Vin in omosen
+accept	42.1:74.1	42.1:74.6	renders	shchob ... sluzhyly = latreuein
+accept	42.1:76.2	42.1:76.3	renders	zh renders de
+accept	42.1:76.9	42.1:76.8	renders	budesh khodyty = proporeuse
+accept	42.1:76.12	42.1:76.12	renders	shchob = purpose infinitive
+accept	42.1:77.1	42.1:77.2	renders	shchob dati = tou dounai
+accept	42.1:77.5	42.1:77.3	renders	piznaty = gnosin
+accept	42.1:77.9	42.1:77.11	renders	yikhnikh = auton
+accept	42.1:78.2	42.1:78.2	renders	velyke myloserdia = splanchna eleous
+accept	42.1:78.6,42.1:78.7	42.1:78.6,42.1:78.7	renders	shcho nym = en hois
+accept	42.1:79.2	42.1:79.1	renders	svityty = epiphanai
+accept	42.1:79.4,42.1:79.5	42.1:79.2	renders	tym khto = tois
+accept	42.1:79.6	42.1:79.8	renders	perebuvaie = kathemenois
+accept	42.1:79.12	42.1:79.10	renders	shchob = tou kateuthynai
+accept	42.1:80.12	42.1:80.13	renders	do = heos
+accept	42.1:80.15	42.1:80.15	renders	ziavlennia = anadeixeos

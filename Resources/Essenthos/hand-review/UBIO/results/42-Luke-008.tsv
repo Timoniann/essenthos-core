@@ -1,0 +1,271 @@
+kind	from	to	relation	reason
+fixed	42.8:1			kai links swapped; added verb and phrase
+refuse	42.8:1.9	42.8:1.6		wrong kai
+refuse	42.8:1.12	42.8:1.11		wrong kai
+accept	42.8:1.9	42.8:1.11	renders	kai between city and village
+accept	42.8:1.12	42.8:1.14	renders	kai between participles
+accept	42.8:1.7	42.8:1.8	renders	traveling
+accept	42.8:1.5,42.8:1.6	42.8:1.3,42.8:1.5	renders	afterward idiom
+accept	42.8:1.13,42.8:1.14	42.8:1.15	renders	proclaiming good news
+fixed	42.8:2			added relative pronoun
+accept	42.8:2.18	42.8:2.17	renders	whom
+fixed	42.8:3			added possessive
+accept	42.8:3.14	42.8:3.18	renders	their own
+fixed	42.8:4			added de and verb
+accept	42.8:4.1	42.8:4.2	renders	de
+accept	42.8:4.15	42.8:4.12	renders	began to speak = said
+fixed	42.8:5			added
+accept	42.8:5.12	42.8:5.14	renders	some (one)
+accept	42.8:5.9	42.8:5.10	renders	while sowing
+fixed	42.8:6			added
+accept	42.8:6.1	42.8:6.2	renders	other
+accept	42.8:6.5	42.8:6.6	renders	rock ground
+accept	42.8:6.11	42.8:6.13	renders	having
+accept	42.8:6.12	42.8:6.10	renders	because (dia)
+fixed	42.8:7			added
+accept	42.8:7.2	42.8:7.2	renders	other
+accept	42.8:7.4	42.8:7.4	renders	en mesw
+fixed	42.8:8			added
+accept	42.8:8.13	42.8:8.16	renders	called out
+accept	42.8:8.14	42.8:8.17	renders	the one who
+accept	42.8:8.19	42.8:8.21	renders	imperative let him hear
+fixed	42.8:9			second Його is his (disciples)
+refuse	42.8:9.4	42.8:9.3		wrong pronoun
+accept	42.8:9.4	42.8:9.6	renders	his disciples
+accept	42.8:9.2	42.8:9.2	renders	de
+accept	42.8:9.8	42.8:9.9	renders	means
+fixed	42.8:10			added
+accept	42.8:10.2	42.8:10.1	renders	ho de = he
+fixed	42.8:11			означає is estin not de
+refuse	42.8:11.3	42.8:11.2		wrong word
+accept	42.8:11.3	42.8:11.1	renders	is
+fixed	42.8:12			added
+accept	42.8:12.1	42.8:12.2	renders	de
+accept	42.8:12.2	42.8:12.1	renders	those
+accept	42.8:12.5	42.8:12.6	renders	are
+accept	42.8:12.6	42.8:12.7	renders	those who
+fixed	42.8:13			added
+accept	42.8:13.1	42.8:13.2	renders	de
+accept	42.8:13.2	42.8:13.1	renders	those
+accept	42.8:13.4,42.8:13.5	42.8:13.5	renders	rock
+accept	42.8:13.8	42.8:13.6	renders	who
+accept	42.8:13.20	42.8:13.15	renders	these
+accept	42.8:13.22	42.8:13.21	renders	for a time
+fixed	42.8:14			придушені is the verb not hypo
+refuse	42.8:14.14	42.8:14.12		wrong word
+accept	42.8:14.13,42.8:14.14	42.8:14.21	renders	are choked
+accept	42.8:14.2	42.8:14.1	renders	that
+accept	42.8:14.7,42.8:14.8	42.8:14.9	renders	those who
+accept	42.8:14.11	42.8:14.11	renders	kai rendered as but
+accept	42.8:14.15	42.8:14.13	renders	cares
+accept	42.8:14.19	42.8:14.19	renders	of life
+accept	42.8:14.22,42.8:14.25	42.8:14.24	renders	bring fruit to maturity
+fixed	42.8:15			оті is hoitines not eisin
+refuse	42.8:15.8	42.8:15.8		wrong word
+accept	42.8:15.8,42.8:15.9	42.8:15.9	renders	those who
+accept	42.8:15.2,42.8:15.3	42.8:15.1	renders	that
+accept	42.8:15.12	42.8:15.15	renders	having heard
+accept	42.8:15.13	42.8:15.18	renders	keep
+accept	42.8:15.16	42.8:15.12	renders	good heart
+fixed	42.8:16			added
+accept	42.8:16.1	42.8:16.2	renders	de
+accept	42.8:16.2	42.8:16.3	renders	lamp
+accept	42.8:16.8	42.8:16.8	renders	or
+accept	42.8:16.10	42.8:16.11	renders	puts
+accept	42.8:16.14	42.8:16.15	renders	puts
+accept	42.8:16.21	42.8:16.17	renders	those
+fixed	42.8:17			added
+accept	42.8:17.1,42.8:17.2	42.8:17.1,42.8:17.3	renders	nothing is
+accept	42.8:17.3	42.8:17.4	renders	hidden
+accept	42.8:17.6	42.8:17.7,42.8:17.8	renders	will become manifest
+accept	42.8:17.8	42.8:17.10	renders	secret
+accept	42.8:17.15	42.8:17.18	renders	come
+accept	42.8:17.16	42.8:17.16,42.8:17.17	renders	into light
+fixed	42.8:18			second хто is hos not an
+refuse	42.8:18.11	42.8:18.13		wrong word
+accept	42.8:18.11	42.8:18.12	renders	whoever
+accept	42.8:18.6	42.8:18.5	renders	whoever
+accept	42.8:18.12	42.8:18.11	renders	kai
+accept	42.8:18.19,42.8:18.20	42.8:18.17	renders	what
+fixed	42.8:19			added
+accept	42.8:19.3	42.8:19.2	renders	de
+accept	42.8:19.4,42.8:19.5	42.8:19.1	renders	came
+accept	42.8:19.12	42.8:19.18	renders	crowd
+fixed	42.8:20			added
+accept	42.8:20.1	42.8:20.2	renders	de
+accept	42.8:20.13	42.8:20.14	renders	wanting
+fixed	42.8:21			added
+accept	42.8:21.2	42.8:21.1	renders	ho de = he
+accept	42.8:21.14,42.8:21.15	42.8:21.14	renders	those who
+fixed	42.8:22			Його is autou (his disciples)
+refuse	42.8:22.13	42.8:22.15		wrong word
+refuse	42.8:22.14	42.8:22.19		wrong verse word
+accept	42.8:22.14	42.8:22.15	renders	his disciples
+accept	42.8:22.1	42.8:22.2	renders	de
+accept	42.8:22.11	42.8:22.12	renders	kai
+accept	42.8:22.23	42.8:22.23	renders	other side
+fixed	42.8:23			added
+accept	42.8:23.3	42.8:23.3	renders	of them
+accept	42.8:23.6	42.8:23.4	renders	fell asleep
+accept	42.8:23.8	42.8:23.6	renders	came down
+accept	42.8:23.11	42.8:23.7	renders	storm
+accept	42.8:23.15,42.8:23.17	42.8:23.13	renders	were being swamped
+accept	42.8:23.19,42.8:23.20	42.8:23.15	renders	were in danger
+fixed	42.8:24			added
+accept	42.8:24.1	42.8:24.2	renders	de
+accept	42.8:24.13	42.8:24.9	renders	ho
+accept	42.8:24.14	42.8:24.10	renders	de
+accept	42.8:24.16	42.8:24.12	renders	rebuked
+fixed	42.8:25			added
+accept	42.8:25.10	42.8:25.9	renders	de
+accept	42.8:25.15	42.8:25.11	renders	saying
+accept	42.8:25.16	42.8:25.13	renders	one another
+accept	42.8:25.19	42.8:25.14	renders	who
+accept	42.8:25.20	42.8:25.15	renders	then
+accept	42.8:25.23	42.8:25.18	renders	that
+accept	42.8:25.32	42.8:25.27	renders	obey
+ok	42.8:26			
+fixed	42.8:27			added
+accept	42.8:27.1	42.8:27.2	renders	de
+accept	42.8:27.5	42.8:27.3	renders	he (dative subject)
+accept	42.8:27.15	42.8:27.16	renders	time
+accept	42.8:27.20	42.8:27.19	renders	was wearing
+accept	42.8:27.24	42.8:27.25	renders	abode
+fixed	42.8:28			added
+accept	42.8:28.1	42.8:28.2	renders	de
+accept	42.8:28.14	42.8:28.11	renders	said
+fixed	42.8:29			added
+accept	42.8:29.9	42.8:29.11	renders	many
+accept	42.8:29.10	42.8:29.13	renders	times
+accept	42.8:29.13	42.8:29.14	renders	pluperfect auxiliary
+accept	42.8:29.16	42.8:29.17	renders	was bound
+accept	42.8:29.20	42.8:29.20	renders	shackles
+accept	42.8:29.24	42.8:29.22	renders	kai
+accept	42.8:29.26	42.8:29.23	renders	breaking
+accept	42.8:29.27	42.8:29.25	renders	bonds
+accept	42.8:29.30	42.8:29.26	renders	was driven
+fixed	42.8:30			added
+accept	42.8:30.5	42.8:30.6	renders	what
+accept	42.8:30.9	42.8:30.11	renders	de
+accept	42.8:30.10	42.8:30.10	renders	ho
+ok	42.8:31			
+fixed	42.8:32			великий is hikanon not herd
+refuse	42.8:32.7	42.8:32.4		wrong word
+accept	42.8:32.7	42.8:32.6	renders	many
+accept	42.8:32.1	42.8:32.7	renders	feeding
+accept	42.8:32.15	42.8:32.19	renders	to enter
+accept	42.8:32.18	42.8:32.18	renders	those
+fixed	42.8:33			added
+accept	42.8:33.1	42.8:33.2	renders	de
+accept	42.8:33.11	42.8:33.8	renders	entered
+accept	42.8:33.13	42.8:33.15	renders	herd
+accept	42.8:33.14	42.8:33.13	renders	rushed
+accept	42.8:33.15	42.8:33.16	renders	down from
+fixed	42.8:34			added
+accept	42.8:34.1	42.8:34.4	renders	herdsmen
+accept	42.8:34.2	42.8:34.2	renders	de
+accept	42.8:34.5	42.8:34.5	renders	that
+accept	42.8:34.14	42.8:34.16	renders	fields
+accept	42.8:34.15	42.8:34.9	renders	reported
+fixed	42.8:35			clothed and sound mind swapped
+refuse	42.8:35.24	42.8:35.23		wrong word
+refuse	42.8:35.27	42.8:35.21		wrong word
+accept	42.8:35.24	42.8:35.21	renders	clothed
+accept	42.8:35.26,42.8:35.27	42.8:35.23	renders	of sound mind
+accept	42.8:35.1	42.8:35.2	renders	de
+accept	42.8:35.4	42.8:35.4	renders	that
+accept	42.8:35.19	42.8:35.17	renders	whom
+fixed	42.8:36			added
+accept	42.8:36.1	42.8:36.5	renders	those having seen
+accept	42.8:36.2	42.8:36.2	renders	de
+accept	42.8:36.4	42.8:36.1	renders	related
+fixed	42.8:37			їх is not autos
+refuse	42.8:37.18	42.8:37.18		wrong word
+accept	42.8:37.19	42.8:37.18	renders	he
+accept	42.8:37.20	42.8:37.19	renders	de
+accept	42.8:37.2	42.8:37.4	renders	all
+accept	42.8:37.6	42.8:37.2	renders	began to ask
+accept	42.8:37.17	42.8:37.17	renders	were seized
+fixed	42.8:38			із is aph not syn
+refuse	42.8:38.7	42.8:38.12		wrong word
+accept	42.8:38.7	42.8:38.6	renders	from
+accept	42.8:38.8	42.8:38.7	renders	whom
+accept	42.8:38.9	42.8:38.1	renders	began begging
+accept	42.8:38.11	42.8:38.3	renders	him
+accept	42.8:38.13	42.8:38.11	renders	to be
+accept	42.8:38.14	42.8:38.12	renders	with
+accept	42.8:38.15	42.8:38.13	renders	him
+accept	42.8:38.16	42.8:38.15	renders	de
+fixed	42.8:39			added
+accept	42.8:39.4	42.8:39.5	renders	your
+accept	42.8:39.6	42.8:39.7	renders	relate
+accept	42.8:39.7	42.8:39.8	renders	how much
+accept	42.8:39.21	42.8:39.20	renders	how much
+accept	42.8:39.20	42.8:39.19	renders	proclaiming
+fixed	42.8:40			added
+accept	42.8:40.2	42.8:40.1	renders	when
+accept	42.8:40.3	42.8:40.4	renders	returned
+accept	42.8:40.11	42.8:40.11,42.8:40.14	renders	were looking for
+fixed	42.8:41			added
+accept	42.8:41.1	42.8:41.1	renders	kai idou
+accept	42.8:41.9	42.8:41.13	renders	was
+accept	42.8:41.19	42.8:41.20	renders	began begging
+fixed	42.8:42			added
+accept	42.8:42.2	42.8:42.5	renders	to him
+accept	42.8:42.3	42.8:42.4	renders	was (had)
+accept	42.8:42.7	42.8:42.6	renders	about
+accept	42.8:42.12	42.8:42.10	renders	she
+accept	42.8:42.14	42.8:42.12	renders	when
+accept	42.8:42.16	42.8:42.15	renders	went
+fixed	42.8:43			added
+accept	42.8:43.10	42.8:43.3	renders	being
+accept	42.8:43.8	42.8:43.4	renders	with
+accept	42.8:43.9	42.8:43.5	renders	flux of blood
+accept	42.8:43.12	42.8:43.14	renders	no one
+fixed	42.8:44			added
+accept	42.8:44.5	42.8:44.5	renders	fringe
+accept	42.8:44.10	42.8:44.10	renders	immediately
+accept	42.8:44.12	42.8:44.16	renders	her
+accept	42.8:44.13	42.8:44.13,42.8:44.15	renders	flux of blood
+fixed	42.8:45			added
+accept	42.8:45.9	42.8:45.10	renders	de
+accept	42.8:45.10	42.8:45.9	renders	were denying
+accept	42.8:45.22	42.8:45.21	renders	press
+fixed	42.8:46			added
+accept	42.8:46.2	42.8:46.2	renders	de
+fixed	42.8:47			added
+accept	42.8:47.16	42.8:47.18	renders	declared
+accept	42.8:47.19	42.8:47.22	renders	people
+accept	42.8:47.20	42.8:47.13,42.8:47.14,42.8:47.15	renders	for what cause
+accept	42.8:47.27	42.8:47.26	renders	immediately
+fixed	42.8:48			added
+accept	42.8:48.1	42.8:48.1	renders	ho de = he
+accept	42.8:48.2	42.8:48.2	renders	de
+fixed	42.8:49			added
+accept	42.8:49.2	42.8:49.2	renders	of him
+accept	42.8:49.17	42.8:49.15	renders	no longer
+fixed	42.8:50			added
+accept	42.8:50.11	42.8:50.12	renders	future passive
+fixed	42.8:51			added
+accept	42.8:51.2	42.8:51.2	renders	de
+accept	42.8:51.6	42.8:51.7	renders	allowed
+accept	42.8:51.8	42.8:51.9	renders	anyone
+accept	42.8:51.10	42.8:51.11	renders	him
+accept	42.8:51.12	42.8:51.12,42.8:51.13	renders	except
+accept	42.8:51.20	42.8:51.23	renders	child
+fixed	42.8:52			added
+accept	42.8:52.8	42.8:52.7	renders	ho de = he
+ok	42.8:53			
+fixed	42.8:54			added
+accept	42.8:54.2	42.8:54.1	renders	he
+accept	42.8:54.9	42.8:54.7	renders	called out
+accept	42.8:54.11	42.8:54.10	renders	child
+accept	42.8:54.12	42.8:54.11	renders	arise
+fixed	42.8:55			added
+accept	42.8:55.2	42.8:55.2	renders	returned
+accept	42.8:55.9	42.8:55.7	renders	arose
+accept	42.8:55.6,42.8:55.7	42.8:55.8	renders	immediately
+accept	42.8:55.12	42.8:55.12	renders	to be given
+fixed	42.8:56			added
+accept	42.8:56.6	42.8:56.6	renders	ho de = he
+accept	42.8:56.12	42.8:56.12	renders	what

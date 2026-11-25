@@ -189,6 +189,9 @@ Resources/Essenthos/geez/*
 Resources/Essenthos/generation/
 Resources/Essenthos/page-readings/pages-swete-*/out/
 Resources/Essenthos/page-readings/pages-swete-*/progress.*
+# The hand review's export, chunks, status and logs are remade by every run; its verdicts (results/) are kept in git.
+Resources/Essenthos/hand-review/*/run/
+Resources/Essenthos/hand-review/**/__pycache__/
 
 # Resources/Essenthos is the build store (build/products.tsv says who makes each file). What people edit is carried:
 # the hand files, the record files (records/**, ours, edited by owner-rows and owner-apply), the settled names and

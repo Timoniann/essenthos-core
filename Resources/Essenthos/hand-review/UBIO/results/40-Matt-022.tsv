@@ -1,0 +1,152 @@
+kind	from	to	relation	reason
+ok	40.22:1			
+fixed	40.22:2			added justify verb
+fixed	40.22:3			added missing links
+fixed	40.22:4			added missing links
+fixed	40.22:5			added missing links
+fixed	40.22:6			added loipoi
+fixed	40.22:7			added de
+fixed	40.22:8			added negation
+fixed	40.22:9			added missing links
+fixed	40.22:10			filled linked to wrong word
+fixed	40.22:11			wrong link for to see
+fixed	40.22:12			added ho de
+ok	40.22:13			
+fixed	40.22:14			added de
+fixed	40.22:15			added missing links
+fixed	40.22:16			added missing links
+fixed	40.22:17			added oun, ti
+ok	40.22:18			
+fixed	40.22:19			coin and tribute swapped
+fixed	40.22:20			added He
+fixed	40.22:21			genitive/dative crossed
+fixed	40.22:22			added missing links
+fixed	40.22:23			added negation
+fixed	40.22:24			added missing links
+fixed	40.22:25			added de
+fixed	40.22:26			added heos
+fixed	40.22:27			added hysteron
+fixed	40.22:28			added missing links
+fixed	40.22:29			added de, you
+ok	40.22:30			
+ok	40.22:31			
+unsure	40.22:32			Bog(10) vs Bogom(13) to Nestle single Theos(17): TR has two, unclear which
+ok	40.22:33			
+fixed	40.22:34			added missing links
+fixed	40.22:35			added nomikos
+ok	40.22:36			
+fixed	40.22:37			added missing links
+ok	40.22:38			
+fixed	40.22:39			added missing links
+fixed	40.22:40			added verb
+fixed	40.22:41			added de
+fixed	40.22:42			added pronouns
+fixed	40.22:43			added missing links
+fixed	40.22:44			added missing links
+fixed	40.22:45			added He
+fixed	40.22:46			added oude, tis
+accept	40.22:2.8	40.22:2.9	renders	made = epoiesen
+accept	40.22:3.3	40.22:3.2	renders	pronoun in verb
+accept	40.22:3.6	40.22:3.6	renders	to call
+accept	40.22:3.12	40.22:3.8	renders	invited
+accept	40.22:4.10	40.22:4.13	renders	pronoun in verb
+accept	40.22:4.13	40.22:4.12	renders	my = mou
+accept	40.22:4.14	40.22:4.20	renders	killed
+accept	40.22:4.17	40.22:4.19	renders	fatlings
+accept	40.22:5.1	40.22:5.2	renders	de
+accept	40.22:5.2	40.22:5.1	renders	article as pronoun
+accept	40.22:5.6	40.22:5.5	renders	hos
+accept	40.22:5.9	40.22:5.9	renders	own
+accept	40.22:5.10	40.22:5.12	renders	de
+accept	40.22:5.11	40.22:5.11	renders	hos
+accept	40.22:5.13	40.22:5.16	renders	his
+accept	40.22:6.2	40.22:6.3	renders	the rest
+accept	40.22:7.1	40.22:7.2	renders	de
+accept	40.22:8.8	40.22:8.14	renders	unworthy = ouk axioi
+accept	40.22:9.4	40.22:9.5,40.22:9.7	renders	crossroads = diexodous ton hodon
+accept	40.22:9.6	40.22:9.9	renders	hosous
+accept	40.22:9.7	40.22:9.10	renders	ean
+accept	40.22:9.8	40.22:9.11	renders	find
+refuse	40.22:10.19	40.22:10.21		filled is eplesthe, not reclining
+accept	40.22:10.19	40.22:10.18	renders	became full
+accept	40.22:10.9	40.22:10.11	renders	hous
+accept	40.22:10.11	40.22:10.12	renders	found
+accept	40.22:10.17	40.22:10.20	renders	wedding hall
+accept	40.22:10.18	40.22:10.21	renders	guests = reclining
+refuse	40.22:11.8	40.22:11.7		to see is theasasthai
+accept	40.22:11.8	40.22:11.5	renders	to see
+accept	40.22:11.7	40.22:11.7	renders	guests = reclining
+accept	40.22:11.2	40.22:11.1	renders	entered
+accept	40.22:11.3	40.22:11.2	renders	de
+accept	40.22:11.16	40.22:11.12	renders	dressed
+accept	40.22:12.14	40.22:12.12	renders	article as pronoun
+accept	40.22:12.15	40.22:12.13	renders	de
+accept	40.22:14.4	40.22:14.6	renders	de
+accept	40.22:15.5	40.22:15.5,40.22:15.6	renders	took counsel
+accept	40.22:15.6	40.22:15.7	renders	hopos
+accept	40.22:15.7	40.22:15.9	renders	trap
+accept	40.22:15.9	40.22:15.11	renders	word
+accept	40.22:16.15	40.22:16.15	renders	you are
+accept	40.22:16.16	40.22:16.14	renders	true
+accept	40.22:16.22	40.22:16.21	renders	en aletheia
+accept	40.22:16.25	40.22:16.26,40.22:16.27	renders	care to you
+accept	40.22:16.26	40.22:16.29	renders	no one
+accept	40.22:16.27	40.22:16.28	renders	peri
+accept	40.22:16.28	40.22:16.29	renders	no one
+accept	40.22:16.34	40.22:16.32	renders	look
+accept	40.22:16.35	40.22:16.32	renders	pronoun in verb
+accept	40.22:17.2	40.22:17.2	renders	oun
+accept	40.22:17.4	40.22:17.4	renders	ti
+refuse	40.22:19.4	40.22:19.4		tribute is kensou
+accept	40.22:19.4	40.22:19.6	renders	tribute
+accept	40.22:19.3	40.22:19.4	renders	coin
+accept	40.22:19.5	40.22:19.8	renders	de
+accept	40.22:20.2	40.22:20.2	renders	pronoun in verb
+refuse	40.22:21.11	40.22:21.9		dative is Kaisari
+refuse	40.22:21.13	40.22:21.14		to God is Theo dative
+refuse	40.22:21.14	40.22:21.16		things of God is Theou
+accept	40.22:21.11	40.22:21.10	renders	to Caesar
+accept	40.22:21.10	40.22:21.9	renders	of Caesar
+accept	40.22:21.13	40.22:21.16	renders	to God
+accept	40.22:21.14	40.22:21.14	renders	of God
+accept	40.22:21.1	40.22:21.1	renders	pronoun in verb
+accept	40.22:21.6	40.22:21.4	renders	pronoun in verb
+accept	40.22:22.1	40.22:22.1	renders	kai
+accept	40.22:22.6	40.22:22.3	renders	marveled
+accept	40.22:23.10	40.22:23.9	renders	me
+accept	40.22:24.6	40.22:24.4	renders	said
+accept	40.22:24.8	40.22:24.6	renders	tis
+accept	40.22:24.17	40.22:24.11	renders	will marry
+accept	40.22:24.18	40.22:24.16	renders	wife
+accept	40.22:25.2	40.22:25.2	renders	de
+accept	40.22:26.7	40.22:26.8	renders	heos
+accept	40.22:27.2	40.22:27.1	renders	hysteron
+accept	40.22:28.4	40.22:28.5	renders	tinos
+accept	40.22:28.9	40.22:28.8	renders	estai
+accept	40.22:29.2	40.22:29.2	renders	de
+accept	40.22:29.8	40.22:29.7	renders	pronoun in verb
+accept	40.22:34.5	40.22:34.6	renders	pronoun in verb
+accept	40.22:34.6,40.22:34.7	40.22:34.6	renders	silenced
+accept	40.22:34.10	40.22:34.10,40.22:34.12	renders	epi to auto
+accept	40.22:35.6,40.22:35.7	40.22:35.6	renders	lawyer
+accept	40.22:37.1	40.22:37.1	renders	article as pronoun
+accept	40.22:37.2	40.22:37.2	renders	de
+accept	40.22:37.3	40.22:37.3	renders	said
+accept	40.22:37.11	40.22:37.14	renders	your heart
+accept	40.22:39.3	40.22:39.2	renders	like
+accept	40.22:39.7	40.22:39.7	renders	your
+accept	40.22:40.9	40.22:40.9	renders	hangs
+accept	40.22:41.2	40.22:41.2	renders	de
+accept	40.22:42.9	40.22:42.10	renders	estin
+accept	40.22:42.11	40.22:42.11	renders	pronoun in verb
+accept	40.22:43.1	40.22:43.1	renders	pronoun in verb
+accept	40.22:43.6	40.22:43.4	renders	oun
+accept	40.22:43.8	40.22:43.6	renders	en Pneumati
+accept	40.22:44.8	40.22:44.10	renders	until
+accept	40.22:44.10	40.22:44.12	renders	place
+accept	40.22:44.11	40.22:44.12	renders	pronoun in verb
+accept	40.22:44.15	40.22:44.18	renders	feet
+accept	40.22:45.9	40.22:45.10	renders	estin
+accept	40.22:46.9	40.22:46.7	renders	oude
+accept	40.22:46.10	40.22:46.9	renders	tis
+accept	40.22:46.14	40.22:46.7	renders	oude negation

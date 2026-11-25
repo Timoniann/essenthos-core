@@ -1,0 +1,159 @@
+kind	from	to	relation	reason
+fixed	42.5:1			added missing links
+accept	42.5:1.1	42.5:1.2	renders	and = de
+accept	42.5:1.4	42.5:1.7	renders	pressed = epikeisthai
+fixed	42.5:2			added participle
+accept	42.5:2.12	42.5:2.14	renders	having gone out
+fixed	42.5:3			added missing links
+accept	42.5:3.1	42.5:3.2	renders	and = de
+accept	42.5:3.12	42.5:3.10	renders	asked
+accept	42.5:3.14	42.5:3.11	renders	him
+accept	42.5:3.19	42.5:3.18	renders	and = de
+fixed	42.5:4			added missing links
+accept	42.5:4.2	42.5:4.1	renders	when = hos
+accept	42.5:4.5	42.5:4.4	renders	teach renders lalon
+accept	42.5:4.14	42.5:4.18	renders	for = eis
+accept	42.5:4.16	42.5:4.17	renders	your = hymon
+fixed	42.5:5			added missing links
+accept	42.5:5.11	42.5:5.9	renders	toiled
+accept	42.5:5.14	42.5:5.11	renders	taken
+accept	42.5:5.16	42.5:5.13	renders	but = de
+fixed	42.5:6			verb mislinked
+refuse	42.5:6.12	42.5:6.4		breaking is dierresseto not synekleisan
+accept	42.5:6.7	42.5:6.4	renders	enclosed/caught
+accept	42.5:6.11,42.5:6.12	42.5:6.8	renders	began to break = dierresseto
+accept	42.5:6.8	42.5:6.9	renders	and = de
+fixed	42.5:7			conjunction and missing links
+refuse	42.5:7.17	42.5:7.13		ta y is one and before filled
+accept	42.5:7.17	42.5:7.15	renders	ta y = kai
+accept	42.5:7.2	42.5:7.2	renders	beckoned
+accept	42.5:7.13	42.5:7.11	renders	help
+accept	42.5:7.22	42.5:7.20	renders	so that
+accept	42.5:7.23,42.5:7.25	42.5:7.21	renders	began to sink
+accept	42.5:7.24	42.5:7.22	renders	they = auta
+fixed	42.5:8			added missing links
+accept	42.5:8.1	42.5:8.2	renders	and = de
+accept	42.5:8.18	42.5:8.16	renders	I am
+accept	42.5:8.20	42.5:8.14	renders	man = aner
+fixed	42.5:9			added missing links
+accept	42.5:9.2	42.5:9.10	renders	at = epi
+accept	42.5:9.3	42.5:9.12	renders	catch
+accept	42.5:9.8	42.5:9.3	renders	seized
+accept	42.5:9.9	42.5:9.1	renders	amazement
+accept	42.5:9.12	42.5:9.5	renders	ta y = kai
+fixed	42.5:10			added missing links
+accept	42.5:10.1	42.5:10.1	renders	likewise
+accept	42.5:10.9	42.5:10.11	renders	partners
+accept	42.5:10.18,42.5:10.19	42.5:10.25	renders	from now = apo tou nyn
+accept	42.5:10.20,42.5:10.21	42.5:10.27	renders	you will be
+fixed	42.5:11			added verb
+accept	42.5:11.11	42.5:11.10	renders	went after = followed
+fixed	42.5:12			added missing links
+accept	42.5:12.4	42.5:12.5	renders	being = einai
+accept	42.5:12.3	42.5:12.6	renders	he = auton
+accept	42.5:12.12	42.5:12.14	renders	full = pleres
+ok	42.5:13			
+fixed	42.5:14			added missing links
+accept	42.5:14.2	42.5:14.3	renders	ordered
+accept	42.5:14.3	42.5:14.2	renders	he = autos
+fixed	42.5:15			wrong pronoun link
+refuse	42.5:15.16	42.5:15.18		from Him has no Nestle counterpart (TR hyp autou)
+accept	42.5:15.2	42.5:15.5	renders	report
+accept	42.5:15.7	42.5:15.1	renders	spread
+accept	42.5:15.5	42.5:15.3	renders	still more
+fixed	42.5:16			added missing links
+accept	42.5:16.1	42.5:16.1	renders	he = autos
+accept	42.5:16.2	42.5:16.2	renders	de
+accept	42.5:16.3	42.5:16.3,42.5:16.4	renders	was withdrawing
+accept	42.5:16.4	42.5:16.5	renders	in
+accept	42.5:16.5,42.5:16.6	42.5:16.7	renders	desert places
+fixed	42.5:17			pronoun referent differs
+refuse	42.5:17.31	42.5:17.36		them (TR autous) vs Nestle auton = Jesus
+accept	42.5:17.3	42.5:17.4	renders	one
+accept	42.5:17.10	42.5:17.13	renders	sitting
+accept	42.5:17.16	42.5:17.20	renders	from = ek
+fixed	42.5:18			added missing links
+accept	42.5:18.3	42.5:18.3	renders	men
+accept	42.5:18.10	42.5:18.9	renders	was
+accept	42.5:18.12	42.5:18.12	renders	were seeking
+accept	42.5:18.18	42.5:18.16	renders	to place
+fixed	42.5:19			added missing links
+accept	42.5:19.3	42.5:19.1	renders	connective = kai
+accept	42.5:19.4	42.5:19.4	renders	what way
+accept	42.5:19.11	42.5:19.13	renders	housetop
+accept	42.5:19.13	42.5:19.14	renders	through
+accept	42.5:19.14	42.5:19.16	renders	tiles
+accept	42.5:19.18	42.5:19.18	renders	him
+fixed	42.5:20			pronoun swap
+refuse	42.5:20.7	42.5:20.5		to him (TR auto) is not auton their
+accept	42.5:20.3	42.5:20.5	renders	their faith
+fixed	42.5:21			added except
+accept	42.5:21.19	42.5:21.20,42.5:21.21	renders	except = ei me
+fixed	42.5:22			added pronoun
+accept	42.5:22.12	42.5:22.13	renders	you in verb
+fixed	42.5:23			added missing links
+accept	42.5:23.1	42.5:23.1	renders	which
+accept	42.5:23.10	42.5:23.12	renders	arise
+accept	42.5:23.12	42.5:23.13	renders	ta y = kai
+fixed	42.5:24			added possessive
+accept	42.5:24.29	42.5:24.31	renders	your house
+fixed	42.5:25			added relative
+accept	42.5:25.10	42.5:25.8	renders	which = ho
+fixed	42.5:26			added missing links
+accept	42.5:26.2	42.5:26.4	renders	all
+accept	42.5:26.3	42.5:26.2	renders	amazement
+accept	42.5:26.4	42.5:26.3	renders	seized
+accept	42.5:26.13	42.5:26.15	renders	remarkable things
+fixed	42.5:27			added missing links
+accept	42.5:27.9	42.5:27.8	renders	by name
+accept	42.5:27.20	42.5:27.17	renders	follow
+accept	42.5:27.17	42.5:27.14	renders	ta y = kai
+fixed	42.5:28			added verb
+accept	42.5:28.7	42.5:28.5	renders	went after = followed
+fixed	42.5:29			pronouns mislinked
+refuse	42.5:29.10	42.5:29.10		for Him is auto not autou his
+accept	42.5:29.9,42.5:29.10	42.5:29.6	renders	for Him = auto
+accept	42.5:29.2	42.5:29.2	renders	made
+accept	42.5:29.5	42.5:29.10	renders	his house
+refuse	42.5:29.21	42.5:29.21		with Him vs Nestle with them
+accept	42.5:29.19,42.5:29.22,42.5:29.23	42.5:29.22	renders	reclining at table
+fixed	42.5:30			pronoun mislinked
+refuse	42.5:30.8	42.5:30.8		at Him has no counterpart; auton = their
+accept	42.5:30.5	42.5:30.8	renders	their scribes
+accept	42.5:30.12	42.5:30.13	renders	saying
+accept	42.5:30.13	42.5:30.14	renders	why = dia ti
+accept	42.5:30.19	42.5:30.21	renders	you in verb
+fixed	42.5:31			added missing links
+accept	42.5:31.8	42.5:31.13	renders	physician
+accept	42.5:31.10	42.5:31.9,42.5:31.10	renders	have need
+accept	42.5:31.13	42.5:31.16,42.5:31.17	renders	sick ones
+ok	42.5:32			
+fixed	42.5:33			added missing links
+accept	42.5:33.1	42.5:33.1	renders	they = hoi
+accept	42.5:33.2	42.5:33.2	renders	de
+accept	42.5:33.12	42.5:33.12,42.5:33.13	renders	make prayers
+accept	42.5:33.13	42.5:33.14	renders	likewise
+accept	42.5:33.17	42.5:33.21	renders	yours
+fixed	42.5:34			added missing links
+accept	42.5:34.6	42.5:34.7	renders	question particle me
+accept	42.5:34.15	42.5:34.13,42.5:34.14	renders	while = en ho
+fixed	42.5:35			added missing links
+accept	42.5:35.7	42.5:35.10	renders	bridegroom
+accept	42.5:35.13	42.5:35.12	renders	future aux
+fixed	42.5:36			verb mislinked
+refuse	42.5:36.18	42.5:36.13		will tear is schisei
+accept	42.5:36.18	42.5:36.24	renders	will tear
+accept	42.5:36.1	42.5:36.1	renders	was speaking
+accept	42.5:36.2	42.5:36.2	renders	de
+accept	42.5:36.4	42.5:36.4	renders	parable
+accept	42.5:36.15	42.5:36.14	renders	puts
+accept	42.5:36.16,42.5:36.17	42.5:36.18,42.5:36.19,42.5:36.20	renders	otherwise
+accept	42.5:36.23	42.5:36.33	renders	from
+fixed	42.5:37			added missing links
+accept	42.5:37.6	42.5:37.5	renders	new
+accept	42.5:37.10,42.5:37.11	42.5:37.9,42.5:37.10,42.5:37.11	renders	otherwise
+accept	42.5:37.12	42.5:37.12	renders	will burst
+accept	42.5:37.17	42.5:37.20	renders	it = autos
+ok	42.5:38			
+fixed	42.5:39			added missing link
+accept	42.5:39.5	42.5:39.6	renders	new

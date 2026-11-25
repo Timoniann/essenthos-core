@@ -1,0 +1,191 @@
+kind	from	to	relation	reason
+ok	43.19:1			
+fixed	43.19:2			added missing links
+accept	43.19:2.4	43.19:2.6	renders	з = ἐξ
+accept	43.19:2.5	43.19:2.7	renders	терну = ἀκανθῶν
+accept	43.19:2.7	43.19:2.9	renders	Йому = αὐτοῦ
+accept	43.19:2.12	43.19:2.13,43.19:2.14	renders	багряниця = purple robe
+accept	43.19:2.13	43.19:2.15	renders	наділи = περιέβαλον
+fixed	43.19:3			added приступали
+accept	43.19:3.2	43.19:3.2	renders	приступали = ἤρχοντο
+fixed	43.19:4			added назовні x2
+accept	43.19:4.3	43.19:4.4	renders	назовні = ἔξω
+accept	43.19:4.15	43.19:4.14	renders	назовні = ἔξω
+fixed	43.19:5			терновім relinked, added
+refuse	43.19:5.6	43.19:5.6		терновім is thorny, not wearing
+accept	43.19:5.6	43.19:5.8	renders	терновім = ἀκάνθινον
+accept	43.19:5.3	43.19:5.5	renders	назовні = ἔξω
+accept	43.19:5.17	43.19:5.17	renders	Оце = Ἰδοὺ
+fixed	43.19:6			added missing
+accept	43.19:6.22	43.19:6.22	renders	розпніть = σταυρώσατε
+accept	43.19:6.24	43.19:6.29	renders	провини = αἰτίαν
+accept	43.19:6.25	43.19:6.23	renders	я = ἐγὼ
+fixed	43.19:7			added missing
+accept	43.19:7.1	43.19:7.1	renders	відказали = ἀπεκρίθησαν
+accept	43.19:7.11	43.19:7.12	renders	мусить = ὀφείλει
+accept	43.19:7.12	43.19:7.13	renders	умерти = ἀποθανεῖν
+fixed	43.19:8			ще більш = μᾶλλον
+accept	43.19:8.8	43.19:8.9	renders	ще більш = μᾶλλον
+fixed	43.19:9			added missing
+accept	43.19:9.2	43.19:9.2	renders	вернувся = εἰσῆλθεν
+accept	43.19:9.11	43.19:9.15	renders	Та = δὲ
+fixed	43.19:10			clauses swapped vs Nestle; relinked to matching clause
+refuse	43.19:10.16	43.19:10.13		clause 1 (crucify) matches Nestle clause 2
+accept	43.19:10.16	43.19:10.18	renders	маю = ἔχω of crucify clause
+refuse	43.19:10.17	43.19:10.13		same
+accept	43.19:10.17	43.19:10.18	renders	я = ἔχω of crucify clause
+refuse	43.19:10.18	43.19:10.12		same
+accept	43.19:10.18	43.19:10.17	renders	владу = ἐξουσίαν of crucify clause
+refuse	43.19:10.20	43.19:10.15		object of crucify is σε 20
+accept	43.19:10.20	43.19:10.20	renders	Тебе = σε after σταυρῶσαί
+refuse	43.19:10.22	43.19:10.18		clause 2 (release) matches Nestle clause 1
+accept	43.19:10.22	43.19:10.13	renders	маю = ἔχω of release clause
+refuse	43.19:10.23	43.19:10.17		same
+accept	43.19:10.23	43.19:10.12	renders	владу = ἐξουσίαν of release clause
+refuse	43.19:10.24	43.19:10.20		object of release is σε 15
+accept	43.19:10.24	43.19:10.15	renders	Тебе = σε after ἀπολῦσαί
+accept	43.19:10.14	43.19:10.10	renders	знаєш = οἶδας
+fixed	43.19:11			added missing
+accept	43.19:11.3	43.19:11.6	renders	надо = κατ
+accept	43.19:11.17	43.19:11.11	renders	було = ἦν
+accept	43.19:11.18	43.19:11.15,43.19:11.16	renders	тому = διὰ τοῦτο
+accept	43.19:11.22	43.19:11.17	renders	той = ὁ (substantive)
+fixed	43.19:12			added missing
+accept	43.19:12.1	43.19:12.1	renders	після = ἐκ
+accept	43.19:12.5	43.19:12.6	renders	пустити = ἀπολῦσαι
+accept	43.19:12.7	43.19:12.9	renders	та = δὲ
+accept	43.19:12.12	43.19:12.14	renders	Його = τοῦτον
+accept	43.19:12.13	43.19:12.15	renders	пустиш = ἀπολύσῃς
+accept	43.19:12.18	43.19:12.17	renders	ти = εἶ
+accept	43.19:12.24	43.19:12.25	renders	видає = ποιῶν
+accept	43.19:12.25	43.19:12.26	renders	противиться = ἀντιλέγει
+fixed	43.19:13			added missing
+accept	43.19:13.8	43.19:13.8	renders	вивів = ἤγαγεν
+accept	43.19:13.9	43.19:13.9	renders	назовні = ἔξω
+accept	43.19:13.22	43.19:13.21	renders	ж = δὲ
+fixed	43.19:14			added missing
+accept	43.19:14.3	43.19:14.2	renders	ж = δὲ
+accept	43.19:14.4	43.19:14.3	renders	день Приготовлення = Παρασκευὴ
+accept	43.19:14.8	43.19:14.7	renders	була = ἦν
+accept	43.19:14.9	43.19:14.8	renders	близько = ὡς
+fixed	43.19:15			added missing
+accept	43.19:15.2	43.19:15.3	renders	вони = ἐκεῖνοι
+accept	43.19:15.16	43.19:15.15	renders	маю розпясти = σταυρώσω
+accept	43.19:15.24	43.19:15.23	renders	окрім = εἰ μὴ
+fixed	43.19:16			їм/Його swapped
+refuse	43.19:16.4	43.19:16.4		їм is αὐτοῖς
+accept	43.19:16.4	43.19:16.5	renders	їм = αὐτοῖς
+refuse	43.19:16.6	43.19:16.5		Його is αὐτὸν
+accept	43.19:16.6	43.19:16.4	renders	Його = αὐτὸν
+accept	43.19:16.10	43.19:16.8	renders	взяли = Παρέλαβον
+fixed	43.19:17			зване relinked
+refuse	43.19:17.10	43.19:17.13		зване is λεγόμενον (Skull-called place)
+accept	43.19:17.10	43.19:17.9	renders	зване = λεγόμενον
+accept	43.19:17.3	43.19:17.3	renders	Свого = ἑαυτῷ
+fixed	43.19:18			added missing
+accept	43.19:18.1	43.19:18.1	renders	там = ὅπου
+accept	43.19:18.10,43.19:18.11	43.19:18.9	renders	з одного = ἐντεῦθεν
+accept	43.19:18.12	43.19:18.10	renders	та = καὶ
+accept	43.19:18.13,43.19:18.14	43.19:18.11	renders	з другого = ἐντεῦθεν
+accept	43.19:18.16	43.19:18.13	renders	а = δὲ
+fixed	43.19:19			added missing
+accept	43.19:19.5	43.19:19.4	renders	написа = τίτλον
+accept	43.19:19.12	43.19:19.13	renders	ж = δὲ
+fixed	43.19:20			added missing
+accept	43.19:20.15	43.19:20.11	renders	було = ἦν
+accept	43.19:20.24	43.19:20.24	renders	по-римському = Ῥωμαϊστί
+fixed	43.19:21			added missing
+accept	43.19:21.12	43.19:21.17	renders	Він = ἐκεῖνος
+accept	43.19:21.15	43.19:21.20	renders	Я = εἰμι
+ok	43.19:22			
+fixed	43.19:23			refused по=ὅλου, added
+refuse	43.19:23.14	43.19:23.32		по is distributive, not ὅλου
+accept	43.19:23.10	43.19:23.13	renders	поділили на = ἐποίησαν
+accept	43.19:23.24	43.19:23.22	renders	був = ἦν
+accept	43.19:23.25	43.19:23.26	renders	не шитий = ἄραφος
+accept	43.19:23.28	43.19:23.30	renders	витканий = ὑφαντὸς
+accept	43.19:23.29	43.19:23.31,43.19:23.32	renders	цілий = δι ὅλου
+accept	43.19:23.30	43.19:23.27,43.19:23.29	renders	відверху = ἐκ τῶν ἄνωθεν
+fixed	43.19:24			метнули relinked, added
+refuse	43.19:24.26	43.19:24.24		метнули is ἔβαλον
+accept	43.19:24.26	43.19:24.28	renders	метнули = ἔβαλον
+accept	43.19:24.27	43.19:24.24	renders	про = ἐπὶ
+accept	43.19:24.3,43.19:24.5	43.19:24.4	renders	один одного = ἀλλήλους
+accept	43.19:24.13	43.19:24.10	renders	на = περὶ
+accept	43.19:24.15	43.19:24.12	renders	кому = τίνος
+accept	43.19:24.23	43.19:24.22	renders	між собою = ἑαυτοῖς
+fixed	43.19:25			added же
+accept	43.19:25.3	43.19:25.2	renders	же = δὲ
+fixed	43.19:26			added Оце
+accept	43.19:26.16	43.19:26.16	renders	Оце = ἴδε
+fixed	43.19:27			added missing
+accept	43.19:27.5	43.19:27.5	renders	Оце = Ἴδε
+accept	43.19:27.17	43.19:27.20	renders	до себе = εἰς τὰ ἴδια
+fixed	43.19:28			added missing
+accept	43.19:28.1	43.19:28.2	renders	потім = μετὰ τοῦτο
+accept	43.19:28.5	43.19:28.7	renders	вже = ἤδη
+accept	43.19:28.9	43.19:28.11	renders	збулося = τελειωθῇ
+fixed	43.19:29			added missing
+accept	43.19:29.2	43.19:29.2	renders	стояла = ἔκειτο
+accept	43.19:29.10	43.19:29.7	renders	наповнивши ~ μεστὸν
+accept	43.19:29.16	43.19:29.12	renders	піднесли = προσήνεγκαν
+ok	43.19:30			
+fixed	43.19:31			added missing
+accept	43.19:31.1	43.19:31.6	renders	був = ἦν
+accept	43.19:31.3,43.19:31.4	43.19:31.5	renders	день Приготовлення = Παρασκευὴ
+accept	43.19:31.5	43.19:31.2	renders	тож = οὖν
+accept	43.19:31.12	43.19:31.9	renders	зосталися = μείνῃ
+accept	43.19:31.13	43.19:31.15	renders	в = ἐν
+accept	43.19:31.17	43.19:31.22	renders	Великдень = great day
+accept	43.19:31.22	43.19:31.30	renders	зламати = κατεαγῶσιν
+accept	43.19:31.23	43.19:31.33	renders	голінки = σκέλη
+accept	43.19:31.24	43.19:31.31	renders	розпятим = αὐτῶν (their)
+accept	43.19:31.26	43.19:31.35	renders	зняти = ἀρθῶσιν
+ok	43.19:32			
+fixed	43.19:33			голінок relinked, added
+refuse	43.19:33.13	43.19:33.12		голінок is σκέλη
+accept	43.19:33.13	43.19:33.15	renders	голінок = σκέλη
+accept	43.19:33.16	43.19:33.12	renders	зламали = κατέαξαν
+accept	43.19:33.14	43.19:33.13	renders	Йому = αὐτοῦ
+accept	43.19:33.1	43.19:33.6	renders	коли = ὡς
+accept	43.19:33.9	43.19:33.9	renders	Він = αὐτὸν
+accept	43.19:33.10	43.19:33.8	renders	уже = ἤδη
+fixed	43.19:34			added та
+accept	43.19:34.1	43.19:34.1	renders	та = ἀλλ
+fixed	43.19:35			added missing
+accept	43.19:35.3	43.19:35.4	renders	засвідчив = μεμαρτύρηκεν
+accept	43.19:35.7	43.19:35.7	renders	його = αὐτοῦ
+accept	43.19:35.9	43.19:35.12	renders	він = ἐκεῖνος
+fixed	43.19:36			added missing
+accept	43.19:36.8	43.19:36.11	renders	Йому = αὐτοῦ
+accept	43.19:36.10	43.19:36.10	renders	ламати = συντριβήσεται
+fixed	43.19:37			added missing
+accept	43.19:37.3	43.19:37.3	renders	друге = ἑτέρα
+accept	43.19:37.7	43.19:37.6	renders	будуть = Ὄψονται
+accept	43.19:37.9	43.19:37.8	renders	Того = ὃν
+fixed	43.19:38			added missing
+accept	43.19:38.1	43.19:38.3	renders	потім = μετὰ ταῦτα
+accept	43.19:38.3	43.19:38.8	renders	із = ἀπὸ
+accept	43.19:38.6	43.19:38.10	renders	був = ὢν
+accept	43.19:38.11	43.19:38.16	renders	бо = διὰ
+accept	43.19:38.14	43.19:38.4	renders	став просити = ἠρώτησεν
+accept	43.19:38.30	43.19:38.37	renders	Ісусове = αὐτοῦ (His)
+fixed	43.19:39			із relinked, added
+refuse	43.19:39.14	43.19:39.16		із renders καὶ
+accept	43.19:39.14	43.19:39.15	renders	із = καὶ
+accept	43.19:39.6	43.19:39.11	renders	давніше = πρῶτον
+accept	43.19:39.10	43.19:39.8	renders	Ісуса = αὐτὸν
+accept	43.19:39.12	43.19:39.14	renders	смирну = σμύρνης
+accept	43.19:39.16	43.19:39.13	renders	помішану = μίγμα
+accept	43.19:39.17	43.19:39.17	renders	щось = ὡς
+fixed	43.19:40			added обгорнули
+accept	43.19:40.8	43.19:40.8	renders	обгорнули = ἔδησαν
+fixed	43.19:41			added missing
+accept	43.19:41.8	43.19:41.1	renders	знаходився = ἦν
+accept	43.19:41.16	43.19:41.15	renders	в = ἐν
+accept	43.19:41.17	43.19:41.16	renders	ньому = ᾧ
+accept	43.19:41.18	43.19:41.17	renders	ніколи = οὐδέπω
+accept	43.19:41.21	43.19:41.19,43.19:41.20	renders	лежав = ἦν τεθειμένος
+fixed	43.19:42			added missing
+accept	43.19:42.2	43.19:42.1	renders	отут = ἐκεῖ
+accept	43.19:42.5	43.19:42.5	renders	дня Приготовлення = Παρασκευὴν

@@ -1,0 +1,256 @@
+kind	from	to	relation	reason
+ok	40.13:1			
+fixed	40.13:2			added missing links
+accept	40.13:2.2	40.13:2.6	renders	word renders original
+accept	40.13:2.3	40.13:2.5	renders	word renders original
+accept	40.13:2.21	40.13:2.17	renders	word renders original
+accept	40.13:2.8	40.13:2.7	renders	word renders original
+fixed	40.13:3			added missing links
+accept	40.13:3.3,40.13:3.4	40.13:3.2	renders	word renders original
+fixed	40.13:4			added missing links
+accept	40.13:4.7	40.13:4.6	renders	word renders original
+accept	40.13:4.2	40.13:4.2	renders	word renders original
+accept	40.13:4.11	40.13:4.15	renders	word renders original
+fixed	40.13:5			added missing links
+accept	40.13:5.1	40.13:5.1	renders	word renders original
+accept	40.13:5.2	40.13:5.2	renders	word renders original
+accept	40.13:5.15	40.13:5.15	renders	word renders original
+accept	40.13:5.17	40.13:5.17	renders	word renders original
+fixed	40.13:6			added missing links
+accept	40.13:6.4	40.13:6.3	renders	word renders original
+accept	40.13:6.8	40.13:6.10	renders	word renders original
+ok	40.13:7			
+fixed	40.13:8			added missing links
+accept	40.13:8.9	40.13:8.12	renders	word renders original
+accept	40.13:8.13	40.13:8.15	renders	word renders original
+accept	40.13:8.15	40.13:8.17	renders	word renders original
+accept	40.13:8.16	40.13:8.19	renders	word renders original
+accept	40.13:8.17	40.13:8.18	renders	word renders original
+fixed	40.13:9			added missing links
+accept	40.13:9.1	40.13:9.1	renders	word renders original
+accept	40.13:9.6	40.13:9.4	renders	word renders original
+fixed	40.13:10			refused wrong links; added missing links
+refuse	40.13:10.13	40.13:10.9		en belongs to parables; do renders dative
+accept	40.13:10.9	40.13:10.7	renders	word renders original
+accept	40.13:10.13	40.13:10.12	renders	word renders original
+accept	40.13:10.10	40.13:10.9	renders	word renders original
+accept	40.13:10.11	40.13:10.11	renders	word renders original
+fixed	40.13:11			added missing links
+accept	40.13:11.1	40.13:11.2	renders	word renders original
+accept	40.13:11.2	40.13:11.1	renders	word renders original
+accept	40.13:11.6	40.13:11.5	renders	word renders original
+accept	40.13:11.14	40.13:11.15	renders	word renders original
+ok	40.13:12			
+fixed	40.13:13			refused wrong links; added missing links
+refuse	40.13:13.4	40.13:13.3		en belongs to parables; do renders dative
+accept	40.13:13.2	40.13:13.1	renders	word renders original
+accept	40.13:13.4	40.13:13.5	renders	word renders original
+accept	40.13:13.6	40.13:13.3	renders	word renders original
+accept	40.13:13.16,40.13:13.17	40.13:13.15	renders	word renders original
+fixed	40.13:14			refused wrong links; added missing links
+refuse	40.13:14.9	40.13:14.9		swapped: verb vs noun
+refuse	40.13:14.10	40.13:14.10		swapped: noun vs verb
+refuse	40.13:14.14	40.13:14.16		dyvytysia budete renders the finite verb
+accept	40.13:14.2	40.13:14.3	renders	word renders original
+accept	40.13:14.7	40.13:14.7	renders	word renders original
+accept	40.13:14.9	40.13:14.10	renders	word renders original
+accept	40.13:14.10	40.13:14.9	renders	word renders original
+accept	40.13:14.12	40.13:14.13	renders	word renders original
+accept	40.13:14.14,40.13:14.15	40.13:14.17	renders	word renders original
+accept	40.13:14.16	40.13:14.16	renders	word renders original
+accept	40.13:14.18	40.13:14.20	renders	word renders original
+fixed	40.13:15			refused wrong links; added missing links
+refuse	40.13:15.11	40.13:15.11		barews is tiazhko; zazhmuryly is ekammysan
+accept	40.13:15.4	40.13:15.6	renders	word renders original
+accept	40.13:15.11	40.13:15.17	renders	word renders original
+accept	40.13:15.6	40.13:15.11	renders	word renders original
+accept	40.13:15.15	40.13:15.19	renders	word renders original
+accept	40.13:15.32	40.13:15.34	renders	word renders original
+fixed	40.13:16			added missing links
+accept	40.13:16.5	40.13:16.6	renders	word renders original
+accept	40.13:16.10	40.13:16.12	renders	word renders original
+ok	40.13:17			
+fixed	40.13:18			added missing links
+accept	40.13:18.2	40.13:18.2	renders	word renders original
+fixed	40.13:19			added missing links
+accept	40.13:19.8	40.13:19.7	renders	word renders original
+accept	40.13:19.15	40.13:19.16	renders	word renders original
+accept	40.13:19.23	40.13:19.24	renders	word renders original
+fixed	40.13:20			added missing links
+accept	40.13:20.2	40.13:20.6	renders	word renders original
+accept	40.13:20.5	40.13:20.5	renders	word renders original
+fixed	40.13:21			added missing links
+accept	40.13:21.4	40.13:21.6	renders	word renders original
+accept	40.13:21.5	40.13:21.1,40.13:21.2	renders	word renders original
+accept	40.13:21.1	40.13:21.3	renders	word renders original
+accept	40.13:21.10	40.13:21.11	renders	word renders original
+accept	40.13:21.14	40.13:21.10	renders	word renders original
+fixed	40.13:22			added missing links
+accept	40.13:22.1	40.13:22.2	renders	word renders original
+accept	40.13:22.2	40.13:22.3	renders	word renders original
+accept	40.13:22.10	40.13:22.13	renders	word renders original
+accept	40.13:22.21	40.13:22.28	renders	word renders original
+fixed	40.13:23			added missing links
+accept	40.13:23.17	40.13:23.18	renders	word renders original
+accept	40.13:23.16	40.13:23.16	renders	word renders original
+accept	40.13:23.19	40.13:23.20	renders	word renders original
+accept	40.13:23.20	40.13:23.21	renders	word renders original
+accept	40.13:23.24	40.13:23.24	renders	word renders original
+accept	40.13:23.27	40.13:23.28	renders	word renders original
+accept	40.13:23.28	40.13:23.27	renders	word renders original
+accept	40.13:23.29	40.13:23.29	renders	word renders original
+fixed	40.13:24			added missing links
+accept	40.13:24.3,40.13:24.4	40.13:24.3	renders	word renders original
+fixed	40.13:25			refused wrong links; added missing links
+refuse	40.13:25.9	40.13:25.12		kukil is the weeds, not the verb
+accept	40.13:25.4	40.13:25.4	renders	word renders original
+accept	40.13:25.2	40.13:25.1	renders	word renders original
+accept	40.13:25.9	40.13:25.13	renders	word renders original
+accept	40.13:25.12	40.13:25.12	renders	word renders original
+accept	40.13:25.10	40.13:25.14	renders	word renders original
+fixed	40.13:26			added missing links
+accept	40.13:26.3	40.13:26.3	renders	word renders original
+accept	40.13:26.4	40.13:26.5	renders	word renders original
+accept	40.13:26.6	40.13:26.8	renders	word renders original
+accept	40.13:26.7	40.13:26.7	renders	word renders original
+fixed	40.13:27			added missing links
+accept	40.13:27.2	40.13:27.1	renders	word renders original
+accept	40.13:27.1	40.13:27.2	renders	word renders original
+accept	40.13:27.19	40.13:27.16	renders	word renders original
+accept	40.13:27.21	40.13:27.19	renders	word renders original
+fixed	40.13:28			added missing links
+accept	40.13:28.1	40.13:28.2	renders	word renders original
+accept	40.13:28.2	40.13:28.1	renders	word renders original
+accept	40.13:28.5	40.13:28.6	renders	word renders original
+accept	40.13:28.6	40.13:28.5	renders	word renders original
+accept	40.13:28.7	40.13:28.8	renders	word renders original
+accept	40.13:28.9	40.13:28.10	renders	word renders original
+accept	40.13:28.18	40.13:28.16	renders	word renders original
+fixed	40.13:29			added missing links
+accept	40.13:29.2	40.13:29.1	renders	word renders original
+accept	40.13:29.10	40.13:29.5	renders	word renders original
+accept	40.13:29.5	40.13:29.6	renders	word renders original
+accept	40.13:29.12	40.13:29.11	renders	word renders original
+fixed	40.13:30			added missing links
+accept	40.13:30.12,40.13:30.13	40.13:30.12	renders	word renders original
+accept	40.13:30.23	40.13:30.24	renders	word renders original
+accept	40.13:30.27	40.13:30.29	renders	word renders original
+accept	40.13:30.28	40.13:30.31	renders	word renders original
+fixed	40.13:31			added missing links
+accept	40.13:31.3,40.13:31.4	40.13:31.3	renders	word renders original
+fixed	40.13:32			added missing links
+accept	40.13:32.1	40.13:32.1	renders	word renders original
+accept	40.13:32.2	40.13:32.2	renders	word renders original
+accept	40.13:32.4	40.13:32.5	renders	word renders original
+accept	40.13:32.9	40.13:32.11	renders	word renders original
+accept	40.13:32.14	40.13:32.16	renders	word renders original
+accept	40.13:32.17	40.13:32.18	renders	word renders original
+fixed	40.13:33			added missing links
+accept	40.13:33.3,40.13:33.5	40.13:33.3	renders	word renders original
+accept	40.13:33.13	40.13:33.13	renders	word renders original
+accept	40.13:33.16	40.13:33.15	renders	word renders original
+accept	40.13:33.19	40.13:33.18	renders	word renders original
+accept	40.13:33.20	40.13:33.17	renders	word renders original
+accept	40.13:33.22	40.13:33.21	renders	word renders original
+accept	40.13:33.23	40.13:33.23	renders	word renders original
+fixed	40.13:34			added missing links
+accept	40.13:34.8	40.13:34.9	renders	word renders original
+accept	40.13:34.12	40.13:34.13	renders	word renders original
+accept	40.13:34.15	40.13:34.13	renders	word renders original
+accept	40.13:34.13,40.13:34.16	40.13:34.14	renders	word renders original
+fixed	40.13:35			added missing links
+accept	40.13:35.13	40.13:35.14	renders	word renders original
+accept	40.13:35.15	40.13:35.16	renders	word renders original
+fixed	40.13:36			refused wrong links; added missing links
+refuse	40.13:36.10	40.13:36.11		Yoho is possessive autou
+refuse	40.13:36.13	40.13:36.14		Nioho is the dative auto
+accept	40.13:36.2	40.13:36.2	renders	word renders original
+accept	40.13:36.6	40.13:36.6	renders	word renders original
+accept	40.13:36.7	40.13:36.5	renders	word renders original
+accept	40.13:36.10	40.13:36.14	renders	word renders original
+accept	40.13:36.13	40.13:36.11	renders	word renders original
+accept	40.13:36.16	40.13:36.16	renders	word renders original
+accept	40.13:36.21	40.13:36.23	renders	word renders original
+fixed	40.13:37			added missing links
+accept	40.13:37.1	40.13:37.2	renders	word renders original
+accept	40.13:37.2	40.13:37.1	renders	word renders original
+accept	40.13:37.8	40.13:37.5	renders	word renders original
+fixed	40.13:38			added missing links
+accept	40.13:38.1	40.13:38.2	renders	word renders original
+accept	40.13:38.6	40.13:38.8	renders	word renders original
+fixed	40.13:39			added missing links
+accept	40.13:39.1	40.13:39.2	renders	word renders original
+accept	40.13:39.3	40.13:39.4	renders	word renders original
+accept	40.13:39.4	40.13:39.5	renders	word renders original
+accept	40.13:39.9	40.13:39.13	renders	word renders original
+accept	40.13:39.11	40.13:39.17	renders	word renders original
+fixed	40.13:40			added missing links
+accept	40.13:40.13	40.13:40.11	renders	word renders original
+accept	40.13:40.14	40.13:40.15	renders	word renders original
+fixed	40.13:41			added missing links
+accept	40.13:41.15	40.13:41.19	renders	word renders original
+fixed	40.13:42			added missing links
+accept	40.13:42.7	40.13:42.10	renders	word renders original
+accept	40.13:42.9	40.13:42.12	renders	word renders original
+fixed	40.13:43			added missing links
+accept	40.13:43.8	40.13:43.13	renders	word renders original
+accept	40.13:43.10	40.13:43.14	renders	word renders original
+accept	40.13:43.13	40.13:43.17	renders	word renders original
+fixed	40.13:44			added missing links
+accept	40.13:44.19	40.13:44.20	renders	word renders original
+accept	40.13:44.20	40.13:44.21	renders	word renders original
+accept	40.13:44.23	40.13:44.24	renders	word renders original
+accept	40.13:44.29	40.13:44.30	renders	word renders original
+ok	40.13:45			
+fixed	40.13:46			added missing links
+accept	40.13:46.5	40.13:46.4	renders	word renders original
+accept	40.13:46.1	40.13:46.2	renders	word renders original
+accept	40.13:46.8	40.13:46.6	renders	word renders original
+accept	40.13:46.11	40.13:46.7	renders	word renders original
+fixed	40.13:47			refused wrong links; added missing links
+refuse	40.13:47.9	40.13:47.8		zakynenoho is the participle
+accept	40.13:47.9	40.13:47.9	renders	word renders original
+accept	40.13:47.13	40.13:47.14,40.13:47.15	renders	word renders original
+fixed	40.13:48			added missing links
+accept	40.13:48.2	40.13:48.1	renders	word renders original
+accept	40.13:48.3	40.13:48.3	renders	word renders original
+accept	40.13:48.4	40.13:48.4	renders	word renders original
+accept	40.13:48.9	40.13:48.9	renders	word renders original
+accept	40.13:48.16	40.13:48.18	renders	word renders original
+accept	40.13:48.17	40.13:48.19	renders	word renders original
+fixed	40.13:49			added missing links
+accept	40.13:49.11	40.13:49.16	renders	word renders original
+fixed	40.13:50			added missing links
+accept	40.13:50.7	40.13:50.10	renders	word renders original
+accept	40.13:50.9	40.13:50.12	renders	word renders original
+fixed	40.13:51			added missing links
+accept	40.13:51.6	40.13:51.6	renders	word renders original
+accept	40.13:51.7	40.13:51.4	renders	word renders original
+fixed	40.13:52			added missing links
+accept	40.13:52.1	40.13:52.2	renders	word renders original
+accept	40.13:52.2	40.13:52.1	renders	word renders original
+accept	40.13:52.5	40.13:52.5	renders	word renders original
+accept	40.13:52.21	40.13:52.19	renders	word renders original
+fixed	40.13:53			added missing links
+accept	40.13:53.8,40.13:53.10	40.13:53.10	renders	word renders original
+fixed	40.13:54			refused wrong links; added missing links
+refuse	40.13:54.23	40.13:54.19		tsia is haute; toutoi is v Nioho
+accept	40.13:54.14	40.13:54.13	renders	word renders original
+accept	40.13:54.16	40.13:54.15	renders	word renders original
+accept	40.13:54.23	40.13:54.22	renders	word renders original
+accept	40.13:54.21,40.13:54.22	40.13:54.19	renders	word renders original
+accept	40.13:54.27	40.13:54.25	renders	word renders original
+fixed	40.13:55			refused wrong links; added missing links
+refuse	40.13:55.7	40.13:55.6		question particle, not carpenter
+refuse	40.13:55.8	40.13:55.6		particle, not carpenter
+accept	40.13:55.3	40.13:55.2	renders	word renders original
+accept	40.13:55.11	40.13:55.8	renders	word renders original
+fixed	40.13:56			added missing links
+accept	40.13:56.11	40.13:56.11	renders	word renders original
+accept	40.13:56.12	40.13:56.12	renders	word renders original
+accept	40.13:56.14	40.13:56.13	renders	word renders original
+fixed	40.13:57			added missing links
+accept	40.13:57.10	40.13:57.10,40.13:57.11	renders	word renders original
+accept	40.13:57.13,40.13:57.14	40.13:57.14,40.13:57.15	renders	word renders original
+accept	40.13:57.21	40.13:57.23	renders	word renders original
+ok	40.13:58			

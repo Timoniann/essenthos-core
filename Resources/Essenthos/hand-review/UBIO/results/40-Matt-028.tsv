@@ -1,0 +1,73 @@
+kind	from	to	relation	reason
+fixed	40.28:1			na svitanku = epiphoskouse; added opse, de, first
+refuse	40.28:1.5	40.28:1.6		na belongs to na svitanku, not eis
+accept	40.28:1.5,40.28:1.6	40.28:1.5	renders	at dawn = epiphoskouse
+accept	40.28:1.1,40.28:1.2	40.28:1.1	renders	when past = opse
+accept	40.28:1.3	40.28:1.2	renders	zh = de
+accept	40.28:1.8	40.28:1.7	renders	first = mian
+ok	40.28:2			
+fixed	40.28:3			added de, en, kai
+accept	40.28:3.2	40.28:3.2	renders	zh = de
+accept	40.28:3.4	40.28:3.1	renders	was = en
+accept	40.28:3.8	40.28:3.8	renders	a = kai
+fixed	40.28:4			added I = de
+accept	40.28:4.1	40.28:4.2	renders	I renders de
+fixed	40.28:5			vy linked to zeteite
+accept	40.28:5.16	40.28:5.17	renders	subject of zeteite
+fixed	40.28:6			added nema, ekeito
+accept	40.28:6.1	40.28:6.1,40.28:6.2	renders	nema = ouk estin
+accept	40.28:6.2	40.28:6.2	renders	Him = subject of estin
+accept	40.28:6.13,40.28:6.14	40.28:6.13	renders	lay = ekeito
+fixed	40.28:7			pronouns linked to verbs
+accept	40.28:7.10	40.28:7.9	renders	subject of egerthe
+accept	40.28:7.21	40.28:7.22	renders	subject of opsesthe
+accept	40.28:7.25	40.28:7.24	renders	subject of eipon
+fixed	40.28:8			added verbs
+accept	40.28:8.2	40.28:8.2	renders	went = apelthousai
+accept	40.28:8.13	40.28:8.12	renders	ran = edramon
+fixed	40.28:9			added verbs, de
+accept	40.28:9.3	40.28:9.4	renders	met = hypentesen
+accept	40.28:9.8	40.28:9.7	renders	rejoice = chairete
+accept	40.28:9.9	40.28:9.8	renders	they = hai (pronominal)
+accept	40.28:9.10	40.28:9.9	renders	zh = de
+fixed	40.28:10			added hina apelthosin
+accept	40.28:10.11	40.28:10.13	renders	nekhai = hina
+accept	40.28:10.12,40.28:10.13	40.28:10.14	renders	they go = apelthosin
+fixed	40.28:11			zo refused; verbs added
+refuse	40.28:11.7	40.28:11.7		preposition linked to noun
+accept	40.28:11.4	40.28:11.1	renders	were going = poreuomenon
+accept	40.28:11.2	40.28:11.2	renders	zh = de
+accept	40.28:11.15	40.28:11.12	renders	told = apengeilan
+fixed	40.28:12			added labontes, soldiers, many
+accept	40.28:12.6	40.28:12.8	renders	took counsel = labontes
+accept	40.28:12.10	40.28:12.13	renders	guard = stratiotais
+accept	40.28:12.11	40.28:12.10	renders	many = hikana
+fixed	40.28:13			added verbs
+accept	40.28:13.9	40.28:13.9	renders	stole = eklepsan
+accept	40.28:13.13	40.28:13.12	renders	slept = koimomenon
+fixed	40.28:14			added amerimnous poiesomen
+accept	40.28:14.12,40.28:14.13	40.28:14.12	renders	free of trouble = amerimnous
+accept	40.28:14.14	40.28:14.13	renders	make = poiesomen
+fixed	40.28:15			added de, hoi, diephemisthe, hemeras
+accept	40.28:15.1	40.28:15.2	renders	I = de
+accept	40.28:15.3	40.28:15.1	renders	they = hoi (pronominal)
+accept	40.28:15.10	40.28:15.9	renders	spread = diephemisthe
+accept	40.28:15.19	40.28:15.18	renders	today = semeron hemeras
+fixed	40.28:16			added de, hou, etaxato
+accept	40.28:16.2	40.28:16.2	renders	zhe = de
+accept	40.28:16.9	40.28:16.12	renders	where = hou
+accept	40.28:16.10	40.28:16.13	renders	commanded = etaxato
+fixed	40.28:17			added verbs, some
+accept	40.28:17.5	40.28:17.2	renders	saw = idontes
+accept	40.28:17.11	40.28:17.5	renders	some = hoi
+accept	40.28:17.12	40.28:17.7	renders	doubted = edistasan
+fixed	40.28:18			added elalesen autois
+accept	40.28:18.5	40.28:18.5	renders	spoke = elalesen
+accept	40.28:18.6	40.28:18.6	renders	to them = autois
+ok	40.28:19			
+fixed	40.28:20			added hosa, eimi, hemeras, heos
+accept	40.28:20.5,40.28:20.6	40.28:20.5	renders	that which = hosa
+accept	40.28:20.7	40.28:20.6	renders	subject of eneteilamen
+accept	40.28:20.13	40.28:20.13	renders	will be = eimi
+accept	40.28:20.16	40.28:20.16	renders	every day = pasas hemeras
+accept	40.28:20.17	40.28:20.17	renders	until = heos
