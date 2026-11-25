@@ -3,7 +3,23 @@
   "titled": "{{title}} · Essenthos",
   "home": {
     "title": "Essenthos — la Biblia junto a su hebreo y su griego, palabra por palabra",
-    "description": "Lea la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra, con el Diccionario Strong, una enciclopedia de personas y lugares, una cronología y un mapa."
+    "description": "Lea la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra, con el Diccionario Strong, una enciclopedia de personas y lugares, una cronología y un mapa.",
+    "about": {
+      "what": {
+        "heading": "Qué es Essenthos",
+        "text": "Essenthos es un proyecto gratuito y sin fines comerciales para estudiar la Biblia. Cada palabra de una traducción está enlazada con la palabra hebrea o griega que traduce, de modo que se puede ver qué palabra hay detrás de cuál, qué significa y cómo la traducen otras versiones. El sitio está en español, inglés, ucraniano y alemán, y para leer no hace falta una cuenta."
+      },
+      "here": {
+        "heading": "Qué hay aquí",
+        "text": "El lector muestra cualquier capítulo en uno o varios textos, uno al lado de otro. Más de 60 textos conviven en un mismo modelo: la Biblia hebrea, la Septuaginta y el Nuevo Testamento griego en varias ediciones, junto a traducciones como la Reina-Valera 1909, la King James, la Biblia ucraniana de Ohienko y la de Lutero de 1912. Al señalar una palabra, se ilumina su original.",
+        "more": "El Diccionario Strong recoge cada palabra hebrea y griega con sus sentidos y las formas en que la traducen las versiones. La enciclopedia tiene una página para cada persona, lugar, pueblo y cosa que nombra el texto: familia, funciones, dónde está un lugar y cada versículo que los nombra. Los acompañan una cronología, un mapa, un árbol genealógico y una concordancia, y todos los datos están abiertos mediante una API gratuita."
+      },
+      "links": {
+        "heading": "Cómo se hacen y se comprueban los enlaces",
+        "text": "Cada enlace entre dos palabras registra qué lo estableció: una fuente que lo afirma, una revisión a mano o un método que lo dedujo, como un número Strong compartido o un alineador automático. Un enlace deducido lleva una estimación de su seguridad y nunca se presenta como uno que afirma una fuente. Donde una segunda fuente enlazó la misma palabra, el lector muestra con qué frecuencia coinciden ambas.",
+        "more": "Cada afirmación de una página se puede comprobar con los versículos de los que procede, y donde algo no se sabe, la página lo dice. De dónde procede cada texto y cada conjunto de datos, y bajo qué licencia, está en «Fuentes y licencias»."
+      }
+    }
   },
   "quoted": "«{{text}}»",
   "chapterVerse": "{{chapter}}:{{verse}}",

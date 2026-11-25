@@ -3,7 +3,23 @@
   "titled": "{{title}} · Essenthos",
   "home": {
     "title": "Essenthos — die Bibel neben dem hebräischen und griechischen Urtext, Wort für Wort",
-    "description": "Lesen Sie die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort — mit dem Strong-Wörterbuch, einer Enzyklopädie der Personen und Orte, Zeitleiste und Karte."
+    "description": "Lesen Sie die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort — mit dem Strong-Wörterbuch, einer Enzyklopädie der Personen und Orte, Zeitleiste und Karte.",
+    "about": {
+      "what": {
+        "heading": "Was Essenthos ist",
+        "text": "Essenthos ist ein kostenloses, nichtkommerzielles Projekt zum Studium der Bibel. Jedes Wort einer Übersetzung ist mit dem hebräischen oder griechischen Wort verknüpft, das es wiedergibt. So ist zu sehen, welches Wort hinter welchem steht, was es bedeutet und wie andere Übersetzungen es wiedergeben. Die Seite gibt es auf Deutsch, Englisch, Ukrainisch und Spanisch, und zum Lesen braucht man kein Konto."
+      },
+      "here": {
+        "heading": "Was es hier gibt",
+        "text": "Die Leseansicht zeigt jedes Kapitel in einem oder mehreren Texten nebeneinander. Mehr als 60 Texte stehen in einem Modell: die hebräische Bibel, die Septuaginta und das griechische Neue Testament in mehreren Ausgaben, neben Übersetzungen wie Luther 1912, der King-James-Bibel, der ukrainischen Bibel von Ohijenko und Reina-Valera 1909. Zeigen Sie auf ein Wort, und sein Original leuchtet auf.",
+        "more": "Das Strong-Wörterbuch führt jedes hebräische und griechische Wort mit seinen Bedeutungen auf und zeigt, wie die Übersetzungen es wiedergeben. Die Enzyklopädie hat eine Seite für jede Person, jeden Ort, jedes Volk und jede Sache, die der Text nennt: Familie, Rollen, wo ein Ort liegt, und jeder Vers, der sie nennt. Dazu kommen Zeitleiste, Karte, Stammbaum und Konkordanz, und alle Daten sind über eine kostenlose API offen zugänglich."
+      },
+      "links": {
+        "heading": "Wie die Verknüpfungen entstehen und geprüft werden",
+        "text": "Jede Verknüpfung zwischen zwei Wörtern hält fest, worauf sie beruht: auf einer Quelle, die sie angibt, auf einer Prüfung von Hand oder auf einem Verfahren, das sie erschlossen hat, etwa einer gemeinsamen Strong-Nummer oder einem automatischen Abgleich. Eine erschlossene Verknüpfung trägt eine Schätzung, wie sicher sie ist, und wird nie als eine ausgegeben, die eine Quelle angibt. Wo eine zweite Quelle dasselbe Wort verknüpft hat, zeigt die Leseansicht, wie oft beide übereinstimmen.",
+        "more": "Jede Aussage auf einer Seite lässt sich an den Versen prüfen, aus denen sie stammt, und wo etwas nicht bekannt ist, sagt die Seite es. Woher jeder Text und jeder Datensatz stammt und unter welcher Lizenz, steht unter „Quellen und Lizenzen“."
+      }
+    }
   },
   "quoted": "„{{text}}“",
   "chapterVerse": "{{chapter}},{{verse}}",

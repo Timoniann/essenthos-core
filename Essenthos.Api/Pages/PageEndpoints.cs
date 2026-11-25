@@ -24,6 +24,11 @@ internal static class PageEndpoints
     private const string Html = "text/html; charset=utf-8";
     private const string Xml = "application/xml; charset=utf-8";
 
+    private const string Markdown = "text/markdown; charset=utf-8";
+
+    /// <summary>Where the home page's Markdown is served by itself.</summary>
+    private const string Llms = "</llms.txt>; rel=\"alternate\"; type=\"text/markdown\"";
+
     /// <summary>A reader's own pages, which no crawler has any business in.</summary>
     private static readonly string[] Private = ["/account", "/bookmarks", "/admin"];
 
@@ -62,6 +67,19 @@ internal static class PageEndpoints
                     $"The reader's index.html is not available, so pages are not rendered here. Set {PageShell.ConfigurationKey} " +
                     "to the web container's /index.html; until then the proxy serves the plain application.",
                     statusCode: StatusCodes.Status503ServiceUnavailable);
+            }
+
+            // The home page is also the site described in Markdown, the reader's llms.txt, for a client
+            // that asks for Markdown over HTML; it says so in a Link header, and HTML stays the default.
+            if (address.Kind == PageKind.Home && reading.Markdown is { } markdown)
+            {
+                context.Response.Headers.Vary = "Accept";
+                context.Response.Headers.Link = Llms;
+                if (PrefersMarkdown(request))
+                {
+                    context.Response.Headers.CacheControl = "no-cache";
+                    return Results.Text(markdown, Markdown, Encoding.UTF8);
+                }
             }
 
             // A page is a function of the release, the build and the shell, so a client that holds it as it
@@ -201,6 +219,30 @@ internal static class PageEndpoints
             .ToList();
         var location = PageAddress.Escaped(spelled);
         return kept.Count == 0 ? location : $"{location}?{string.Join('&', kept)}";
+    }
+
+    /// <summary>
+    /// Whether a request ranks Markdown above HTML: <c>text/markdown</c> with a weight higher than any
+    /// it gives <c>text/html</c> by name. Wildcards are not a preference for either, so a browser's
+    /// <c>*/*</c> leaves it HTML.
+    /// </summary>
+    public static bool PrefersMarkdown(HttpRequest request)
+    {
+        double markdown = 0, html = 0;
+        foreach (var type in request.GetTypedHeaders().Accept)
+        {
+            var weight = type.Quality ?? 1;
+            if (type.MediaType.Equals("text/markdown", StringComparison.OrdinalIgnoreCase))
+            {
+                markdown = Math.Max(markdown, weight);
+            }
+            else if (type.MediaType.Equals("text/html", StringComparison.OrdinalIgnoreCase))
+            {
+                html = Math.Max(html, weight);
+            }
+        }
+
+        return markdown > html;
     }
 
     private static string Origin(HttpContext context, IConfiguration configuration) =>

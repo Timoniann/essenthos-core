@@ -3,7 +3,23 @@
   "titled": "{{title}} · Essenthos",
   "home": {
     "title": "Essenthos — the Bible beside its Hebrew and Greek, word by word",
-    "description": "Read the Bible beside the Hebrew and Greek it was translated from, word by word, with Strong's Dictionary, an encyclopedia of people and places, a timeline and a map."
+    "description": "Read the Bible beside the Hebrew and Greek it was translated from, word by word, with Strong's Dictionary, an encyclopedia of people and places, a timeline and a map.",
+    "about": {
+      "what": {
+        "heading": "What Essenthos is",
+        "text": "Essenthos is a free, non-commercial place to study the Bible. Each word of a translation is linked to the Hebrew or Greek word it renders, so a reader can see which word stands behind which, what it means and how other translations render it. The site is in English, Ukrainian, German and Spanish, and reading needs no account."
+      },
+      "here": {
+        "heading": "What is here",
+        "text": "The reader shows any chapter in one or more texts side by side. More than 60 texts stand in one model: the Hebrew Bible, the Septuagint and the Greek New Testament in several editions, beside translations such as the King James Version, Ohienko's Ukrainian Bible, Luther 1912 and Reina-Valera 1909. Point at a word and its original lights up.",
+        "more": "Strong's Dictionary gives every Hebrew and Greek word with its senses and the ways the translations render it. The encyclopedia has a page for each person, place, people and thing the text names: family, roles, where a place lies, and every verse that names them. A timeline, a map, a family tree and a concordance go with them, and all the data is open through a free API."
+      },
+      "links": {
+        "heading": "How the links are made and checked",
+        "text": "Every link between two words records what established it: a source that states it, a check by hand, or a method that worked it out, such as a shared Strong's number or an aligner. A link that was worked out carries an estimate of how sure it is, and it is never shown as one a source states. Where a second source linked the same word, the reader shows how often the two agree.",
+        "more": "Every claim on a page can be checked against the verses it comes from, and where something is not known, the page says so. Where each text and dataset comes from, and under which licence, is on Sources and licences."
+      }
+    }
   },
   "quoted": "“{{text}}”",
   "chapterVerse": "{{chapter}}:{{verse}}",

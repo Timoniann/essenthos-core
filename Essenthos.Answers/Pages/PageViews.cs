@@ -1035,8 +1035,19 @@ internal static partial class PageViews
         var description = t.Text("home.description");
         var body = Open(language)
             .Element("h1", PageContent.SiteName)
-            .Element("p", description)
-            .Open("nav").Open("ul");
+            .Element("p", description);
+        foreach (var section in t.Keys("home.about"))
+        {
+            body.Open("section").Element("h2", t.Text($"home.about.{section}.heading"));
+            foreach (var paragraph in t.Keys($"home.about.{section}").Where(key => key != "heading"))
+            {
+                body.Element("p", t.Text($"home.about.{section}.{paragraph}"));
+            }
+
+            body.Close("section");
+        }
+
+        body.Open("nav").Open("ul");
         foreach (var key in HomeSections)
         {
             body.Open("li").Link(language.Path(PageSections.Named(key).Path), t.Text($"page.{key}.title")).Close("li");
