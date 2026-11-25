@@ -17,7 +17,7 @@ internal static class TextTaglines
         {
             ["BHSA"] = Say(
                 "The Masoretic Hebrew Bible of the Leningrad Codex, with the ETCBC's linguistic annotation of every word.",
-                "Масоретська єврейська Біблія за Ленінградським кодексом, з лінгвістичною розміткою ETCBC для кожного слова.",
+                "Масоретська гебрейська Біблія за Ленінградським кодексом, з лінгвістичною розміткою ETCBC для кожного слова.",
                 "Die masoretische Hebräische Bibel nach dem Codex Leningradensis, mit der sprachlichen Annotation des ETCBC zu jedem Wort.",
                 "La Biblia hebrea masorética del Códice de Leningrado, con la anotación lingüística del ETCBC en cada palabra."),
             ["SP"] = Say(
@@ -132,7 +132,7 @@ internal static class TextTaglines
                 "La Revised Version americana: la línea de la King James llevada al texto griego crítico."),
             ["YLT"] = Say(
                 "A strictly literal English that keeps the grammar of the Hebrew and Greek.",
-                "Суворо буквальний англійський переклад, що зберігає граматику єврейського й грецького тексту.",
+                "Суворо буквальний англійський переклад, що зберігає граматику гебрейського й грецького тексту.",
                 "Ein streng wörtliches Englisch, das die Grammatik des Hebräischen und Griechischen bewahrt.",
                 "Un inglés estrictamente literal que conserva la gramática del hebreo y del griego."),
             ["JPS1917"] = Say(
@@ -142,7 +142,7 @@ internal static class TextTaglines
                 "La primera Biblia inglesa hecha por judíos para judíos, a partir del texto masorético."),
             ["BSB"] = Say(
                 "A modern English translation in which every word can be traced to the Hebrew or Greek.",
-                "Сучасний англійський переклад, у якому кожне слово можна простежити до єврейського чи грецького.",
+                "Сучасний англійський переклад, у якому кожне слово можна простежити до гебрейського чи грецького.",
                 "Eine moderne englische Übersetzung, in der sich jedes Wort auf das Hebräische oder Griechische zurückführen lässt.",
                 "Una traducción inglesa moderna en la que cada palabra remite al hebreo o al griego."),
             ["WEB"] = Say(
@@ -192,7 +192,7 @@ internal static class TextTaglines
                 "La traducción sinodal rusa de 1876, con los libros que marca como no canónicos."),
             ["UBIO"] = Say(
                 "Ivan Ohienko's Ukrainian Bible, translated from the Hebrew and Greek.",
-                "Українська Біблія Івана Огієнка, перекладена з єврейської та грецької.",
+                "Українська Біблія Івана Огієнка, перекладена з гебрейської та грецької.",
                 "Iwan Ohijenkos ukrainische Bibel, aus dem Hebräischen und Griechischen übersetzt.",
                 "La Biblia ucraniana de Iván Ohienko, traducida del hebreo y del griego."),
             ["UKR1871"] = Say(
@@ -227,7 +227,7 @@ internal static class TextTaglines
                 "La Biblia de Gdansk de 1632 llevada al polaco actual."),
             ["PESHITTA"] = Say(
                 "The Syriac Old Testament, translated from the Hebrew.",
-                "Сирійський Старий Завіт, перекладений з єврейської.",
+                "Сирійський Старий Завіт, перекладений з гебрейської.",
                 "Das syrische Alte Testament, aus dem Hebräischen übersetzt.",
                 "El Antiguo Testamento siríaco, traducido del hebreo."),
             ["ONKELOS"] = Say(

@@ -48,6 +48,8 @@
         <!-- The records withdrawn from the encyclopedia: the Forge withdraws them, and the API answers
              their old addresses from the same list. -->
         <EmbeddedResource Include="Corpus\WithdrawnRecords.json" LogicalName="WithdrawnRecords.json" />
+        <!-- The spellings a search takes for one word (SearchSynonyms). -->
+        <EmbeddedResource Include="Corpus\SearchSynonyms.tsv" LogicalName="SearchSynonyms.tsv" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,7 @@
+# Spellings a search takes for one word: a typed word holding one part of a row is searched with each
+# other part of that row in its place, and the other way round. One row per group, the language's code
+# first, then the parts, tab-separated; a part is a word's front or root as WordFolding folds it.
+#
+# ukr: the site calls Hebrew «гебрейський» (the owner, 2026-11-25); readers and other
+# translations say «єврейський» or «давньоєврейський», and each finds what the others find.
+ukr	гебрейськ	давньоєврейськ	єврейськ
