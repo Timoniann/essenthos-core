@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-23
 # Our records. No dataset source: where a record came from is its claims; a dataset's id for it is in records/external-ids.
 slug	kind	subtype	place_kind	name	sex	sex_source	name_gender	tribe	origin	another_name_for	byname
 aaron	person	\N	\N	Aaron	male	\N	\N	Levi	\N	\N	\N
@@ -148,7 +148,7 @@ adullamites	people	\N	\N	Adullamites	\N	\N	\N	\N	\N	\N	\N
 adummim	place	\N	road	Adummim	\N	\N	\N	\N	\N	\N	\N
 aeneas	person	\N	\N	Aeneas	male	\N	male	\N	\N	\N	\N
 aenon	place	\N	settlement	Aenon	\N	\N	\N	\N	\N	\N	\N
-aetos	being	creature	\N	Aetos	\N	\N	\N	\N	\N	\N	\N
+aetos	being	creature	\N	Eagle	\N	\N	\N	\N	\N	\N	\N
 agabus	person	\N	\N	Agabus	male	\N	male	\N	\N	\N	\N
 agag	person	\N	\N	Agag	male	\N	\N	\N	\N	\N	\N
 agag-2	person	\N	\N	Agag	male	\N	\N	\N	\N	\N	\N
@@ -247,8 +247,8 @@ akkub-2	person	\N	\N	Akkub	male	\N	\N	Levi	\N	\N	\N
 akkub-3	person	\N	\N	Akkub	male	\N	\N	Levi	\N	\N	\N
 akkub-5	person	\N	\N	Akkub	\N	\N	\N	\N	\N	\N	\N
 akrabbim	place	\N	mountain pass	Akrabbim	\N	\N	\N	\N	\N	\N	\N
-akris	being	creature	\N	Akris	\N	\N	\N	\N	\N	\N	\N
-alektor	being	creature	\N	Alektor	\N	\N	\N	\N	\N	\N	\N
+akris	being	creature	\N	Locust	\N	\N	\N	\N	\N	\N	\N
+alektor	being	creature	\N	Rooster	\N	\N	\N	\N	\N	\N	\N
 alemeth	person	\N	\N	Alemeth	male	\N	\N	Benjamin	\N	\N	\N
 alemeth-2	person	\N	\N	Alemeth	male	\N	\N	Benjamin	\N	\N	\N
 alemeth-3	place	\N	settlement	Alemeth	\N	\N	\N	\N	\N	\N	\N
@@ -264,7 +264,7 @@ allonbacuth	place	\N	tree	Allon-bacuth	\N	\N	\N	\N	\N	\N	\N
 almodad	person	\N	\N	Almodad	male	\N	\N	\N	\N	\N	\N
 almon	place	\N	settlement	Almon	\N	\N	\N	\N	\N	alemeth-3	\N
 almondiblathaim	place	\N	settlement	Almon-diblathaim	\N	\N	\N	\N	\N	bethdiblathaim	\N
-alopex	being	creature	\N	Alopex	\N	\N	\N	\N	\N	\N	\N
+alopex	being	creature	\N	Fox	\N	\N	\N	\N	\N	\N	\N
 alphaeus	person	\N	\N	Alphaeus	male	\N	male	\N	\N	\N	\N
 altar-el-elohe-israel	object	monument	\N	Altar El-elohe-Israel	\N	\N	\N	\N	\N	\N	\N
 altar-of-incense	object	furnishing	\N	Altar of Incense	\N	\N	\N	\N	\N	\N	\N
@@ -400,7 +400,7 @@ apollos	person	\N	\N	Apollos	male	\N	male	\N	\N	\N	\N
 appaim	person	\N	\N	Appaim	male	\N	\N	Judah	\N	\N	\N
 apphia	person	\N	\N	Apphia	female	\N	female	\N	\N	\N	\N
 appointed-times	observance	appointed-time	\N	The Appointed Times of the LORD	\N	\N	\N	\N	\N	\N	\N
-aqrav	being	creature	\N	Aqrav	\N	\N	\N	\N	\N	\N	\N
+aqrav	being	creature	\N	Scorpion	\N	\N	\N	\N	\N	\N	\N
 aquila	person	\N	\N	Aquila	male	\N	male	\N	\N	\N	\N
 ar	place	\N	settlement	Ar	\N	\N	\N	\N	\N	\N	\N
 ara	person	\N	\N	Ara	male	\N	\N	Asher	\N	\N	\N
@@ -424,7 +424,7 @@ ararat	place	\N	geographic region	Ararat	\N	\N	\N	\N	\N	\N	\N
 araunah	person	\N	\N	Araunah	male	\N	\N	\N	\N	\N	\N
 arba	person	\N	\N	Arba	male	\N	\N	\N	\N	\N	\N
 arbahites	people	\N	\N	Arbahites	\N	\N	\N	\N	\N	\N	\N
-arbeh	being	creature	\N	Arbeh	\N	\N	\N	\N	\N	\N	\N
+arbeh	being	creature	\N	Locust	\N	\N	\N	\N	\N	\N	\N
 arbela	place	\N	settlement	Arbela	\N	\N	\N	\N	\N	\N	\N
 arbites	people	\N	\N	Arbites	\N	\N	\N	\N	\N	\N	\N
 archangel	title	\N	\N	Archangel	\N	\N	\N	\N	\N	\N	\N
@@ -437,7 +437,7 @@ ardites	people	\N	\N	Ardites	\N	\N	\N	\N	\N	\N	\N
 ardon	person	\N	\N	Ardon	male	\N	\N	Judah	\N	\N	\N
 areli	person	\N	\N	Areli	male	\N	\N	Gad	\N	\N	\N
 arelites	people	\N	\N	Arelites	\N	\N	\N	\N	\N	\N	\N
-aren	being	creature	\N	Aren	\N	\N	\N	\N	\N	\N	\N
+aren	being	creature	\N	Lamb	\N	\N	\N	\N	\N	\N	\N
 areopagus	place	\N	hill	Areopagus	\N	\N	\N	\N	\N	\N	\N
 aretas	person	\N	\N	Aretas	male	\N	male	\N	\N	\N	\N
 argob	person	\N	\N	Argob	male	\N	\N	\N	\N	\N	\N
@@ -459,12 +459,12 @@ ark-of-bulrushes	object	vessel	\N	Ark of Bulrushes	\N	\N	\N	\N	\N	\N	\N
 ark-of-the-covenant	object	furnishing	\N	Ark of the Covenant	\N	\N	\N	\N	\N	\N	\N
 arkite-son-of-canaan	person	\N	\N	Arkite	male	relationship	\N	\N	\N	\N	\N
 arkites	people	\N	\N	Arkites	\N	\N	\N	\N	\N	\N	\N
-arkos	being	creature	\N	Arkos	\N	\N	\N	\N	\N	\N	\N
+arkos	being	creature	\N	Bear	\N	\N	\N	\N	\N	\N	\N
 armageddon	place	\N	mountain, river, settlement, special, valley	Armageddon	\N	\N	\N	\N	\N	megiddo	\N
 armoni	person	\N	\N	Armoni	male	\N	\N	Benjamin	\N	\N	\N
 arnan	person	\N	\N	Arnan	male	\N	\N	Judah	\N	\N	\N
 arnevet	being	creature	\N	Arnevet	\N	\N	\N	\N	\N	\N	\N
-arnion	being	creature	\N	Arnion	\N	\N	\N	\N	\N	\N	\N
+arnion	being	creature	\N	Lamb	\N	\N	\N	\N	\N	\N	\N
 arnon	place	\N	river	Arnon	\N	\N	\N	\N	\N	\N	\N
 arod	being	creature	\N	Arod	\N	\N	\N	\N	\N	\N	\N
 arodi	person	\N	\N	Arodi	male	\N	\N	Gad	\N	\N	\N
@@ -487,7 +487,7 @@ arumah	place	\N	settlement	Arumah	\N	\N	\N	\N	\N	\N	\N
 arvad-2	place	\N	settlement	Arvad	\N	\N	\N	\N	\N	\N	\N
 arvadite-son-of-canaan	person	\N	\N	Arvadite	male	relationship	\N	\N	\N	\N	\N
 arvadites	people	\N	\N	Arvadites	\N	\N	\N	\N	\N	\N	\N
-aryeh	being	creature	\N	Aryeh	\N	\N	\N	\N	\N	\N	\N
+aryeh	being	creature	\N	Lion	\N	\N	\N	\N	\N	\N	\N
 arza	person	\N	\N	Arza	male	\N	\N	\N	\N	\N	\N
 asa	person	\N	\N	Asa	male	\N	\N	Judah	\N	\N	\N
 asa-2	person	\N	\N	Asa	male	\N	\N	Levi	\N	\N	\N
@@ -504,7 +504,7 @@ asaph-2	person	\N	\N	Asaph	male	\N	\N	Levi	\N	\N	\N
 asaph-4	person	\N	\N	Asaph	male	\N	\N	\N	\N	\N	\N
 asarel	person	\N	\N	Asarel	male	\N	\N	Judah	\N	\N	\N
 asenath	person	\N	\N	Asenath	female	\N	\N	\N	\N	\N	\N
-ash-moth	being	creature	\N	Ash	\N	\N	\N	\N	\N	\N	\N
+ash-moth	being	creature	\N	Moth	\N	\N	\N	\N	\N	\N	\N
 ashan	place	\N	settlement	Ashan	\N	\N	\N	\N	\N	\N	\N
 asharelah	person	\N	\N	Asharelah	male	\N	\N	Levi	\N	\N	\N
 ashbel	person	\N	\N	Ashbel	male	\N	\N	Benjamin	\N	\N	\N
@@ -565,27 +565,27 @@ athaliah-3	person	\N	\N	Athaliah	male	\N	\N	\N	\N	\N	\N
 atharim	place	\N	road, settlement, special	Atharim	\N	\N	\N	\N	\N	\N	\N
 athens	place	\N	settlement	Athens	\N	\N	\N	\N	\N	\N	\N
 athlai	person	\N	\N	Athlai	male	\N	\N	\N	\N	\N	\N
-aton	being	creature	\N	Aton	\N	\N	\N	\N	\N	\N	\N
+aton	being	creature	\N	Donkey	\N	\N	\N	\N	\N	\N	\N
 atrothbethjoab	place	\N	settlement, special	Atroth-beth-joab	\N	\N	\N	\N	\N	\N	\N
 atrothshophan	place	\N	settlement	Atroth-shophan	\N	\N	\N	\N	\N	\N	\N
 attai	person	\N	\N	Attai	male	\N	\N	Judah	\N	\N	\N
 attai-2	person	\N	\N	Attai	male	\N	\N	Gad	\N	\N	\N
 attai-3	person	\N	\N	Attai	male	\N	\N	Judah	\N	\N	\N
 attalia	place	\N	settlement	Attalia	\N	\N	\N	\N	\N	\N	\N
-attud	being	creature	\N	Attud	\N	\N	\N	\N	\N	\N	\N
+attud	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 aven	place	\N	settlement, special	Aven	\N	\N	\N	\N	\N	bethaven-2	\N
 avim	people	\N	\N	Avim	\N	\N	\N	\N	\N	\N	\N
 avites	people	\N	\N	Avites	\N	\N	\N	\N	\N	\N	\N
 avith	place	\N	settlement	Avith	\N	\N	\N	\N	\N	\N	\N
 avva	place	\N	settlement, special	Avva	\N	\N	\N	\N	\N	ivvah	\N
 avvim	place	\N	settlement	Avvim	\N	\N	\N	\N	\N	ai	\N
-ayil	being	creature	\N	Ayil	\N	\N	\N	\N	\N	\N	\N
+ayil	being	creature	\N	Ram	\N	\N	\N	\N	\N	\N	\N
 ayir	being	creature	\N	Ayir	\N	\N	\N	\N	\N	\N	\N
 ayyah	place	\N	settlement	Ayyah	\N	\N	\N	\N	\N	ai	\N
 ayyah-bird	being	creature	\N	Ayyah	\N	\N	\N	\N	\N	\N	\N
-ayyal	being	creature	\N	Ayyal	\N	\N	\N	\N	\N	\N	\N
-ayyalah	being	creature	\N	Ayyalah	\N	\N	\N	\N	\N	\N	\N
-ayyelet	being	creature	\N	Ayyelet	\N	\N	\N	\N	\N	\N	\N
+ayyal	being	creature	\N	Deer	\N	\N	\N	\N	\N	\N	\N
+ayyalah	being	creature	\N	Deer	\N	\N	\N	\N	\N	\N	\N
+ayyelet	being	creature	\N	Doe	\N	\N	\N	\N	\N	\N	\N
 azal	place	\N	river, settlement, special	Azal	\N	\N	\N	\N	\N	\N	\N
 azaliah	person	\N	\N	Azaliah	male	\N	\N	\N	\N	\N	\N
 azaniah	person	\N	\N	Azaniah	male	\N	\N	Levi	\N	\N	\N
@@ -746,7 +746,7 @@ batanea	place	\N	region	Batanea	\N	\N	\N	\N	\N	\N	\N
 bathrabbim	place	\N	gate	Bath-rabbim	\N	\N	\N	\N	\N	\N	\N
 bathsheba	person	\N	\N	Bathsheba	female	\N	\N	\N	\N	\N	\N
 bathshua	person	\N	\N	Bath-shua	female	\N	\N	\N	\N	\N	\N
-batrachos	being	creature	\N	Batrachos	\N	\N	\N	\N	\N	\N	\N
+batrachos	being	creature	\N	Frog	\N	\N	\N	\N	\N	\N	\N
 bavvai	person	\N	\N	Bavvai	male	\N	\N	\N	\N	\N	\N
 bazluth	person	\N	\N	Bazluth	male	\N	\N	Levi	\N	\N	\N
 bealiah	person	\N	\N	Bealiah	male	\N	\N	\N	\N	\N	\N
@@ -966,7 +966,7 @@ bohan	person	\N	\N	Bohan	male	\N	\N	Reuben	\N	\N	\N
 bohans-stone	object	monument	\N	Stone of Bohan	\N	\N	\N	\N	\N	\N	\N
 book-of-jashar	object	book	\N	Book of Jashar	\N	\N	\N	\N	\N	\N	\N
 borashan	place	\N	settlement	Bor-ashan	\N	\N	\N	\N	\N	ashan	\N
-bous	being	creature	\N	Bous	\N	\N	\N	\N	\N	\N	\N
+bous	being	creature	\N	Ox	\N	\N	\N	\N	\N	\N	\N
 bozez	place	\N	cliff	Bozez	\N	\N	\N	\N	\N	\N	\N
 bozkath	place	\N	settlement	Bozkath	\N	\N	\N	\N	\N	\N	\N
 bozrah	place	\N	settlement	Bozrah	\N	\N	\N	\N	\N	\N	\N
@@ -1040,12 +1040,12 @@ chagav	being	creature	\N	Chagav	\N	\N	\N	\N	\N	\N	\N
 chalcis	place	\N	settlement	Chalcis	\N	\N	\N	\N	\N	\N	\N
 chaldea	place	\N	geographic region	Chaldea	\N	\N	\N	\N	\N	\N	\N
 chaldeans	people	\N	\N	Chaldeans	\N	\N	\N	\N	chesed	\N	\N
-chamor	being	creature	\N	Chamor	\N	\N	\N	\N	\N	\N	\N
+chamor	being	creature	\N	Donkey	\N	\N	\N	\N	\N	\N	\N
 chargol	being	creature	\N	Chargol	\N	\N	\N	\N	\N	\N	\N
 charmande	place	\N	settlement	Charmande	\N	\N	\N	\N	\N	\N	\N
-chasidah	being	creature	\N	Chasidah	\N	\N	\N	\N	\N	\N	\N
+chasidah	being	creature	\N	Stork	\N	\N	\N	\N	\N	\N	\N
 chasil	being	creature	\N	Chasil	\N	\N	\N	\N	\N	\N	\N
-chazir	being	creature	\N	Chazir	\N	\N	\N	\N	\N	\N	\N
+chazir	being	creature	\N	Pig	\N	\N	\N	\N	\N	\N	\N
 chebar	place	\N	river	Chebar	\N	\N	\N	\N	\N	\N	\N
 chedorlaomer	person	\N	\N	Chedorlaomer	male	\N	\N	\N	\N	\N	\N
 chefarhaamonai	place	\N	\N	Chefarhaamonai	\N	\N	\N	\N	\N	\N	\N
@@ -1083,7 +1083,7 @@ chislothtabor	place	\N	settlement	Chisloth-tabor	\N	\N	\N	\N	\N	chesulloth	\N
 chitlish	place	\N	settlement	Chitlish	\N	\N	\N	\N	\N	\N	\N
 chiun	being	god	\N	Chiun	\N	\N	\N	\N	\N	\N	\N
 chloe	person	\N	\N	Chloe	female	\N	female	\N	\N	\N	\N
-choiros	being	creature	\N	Choiros	\N	\N	\N	\N	\N	\N	\N
+choiros	being	creature	\N	Pig	\N	\N	\N	\N	\N	\N	\N
 choled	being	creature	\N	Choled	\N	\N	\N	\N	\N	\N	\N
 chomet	being	creature	\N	Chomet	\N	\N	\N	\N	\N	\N	\N
 chorashan	place	\N	\N	Chorashan	\N	\N	\N	\N	\N	\N	\N
@@ -1140,7 +1140,7 @@ dagon	being	god	\N	Dagon	\N	\N	\N	\N	\N	\N	\N
 dalmanutha	place	\N	settlement	Dalmanutha	\N	\N	\N	\N	\N	magadan	\N
 dalmatia	place	\N	region	Dalmatia	\N	\N	\N	\N	\N	\N	\N
 dalphon	person	\N	\N	Dalphon	male	\N	\N	\N	\N	\N	\N
-damalis	being	creature	\N	Damalis	\N	\N	\N	\N	\N	\N	\N
+damalis	being	creature	\N	Heifer	\N	\N	\N	\N	\N	\N	\N
 damaris	person	\N	\N	Damaris	female	\N	female	\N	\N	\N	\N
 damascus	place	\N	settlement	Damascus	\N	\N	\N	\N	\N	\N	\N
 dan	person	\N	\N	Dan	male	\N	\N	Dan	\N	\N	\N
@@ -1175,7 +1175,7 @@ dedan-2	person	\N	\N	Dedan	male	\N	\N	\N	\N	\N	\N
 dedan-3	place	\N	settlement	Dedan	\N	\N	\N	\N	\N	\N	\N
 dedanim	people	\N	\N	Dedanim	\N	\N	\N	\N	\N	\N	\N
 dehavites	people	\N	\N	Dehavites	\N	\N	\N	\N	\N	\N	\N
-dekhar	being	creature	\N	Dekhar	\N	\N	\N	\N	\N	\N	\N
+dekhar	being	creature	\N	Ram	\N	\N	\N	\N	\N	\N	\N
 delaiah	person	\N	\N	Delaiah	male	\N	\N	Judah	\N	\N	\N
 delaiah-2	person	\N	\N	Delaiah	male	\N	\N	Levi	\N	\N	\N
 delaiah-3	person	\N	\N	Delaiah	male	\N	\N	\N	\N	\N	\N
@@ -1186,9 +1186,9 @@ demas	person	\N	\N	Demas	male	\N	male	\N	\N	\N	\N
 demetrius	person	\N	\N	Demetrius	male	\N	male	\N	\N	\N	\N
 demetrius-2	person	\N	\N	Demetrius	male	\N	male	\N	\N	\N	\N
 derbe	place	\N	settlement	Derbe	\N	\N	\N	\N	\N	\N	\N
-deror	being	creature	\N	Deror	\N	\N	\N	\N	\N	\N	\N
+deror	being	creature	\N	Swallow	\N	\N	\N	\N	\N	\N	\N
 deuel	person	\N	\N	Deuel	male	\N	\N	Gad	\N	\N	\N
-devorah-bee	being	creature	\N	Devorah	\N	\N	\N	\N	\N	\N	\N
+devorah-bee	being	creature	\N	Bee	\N	\N	\N	\N	\N	\N	\N
 diblaim	person	\N	\N	Diblaim	male	\N	\N	\N	\N	\N	\N
 diblath	place	\N	\N	Diblath	\N	\N	\N	\N	\N	\N	\N
 dibon	place	\N	settlement	Dibon	\N	\N	\N	\N	\N	\N	\N
@@ -1223,7 +1223,7 @@ doeg	person	\N	\N	Doeg	male	\N	\N	\N	\N	\N	\N
 dophkah	place	\N	settlement	Dophkah	\N	\N	\N	\N	\N	\N	\N
 dor	place	\N	settlement	Dor	\N	\N	\N	\N	\N	\N	\N
 dothan	place	\N	settlement	Dothan	\N	\N	\N	\N	\N	\N	\N
-dov	being	creature	\N	Dov	\N	\N	\N	\N	\N	\N	\N
+dov	being	creature	\N	Bear	\N	\N	\N	\N	\N	\N	\N
 dragon-of-babylon	being	creature	\N	Dragon of Babylon	\N	\N	\N	\N	\N	\N	\N
 dragonspring	place	\N	spring	Dragon Spring	\N	\N	\N	\N	\N	enrogel	\N
 drusilla	person	\N	\N	Drusilla	female	\N	female	\N	\N	\N	\N
@@ -1263,9 +1263,9 @@ edrei	place	\N	settlement	Edrei	\N	\N	\N	\N	\N	\N	\N
 edrei-2	place	\N	settlement	Edrei	\N	\N	\N	\N	\N	\N	\N
 efeh	being	creature	\N	Ef'eh	\N	\N	\N	\N	\N	\N	\N
 efroach	being	creature	\N	Efroach	\N	\N	\N	\N	\N	\N	\N
-egel	being	creature	\N	Egel	\N	\N	\N	\N	\N	\N	\N
+egel	being	creature	\N	Calf	\N	\N	\N	\N	\N	\N	\N
 eglah	person	\N	\N	Eglah	female	\N	\N	\N	\N	\N	\N
-eglah-animal	being	creature	\N	Eglah	\N	\N	\N	\N	\N	\N	\N
+eglah-animal	being	creature	\N	Heifer	\N	\N	\N	\N	\N	\N	\N
 eglaim	place	\N	settlement, special, spring	Eglaim	\N	\N	\N	\N	\N	\N	\N
 eglathshelishiyah	place	\N	settlement, special	Eglath-shelishiyah	\N	\N	\N	\N	\N	\N	\N
 eglon	person	\N	\N	Eglon	male	\N	\N	\N	\N	\N	\N
@@ -1516,7 +1516,7 @@ erastus-2	person	\N	\N	Erastus	male	\N	male	\N	\N	\N	\N
 erech	place	\N	settlement	Erech	\N	\N	\N	\N	\N	\N	\N
 eri	person	\N	\N	Eri	male	\N	\N	Gad	\N	\N	\N
 eridu	place	\N	settlement	Eridu	\N	\N	\N	\N	\N	\N	\N
-eriphos	being	creature	\N	Eriphos	\N	\N	\N	\N	\N	\N	\N
+eriphos	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 erites	people	\N	\N	Erites	\N	\N	\N	\N	eri	\N	\N
 esarhaddon	person	\N	\N	Esarhaddon	male	\N	\N	\N	\N	\N	\N
 esau	person	\N	\N	Esau	male	\N	\N	\N	\N	\N	{"book": 1, "names": {"deu": ["Edom"], "eng": ["Edom"], "rus": ["Едом"], "spa": ["Edom"], "ukr": ["Едом"]}, "verse": 30, "chapter": 25}
@@ -1553,7 +1553,7 @@ eutychus	person	\N	\N	Eutychus	male	\N	male	\N	\N	\N	\N
 eve	person	\N	\N	Eve	female	\N	female	\N	\N	\N	\N
 evi	person	\N	\N	Evi	male	\N	\N	\N	\N	\N	\N
 evilmerodach	person	\N	\N	Evil-merodach	male	\N	\N	\N	\N	\N	\N
-ez	being	creature	\N	Ez	\N	\N	\N	\N	\N	\N	\N
+ez	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 ezbai	person	\N	\N	Ezbai	male	\N	\N	\N	\N	\N	\N
 ezbon	person	\N	\N	Ezbon	male	\N	\N	Gad	\N	\N	\N
 ezbon-2	person	\N	\N	Ezbon	male	\N	\N	Benjamin	\N	\N	\N
@@ -1616,7 +1616,7 @@ galilee	place	\N	region	Galilee	\N	\N	\N	\N	\N	\N	\N
 galilee-2	place	\N	region, settlement	Galilee	\N	\N	\N	\N	\N	galilee	\N
 gallim	place	\N	settlement, special	Gallim	\N	\N	\N	\N	\N	\N	\N
 gallio	person	\N	\N	Gallio	male	\N	male	\N	\N	\N	\N
-gamal	being	creature	\N	Gamal	\N	\N	\N	\N	\N	\N	\N
+gamal	being	creature	\N	Camel	\N	\N	\N	\N	\N	\N	\N
 gamaliel	person	\N	\N	Gamaliel	male	\N	\N	Manasseh	\N	\N	\N
 gamaliel-2	person	\N	\N	Gamaliel	male	\N	\N	\N	\N	\N	\N
 gammadims	people	\N	\N	Gammadims	\N	\N	\N	\N	\N	\N	\N
@@ -1664,8 +1664,8 @@ gederathites	people	\N	\N	Gederathites	\N	\N	\N	\N	\N	\N	\N
 gederites	people	\N	\N	Gederites	\N	\N	\N	\N	\N	\N	\N
 gederoth	place	\N	settlement, special	Gederoth	\N	\N	\N	\N	\N	gederah	\N
 gederothaim	place	\N	settlement, special	Gederothaim	\N	\N	\N	\N	\N	gederah	\N
-gedi	being	creature	\N	Gedi	\N	\N	\N	\N	\N	\N	\N
-gediyyah	being	creature	\N	Gediyyah	\N	\N	\N	\N	\N	\N	\N
+gedi	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
+gediyyah	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 gedor	person	\N	\N	Gedor	male	\N	\N	Judah	\N	\N	\N
 gedor-2	person	\N	\N	Gedor	male	\N	\N	Judah	\N	\N	\N
 gedor-3	person	\N	\N	Gedor	male	\N	\N	Benjamin	\N	\N	\N
@@ -2087,7 +2087,7 @@ hilkiah-7	person	\N	\N	Hilkiah	male	relationship	\N	\N	\N	\N	\N
 hilkiah-8	person	\N	\N	Hilkiah	male	relationship	\N	\N	\N	\N	\N
 hilkiah-at-ezras-right-hand	person	\N	\N	Hilkiah	\N	\N	\N	\N	\N	\N	\N
 hillel	person	\N	\N	Hillel	male	\N	\N	\N	\N	\N	\N
-hippos	being	creature	\N	Hippos	\N	\N	\N	\N	\N	\N	\N
+hippos	being	creature	\N	Horse	\N	\N	\N	\N	\N	\N	\N
 hirah	person	\N	\N	Hirah	male	\N	\N	\N	\N	\N	\N
 hiram	person	\N	\N	Hiram	male	\N	\N	\N	\N	\N	\N
 hiram-2	person	\N	\N	Hiram	male	\N	\N	\N	\N	\N	\N
@@ -2174,7 +2174,7 @@ hushim-2	person	\N	\N	Hushim	male	\N	\N	Benjamin	\N	\N	\N
 hushim-3	person	\N	\N	Hushim	female	\N	\N	Benjamin	\N	\N	\N
 hymenaeus	person	\N	\N	Hymenaeus	male	\N	male	\N	\N	\N	\N
 hypozygion	being	creature	\N	Hypozygion	\N	\N	\N	\N	\N	\N	\N
-hys	being	creature	\N	Hys	\N	\N	\N	\N	\N	\N	\N
+hys	being	creature	\N	Sow	\N	\N	\N	\N	\N	\N	\N
 ibhar	person	\N	\N	Ibhar	male	\N	\N	Judah	\N	\N	\N
 ibleam	place	\N	settlement	Ibleam	\N	\N	\N	\N	\N	\N	\N
 ibneiah	person	\N	\N	Ibneiah	male	\N	\N	Benjamin	\N	\N	\N
@@ -2841,11 +2841,11 @@ kadmiel-2	person	\N	\N	Kadmiel	male	\N	\N	Levi	\N	\N	\N
 kadmonites	people	\N	\N	Kadmonites	\N	\N	\N	\N	\N	\N	\N
 kain	place	\N	settlement, special	Kain	\N	\N	\N	\N	\N	\N	\N
 kallai	person	\N	\N	Kallai	male	\N	\N	Levi	\N	\N	\N
-kamelos	being	creature	\N	Kamelos	\N	\N	\N	\N	\N	\N	\N
+kamelos	being	creature	\N	Camel	\N	\N	\N	\N	\N	\N	\N
 kamon	place	\N	settlement	Kamon	\N	\N	\N	\N	\N	\N	\N
 kanah	place	\N	river	Kanah	\N	\N	\N	\N	\N	\N	\N
 kanah-2	place	\N	settlement	Kanah	\N	\N	\N	\N	\N	\N	\N
-kar	being	creature	\N	Kar	\N	\N	\N	\N	\N	\N	\N
+kar	being	creature	\N	Lamb	\N	\N	\N	\N	\N	\N	\N
 kareah	person	\N	\N	Kareah	male	\N	\N	\N	\N	\N	\N
 karka	place	\N	settlement	Karka	\N	\N	\N	\N	\N	\N	\N
 karkor	place	\N	settlement, special, valley	Karkor	\N	\N	\N	\N	\N	\N	\N
@@ -2865,7 +2865,7 @@ kedeshnaphtali	place	\N	settlement	Kedesh-naphtali	\N	\N	\N	\N	\N	\N	\N
 kehelathah	place	\N	campsite, settlement	Kehelathah	\N	\N	\N	\N	\N	makheloth	\N
 keilah-2	place	\N	settlement	Keilah	\N	\N	\N	\N	\N	\N	\N
 kelaiah	person	\N	\N	Kelaiah	male	\N	\N	Levi	\N	\N	\N
-kelev	being	creature	\N	Kelev	\N	\N	\N	\N	\N	\N	\N
+kelev	being	creature	\N	Dog	\N	\N	\N	\N	\N	\N	\N
 kelita	person	\N	\N	Kelita	male	\N	\N	Levi	\N	\N	\N
 kemuel	person	\N	\N	Kemuel	male	\N	\N	\N	\N	\N	\N
 kemuel-2	person	\N	\N	Kemuel	male	\N	\N	Ephraim	\N	\N	\N
@@ -2877,14 +2877,14 @@ kenaz-2	person	\N	\N	Kenaz	male	\N	\N	Judah	\N	\N	\N
 kenaz-3	person	\N	\N	Kenaz	male	\N	\N	Judah	\N	\N	\N
 kenites	people	\N	\N	Kenites	\N	\N	\N	\N	cain	\N	\N
 kenizzites	people	\N	\N	Kenizzites	\N	\N	\N	\N	\N	\N	\N
-kephir	being	creature	\N	Kephir	\N	\N	\N	\N	\N	\N	\N
+kephir	being	creature	\N	Lion	\N	\N	\N	\N	\N	\N	\N
 kerenhappuch	person	\N	\N	Keren-happuch	female	\N	\N	\N	\N	\N	\N
 kerioth	place	\N	settlement, special	Kerioth	\N	\N	\N	\N	\N	\N	\N
 keriothhezron	place	\N	settlement, special	Kerioth-hezron	\N	\N	\N	\N	\N	\N	\N
 keros	person	\N	\N	Keros	male	\N	\N	Levi	\N	\N	\N
-keses	being	creature	\N	Keses	\N	\N	\N	\N	\N	\N	\N
+keses	being	creature	\N	Sheep	\N	\N	\N	\N	\N	\N	\N
 keturah	person	\N	\N	Keturah	female	\N	\N	\N	\N	\N	\N
-kevess	being	creature	\N	Kevess	\N	\N	\N	\N	\N	\N	\N
+kevess	being	creature	\N	Lamb	\N	\N	\N	\N	\N	\N	\N
 keziah	person	\N	\N	Keziah	female	\N	\N	\N	\N	\N	\N
 keziz	place	\N	\N	Keziz	\N	\N	\N	\N	\N	\N	\N
 kibrothhattaavah	place	\N	settlement	Kibroth-hattaavah	\N	\N	\N	\N	\N	\N	\N
@@ -2968,29 +2968,29 @@ kitron	place	\N	settlement	Kitron	\N	\N	\N	\N	\N	\N	\N
 kittim-2	place	\N	island	Kittim	\N	\N	\N	\N	\N	cyprus	\N
 kittim-h3794	people	\N	\N	Kittim	\N	\N	\N	\N	\N	\N	\N
 kittim-son-of-javan	person	\N	\N	Kittim	male	relationship	\N	\N	\N	\N	\N
-kivsah	being	creature	\N	Kivsah	\N	\N	\N	\N	\N	\N	\N
+kivsah	being	creature	\N	Lamb	\N	\N	\N	\N	\N	\N	\N
 koa	place	\N	region	Koa	\N	\N	\N	\N	\N	gutium	\N
 koach	being	creature	\N	Koach	\N	\N	\N	\N	\N	\N	\N
-kof	being	creature	\N	Qof	\N	\N	\N	\N	\N	\N	\N
+kof	being	creature	\N	Ape	\N	\N	\N	\N	\N	\N	\N
 kohath	person	\N	\N	Kohath	male	\N	\N	Levi	\N	\N	\N
 kohathites	people	\N	\N	Kohathites	\N	\N	\N	\N	kohath	\N	\N
 kolaiah	person	\N	\N	Kolaiah	male	\N	\N	Benjamin	\N	\N	\N
 kolaiah-2	person	\N	\N	Kolaiah	male	\N	\N	\N	\N	\N	\N
 kolaiah-3	person	\N	\N	Kolaiah	\N	\N	\N	\N	\N	\N	\N
-konops	being	creature	\N	Konops	\N	\N	\N	\N	\N	\N	\N
+konops	being	creature	\N	Gnat	\N	\N	\N	\N	\N	\N	\N
 korah	person	\N	\N	Korah	male	\N	\N	Edomite	\N	\N	\N
 korah-2	person	\N	\N	Korah	male	\N	\N	Edomite	\N	\N	\N
 korah-3	person	\N	\N	Korah	male	\N	\N	Levi	\N	\N	\N
 korah-4	person	\N	\N	Korah	male	\N	\N	Judah	\N	\N	\N
 korahites	people	\N	\N	Korahites	\N	\N	\N	\N	\N	\N	\N
-korax	being	creature	\N	Korax	\N	\N	\N	\N	\N	\N	\N
+korax	being	creature	\N	Raven	\N	\N	\N	\N	\N	\N	\N
 kore	person	\N	\N	Kore	male	\N	\N	Levi	\N	\N	\N
 kore-2	person	\N	\N	Kore	male	\N	\N	Levi	\N	\N	\N
-kos-owl	being	creature	\N	Kos	\N	\N	\N	\N	\N	\N	\N
+kos-owl	being	creature	\N	Owl	\N	\N	\N	\N	\N	\N	\N
 koz	person	\N	\N	Koz	male	\N	\N	\N	\N	\N	\N
 kue	place	\N	region	Kue	\N	\N	\N	\N	\N	\N	\N
 kumidi	place	\N	settlement	Kumidi	\N	\N	\N	\N	\N	\N	\N
-kyon	being	creature	\N	Kyon	\N	\N	\N	\N	\N	\N	\N
+kyon	being	creature	\N	Dog	\N	\N	\N	\N	\N	\N	\N
 laadah	person	\N	\N	Laadah	male	\N	\N	Judah	\N	\N	\N
 laash	place	\N	settlement	Laash	\N	\N	\N	\N	\N	\N	\N
 laban	person	\N	\N	Laban	male	\N	\N	\N	\N	\N	\N
@@ -3014,8 +3014,8 @@ lappidoth	person	\N	\N	Lappidoth	male	\N	\N	\N	\N	\N	\N
 lasea	place	\N	settlement	Lasea	\N	\N	\N	\N	\N	\N	\N
 lasha	place	\N	settlement	Lasha	\N	\N	\N	\N	\N	\N	\N
 lasharon	place	\N	region, settlement	Lasharon	\N	\N	\N	\N	\N	sharon	\N
-lavi	being	creature	\N	Lavi	\N	\N	\N	\N	\N	\N	\N
-layish	being	creature	\N	Layish	\N	\N	\N	\N	\N	\N	\N
+lavi	being	creature	\N	Lioness	\N	\N	\N	\N	\N	\N	\N
+layish	being	creature	\N	Lion	\N	\N	\N	\N	\N	\N	\N
 lazarus	person	\N	\N	Lazarus	male	\N	male	\N	\N	\N	\N
 lazarus-2	person	\N	\N	Lazarus	male	\N	male	\N	\N	\N	\N
 leah	person	\N	\N	Leah	female	\N	\N	\N	\N	\N	\N
@@ -3032,7 +3032,7 @@ lehabim	people	\N	\N	Lehabim	\N	\N	\N	\N	lehabim	\N	\N
 lehabim-son-of-mizraim	person	\N	\N	Lehabim	male	relationship	\N	\N	\N	\N	\N
 lehi	place	\N	settlement, special	Lehi	\N	\N	\N	\N	\N	\N	\N
 lemuel	person	\N	\N	Lemuel	male	\N	\N	\N	\N	\N	\N
-leon	being	creature	\N	Leon	\N	\N	\N	\N	\N	\N	\N
+leon	being	creature	\N	Lion	\N	\N	\N	\N	\N	\N	\N
 leshem	place	\N	\N	Leshem	\N	\N	\N	\N	\N	\N	\N
 letaah	being	creature	\N	Leta'ah	\N	\N	\N	\N	\N	\N	\N
 letush	person	\N	\N	Letush	male	\N	\N	\N	\N	\N	\N
@@ -3473,7 +3473,7 @@ moreh-2	place	\N	hill	Moreh	\N	\N	\N	\N	\N	\N	\N
 moreshethgath	place	\N	settlement	Moresheth-gath	\N	\N	\N	\N	\N	\N	\N
 moriah	place	\N	region	Moriah	\N	\N	\N	\N	\N	\N	\N
 mortar	place	\N	district in settlement	Mortar	\N	\N	\N	\N	\N	\N	\N
-moschos	being	creature	\N	Moschos	\N	\N	\N	\N	\N	\N	\N
+moschos	being	creature	\N	Calf	\N	\N	\N	\N	\N	\N	\N
 moseroth	place	\N	campsite	Moseroth	\N	\N	\N	\N	\N	\N	\N
 moses	person	\N	\N	Moses	male	\N	male	Levi	\N	\N	\N
 moses-staff	object	implement	\N	Staff of Moses	\N	\N	\N	\N	\N	\N	\N
@@ -3537,7 +3537,7 @@ naaran	place	\N	settlement	Naaran	\N	\N	\N	\N	\N	\N	\N
 nabal	person	\N	\N	Nabal	male	\N	\N	Judah	\N	\N	\N
 naboth	person	\N	\N	Naboth	male	\N	\N	\N	\N	\N	\N
 naboths-field	place	\N	land-parcel	Naboth's Field	\N	\N	\N	\N	\N	\N	\N
-nachash	being	creature	\N	Nachash	\N	\N	\N	\N	\N	\N	\N
+nachash	being	creature	\N	Snake	\N	\N	\N	\N	\N	\N	\N
 nachon	place	\N	\N	Nachon	\N	\N	\N	\N	\N	\N	\N
 nadab	person	\N	\N	Nadab	male	\N	\N	Levi	\N	\N	\N
 nadab-2	person	\N	\N	Nadab	male	\N	\N	Ephraim	\N	\N	\N
@@ -3613,7 +3613,7 @@ nehushta	person	\N	\N	Nehushta	female	\N	\N	\N	\N	\N	\N
 nehushtan	object	image	\N	Bronze Serpent (Nehushtan)	\N	\N	\N	\N	\N	\N	\N
 neiel	place	\N	settlement, valley	Neiel	\N	\N	\N	\N	\N	\N	\N
 nekoda	person	\N	\N	Nekoda	male	\N	\N	\N	\N	\N	\N
-nemalah	being	creature	\N	Nemalah	\N	\N	\N	\N	\N	\N	\N
+nemalah	being	creature	\N	Ant	\N	\N	\N	\N	\N	\N	\N
 nemuel	person	\N	\N	Nemuel	male	\N	\N	Reuben	\N	\N	\N
 nemuelites	people	\N	\N	Nemuelites	\N	\N	\N	\N	\N	\N	\N
 nepheg	person	\N	\N	Nepheg	male	\N	\N	Levi	\N	\N	\N
@@ -3628,7 +3628,7 @@ nergalsarezer	person	\N	\N	Nergal-sar-ezer	male	\N	\N	\N	\N	\N	\N
 nergalsarezer-2	person	\N	\N	Nergal-sar-ezer	male	\N	\N	\N	\N	\N	\N
 neri	person	\N	\N	Neri	male	\N	\N	\N	\N	\N	\N
 neriah	person	\N	\N	Neriah	male	\N	\N	\N	\N	\N	\N
-nesher	being	creature	\N	Nesher	\N	\N	\N	\N	\N	\N	\N
+nesher	being	creature	\N	Eagle	\N	\N	\N	\N	\N	\N	\N
 netaim	place	\N	settlement	Netaim	\N	\N	\N	\N	\N	\N	\N
 netanel	person	\N	\N	Netanel	male	\N	\N	\N	\N	\N	\N
 nethanel	person	\N	\N	Nethanel	male	\N	\N	Issachar	\N	\N	\N
@@ -3647,7 +3647,7 @@ nethaniah-3	person	\N	\N	Nethaniah	male	\N	\N	Levi	\N	\N	\N
 nethaniah-4	person	\N	\N	Nethaniah	male	\N	\N	\N	\N	\N	\N
 netophah	place	\N	settlement	Netophah	\N	\N	\N	\N	\N	\N	\N
 netophathites	people	\N	\N	Netophathites	\N	\N	\N	\N	\N	\N	\N
-nets	being	creature	\N	Nets	\N	\N	\N	\N	\N	\N	\N
+nets	being	creature	\N	Hawk	\N	\N	\N	\N	\N	\N	\N
 new-jerusalem	place	\N	\N	New Jerusalem	\N	\N	\N	\N	\N	\N	\N
 new-moon	observance	new-moon	\N	New Moon	\N	\N	\N	\N	\N	\N	\N
 newgate	place	\N	gate	New Gate	\N	\N	\N	\N	\N	\N	\N
@@ -3685,7 +3685,7 @@ noph	place	\N	\N	Noph	\N	\N	\N	\N	\N	\N	\N
 nophah	place	\N	settlement, special	Nophah	\N	\N	\N	\N	\N	\N	\N
 north	place	\N	region	North	\N	\N	\N	\N	\N	\N	\N
 northgate	place	\N	gate	North Gate	\N	\N	\N	\N	\N	\N	\N
-nossion	being	creature	\N	Nossion	\N	\N	\N	\N	\N	\N	\N
+nossion	being	creature	\N	Chick	\N	\N	\N	\N	\N	\N	\N
 nossos	being	creature	\N	Nossos	\N	\N	\N	\N	\N	\N	\N
 nuhashe	place	\N	region	Nuhashe	\N	\N	\N	\N	\N	\N	\N
 nun	person	\N	\N	Nun	male	\N	\N	Ephraim	\N	\N	\N
@@ -3738,25 +3738,25 @@ on-2	place	\N	settlement	On	\N	\N	\N	\N	\N	\N	\N
 onam	person	\N	\N	Onam	male	\N	\N	Edomite	\N	\N	\N
 onam-2	person	\N	\N	Onam	male	\N	\N	Judah	\N	\N	\N
 onan	person	\N	\N	Onan	male	\N	\N	Judah	\N	\N	\N
-onarion	being	creature	\N	Onarion	\N	\N	\N	\N	\N	\N	\N
+onarion	being	creature	\N	Donkey	\N	\N	\N	\N	\N	\N	\N
 onesimus	person	\N	\N	Onesimus	male	\N	male	\N	\N	\N	\N
 onesiphorus	person	\N	\N	Onesiphorus	male	\N	male	\N	\N	\N	\N
 ono	place	\N	settlement	Ono	\N	\N	\N	\N	\N	\N	\N
-onos	being	creature	\N	Onos	\N	\N	\N	\N	\N	\N	\N
+onos	being	creature	\N	Donkey	\N	\N	\N	\N	\N	\N	\N
 ophel	place	\N	hill	Ophel	\N	\N	\N	\N	\N	\N	\N
 ophir	person	\N	\N	Ophir	male	\N	\N	\N	\N	\N	\N
 ophir-2	place	\N	island, mine, region, settlement	Ophir	\N	\N	\N	\N	\N	\N	\N
-ophis	being	creature	\N	Ophis	\N	\N	\N	\N	\N	\N	\N
+ophis	being	creature	\N	Snake	\N	\N	\N	\N	\N	\N	\N
 ophni	place	\N	settlement, special	Ophni	\N	\N	\N	\N	\N	\N	\N
 ophrah	person	\N	\N	Ophrah	male	\N	\N	\N	\N	\N	\N
 ophrah-2	place	\N	settlement	Ophrah	\N	\N	\N	\N	\N	\N	\N
 ophrah-3	place	\N	settlement	Ophrah	\N	\N	\N	\N	\N	\N	\N
 oreb	person	\N	\N	Oreb	male	\N	\N	\N	\N	\N	\N
 oreb-2	place	\N	\N	Oreb	\N	\N	\N	\N	\N	\N	\N
-oreb-raven	being	creature	\N	Oreb	\N	\N	\N	\N	\N	\N	\N
+oreb-raven	being	creature	\N	Raven	\N	\N	\N	\N	\N	\N	\N
 oren	person	\N	\N	Oren	male	\N	\N	Judah	\N	\N	\N
 ornans-threshingfloor	place	\N	named-site	Threshingfloor of Ornan / Araunah	\N	\N	\N	\N	\N	\N	\N
-ornis	being	creature	\N	Ornis	\N	\N	\N	\N	\N	\N	\N
+ornis	being	creature	\N	Hen	\N	\N	\N	\N	\N	\N	\N
 orpah	person	\N	\N	Orpah	female	\N	\N	\N	\N	\N	\N
 osnappar	person	\N	\N	Osnappar	male	\N	\N	\N	\N	\N	\N
 othni	person	\N	\N	Othni	male	\N	\N	Levi	\N	\N	\N
@@ -3781,9 +3781,9 @@ paltiel-2	person	\N	\N	Paltiel	\N	\N	\N	\N	\N	\N	\N
 paltites	people	\N	\N	Paltites	\N	\N	\N	\N	\N	\N	\N
 pamphylia	place	\N	region	Pamphylia	\N	\N	\N	\N	\N	\N	\N
 paphos	place	\N	settlement	Paphos	\N	\N	\N	\N	\N	\N	\N
-par	being	creature	\N	Par	\N	\N	\N	\N	\N	\N	\N
+par	being	creature	\N	Bull	\N	\N	\N	\N	\N	\N	\N
 parah	place	\N	settlement	Parah	\N	\N	\N	\N	\N	\N	\N
-parah-animal	being	creature	\N	Parah	\N	\N	\N	\N	\N	\N	\N
+parah-animal	being	creature	\N	Cow	\N	\N	\N	\N	\N	\N	\N
 paran	place	\N	region	Paran	\N	\N	\N	\N	\N	\N	\N
 parbar	place	\N	structure	Parbar	\N	\N	\N	\N	\N	\N	\N
 pardalis	being	creature	\N	Pardalis	\N	\N	\N	\N	\N	\N	\N
@@ -3844,14 +3844,14 @@ penuel-2	person	\N	\N	Penuel	male	\N	\N	Benjamin	\N	\N	\N
 peoplesgate	place	\N	gate	People’s Gate	\N	\N	\N	\N	\N	\N	\N
 peor	place	\N	mountain	Peor	\N	\N	\N	\N	\N	\N	\N
 pere	being	creature	\N	Pere	\N	\N	\N	\N	\N	\N	\N
-pered	being	creature	\N	Pered	\N	\N	\N	\N	\N	\N	\N
+pered	being	creature	\N	Mule	\N	\N	\N	\N	\N	\N	\N
 peres	being	creature	\N	Peres	\N	\N	\N	\N	\N	\N	\N
 peresh	person	\N	\N	Peresh	male	\N	\N	Manasseh	\N	\N	\N
 perez	person	\N	\N	Perez	male	\N	\N	Judah	\N	\N	\N
 perezuzzah	place	\N	settlement	Perez-uzzah	\N	\N	\N	\N	\N	\N	\N
 perga	place	\N	settlement	Perga	\N	\N	\N	\N	\N	\N	\N
 pergamum	place	\N	settlement	Pergamum	\N	\N	\N	\N	\N	\N	\N
-peristera	being	creature	\N	Peristera	\N	\N	\N	\N	\N	\N	\N
+peristera	being	creature	\N	Dove	\N	\N	\N	\N	\N	\N	\N
 perizzites	people	\N	\N	Perizzites	\N	\N	\N	\N	\N	\N	\N
 persia	place	\N	region	Persia	\N	\N	\N	\N	\N	\N	\N
 persians	people	\N	\N	Persians	\N	\N	\N	\N	\N	\N	\N
@@ -3913,7 +3913,7 @@ pinon	person	\N	\N	Pinon	male	\N	\N	Edomite	\N	\N	\N
 piram	person	\N	\N	Piram	male	\N	\N	\N	\N	\N	\N
 pirathon	place	\N	settlement	Pirathon	\N	\N	\N	\N	\N	\N	\N
 pirathonites	people	\N	\N	Pirathonites	\N	\N	\N	\N	\N	\N	\N
-pirdah	being	creature	\N	Pirdah	\N	\N	\N	\N	\N	\N	\N
+pirdah	being	creature	\N	Mule	\N	\N	\N	\N	\N	\N	\N
 pisgah	place	\N	mountain, mountain range, special	Pisgah	\N	\N	\N	\N	\N	\N	\N
 pishon	place	\N	river	Pishon	\N	\N	\N	\N	\N	\N	\N
 pisidia	place	\N	region	Pisidia	\N	\N	\N	\N	\N	\N	\N
@@ -3921,7 +3921,7 @@ pispa	person	\N	\N	Pispa	male	\N	\N	Asher	\N	\N	\N
 pithom	place	\N	settlement	Pithom	\N	\N	\N	\N	\N	\N	\N
 pithon	person	\N	\N	Pithon	male	\N	\N	Benjamin	\N	\N	\N
 pocherethhazzebaim	person	\N	\N	Pochereth-hazzebaim	male	\N	\N	\N	\N	\N	\N
-polos	being	creature	\N	Polos	\N	\N	\N	\N	\N	\N	\N
+polos	being	creature	\N	Colt	\N	\N	\N	\N	\N	\N	\N
 pontus	place	\N	region	Pontus	\N	\N	\N	\N	\N	\N	\N
 poratha	person	\N	\N	Poratha	male	\N	\N	\N	\N	\N	\N
 porcius	person	\N	\N	Porcius	male	\N	male	\N	\N	\N	\N
@@ -3931,7 +3931,7 @@ potsherdgate	place	\N	gate	Potsherd Gate	\N	\N	\N	\N	\N	\N	\N
 princeofgreece	person	\N	\N	Prince of Greece	\N	\N	\N	\N	\N	\N	\N
 princeofthekingdomofpersia	person	\N	\N	Prince of the Kingdom of Persia	\N	\N	\N	\N	\N	\N	\N
 priscilla	person	\N	\N	Priscilla	female	\N	female	\N	\N	\N	\N
-probaton	being	creature	\N	Probaton	\N	\N	\N	\N	\N	\N	\N
+probaton	being	creature	\N	Sheep	\N	\N	\N	\N	\N	\N	\N
 prochorus	person	\N	\N	Prochorus	male	\N	male	\N	\N	\N	\N
 proconsul	title	\N	\N	Proconsul	\N	\N	\N	\N	\N	\N	\N
 ptolemais	place	\N	settlement	Ptolemais	\N	\N	\N	\N	\N	\N	\N
@@ -3955,7 +3955,7 @@ pyrrhus	person	\N	\N	Pyrrhus	male	\N	\N	\N	\N	\N	\N
 qaat	being	creature	\N	Qa'at	\N	\N	\N	\N	\N	\N	\N
 qippod	being	creature	\N	Qippod	\N	\N	\N	\N	\N	\N	\N
 qippoz	being	creature	\N	Qippoz	\N	\N	\N	\N	\N	\N	\N
-qore	being	creature	\N	Qore	\N	\N	\N	\N	\N	\N	\N
+qore	being	creature	\N	Partridge	\N	\N	\N	\N	\N	\N	\N
 quartus	person	\N	\N	Quartus	male	\N	male	\N	\N	\N	\N
 queen-of-heaven	being	god	\N	Queen of heaven	\N	\N	\N	\N	\N	\N	\N
 queenofsheba	person	\N	\N	Queen of Sheba	female	\N	\N	\N	\N	\N	\N
@@ -3972,7 +3972,7 @@ rabshakeh	title	\N	\N	Rabshakeh	\N	\N	\N	\N	\N	\N	\N
 racal	place	\N	settlement	Racal	\N	\N	\N	\N	\N	carmel	\N
 racham	being	creature	\N	Racham	\N	\N	\N	\N	\N	\N	\N
 rachel	person	\N	\N	Rachel	female	\N	\N	\N	\N	\N	\N
-rachel-ewe	being	creature	\N	Rachel	\N	\N	\N	\N	\N	\N	\N
+rachel-ewe	being	creature	\N	Sheep	\N	\N	\N	\N	\N	\N	\N
 raddai	person	\N	\N	Raddai	male	\N	\N	Judah	\N	\N	\N
 ragmat	place	\N	settlement	Ragmat	\N	\N	\N	\N	\N	\N	\N
 rahab	person	\N	\N	Rahab	female	\N	\N	\N	\N	\N	\N
@@ -4073,7 +4073,7 @@ rhodes	place	\N	island, settlement	Rhodes	\N	\N	\N	\N	\N	\N	\N
 ribai	person	\N	\N	Ribai	male	\N	\N	Benjamin	\N	\N	\N
 riblah	place	\N	settlement	Riblah	\N	\N	\N	\N	\N	\N	\N
 riblah-2	place	\N	settlement	Riblah	\N	\N	\N	\N	\N	\N	\N
-rimmah	being	creature	\N	Rimmah	\N	\N	\N	\N	\N	\N	\N
+rimmah	being	creature	\N	Worm	\N	\N	\N	\N	\N	\N	\N
 rimmon	person	\N	\N	Rimmon	male	\N	\N	Benjamin	\N	\N	\N
 rimmon-2	place	\N	natural area	Rimmon	\N	\N	\N	\N	\N	\N	\N
 rimmon-3	place	\N	settlement	Rimmon	\N	\N	\N	\N	\N	\N	\N
@@ -4108,7 +4108,7 @@ sabtecha	place	\N	\N	Sabtecha	\N	\N	\N	\N	\N	\N	\N
 sacar	person	\N	\N	Sacar	male	\N	\N	Levi	\N	\N	\N
 sachia	person	\N	\N	Sachia	male	\N	\N	Benjamin	\N	\N	\N
 sahar	place	\N	settlement, special	Sahar	\N	\N	\N	\N	\N	\N	\N
-sair	being	creature	\N	Sa'ir	\N	\N	\N	\N	\N	\N	\N
+sair	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 salam	being	creature	\N	Sal'am	\N	\N	\N	\N	\N	\N	\N
 salamis	place	\N	settlement	Salamis	\N	\N	\N	\N	\N	\N	\N
 salecah	place	\N	settlement	Salecah	\N	\N	\N	\N	\N	\N	\N
@@ -4151,7 +4151,7 @@ sarepta	place	\N	\N	Sarepta	\N	\N	\N	\N	\N	\N	\N
 sargon	person	\N	\N	Sargon	male	\N	\N	\N	\N	\N	\N
 sarid	place	\N	settlement	Sarid	\N	\N	\N	\N	\N	\N	\N
 sarsekim	person	\N	\N	Sar-sekim	male	\N	\N	\N	\N	\N	\N
-sas	being	creature	\N	Sas	\N	\N	\N	\N	\N	\N	\N
+sas	being	creature	\N	Worm	\N	\N	\N	\N	\N	\N	\N
 satan	person	\N	\N	Satan	male	\N	male	\N	\N	\N	\N
 saul	person	\N	\N	Saul	male	\N	\N	Benjamin	\N	\N	\N
 saul-2	person	\N	\N	Saul	male	\N	male	\N	\N	\N	\N
@@ -4173,7 +4173,7 @@ secu	place	\N	settlement	Secu	\N	\N	\N	\N	\N	\N	\N
 secundus	person	\N	\N	Secundus	male	\N	male	\N	\N	\N	\N
 segub	person	\N	\N	Segub	male	\N	\N	\N	\N	\N	\N
 segub-2	person	\N	\N	Segub	male	\N	\N	Judah	\N	\N	\N
-seh	being	creature	\N	Seh	\N	\N	\N	\N	\N	\N	\N
+seh	being	creature	\N	Sheep	\N	\N	\N	\N	\N	\N	\N
 seir	person	\N	\N	Seir	male	\N	\N	\N	\N	\N	\N
 seirah	place	\N	natural area, special	Seirah	\N	\N	\N	\N	\N	\N	\N
 seirah-animal	being	creature	\N	Se'irah	\N	\N	\N	\N	\N	\N	\N
@@ -4214,7 +4214,7 @@ sergius	person	\N	\N	Sergius	male	\N	male	\N	\N	\N	\N
 serpent-of-eden	person	\N	\N	The Serpent	\N	\N	\N	\N	\N	\N	\N
 serpentsstone	place	\N	rock	Serpent’s Stone	\N	\N	\N	\N	\N	\N	\N
 serug	person	\N	\N	Serug	male	\N	\N	\N	\N	\N	\N
-ses	being	creature	\N	Ses	\N	\N	\N	\N	\N	\N	\N
+ses	being	creature	\N	Moth	\N	\N	\N	\N	\N	\N	\N
 seth	person	\N	\N	Seth	male	\N	\N	\N	\N	\N	\N
 sethur	person	\N	\N	Sethur	male	\N	\N	Asher	\N	\N	\N
 shaalbim	place	\N	settlement	Shaalbim	\N	\N	\N	\N	\N	\N	\N
@@ -4228,7 +4228,7 @@ shaaraim-2	place	\N	settlement	Shaaraim	\N	\N	\N	\N	\N	sharuhen	\N
 shaashgaz	person	\N	\N	Shaashgaz	male	\N	\N	\N	\N	\N	\N
 shabbethai-2	person	\N	\N	Shabbethai	male	\N	\N	Levi	\N	\N	\N
 shablul	being	creature	\N	Shablul	\N	\N	\N	\N	\N	\N	\N
-shachal	being	creature	\N	Shachal	\N	\N	\N	\N	\N	\N	\N
+shachal	being	creature	\N	Lion	\N	\N	\N	\N	\N	\N	\N
 shachaph	being	creature	\N	Shachaph	\N	\N	\N	\N	\N	\N	\N
 shaharaim	person	\N	\N	Shaharaim	male	\N	\N	Benjamin	\N	\N	\N
 shahazumah	place	\N	settlement	Shahazumah	\N	\N	\N	\N	\N	\N	\N
@@ -4337,7 +4337,7 @@ shehariah	person	\N	\N	Shehariah	male	\N	\N	Benjamin	\N	\N	\N
 shelah	person	\N	\N	Shelah	male	\N	\N	\N	\N	\N	\N
 shelah-2	person	\N	\N	Shelah	male	\N	\N	Judah	\N	\N	\N
 shelanites	people	\N	\N	Shelanites	\N	\N	\N	\N	\N	\N	\N
-shelav	being	creature	\N	Selav	\N	\N	\N	\N	\N	\N	\N
+shelav	being	creature	\N	Quail	\N	\N	\N	\N	\N	\N	\N
 shelemiah	person	\N	\N	Shelemiah	male	\N	\N	\N	\N	\N	\N
 shelemiah-2	person	\N	\N	Shelemiah	male	\N	\N	\N	\N	\N	\N
 shelemiah-3	person	\N	\N	Shelemiah	male	\N	\N	\N	\N	\N	\N
@@ -4500,13 +4500,13 @@ shobi	person	\N	\N	Shobi	male	\N	\N	\N	\N	\N	\N
 shoham	person	\N	\N	Shoham	male	\N	\N	Levi	\N	\N	\N
 shomer	person	\N	\N	Shomer	female	\N	\N	\N	\N	\N	\N
 shomer-2	person	\N	\N	Shomer	male	\N	\N	Asher	\N	\N	\N
-shor	being	creature	\N	Shor	\N	\N	\N	\N	\N	\N	\N
+shor	being	creature	\N	Ox	\N	\N	\N	\N	\N	\N	\N
 shua	person	\N	\N	Shua	male	\N	\N	\N	\N	\N	\N
 shua-2	person	\N	\N	Shua	female	\N	\N	Asher	\N	\N	\N
 shuah	person	\N	\N	Shuah	male	\N	\N	\N	\N	\N	\N
 shual	person	\N	\N	Shual	male	\N	\N	Asher	\N	\N	\N
 shual-2	place	\N	region	Shual	\N	\N	\N	\N	\N	\N	\N
-shual-animal	being	creature	\N	Shu'al	\N	\N	\N	\N	\N	\N	\N
+shual-animal	being	creature	\N	Fox	\N	\N	\N	\N	\N	\N	\N
 shuhah	person	\N	\N	Shuhah	male	\N	\N	Judah	\N	\N	\N
 shuhamites	people	\N	\N	Shuhamites	\N	\N	\N	\N	hushim	\N	\N
 shuhites	people	\N	\N	Shuhites	\N	\N	\N	\N	\N	\N	\N
@@ -4564,8 +4564,8 @@ sisera-2	person	\N	\N	Sisera	male	\N	\N	Levi	\N	\N	\N
 sismai	person	\N	\N	Sismai	male	\N	\N	Judah	\N	\N	\N
 sithri	person	\N	\N	Sithri	male	\N	\N	Levi	\N	\N	\N
 sitnah	place	\N	well	Sitnah	\N	\N	\N	\N	\N	\N	\N
-skolex	being	creature	\N	Skolex	\N	\N	\N	\N	\N	\N	\N
-skorpios	being	creature	\N	Skorpios	\N	\N	\N	\N	\N	\N	\N
+skolex	being	creature	\N	Worm	\N	\N	\N	\N	\N	\N	\N
+skorpios	being	creature	\N	Scorpion	\N	\N	\N	\N	\N	\N	\N
 smyrna	place	\N	settlement	Smyrna	\N	\N	\N	\N	\N	\N	\N
 so	person	\N	\N	So	male	\N	\N	\N	\N	\N	\N
 soco	person	\N	\N	Soco	male	\N	\N	\N	\N	\N	\N
@@ -4612,7 +4612,7 @@ sukkiims	people	\N	\N	Sukkiims	\N	\N	\N	\N	\N	\N	\N
 suph	place	\N	body of water, settlement	Suph	\N	\N	\N	\N	\N	redsea-3	\N
 suphah	place	\N	body of water, settlement	Suphah	\N	\N	\N	\N	\N	\N	\N
 sur	place	\N	gate	Sur	\N	\N	\N	\N	\N	gateofthefoundation	\N
-sus	being	creature	\N	Sus	\N	\N	\N	\N	\N	\N	\N
+sus	being	creature	\N	Horse	\N	\N	\N	\N	\N	\N	\N
 susa	place	\N	settlement	Susa	\N	\N	\N	\N	\N	\N	\N
 susah	being	creature	\N	Susah	\N	\N	\N	\N	\N	\N	\N
 susanchites	people	\N	\N	Susanchites	\N	\N	\N	\N	\N	\N	\N
@@ -4657,7 +4657,7 @@ tahath-6	person	\N	\N	Tahath	\N	\N	\N	\N	\N	\N	\N
 tahpanhes	place	\N	settlement	Tahpanhes	\N	\N	\N	\N	\N	\N	\N
 tahpenes	person	\N	\N	Tahpenes	female	\N	\N	\N	\N	\N	\N
 tahtimhodshi	place	\N	\N	Tahtim-hodshi	\N	\N	\N	\N	\N	\N	\N
-taleh	being	creature	\N	Taleh	\N	\N	\N	\N	\N	\N	\N
+taleh	being	creature	\N	Lamb	\N	\N	\N	\N	\N	\N	\N
 talmai	person	\N	\N	Talmai	male	\N	\N	\N	\N	\N	\N
 talmai-2	person	\N	\N	Talmai	male	\N	\N	\N	\N	\N	\N
 talmon	person	\N	\N	Talmon	male	\N	\N	Levi	\N	\N	\N
@@ -4687,8 +4687,8 @@ tartak	being	god	\N	Tartak	\N	\N	\N	\N	\N	\N	\N
 tartan	title	\N	\N	Tartan	\N	\N	\N	\N	\N	\N	\N
 tartessos	place	\N	settlement	Tartessos	\N	\N	\N	\N	\N	\N	\N
 tattenai	person	\N	\N	Tattenai	male	\N	\N	\N	\N	\N	\N
-tauros	being	creature	\N	Tauros	\N	\N	\N	\N	\N	\N	\N
-tayish	being	creature	\N	Tayish	\N	\N	\N	\N	\N	\N	\N
+tauros	being	creature	\N	Bull	\N	\N	\N	\N	\N	\N	\N
+tayish	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 tebah	person	\N	\N	Tebah	male	\N	\N	\N	\N	\N	\N
 tebaliah	person	\N	\N	Tebaliah	male	\N	\N	Levi	\N	\N	\N
 tehinnah	person	\N	\N	Tehinnah	male	\N	\N	Judah	\N	\N	\N
@@ -4790,13 +4790,13 @@ tohu	person	\N	\N	Tohu	male	\N	\N	Levi	\N	\N	\N
 toi	person	\N	\N	Toi	male	\N	\N	\N	\N	\N	\N
 tola	person	\N	\N	Tola	male	\N	\N	Issachar	\N	\N	\N
 tola-2	person	\N	\N	Tola	male	\N	\N	Issachar	\N	\N	\N
-tolaat	being	creature	\N	Tola'at	\N	\N	\N	\N	\N	\N	\N
+tolaat	being	creature	\N	Worm	\N	\N	\N	\N	\N	\N	\N
 tolad	place	\N	\N	Tolad	\N	\N	\N	\N	\N	\N	\N
 tolaites	people	\N	\N	Tolaites	\N	\N	\N	\N	\N	\N	\N
 tophel	place	\N	settlement	Tophel	\N	\N	\N	\N	\N	\N	\N
 topheth	place	\N	altar	Topheth	\N	\N	\N	\N	\N	\N	\N
-tor	being	creature	\N	Tor	\N	\N	\N	\N	\N	\N	\N
-tor-dove	being	creature	\N	Tor	\N	\N	\N	\N	\N	\N	\N
+tor	being	creature	\N	Ox	\N	\N	\N	\N	\N	\N	\N
+tor-dove	being	creature	\N	Turtledove	\N	\N	\N	\N	\N	\N	\N
 tormah	place	\N	\N	Tormah	\N	\N	\N	\N	\N	\N	\N
 tower-of-babel	object	structure	\N	Tower of Babel	\N	\N	\N	\N	\N	\N	\N
 tower-of-siloam	object	structure	\N	Tower of Siloam	\N	\N	\N	\N	\N	\N	\N
@@ -4805,20 +4805,20 @@ towerofshechem	place	\N	structure	Tower of Shechem	\N	\N	\N	\N	\N	\N	\N
 towerofthehundred	place	\N	structure	Tower of the Hundred	\N	\N	\N	\N	\N	\N	\N
 toweroftheovens	place	\N	structure	Tower of the Ovens	\N	\N	\N	\N	\N	\N	\N
 trachonitis	place	\N	region	Trachonitis	\N	\N	\N	\N	\N	\N	\N
-tragos	being	creature	\N	Tragos	\N	\N	\N	\N	\N	\N	\N
+tragos	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 tree-of-knowledge-of-good-and-evil	object	tree	\N	Tree of the Knowledge of Good and Evil	\N	\N	\N	\N	\N	\N	\N
 tree-of-life	object	tree	\N	Tree of Life	\N	\N	\N	\N	\N	\N	\N
 troas	place	\N	settlement	Troas	\N	\N	\N	\N	\N	\N	\N
 trogyllium	place	\N	promontory	Trogyllium	\N	\N	\N	\N	\N	\N	\N
 trophimus	person	\N	\N	Trophimus	male	\N	male	\N	\N	\N	\N
-trygon	being	creature	\N	Trygon	\N	\N	\N	\N	\N	\N	\N
+trygon	being	creature	\N	Turtledove	\N	\N	\N	\N	\N	\N	\N
 tryphaena	person	\N	\N	Tryphaena	female	\N	female	\N	\N	\N	\N
 tryphosa	person	\N	\N	Tryphosa	female	\N	female	\N	\N	\N	\N
-tsaphir	being	creature	\N	Tsaphir	\N	\N	\N	\N	\N	\N	\N
+tsaphir	being	creature	\N	Goat	\N	\N	\N	\N	\N	\N	\N
 tsav	being	creature	\N	Tsav	\N	\N	\N	\N	\N	\N	\N
 tselatsal	being	creature	\N	Tselatsal	\N	\N	\N	\N	\N	\N	\N
 tsepha	being	creature	\N	Tsepha	\N	\N	\N	\N	\N	\N	\N
-tsephardea	being	creature	\N	Tsephardea	\N	\N	\N	\N	\N	\N	\N
+tsephardea	being	creature	\N	Frog	\N	\N	\N	\N	\N	\N	\N
 tsevi	being	creature	\N	Tsevi	\N	\N	\N	\N	\N	\N	\N
 tseviyyah	being	creature	\N	Tseviyyah	\N	\N	\N	\N	\N	\N	\N
 tsirah	being	creature	\N	Tsir'ah	\N	\N	\N	\N	\N	\N	\N
@@ -4951,14 +4951,14 @@ wildernessofsinai	place	\N	region	Wilderness of Sinai	\N	\N	\N	\N	\N	\N	\N
 wildernessofziph	place	\N	region	Wilderness of Ziph	\N	\N	\N	\N	\N	\N	\N
 wildgoatsrocks	place	\N	natural area	Wildgoats’ Rocks	\N	\N	\N	\N	\N	\N	\N
 wood-offering	observance	rite	\N	The Wood Offering	\N	\N	\N	\N	\N	\N	\N
-yaanah	being	creature	\N	Ya'anah	\N	\N	\N	\N	\N	\N	\N
+yaanah	being	creature	\N	Ostrich	\N	\N	\N	\N	\N	\N	\N
 yachmur	being	creature	\N	Yachmur	\N	\N	\N	\N	\N	\N	\N
 yael	being	creature	\N	Ya'el	\N	\N	\N	\N	\N	\N	\N
 yanshuph	being	creature	\N	Yanshuph	\N	\N	\N	\N	\N	\N	\N
 yeleq	being	creature	\N	Yeleq	\N	\N	\N	\N	\N	\N	\N
 yhvh	person	\N	\N	YHVH	male	\N	\N	\N	\N	\N	\N
 yiron	place	\N	settlement	Yiron	\N	\N	\N	\N	\N	\N	\N
-yonah-dove	being	creature	\N	Yonah	\N	\N	\N	\N	\N	\N	\N
+yonah-dove	being	creature	\N	Dove	\N	\N	\N	\N	\N	\N	\N
 youngeroflot	person	\N	\N	Younger of Lot	female	\N	\N	\N	\N	\N	\N
 zaanan	place	\N	settlement, special	Zaanan	\N	\N	\N	\N	\N	zenan	\N
 zaanannim	place	\N	settlement	Zaanannim	\N	\N	\N	\N	\N	\N	\N
@@ -5077,7 +5077,7 @@ zedekiah-4	person	\N	\N	Zedekiah	male	\N	\N	\N	\N	\N	\N
 zedekiah-5	person	\N	\N	Zedekiah	male	\N	\N	\N	\N	\N	\N
 zeeb	person	\N	\N	Zeeb	male	\N	\N	\N	\N	\N	\N
 zeebs-winepress	object	structure	\N	Winepress of Zeeb	\N	\N	\N	\N	\N	\N	\N
-zeev	being	creature	\N	Ze'ev	\N	\N	\N	\N	\N	\N	\N
+zeev	being	creature	\N	Wolf	\N	\N	\N	\N	\N	\N	\N
 zela	place	\N	settlement	Zela	\N	\N	\N	\N	\N	\N	\N
 zelek	person	\N	\N	Zelek	male	\N	\N	Ammonite	\N	\N	\N
 zelophehad	person	\N	\N	Zelophehad	male	\N	\N	Manasseh	\N	\N	\N
@@ -5120,7 +5120,7 @@ zetham	person	\N	\N	Zetham	male	\N	\N	Levi	\N	\N	\N
 zethan	person	\N	\N	Zethan	male	\N	\N	Benjamin	\N	\N	\N
 zethar	person	\N	\N	Zethar	male	\N	\N	\N	\N	\N	\N
 zeus	being	god	\N	Zeus	\N	\N	\N	\N	\N	\N	\N
-zevuv	being	creature	\N	Zevuv	\N	\N	\N	\N	\N	\N	\N
+zevuv	being	creature	\N	Fly	\N	\N	\N	\N	\N	\N	\N
 zia	person	\N	\N	Zia	male	\N	\N	Gad	\N	\N	\N
 ziba	person	\N	\N	Ziba	male	\N	\N	\N	\N	\N	\N
 zibeon-2	person	\N	\N	Zibeon	male	\N	\N	Edomite	\N	\N	\N
