@@ -43,6 +43,7 @@ internal static class DeskEndpoints
             {
                 Count("wikipedia", () => wikipedia.Unanswered(), null),
                 Count("known-for", () => knownFor.Unanswered(), null),
+                Count("pictures", () => portraits.FoundWaiting(), null),
             };
 
             try
@@ -170,6 +171,21 @@ internal static class DeskEndpoints
             return await choices.Choose(slug, request, before.Entity.LocalName ?? before.Entity.Name) is null
                 ? Results.UnprocessableEntity(new ProblemResponse("That picture is not under the images folder, or the caption is too long."))
                 : Results.Ok(await board.Pictures(slug, cancellationToken));
+        });
+
+        routes.MapPut("/pictures/{slug}/review", async (
+            string slug, PictureReviewRequest request, PictureChoices choices, PortraitBoard board,
+            CancellationToken cancellationToken) =>
+        {
+            if (await board.Pictures(slug, cancellationToken) is not { } before)
+            {
+                return NotThere("There is no such record in the corpus.");
+            }
+
+            return await choices.Review(slug, before.Entity.Kind, request, before.Entity.LocalName ?? before.Entity.Name)
+                ? Results.Ok(await board.Pictures(slug, cancellationToken))
+                : Results.UnprocessableEntity(new ProblemResponse(
+                    "The list of found public works holds no such picture of this record, or the word is not pending, approved or rejected."));
         });
 
         // The pictures themselves, from the corpus's images folder and nowhere above it.

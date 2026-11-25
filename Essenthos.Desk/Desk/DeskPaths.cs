@@ -51,6 +51,9 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
 
     public string Generated => Path.Combine(Images, "generated");
 
+    /// <summary>The public works, beside the manifest of those found for the owner's review.</summary>
+    public string Commons => Path.Combine(Images, "commons");
+
     /// <summary>
     /// What the console works out for itself and keeps between runs, such as the census of the texts:
     /// nothing tracked and nothing a loader reads, so it lives outside the checkout and the corpus.
