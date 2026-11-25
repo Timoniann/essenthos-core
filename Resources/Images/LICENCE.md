@@ -55,6 +55,13 @@ the console's Pictures page, which writes `approved` or `rejected` into the entr
 `needs: images`. Only public domain, CC0, CC BY and CC BY-SA are taken, each read on the file's Commons page; an
 ancient object or a drawing of one is preferred, and a record with nothing faithful is left without.
 
+No work shows nudity: the site is read by families and churches. A clothed ancient depiction is taken where one
+exists. Where none does, the nude parts of the work are blurred in a copy beside it, made by
+`scripts/blur-images.py` from the regions listed in `scripts/blur-regions.json`; the manifest names the copy,
+marks the entry `modified`, adds "(modified: blurred by Essenthos)" to its credit and says in each caption that
+the photograph is modified. Every licence taken here allows a modified copy; one under CC BY-SA keeps that
+licence.
+
 ## A generated portrait
 
 Drop the file into `generated/` and list it in `generated/manifest.json`:

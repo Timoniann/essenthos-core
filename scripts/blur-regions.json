@@ -1,0 +1,15 @@
+{
+  "about": "Public works shown only in part: the nude parts of each source picture are blurred into a copy beside it, which the found works' manifest (Resources/Images/commons/manifest.json) lists in place of the source. Each region is an ellipse given as fractions of the picture's width and height: [left, top, right, bottom]. The licences of these sources (public domain, CC BY, CC BY-SA) allow a modified copy; the manifest entry and its caption say the copy is blurred, and CC BY-SA copies keep that licence. scripts/blur-images.py makes the copies; scripts/fetch-images.ps1 fetches each source and runs it.",
+  "images": [
+    {
+      "entity": "asherah",
+      "source": "commons/Hecht_Museum,_Israel_–_figurines_010.JPG",
+      "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Hecht_Museum%2C_Israel_%E2%80%93_figurines_010.JPG/1920px-Hecht_Museum%2C_Israel_%E2%80%93_figurines_010.JPG",
+      "output": "commons/Judean_pillar_figurine_Hecht_Museum_blurred.jpg",
+      "regions": [
+        [0.350, 0.412, 0.478, 0.478],
+        [0.487, 0.410, 0.604, 0.480]
+      ]
+    }
+  ]
+}
