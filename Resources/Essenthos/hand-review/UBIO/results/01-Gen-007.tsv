@@ -1,0 +1,128 @@
+kind	from	to	relation	reason
+fixed	1.7:1			Added the dative prefix and object pronoun, and moved the preposition.
+fixed	1.7:2			Completed the distributive number and linked the missing pronouns and negated adjective.
+fixed	1.7:3			Completed the distributive number and linked the source preposition and purpose expression.
+fixed	1.7:4			Linked the time phrase, rain expression, and wiping clause.
+fixed	1.7:5			Linked the comparison and the command with its auxiliary.
+fixed	1.7:6			Completed the age numeral and linked the flood verb.
+fixed	1.7:7			Linked the kinship expression and the two prepositional expressions.
+fixed	1.7:8			Linked the negated adjective and subject suffix.
+fixed	1.7:9			Completed the distributive number and linked the comparison and auxiliary.
+fixed	1.7:10			Linked the temporal preposition and floodwater verb.
+unsure	1.7:11			Corrected date and opening links. The two relational lamed prefixes remain uncertain.
+ok	1.7:12			
+fixed	1.7:13			Linked the temporal genitive, demonstrative, entry verb, kinship expression, and accompaniment.
+fixed	1.7:14			Corrected the possessive occurrence and linked the prefixes in the kind phrases.
+fixed	1.7:15			Completed the distributive number and linked the relative clause opening.
+fixed	1.7:16			Linked the relative participle, main entry verb, comparison, and pronouns.
+fixed	1.7:17			Linked the subject pronoun and elevation expression.
+fixed	1.7:18			Linked the first verb and the second verb's subject pronoun.
+fixed	1.7:19			Completed the repeated intensifier and linked the rising verb.
+fixed	1.7:20			Completed the numeral and upward expression, and linked the rising verb.
+fixed	1.7:21			Linked the relative words and missing prepositions.
+fixed	1.7:22			Linked both relative clauses, the possessive suffix, and the past auxiliary.
+fixed	1.7:23			Linked the object phrase, range endpoints, subject pronoun, and final relative phrase.
+ok	1.7:24			
+refuse	1.7:1.18	1.7:1.19		The preposition renders the prefix.
+refuse	1.7:11.20	1.7:11.32		The verb renders the opening verb.
+refuse	1.7:14.7	1.7:14.13		This possessive belongs to the first kind phrase.
+refuse	1.7:14.21	1.7:14.24		The preposition renders the prefix.
+refuse	1.7:14.27	1.7:14.30		The preposition renders the prefix.
+accept	1.7:1.4	1.7:1.4,1.7:1.5	renders	The dative renders the prefix with Noah.
+accept	1.7:1.16	1.7:1.15	renders	Second-person object suffix.
+accept	1.7:1.18	1.7:1.18	renders	Preposition in the before expression.
+accept	1.7:2.6	1.7:2.8	renders	Suffixed preposition renders the reflexive dative.
+accept	1.7:2.7,1.7:2.8	1.7:2.9,1.7:2.10	renders	The repeated numeral marks distribution.
+accept	1.7:2.12	1.7:2.13	renders	Possessive suffix on the first female.
+accept	1.7:2.16	1.7:2.19,1.7:2.20	renders	One adjective renders the negated adjective.
+accept	1.7:2.21	1.7:2.25	renders	Possessive suffix on the second female.
+accept	1.7:3.2	1.7:3.2	renders	Source preposition.
+accept	1.7:3.5,1.7:3.6	1.7:3.6,1.7:3.7	renders	The repeated numeral marks distribution.
+accept	1.7:3.10	1.7:3.11	renders	Purpose prefix on the infinitive.
+accept	1.7:3.12,1.7:3.13	1.7:3.12	renders	Verb and complement render keeping alive.
+accept	1.7:4.3	1.7:4.2	renders	Temporal preposition.
+accept	1.7:4.4	1.7:4.5	renders	Seven in the time phrase.
+accept	1.7:4.7,1.7:4.10	1.7:4.7	renders	The verb and noun render causing rain.
+accept	1.7:4.17	1.7:4.19	renders	Quantifier of the living things.
+accept	1.7:4.18	1.7:4.21	renders	Living thing.
+accept	1.7:4.19	1.7:4.22	renders	Relative marker.
+accept	1.7:4.20,1.7:4.21	1.7:4.23	renders	Verb with first-person subject ending.
+accept	1.7:4.22	1.7:4.17	renders	Wiping verb.
+accept	1.7:4.23	1.7:4.24,1.7:4.25	renders	One preposition renders both spatial elements.
+accept	1.7:5.5	1.7:5.4,1.7:5.6	renders	Comparison and relative construction.
+accept	1.7:5.6,1.7:5.7	1.7:5.7	renders	Command verb with past auxiliary.
+accept	1.7:6.5	1.7:6.4,1.7:6.5	renders	Compound numeral six hundred.
+accept	1.7:6.8	1.7:6.10	renders	Written verb of occurrence.
+accept	1.7:7.11	1.7:7.9,1.7:7.10	renders	Daughters-in-law renders wives of sons.
+accept	1.7:7.13,1.7:7.14	1.7:7.11	renders	Accompaniment with pronominal suffix.
+accept	1.7:7.17	1.7:7.15,1.7:7.16	renders	One preposition renders the Hebrew idiom.
+accept	1.7:8.8	1.7:8.11,1.7:8.12	renders	One adjective renders the negated adjective.
+accept	1.7:8.9	1.7:8.11	renders	Subject suffix on the negator.
+accept	1.7:9.1,1.7:9.2	1.7:9.1,1.7:9.2	renders	The repeated numeral marks distribution.
+accept	1.7:9.11	1.7:9.12,1.7:9.13	renders	Comparison and relative construction.
+accept	1.7:9.14	1.7:9.14	renders	Past auxiliary of the command verb.
+accept	1.7:10.3	1.7:10.3	renders	Temporal preposition.
+accept	1.7:10.9	1.7:10.11	renders	Verb describing the floodwaters.
+accept	1.7:11.1	1.7:11.1,1.7:11.2	renders	Temporal genitive renders in the year.
+accept	1.7:11.2	1.7:11.3	renders	Six in the year count.
+accept	1.7:11.4	1.7:11.5	renders	Years in the age count.
+accept	1.7:11.7	1.7:11.9,1.7:11.11	renders	Temporal genitive renders in the month.
+accept	1.7:11.9	1.7:11.15,1.7:11.16	renders	Compound numeral seventeen.
+accept	1.7:11.10	1.7:11.14,1.7:11.17	renders	Temporal genitive in the seventeenth-day phrase.
+accept	1.7:11.12	1.7:11.25	renders	Demonstrative in this day.
+accept	1.7:11.13	1.7:11.21,1.7:11.23	renders	Temporal genitive renders on this day.
+accept	1.7:11.20	1.7:11.35	renders	Opening verb of the heavenly apertures.
+accept	1.7:11.22	1.7:11.32	renders	Noun for the heavenly apertures.
+accept	1.7:13.1	1.7:13.6	renders	Demonstrative in the day phrase.
+accept	1.7:13.3	1.7:13.1,1.7:13.4	renders	Temporal genitive renders on that day.
+accept	1.7:13.6	1.7:13.7	renders	Entry verb.
+accept	1.7:13.21	1.7:13.22,1.7:13.23	renders	Daughters-in-law renders wives of sons.
+accept	1.7:13.23,1.7:13.24	1.7:13.24	renders	Accompaniment with plural suffix.
+accept	1.7:14.5	1.7:14.6	renders	Prefix in the first kind phrase.
+accept	1.7:14.7	1.7:14.7	renders	Possessive suffix for the wild animals.
+accept	1.7:14.11	1.7:14.12	renders	Prefix in the cattle kind phrase.
+accept	1.7:14.12,1.7:14.13	1.7:14.13	renders	Kind noun with possessive suffix for cattle.
+accept	1.7:14.17	1.7:14.19	renders	Relative word in the participial clause.
+accept	1.7:14.19	1.7:14.20	renders	Preposition of movement over the ground.
+accept	1.7:14.21	1.7:14.23	renders	Prefix in the creeping animals' kind phrase.
+accept	1.7:14.22,1.7:14.23	1.7:14.24	renders	Kind noun with possessive suffix for creeping animals.
+accept	1.7:14.27	1.7:14.29	renders	Prefix in the birds' kind phrase.
+accept	1.7:15.7,1.7:15.8	1.7:15.8,1.7:15.9	renders	The repeated numeral marks distribution.
+accept	1.7:15.12	1.7:15.14	renders	Written relative marker.
+accept	1.7:15.13,1.7:15.14	1.7:15.15	renders	Preposition with pronominal suffix.
+accept	1.7:16.3	1.7:16.3	renders	Relative word in the participial clause.
+accept	1.7:16.11	1.7:16.10	renders	Main finite entry verb.
+accept	1.7:16.12	1.7:16.11,1.7:16.12	renders	Comparison and relative construction.
+accept	1.7:16.14	1.7:16.14	renders	Pronominal suffix on the object marker.
+accept	1.7:16.19,1.7:16.20	1.7:16.19	renders	Preposition with third-person suffix.
+accept	1.7:17.15,1.7:17.16,1.7:17.17	1.7:17.20	renders	Subject ending and verb of elevation.
+accept	1.7:17.18	1.7:17.21,1.7:17.22	renders	One preposition renders the compound above.
+accept	1.7:18.2	1.7:18.2	renders	First verb of rising waters.
+accept	1.7:18.7	1.7:18.6	renders	Subject ending of the second verb.
+accept	1.7:19.2	1.7:19.5,1.7:19.6	renders	Hyphenated repetition renders both intensifiers.
+accept	1.7:19.6	1.7:19.4	renders	Verb of rising waters.
+accept	1.7:20.2	1.7:20.1,1.7:20.2	renders	Compound numeral fifteen.
+accept	1.7:20.4	1.7:20.4,1.7:20.5,1.7:20.6	renders	One adverb renders the compound upward expression.
+accept	1.7:20.6	1.7:20.7	renders	Verb of rising waters.
+accept	1.7:21.5	1.7:21.6	renders	Relative word in the first participial clause.
+accept	1.7:21.9	1.7:21.10	renders	Preposition for the birds.
+accept	1.7:21.12	1.7:21.14	renders	Preposition for the cattle.
+accept	1.7:21.15	1.7:21.18	renders	Preposition for the wild animals.
+accept	1.7:21.18	1.7:21.22	renders	Preposition for the swarming creatures.
+accept	1.7:21.21	1.7:21.27	renders	Relative word in the second participial clause.
+accept	1.7:21.23	1.7:21.28	renders	Preposition in the swarming clause.
+accept	1.7:22.2	1.7:22.2	renders	First written relative marker.
+accept	1.7:22.3	1.7:22.6	renders	Preposition before nostrils.
+accept	1.7:22.4,1.7:22.5	1.7:22.7	renders	Nostrils with possessive suffix.
+accept	1.7:22.6	1.7:22.4	renders	Spirit in the life expression.
+accept	1.7:22.10	1.7:22.10	renders	Second written relative marker.
+accept	1.7:22.11	1.7:22.11	renders	Preposition before dry land.
+accept	1.7:22.14	1.7:22.14	renders	Past auxiliary with the verb of dying.
+accept	1.7:23.4	1.7:23.4	renders	Quantifier of the living things.
+accept	1.7:23.5	1.7:23.6	renders	Living thing.
+accept	1.7:23.11,1.7:23.12	1.7:23.14	renders	Range endpoint at the cattle.
+accept	1.7:23.14,1.7:23.15	1.7:23.16	renders	Range endpoint at the creeping creatures.
+accept	1.7:23.18,1.7:23.19	1.7:23.19	renders	Range endpoint at the birds.
+accept	1.7:23.22	1.7:23.24	renders	Plural subject ending of the wiping verb.
+accept	1.7:23.31,1.7:23.32	1.7:23.33	renders	Demonstrative and relative render the headless relative.
+accept	1.7:23.33,1.7:23.34	1.7:23.34	renders	Accompaniment with pronominal suffix.

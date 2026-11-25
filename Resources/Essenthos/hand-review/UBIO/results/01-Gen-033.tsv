@@ -1,0 +1,127 @@
+kind	from	to	relation	reason
+unsure	1.33:1			Restored omitted links. The role of аж in the behold clause is uncertain.
+fixed	1.33:2			Restored the verb, its subject, and the placement words.
+fixed	1.33:3			Restored the subject, motion verb, and prepositional links.
+fixed	1.33:4			Restored the directional prefix and two pronouns.
+unsure	1.33:5			Corrected the possessive and restored the demonstrative and subject. The contribution of такі is uncertain.
+fixed	1.33:6			Completed the compound conjunction.
+fixed	1.33:7			Completed the final compound conjunction.
+fixed	1.33:8			Corrected the question and demonstrative and restored the subject and purpose links.
+fixed	1.33:9			Restored the possession and wish clauses.
+unsure	1.33:10			Corrected the causal link and restored omitted links. The scope of Бож beyond כִּי is uncertain.
+fixed	1.33:11			Restored the request particle, favor and possession expressions, and final clause links.
+fixed	1.33:12			Completed the directional phrase and its pronoun.
+fixed	1.33:13			Corrected the death verb and restored the driving clause and shared noun.
+fixed	1.33:14			Corrected the pace and first position phrase and restored verb, prefix, and noun links.
+unsure	1.33:15			Restored the request, partitive, and pronoun links. The correspondence of таку to זֶה is uncertain.
+fixed	1.33:16			Corrected the demonstrative and restored the time and direction prefixes.
+fixed	1.33:17			Restored the travel and beneficiary links and completed the causal expression.
+fixed	1.33:18			Restored the two occurrences of coming and completed the place expressions.
+fixed	1.33:19			Restored the subject, plot noun, locative relative, and source prefix.
+fixed	1.33:20			Restored the object pronoun and completed the compound name.
+refuse	1.33:5.3	1.33:5.3		Object marker carries no possessive.
+refuse	1.33:8.6	1.33:8.9		The postposed той renders the demonstrative.
+refuse	1.33:10.6	1.33:10.17		This particle belongs to the opening refusal.
+refuse	1.33:13.24	1.33:13.19		This verb means driving the animals.
+refuse	1.33:14.6	1.33:14.5		Очима renders the noun in this phrase.
+refuse	1.33:14.13	1.33:14.9		The pace is expressed by the following phrase.
+refuse	1.33:16.3	1.33:16.4		The article carries no demonstrative meaning.
+accept	1.33:1.7	1.33:1.5	renders	Part of the compound conjunction та й.
+accept	1.33:1.11	1.33:1.10	renders	Esau's coming.
+accept	1.33:1.15	1.33:1.12	renders	Pronoun carried by the preposition.
+accept	1.33:1.18	1.33:1.15	renders	People counted in the group.
+accept	1.33:1.20	1.33:1.17	renders	Subject of the division verb.
+accept	1.33:1.24	1.33:1.21	renders	Preposition introducing Leah.
+accept	1.33:1.27	1.33:1.24	renders	Preposition introducing Rachel.
+accept	1.33:1.30	1.33:1.27	renders	Preposition introducing the maidservants.
+accept	1.33:2.2,1.33:2.3	1.33:2.2	renders	Placement verb and its subject.
+accept	1.33:2.9	1.33:2.9	renders	Placement in front.
+accept	1.33:2.15	1.33:2.15	renders	First rear group in the sequence.
+accept	1.33:3.2	1.33:3.2	renders	Emphatic independent subject.
+accept	1.33:3.3	1.33:3.3	renders	Going ahead of the others.
+accept	1.33:3.4	1.33:3.4,1.33:3.5	renders	Compound preposition meaning before.
+accept	1.33:3.5	1.33:3.5	renders	Pronoun carried by the suffix.
+accept	1.33:3.8	1.33:3.8	renders	Directional ending on earth.
+accept	1.33:3.13	1.33:3.11	renders	Part of the temporal conjunction аж поки.
+accept	1.33:4.4	1.33:4.4	renders	Directional prefix within the encounter phrase.
+accept	1.33:4.5	1.33:4.5	renders	Pronoun carried by the encounter word.
+accept	1.33:4.18	1.33:4.15	renders	Plural subject of the weeping verb.
+accept	1.33:5.3	1.33:5.4	renders	Possessive suffix on eyes.
+accept	1.33:5.14	1.33:5.17	renders	Demonstrative identifying the group.
+accept	1.33:5.17	1.33:5.20	renders	Subject of the reply verb.
+accept	1.33:6.9	1.33:6.8	renders	Part of the compound conjunction та й.
+accept	1.33:7.17	1.33:7.15	renders	Part of the compound conjunction та й.
+accept	1.33:8.5,1.33:8.7	1.33:8.3	renders	Interrogative construction що за.
+accept	1.33:8.10	1.33:8.9	renders	Demonstrative modifying camp.
+accept	1.33:8.15	1.33:8.13	renders	Subject of the reply verb.
+accept	1.33:8.17	1.33:8.14	renders	Prefix marking the purpose infinitive.
+accept	1.33:9.4	1.33:9.5	renders	First-person possessor expressed as subject.
+accept	1.33:9.5	1.33:9.4	renders	Existential predicate expressed as possession.
+accept	1.33:9.6	1.33:9.6	renders	Quantity possessed.
+accept	1.33:9.9	1.33:9.10,1.33:9.11	renders	Substantival possessive meaning what is yours.
+accept	1.33:9.10,1.33:9.11	1.33:9.8	renders	Jussive verb and its mood particle.
+accept	1.33:9.12	1.33:9.9	renders	Beneficiary of the wish.
+accept	1.33:10.4	1.33:10.4	renders	Negation in the opening refusal.
+accept	1.33:10.5,1.33:10.6	1.33:10.5	renders	Particle expression reinforcing the opening refusal.
+accept	1.33:10.15	1.33:10.13	renders	Request to take the gift.
+accept	1.33:10.18	1.33:10.15	renders	Source prefix on hand.
+accept	1.33:10.21	1.33:10.17	renders	Causal connective before the first seeing verb.
+accept	1.33:10.23	1.33:10.20	renders	First occurrence of seeing.
+accept	1.33:10.31,1.33:10.32,1.33:10.33,1.33:10.34	1.33:10.27	renders	Favor verb with its subject, reflexive expression, and object.
+accept	1.33:11.2	1.33:11.2	renders	Particle reinforcing the request.
+accept	1.33:11.7	1.33:11.7	renders	Recipient of what was brought.
+accept	1.33:11.10,1.33:11.11,1.33:11.12,1.33:11.13	1.33:11.9	renders	Favor expressed with an adjective and its complement.
+accept	1.33:11.15	1.33:11.11	renders	Part of the compound conjunction та й.
+accept	1.33:11.16	1.33:11.13	renders	Existential predicate expressed as possession.
+accept	1.33:11.17	1.33:11.14	renders	First-person possessor expressed as subject.
+accept	1.33:11.20,1.33:11.21	1.33:11.17	renders	Entreaty verb and its subject.
+accept	1.33:11.22	1.33:11.18	renders	Object carried by the suffixed preposition.
+accept	1.33:11.24	1.33:11.20	renders	Subject of the taking verb.
+accept	1.33:12.10	1.33:12.8	renders	Prefix in the compound position phrase.
+accept	1.33:12.11	1.33:12.9	renders	Second-person suffix in the position phrase.
+accept	1.33:13.2	1.33:13.2	renders	Subject of the reply verb.
+accept	1.33:13.14	1.33:13.12	renders	Shared noun also describes the smaller livestock.
+accept	1.33:13.15,1.33:13.16	1.33:13.17	renders	Relation to the speaker and its pronoun.
+accept	1.33:13.18	1.33:13.18	renders	Conjunction introducing the conditional clause.
+accept	1.33:13.19,1.33:13.20	1.33:13.19	renders	Driving verb and its object suffix.
+accept	1.33:13.24	1.33:13.23	renders	Death of the flock.
+accept	1.33:14.1,1.33:14.3	1.33:14.1	renders	Jussive motion verb and its mood particle.
+accept	1.33:14.2	1.33:14.2	renders	Particle reinforcing the request.
+accept	1.33:14.6	1.33:14.4	renders	Prefix in перед очима.
+accept	1.33:14.7	1.33:14.5	renders	Face noun rendered as eyes.
+accept	1.33:14.12	1.33:14.9	renders	Jacob's verb of going onward.
+accept	1.33:14.13	1.33:14.10,1.33:14.11	renders	Adverb expressing the slow pace.
+accept	1.33:14.14	1.33:14.12	renders	Prefix in the livestock pace phrase.
+accept	1.33:14.15	1.33:14.13	renders	Foot in the livestock pace phrase.
+accept	1.33:14.16	1.33:14.15	renders	Livestock referred to in the pace phrase.
+accept	1.33:14.18	1.33:14.17	renders	Prefix in передо мною.
+accept	1.33:14.19	1.33:14.18	renders	First-person suffix in the position phrase.
+accept	1.33:14.21	1.33:14.20	renders	Prefix in the children's pace phrase.
+accept	1.33:14.22	1.33:14.21	renders	Foot in the children's pace phrase.
+accept	1.33:15.5	1.33:15.5	renders	Particle reinforcing the offer.
+accept	1.33:15.7	1.33:15.6	renders	Second-person suffix on the preposition.
+accept	1.33:15.8	1.33:15.7	renders	Indefinite quantity expressed by the partitive.
+accept	1.33:15.10	1.33:15.9	renders	People from whom the group is drawn.
+accept	1.33:15.13	1.33:15.11	renders	First-person suffix on the preposition.
+accept	1.33:15.15	1.33:15.13	renders	Subject of the reply verb.
+accept	1.33:15.19	1.33:15.16	renders	First-person subject of finding favor.
+accept	1.33:16.3	1.33:16.7	renders	Demonstrative in that day.
+accept	1.33:16.4	1.33:16.3	renders	Temporal genitive renders the time prefix.
+accept	1.33:16.6	1.33:16.9	renders	Directional prefix on road.
+accept	1.33:17.3	1.33:17.3	renders	Jacob's departure.
+accept	1.33:17.4	1.33:17.4	renders	Directional ending on Succoth.
+accept	1.33:17.8	1.33:17.7	renders	Beneficiary of the house construction.
+accept	1.33:17.16	1.33:17.14	renders	Preposition within the compound causal expression.
+accept	1.33:18.3	1.33:18.11	renders	Prefix marking time of arrival.
+accept	1.33:18.4,1.33:18.5	1.33:18.12	renders	Temporal coming clause and its subject suffix.
+accept	1.33:18.8	1.33:18.15	renders	Aram component of the place name.
+accept	1.33:18.9	1.33:18.2	renders	Main verb of arrival.
+accept	1.33:18.11	1.33:18.5	renders	Preposition expressing the bare destination noun.
+accept	1.33:18.14	1.33:18.8	renders	Locative prefix on land.
+accept	1.33:18.19	1.33:18.18	renders	Preposition in the compound phrase meaning before.
+accept	1.33:19.3	1.33:19.2	renders	Subject of the purchase verb.
+accept	1.33:19.4	1.33:19.4	renders	Plot of land purchased.
+accept	1.33:19.6	1.33:19.9	renders	Relative де incorporates the locative adverb.
+accept	1.33:19.10	1.33:19.11	renders	Source prefix on hand.
+accept	1.33:20.7	1.33:20.7	renders	Pronoun carried by the suffixed preposition.
+accept	1.33:20.8	1.33:20.8,1.33:20.9	renders	First two components of the compound name.

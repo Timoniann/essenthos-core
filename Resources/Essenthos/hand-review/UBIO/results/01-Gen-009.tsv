@@ -1,0 +1,155 @@
+kind	from	to	relation	reason
+fixed	1.9:1			Completed the compound conjunction.
+fixed	1.9:2			Missing fear, preposition, and clause links.
+fixed	1.9:3			Missing predicate, pronoun, and preposition links.
+fixed	1.9:4			Missing shared preposition and verb form links.
+fixed	1.9:5			Missing verb, suffix, and source links. The first із expresses a different relation.
+unsure	1.9:6			The source phrase з людини may differ from the Hebrew agent phrase.
+fixed	1.9:7			Missing contrast marker, verb, and suffixed preposition.
+fixed	1.9:8			Missing companionship phrase and infinitive prefix.
+fixed	1.9:9			Moved the possessive to covenant and added missing phrase links.
+fixed	1.9:10			Missing prepositional, relative, and noun links.
+fixed	1.9:11			Missing companionship, negation, passive verb, and causal links.
+fixed	1.9:12			Missing speech verbs, pronouns, and prepositions.
+fixed	1.9:13			Missing verb, subject pronouns, and second between.
+fixed	1.9:14			Missing temporal verb and its subject.
+fixed	1.9:15			Removed the supplied object preposition and completed the between phrases.
+fixed	1.9:16			Missing purpose marker and second between.
+fixed	1.9:17			Missing covenant verb, suffix, and second between.
+fixed	1.9:18			Missing main verb, relative marker, and predicate copula.
+fixed	1.9:19			Missing predicate copula and second demonstrative.
+fixed	1.9:20			Missing auxiliary, descriptive nouns, and planting phrase.
+fixed	1.9:21			Missing subject pronoun, conjunction component, and location noun.
+fixed	1.9:22			Missing conjunction component and dative and locative prefixes.
+unsure	1.9:23			The active paraphrase of the faces pointing backward is uncertain.
+fixed	1.9:24			Missing waking verb, dative pronoun, and auxiliary.
+fixed	1.9:25			Missing subject pronouns, curse auxiliary, and dative prefix.
+fixed	1.9:26			Missing subject pronoun, jussive verb phrase, and dative pronoun.
+fixed	1.9:27			Moved the verb off Japheth and completed the jussive phrases.
+fixed	1.9:28			Missing three hundred and both occurrences of years.
+fixed	1.9:29			Completed nine hundred, both occurrences of years, and the conjunction.
+refuse	1.9:9.4	1.9:9.3		The possessive belongs to covenant.
+refuse	1.9:15.3	1.9:15.2		Supplied preposition for a direct object.
+refuse	1.9:27.3	1.9:27.4		The verb is on the name Japheth.
+accept	1.9:1.9	1.9:1.9	renders	Part of the compound conjunction та й.
+accept	1.9:2.3,1.9:2.4	1.9:2.2	renders	Fear directed toward you.
+accept	1.9:2.6,1.9:2.7,1.9:2.8	1.9:2.4	renders	Terror directed toward you.
+accept	1.9:2.10	1.9:2.6	renders	First preposition introducing the affected animals.
+accept	1.9:2.11	1.9:2.7	renders	Quantifier for the wild animals.
+accept	1.9:2.15	1.9:2.12	renders	Second preposition introduces the birds.
+accept	1.9:2.19	1.9:2.17	renders	Preposition introducing the creeping things.
+accept	1.9:2.21	1.9:2.19	renders	Relative marker.
+accept	1.9:2.22	1.9:2.20	renders	Creeping verb.
+accept	1.9:2.25	1.9:2.24	renders	Preposition introducing the fish.
+accept	1.9:2.33	1.9:2.31	renders	Plural subject of the passive verb.
+accept	1.9:3.2,1.9:3.3	1.9:3.2	renders	Relative phrase renders creeping things.
+accept	1.9:3.6	1.9:3.4	renders	Explicit Hebrew pronoun.
+accept	1.9:3.8	1.9:3.6	renders	First suffixed dative.
+accept	1.9:3.9	1.9:3.8	renders	Preposition marking use as food.
+accept	1.9:3.11	1.9:3.10	renders	Comparative prefix.
+accept	1.9:3.15	1.9:3.13	renders	Giving verb.
+accept	1.9:3.16	1.9:3.14	renders	Second suffixed dative.
+accept	1.9:4.3,1.9:4.7	1.9:4.3	renders	Preposition shared by life and its appositive blood.
+accept	1.9:4.11,1.9:4.12	1.9:4.7	renders	Future auxiliary and second-person plural subject.
+accept	1.9:5.2	1.9:5.2	renders	Restrictive particle.
+accept	1.9:5.3,1.9:5.4,1.9:5.5	1.9:5.7	renders	First demand with its subject and auxiliary.
+accept	1.9:5.6,1.9:5.7	1.9:5.4	renders	Blood with its possessive suffix.
+accept	1.9:5.9,1.9:5.10	1.9:5.6	renders	Lives with their possessive suffix.
+accept	1.9:5.11	1.9:5.8	renders	Source prefix for the animal.
+accept	1.9:5.17	1.9:5.12	renders	Object suffix on the second demand.
+accept	1.9:5.19	1.9:5.14	renders	Source prefix for the person.
+accept	1.9:5.21	1.9:5.17	renders	Person in the second source phrase.
+accept	1.9:5.22	1.9:5.18	renders	Source prefix for the brother.
+accept	1.9:5.27,1.9:5.28	1.9:5.22	renders	Subject and auxiliary of the third demand.
+accept	1.9:6.2	1.9:6.1	renders	Finite Ukrainian verb renders the Hebrew participle.
+accept	1.9:6.9	1.9:6.9	renders	Future passive auxiliary.
+accept	1.9:6.13	1.9:6.14	renders	Subject expressed by the verb form.
+accept	1.9:7.2	1.9:7.1	renders	Contrastive conjunction.
+accept	1.9:7.6	1.9:7.6	renders	Swarming verb.
+accept	1.9:7.11,1.9:7.12	1.9:7.12	renders	Locative preposition with its pronoun suffix.
+accept	1.9:8.10,1.9:8.11	1.9:8.9	renders	Companionship preposition with its pronoun suffix.
+accept	1.9:8.12	1.9:8.10	renders	The converb renders the quote-introducing infinitive construction.
+accept	1.9:9.4	1.9:9.6	renders	Possessive suffix on covenant.
+accept	1.9:9.7	1.9:9.3	renders	First-person suffix on behold.
+accept	1.9:9.8,1.9:9.9	1.9:9.7	renders	With you, including the suffix.
+accept	1.9:9.11	1.9:9.9	renders	With introduces the descendants.
+accept	1.9:9.13	1.9:9.10	renders	Descendants renders seed.
+accept	1.9:9.15	1.9:9.11	renders	Pronoun suffix on after.
+accept	1.9:10.2	1.9:10.2	renders	With introduces every living creature.
+accept	1.9:10.7,1.9:10.8	1.9:10.8	renders	First with you phrase.
+accept	1.9:10.9	1.9:10.9	renders	Among the birds.
+accept	1.9:10.11	1.9:10.12	renders	Among the livestock.
+accept	1.9:10.14	1.9:10.16	renders	Among the wild animals.
+accept	1.9:10.16	1.9:10.20	renders	Adjective renders the first genitive earth.
+accept	1.9:10.17	1.9:10.18	renders	First occurrence of wild animals.
+accept	1.9:10.18,1.9:10.19	1.9:10.21	renders	Second with you phrase.
+accept	1.9:10.22	1.9:10.24	renders	Relative marker renders the participle.
+accept	1.9:10.26	1.9:10.27	renders	Prefix marks the endpoint of the range.
+accept	1.9:10.28	1.9:10.31	renders	Adjective renders the second genitive earth.
+accept	1.9:11.6,1.9:11.7	1.9:11.5	renders	With you, including the suffix.
+accept	1.9:11.9,1.9:11.11	1.9:11.7	renders	Negative concord expresses the first negation.
+accept	1.9:11.14	1.9:11.8	renders	Passive destruction verb.
+accept	1.9:11.15	1.9:11.12	renders	Instrumental case renders the causal prefix.
+accept	1.9:12.3	1.9:12.2	renders	Speech verb.
+accept	1.9:12.8	1.9:12.10	renders	Giving verb.
+accept	1.9:12.12	1.9:12.11	renders	First-person suffix on between.
+accept	1.9:12.14	1.9:12.13	renders	Second-person plural suffix on between.
+accept	1.9:12.16	1.9:12.15	renders	Between introduces every living creature.
+accept	1.9:12.21,1.9:12.22	1.9:12.20	renders	With you, including the suffix.
+accept	1.9:12.23	1.9:12.21	renders	Preposition marking duration.
+accept	1.9:13.1,1.9:13.4	1.9:13.3	renders	Giving verb with first-person subject.
+accept	1.9:13.9	1.9:13.8	renders	Feminine subject of become.
+accept	1.9:13.14	1.9:13.12	renders	First-person suffix on between.
+accept	1.9:13.16	1.9:13.14	renders	Second between introduces the earth.
+accept	1.9:14.6,1.9:14.8	1.9:14.4	renders	Temporal infinitive with first-person suffix.
+accept	1.9:15.8	1.9:15.6	renders	First-person suffix on between.
+accept	1.9:15.10,1.9:15.11	1.9:15.8	renders	Between with second-person plural suffix.
+accept	1.9:15.13	1.9:15.10	renders	Third between introduces the living creatures.
+accept	1.9:16.9	1.9:16.10	renders	Purpose prefix.
+accept	1.9:16.17	1.9:16.17	renders	Second between.
+accept	1.9:17.11	1.9:17.11	renders	Establishing verb.
+accept	1.9:17.13	1.9:17.12	renders	First-person suffix on between.
+accept	1.9:17.15	1.9:17.14	renders	Second between.
+accept	1.9:18.2	1.9:18.2	renders	Written verb of being.
+accept	1.9:18.5	1.9:18.6	renders	Relative marker renders the participle.
+accept	1.9:18.17	1.9:18.18	renders	Supplied copula links to the predicate father.
+accept	1.9:19.3	1.9:19.3	renders	Supplied copula links to the predicate sons.
+accept	1.9:19.8	1.9:19.7	renders	Pronoun renders the second demonstrative.
+accept	1.9:20.3	1.9:20.2	renders	Past auxiliary of began.
+accept	1.9:20.5	1.9:20.4	renders	Man in the description of Noah.
+accept	1.9:20.6	1.9:20.6	renders	Ground in the description of Noah.
+accept	1.9:20.7	1.9:20.8	renders	Planting verb.
+accept	1.9:20.8	1.9:20.9	renders	Vineyard rendered as виноград.
+accept	1.9:21.3	1.9:21.2	renders	Subject of the drinking verb.
+accept	1.9:21.6	1.9:21.6	renders	Part of the compound conjunction та й.
+accept	1.9:21.11	1.9:21.11	renders	Inside of the tent.
+accept	1.9:22.10	1.9:22.9	renders	Part of the compound conjunction та й.
+accept	1.9:22.13	1.9:22.11	renders	Dative case marks the recipients.
+accept	1.9:22.15	1.9:22.14	renders	The locative adverb also renders the prefix.
+accept	1.9:23.2	1.9:23.1	renders	Then renders the narrative sequence.
+accept	1.9:23.11	1.9:23.12	renders	Shoulder noun.
+accept	1.9:23.12	1.9:23.13	renders	Possessive suffix on both of them.
+accept	1.9:23.14	1.9:23.15,1.9:23.16	renders	One verb renders walking backward.
+accept	1.9:23.16	1.9:23.17	renders	Part of the compound conjunction та й.
+accept	1.9:23.17	1.9:23.18	renders	Covering verb.
+accept	1.9:24.3	1.9:24.2	renders	Sobering up renders awakening from wine.
+accept	1.9:24.10	1.9:24.11	renders	Suffixed dative pronoun.
+accept	1.9:24.11	1.9:24.10	renders	Past auxiliary joins the verb of doing.
+accept	1.9:25.3	1.9:25.2	renders	Subject of said.
+accept	1.9:25.5	1.9:25.3	renders	Imperative copula expresses the curse.
+accept	1.9:25.7	1.9:25.7	renders	Subject of will be.
+accept	1.9:25.12	1.9:25.8	renders	Dative case renders the prefix.
+accept	1.9:26.3	1.9:26.2	renders	Subject of said.
+accept	1.9:26.9,1.9:26.12	1.9:26.8	renders	Jussive of being.
+accept	1.9:26.13	1.9:26.11	renders	Suffixed dative pronoun.
+accept	1.9:27.1,1.9:27.3	1.9:27.1	renders	Jussive of making spacious.
+accept	1.9:27.6,1.9:27.10	1.9:27.6	renders	Jussive marker and subject of dwell.
+accept	1.9:27.13,1.9:27.16	1.9:27.11	renders	Jussive of being.
+accept	1.9:27.17	1.9:27.14	renders	Suffixed dative pronoun.
+accept	1.9:28.6	1.9:28.7,1.9:28.8	renders	Compound number three hundred.
+accept	1.9:28.7	1.9:28.9	renders	Years after three hundred.
+accept	1.9:28.10	1.9:28.12	renders	Years after fifty.
+accept	1.9:29.6	1.9:29.7	renders	Missing hundreds component of nine hundred.
+accept	1.9:29.7	1.9:29.8	renders	Years after nine hundred.
+accept	1.9:29.10	1.9:29.11	renders	Years after fifty.
+accept	1.9:29.12	1.9:29.12	renders	Part of the compound conjunction та й.

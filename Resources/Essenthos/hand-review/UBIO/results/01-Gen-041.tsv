@@ -1,0 +1,150 @@
+kind	from	to	relation	reason
+fixed	1.41:1			Missing temporal phrase and standing subject.
+fixed	1.41:2			Missing motion verb, adjective, and flesh noun.
+fixed	1.41:3			Missing motion verb and pronouns.
+fixed	1.41:4			Missing eating verb and both cattle nouns.
+fixed	1.41:5			Missing subjects and stalk phrase.
+fixed	1.41:6			Missing pronoun in the after phrase.
+fixed	1.41:7			Missing swallowing verb, grain noun, and dream predication.
+fixed	1.41:8			Missing time phrase, pronouns, and dative prefix.
+fixed	1.41:9			Missing preposition, offences, and possessive.
+fixed	1.41:10			Custody preposition linked to its noun. Auxiliary, objects, and guard noun missing.
+fixed	1.41:11			Missing time phrase, pronouns, and second dream wording.
+unsure	1.41:12			Locative copula target uncertain. Pronouns and possession restored.
+fixed	1.41:13			Missing comparison and objects. The supplied second-person subject differs from the Hebrew verb form.
+fixed	1.41:14			Missing prison noun, shaving verb, and arrival subject.
+fixed	1.41:15			Missing dream noun, negative construction, and pronouns.
+fixed	1.41:16			Missing answer verb, self-exclusion, and answer expression.
+fixed	1.41:17			Missing speech verb and presentative subject.
+fixed	1.41:18			Missing motion verb.
+fixed	1.41:19			Missing motion verb, conjunction, and comparison.
+fixed	1.41:20			Missing eating verb and ordinal.
+fixed	1.41:21			Missing repeated entry, knowledge, appearance, and time links.
+fixed	1.41:22			Missing presentational conjunction and stalk phrase.
+fixed	1.41:23			Missing pronoun in the after phrase.
+fixed	1.41:24			Missing verbs, negative construction, and dative links.
+fixed	1.41:25			Missing relative correlative, subject, and dative prefix.
+fixed	1.41:26			Missing cattle noun and both resumptive pronouns.
+fixed	1.41:27			Missing relative verb, pronouns, and famine phrase.
+fixed	1.41:28			Missing demonstrative, verb forms, and dative link.
+ok	1.41:29			
+refuse	1.41:10.10	1.41:10.9		Custody preposition renders the preceding prefix.
+accept	1.41:1.3	1.41:1.3	renders	Preposition in temporal idiom.
+accept	1.41:1.5,1.41:1.6	1.41:1.5	renders	Dual form means two years.
+accept	1.41:1.7	1.41:1.6	renders	Time in full-years idiom.
+accept	1.41:1.12	1.41:1.12	renders	Implicit subject of standing.
+accept	1.41:2.3	1.41:2.6	renders	Cows coming up.
+accept	1.41:2.8	1.41:2.9	renders	Attractive appearance adjective.
+accept	1.41:2.12	1.41:2.13	renders	Flesh noun.
+accept	1.41:3.3	1.41:3.6	renders	Cows coming up.
+accept	1.41:3.7	1.41:3.7	renders	Pronoun in after suffix.
+accept	1.41:3.17	1.41:3.17	renders	Subject of standing.
+accept	1.41:4.2	1.41:4.4	renders	Subject cattle.
+accept	1.41:4.8	1.41:4.2	renders	Eating verb.
+accept	1.41:4.10	1.41:4.15	renders	Object cattle.
+accept	1.41:5.4	1.41:5.2	renders	Subject of sleeping.
+accept	1.41:5.7	1.41:5.4	renders	Dreamer in the verb form.
+accept	1.41:5.11	1.41:5.10	renders	Grain coming up.
+accept	1.41:5.12	1.41:5.11	renders	Preposition on the stalk.
+accept	1.41:5.13	1.41:5.13	renders	One stalk.
+accept	1.41:5.14	1.41:5.12	renders	Stalk noun.
+accept	1.41:6.5	1.41:6.10	renders	Pronoun in after suffix.
+accept	1.41:7.2	1.41:7.2	renders	Swallowing verb.
+accept	1.41:7.7	1.41:7.10	renders	Grain swallowed.
+accept	1.41:7.15	1.41:7.20	renders	Presentative recognition of the dream.
+accept	1.41:7.16	1.41:7.21	renders	Copula of dream predicate.
+accept	1.41:8.3	1.41:8.3,1.41:8.5	renders	Adverb renders in the morning.
+accept	1.41:8.10	1.41:8.10	renders	Subject of sending.
+accept	1.41:8.19	1.41:8.20	renders	Possessive suffix on wise men.
+accept	1.41:8.23	1.41:8.24	renders	Suffixed recipient.
+accept	1.41:8.31	1.41:8.30	renders	Plural object pronoun.
+accept	1.41:8.32	1.41:8.31	renders	Dative renders the prefix.
+accept	1.41:9.5	1.41:9.6	renders	Preposition meaning with.
+accept	1.41:9.11,1.41:9.12	1.41:9.11	renders	Offences and possessive suffix.
+accept	1.41:10.2	1.41:10.2	renders	Past auxiliary of anger verb.
+accept	1.41:10.4	1.41:10.3	renders	Preposition before servants.
+accept	1.41:10.9	1.41:10.7	renders	First object pronoun.
+accept	1.41:10.10	1.41:10.8	renders	Custody preposition.
+accept	1.41:10.15	1.41:10.13	renders	Royal guard designation.
+accept	1.41:10.16	1.41:10.14	renders	Repeated object pronoun.
+accept	1.41:11.3	1.41:11.4,1.41:11.5	renders	Temporal genitive renders at night.
+accept	1.41:11.5	1.41:11.2	renders	First-person plural dreamers.
+accept	1.41:11.7	1.41:11.7	renders	Explicit first-person pronoun.
+accept	1.41:11.9	1.41:11.9	renders	Explicit third-person pronoun.
+accept	1.41:11.11	1.41:11.14	renders	Second dreaming verb.
+accept	1.41:11.12,1.41:11.14	1.41:11.13	renders	Second dream noun and its possessor.
+accept	1.41:12.3,1.41:12.4	1.41:12.3	renders	With and its pronominal suffix.
+accept	1.41:12.9	1.41:12.7	renders	Genitive conveys the master's relation.
+accept	1.41:12.15	1.41:12.13	renders	Suffixed recipient.
+accept	1.41:12.17	1.41:12.15	renders	Subject of interpreting.
+accept	1.41:12.22	1.41:12.19	renders	Distributive each.
+accept	1.41:13.3	1.41:13.3,1.41:13.4	renders	Comparative relative construction.
+accept	1.41:13.4	1.41:13.5	renders	Subject of interpreting.
+accept	1.41:13.10	1.41:13.9	renders	First-person object pronoun.
+accept	1.41:13.13	1.41:13.11	renders	Preposition before position.
+accept	1.41:13.17	1.41:13.14	renders	Third-person object pronoun.
+accept	1.41:14.12	1.41:14.12	renders	Pit used as a prison.
+accept	1.41:14.14	1.41:14.14	renders	Shaving verb.
+accept	1.41:14.20	1.41:14.19	renders	Subject of arriving.
+accept	1.41:15.7	1.41:15.7	renders	First-person dreamer.
+accept	1.41:15.8	1.41:15.6	renders	First dream noun.
+accept	1.41:15.10	1.41:15.10	renders	Negative existential.
+accept	1.41:15.11,1.41:15.12	1.41:15.9	renders	Relative wording unpacks the interpreter participle.
+accept	1.41:15.14	1.41:15.11	renders	First dream object pronoun.
+accept	1.41:15.18,1.41:15.19	1.41:15.15	renders	Preposition and second-person suffix.
+accept	1.41:15.26	1.41:15.22	renders	Second dream object pronoun.
+accept	1.41:16.3	1.41:16.2	renders	Joseph's reply verb.
+accept	1.41:16.7,1.41:16.8	1.41:16.8	renders	Negation and pronoun render without me.
+accept	1.41:16.10,1.41:16.11	1.41:16.10	renders	Verb phrase expresses giving an answer.
+accept	1.41:17.2	1.41:17.2	renders	Pharaoh's speech verb.
+accept	1.41:17.12	1.41:17.8	renders	First-person presentative suffix.
+accept	1.41:18.3	1.41:18.6	renders	Cows coming up.
+accept	1.41:19.3	1.41:19.6	renders	Cows coming up.
+accept	1.41:19.5	1.41:19.7	renders	Pronoun in after suffix.
+accept	1.41:19.10	1.41:19.9	renders	Conjunction before ugly.
+accept	1.41:19.17,1.41:19.19	1.41:19.18	renders	Correlative wording renders the comparison.
+accept	1.41:19.18	1.41:19.26	renders	Ugliness in the comparison.
+accept	1.41:19.20	1.41:19.19	renders	Explicit comparison pronoun.
+accept	1.41:19.21	1.41:19.17	renders	First-person subject of seeing.
+accept	1.41:20.6	1.41:20.2	renders	Eating verb.
+accept	1.41:20.9	1.41:20.15	renders	First cattle.
+accept	1.41:21.2	1.41:21.2	renders	First entry verb.
+accept	1.41:21.9,1.41:21.10	1.41:21.7	renders	Impersonal wording renders passive knowing.
+accept	1.41:21.12,1.41:21.13	1.41:21.9	renders	Repeated entry verb and subject.
+accept	1.41:21.14	1.41:21.10	renders	Repeated entry preposition.
+accept	1.41:21.15,1.41:21.16	1.41:21.11	renders	Repeated interior noun and suffix.
+accept	1.41:21.18,1.41:21.19	1.41:21.13	renders	Appearance noun and possessive suffix.
+accept	1.41:21.20,1.41:21.21	1.41:21.14	renders	Copula and adjective render the predicate.
+accept	1.41:21.22	1.41:21.15,1.41:21.16	renders	Comparative relative construction.
+accept	1.41:21.23	1.41:21.17	renders	Temporal preposition.
+accept	1.41:21.24	1.41:21.19	renders	Beginning noun.
+accept	1.41:21.26	1.41:21.21	renders	First-person subject of waking.
+accept	1.41:22.8	1.41:22.5	renders	Conjunction introducing the new sight.
+accept	1.41:22.10	1.41:22.9	renders	Grain coming up.
+accept	1.41:22.11	1.41:22.10	renders	Preposition on the stalk.
+accept	1.41:22.12	1.41:22.12	renders	One stalk.
+accept	1.41:22.13	1.41:22.11	renders	Stalk noun.
+accept	1.41:23.5	1.41:23.10	renders	Pronoun in after suffix.
+accept	1.41:24.2	1.41:24.2	renders	Swallowing verb.
+accept	1.41:24.4	1.41:24.6	renders	Thin grain adjective.
+accept	1.41:24.10,1.41:24.11	1.41:24.14	renders	Speech verb and first-person subject.
+accept	1.41:24.13	1.41:24.15,1.41:24.17	renders	Dative renders recipient preposition and noun.
+accept	1.41:24.15,1.41:24.16	1.41:24.19	renders	Negative existential.
+accept	1.41:24.17,1.41:24.18,1.41:24.20	1.41:24.20	renders	Relative clause renders the reporting participle.
+accept	1.41:24.19	1.41:24.21	renders	First-person recipient.
+accept	1.41:25.13	1.41:25.11	renders	Resumes the free relative.
+accept	1.41:25.14	1.41:25.15	renders	Subject of reporting.
+accept	1.41:25.16	1.41:25.16	renders	Dative renders the prefix.
+accept	1.41:26.2	1.41:26.2	renders	Cattle noun.
+accept	1.41:26.4	1.41:26.7	renders	Resumptive pronoun in cattle equation.
+accept	1.41:26.13	1.41:26.16	renders	Resumptive pronoun in grain equation.
+accept	1.41:27.7,1.41:27.8	1.41:27.11	renders	Relative clause renders the motion participle.
+accept	1.41:27.10	1.41:27.12	renders	Pronoun in after suffix.
+accept	1.41:27.13	1.41:27.15	renders	Explicit resumptive pronoun.
+accept	1.41:27.25	1.41:27.27	renders	Famine years.
+accept	1.41:27.26	1.41:27.28	renders	Adjective renders famine noun.
+accept	1.41:28.1	1.41:28.1	renders	Demonstrative renders initial pronoun.
+accept	1.41:28.6,1.41:28.7	1.41:28.5	renders	Speech verb and past auxiliary.
+accept	1.41:28.8	1.41:28.6	renders	Dative renders the preposition.
+accept	1.41:28.12	1.41:28.8	renders	Resumes the second free relative.
+accept	1.41:28.13	1.41:28.12	renders	Subject of showing.

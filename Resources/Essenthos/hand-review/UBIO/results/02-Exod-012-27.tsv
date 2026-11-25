@@ -1,0 +1,152 @@
+kind	from	to	relation	reason
+unsure	2.12:27			Restored pronoun and verb links. Groundward phrase uncertain.
+fixed	2.12:28			Restored both action links, comparison, and subject pronoun.
+fixed	2.12:29			Restored night, striking, relative, range, and dungeon links.
+fixed	2.12:30			Restored both existential verbs and the relative connector.
+fixed	2.12:31			Completed compound expressions and restored the first additive particle.
+fixed	2.12:32			Corrected the livestock occurrence and restored missing phrase links.
+fixed	2.12:33			Restored purpose, dispatch, source, and death links.
+fixed	2.12:34			Restored the kneading-trough noun.
+fixed	2.12:35			Restored the opening action and the garments.
+unsure	2.12:36			Restored the plundering phrase. Source preposition uncertain.
+fixed	2.12:37			Restored direction and numeral components and completed the exception phrase.
+fixed	2.12:38			Corrected the two livestock occurrences and completed the descriptive phrases.
+fixed	2.12:39			Restored actions, pronouns, the result phrase, and travel provisions.
+fixed	2.12:40			Restored the sojourn and matched each year noun to its number.
+fixed	2.12:41			Corrected the demonstrative and restored temporal, number, and army links.
+fixed	2.12:42			Restored the vigil, departure, beneficiary, and generation links.
+fixed	2.12:43			Completed the foreigner idiom and restored relation, quantifier, and verb links.
+fixed	2.12:44			Restored ownership, price, temporal, and pronoun links.
+fixed	2.12:45			Restored the sojourner, future auxiliary, and pronoun.
+fixed	2.12:46			Restored the single-house expression, partitive, and pronouns.
+fixed	2.12:47			Restored the future auxiliary and object pronoun.
+fixed	2.12:48			Restored pronouns, dative, command, and quantifier links.
+fixed	2.12:49			Restored the participial relative and the phrase for among you.
+fixed	2.12:50			Restored both action links, comparison, auxiliary, and subject.
+fixed	2.12:51			Restored the date, departure verb, and grouping preposition.
+refuse	2.12:32.4	2.12:32.4		First livestock noun belongs with the small stock.
+refuse	2.12:38.11	2.12:38.10		First livestock noun belongs with the small stock.
+refuse	2.12:38.14	2.12:38.11		Second livestock noun belongs with the large stock.
+refuse	2.12:41.13	2.12:41.14		Demonstrative belongs with this, not very.
+accept	2.12:27.3	2.12:27.5	renders	Renders the independent pronoun.
+accept	2.12:27.9,2.12:27.10	2.12:27.9	renders	Verb and past auxiliary render passed over.
+accept	2.12:27.22	2.12:27.23	renders	Renders the verb of deliverance.
+accept	2.12:28.4	2.12:28.4	renders	First occurrence of did.
+accept	2.12:28.7	2.12:28.7,2.12:28.8	renders	Renders the compound comparative connector.
+accept	2.12:28.15,2.12:28.16	2.12:28.16	renders	Final verb and its plural subject.
+accept	2.12:29.5	2.12:29.6	renders	Renders night.
+accept	2.12:29.7	2.12:29.9	renders	Renders struck.
+accept	2.12:29.17	2.12:29.19	renders	Introduces the relative clause rendering the participle.
+accept	2.12:29.22	2.12:29.22	renders	Part of the expression marking the range endpoint.
+accept	2.12:29.28	2.12:29.30	renders	Renders the pit as a dungeon modifier.
+accept	2.12:29.29	2.12:29.28	renders	Renders house.
+accept	2.12:30.21	2.12:30.19	renders	Existence component of the first negative existential.
+accept	2.12:30.23	2.12:30.21	renders	Introduces the corresponding relative clause.
+accept	2.12:30.25	2.12:30.22	renders	Existence component of the second negative existential.
+accept	2.12:31.9	2.12:31.9	renders	Completes the compound conjunction.
+accept	2.12:31.13	2.12:31.14	renders	Completes the expression from the midst of.
+accept	2.12:31.16	2.12:31.16	renders	Renders the first additive particle.
+accept	2.12:32.4	2.12:32.2	renders	Noun in the small-stock expression.
+accept	2.12:32.6,2.12:32.7,2.12:32.8	2.12:32.4	renders	Renders the large livestock and its possessive suffix.
+accept	2.12:32.10	2.12:32.6,2.12:32.7	renders	Renders the compound comparative connector.
+accept	2.12:32.12	2.12:32.8	renders	Renders said.
+accept	2.12:32.14	2.12:32.9	renders	Completes the compound conjunction.
+accept	2.12:32.15	2.12:32.10	renders	Renders the command to go.
+accept	2.12:32.19	2.12:32.14	renders	Renders the first-person object suffix.
+accept	2.12:33.6	2.12:33.7	renders	Renders the outer purpose marker.
+accept	2.12:33.7	2.12:33.8	renders	Renders hastening as manner.
+accept	2.12:33.8	2.12:33.10	renders	Renders sending away.
+accept	2.12:33.10	2.12:33.11	renders	Renders the source preposition.
+accept	2.12:33.14	2.12:33.16	renders	Renders the quantifier all.
+accept	2.12:33.16	2.12:33.17	renders	Renders dying.
+accept	2.12:34.10	2.12:34.9	renders	Renders kneading troughs.
+accept	2.12:35.4	2.12:35.4	renders	Renders what the Israelites did.
+accept	2.12:35.18	2.12:35.18	renders	Renders garments.
+accept	2.12:36.14,2.12:36.15	2.12:36.14	renders	Together render the verb meaning plunder.
+accept	2.12:37.7	2.12:37.7	renders	Renders the directional suffix on Succoth.
+accept	2.12:37.10	2.12:37.9	renders	Renders six in the compound number.
+accept	2.12:37.11	2.12:37.10	renders	Renders hundreds in the compound number.
+accept	2.12:37.15	2.12:37.15,2.12:37.17	renders	Completes the compound expression for except.
+accept	2.12:38.3	2.12:38.4	renders	Renders the quantity of the mixed crowd.
+accept	2.12:38.5	2.12:38.3	renders	Completes the expression for a mixed crowd.
+accept	2.12:38.7,2.12:38.8	2.12:38.6	renders	Renders with and its pronominal suffix.
+accept	2.12:38.11	2.12:38.8	renders	Noun in the small-stock expression.
+accept	2.12:38.12	2.12:38.9	renders	Conjunction joining the two kinds of livestock.
+accept	2.12:38.13,2.12:38.14	2.12:38.10	renders	Together render the large livestock.
+accept	2.12:38.15	2.12:38.11	renders	Renders the collective livestock holdings.
+accept	2.12:38.17	2.12:38.12	renders	Renders the adjective describing the quantity of livestock.
+accept	2.12:39.3	2.12:39.2	renders	Renders the plural subject of baked.
+accept	2.12:39.7	2.12:39.7	renders	Renders brought out.
+accept	2.12:39.10,2.12:39.12	2.12:39.10	renders	Renders the cakes as the result of baking.
+accept	2.12:39.16	2.12:39.14	renders	Renders the verb's subject.
+accept	2.12:39.20	2.12:39.16	renders	Renders the passive verb driven out.
+accept	2.12:39.21	2.12:39.17	renders	Renders the source preposition in the expulsion clause.
+accept	2.12:39.26	2.12:39.23	renders	Renders tarrying.
+accept	2.12:39.29,2.12:39.30	2.12:39.26	renders	Expresses the travel purpose inherent in the provisions noun.
+accept	2.12:39.33	2.12:39.29	renders	Renders the benefactive preposition and its pronoun.
+accept	2.12:40.2	2.12:40.2	renders	Renders the sojourn.
+accept	2.12:40.9	2.12:40.12	renders	Completes the compound number four hundred.
+accept	2.12:40.10	2.12:40.14	renders	Year noun belonging to four hundred.
+accept	2.12:40.13	2.12:40.10	renders	Year noun belonging to thirty.
+accept	2.12:41.3	2.12:41.3	renders	Renders the temporal prefix in at the end of.
+accept	2.12:41.5	2.12:41.8,2.12:41.9	renders	Renders four hundred as a whole.
+accept	2.12:41.6	2.12:41.10	renders	Year noun belonging to four hundred.
+accept	2.12:41.9	2.12:41.6	renders	Year noun belonging to thirty.
+accept	2.12:41.13	2.12:41.18	renders	Renders the demonstrative modifying day.
+accept	2.12:41.14	2.12:41.13	renders	Temporal genitive renders the time preposition.
+accept	2.12:41.18	2.12:41.21	renders	Renders the hosts.
+accept	2.12:42.1	2.12:42.3	renders	Renders the first independent pronoun.
+accept	2.12:42.2	2.12:42.1	renders	Renders the first night noun.
+accept	2.12:42.3	2.12:42.2	renders	Renders the first vigil noun.
+accept	2.12:42.6	2.12:42.6	renders	Renders the explanatory link to the departure.
+accept	2.12:42.7,2.12:42.8	2.12:42.7	renders	Renders bringing out and the verb's subject.
+accept	2.12:42.10	2.12:42.8	renders	Renders the source preposition.
+accept	2.12:42.14	2.12:42.11	renders	Renders the emphatic identification of the night.
+accept	2.12:42.16	2.12:42.18	renders	Renders the second vigil noun.
+accept	2.12:42.20	2.12:42.19	renders	Dative renders the beneficiary prefix.
+accept	2.12:42.22	2.12:42.23	renders	Renders the preposition governing generations.
+accept	2.12:43.7	2.12:43.4	renders	Repeats the preposition shared by Moses and Aaron.
+accept	2.12:43.11	2.12:43.9	renders	Renders the relation expressed by the construct regulation.
+accept	2.12:43.13	2.12:43.12	renders	Renders the quantifier under negation.
+accept	2.12:43.14	2.12:43.14	renders	Completes the Hebrew idiom for a foreigner.
+accept	2.12:43.16	2.12:43.16	renders	Future auxiliary of eat.
+accept	2.12:43.18	2.12:43.17	renders	Renders the pronoun in the suffixed preposition.
+accept	2.12:44.4	2.12:44.4	renders	Renders man adjectivally.
+accept	2.12:44.6	2.12:44.5	renders	Expresses the price relation of the construct purchase noun.
+accept	2.12:44.8	2.12:44.7	renders	Renders the connector introducing the condition.
+accept	2.12:44.10	2.12:44.9	renders	Renders the suffixed object pronoun.
+accept	2.12:44.12,2.12:44.13	2.12:44.11	renders	Renders the subject and future of eat.
+accept	2.12:44.15	2.12:44.12	renders	Renders the pronoun in the suffixed preposition.
+accept	2.12:45.1	2.12:45.1	renders	Renders the resident outsider.
+accept	2.12:45.5	2.12:45.5	renders	Future auxiliary of eat.
+accept	2.12:45.7	2.12:45.6	renders	Renders the pronoun in the suffixed preposition.
+accept	2.12:46.2	2.12:46.3	renders	Renders the restriction to one house.
+accept	2.12:46.5	2.12:46.4	renders	Renders the subject of the passive verb.
+accept	2.12:46.9	2.12:46.7	renders	Renders the preposition governing house.
+accept	2.12:46.13	2.12:46.10	renders	Genitive renders the partitive before flesh.
+accept	2.12:46.16	2.12:46.18	renders	Renders the suffixed pronoun as a possessive.
+accept	2.12:47.4	2.12:47.4	renders	Future auxiliary of observe.
+accept	2.12:47.6	2.12:47.5	renders	Renders the suffixed object pronoun.
+accept	2.12:48.6	2.12:48.4	renders	Renders the pronoun suffixed to with.
+accept	2.12:48.12	2.12:48.9	renders	Dative renders the prefix before the divine name.
+accept	2.12:48.14	2.12:48.11	renders	Renders the command expressed by the infinitive absolute.
+accept	2.12:48.17,2.12:48.18	2.12:48.12	renders	Renders the suffixed preposition marking affiliation.
+accept	2.12:48.19	2.12:48.13	renders	Quantifier governing the males.
+accept	2.12:48.24	2.12:48.17	renders	Renders the subject of approach.
+accept	2.12:48.27	2.12:48.19	renders	Renders the object suffix on observe.
+accept	2.12:48.29	2.12:48.21	renders	Renders the subject of be.
+accept	2.12:48.33	2.12:48.23	renders	Expresses the locative relation of native to land.
+accept	2.12:48.36	2.12:48.27	renders	Quantifier governing the uncircumcised.
+accept	2.12:48.37	2.12:48.28	renders	Renders uncircumcised.
+accept	2.12:48.41	2.12:48.31	renders	Renders the pronoun in the suffixed preposition.
+accept	2.12:49.9	2.12:49.12	renders	Introduces the relative clause rendering the participle.
+accept	2.12:49.11	2.12:49.13,2.12:49.14	renders	Renders in the midst as one preposition.
+accept	2.12:49.12	2.12:49.14	renders	Renders the second-person plural suffix.
+accept	2.12:50.2	2.12:50.2	renders	First occurrence of did.
+accept	2.12:50.6	2.12:50.6,2.12:50.7	renders	Renders the compound comparative connector.
+accept	2.12:50.8	2.12:50.8	renders	Past auxiliary of commanded.
+accept	2.12:50.14,2.12:50.15	2.12:50.16	renders	Final verb and its plural subject.
+accept	2.12:51.3	2.12:51.8	renders	Renders the demonstrative modifying day.
+accept	2.12:51.5	2.12:51.3	renders	Temporal genitive renders the time preposition.
+accept	2.12:51.6	2.12:51.9	renders	Renders brought out.
+accept	2.12:51.13	2.12:51.17	renders	Renders the preposition marking division by groups.

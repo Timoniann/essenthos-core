@@ -1,0 +1,198 @@
+kind	from	to	relation	reason
+fixed	1.24:1			Missing verb forms, idiom components, and instrumental link.
+fixed	1.24:2			Missing relative, preposition, and possession links.
+fixed	1.24:3			Missing pronoun and prepositional links.
+fixed	1.24:4			Missing component of birthplace expression.
+fixed	1.24:5			Missing pronouns, verbs, demonstrative, and question markers.
+fixed	1.24:6			Missing pronouns, negation, and verb.
+fixed	1.24:7			Missing pronouns, past auxiliary, and prepositional links.
+fixed	1.24:8			Wrong demonstrative target and possessive person. Missing clause links.
+fixed	1.24:9			Missing dative pronoun and demonstrative.
+unsure	1.24:10			The second «взяв» recasts a phrase describing goods in hand.
+fixed	1.24:11			Wrong water occurrence. Missing links for kneeling, time, and drawing water.
+fixed	1.24:12			Missing verbs, conjunction component, and prepositional links.
+fixed	1.24:13			Missing inhabitants and purpose infinitive links.
+fixed	1.24:14			Two subject pronouns linked to neighboring words. Several links missing.
+fixed	1.24:15			Missing conjunction, passive auxiliary, dative, and shoulder possessive.
+fixed	1.24:16			Missing description, object pronoun, and directional links.
+fixed	1.24:17			Missing encounter suffix and components of conjunction and request.
+fixed	1.24:18			Missing subject pronoun and lowering verb.
+fixed	1.24:19			Missing temporal links and components of drawing and finishing drinking.
+fixed	1.24:20			Missing purpose, water, and recipient links.
+fixed	1.24:21			Missing dative pronoun, interrogative, and possessive suffix.
+fixed	1.24:22			Missing temporal, weight, and bracelet placement links.
+fixed	1.24:23			Missing question, request, location, and beneficiary links.
+fixed	1.24:24			Missing addressee and relative object pronouns.
+fixed	1.24:25			Missing additive marker, quantity, possession, and purpose links.
+fixed	1.24:26			Missing dative recipient and components of prostration.
+fixed	1.24:27			Missing verbs, object pronoun, and prepositional links.
+unsure	1.24:28			«Про» recasts the relation expressed by the Hebrew comparative prefix.
+fixed	1.24:29			Missing links for the possessive construction.
+fixed	1.24:30			Missing pronouns, hearing and speech links, and final preposition.
+fixed	1.24:31			Missing imperatival, future, and locative links.
+fixed	1.24:32			Missing directional, possessive, and accompaniment links.
+fixed	1.24:33			Missing locative, purpose, pronoun, and verb links.
+fixed	1.24:34			Missing subject and speech expression links.
+refuse	1.24:8.15	1.24:8.13		Demonstrative renders the following word.
+refuse	1.24:8.17	1.24:8.13		Second-person reflexive versus first-person suffix.
+refuse	1.24:11.16	1.24:11.13		Water drawn, rather than well water modifier.
+refuse	1.24:14.23	1.24:14.18		First-person subject belongs to the watering verb.
+refuse	1.24:14.26	1.24:14.20		Second-person subject linked to feminine object.
+accept	1.24:1.3	1.24:1.3	renders	Past form of being old.
+accept	1.24:1.6	1.24:1.7	renders	Years render days in the idiom.
+accept	1.24:1.7	1.24:1.4	renders	Entering in the age idiom.
+accept	1.24:1.12	1.24:1.10	renders	Past auxiliary of blessing.
+accept	1.24:1.13	1.24:1.13	renders	Instrumental case renders the prefix.
+accept	1.24:2.10	1.24:2.9	renders	Relative construction renders the participle.
+accept	1.24:2.12	1.24:2.10	renders	Preposition governed by ruling.
+accept	1.24:2.15,1.24:2.16	1.24:2.13	renders	Possession expressed by the suffixed preposition.
+accept	1.24:3.4	1.24:3.2	renders	Second-person object suffix.
+accept	1.24:3.5	1.24:3.3	renders	Instrumental case renders the oath preposition.
+accept	1.24:3.12	1.24:3.14	renders	Second-person subject of taking.
+accept	1.24:3.19	1.24:3.18	renders	Source preposition.
+accept	1.24:3.22	1.24:3.25	renders	Prepositional component of dwelling among.
+accept	1.24:3.23	1.24:3.26	renders	Relative pronoun also carries the resumptive suffix.
+accept	1.24:4.9	1.24:4.6	renders	Place in the birthplace expression.
+accept	1.24:5.5	1.24:5.3	renders	Addressee suffix.
+accept	1.24:5.10	1.24:5.8	renders	Verb of willingness.
+accept	1.24:5.12	1.24:5.13	renders	First-person suffix on the preposition.
+accept	1.24:5.13	1.24:5.12	renders	Infinitive of going.
+accept	1.24:5.15	1.24:5.18	renders	Explicit demonstrative.
+accept	1.24:5.18	1.24:5.19	renders	Interrogative particle.
+accept	1.24:5.19	1.24:5.20	renders	Emphasis of the infinitive absolute.
+accept	1.24:5.26	1.24:5.27,1.24:5.29,1.24:5.30	renders	Relative adverb combines the source expression.
+accept	1.24:6.4	1.24:6.3	renders	Addressee suffix.
+accept	1.24:6.8,1.24:6.10	1.24:6.8	renders	Verb of returning and its subject.
+accept	1.24:6.9	1.24:6.7	renders	Negative force of the lest particle.
+accept	1.24:7.4	1.24:7.6	renders	First-person object suffix.
+accept	1.24:7.17	1.24:7.16	renders	Past auxiliary of speaking.
+accept	1.24:7.18,1.24:7.19	1.24:7.17	renders	Preposition and first-person suffix.
+accept	1.24:7.26	1.24:7.24	renders	Dative case marks the recipient.
+accept	1.24:7.35	1.24:7.35	renders	Prepositional component of before.
+accept	1.24:7.36,1.24:7.37	1.24:7.36	renders	Face and its possessive suffix.
+accept	1.24:7.39	1.24:7.38	renders	Second-person subject of taking.
+accept	1.24:7.41	1.24:7.42,1.24:7.43	renders	Source adverb combines from and there.
+accept	1.24:8.6	1.24:8.4	renders	Verb of willingness.
+accept	1.24:8.7	1.24:8.8	renders	Infinitive of going.
+accept	1.24:8.8,1.24:8.9	1.24:8.9	renders	Preposition and second-person suffix.
+accept	1.24:8.10	1.24:8.10	renders	Conjunction introducing the conditional result.
+accept	1.24:8.13	1.24:8.11	renders	Predicate of being cleared.
+accept	1.24:8.15	1.24:8.14	renders	Explicit demonstrative.
+accept	1.24:8.21,1.24:8.24	1.24:8.19	renders	Verb of returning and its subject.
+accept	1.24:9.12	1.24:9.13	renders	Suffixed dative preposition.
+accept	1.24:9.15	1.24:9.18	renders	Explicit demonstrative.
+accept	1.24:10.12	1.24:10.10	renders	Second element of the conjunction «та й».
+accept	1.24:10.16	1.24:10.13	renders	Variety renders the range of goods.
+accept	1.24:10.24	1.24:10.19	renders	Subject of rising.
+accept	1.24:10.28	1.24:10.22	renders	Destination preposition.
+accept	1.24:10.29	1.24:10.24	renders	Second component of the place name.
+accept	1.24:11.2,1.24:11.4	1.24:11.2	renders	Periphrasis for causing to kneel.
+accept	1.24:11.5	1.24:11.5,1.24:11.6,1.24:11.7	renders	Prepositional expression meaning outside.
+accept	1.24:11.8	1.24:11.13	renders	Water modifying the well.
+accept	1.24:11.10	1.24:11.14,1.24:11.15	renders	Temporal components of the evening expression.
+accept	1.24:11.11	1.24:11.17	renders	Second temporal preposition.
+accept	1.24:11.13	1.24:11.18	renders	Temporal clause renders the construct relation.
+accept	1.24:11.15,1.24:11.16,1.24:11.17	1.24:11.21	renders	Feminine plural water-drawing participle.
+accept	1.24:12.2	1.24:12.1	renders	Second element of the conjunction «та й».
+accept	1.24:12.9	1.24:12.7	renders	Request to make it happen.
+accept	1.24:12.12	1.24:12.9,1.24:12.10	renders	Dative renders the expression before me.
+accept	1.24:12.16	1.24:12.14	renders	Verb of doing.
+accept	1.24:12.17	1.24:12.16	renders	Preposition meaning with.
+accept	1.24:13.9	1.24:13.10	renders	People of the city.
+accept	1.24:13.13	1.24:13.14,1.24:13.15	renders	Purpose infinitive of drawing.
+accept	1.24:14.5	1.24:14.7	renders	Addressee preposition.
+accept	1.24:14.6	1.24:14.5,1.24:14.7	renders	Relative pronoun combines relative and resumptive forms.
+accept	1.24:14.12	1.24:14.12	renders	First-person subject of drinking.
+accept	1.24:14.16	1.24:14.14	renders	Verb introducing her reply.
+accept	1.24:14.19,1.24:14.20	1.24:14.17	renders	Additive expression meaning also.
+accept	1.24:14.23,1.24:14.24	1.24:14.19	renders	Watering verb and its first-person subject.
+accept	1.24:14.26	1.24:14.21	renders	Second-person subject of appointing.
+accept	1.24:14.34,1.24:14.35	1.24:14.27	renders	Suffixed preposition marking the evidence.
+accept	1.24:14.40	1.24:14.30	renders	Verb of doing.
+accept	1.24:14.41	1.24:14.32	renders	Preposition meaning with.
+accept	1.24:15.7	1.24:15.8	renders	Conjunction in the sudden transition.
+accept	1.24:15.12	1.24:15.13	renders	Auxiliary of the passive verb.
+accept	1.24:15.14	1.24:15.14	renders	Dative case renders the prefix.
+accept	1.24:15.26,1.24:15.27	1.24:15.25	renders	Possessive phrase renders the shoulder suffix.
+accept	1.24:16.4	1.24:16.6	renders	Degree adverb.
+accept	1.24:16.6	1.24:16.4	renders	Preposition expresses the adjective's construct relation.
+accept	1.24:16.7	1.24:16.5	renders	Appearance in the description.
+accept	1.24:16.8	1.24:16.4	renders	Copula of the appearance predicate.
+accept	1.24:16.15	1.24:16.11	renders	Feminine object suffix.
+accept	1.24:16.19	1.24:16.15	renders	Preposition renders the directional ending.
+accept	1.24:16.26	1.24:16.19	renders	Second element of the conjunction «та й».
+accept	1.24:17.5	1.24:17.5	renders	Directional component of the encounter expression.
+accept	1.24:17.6	1.24:17.6	renders	Feminine suffix of the encounter expression.
+accept	1.24:17.8	1.24:17.7	renders	Second element of the conjunction «та й».
+accept	1.24:17.10	1.24:17.9	renders	Causative imperative component.
+accept	1.24:18.2	1.24:18.2	renders	Demonstrative pronoun renders the verb's subject.
+accept	1.24:18.11	1.24:18.8	renders	Verb of lowering the pitcher.
+accept	1.24:19.2	1.24:19.1	renders	Temporal use of the opening conjunction.
+accept	1.24:19.14	1.24:19.10	renders	Water is implicit in the drawing verb.
+accept	1.24:19.16	1.24:19.12	renders	Subordinator in the until expression.
+accept	1.24:19.17	1.24:19.13	renders	Plural subject of finishing.
+accept	1.24:19.19	1.24:19.15	renders	Drinking component of drinking one's fill.
+accept	1.24:20.15	1.24:20.15	renders	Infinitive expresses the purpose of running.
+accept	1.24:20.18	1.24:20.18	renders	Water is implicit in the finite drawing verb.
+accept	1.24:20.20	1.24:20.19	renders	Dative case marks the recipients.
+accept	1.24:21.5	1.24:21.5	renders	Suffixed dative preposition.
+accept	1.24:21.10	1.24:21.9	renders	First interrogative particle.
+accept	1.24:21.14	1.24:21.12	renders	Dative expresses the journey's possessive suffix.
+accept	1.24:22.3	1.24:22.3,1.24:22.4	renders	Compound temporal conjunction.
+accept	1.24:22.4	1.24:22.5	renders	Verb of finishing.
+accept	1.24:22.16	1.24:22.17	renders	Weight suffix refers to the ring.
+accept	1.24:22.20	1.24:22.21	renders	Preposition marking bracelet placement.
+accept	1.24:22.25	1.24:22.23	renders	Shekels are the understood unit of ten.
+accept	1.24:22.28	1.24:22.25	renders	Weight suffix refers to the bracelets.
+accept	1.24:23.2	1.24:23.1	renders	Second element of the conjunction «та й».
+accept	1.24:23.4	1.24:23.4	renders	Interrogative possessor.
+accept	1.24:23.5	1.24:23.5	renders	Explicit second-person pronoun.
+accept	1.24:23.8	1.24:23.7	renders	Particle softening the request.
+accept	1.24:23.9	1.24:23.8	renders	Suffixed first-person dative.
+accept	1.24:23.10	1.24:23.9	renders	Interrogative particle.
+accept	1.24:23.11	1.24:23.11	renders	Preposition expresses the bare noun's location.
+accept	1.24:23.14	1.24:23.12	renders	Possessive suffix on father.
+accept	1.24:23.17,1.24:23.18	1.24:23.14	renders	Beneficiary preposition and its suffix.
+accept	1.24:23.19	1.24:23.15	renders	Infinitive expresses what the place is for.
+accept	1.24:24.3	1.24:24.3	renders	Suffixed preposition marking the addressee.
+accept	1.24:24.10	1.24:24.9	renders	Resumptive pronoun expresses the relative's object role.
+accept	1.24:25.4	1.24:25.3	renders	Addressee suffix.
+accept	1.24:25.5	1.24:25.4	renders	First additive marker in the correlative pair.
+accept	1.24:25.9	1.24:25.8	renders	Abundance.
+accept	1.24:25.10,1.24:25.11,1.24:25.12	1.24:25.9	renders	Possessive predicate expressed by the suffixed preposition.
+accept	1.24:25.15	1.24:25.12	renders	Infinitive expresses what the place is for.
+accept	1.24:26.7	1.24:26.7,1.24:26.8	renders	Dative case and divine name.
+accept	1.24:26.8,1.24:26.9,1.24:26.10	1.24:26.6	renders	Phrase spells out the depth of prostration.
+accept	1.24:27.2	1.24:27.1	renders	Second element of the conjunction «та й».
+accept	1.24:27.12	1.24:27.10	renders	Verb of withholding or abandoning.
+accept	1.24:27.16	1.24:27.13	renders	Faithfulness.
+accept	1.24:27.18	1.24:27.14,1.24:27.15	renders	Compound separation preposition.
+accept	1.24:27.22	1.24:27.20	renders	Copula expresses being on the way.
+accept	1.24:27.26,1.24:27.27	1.24:27.21	renders	Leading verb and first-person object suffix.
+accept	1.24:27.28	1.24:27.23	renders	Preposition expresses the bare noun's destination.
+accept	1.24:28.6	1.24:28.7	renders	Preposition introduces the household receiving the report.
+accept	1.24:28.8,1.24:28.9	1.24:28.9	renders	Mother and her possessive suffix.
+accept	1.24:28.11	1.24:28.14	renders	Demonstrative referring to the event.
+accept	1.24:29.2,1.24:29.4	1.24:29.2	renders	Possessive predicate expressed by the prefix.
+accept	1.24:30.4	1.24:30.4	renders	Understood subject of seeing.
+accept	1.24:30.14	1.24:30.16	renders	Second temporal marker.
+accept	1.24:30.15	1.24:30.17	renders	Verb of hearing.
+accept	1.24:30.20,1.24:30.21	1.24:30.23	renders	Relative clause renders the speech expression.
+accept	1.24:30.29	1.24:30.30	renders	Subject of arriving.
+accept	1.24:30.34	1.24:30.36	renders	Subject pronoun of the standing participle.
+accept	1.24:30.39	1.24:30.40	renders	Preposition locating the man by the spring.
+accept	1.24:31.3	1.24:31.3	renders	Imperative of entering.
+accept	1.24:31.7	1.24:31.7	renders	Verb of standing.
+accept	1.24:31.8	1.24:31.8	renders	Adverb includes the locative prefix's meaning.
+accept	1.24:32.5	1.24:32.6	renders	Preposition renders the directional ending.
+accept	1.24:32.23	1.24:32.23	renders	Dative expresses the possessive suffix on feet.
+accept	1.24:32.28,1.24:32.29,1.24:32.30	1.24:32.29	renders	Accompaniment predicate and its pronoun.
+accept	1.24:33.3	1.24:33.3,1.24:33.4	renders	Preposition combines the in-front expression.
+accept	1.24:33.4	1.24:33.4	renders	Third-person suffix.
+accept	1.24:33.5	1.24:33.5	renders	Purpose marker.
+accept	1.24:33.6	1.24:33.6	renders	Understood subject of eating.
+accept	1.24:33.9	1.24:33.8	renders	Demonstrative pronoun renders the verb's subject.
+accept	1.24:33.12	1.24:33.10	renders	Future auxiliary of eating.
+accept	1.24:33.15	1.24:33.12	renders	Subordinator in the until expression.
+accept	1.24:33.17	1.24:33.13	renders	Verb of telling.
+accept	1.24:34.2,1.24:34.3,1.24:34.4	1.24:34.2	renders	Subject and periphrastic speech verb.

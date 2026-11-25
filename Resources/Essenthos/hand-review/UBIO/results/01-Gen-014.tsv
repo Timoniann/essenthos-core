@@ -1,0 +1,248 @@
+kind	from	to	relation	reason
+ok	1.14:1			
+fixed	1.14:2			Missing subject, explicit prepositions, and identifying pronoun.
+fixed	1.14:3			Removed the time adverb from Siddim. Added the auxiliary and pronoun.
+fixed	1.14:4			Completed both numbers and added the subject and final verb.
+fixed	1.14:5			Completed the date, the comitative predicate, and the place name.
+unsure	1.14:6			Added the endpoint intensifier. The resumptive pronoun is uncertain.
+fixed	1.14:7			Added the identifying pronoun, land noun, and relative construction.
+fixed	1.14:8			Added the comitative phrase, battle preposition, and valley noun.
+fixed	1.14:9			Added both prepositions marking the opposing parties.
+fixed	1.14:10			Corrected the bitumen modifier and restored the repeated noun construction and other omissions.
+ok	1.14:11			
+fixed	1.14:12			Added the subject, causal background clause, and final verb.
+fixed	1.14:13			Added the auxiliary, recipient marker, dwelling phrase, and covenant expression.
+fixed	1.14:14			Corrected the mustering verb and completed the captive phrase, retainers, birth phrase, and number.
+fixed	1.14:15			Completed the division, striking, pursuit, and directional expressions.
+fixed	1.14:16			Added the subject, kinship noun, second return verb, and people.
+fixed	1.14:17			Restored the temporal sequence, pronouns, comitative predicate, and second valley noun.
+fixed	1.14:18			Added the copula and the relation to God.
+fixed	1.14:19			Added both blessing pronouns, source phrase, and creator clause.
+fixed	1.14:20			Added the delivery verb, suffixed adversary noun, and recipient.
+fixed	1.14:21			Added the addressee relation, collective noun, and beneficiary.
+fixed	1.14:22			Added the connective, addressee relation, and divine titles.
+fixed	1.14:23			Restored oath force, possession, and the preventive clause.
+fixed	1.14:24			Added the refusal, relative antecedent, eating verb, share, and comitative pronoun.
+fixed	1.15:1			Added the opening phrase, speech introduction, beneficiary, and reward predicate.
+fixed	1.15:2			Added the circumstantial connective, walking verb, household expression, and origin marker.
+fixed	1.15:3			Added the introductory particle, subject, household expression, and heir predicate.
+fixed	1.15:4			Completed the speech introduction, contrast, relative construction, and inheritance predicates.
+fixed	1.15:5			Added the directional marker, counting verbs, conditional, object, and addressee.
+fixed	1.15:6			Added the governed dative, subject, object, recipient, and result relation.
+unsure	1.15:7			Added the suffix pronouns and inheritance verb. The infinitive's expressed Ukrainian subject is uncertain.
+fixed	1.15:8			Completed the question and the inheritance predicate.
+fixed	1.15:9			Added the opening subject, connective, addressee, and missing animal descriptions.
+fixed	1.15:10			Restored the beneficiary, demonstrative, object, division, arrangement, and birds.
+fixed	1.15:11			Moved the driving verb off the object pronoun and completed the bird expression.
+fixed	1.15:12			Restored the sunset construction, both falling verbs, and the final prepositional phrase.
+fixed	1.15:13			Separated the infinitive emphasis from the finite verb and completed the pronoun links.
+fixed	1.15:14			Added subject and tense links, judgment, the time expression, and accompaniment.
+fixed	1.15:15			Added the kinship noun and its possessive.
+fixed	1.15:16			Added the completeness predicate and temporal expression.
+fixed	1.15:17			Added the temporal construction, fire modifier, and demonstrative.
+fixed	1.15:18			Moved the demonstrative off the article and completed the covenant and boundary phrases.
+fixed	1.15:19			Corrected the Kenite and Kenizzite targets.
+ok	1.15:20			
+ok	1.15:21			
+refuse	1.14:3.9	1.14:3.7		Supplied time adverb on a place name.
+refuse	1.14:10.6	1.14:10.6		Bitumen adjective on a well noun.
+refuse	1.14:10.6	1.14:10.5		Bitumen adjective on a well noun.
+refuse	1.14:14.12	1.14:14.10		Mustering verb on the retainers noun.
+refuse	1.15:11.9	1.15:11.10		Driving verb on the object pronoun.
+refuse	1.15:13.7	1.15:13.5		Imperative on the emphatic infinitive.
+refuse	1.15:18.2	1.15:18.2		Demonstrative on an elided article.
+refuse	1.15:19.1	1.15:19.1		Ethnonym on an object marker.
+refuse	1.15:19.3	1.15:19.3		Kenizzite linked to Kenite.
+accept	1.14:2.1	1.14:2.1	renders	Plural subject of made.
+accept	1.14:2.4	1.14:2.3	renders	Preposition before Bera.
+accept	1.14:2.9	1.14:2.8	renders	Preposition before Birsha.
+accept	1.14:2.25	1.14:2.22	renders	Pronoun in the Bela identification.
+accept	1.14:3.4	1.14:3.3	renders	Auxiliary with the past verb.
+accept	1.14:3.8	1.14:3.8	renders	Pronoun identifying the valley.
+accept	1.14:4.1	1.14:4.1,1.14:4.2	renders	Complete compound numeral twelve.
+accept	1.14:4.4	1.14:4.4	renders	Plural subject of served.
+accept	1.14:4.8	1.14:4.9	renders	Teen component of thirteenth.
+accept	1.14:4.9	1.14:4.11	renders	Rebellion verb.
+accept	1.14:5.2	1.14:5.2	renders	Temporal genitive renders the dating prefix.
+accept	1.14:5.3	1.14:5.3	renders	Four component of fourteenth.
+accept	1.14:5.9,1.14:5.10,1.14:5.11	1.14:5.12	renders	Predicate meaning were with him.
+accept	1.14:5.24	1.14:5.30	renders	Shaveh component of the place name.
+accept	1.14:6.6	1.14:6.8	renders	Emphatic extent in as far as.
+accept	1.14:7.8	1.14:7.7	renders	Pronoun identifying En Mishpat.
+accept	1.14:7.14	1.14:7.13	renders	Amalekite territory noun.
+accept	1.14:7.19	1.14:7.22	renders	Relative marker expands the participle.
+accept	1.14:8.22,1.14:8.23	1.14:8.21	renders	Comitative preposition and plural suffix.
+accept	1.14:8.24	1.14:8.22	renders	Preposition expresses the battle specification.
+accept	1.14:8.27	1.14:8.24	renders	Valley noun.
+accept	1.14:9.1	1.14:9.1	renders	Preposition before Kedorlaomer.
+accept	1.14:9.19	1.14:9.19	renders	Opposition in the battle context.
+accept	1.14:10.4,1.14:10.5	1.14:10.5	renders	Copula and fullness expressed by the repeated predicate noun.
+accept	1.14:10.6	1.14:10.7	renders	Bitumen expressed as an adjective.
+accept	1.14:10.7	1.14:10.6	renders	Pits specified as containing bitumen.
+accept	1.14:10.13	1.14:10.10	renders	Shared royal title repeated for Gomorrah.
+accept	1.14:10.18	1.14:10.16	renders	Directional adverb.
+accept	1.14:10.20	1.14:10.19	renders	Those who remained.
+accept	1.14:10.22	1.14:10.20	renders	Preposition renders the directional ending.
+accept	1.14:12.3	1.14:12.2	renders	Plural subject of took.
+accept	1.14:12.8	1.14:12.13	renders	Causal rendering of the circumstantial connective.
+accept	1.14:12.9	1.14:12.15	renders	Residence verb.
+accept	1.14:12.17	1.14:12.12	renders	Departure verb.
+accept	1.14:13.3	1.14:13.2	renders	Auxiliary with the past verb.
+accept	1.14:13.9	1.14:13.7	renders	Dative of Abram renders the recipient prefix.
+accept	1.14:13.12	1.14:13.13	renders	Dwelling participle.
+accept	1.14:13.13	1.14:13.14	renders	Locative prefix rendered as among.
+accept	1.14:13.14	1.14:13.15	renders	Tree noun.
+accept	1.14:13.23	1.14:13.26,1.14:13.27	renders	Allies renders the covenant partners expression.
+accept	1.14:14.5,1.14:14.6	1.14:14.6	renders	Kinship noun and its possessive suffix.
+accept	1.14:14.7,1.14:14.8,1.14:14.9	1.14:14.5	renders	Phrase renders the captive-taking verb.
+accept	1.14:14.12	1.14:14.8	renders	Mustering rendered as arming.
+accept	1.14:14.14,1.14:14.15	1.14:14.10	renders	Trained servants renders the retainers noun.
+accept	1.14:14.16,1.14:14.17,1.14:14.20	1.14:14.11	renders	Relative birth clause and the relation to the household.
+accept	1.14:14.24	1.14:14.13	renders	Eight component of eighteen.
+accept	1.14:15.4,1.14:15.5	1.14:15.2	renders	Into groups makes the division explicit.
+accept	1.14:15.12,1.14:15.13	1.14:15.9	renders	Striking verb and plural object suffix.
+accept	1.14:15.16,1.14:15.17	1.14:15.11	renders	Prepositional object renders the pursuit suffix.
+accept	1.14:15.18	1.14:15.12	renders	Emphatic extent in as far as.
+accept	1.14:15.22	1.14:15.15	renders	Spatial prefix in the left-side expression.
+accept	1.14:15.23	1.14:15.17	renders	Genitive expresses the spatial reference point.
+accept	1.14:16.3	1.14:16.2	renders	Subject of the first return verb.
+accept	1.14:16.9	1.14:16.11	renders	Kinship noun for Lot.
+accept	1.14:16.14	1.14:16.14	renders	Second return verb.
+accept	1.14:16.19	1.14:16.23	renders	People noun.
+accept	1.14:17.1	1.14:17.1	renders	Narrative connective rendered as then.
+accept	1.14:17.5	1.14:17.5	renders	Directional prefix in the encounter phrase.
+accept	1.14:17.6	1.14:17.6	renders	Pronoun on the encounter word.
+accept	1.14:17.7	1.14:17.7	renders	Temporal connective before the return.
+accept	1.14:17.8	1.14:17.8	renders	Subject expressed by the return infinitive's suffix.
+accept	1.14:17.10	1.14:17.10	renders	Striking verb rendered by a converb.
+accept	1.14:17.15,1.14:17.16,1.14:17.17	1.14:17.18	renders	Predicate meaning were with him.
+accept	1.14:17.21	1.14:17.22	renders	Pronoun identifying the valley.
+accept	1.14:17.23	1.14:17.23	renders	Second valley noun.
+accept	1.14:18.11	1.14:18.11	renders	Copula of the priest predicate.
+accept	1.14:18.13	1.14:18.12,1.14:18.13	renders	Genitive renders the priest's relation to God.
+accept	1.14:19.3,1.14:19.4	1.14:19.2	renders	Subject and object of blessed.
+accept	1.14:19.10	1.14:19.7	renders	Blessing preposition rendered as from.
+accept	1.14:19.11	1.14:19.8	renders	God in the blessing phrase.
+accept	1.14:19.13,1.14:19.14	1.14:19.10	renders	Relative clause renders the creator participle.
+accept	1.14:20.6	1.14:20.6	renders	Delivery verb.
+accept	1.14:20.10,1.14:20.11	1.14:20.7	renders	Adversaries and their possessive suffix.
+accept	1.14:20.15	1.14:20.12	renders	Recipient of the tithe.
+accept	1.14:21.5	1.14:21.5	renders	Dative of Abram renders the addressee relation.
+accept	1.14:21.8	1.14:21.10	renders	Collective noun for the people.
+accept	1.14:21.12	1.14:21.15	renders	Reflexive dative renders the beneficiary.
+accept	1.14:22.2	1.14:22.1	renders	Connective introducing Abram's reply.
+accept	1.14:22.4	1.14:22.4	renders	Dative of king renders the addressee relation.
+accept	1.14:22.12	1.14:22.11	renders	God in the divine title.
+accept	1.14:22.14	1.14:22.13	renders	Creator title renders the participle.
+accept	1.14:23.1	1.14:23.1	renders	First particle introducing the oath.
+accept	1.14:23.4	1.14:23.5	renders	Emphatic extent of the upper endpoint.
+accept	1.14:23.8	1.14:23.10	renders	First-person subject of take.
+accept	1.14:23.9	1.14:23.9	renders	Oath particle gives the taking clause negative force.
+accept	1.14:23.11	1.14:23.11	renders	Source preposition before everything.
+accept	1.14:23.12	1.14:23.13	renders	Correlative demonstrative in the relative expression.
+accept	1.14:23.15	1.14:23.14	renders	Possession expressed by the suffixed preposition.
+accept	1.14:23.16	1.14:23.15	renders	Connective introduces the preventive result.
+accept	1.14:23.17,1.14:23.19	1.14:23.17	renders	Second-person subject and saying verb.
+accept	1.14:24.1,1.14:24.2,1.14:24.3,1.14:24.4	1.14:24.1	renders	Refusal paraphrases Abram's exclusion of himself.
+accept	1.14:24.7	1.14:24.3	renders	Antecedent supplied by the headless relative.
+accept	1.14:24.10	1.14:24.4	renders	Eating verb.
+accept	1.14:24.12	1.14:24.8	renders	First occurrence of share.
+accept	1.14:24.16	1.14:24.13	renders	First-person comitative suffix.
+accept	1.15:1.2	1.15:1.5	renders	Demonstrative modifying events.
+accept	1.15:1.3	1.15:1.3	renders	Things rendered as events.
+accept	1.15:1.4	1.15:1.6	renders	Written verb of being.
+accept	1.15:1.7	1.15:1.9	renders	Dative renders the addressee relation.
+accept	1.15:1.10	1.15:1.15	renders	Introduces the quoted speech.
+accept	1.15:1.15	1.15:1.21	renders	Beneficiary in the shield clause.
+accept	1.15:1.17,1.15:1.18	1.15:1.22	renders	Reward noun and its possessive suffix.
+accept	1.15:1.20	1.15:1.23	renders	Predicate expressing the reward's greatness.
+accept	1.15:2.10	1.15:2.9	renders	Circumstantial connective rendered as when.
+accept	1.15:2.13	1.15:2.11	renders	Walking participle.
+accept	1.15:2.15	1.15:2.14,1.15:2.15	renders	Steward renders the Hebrew construct expression.
+accept	1.15:2.17	1.15:2.16	renders	House rendered as household.
+accept	1.15:2.20	1.15:2.18	renders	Preposition expresses the Damascus epithet's origin.
+accept	1.15:3.4	1.15:3.4	renders	First attention particle.
+accept	1.15:3.5	1.15:3.7	renders	Second-person subject of gave.
+accept	1.15:3.13	1.15:3.11,1.15:3.12	renders	Steward renders the household member expression.
+accept	1.15:3.14	1.15:3.13	renders	Heir noun renders the inheritance participle.
+accept	1.15:3.15	1.15:3.14	renders	First-person pronoun on the suffixed object marker.
+accept	1.15:4.6	1.15:4.5	renders	Third-person addressee suffix.
+accept	1.15:4.7	1.15:4.7	renders	Introduces the quoted speech.
+accept	1.15:4.8	1.15:4.10	renders	Pronoun renders the demonstrative subject.
+accept	1.15:4.11,1.15:4.12	1.15:4.9	renders	First inheritance verb and its object suffix.
+accept	1.15:4.13	1.15:4.11,1.15:4.12	renders	Adversative particle pair after negation.
+accept	1.15:4.14	1.15:4.13	renders	Antecedent of the headless relative.
+accept	1.15:4.18	1.15:4.16	renders	Possessive suffix on the body noun.
+accept	1.15:4.23	1.15:4.18	renders	Object suffix of the second inheritance verb.
+accept	1.15:5.10	1.15:5.11	renders	Preposition renders the directional ending.
+accept	1.15:5.14	1.15:5.13	renders	Imperative count.
+accept	1.15:5.15	1.15:5.16	renders	Conditional conjunction.
+accept	1.15:5.19	1.15:5.20	renders	Plural object pronoun for the stars.
+accept	1.15:5.20	1.15:5.19	renders	Infinitive count.
+accept	1.15:5.22,1.15:5.23	1.15:5.23	renders	Preposition and suffix for the addressee.
+accept	1.15:6.4	1.15:6.3	renders	Dative renders the preposition governed by believe.
+accept	1.15:6.6,1.15:6.9	1.15:6.6	renders	Subject and object encoded by the reckoning verb.
+accept	1.15:6.8	1.15:6.7	renders	Recipient of the reckoning.
+accept	1.15:6.10	1.15:6.8	renders	Preposition expresses the predicative result.
+accept	1.15:7.4	1.15:7.3	renders	Addressee suffix.
+accept	1.15:7.9	1.15:7.7	renders	Second-person object suffix of brought out.
+accept	1.15:7.15	1.15:7.13	renders	Recipient of the land.
+accept	1.15:7.19	1.15:7.20	renders	Verb in the periphrasis for inherit.
+accept	1.15:8.6	1.15:8.5	renders	Means preposition in the question.
+accept	1.15:8.7	1.15:8.6	renders	Interrogative pronoun.
+accept	1.15:8.12,1.15:8.13	1.15:8.9	renders	Inheritance predicate and its feminine object suffix.
+accept	1.15:9.1	1.15:9.2	renders	Subject of spoke.
+accept	1.15:9.2	1.15:9.1	renders	Narrative connective rendered by the particle.
+accept	1.15:9.5	1.15:9.3	renders	Addressee suffix.
+accept	1.15:9.7	1.15:9.7	renders	Age of the first animal.
+accept	1.15:9.8	1.15:9.6	renders	First animal, the heifer.
+accept	1.15:9.10	1.15:9.10	renders	Age of the goat.
+accept	1.15:9.19	1.15:9.17	renders	Species expressed in the young bird term.
+accept	1.15:10.3	1.15:10.2	renders	Subject of took.
+accept	1.15:10.4,1.15:10.5	1.15:10.3	renders	Benefactive preposition and its suffix.
+accept	1.15:10.7	1.15:10.6	renders	Demonstrative in all these.
+accept	1.15:10.10	1.15:10.9	renders	Object pronoun rendered with a collective singular antecedent.
+accept	1.15:10.11	1.15:10.10,1.15:10.12	renders	In half renders in the middle.
+accept	1.15:10.13	1.15:10.14	renders	Placement verb rendered as gave.
+accept	1.15:10.15,1.15:10.16	1.15:10.16	renders	Piece and its possessive suffix.
+accept	1.15:10.17	1.15:10.18	renders	Correspondence of the facing pieces.
+accept	1.15:10.18	1.15:10.17	renders	Preposition in the facing expression.
+accept	1.15:10.19	1.15:10.19	renders	Counterpart rendered as the other piece.
+accept	1.15:10.21	1.15:10.23	renders	Bird noun rendered collectively.
+accept	1.15:11.4	1.15:11.4	renders	Bird noun in bird of prey.
+accept	1.15:11.9	1.15:11.9	renders	Verb of driving away.
+accept	1.15:11.10	1.15:11.10	renders	Object pronoun rendered with a collective singular antecedent.
+accept	1.15:12.1	1.15:12.2	renders	Temporal clause introduced by the occurrence formula.
+accept	1.15:12.2	1.15:12.1	renders	Opening connective rendered by the particle.
+accept	1.15:12.4,1.15:12.6	1.15:12.6	renders	Sunset expression renders the motion verb.
+accept	1.15:12.5	1.15:12.5	renders	Preposition marking approach to sunset.
+accept	1.15:12.8	1.15:12.9	renders	First falling verb, for the sleep.
+accept	1.15:12.14	1.15:12.17	renders	Second falling verb, for the dread.
+accept	1.15:12.15,1.15:12.16	1.15:12.18	renders	Preposition and suffix meaning upon him.
+accept	1.15:12.17	1.15:12.14	renders	Dread noun.
+accept	1.15:13.4	1.15:13.3	renders	Preposition marking Abram as addressee.
+accept	1.15:13.6	1.15:13.5	renders	Emphasis from the infinitive absolute.
+accept	1.15:13.7	1.15:13.6	renders	Finite verb of knowing.
+accept	1.15:13.16	1.15:13.14	renders	Possession expressed by the suffixed preposition.
+accept	1.15:13.20	1.15:13.16	renders	Plural subject of serve.
+accept	1.15:13.22	1.15:13.18	renders	Future auxiliary of afflict.
+accept	1.15:13.23	1.15:13.19	renders	Plural object of afflict.
+accept	1.15:14.5,1.15:14.6	1.15:14.7	renders	Plural subject and future auxiliary of serve.
+accept	1.15:14.8	1.15:14.8	renders	Judgment verb.
+accept	1.15:14.10	1.15:14.13	renders	Plural subject of go out.
+accept	1.15:14.11	1.15:14.12	renders	Second component of afterward.
+accept	1.15:14.13	1.15:14.14	renders	Prefix of accompaniment with the possessions.
+accept	1.15:15.4,1.15:15.5	1.15:15.5	renders	Ancestors rendered as kin, with the possessive suffix.
+accept	1.15:16.7,1.15:16.10	1.15:16.12,1.15:16.13	renders	The compound temporal expression means up to now.
+accept	1.15:16.9	1.15:16.8	renders	Completeness predicate.
+accept	1.15:17.3	1.15:17.2	renders	Occurrence formula introduces the temporal clause.
+accept	1.15:17.17	1.15:17.15	renders	Fire noun rendered adjectivally.
+accept	1.15:17.20	1.15:17.22	renders	Demonstrative modifying the pieces.
+accept	1.15:18.2	1.15:18.5	renders	Demonstrative in that day.
+accept	1.15:18.3	1.15:18.1	renders	Temporal genitive renders the dating prefix.
+accept	1.15:18.7	1.15:18.8	renders	Comitative preposition before Abram.
+accept	1.15:18.9	1.15:18.12	renders	Speech introduction rendered by a converb.
+accept	1.15:18.10	1.15:18.13	renders	Dative of offspring renders the recipient prefix.
+accept	1.15:18.19,1.15:18.23	1.15:18.24	renders	Extent and repeated endpoint marker in the river apposition.
+accept	1.15:19.1	1.15:19.3	renders	Kenite ethnonym.
+accept	1.15:19.3	1.15:19.7	renders	Kenizzite ethnonym.

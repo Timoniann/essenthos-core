@@ -1,0 +1,265 @@
+kind	from	to	relation	reason
+fixed	1.30:1			Added subject, case, condition, and negation links.
+fixed	1.30:2			Added missing verb, pronoun, preposition, and question links.
+fixed	1.30:3			Added missing imperatives, pronouns, and verbal expansions.
+fixed	1.30:4			Added pronoun and role-preposition links.
+fixed	1.30:5			Added the dative prefix.
+fixed	1.30:6			Added the object suffix and completed the causal expression.
+fixed	1.30:7			Added the subject pronoun and dative prefix.
+fixed	1.30:8			Corrected the wrestling verb and linked the intensifier and possessive.
+fixed	1.30:9			Added missing verbs, object pronoun, and prepositions.
+fixed	1.30:10			Added the dative prefix.
+fixed	1.30:11			Linked the arrival of good fortune.
+fixed	1.30:12			Added the dative prefix.
+fixed	1.30:13			Linked the happiness phrase and the expanded verb.
+fixed	1.30:14			Corrected the mandrake link and filled gaps in both clauses.
+fixed	1.30:15			Added question, pronoun, temporal, and mandrake links.
+fixed	1.30:16			Moved the emphasis to the infinitive absolute and filled missing links.
+fixed	1.30:17			Added the subject pronoun and dative prefix.
+fixed	1.30:18			Moved the possessive to husband and filled missing links.
+fixed	1.30:19			Added the dative prefix.
+fixed	1.30:20			Added both object references, the time phrase, and missing content links.
+fixed	1.30:21			Linked the word for name.
+fixed	1.30:22			Linked the pronoun in the hearing clause.
+fixed	1.30:23			Added the subject pronoun and removal verb.
+fixed	1.30:24			Linked the speech-introducing verb.
+fixed	1.30:25			Added the temporal clause marker, verbs, mood, and destination prefix.
+fixed	1.30:26			Added the service pronouns, prepositional phrase, and verb forms.
+fixed	1.30:27			Linked the addressee, discovery, blessing, and cause.
+fixed	1.30:28			Linked the wage possessive and payer phrase.
+fixed	1.30:29			Added the speaker, suffix pronouns, and change-of-state verb.
+fixed	1.30:30			Linked possession, increase, arrival, and the future verb.
+fixed	1.30:31			Added pronouns, the giving verb, demonstrative, and future auxiliaries.
+fixed	1.30:32			Added traversal, removal, flock, and wage links.
+unsure	1.30:33			The preposition in від тебе has no clear equivalent in the recast clause.
+fixed	1.30:34			Linked the assent, optative particle, and verb.
+fixed	1.30:35			Corrected the time demonstrative and subject links, then filled gaps.
+fixed	1.30:36			Completed the distance phrase and linked the remaining flock adjective.
+fixed	1.30:37			Corrected the wood and peeling links and added the locative copula.
+fixed	1.30:38			Unswapped the flock occurrences and linked the locative and temporal phrases.
+unsure	1.30:39			The explicit offspring nouns have no clear target in the recast clause.
+fixed	1.30:40			Added the placement verbs, flock nouns, possessive, and prepositions.
+fixed	1.30:41			Added the habitual verb, setting, flock nouns, and purpose marker.
+fixed	1.30:42			Corrected the allocation verb and added temporal and dative links.
+fixed	1.30:43			Linked the repeated intensifier, possessive phrase, and flocks.
+refuse	1.30:8.6	1.30:8.5		Genitive intensifier, not the wrestling verb.
+refuse	1.30:14.32	1.30:14.26		Request particle, not mandrakes.
+refuse	1.30:16.17	1.30:16.21		Emphasis comes from the infinitive absolute.
+refuse	1.30:18.13	1.30:18.9		Possessive modifies husband.
+refuse	1.30:35.2	1.30:35.4		The article does not render the demonstrative.
+refuse	1.30:35.5	1.30:35.7		Demonstrative modifies day.
+refuse	1.30:37.7	1.30:37.7		This adjective means fresh.
+refuse	1.30:37.16	1.30:37.15		This noun means peeled stripes.
+refuse	1.30:37.19	1.30:37.17		This form means exposing.
+refuse	1.30:38.8	1.30:38.18		This flock comes to drink.
+refuse	1.30:38.15	1.30:38.24		This flock faces the rods.
+refuse	1.30:39.10	1.30:39.12		This adjective means striped.
+refuse	1.30:42.13	1.30:42.11		This adjective names the weak animals.
+accept	1.30:1.5	1.30:1.6	renders	Subject of bearing.
+accept	1.30:1.8	1.30:1.7	renders	Dative renders the recipient prefix.
+accept	1.30:1.12	1.30:1.12	renders	Dative marks the target of envy.
+accept	1.30:1.22	1.30:1.22	renders	Conditional conjunction.
+accept	1.30:1.23	1.30:1.23	renders	Conditional negation.
+accept	1.30:2.5	1.30:2.5	renders	Preposition marks the target of anger.
+accept	1.30:2.8	1.30:2.8	renders	Subject of speaking.
+accept	1.30:2.10	1.30:2.9	renders	Interrogative particle.
+accept	1.30:2.13	1.30:2.11	renders	God in the question.
+accept	1.30:2.15	1.30:2.14	renders	Verb of withholding.
+accept	1.30:2.17	1.30:2.15	renders	Second-person suffix.
+accept	1.30:3.8	1.30:3.6	renders	Imperative of coming.
+accept	1.30:3.10	1.30:3.7	renders	Feminine suffix on the preposition.
+accept	1.30:3.12,1.30:3.14	1.30:3.9	renders	Verb of bearing with jussive mood.
+accept	1.30:3.19	1.30:3.15	renders	Independent first-person pronoun.
+accept	1.30:3.21,1.30:3.22,1.30:3.25	1.30:3.13	renders	Expanded idiom for gaining children.
+accept	1.30:3.24	1.30:3.16	renders	Feminine suffix on the source preposition.
+accept	1.30:4.2	1.30:4.2	renders	Subject of giving.
+accept	1.30:4.4	1.30:4.3	renders	Suffixed recipient preposition.
+accept	1.30:4.8	1.30:4.7	renders	Prefix marks the marital role.
+accept	1.30:4.13	1.30:4.11	renders	Feminine suffix on the preposition.
+accept	1.30:5.6	1.30:5.6	renders	Dative renders the recipient prefix.
+accept	1.30:6.6	1.30:6.4	renders	First-person object suffix.
+accept	1.30:6.16	1.30:6.15	renders	Preposition in the causal idiom.
+accept	1.30:7.3	1.30:7.2	renders	Subject of conceiving.
+accept	1.30:7.12	1.30:7.11	renders	Dative renders the recipient prefix.
+accept	1.30:8.4	1.30:8.5	renders	Genitive intensifies the struggle.
+accept	1.30:8.6	1.30:8.6	renders	Actual wrestling verb.
+accept	1.30:8.10	1.30:8.8	renders	Possessive suffix on sister.
+accept	1.30:9.6	1.30:9.5	renders	Verb of ceasing.
+accept	1.30:9.7	1.30:9.7	renders	Infinitive of bearing.
+accept	1.30:9.15	1.30:9.15	renders	Feminine object pronoun.
+accept	1.30:9.16	1.30:9.16	renders	Dative renders the recipient prefix.
+accept	1.30:9.17	1.30:9.18	renders	Prefix marks the marital role.
+accept	1.30:10.6	1.30:10.6	renders	Dative renders the recipient prefix.
+accept	1.30:11.4	1.30:11.4	renders	Verb of arrival.
+accept	1.30:11.5	1.30:11.5	renders	Noun meaning good fortune.
+accept	1.30:12.8	1.30:12.8	renders	Dative renders the recipient prefix.
+accept	1.30:13.5	1.30:13.4	renders	Preposition in the happiness phrase.
+accept	1.30:13.6,1.30:13.7	1.30:13.5	renders	Happiness and its possessive suffix.
+accept	1.30:13.9,1.30:13.10,1.30:13.12,1.30:13.14	1.30:13.7	renders	Expanded predicate for considering someone blessed.
+accept	1.30:14.7	1.30:14.6	renders	Introduces the clause rendering harvest.
+accept	1.30:14.14,1.30:14.15	1.30:14.10	renders	First mandrake phrase.
+accept	1.30:14.18	1.30:14.16	renders	Plural object pronoun.
+accept	1.30:14.30	1.30:14.28	renders	Partitive preposition.
+accept	1.30:14.31,1.30:14.32	1.30:14.29	renders	Second mandrake phrase.
+accept	1.30:14.33	1.30:14.30	renders	Noun carrying the possessive suffix.
+accept	1.30:15.2	1.30:15.2	renders	Subject of replying.
+accept	1.30:15.4	1.30:15.3	renders	Suffixed recipient preposition.
+accept	1.30:15.5	1.30:15.4	renders	Interrogative particle.
+accept	1.30:15.8	1.30:15.6	renders	Introduces the clause rendering the construct infinitive.
+accept	1.30:15.15,1.30:15.16	1.30:15.14	renders	First mandrake phrase.
+accept	1.30:15.17,1.30:15.18	1.30:15.15	renders	Son and first-person possessive suffix.
+accept	1.30:15.24	1.30:15.20	renders	Subject of lying down.
+accept	1.30:15.27	1.30:15.21	renders	Second-person suffix on with.
+accept	1.30:15.28	1.30:15.23	renders	Temporal expression means tonight.
+accept	1.30:15.31	1.30:15.25	renders	Second mandrake phrase.
+accept	1.30:15.33	1.30:15.26	renders	Noun carrying the second-person suffix.
+accept	1.30:16.6	1.30:16.7	renders	Adverb incorporates the temporal prefix.
+accept	1.30:16.10	1.30:16.13	renders	Adverb incorporates the direction toward him.
+accept	1.30:16.14	1.30:16.17	renders	Preposition of direction.
+accept	1.30:16.17	1.30:16.20	renders	Infinitive absolute supplies emphasis.
+accept	1.30:16.19,1.30:16.20	1.30:16.21	renders	Subject ending and object suffix of hiring.
+accept	1.30:16.21	1.30:16.22	renders	Prefix marks the price paid.
+accept	1.30:16.22	1.30:16.23	renders	Part of the mandrake expression.
+accept	1.30:16.24,1.30:16.25	1.30:16.24	renders	Son and first-person possessive suffix.
+accept	1.30:16.28	1.30:16.26	renders	Subject of lying down.
+accept	1.30:16.29,1.30:16.30	1.30:16.27	renders	With and its feminine suffix.
+accept	1.30:16.31	1.30:16.28	renders	Temporal genitive conveys the prefix.
+accept	1.30:16.32	1.30:16.31	renders	Demonstrative modifying night.
+accept	1.30:17.7	1.30:17.7	renders	Subject of conceiving.
+accept	1.30:17.10	1.30:17.10	renders	Dative renders the recipient prefix.
+accept	1.30:18.9	1.30:18.8	renders	Giving the maidservant.
+accept	1.30:18.11	1.30:18.9	renders	Noun means maidservant.
+accept	1.30:18.13	1.30:18.11	renders	Possessive suffix on husband.
+accept	1.30:18.14	1.30:18.10,1.30:18.11	renders	Husband and the recipient prefix.
+accept	1.30:19.7	1.30:19.9	renders	Dative renders the recipient prefix.
+accept	1.30:20.5	1.30:20.6	renders	Explicit first-person object pronoun.
+accept	1.30:20.8	1.30:20.7	renders	Noun means gift.
+accept	1.30:20.9,1.30:20.10	1.30:20.10	renders	Temporal expression means this time.
+accept	1.30:20.12,1.30:20.13	1.30:20.11	renders	Locative phrase renders the verb's object suffix.
+accept	1.30:20.14,1.30:20.15	1.30:20.12	renders	Husband and first-person possessive suffix.
+accept	1.30:20.18	1.30:20.14	renders	Verb of bearing.
+accept	1.30:20.19	1.30:20.15	renders	Suffixed recipient preposition.
+accept	1.30:21.7	1.30:21.8	renders	Noun means name.
+accept	1.30:22.8	1.30:22.8	renders	Feminine suffix in the hearing clause.
+accept	1.30:23.3	1.30:23.2	renders	Subject of conceiving.
+accept	1.30:23.10	1.30:23.8	renders	Verb of taking away.
+accept	1.30:24.6	1.30:24.7	renders	Infinitive introduces direct speech.
+accept	1.30:25.3	1.30:25.3,1.30:25.4	renders	Compound temporal conjunction.
+accept	1.30:25.5	1.30:25.5	renders	Verb of bearing.
+accept	1.30:25.12	1.30:25.14	renders	Imperative of sending away.
+accept	1.30:25.15	1.30:25.16	renders	Expresses cohortative mood.
+accept	1.30:25.22	1.30:25.20	renders	Destination prefix on land.
+accept	1.30:26.10	1.30:26.9	renders	Second-person object pronoun.
+accept	1.30:26.11,1.30:26.12	1.30:26.10	renders	Prepositional relation and plural suffix.
+accept	1.30:26.15	1.30:26.12	renders	Subject of the cohortative.
+accept	1.30:26.24,1.30:26.25,1.30:26.26	1.30:26.19	renders	Past service verb and its object suffix.
+accept	1.30:27.4	1.30:27.3	renders	Masculine suffix on the preposition.
+accept	1.30:27.17,1.30:27.18	1.30:27.11	renders	Discovery verb and first-person subject.
+accept	1.30:27.19	1.30:27.12	renders	Renders the conjunction introducing what he learned.
+accept	1.30:27.20,1.30:27.21	1.30:27.13	renders	Blessing verb and first-person object suffix.
+accept	1.30:27.23	1.30:27.15,1.30:27.16	renders	Compound causal preposition.
+accept	1.30:27.24	1.30:27.16	renders	Second-person suffix in the causal phrase.
+accept	1.30:28.5	1.30:28.4	renders	Reflexive dative recasts the wage possessive.
+accept	1.30:28.7,1.30:28.8	1.30:28.5	renders	Payer phrase renders the suffixed preposition.
+accept	1.30:29.2	1.30:29.2	renders	Subject of replying.
+accept	1.30:29.9	1.30:29.8	renders	Second-person object suffix of serving.
+accept	1.30:29.12	1.30:29.12	renders	Verb of becoming.
+accept	1.30:29.16	1.30:29.14	renders	First-person suffix on with.
+accept	1.30:30.5	1.30:30.4	renders	Written verb of being.
+accept	1.30:30.6,1.30:30.7	1.30:30.5	renders	Possession expressed by the suffixed preposition.
+accept	1.30:30.8	1.30:30.6,1.30:30.7	renders	Compound expression meaning before.
+accept	1.30:30.9	1.30:30.7	renders	First-person suffix in before me.
+accept	1.30:30.10	1.30:30.9	renders	Verb of increasing.
+accept	1.30:30.11	1.30:30.10	renders	Prefix marks the result of increase.
+accept	1.30:30.12	1.30:30.11	renders	Noun denotes abundance.
+accept	1.30:30.16	1.30:30.15	renders	Second-person object pronoun.
+accept	1.30:30.17	1.30:30.16	renders	Prefix introduces the temporal arrival idiom.
+accept	1.30:30.18,1.30:30.19	1.30:30.17	renders	Foot and first-person possessive suffix.
+accept	1.30:30.27,1.30:30.28	1.30:30.21	renders	Expanded future verb.
+accept	1.30:31.6	1.30:31.4	renders	First-person subject of giving.
+accept	1.30:31.7	1.30:31.5	renders	Suffixed recipient preposition.
+accept	1.30:31.13	1.30:31.10	renders	Giving verb under negation.
+accept	1.30:31.19	1.30:31.19	renders	Demonstrative modifying thing.
+accept	1.30:31.23	1.30:31.21	renders	Future auxiliary of pasturing.
+accept	1.30:31.27	1.30:31.23	renders	Future auxiliary of keeping.
+accept	1.30:32.1	1.30:32.1	renders	First-person subject of passing through.
+accept	1.30:32.4	1.30:32.2	renders	Prefix marks traversal through the flock.
+accept	1.30:32.8	1.30:32.7	renders	Introduces the purpose expressed by removal.
+accept	1.30:32.10	1.30:32.8,1.30:32.9	renders	Compound adverb meaning from there.
+accept	1.30:32.12	1.30:32.11	renders	First occurrence of lamb.
+accept	1.30:32.20	1.30:32.19	renders	Preposition means among the sheep.
+accept	1.30:32.29	1.30:32.30	renders	Overt subject of the verb of being.
+accept	1.30:32.32	1.30:32.31	renders	First-person possessive suffix on wages.
+accept	1.30:33.4	1.30:33.2	renders	Verb of testifying.
+accept	1.30:33.5,1.30:33.6	1.30:33.3	renders	On my behalf and its first-person suffix.
+accept	1.30:33.9	1.30:33.6	renders	Noun means day.
+accept	1.30:33.11	1.30:33.9	renders	Verb of coming.
+accept	1.30:33.13	1.30:33.10	renders	Preposition introducing the wages.
+accept	1.30:33.17	1.30:33.13	renders	Second-person suffix in the final phrase.
+accept	1.30:33.20	1.30:33.16	renders	Subject suffix on the negative form.
+accept	1.30:33.24,1.30:33.29	1.30:33.16	renders	One source negation covers the coordinated descriptions.
+accept	1.30:33.31	1.30:33.25	renders	Preposition means among the sheep.
+accept	1.30:33.34	1.30:33.29	renders	Independent pronoun in the final clause.
+accept	1.30:33.35,1.30:33.36	1.30:33.30	renders	With and its first-person suffix.
+accept	1.30:34.4	1.30:34.4	renders	Particle of assent.
+accept	1.30:34.5	1.30:34.5	renders	Optative particle.
+accept	1.30:34.6	1.30:34.6	renders	Written verb of being.
+accept	1.30:35.2	1.30:35.7	renders	Demonstrative modifying day.
+accept	1.30:35.3	1.30:35.3	renders	Temporal genitive conveys the prefix.
+accept	1.30:35.5	1.30:35.2	renders	Subject of removing.
+accept	1.30:35.9	1.30:35.15	renders	First occurrence of the mottled adjective.
+accept	1.30:35.13	1.30:35.22	renders	Speckled adjective describing the she-goats.
+accept	1.30:35.19,1.30:35.20,1.30:35.21	1.30:35.29	renders	Locative predicate with copula and pronoun.
+accept	1.30:35.29	1.30:35.38	renders	Preposition in the handover.
+accept	1.30:36.2	1.30:36.2	renders	Verb of setting the distance.
+accept	1.30:36.3	1.30:36.3	renders	Noun means journey or way.
+accept	1.30:36.4	1.30:36.5	renders	Compound adjective incorporates days.
+accept	1.30:36.6	1.30:36.6	renders	Reflexive renders the third-person suffix.
+accept	1.30:36.8	1.30:36.8	renders	Second occurrence of between.
+accept	1.30:36.13	1.30:36.17	renders	Participle means remaining.
+accept	1.30:37.3	1.30:37.3	renders	Reflexive recipient.
+accept	1.30:37.5	1.30:37.7	renders	Adjective means fresh.
+accept	1.30:37.7	1.30:37.6	renders	First tree name.
+accept	1.30:37.14	1.30:37.14	renders	Recasts the relation of peeling on the rods.
+accept	1.30:37.16	1.30:37.16	renders	White adjective modifying the peelings.
+accept	1.30:37.17	1.30:37.15	renders	Noun for peeled strips.
+accept	1.30:37.18	1.30:37.17	renders	Participle of exposing.
+accept	1.30:37.19	1.30:37.19	renders	Substantivized white.
+accept	1.30:37.23	1.30:37.21	renders	Copula expresses the locative predicate.
+accept	1.30:38.3	1.30:38.5	renders	Noun means rods.
+accept	1.30:38.5	1.30:38.6	renders	Resumptive pronoun marks the relative clause's object.
+accept	1.30:38.7	1.30:38.21,1.30:38.22	renders	Compound preposition meaning in front of.
+accept	1.30:38.8	1.30:38.24	renders	Flock facing the rods.
+accept	1.30:38.9	1.30:38.8	renders	Locative prefix on the first trough noun.
+accept	1.30:38.11	1.30:38.11	renders	Locative prefix on the second trough noun.
+accept	1.30:38.12	1.30:38.12	renders	Second trough noun.
+accept	1.30:38.14	1.30:38.15	renders	Locative relative conjunction.
+accept	1.30:38.15	1.30:38.18	renders	Flock coming to drink.
+accept	1.30:38.19	1.30:38.26	renders	Plural subject of mating.
+accept	1.30:38.21	1.30:38.27	renders	Prefix marks when they came.
+accept	1.30:39.4	1.30:39.5	renders	Preposition marks position at the rods.
+accept	1.30:40.5	1.30:40.3	renders	Sheep Jacob separates.
+accept	1.30:40.7	1.30:40.7	renders	Verb of positioning the flock.
+accept	1.30:40.13	1.30:40.11	renders	Repeats the preposition shared by both targets.
+accept	1.30:40.20	1.30:40.20	renders	First verb of putting.
+accept	1.30:40.21	1.30:40.21	renders	Possessive renders for himself.
+accept	1.30:40.23	1.30:40.23	renders	Prefix forms the adverb meaning separately.
+accept	1.30:40.28	1.30:40.28	renders	Preposition of placement with the other flock.
+accept	1.30:40.29	1.30:40.29	renders	Final occurrence of flock.
+accept	1.30:41.2	1.30:41.2	renders	Written verb rendered habitually.
+accept	1.30:41.5	1.30:41.4	renders	Completes the expression meaning every time.
+accept	1.30:41.6	1.30:41.3	renders	Temporal prefix introducing the mating clause.
+accept	1.30:41.8	1.30:41.7	renders	First occurrence of flock.
+accept	1.30:41.13	1.30:41.20	renders	Locative prefix on the troughs.
+accept	1.30:41.16	1.30:41.16	renders	Prefix in the expression before their eyes.
+accept	1.30:41.18	1.30:41.19	renders	Second occurrence of flock.
+accept	1.30:41.19	1.30:41.23	renders	Prefix marks purpose.
+accept	1.30:41.22	1.30:41.25	renders	Locative prefix on the rods.
+accept	1.30:42.2	1.30:42.2	renders	Prefix introduces the temporal clause.
+accept	1.30:42.3	1.30:42.5	renders	Noun means flock.
+accept	1.30:42.10,1.30:42.13	1.30:42.9	renders	Written verb expanded as outcome and allocation.
+accept	1.30:42.14	1.30:42.12	renders	Dative renders the prefix before Laban.
+accept	1.30:42.17	1.30:42.17	renders	Dative renders the prefix before Jacob.
+accept	1.30:43.2	1.30:43.5,1.30:43.6	renders	One hyphenated form renders both intensifiers.
+accept	1.30:43.8,1.30:43.9	1.30:43.9	renders	Possessive phrase renders the suffixed preposition.
+accept	1.30:43.11	1.30:43.10	renders	Noun means flocks.

@@ -1,0 +1,221 @@
+kind	from	to	relation	reason
+fixed	1.42:1			Missing grain, addressee preposition, and reciprocal wording.
+fixed	1.42:2			Missing subject pronoun, both grain terms, and source adverb.
+fixed	1.42:3			Missing purpose prefix and source preposition.
+fixed	1.42:4			Missing accompaniment preposition and part of the preventive conjunction.
+fixed	1.42:5			Missing purpose, grain, and wording for the other arrivals.
+fixed	1.42:6			Missing ruler, grain, recipients, and direction.
+fixed	1.42:7			Missing disguise wording, pronouns, and question links.
+ok	1.42:8			
+fixed	1.42:9			Missing dream clause, addressee, and accusation wording.
+fixed	1.42:10			Missing addressee and purpose prefix.
+fixed	1.42:11			Missing independent subjects and past copula.
+fixed	1.42:12			Missing narrative transition, addressee, and accusation wording.
+fixed	1.42:13			Missing compound number, time, accompaniment, and negative existential.
+fixed	1.42:14			Missing recipients, demonstrative, relative wording, and past verb.
+unsure	1.42:15			Corrected oath and movement links. The oath's Ukrainian clause introducer is uncertain.
+fixed	1.42:16			Missing source phrase, mood, testing, question, and oath links.
+fixed	1.42:17			Moved the custody preposition and linked the action and duration.
+fixed	1.42:18			Missing temporal prefix, addressee phrase, and fear verb.
+fixed	1.42:19			Missing passive auxiliary, custody, and grain-purpose wording.
+fixed	1.42:20			Missing possessive, destination, auxiliary, and subject pronoun.
+fixed	1.42:21			Missing reciprocal, causal, distress, and pronoun links.
+fixed	1.42:22			Missing addressees, question marker, and verb forms.
+fixed	1.42:23			Missing locative predicate and its past copula.
+fixed	1.42:24			Missing pronouns, prepositions, and connective wording.
+unsure	1.42:25			Linked the actions and recipients. The command complement marker is uncertain.
+fixed	1.42:26			Missing grain, possessive, departure, and source wording.
+fixed	1.42:27			Missing recipient prefix, connective wording, and independent pronoun.
+fixed	1.42:28			Missing speaker, recipient relation, return, and heart idiom.
+fixed	1.42:29			Missing destination, recipient, and wording for what happened.
+fixed	1.42:30			Missing accompaniment, treatment, object, and comparison.
+fixed	1.42:31			Missing addressee and past copula.
+fixed	1.42:32			Completed the compound number and linked absence, time, and accompaniment.
+unsure	1.42:33			Linked prepositions, pronouns, and departure. The explicit grain wording is uncertain.
+fixed	1.42:34			Missing destination, second conjunction, recipient, and trading expression.
+fixed	1.42:35			Missing preposition in the distributive possessive phrase.
+fixed	1.42:36			Missing addressees, bereavement, both negatives, and final predicate.
+unsure	1.42:37			Linked speech, commands, and pronouns. The imperative particle is uncertain.
+fixed	1.42:38			Missing subjects, accident wording, relative construction, and direction.
+refuse	1.42:17.5	1.42:17.5		Preposition renders אֶל in the custody phrase.
+accept	1.42:1.8	1.42:1.6	renders	Grain noun.
+accept	1.42:1.12	1.42:1.12	renders	Addressee preposition.
+accept	1.42:1.19,1.42:1.20	1.42:1.15	renders	Completes the reciprocal verb expression.
+accept	1.42:2.3	1.42:2.2	renders	Subject carried by the speech verb.
+accept	1.42:2.11	1.42:2.7	renders	Available grain.
+accept	1.42:2.17	1.42:2.13	renders	Grain specified by the buying verb.
+accept	1.42:2.18	1.42:2.15,1.42:2.16	renders	From there in one word.
+accept	1.42:3.6	1.42:3.6	renders	Infinitive expresses purpose.
+accept	1.42:3.8	1.42:3.9	renders	Source preposition.
+accept	1.42:4.8	1.42:4.9	renders	Accompaniment preposition.
+accept	1.42:4.14	1.42:4.13	renders	Negation within the expression for lest.
+accept	1.42:5.5	1.42:5.5	renders	Infinitive expresses purpose.
+accept	1.42:5.6	1.42:5.6	renders	Grain specified by the buying verb.
+accept	1.42:5.7	1.42:5.8	renders	Shared setting expressed by midst.
+accept	1.42:5.8	1.42:5.7	renders	Prepositional part of the accompaniment phrase.
+accept	1.42:5.9,1.42:5.10	1.42:5.10	renders	Participant and relative wording for the substantive participle.
+accept	1.42:6.4	1.42:6.5	renders	Ruler noun.
+accept	1.42:6.10	1.42:6.11	renders	Grain specified by the selling verb.
+accept	1.42:6.11	1.42:6.13	renders	Totality of the people.
+accept	1.42:6.12	1.42:6.12,1.42:6.14	renders	Dative recipient and its noun.
+accept	1.42:6.20	1.42:6.21	renders	Part of the compound connective та й.
+accept	1.42:6.22	1.42:6.23	renders	Suffixed recipient pronoun.
+accept	1.42:6.24	1.42:6.25	renders	Direction carried by the noun ending.
+accept	1.42:7.10,1.42:7.11,1.42:7.12,1.42:7.13	1.42:7.9	renders	Phrase renders the verb for disguising oneself.
+accept	1.42:7.16,1.42:7.17	1.42:7.13	renders	Accompaniment preposition and its suffix.
+accept	1.42:7.21,1.42:7.22	1.42:7.17	renders	Addressee preposition and its suffix.
+accept	1.42:7.23	1.42:7.18,1.42:7.19	renders	Source question rendered in one word.
+accept	1.42:7.24,1.42:7.25	1.42:7.20	renders	Verb of arrival and its subject.
+accept	1.42:7.32	1.42:7.26	renders	Infinitive expresses purpose.
+accept	1.42:9.6,1.42:9.7	1.42:9.9	renders	Preposition and suffix for whom the dreams concerned.
+accept	1.42:9.8,1.42:9.9,1.42:9.10	1.42:9.8	renders	Dreamer and past dreaming expressed by one verb.
+accept	1.42:9.13	1.42:9.11	renders	Subject carried by the speech verb.
+accept	1.42:9.14,1.42:9.15	1.42:9.12	renders	Addressee preposition and its suffix.
+accept	1.42:9.19	1.42:9.21	renders	Arrival verb.
+accept	1.42:9.20	1.42:9.15,1.42:9.16	renders	Purpose prefix and act of inspecting.
+accept	1.42:9.21,1.42:9.22	1.42:9.18	renders	Phrase renders the land's vulnerability.
+accept	1.42:10.4	1.42:10.3	renders	Suffixed addressee pronoun.
+accept	1.42:10.12	1.42:10.9	renders	Infinitive expresses purpose.
+accept	1.42:11.1	1.42:11.5	renders	Independent subject of the first assertion.
+accept	1.42:11.6	1.42:11.7	renders	Independent subject of the second assertion.
+accept	1.42:11.11	1.42:11.9	renders	Written past copula.
+accept	1.42:12.1	1.42:12.2	renders	Subject carried by the speech verb.
+accept	1.42:12.2	1.42:12.1	renders	Contrastive narrative connective.
+accept	1.42:12.4,1.42:12.5	1.42:12.3	renders	Addressee preposition and its suffix.
+accept	1.42:12.10	1.42:12.10,1.42:12.11	renders	Purpose prefix and act of inspecting.
+accept	1.42:12.11,1.42:12.12	1.42:12.6	renders	Phrase renders the land's vulnerability.
+accept	1.42:13.4	1.42:13.3,1.42:13.4	renders	Whole compound number twelve.
+accept	1.42:13.17	1.42:13.21	renders	Today rendered as now.
+accept	1.42:13.18	1.42:13.18	renders	Accompaniment preposition.
+accept	1.42:13.23	1.42:13.25	renders	Negative existential.
+accept	1.42:14.3	1.42:14.3	renders	Suffixed addressee pronoun.
+accept	1.42:14.5	1.42:14.5	renders	Demonstrative renders the independent pronoun.
+accept	1.42:14.6	1.42:14.6	renders	Antecedent supplied by the free relative construction.
+accept	1.42:14.9,1.42:14.10	1.42:14.7	renders	Speech verb and its past auxiliary.
+accept	1.42:14.12	1.42:14.8	renders	Addressee carried by the suffix.
+accept	1.42:15.1	1.42:15.1	renders	Instrumental form expresses the means of testing.
+accept	1.42:15.6	1.42:15.4	renders	Life invoked in the oath.
+accept	1.42:15.10	1.42:15.6	renders	Oath particle gives the clause negative force.
+accept	1.42:15.12	1.42:15.9	renders	Demonstrative supplies the here component.
+accept	1.42:15.14	1.42:15.10,1.42:15.11	renders	Negation expresses the exception in the compound conjunction.
+accept	1.42:15.15	1.42:15.13	renders	Brother's arrival verb.
+accept	1.42:16.2,1.42:16.3	1.42:16.2	renders	Source preposition and its personal suffix.
+accept	1.42:16.6	1.42:16.5	renders	Jussive expressed by a mood particle.
+accept	1.42:16.15	1.42:16.13	renders	Words being tested.
+accept	1.42:16.17,1.42:16.19	1.42:16.12	renders	Auxiliary and noun complete the passive testing expression.
+accept	1.42:16.20	1.42:16.14	renders	Interrogative marker.
+accept	1.42:16.22,1.42:16.23	1.42:16.16	renders	Accompaniment preposition and its suffix.
+accept	1.42:16.25	1.42:16.18	renders	Conditional conjunction.
+accept	1.42:16.28	1.42:16.20	renders	Life invoked in the oath.
+accept	1.42:16.30	1.42:16.22	renders	Introduces the sworn assertion.
+accept	1.42:17.2,1.42:17.3	1.42:17.2	renders	Custody action and its subject.
+accept	1.42:17.5	1.42:17.4	renders	Preposition expresses placement in custody.
+accept	1.42:17.7	1.42:17.7	renders	Preposition expresses the duration carried by the time noun.
+accept	1.42:18.3	1.42:18.5	renders	Temporal genitive expresses on the day.
+accept	1.42:18.6,1.42:18.7	1.42:18.3	renders	Addressee preposition and its suffix.
+accept	1.42:18.14	1.42:18.18	renders	Fear verb.
+accept	1.42:19.7	1.42:19.6	renders	Auxiliary expresses the verb's future passive.
+accept	1.42:19.12	1.42:19.9	renders	Custody noun.
+accept	1.42:19.16	1.42:19.13	renders	Causative verb of bringing.
+accept	1.42:19.17	1.42:19.14	renders	Grain noun.
+accept	1.42:19.18,1.42:19.19	1.42:19.14	renders	Purpose wording expresses the grain construct's relation to hunger.
+accept	1.42:20.2	1.42:20.3	renders	Possessive suffix on brother.
+accept	1.42:20.6,1.42:20.7	1.42:20.7	renders	Destination preposition and its suffix.
+accept	1.42:20.9	1.42:20.9	renders	Auxiliary expresses the verb's future passive.
+accept	1.42:20.14	1.42:20.13	renders	Subject carried by the verb of dying.
+accept	1.42:21.2	1.42:21.2	renders	Speech verb.
+accept	1.42:21.5	1.42:21.4,1.42:21.5	renders	Dative renders the reciprocal addressee phrase.
+accept	1.42:21.6	1.42:21.6	renders	Adverb of affirmation.
+accept	1.42:21.9	1.42:21.9	renders	Preposition gives the ground of guilt.
+accept	1.42:21.12	1.42:21.11	renders	Relative connective rendered causally here.
+accept	1.42:21.15	1.42:21.13	renders	Distress of his soul.
+accept	1.42:21.19	1.42:21.16	renders	Subject carried by the infinitive suffix.
+accept	1.42:21.21	1.42:21.17	renders	Suffixed addressee of the plea.
+accept	1.42:21.23	1.42:21.20	renders	Subject carried by the hearing verb.
+accept	1.42:21.26	1.42:21.21	renders	Prepositional component of the causal idiom.
+accept	1.42:21.30	1.42:21.26	renders	Distress that came upon them.
+accept	1.42:21.31,1.42:21.32	1.42:21.24	renders	Preposition and suffix in the expression came upon us.
+accept	1.42:22.3	1.42:22.4	renders	Suffixed object of the reply.
+accept	1.42:22.6	1.42:22.7	renders	Interrogative marker.
+accept	1.42:22.8,1.42:22.9	1.42:22.9	renders	Speech verb and its first-person subject.
+accept	1.42:22.10	1.42:22.10	renders	Suffixed addressee pronoun.
+accept	1.42:22.17	1.42:22.20	renders	Subject carried by the hearing verb.
+accept	1.42:22.21	1.42:22.24	renders	Presentative particle.
+accept	1.42:23.10,1.42:23.11	1.42:23.11	renders	Past copula and preposition express the locative predicate.
+accept	1.42:24.2	1.42:24.2	renders	Subject carried by the turning verb.
+accept	1.42:24.5	1.42:24.4	renders	Personal suffix in the phrase for turning away.
+accept	1.42:24.7	1.42:24.5	renders	Part of the compound connective та й.
+accept	1.42:24.11,1.42:24.12	1.42:24.9	renders	Destination preposition and its suffix.
+accept	1.42:24.15,1.42:24.16	1.42:24.12	renders	Speech addressee expressed as accompaniment.
+accept	1.42:24.19	1.42:24.15	renders	Source preposition in the taking clause.
+accept	1.42:24.20	1.42:24.16	renders	Personal suffix in the phrase for taking from them.
+accept	1.42:24.23	1.42:24.19	renders	Part of the compound connective та й.
+accept	1.42:24.25	1.42:24.21	renders	Suffixed object pronoun.
+accept	1.42:24.26	1.42:24.22	renders	Preposition in the expression before their eyes.
+accept	1.42:25.12	1.42:25.11	renders	Verb of returning the silver.
+accept	1.42:25.18	1.42:25.18	renders	Verb of giving provisions.
+accept	1.42:25.19	1.42:25.19	renders	Recipient of the provisions.
+accept	1.42:25.21	1.42:25.21	renders	Preposition expressing provision for the journey.
+accept	1.42:25.24	1.42:25.26	renders	Recipient in the final clause.
+accept	1.42:25.25	1.42:25.25	renders	Doing rendered by an impersonal passive.
+accept	1.42:26.3	1.42:26.2	renders	Subject carried by the loading verb.
+accept	1.42:26.4,1.42:26.5	1.42:26.4	renders	Grain noun and its possessive suffix.
+accept	1.42:26.6	1.42:26.5	renders	Preposition of placement on the donkeys.
+accept	1.42:26.10	1.42:26.8	renders	Departure verb.
+accept	1.42:26.11	1.42:26.10	renders	Adverb supplies the there component.
+accept	1.42:27.7	1.42:27.10	renders	Dative expresses the giving recipient.
+accept	1.42:27.14	1.42:27.15	renders	Part of the compound connective та й.
+accept	1.42:27.19	1.42:27.21	renders	Independent pronoun referring to the silver.
+accept	1.42:28.3	1.42:28.2	renders	Subject carried by the speech verb.
+accept	1.42:28.4	1.42:28.3	renders	Dative expresses the speech addressee.
+accept	1.42:28.6	1.42:28.5	renders	Passive return verb.
+accept	1.42:28.16	1.42:28.13	renders	Verb in the idiom for the heart sinking.
+accept	1.42:28.17	1.42:28.14	renders	Possessor of the heart expressed in the dative.
+accept	1.42:29.8	1.42:29.6	renders	Direction carried by the noun ending.
+accept	1.42:29.13	1.42:29.10	renders	Suffixed recipient pronoun.
+accept	1.42:29.15,1.42:29.18	1.42:29.14	renders	Relative wording and past auxiliary express the participle.
+accept	1.42:29.16	1.42:29.15	renders	Suffixed object pronoun.
+accept	1.42:30.7,1.42:30.8	1.42:30.7	renders	Accompaniment preposition and its suffix.
+accept	1.42:30.11,1.42:30.12	1.42:30.10	renders	Treating as spies expressed with a past auxiliary.
+accept	1.42:30.13	1.42:30.11	renders	Suffixed object pronoun.
+accept	1.42:30.14	1.42:30.12	renders	Comparative prefix.
+accept	1.42:31.4	1.42:31.3	renders	Suffixed addressee pronoun.
+accept	1.42:31.8	1.42:31.7	renders	Written past copula.
+accept	1.42:32.2	1.42:32.1	renders	Completes the compound number twelve.
+accept	1.42:32.8	1.42:32.9	renders	Negative existential.
+accept	1.42:32.11	1.42:32.14	renders	Today rendered as now.
+accept	1.42:32.12	1.42:32.15	renders	Accompaniment preposition.
+accept	1.42:33.3,1.42:33.4	1.42:33.3	renders	Addressee preposition and its suffix.
+accept	1.42:33.10	1.42:33.9	renders	Preposition expresses the basis for knowing.
+accept	1.42:33.11	1.42:33.10	renders	Demonstrative for the test.
+accept	1.42:33.18	1.42:33.19	renders	Personal suffix of the accompaniment preposition.
+accept	1.42:33.25	1.42:33.23	renders	Households noun.
+accept	1.42:33.30	1.42:33.25	renders	Part of the compound connective та й.
+accept	1.42:33.31	1.42:33.26	renders	Departure imperative.
+accept	1.42:34.3	1.42:34.7	renders	Destination preposition.
+accept	1.42:34.16	1.42:34.14	renders	Introduces the second assertion.
+accept	1.42:34.21	1.42:34.20	renders	Suffixed recipient pronoun.
+accept	1.42:34.26,1.42:34.27,1.42:34.30,1.42:34.31	1.42:34.25	renders	Permission to travel about for trade.
+accept	1.42:35.9	1.42:35.8	renders	Marks the possessive relation in the expression for each man.
+accept	1.42:36.3,1.42:36.4	1.42:36.3	renders	Addressee preposition and its suffix.
+accept	1.42:36.9,1.42:36.11	1.42:36.7	renders	Both words express bereaving someone of children.
+accept	1.42:36.10	1.42:36.6	renders	Suffixed first-person object pronoun.
+accept	1.42:36.13	1.42:36.9	renders	Negative existential for Joseph.
+accept	1.42:36.16	1.42:36.12	renders	Negative existential for Simeon.
+accept	1.42:36.20	1.42:36.16	renders	Verb for taking Benjamin.
+accept	1.42:36.21,1.42:36.22	1.42:36.19	renders	Totality and its resumptive reference.
+accept	1.42:36.23,1.42:36.24	1.42:36.17	renders	Preposition and first-person suffix.
+accept	1.42:37.2	1.42:37.2	renders	Speech verb.
+accept	1.42:37.16,1.42:37.17	1.42:37.15	renders	First destination preposition and its suffix.
+accept	1.42:37.18	1.42:37.16	renders	Imperative of giving.
+accept	1.42:37.20	1.42:37.17	renders	Suffixed object of giving.
+accept	1.42:37.26,1.42:37.27	1.42:37.22	renders	Return verb and its object suffix.
+accept	1.42:37.28,1.42:37.29	1.42:37.23	renders	Second destination preposition and its suffix.
+accept	1.42:38.2	1.42:38.2	renders	Demonstrative pronoun expresses the verb's subject.
+accept	1.42:38.7	1.42:38.6	renders	Personal suffix of the accompaniment preposition.
+accept	1.42:38.16	1.42:38.12	renders	Prefix forms the adverbial expression for being alone.
+accept	1.42:38.20	1.42:38.16	renders	Object suffix on the verb for befalling.
+accept	1.42:38.21	1.42:38.17	renders	Accident noun.
+accept	1.42:38.24	1.42:38.21,1.42:38.23	renders	Relative and resumptive phrase rendered by one inflected pronoun.
+accept	1.42:38.29	1.42:38.25	renders	Causative verb of bringing down.
+accept	1.42:38.32	1.42:38.30	renders	Direction carried by the ending on Sheol.

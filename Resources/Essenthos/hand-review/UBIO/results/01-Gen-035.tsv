@@ -1,0 +1,139 @@
+kind	from	to	relation	reason
+fixed	1.35:1			Missing direction, dative, relative, and flight links.
+fixed	1.35:2			Missing predicate, adjective, and pronoun links.
+fixed	1.35:3			Missing direction, dative, relative, and pronoun links.
+fixed	1.35:4			Missing subject, recipient, copula, object, and location links.
+fixed	1.35:5			Missing intensifier, predicate, and pronoun links.
+fixed	1.35:6			Missing identification, copula, and pronoun links.
+fixed	1.35:7			Missing pronouns, name component, and flight links.
+fixed	1.35:8			Missing location, pronouns, and name component.
+fixed	1.35:9			Missing arrival phrase, Aram, and object pronoun.
+fixed	1.35:10			Missing recipient, auxiliary, name, and contrast component.
+fixed	1.35:11			Missing recipient, imperative, and source links.
+fixed	1.35:12			Missing dative prefixes and suffix pronouns.
+fixed	1.35:13			Missing compound preposition component and pronouns.
+fixed	1.35:14			Missing pronouns, prepositions, libation, and pouring verb.
+fixed	1.35:15			Missing relative and suffixed preposition.
+fixed	1.35:16			Restored distance and labor links. Singular subject reflects a number shift.
+fixed	1.35:17			Possessive moved to the birth noun. Other links restored.
+fixed	1.35:18			Missing temporal clause, subject, and naming pronouns.
+fixed	1.35:19			Direction follows the road construct. Identification links restored.
+fixed	1.35:20			Missing demonstrative, monument, and endpoint emphasis.
+fixed	1.35:21			Missing distance expression and preposition.
+fixed	1.35:22			Misplaced preposition and conjunction. The evaluative clause has no BHSA counterpart.
+ok	1.35:23			
+ok	1.35:24			
+ok	1.35:25			
+fixed	1.35:26			Missing recipient pronoun.
+fixed	1.35:27			Missing destination, identification, relative, and dwelling links.
+fixed	1.35:28			Both occurrences of years lacked links.
+fixed	1.35:29			Missing days in the idiom and burial object pronoun.
+refuse	1.35:17.6	1.35:17.4		Possessive modifies the birth noun.
+refuse	1.35:19.9	1.35:19.8		Direction comes from the road construct.
+refuse	1.35:22.14	1.35:22.15		Renders the separate preposition.
+refuse	1.35:22.22	1.35:22.23		Conjunction belongs to the sons clause.
+accept	1.35:1.8	1.35:1.8	renders	Marks the destination expressed by the place name.
+accept	1.35:1.17	1.35:1.16	renders	Dative renders the recipient prefix.
+accept	1.35:1.18	1.35:1.20	renders	Relative renders the participial construction.
+accept	1.35:1.20	1.35:1.21	renders	Renders the suffixed preposition.
+accept	1.35:1.21	1.35:1.22	renders	Renders the temporal prefix.
+accept	1.35:1.24	1.35:1.23	renders	Auxiliary of the flight verb.
+accept	1.35:1.25	1.35:1.24,1.35:1.25	renders	Renders the compound preposition of flight.
+accept	1.35:2.10,1.35:2.11,1.35:2.12	1.35:2.10	renders	Copula, preposition, and suffix render the predicate.
+accept	1.35:2.14	1.35:2.15	renders	Adjective renders the genitive noun.
+accept	1.35:2.17	1.35:2.18	renders	Copula expresses the locative predicate.
+accept	1.35:2.18	1.35:2.17,1.35:2.18	renders	Renders the expression meaning in the midst.
+accept	1.35:2.19	1.35:2.18	renders	Renders the second person plural suffix.
+accept	1.35:3.5	1.35:3.5	renders	Marks the destination expressed by the place name.
+accept	1.35:3.12	1.35:3.10	renders	Dative renders the recipient prefix.
+accept	1.35:3.13	1.35:3.14	renders	Relative renders the participial construction.
+accept	1.35:3.15	1.35:3.15	renders	Renders the suffixed object pronoun.
+accept	1.35:3.23	1.35:3.21	renders	Renders the first person suffix.
+accept	1.35:3.26	1.35:3.25	renders	Renders the relative marker.
+accept	1.35:4.2	1.35:4.2	renders	Renders the plural subject of the verb.
+accept	1.35:4.4	1.35:4.3	renders	Dative renders the recipient preposition.
+accept	1.35:4.9	1.35:4.12	renders	Copula expresses the locative predicate.
+accept	1.35:4.22	1.35:4.22	renders	Renders the suffixed object pronoun.
+accept	1.35:4.26	1.35:4.28	renders	Renders the preposition of proximity.
+accept	1.35:5.5	1.35:5.6	renders	Adjective conveys the force of the divine genitive.
+accept	1.35:5.7	1.35:5.4,1.35:5.7	renders	Verb renders the expression meaning was upon.
+accept	1.35:5.12	1.35:5.11	renders	Renders the plural suffix.
+accept	1.35:5.14	1.35:5.14	renders	Renders the plural subject of pursued.
+accept	1.35:6.10	1.35:6.9	renders	Renders the identifying pronoun.
+accept	1.35:6.18,1.35:6.20	1.35:6.17	renders	Copula and pronoun render the suffixed predicate.
+accept	1.35:7.3	1.35:7.2	renders	Renders the subject of built.
+accept	1.35:7.11	1.35:7.10	renders	Renders El in the place name.
+accept	1.35:7.16	1.35:7.15	renders	Renders the suffixed preposition.
+accept	1.35:7.18	1.35:7.18	renders	Renders the temporal prefix.
+accept	1.35:7.19	1.35:7.19	renders	Renders the subject suffix of fleeing.
+accept	1.35:7.21	1.35:7.20,1.35:7.21	renders	Renders the compound preposition of flight.
+accept	1.35:8.9	1.35:8.8,1.35:8.9,1.35:8.10	renders	Renders the compound expression for below Bethel.
+accept	1.35:8.14	1.35:8.16	renders	Renders the subject of called.
+accept	1.35:8.17	1.35:8.17	renders	Renders the suffix on name.
+accept	1.35:8.18	1.35:8.19	renders	Renders the second component of the name.
+accept	1.35:9.8,1.35:9.9,1.35:9.10	1.35:9.8	renders	Subject, verb, and auxiliary render the suffixed infinitive.
+accept	1.35:9.13	1.35:9.11	renders	Adjective renders Aram.
+accept	1.35:9.16	1.35:9.14	renders	Renders the suffixed object pronoun.
+accept	1.35:10.3	1.35:10.3	renders	Renders the suffixed recipient preposition.
+accept	1.35:10.9	1.35:10.8	renders	Auxiliary renders the future verb form.
+accept	1.35:10.12	1.35:10.9	renders	Renders the second occurrence of name.
+accept	1.35:10.15	1.35:10.13	renders	Second component of the contrastive conjunction.
+accept	1.35:11.3	1.35:11.3	renders	Renders the suffixed recipient preposition.
+accept	1.35:11.8	1.35:11.8	renders	Renders the command to be fruitful.
+accept	1.35:11.16,1.35:11.17	1.35:11.16	renders	Renders the source preposition and its suffix.
+accept	1.35:11.21	1.35:11.19	renders	Renders the source prefix before loins.
+accept	1.35:12.8	1.35:12.7	renders	Dative renders the prefix before Abraham.
+accept	1.35:12.10	1.35:12.10	renders	Dative renders the prefix before Isaac.
+accept	1.35:12.12	1.35:12.13	renders	Renders the object suffix of give.
+accept	1.35:12.13	1.35:12.12	renders	Renders the suffixed recipient preposition.
+accept	1.35:12.15	1.35:12.15	renders	Dative renders the prefix before offspring.
+accept	1.35:12.18	1.35:12.17	renders	Renders the suffix of after.
+accept	1.35:13.4,1.35:13.5	1.35:13.4	renders	Renders upon and its pronoun suffix.
+accept	1.35:13.9,1.35:13.10	1.35:13.11	renders	Renders with and its pronoun suffix.
+accept	1.35:14.9	1.35:14.9	renders	Renders the subject of spoke.
+accept	1.35:14.11,1.35:14.12	1.35:14.10	renders	Renders with and its pronoun suffix.
+accept	1.35:14.17,1.35:14.18	1.35:14.15	renders	Renders upon and its first pronoun suffix.
+accept	1.35:14.19,1.35:14.20	1.35:14.16	renders	Together render the libation.
+accept	1.35:14.22	1.35:14.18	renders	Renders the second pouring verb.
+accept	1.35:14.23	1.35:14.19	renders	Renders the pronoun of the second upon.
+accept	1.35:15.6	1.35:15.8	renders	Renders the relative marker.
+accept	1.35:15.9,1.35:15.10	1.35:15.10	renders	Renders with and its pronoun suffix.
+accept	1.35:16.8	1.35:16.7	renders	Renders the adverb meaning still.
+accept	1.35:16.10	1.35:16.10	renders	Renders land in the distance expression.
+accept	1.35:16.11	1.35:16.11,1.35:16.12	renders	Renders the endpoint expressed by to reach.
+accept	1.35:16.18	1.35:16.18	renders	Adjective renders the verb meaning be hard.
+accept	1.35:17.4	1.35:17.4	renders	Adjective renders the infinitive meaning be hard.
+accept	1.35:17.6	1.35:17.6	renders	Renders the possessive suffix on birth.
+accept	1.35:17.10	1.35:17.9	renders	Renders the suffixed feminine recipient.
+accept	1.35:17.15	1.35:17.15	renders	Renders the additive particle.
+accept	1.35:17.17	1.35:17.17	renders	Renders the suffixed second person dative.
+accept	1.35:18.3	1.35:18.3	renders	Renders the temporal prefix.
+accept	1.35:18.4	1.35:18.4	renders	Renders the going out of the soul.
+accept	1.35:18.9	1.35:18.7	renders	Renders the subject of dying.
+accept	1.35:18.13	1.35:18.10	renders	Renders the suffix on name.
+accept	1.35:18.19	1.35:18.15	renders	Renders the pronoun in the second naming clause.
+accept	1.35:19.9	1.35:19.7	renders	Renders the directional relation of the road construct.
+accept	1.35:19.11	1.35:19.9	renders	Renders the identifying pronoun.
+accept	1.35:19.12	1.35:19.10	renders	Copula expresses the Bethlehem predicate.
+accept	1.35:20.8	1.35:20.7	renders	Renders the identifying pronoun.
+accept	1.35:20.10	1.35:20.8	renders	Renders the second monument noun.
+accept	1.35:20.12	1.35:20.11	renders	Conveys extent with the endpoint preposition.
+accept	1.35:21.8	1.35:21.7,1.35:21.8	renders	Renders the compound expression meaning farther on.
+accept	1.35:21.9	1.35:21.9	renders	Renders the prefix before Migdal Eder.
+accept	1.35:22.3	1.35:22.3	renders	Renders the temporal prefix.
+accept	1.35:22.5	1.35:22.4	renders	Renders the verb of dwelling.
+accept	1.35:22.7	1.35:22.10	renders	Renders the demonstrative pronoun.
+accept	1.35:22.14	1.35:22.16	renders	Renders the preposition meaning with.
+accept	1.35:22.27	1.35:22.23	renders	Renders the conjunction introducing the sons clause.
+accept	1.35:22.28	1.35:22.25	renders	Expresses the possession encoded by the construct.
+accept	1.35:22.30	1.35:22.24	renders	Renders the verb of being in the sons clause.
+accept	1.35:22.31	1.35:22.27,1.35:22.28	renders	Renders the compound number twelve.
+accept	1.35:26.13	1.35:26.14	renders	Renders the suffixed recipient preposition.
+accept	1.35:27.8	1.35:27.7	renders	Marks Mamre as the destination.
+accept	1.35:27.12	1.35:27.9	renders	Renders the identifying pronoun.
+accept	1.35:27.14	1.35:27.11	renders	Renders the relative marker.
+accept	1.35:27.16	1.35:27.12	renders	Renders the dwelling verb.
+accept	1.35:28.6	1.35:28.6	renders	Years in the hundred component.
+accept	1.35:28.9	1.35:28.9	renders	Years in the eighty component.
+accept	1.35:29.14	1.35:29.13	renders	The verb also conveys days lived in the idiom.
+accept	1.35:29.17	1.35:29.16	renders	Renders the suffixed object pronoun.

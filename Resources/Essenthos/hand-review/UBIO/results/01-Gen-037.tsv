@@ -1,0 +1,236 @@
+kind	from	to	relation	reason
+fixed	1.37:1			Added the link for dwelling.
+unsure	1.37:2			Restored missing links. The rendering of the youth clause with «як» is uncertain.
+fixed	1.37:3			Linked the comparison, nominal predicate, and pronouns.
+fixed	1.37:4			Linked the object pronouns, comparison, and manner expression.
+fixed	1.37:5			Linked the auxiliary, pronouns, recipient, and hatred expression.
+fixed	1.37:6			Linked the pronouns, demonstrative, and dream words.
+fixed	1.37:7			Moved «сніп» to the noun and restored the missing links.
+fixed	1.37:8			Separated the emphatic infinitive from the finite verb and restored missing links.
+fixed	1.37:9			Moved «його» to the object pronoun and completed the numeral and dream clauses.
+fixed	1.37:10			Linked the recipients, question forms, possessive, and direction.
+fixed	1.37:11			Linked the target of envy and the words remembered.
+fixed	1.37:12			Linked the purpose expressed by the infinitive.
+unsure	1.37:13			Restored the rhetorical question and pronoun links. The force of «ж» after the imperative is uncertain.
+fixed	1.37:14			Linked the second occurrence of «стан», the reply, and the pronouns.
+fixed	1.37:15			Linked the indefinite man, question word, and subject pronouns.
+fixed	1.37:16			Linked the subject, request particle, and recipient.
+fixed	1.37:17			Linked the departure, reported speech, and direction.
+fixed	1.37:18			Completed the distance and time expressions and linked the pronouns and purpose.
+fixed	1.37:19			Linked the reciprocal recipient, demonstrative, arrival, and compound epithet.
+fixed	1.37:20			Linked the exhortation, pit phrase, beast clause, and outcome.
+fixed	1.37:21			Linked the life and the object suffix rendered as a possessive.
+fixed	1.37:22			Linked the prohibitions, demonstrative, pronouns, and purpose clauses.
+fixed	1.37:23			Linked the temporal conjunction, stripping expression, and prepositional predicate.
+fixed	1.37:24			Linked the first pit, directional form, copulas, and pronouns.
+fixed	1.37:25			Linked the missing verbs, purpose forms, and last cargo item.
+fixed	1.37:26			Linked «що» to the clause conjunction.
+fixed	1.37:27			Separated the exhortation from the sale verb and restored the remaining clause links.
+fixed	1.37:28			Linked the passing, sale price, and final subject and verb.
+fixed	1.37:29			Linked the surprise particle, negative existential, and subject pronoun.
+fixed	1.37:30			Linked the subject pronoun, the boy's absence, and the final verb.
+fixed	1.37:31			Linked the goat to the full Hebrew expression.
+unsure	1.37:32			Linked the question particles and «воно». The function of «це» in the question is uncertain.
+fixed	1.37:33			Separated the emphatic infinitive from the passive verb and restored missing links.
+fixed	1.37:34			Linked both prepositions and the support verb of mourning.
+fixed	1.37:35			Linked the onset, refusal, mourning expression, and direction to Sheol.
+unsure	1.37:36			Linked Joseph and the recipient. UBIO names Midianites where BHSA names Medanites.
+refuse	1.37:7.11	1.37:7.12		The noun is linked to the verb.
+refuse	1.37:8.7	1.37:8.7		The infinitive absolute carries the emphasis.
+refuse	1.37:8.10	1.37:8.6		The finite verb carries the action.
+refuse	1.37:9.10	1.37:9.10		This pronoun refers to the dream.
+refuse	1.37:27.2	1.37:27.1		This word renders selling.
+refuse	1.37:33.16	1.37:33.10		The passive verb carries the action.
+accept	1.37:1.6	1.37:1.6	renders	Dwelling.
+accept	1.37:2.3	1.37:2.2	renders	Relation expressed by the construct.
+accept	1.37:2.7	1.37:2.6	renders	Seven component of seventeen.
+accept	1.37:2.9	1.37:2.9	renders	Past tense of the periphrastic verb.
+accept	1.37:2.13	1.37:2.11	renders	With the brothers.
+accept	1.37:2.16	1.37:2.19	renders	With Bilhah's sons.
+accept	1.37:2.20	1.37:2.23	renders	With Zilpah's sons.
+accept	1.37:2.29	1.37:2.33	renders	Bad.
+accept	1.37:2.31,1.37:2.32	1.37:2.32	renders	Report suffix rendered as about them.
+accept	1.37:3.5	1.37:3.6	renders	Comparative preposition.
+accept	1.37:3.11	1.37:3.10	renders	Copula of the nominal predicate.
+accept	1.37:3.12,1.37:3.13	1.37:3.13	renders	Possessive relation with its pronoun.
+accept	1.37:3.17,1.37:3.18	1.37:3.15	renders	Verb with its subject.
+accept	1.37:3.19	1.37:3.16	renders	Recipient of the garment.
+accept	1.37:4.9	1.37:4.5	renders	Object of love.
+accept	1.37:4.10	1.37:4.8	renders	Comparative preposition.
+accept	1.37:4.16	1.37:4.13	renders	Object of hatred.
+accept	1.37:4.21,1.37:4.22	1.37:4.17	renders	Verb suffix rendered as with him.
+accept	1.37:4.23	1.37:4.18,1.37:4.19	renders	Whole phrase expresses peaceful manner.
+accept	1.37:5.3	1.37:5.2	renders	Past auxiliary of dreaming.
+accept	1.37:5.7	1.37:5.6	renders	Subject of reporting.
+accept	1.37:5.10	1.37:5.7	renders	Dative renders the recipient prefix.
+accept	1.37:5.12	1.37:5.10	renders	Subject of increasing.
+accept	1.37:5.13	1.37:5.11	renders	Further increase.
+accept	1.37:5.15	1.37:5.12	renders	Hatred renders hating.
+accept	1.37:5.17	1.37:5.13	renders	Object of hatred.
+accept	1.37:6.3	1.37:6.2	renders	Subject of speaking.
+accept	1.37:6.5	1.37:6.3	renders	Suffix on the preposition.
+accept	1.37:6.9	1.37:6.9	renders	Demonstrative.
+accept	1.37:6.10	1.37:6.7	renders	Dream noun.
+accept	1.37:6.12,1.37:6.13	1.37:6.11	renders	Dreaming and the first-person dreamer.
+accept	1.37:7.5	1.37:7.5	renders	Sheaves being bound.
+accept	1.37:7.6	1.37:7.6,1.37:7.7	renders	Compound preposition meaning amid.
+accept	1.37:7.10,1.37:7.11	1.37:7.13	renders	Sheaf with its possessive suffix.
+accept	1.37:7.12,1.37:7.13	1.37:7.12	renders	Onset of rising.
+accept	1.37:7.15	1.37:7.15	renders	Additive emphasis.
+accept	1.37:7.16	1.37:7.16	renders	Stood upright.
+accept	1.37:7.24	1.37:7.22	renders	Bowing.
+accept	1.37:7.25	1.37:7.23	renders	Dative renders the directional prefix.
+accept	1.37:8.3	1.37:8.3	renders	Recipient of speech.
+accept	1.37:8.6	1.37:8.5	renders	Interrogative particle.
+accept	1.37:8.7	1.37:8.6	renders	Emphasis of the infinitive absolute.
+accept	1.37:8.10	1.37:8.7	renders	Action of the finite verb.
+accept	1.37:8.12	1.37:8.8	renders	First-person plural suffix.
+accept	1.37:8.14	1.37:8.9	renders	Part of the alternative question marker.
+accept	1.37:8.16,1.37:8.17,1.37:8.18	1.37:8.11	renders	Finite verb with subject and auxiliary.
+accept	1.37:8.19,1.37:8.20	1.37:8.12	renders	Preposition and suffix governed by ruling.
+accept	1.37:8.22	1.37:8.14	renders	Subject of increasing.
+accept	1.37:8.24	1.37:8.16	renders	Hatred renders hating.
+accept	1.37:8.26	1.37:8.17	renders	Object of hatred.
+accept	1.37:8.27	1.37:8.18	renders	Cause involving the dreams.
+accept	1.37:9.3	1.37:9.2	renders	Third-person dreamer.
+accept	1.37:9.8	1.37:9.7	renders	Subject of telling.
+accept	1.37:9.10	1.37:9.8	renders	Object pronoun referring to the dream.
+accept	1.37:9.11	1.37:9.9	renders	Dative renders the recipient prefix.
+accept	1.37:9.16	1.37:9.13	renders	First behold in the quotation.
+accept	1.37:9.18	1.37:9.14	renders	First-person dreamer.
+accept	1.37:9.19	1.37:9.16	renders	Another occurrence of dreaming.
+accept	1.37:9.20	1.37:9.15	renders	Dream noun inside the quotation.
+accept	1.37:9.27	1.37:9.25	renders	One component of eleven.
+accept	1.37:9.30	1.37:9.29	renders	First-person recipient of bowing.
+accept	1.37:10.2	1.37:10.2	renders	Subject of telling.
+accept	1.37:10.5	1.37:10.3	renders	Dative marks the father as recipient.
+accept	1.37:10.8	1.37:10.6	renders	Dative marks the brothers as recipients.
+accept	1.37:10.12	1.37:10.10	renders	Target of the rebuke.
+accept	1.37:10.18,1.37:10.19	1.37:10.14	renders	Recipient preposition and pronoun.
+accept	1.37:10.21	1.37:10.19	renders	Demonstrative identifying the dream.
+accept	1.37:10.22	1.37:10.15	renders	Part of the interrogative «що за».
+accept	1.37:10.27	1.37:10.22	renders	Interrogative particle.
+accept	1.37:10.28	1.37:10.23	renders	Emphasis of the infinitive absolute.
+accept	1.37:10.30	1.37:10.24	renders	Plural subject of coming.
+accept	1.37:10.36,1.37:10.37	1.37:10.29	renders	Brothers with possessive suffix.
+accept	1.37:10.40	1.37:10.32	renders	Recipient of bowing.
+accept	1.37:10.41	1.37:10.33	renders	Directional ending meaning toward the ground.
+accept	1.37:11.3	1.37:11.3	renders	Target of envy.
+accept	1.37:11.11	1.37:11.10	renders	Words remembered.
+accept	1.37:12.5	1.37:12.4	renders	Infinitive expresses purpose after motion.
+accept	1.37:13.6	1.37:13.6,1.37:13.7	renders	Rhetorical negative question rendered as an affirmation.
+accept	1.37:13.7,1.37:13.8	1.37:13.8	renders	Brothers with possessive suffix.
+accept	1.37:13.17	1.37:13.14	renders	Object suffix of sending.
+accept	1.37:13.19	1.37:13.15	renders	Plural suffix on the preposition.
+accept	1.37:13.21	1.37:13.17	renders	Subject of replying.
+accept	1.37:13.23	1.37:13.18	renders	Recipient of the reply.
+accept	1.37:13.24,1.37:13.25	1.37:13.19	renders	Behold with first-person suffix.
+accept	1.37:14.3	1.37:14.2	renders	Subject of speaking.
+accept	1.37:14.4,1.37:14.5	1.37:14.3	renders	Recipient preposition and pronoun.
+accept	1.37:14.13	1.37:14.12	renders	Condition of the flock.
+accept	1.37:14.17,1.37:14.18	1.37:14.16	renders	Bring back with first-person suffix.
+accept	1.37:14.19	1.37:14.17	renders	Report to bring back.
+accept	1.37:14.21	1.37:14.19	renders	Subject of sending.
+accept	1.37:14.28	1.37:14.24	renders	Subject of arriving.
+accept	1.37:15.4	1.37:15.3	renders	Identifies an indefinite man.
+accept	1.37:15.7	1.37:15.6	renders	Implicit subject of wandering.
+accept	1.37:15.18	1.37:15.16	renders	Interrogative object.
+accept	1.37:15.19	1.37:15.17	renders	Subject of seeking.
+accept	1.37:16.2	1.37:16.2	renders	Subject of replying.
+accept	1.37:16.9	1.37:16.8	renders	Request particle.
+accept	1.37:16.10	1.37:16.9	renders	First-person recipient.
+accept	1.37:17.6	1.37:17.5	renders	Departed.
+accept	1.37:17.7	1.37:17.6,1.37:17.7	renders	From this place.
+accept	1.37:17.11,1.37:17.12,1.37:17.13	1.37:17.10	renders	Participial speech clause rendered as finite.
+accept	1.37:17.15	1.37:17.12	renders	Directional ending on Dothan.
+accept	1.37:18.2	1.37:18.2	renders	Subject of seeing.
+accept	1.37:18.4	1.37:18.3	renders	Object of seeing.
+accept	1.37:18.5	1.37:18.5	renders	Distance component of «здалека».
+accept	1.37:18.7	1.37:18.7	renders	Prefix in the compound temporal expression.
+accept	1.37:18.11	1.37:18.10	renders	Suffix identifying whom he approached.
+accept	1.37:18.15	1.37:18.13	renders	Target of the plot.
+accept	1.37:18.16	1.37:18.14	renders	Purpose prefix.
+accept	1.37:19.5	1.37:19.4,1.37:19.5	renders	Dative renders the second half of the reciprocal phrase.
+accept	1.37:19.7	1.37:19.12	renders	Coming.
+accept	1.37:19.8	1.37:19.11	renders	Demonstrative.
+accept	1.37:19.9	1.37:19.7,1.37:19.9	renders	Compound epithet meaning master of dreams.
+accept	1.37:20.3	1.37:20.3	renders	Exhortation to act.
+accept	1.37:20.6	1.37:20.6	renders	Conjunction before throwing.
+accept	1.37:20.9	1.37:20.8	renders	Destination after throwing.
+accept	1.37:20.10,1.37:20.11	1.37:20.9	renders	One with its partitive relation.
+accept	1.37:20.16	1.37:20.15	renders	Adjective describing a fierce beast.
+accept	1.37:20.17	1.37:20.14	renders	Beast.
+accept	1.37:20.18,1.37:20.19	1.37:20.16	renders	Eating with its object suffix.
+accept	1.37:20.23	1.37:20.20	renders	Finite verb of the outcome.
+accept	1.37:20.25,1.37:20.26	1.37:20.21	renders	Dreams with possessive suffix.
+accept	1.37:21.15	1.37:21.12	renders	Life taken in the proposed killing.
+accept	1.37:21.16	1.37:21.11	renders	Object suffix rendered as a possessive.
+accept	1.37:22.3,1.37:22.4	1.37:22.3	renders	Recipient preposition and pronoun.
+accept	1.37:22.6	1.37:22.5	renders	Prohibition on shedding blood.
+accept	1.37:22.10	1.37:22.9	renders	Object of throwing.
+accept	1.37:22.13	1.37:22.14	renders	Demonstrative identifying the pit.
+accept	1.37:22.19	1.37:22.21	renders	Prohibition on laying a hand.
+accept	1.37:22.21,1.37:22.22	1.37:22.23	renders	Preposition with its pronominal suffix.
+accept	1.37:22.23	1.37:22.24	renders	Introduces the rescue purpose.
+accept	1.37:22.24	1.37:22.25	renders	Deliver.
+accept	1.37:22.25	1.37:22.26	renders	Object of delivering.
+accept	1.37:22.30,1.37:22.31	1.37:22.30	renders	Returning with the object suffix.
+accept	1.37:23.3	1.37:23.3,1.37:23.4	renders	Compound temporal conjunction.
+accept	1.37:23.12	1.37:23.10	renders	Removal relation conveyed by stripping.
+accept	1.37:23.19,1.37:23.20,1.37:23.21	1.37:23.20	renders	Prepositional predicate with its pronoun and copula.
+accept	1.37:24.7	1.37:24.5	renders	Object of throwing.
+accept	1.37:24.8,1.37:24.9	1.37:24.7	renders	Pit with directional ending.
+accept	1.37:24.14	1.37:24.11	renders	Copula of the adjective predicate.
+accept	1.37:24.16	1.37:24.12	renders	Existential component of the negation.
+accept	1.37:24.17,1.37:24.18	1.37:24.13	renders	Preposition and suffix referring to the pit.
+accept	1.37:25.4	1.37:25.3	renders	Infinitive expresses the purpose of sitting.
+accept	1.37:25.7	1.37:25.7	renders	Raised their eyes.
+accept	1.37:25.17	1.37:25.15	renders	Arrival of the caravan.
+accept	1.37:25.28	1.37:25.25	renders	Third aromatic cargo item.
+accept	1.37:25.29,1.37:25.30	1.37:25.26	renders	Movement with its translated subject.
+accept	1.37:25.31	1.37:25.27,1.37:25.28	renders	Purposive infinitive of bringing down.
+accept	1.37:26.9	1.37:26.8	renders	Clause conjunction.
+accept	1.37:27.1	1.37:27.1	renders	Exhortation to act.
+accept	1.37:27.2,1.37:27.3	1.37:27.3	renders	Selling with the object suffix.
+accept	1.37:27.4	1.37:27.4	renders	Dative renders the recipient prefix.
+accept	1.37:27.8	1.37:27.10	renders	Auxiliary renders the jussive mood.
+accept	1.37:27.11,1.37:27.12	1.37:27.11	renders	Preposition and its pronominal suffix.
+accept	1.37:27.14	1.37:27.15	renders	Shared subject repeated across the predicates.
+accept	1.37:27.16	1.37:27.13	renders	Kinship suffix rendered by the dative.
+accept	1.37:27.18,1.37:27.19	1.37:27.14	renders	Flesh with possessive suffix.
+accept	1.37:27.21	1.37:27.17	renders	Heeding Judah.
+accept	1.37:28.3	1.37:28.2	renders	Passing by.
+accept	1.37:28.6	1.37:28.6	renders	Conjunction introducing the result clause.
+accept	1.37:28.16	1.37:28.19	renders	Dative renders the buyer prefix.
+accept	1.37:28.19	1.37:28.24	renders	Silver paid.
+accept	1.37:28.21,1.37:28.22	1.37:28.26	renders	Bringing with its plural subject.
+accept	1.37:29.6	1.37:29.8	renders	Particle of unexpected discovery.
+accept	1.37:29.7	1.37:29.9	renders	Negative existential.
+accept	1.37:29.13	1.37:29.15	renders	Subject of tearing.
+accept	1.37:30.3	1.37:30.2	renders	Subject of returning.
+accept	1.37:30.10	1.37:30.9	renders	Negative existential.
+accept	1.37:30.11	1.37:30.8	renders	The boy.
+accept	1.37:30.16	1.37:30.14	renders	Motion verb in the question.
+accept	1.37:31.8	1.37:31.8,1.37:31.9	renders	Hebrew expression for a male goat.
+accept	1.37:32.19	1.37:32.17	renders	First interrogative marker.
+accept	1.37:32.24	1.37:32.20	renders	Pronoun referring to the garment.
+accept	1.37:32.26	1.37:32.22	renders	Negation of the second alternative.
+accept	1.37:33.4	1.37:33.2	renders	Object suffix of recognizing.
+accept	1.37:33.9,1.37:33.10	1.37:33.6	renders	Son with possessive suffix.
+accept	1.37:33.11	1.37:33.8	renders	Adjective describing a fierce beast.
+accept	1.37:33.12	1.37:33.7	renders	Beast.
+accept	1.37:33.13,1.37:33.14	1.37:33.9	renders	Eating with its object suffix.
+accept	1.37:33.15	1.37:33.10	renders	Emphasis of the infinitive absolute.
+accept	1.37:33.16	1.37:33.11	renders	Finite passive verb.
+accept	1.37:34.9	1.37:34.8	renders	Preposition locating the sackcloth.
+accept	1.37:34.15	1.37:34.11	renders	Support verb in the mourning expression.
+accept	1.37:34.17	1.37:34.12	renders	Preposition governed by mourning.
+accept	1.37:35.2	1.37:35.2	renders	Rising to act rendered as beginning.
+accept	1.37:35.12	1.37:35.10	renders	Adversative conjunction.
+accept	1.37:35.13,1.37:35.14,1.37:35.15	1.37:35.11	renders	Refusal rendered as negative ability with its subject.
+accept	1.37:35.16	1.37:35.13	renders	Reflexive verb of consolation.
+accept	1.37:35.20	1.37:35.20	renders	Manner expressed as in mourning.
+accept	1.37:35.27	1.37:35.21	renders	Directional ending on Sheol.
+accept	1.37:35.32	1.37:35.24	renders	Pronominal object of mourning.
+accept	1.37:36.4	1.37:36.5	renders	Joseph names the person denoted by the pronoun.
+accept	1.37:36.7	1.37:36.8	renders	Preposition introducing Potiphar as recipient.

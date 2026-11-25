@@ -1,0 +1,122 @@
+kind	from	to	relation	reason
+fixed	1.20:1			Wrong dwelling verb and missing source, direction, and coordination links.
+fixed	1.20:2			Missing preposition introducing the reference to Sarah.
+fixed	1.20:3			Missing addressee, pronoun, verb, and marriage expression links.
+fixed	1.20:4			Missing links for the approach complement and the question.
+fixed	1.20:5			Missing question marker, past auxiliary, and demonstrative.
+unsure	1.20:6			Several links restored. The alignment of the negative purpose wording remains uncertain.
+fixed	1.20:7			Missing auxiliary, pronouns, return verb, emphasis, and possession.
+fixed	1.20:8			Missing time, conjunction, speech, demonstrative, and preposition links.
+fixed	1.20:9			Missing verbs, pronouns, prepositions, and the noun for deeds.
+fixed	1.20:10			Missing dative relation, parts of the idiom, and demonstrative.
+fixed	1.20:11			Missing negation, emphasis, result, killing, and wife links.
+fixed	1.20:12			Missing additive, emphatic, subject, and role links.
+fixed	1.20:13			Missing clause links, verb phrases, and pronominal complements.
+fixed	1.20:14			Missing shared livestock noun, conjunction, and recipient links.
+fixed	1.20:15			Missing links for both expressions of place.
+fixed	1.20:16			The supplied unit was linked to the giving verb. Other links were missing.
+fixed	1.20:17			Missing addressee relation and childbirth links.
+fixed	1.20:18			Missing emphatic infinitive, finite verb, household relation, and causal expression.
+refuse	1.20:1.14	1.20:1.10		Dwelling verb from the preceding clause.
+refuse	1.20:16.6	1.20:16.6		Supplied unit attached to the giving verb.
+accept	1.20:1.3	1.20:1.3,1.20:1.4	renders	Renders the source expression from there.
+accept	1.20:1.5	1.20:1.6	renders	Renders the noun's directional ending.
+accept	1.20:1.10	1.20:1.13	renders	Conjunction before the second between phrase.
+accept	1.20:1.11	1.20:1.14	renders	Second occurrence of between.
+accept	1.20:1.14	1.20:1.17	renders	Verb of temporary residence in Gerar.
+accept	1.20:2.4	1.20:2.4	renders	Introduces the reference to Sarah.
+accept	1.20:3.11,1.20:3.12	1.20:3.12	renders	Preposition and its addressee suffix.
+accept	1.20:3.14	1.20:3.13	renders	Second person carried by the presentative.
+accept	1.20:3.19	1.20:3.19	renders	Renders the verb of taking.
+accept	1.20:3.22	1.20:3.22	renders	Renders the marital relation.
+accept	1.20:3.23	1.20:3.23	renders	Renders the word for husband.
+accept	1.20:4.5,1.20:4.6	1.20:4.5	renders	Preposition with the third-person feminine suffix.
+accept	1.20:4.10	1.20:4.9	renders	Introduces the question.
+accept	1.20:4.11,1.20:4.12	1.20:4.13	renders	Second-person subject and killing verb.
+accept	1.20:5.1	1.20:5.1	renders	Renders the interrogative particle.
+accept	1.20:5.5	1.20:5.4	renders	Auxiliary in the past verb phrase.
+accept	1.20:5.20	1.20:5.23	renders	Renders the demonstrative object.
+accept	1.20:6.4	1.20:6.3	renders	Renders the addressee suffix.
+accept	1.20:6.16	1.20:6.15	renders	Renders the verb of doing.
+accept	1.20:6.22	1.20:6.18	renders	Renders the verb of withholding.
+accept	1.20:6.23	1.20:6.21	renders	Renders the suffixed object pronoun.
+accept	1.20:6.26	1.20:6.23	renders	Renders the verb of sinning.
+accept	1.20:6.27,1.20:6.28	1.20:6.24	renders	Preposition and first-person suffix after sinning.
+accept	1.20:6.29	1.20:6.25	renders	Prepositional component of the causal connective.
+accept	1.20:6.32,1.20:6.33,1.20:6.34	1.20:6.28	renders	Verb of allowing with subject and object suffix.
+accept	1.20:6.36,1.20:6.37	1.20:6.31	renders	Preposition with the feminine suffix after touching.
+accept	1.20:7.11	1.20:7.11	renders	Future auxiliary in the prayer verb phrase.
+accept	1.20:7.14	1.20:7.12	renders	Renders the second-person suffix.
+accept	1.20:7.19	1.20:7.17	renders	Renders the subject suffix on the negator.
+accept	1.20:7.21	1.20:7.18	renders	Renders the return verb in the condition.
+accept	1.20:7.25	1.20:7.21	renders	Renders the infinitive absolute's emphasis.
+accept	1.20:7.31	1.20:7.27	renders	Renders the suffixed expression of possession.
+accept	1.20:8.4	1.20:8.2	renders	Renders the earliness in the rising verb.
+accept	1.20:8.5	1.20:8.4	renders	Renders the temporal prefix within the adverb.
+accept	1.20:8.12	1.20:8.12	renders	Part of the conjunction introducing the speech.
+accept	1.20:8.13	1.20:8.13	renders	Renders the speaking verb.
+accept	1.20:8.15	1.20:8.19	renders	Renders the plural demonstrative.
+accept	1.20:8.16	1.20:8.17	renders	Renders the noun for words.
+accept	1.20:8.17	1.20:8.20	renders	Renders the preposition in the speech expression.
+accept	1.20:9.7,1.20:9.8	1.20:9.8	renders	Preposition and suffix for the addressee.
+accept	1.20:9.12	1.20:9.10	renders	Renders the first verb of doing.
+accept	1.20:9.15	1.20:9.14	renders	Renders the verb of sinning.
+accept	1.20:9.17,1.20:9.18	1.20:9.15	renders	Preposition and suffix for the person wronged.
+accept	1.20:9.21	1.20:9.17	renders	Renders the causative verb of bringing.
+accept	1.20:9.22,1.20:9.23	1.20:9.18	renders	Renders the first upon phrase with its suffix.
+accept	1.20:9.30	1.20:9.24	renders	Renders the noun for deeds.
+accept	1.20:9.33	1.20:9.27	renders	Renders the passive doing verb impersonally.
+accept	1.20:9.34,1.20:9.37	1.20:9.28	renders	Renders the final doing verb and its subject.
+accept	1.20:9.35,1.20:9.36	1.20:9.29	renders	Renders the expression with me.
+accept	1.20:10.4	1.20:10.4	renders	Dative ending renders the addressee relation.
+accept	1.20:10.6,1.20:10.7,1.20:10.8	1.20:10.7	renders	Subject and remaining parts of the idiomatic verb phrase.
+accept	1.20:10.12	1.20:10.14	renders	Renders the demonstrative modifying the deed.
+accept	1.20:11.7	1.20:11.7	renders	Renders the negative existential.
+accept	1.20:11.8	1.20:11.6	renders	Renders the emphasis on the assertion.
+accept	1.20:11.14	1.20:11.15	renders	Renders the conjunction introducing the consequence.
+accept	1.20:11.15,1.20:11.16	1.20:11.16	renders	Killing verb with its first-person object suffix.
+accept	1.20:11.17	1.20:11.18	renders	Second component of the compound causal expression.
+accept	1.20:11.18,1.20:11.19	1.20:11.19	renders	Wife noun with the first-person possessive suffix.
+accept	1.20:12.2	1.20:12.2	renders	Renders the additive particle.
+accept	1.20:12.3,1.20:12.7	1.20:12.7	renders	Restates the shared subject across the two predicates.
+accept	1.20:12.4	1.20:12.3	renders	Renders the particle of affirmation.
+accept	1.20:12.18	1.20:12.15	renders	Renders the prefix indicating the role of wife.
+accept	1.20:13.3	1.20:13.3,1.20:13.4	renders	Renders the compound temporal conjunction.
+accept	1.20:13.5,1.20:13.7	1.20:13.5	renders	Together render the causative verb of wandering.
+accept	1.20:13.6	1.20:13.6	renders	Renders the suffixed object pronoun.
+accept	1.20:13.12	1.20:13.11	renders	Conjunction introducing the temporal clause's outcome.
+accept	1.20:13.14	1.20:13.12	renders	Renders the first-person subject of saying.
+accept	1.20:13.15,1.20:13.16	1.20:13.13	renders	Preposition and feminine addressee suffix.
+accept	1.20:13.17	1.20:13.14	renders	Renders the demonstrative subject.
+accept	1.20:13.18	1.20:13.15	renders	Copula for the nominal predicate.
+accept	1.20:13.22	1.20:13.17	renders	Renders the verb of doing the kindness.
+accept	1.20:13.23,1.20:13.24	1.20:13.18	renders	Renders the expression with me.
+accept	1.20:13.25	1.20:13.19	renders	Renders the preposition introducing each place.
+accept	1.20:13.28	1.20:13.25	renders	Carries the directional sense of the resumptive adverb.
+accept	1.20:13.29	1.20:13.24	renders	Renders the first-person plural verb of coming.
+accept	1.20:13.30,1.20:13.31	1.20:13.26	renders	Imperative and its second-person subject.
+accept	1.20:13.32,1.20:13.33	1.20:13.27	renders	Renders the preposition and suffix in speaking about Abraham.
+accept	1.20:14.7	1.20:14.4	renders	Shared noun also renders the small livestock.
+accept	1.20:14.13	1.20:14.11	renders	Part of the conjunction introducing the gift.
+accept	1.20:14.15	1.20:14.13	renders	Dative ending renders the recipient prefix.
+accept	1.20:14.18	1.20:14.17	renders	Renders the suffixed recipient of the return.
+accept	1.20:15.7	1.20:15.6	renders	Renders the prefix in the expression before you.
+accept	1.20:15.8,1.20:15.9	1.20:15.7	renders	Face noun with the second-person possessive suffix.
+accept	1.20:15.11,1.20:15.12	1.20:15.8	renders	Together express the location for settling.
+accept	1.20:15.13	1.20:15.11,1.20:15.12	renders	Dative renders the idiom identifying whose judgment matters.
+accept	1.20:15.14,1.20:15.15	1.20:15.10	renders	Idiomatic expression of what is pleasing.
+accept	1.20:16.2	1.20:16.2	renders	Dative ending renders the addressee prefix.
+accept	1.20:16.8,1.20:16.9	1.20:16.6	renders	Giving verb and its first-person subject.
+accept	1.20:16.10	1.20:16.9	renders	Dative ending renders the recipient prefix.
+accept	1.20:16.12	1.20:16.11,1.20:16.12	renders	Combines the presentative and its pronoun.
+accept	1.20:16.13	1.20:16.13	renders	Renders the suffixed beneficiary.
+accept	1.20:16.14,1.20:16.15	1.20:16.14	renders	Covering noun and its construct relation to eyes.
+accept	1.20:16.17	1.20:16.16	renders	Renders the relation to the first group of onlookers.
+accept	1.20:16.20,1.20:16.21	1.20:16.19	renders	Preposition meaning with and its feminine suffix.
+accept	1.20:16.25,1.20:16.26	1.20:16.24	renders	Renders the vindication verb and its subject.
+accept	1.20:17.4	1.20:17.4	renders	Dative ending renders the addressee of the prayer.
+accept	1.20:17.16,1.20:17.17,1.20:17.19	1.20:17.18	renders	Renders the childbirth verb with its plural subject and onset.
+accept	1.20:18.2	1.20:18.2	renders	Renders the infinitive absolute's emphasis.
+accept	1.20:18.3,1.20:18.4	1.20:18.3	renders	Renders the finite verb with its past auxiliary.
+accept	1.20:18.9	1.20:18.8	renders	Genitive ending expresses the wombs' relation to the household.
+accept	1.20:18.10	1.20:18.11,1.20:18.12	renders	Renders the compound causal preposition.

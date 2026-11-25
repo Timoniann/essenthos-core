@@ -1,0 +1,185 @@
+kind	from	to	relation	reason
+fixed	1.29:1			Departure idiom, motion verb, and directional ending were unlinked.
+fixed	1.29:2			The first presentation, sheep flock, and several relations lacked links.
+fixed	1.29:3			The compound preposition and the return to the stone’s place were incomplete.
+fixed	1.29:4			Addressee, origin, and reply subject were unlinked.
+fixed	1.29:5			Recipient, question marker, and subject were unlinked.
+fixed	1.29:6			Recipient, question marker, and the phrase about Laban were unlinked.
+fixed	1.29:7			Opening particle, extent of daylight, and gathering verb were unlinked.
+fixed	1.29:8			Passive auxiliary and part of the compound preposition were unlinked.
+fixed	1.29:9			Opening clause, possessive construction, and predicate copula were incomplete.
+fixed	1.29:10			First mention of mother linked to the omitted middle occurrence.
+ok	1.29:11			
+fixed	1.29:12			Dative constructions, subject, and possessive were incomplete.
+fixed	1.29:13			Temporal clause, pronouns, and dative constructions lacked links.
+fixed	1.29:14			Address, affirmation, subject, and accompaniment were incomplete.
+fixed	1.29:15			Question, subjects, and personal complements lacked links.
+fixed	1.29:16			The opening possessive predicate was unlinked.
+fixed	1.29:17			The eye clause and parts of the beauty descriptions lacked links.
+fixed	1.29:18			The compound conjunction and service verb were incomplete.
+fixed	1.29:19			First giving clause, pronouns, and final command lacked links.
+fixed	1.29:20			Causal preposition, pronouns, verb, and simile marker were unlinked.
+fixed	1.29:21			Dative addressee and cohortative clause were incomplete.
+fixed	1.29:22			The verb for holding the feast was unlinked.
+fixed	1.29:23			Temporal prefix, subject, and personal complements lacked links.
+fixed	1.29:24			Recipient, repeated giving verb, and servant role were incomplete.
+unsure	1.29:25			The correspondence of the supplied complementizer to the second waw is uncertain.
+fixed	1.29:26			Place noun, infinitive, and part of the compound preposition lacked links.
+fixed	1.29:27			Week construction, giving clause, and remaining service details lacked links.
+fixed	1.29:28			Week construction and several parts of the giving clause lacked links.
+fixed	1.29:29			Recipient marking, repeated giving verb, and role preposition were unlinked.
+fixed	1.29:30			Arrival, comparison, and further service were incomplete.
+fixed	1.29:31			The copula in Rachel’s clause was unlinked.
+fixed	1.29:32			Speech auxiliary, preposition, and object pronoun were unlinked.
+fixed	1.29:33			The subject pronoun of conception was unlinked.
+fixed	1.29:34			Time phrase, attachment clause, birth clause, and causal expression were incomplete.
+fixed	1.29:35			Time phrase, auxiliary, and cessation clause were incomplete.
+refuse	1.29:10.11	1.29:10.18		Mother in the omitted middle phrase.
+accept	1.29:1.2	1.29:1.2,1.29:1.4	renders	The whole idiom for setting out.
+accept	1.29:1.5	1.29:1.6	renders	Motion verb.
+accept	1.29:1.6	1.29:1.7	renders	Directional ending on the noun.
+accept	1.29:2.3	1.29:2.3	renders	Connective introducing the first sight.
+accept	1.29:2.4	1.29:2.4	renders	First presentational particle.
+accept	1.29:2.12	1.29:2.13,1.29:2.14	renders	One Ukrainian noun for sheep flocks.
+accept	1.29:2.14,1.29:2.15	1.29:2.16	renders	Locative preposition with its pronoun.
+accept	1.29:2.18	1.29:2.22	renders	Demonstrative identifying the well.
+accept	1.29:2.26	1.29:2.30	renders	Verb expressing the stone’s location.
+accept	1.29:3.9	1.29:3.13	renders	Second element of the compound preposition.
+accept	1.29:3.16,1.29:3.21	1.29:3.23	renders	Putting the stone back.
+accept	1.29:3.22	1.29:3.31	renders	Preposition of destination.
+accept	1.29:3.23	1.29:3.32	renders	Possessive suffix on place.
+accept	1.29:4.3,1.29:4.4	1.29:4.3	renders	Preposition and explicit rendering of its pronoun.
+accept	1.29:4.8	1.29:4.6,1.29:4.7	renders	Single interrogative of origin.
+accept	1.29:4.11	1.29:4.10	renders	Subject of the reply verb.
+accept	1.29:4.14	1.29:4.11	renders	Preposition of origin in the reply.
+accept	1.29:5.3	1.29:5.3	renders	Suffixed recipient pronoun.
+accept	1.29:5.4	1.29:5.4	renders	Interrogative particle.
+accept	1.29:5.5	1.29:5.5	renders	Subject carried by the verb.
+accept	1.29:6.3	1.29:6.3	renders	Suffixed recipient pronoun.
+accept	1.29:6.4	1.29:6.4	renders	Interrogative particle.
+accept	1.29:6.6,1.29:6.7	1.29:6.6	renders	Relation and pronoun in the question about Laban.
+accept	1.29:7.3	1.29:7.3	renders	Attention marker opening Jacob’s speech.
+accept	1.29:7.5	1.29:7.7	renders	Amount of daylight remaining.
+accept	1.29:7.9	1.29:7.10	renders	Gathering verb.
+accept	1.29:8.9	1.29:8.7	renders	Auxiliary of the passive verb.
+accept	1.29:8.17	1.29:8.17	renders	Second element of the compound preposition.
+accept	1.29:9.1,1.29:9.2	1.29:9.1	renders	Continuative adverb and its subject suffix.
+accept	1.29:9.3	1.29:9.2	renders	Speaking verb.
+accept	1.29:9.5	1.29:9.3	renders	Pronoun suffixed to the preposition.
+accept	1.29:9.6	1.29:9.4	renders	Connective marking Rachel’s arrival.
+accept	1.29:9.12	1.29:9.11	renders	Genitive case expresses the flock’s ownership.
+accept	1.29:9.15	1.29:9.14	renders	Copula of the shepherd predicate.
+accept	1.29:10.3	1.29:10.3,1.29:10.4	renders	Compound temporal conjunction.
+accept	1.29:10.11	1.29:10.12	renders	Mother in the description of Rachel.
+accept	1.29:10.16	1.29:10.23	renders	Rolling verb.
+accept	1.29:10.18	1.29:10.28	renders	Second element of the compound preposition.
+accept	1.29:12.4	1.29:12.4	renders	Dative of the addressee.
+accept	1.29:12.16	1.29:12.16	renders	Subject carried by the running verb.
+accept	1.29:12.20	1.29:12.19,1.29:12.20	renders	Dative recipient and father noun.
+accept	1.29:12.21	1.29:12.20	renders	Possessive suffix on father.
+accept	1.29:13.3	1.29:13.3	renders	Temporal prefix on the infinitive.
+accept	1.29:13.5	1.29:13.4	renders	Hearing verb.
+accept	1.29:13.7	1.29:13.7	renders	Construct relation specifying the report’s subject.
+accept	1.29:13.14	1.29:13.14	renders	Pronoun suffix on meeting.
+accept	1.29:13.15	1.29:13.13	renders	Direction incorporated in the meeting expression.
+accept	1.29:13.18	1.29:13.17	renders	Pronoun in the embracing clause.
+accept	1.29:13.21	1.29:13.20	renders	Pronoun in the kissing clause.
+accept	1.29:13.29	1.29:13.26	renders	Subject carried by the recounting verb.
+accept	1.29:13.31	1.29:13.27	renders	Dative of the recipient.
+accept	1.29:13.34	1.29:13.34	renders	Demonstrative identifying the events.
+accept	1.29:14.3,1.29:14.4	1.29:14.3	renders	Preposition and suffixed addressee.
+accept	1.29:14.6	1.29:14.5	renders	Affirmation particle.
+accept	1.29:14.7	1.29:14.9	renders	Explicit second-person subject.
+accept	1.29:14.15	1.29:14.11	renders	Subject carried by the verb of staying.
+accept	1.29:14.16,1.29:14.17	1.29:14.12	renders	Accompaniment and suffixed pronoun.
+accept	1.29:15.4	1.29:15.4	renders	Preposition of address.
+accept	1.29:15.6	1.29:15.6	renders	Interrogative particle.
+accept	1.29:15.7	1.29:15.7	renders	Part of the causal conjunction.
+accept	1.29:15.9	1.29:15.9	renders	Explicit subject of the kinship clause.
+accept	1.29:15.13,1.29:15.16	1.29:15.11	renders	Subject ending and object suffix of serve.
+accept	1.29:15.20	1.29:15.14	renders	Recipient of the telling.
+accept	1.29:15.23	1.29:15.16	renders	Possessive suffix on wages.
+accept	1.29:16.2,1.29:16.4	1.29:16.2	renders	Preposition and copula express the possessive predicate.
+accept	1.29:17.1	1.29:17.2	renders	Eye noun.
+accept	1.29:17.2	1.29:17.1	renders	Opening conjunction rendered as a particle.
+accept	1.29:17.4,1.29:17.5	1.29:17.4	renders	Adjectival predicate and its copula.
+accept	1.29:17.10	1.29:17.9	renders	Form noun in the first description.
+accept	1.29:17.12	1.29:17.11	renders	Beauty adjective in the second description.
+accept	1.29:18.6	1.29:18.6	renders	Part of the compound conjunction.
+accept	1.29:18.12,1.29:18.13	1.29:18.8	renders	Service verb and its object suffix.
+accept	1.29:19.5,1.29:19.6	1.29:19.5	renders	First giving infinitive and its subject suffix.
+accept	1.29:19.7	1.29:19.6	renders	First suffixed object pronoun.
+accept	1.29:19.8	1.29:19.7	renders	Recipient of the first giving.
+accept	1.29:19.11	1.29:19.9	renders	Subject suffix on the second giving infinitive.
+accept	1.29:19.12	1.29:19.10	renders	Second suffixed object pronoun.
+accept	1.29:19.14	1.29:19.11	renders	Dative on the recipient noun.
+accept	1.29:19.15	1.29:19.14	renders	Imperative to stay.
+accept	1.29:19.18	1.29:19.15	renders	Pronoun suffixed to the preposition.
+accept	1.29:20.9,1.29:20.15	1.29:20.9	renders	Verb of being and its plural subject.
+accept	1.29:20.10	1.29:20.15	renders	Causal use of the preposition.
+accept	1.29:20.14	1.29:20.17	renders	Suffixed pronoun for the person loved.
+accept	1.29:20.19	1.29:20.12	renders	Simile marker.
+accept	1.29:21.4	1.29:21.4	renders	Dative of the addressee.
+accept	1.29:21.14,1.29:21.15,1.29:21.18	1.29:21.13	renders	Cohortative mood, subject, and motion verb.
+accept	1.29:21.17	1.29:21.14	renders	Pronoun suffix on the directional preposition.
+accept	1.29:22.9	1.29:22.10	renders	Verb for holding the feast.
+accept	1.29:23.3	1.29:23.3	renders	Temporal preposition incorporated in the adverb.
+accept	1.29:23.6	1.29:23.7	renders	Subject carried by the taking verb.
+accept	1.29:23.12	1.29:23.14	renders	Masculine suffix on the preposition.
+accept	1.29:23.14	1.29:23.13	renders	Suffixed feminine object pronoun.
+accept	1.29:23.17,1.29:23.18	1.29:23.17	renders	Relation and feminine pronoun in the final clause.
+accept	1.29:24.4	1.29:24.4	renders	First recipient pronoun.
+accept	1.29:24.8	1.29:24.2	renders	Resumed expression of the same giving.
+accept	1.29:24.9	1.29:24.8	renders	Dative of the named recipient.
+accept	1.29:24.12	1.29:24.11	renders	Preposition expressing the predicate role.
+accept	1.29:25.2	1.29:25.3	renders	Temporal preposition incorporated in the adverb.
+accept	1.29:25.3	1.29:25.2,1.29:25.7	renders	The event frame and revelation rendered together.
+accept	1.29:25.5	1.29:25.8	renders	Subject pronoun of the identification.
+accept	1.29:25.6	1.29:25.9	renders	Copula of the identifying predicate.
+accept	1.29:25.17	1.29:25.17	renders	Suffixed personal complement of doing.
+accept	1.29:25.18	1.29:25.18	renders	Interrogative particle.
+accept	1.29:25.20	1.29:25.20	renders	Preposition expressing the exchange.
+accept	1.29:25.24,1.29:25.25	1.29:25.23	renders	Relation and pronoun in the service clause.
+accept	1.29:25.27	1.29:25.24	renders	Connective introducing the follow-up question.
+accept	1.29:25.30	1.29:25.26	renders	Object suffix on deceive.
+accept	1.29:26.6	1.29:26.8	renders	Place noun.
+accept	1.29:26.11	1.29:26.10	renders	Giving infinitive.
+accept	1.29:26.13	1.29:26.13	renders	Prefix of the compound preposition.
+accept	1.29:27.3	1.29:27.2	renders	Relation expressed by the construct week noun.
+accept	1.29:27.4	1.29:27.3	renders	Demonstrative in the week phrase.
+accept	1.29:27.7	1.29:27.5	renders	Giving verb rendered by a participle.
+accept	1.29:27.8	1.29:27.6	renders	Suffixed recipient pronoun.
+accept	1.29:27.10	1.29:27.9	renders	Demonstrative for the second woman.
+accept	1.29:27.16,1.29:27.17	1.29:27.14	renders	Relation and first-person pronoun in the service clause.
+accept	1.29:27.18	1.29:27.15	renders	Adverb of additional duration.
+accept	1.29:28.8	1.29:28.7	renders	Relation expressed by the construct week noun.
+accept	1.29:28.9	1.29:28.8	renders	Demonstrative in the week phrase.
+accept	1.29:28.11,1.29:28.17	1.29:28.10	renders	Subject and resumed expression of the giving.
+accept	1.29:28.13	1.29:28.11	renders	First recipient pronoun.
+accept	1.29:28.18	1.29:28.15	renders	Second recipient pronoun.
+accept	1.29:28.19	1.29:28.16	renders	Preposition marking the role of wife.
+accept	1.29:29.4	1.29:29.4	renders	Dative of the named recipient.
+accept	1.29:29.10	1.29:29.2	renders	Resumed expression of the same giving.
+accept	1.29:29.11	1.29:29.10	renders	Suffixed recipient pronoun.
+accept	1.29:29.12	1.29:29.11	renders	Preposition marking the servant role.
+accept	1.29:30.2,1.29:30.3	1.29:30.2	renders	Arrival verb and its subject.
+accept	1.29:30.12	1.29:30.11	renders	Second element of the Ukrainian comparison.
+accept	1.29:30.16,1.29:30.17	1.29:30.15	renders	Relation and pronoun in the service clause.
+accept	1.29:30.18	1.29:30.16	renders	Adverb of additional duration.
+accept	1.29:31.13	1.29:31.13	renders	Copula of the barrenness predicate.
+accept	1.29:32.14	1.29:32.12	renders	Past auxiliary of the speech verb.
+accept	1.29:32.17	1.29:32.16	renders	Preposition of looking upon.
+accept	1.29:32.23	1.29:32.20	renders	Object suffix on love.
+accept	1.29:33.3	1.29:33.2	renders	Subject carried by the conception verb.
+accept	1.29:34.3	1.29:34.2	renders	Subject carried by the conception verb.
+accept	1.29:34.11	1.29:34.11	renders	Part of the expression for this occasion.
+accept	1.29:34.13,1.29:34.16	1.29:34.12	renders	Auxiliary and participle of attachment.
+accept	1.29:34.14	1.29:34.14	renders	Directional preposition in the attachment clause.
+accept	1.29:34.23	1.29:34.16	renders	Birth verb.
+accept	1.29:34.24	1.29:34.17	renders	Suffixed recipient pronoun.
+accept	1.29:34.25	1.29:34.20	renders	First element of the compound causal expression.
+accept	1.29:35.10,1.29:35.11	1.29:35.10	renders	Expression for this occasion.
+accept	1.29:35.13	1.29:35.11	renders	Future auxiliary of praise.
+accept	1.29:35.16	1.29:35.14	renders	First element of the compound causal expression.
+accept	1.29:35.22	1.29:35.19	renders	Part of the compound conjunction.
+accept	1.29:35.23	1.29:35.20,1.29:35.21	renders	Cessation expressed by the verb and preposition together.

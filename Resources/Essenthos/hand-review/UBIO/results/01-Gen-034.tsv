@@ -1,0 +1,196 @@
+kind	from	to	relation	reason
+fixed	1.34:1			Missing past auxiliary, dative prefix and preposition.
+fixed	1.34:2			Missing object pronouns and a misplaced preposition.
+fixed	1.34:3			Missing prepositions and verb subject.
+fixed	1.34:4			Missing demonstrative and prepositions.
+fixed	1.34:5			Missing verbs’ subject and content links and the comitative preposition.
+fixed	1.34:6			Missing preposition and its pronoun.
+fixed	1.34:7			Missing anger idiom, clause links and other words. Comitative link misplaced.
+fixed	1.34:8			Missing pronouns, prepositions and request particle.
+fixed	1.34:9			Missing object pronoun and links for the exchange of daughters.
+fixed	1.34:10			Missing pronouns, prepositions and part of the possession phrase.
+fixed	1.34:11			Missing optative marker and verb subject.
+fixed	1.34:12			Missing bride-price terms, comparison and role preposition.
+fixed	1.34:13			Missing manner, speech and causal clause links.
+fixed	1.34:14			Missing pronouns, verbs and parts of multiword renderings.
+fixed	1.34:15			Missing agreement and circumcision clause links.
+fixed	1.34:16			Missing exchange, comitative and predicative links.
+fixed	1.34:17			Missing pronouns, verbs, purpose marker and part of the conjunction.
+fixed	1.34:18			Missing adjective, auxiliary and both occurrences of eyes.
+fixed	1.34:19			Demonstrative linked to an article. Missing desire, copula and comparison links.
+fixed	1.34:20			Missing arrival and speech verbs.
+fixed	1.34:21			Missing demonstrative, mood markers and several phrase links.
+fixed	1.34:22			Temporal prefix misassigned. Missing clause markers, pronouns and role links.
+fixed	1.34:23			Missing first livestock phrase, question marker and pronoun links.
+fixed	1.34:24			Missing obedience verb and both participial departure phrases.
+fixed	1.34:25			Missing temporal, pain, attack, killing and male links.
+fixed	1.34:26			Missing additive and connective links, instrument, taking verb and source.
+fixed	1.34:27			Missing attack, causal connective and defilement clause links.
+fixed	1.34:28			Missing taking verb, shared livestock words and locative links.
+fixed	1.34:29			Missing captivity phrase and locative copula.
+fixed	1.34:30			Missing causative phrases, object pronouns and several clause links.
+unsure	1.34:31			Question and verb links added. Whether the resultative instrumental renders the comparison prefix is uncertain.
+refuse	1.34:2.16	1.34:2.16		Ukrainian comitative preposition supplied with a direct-object construction.
+refuse	1.34:7.27	1.34:7.24		The following written preposition carries the comitative relation.
+refuse	1.34:19.7	1.34:19.8		Hebrew article carries no demonstrative.
+refuse	1.34:22.19	1.34:22.16		This prefix marks time. The Ukrainian preposition belongs with нас.
+accept	1.34:1.3	1.34:1.2	renders	Auxiliary of the past verb form.
+accept	1.34:1.10	1.34:1.8	renders	Dative ending renders the recipient prefix.
+accept	1.34:1.13	1.34:1.12	renders	Preposition governed by the seeing verb.
+accept	1.34:2.3	1.34:2.3	renders	Object pronoun of seeing.
+accept	1.34:2.13	1.34:2.14	renders	Object pronoun of taking.
+accept	1.34:2.17	1.34:2.17	renders	Feminine pronominal suffix of the lying clause.
+accept	1.34:3.5	1.34:3.4	renders	Preposition governed by clinging.
+accept	1.34:3.11	1.34:3.9	renders	Subject encoded by the verb.
+accept	1.34:3.15	1.34:3.15	renders	Preposition in the speaking idiom.
+accept	1.34:4.10	1.34:4.15	renders	Written demonstrative.
+accept	1.34:4.12	1.34:4.16	renders	Preposition marking the role of wife.
+accept	1.34:4.14	1.34:4.10	renders	Benefactive preposition.
+accept	1.34:5.5	1.34:5.5	renders	Third-person subject encoded by the verb.
+accept	1.34:5.14	1.34:5.12	renders	Comitative preposition.
+accept	1.34:5.24	1.34:5.21	renders	Arrival verb.
+accept	1.34:6.10,1.34:6.11	1.34:6.10	renders	Comitative preposition and its suffix.
+accept	1.34:7.7	1.34:7.8	renders	Temporal use of the prefix.
+accept	1.34:7.14	1.34:7.17	renders	Degree adverb.
+accept	1.34:7.15,1.34:7.17	1.34:7.15	renders	Burning verb expresses the onset of anger.
+accept	1.34:7.16	1.34:7.16	renders	Experiencer expressed as a possessive.
+accept	1.34:7.19	1.34:7.20	renders	Subject encoded by the verb.
+accept	1.34:7.20	1.34:7.19	renders	Outrage committed.
+accept	1.34:7.24,1.34:7.25	1.34:7.23	renders	Connective introducing the explanatory infinitive.
+accept	1.34:7.27	1.34:7.25	renders	Written comitative preposition.
+accept	1.34:7.31	1.34:7.29	renders	Manner adverb.
+accept	1.34:8.4,1.34:8.5	1.34:8.4	renders	Comitative preposition and its suffix.
+accept	1.34:8.16	1.34:8.14	renders	Particle urging compliance.
+accept	1.34:8.17	1.34:8.15	renders	Feminine object pronoun.
+accept	1.34:8.18	1.34:8.16	renders	Recipient pronoun.
+accept	1.34:8.19	1.34:8.17	renders	Preposition marking the role of wife.
+accept	1.34:9.4	1.34:9.3	renders	First-person plural object suffix.
+accept	1.34:9.5	1.34:9.5	renders	Giving verb.
+accept	1.34:9.6	1.34:9.6	renders	First-person plural recipient.
+accept	1.34:9.7,1.34:9.8	1.34:9.4	renders	Daughters and their possessive suffix.
+accept	1.34:9.13	1.34:9.11	renders	Reflexive renders the addressee benefactive.
+accept	1.34:10.3,1.34:10.4	1.34:10.2	renders	Comitative preposition and its suffix.
+accept	1.34:10.9	1.34:10.8	renders	Prefix in the compound preposition before.
+accept	1.34:10.10	1.34:10.9	renders	Addressee suffix on the compound preposition.
+accept	1.34:10.14	1.34:10.12	renders	Object suffix on the travel verb.
+accept	1.34:10.17,1.34:10.18	1.34:10.14	renders	Completes the rendering of taking possession.
+accept	1.34:10.19,1.34:10.20	1.34:10.15	renders	Locative preposition and its suffix.
+accept	1.34:11.11,1.34:11.12	1.34:11.9	renders	Volitive force and first-person subject.
+accept	1.34:12.1	1.34:12.3	renders	Degree adverb.
+accept	1.34:12.2	1.34:12.1	renders	Verb requesting an increase.
+accept	1.34:12.3,1.34:12.4	1.34:12.2	renders	Preposition and its first-person suffix.
+accept	1.34:12.5	1.34:12.4	renders	Bride price.
+accept	1.34:12.11	1.34:12.9,1.34:12.10	renders	Compound connective meaning as.
+accept	1.34:12.19	1.34:12.19	renders	Preposition marking the role of wife.
+accept	1.34:13.10	1.34:13.11,1.34:13.12	renders	Instrumental expresses the manner prefix and deceit.
+accept	1.34:13.11	1.34:13.14	renders	Second speech verb.
+accept	1.34:13.12	1.34:13.15	renders	Causal use of the connective.
+accept	1.34:13.13	1.34:13.16	renders	Subject encoded by the verb.
+accept	1.34:14.4	1.34:14.3	renders	Pronominal suffix on the preposition.
+accept	1.34:14.5,1.34:14.7	1.34:14.5	renders	Ability verb and its first-person plural subject.
+accept	1.34:14.9	1.34:14.11	renders	Written demonstrative.
+accept	1.34:14.11	1.34:14.13	renders	Verb for giving in marriage.
+accept	1.34:14.14	1.34:14.16,1.34:14.17	renders	Man with a dative rendering the recipient prefix.
+accept	1.34:14.16	1.34:14.19	renders	Possessive construction expressed with має.
+accept	1.34:14.18	1.34:14.20	renders	Completes the expression for foreskin.
+accept	1.34:14.20	1.34:14.23	renders	Written predicate-clause pronoun.
+accept	1.34:14.22,1.34:14.23	1.34:14.24	renders	Preposition and its first-person plural suffix.
+accept	1.34:15.1,1.34:15.5	1.34:15.4	renders	Agreement verb and its first-person plural subject.
+accept	1.34:15.4	1.34:15.3	renders	Written demonstrative.
+accept	1.34:15.6,1.34:15.7	1.34:15.5	renders	Preposition and its second-person plural suffix.
+accept	1.34:15.11,1.34:15.12	1.34:15.8	renders	Comparison and its first-person plural suffix.
+accept	1.34:15.13	1.34:15.9	renders	Prefix introducing the circumcision clause.
+accept	1.34:15.14,1.34:15.15	1.34:15.11	renders	Prepositional phrase expressing the affected group.
+accept	1.34:15.16	1.34:15.10	renders	Auxiliary of the circumcision verb.
+accept	1.34:16.2	1.34:16.2	renders	Giving verb.
+accept	1.34:16.3	1.34:16.5	renders	Recipient pronoun.
+accept	1.34:16.4,1.34:16.5	1.34:16.4	renders	Daughters and their possessive suffix.
+accept	1.34:16.9	1.34:16.9	renders	Taking verb.
+accept	1.34:16.10	1.34:16.10	renders	Reflexive renders the speaker benefactive.
+accept	1.34:16.13,1.34:16.14	1.34:16.13	renders	Comitative preposition and its suffix.
+accept	1.34:16.18	1.34:16.16	renders	Predicative instrumental renders the result prefix.
+accept	1.34:17.3	1.34:17.4	renders	Subject encoded by the verb.
+accept	1.34:17.6	1.34:17.5	renders	First-person plural suffix on the preposition.
+accept	1.34:17.7	1.34:17.6	renders	Prefix introducing the circumcision clause.
+accept	1.34:17.11	1.34:17.9	renders	Taking verb.
+accept	1.34:17.15	1.34:17.12	renders	Part of the conjunction та й.
+accept	1.34:17.16	1.34:17.13	renders	Departure verb.
+accept	1.34:18.4,1.34:18.5	1.34:18.2	renders	Past predicate corresponding to be good.
+accept	1.34:18.7	1.34:18.5	renders	Eyes of Hamor.
+accept	1.34:18.11	1.34:18.9	renders	Eyes of Shechem.
+accept	1.34:19.10	1.34:19.11	renders	Verb expressing desire for Jacob’s daughter.
+accept	1.34:19.15	1.34:19.17	renders	Past copula of the honor predicate.
+accept	1.34:19.16	1.34:19.18	renders	Superlative degree renders the comparison prefix.
+accept	1.34:20.2	1.34:20.2	renders	Arrival verb.
+accept	1.34:20.12	1.34:20.11	renders	Speech verb addressing the townspeople.
+accept	1.34:21.1	1.34:21.4	renders	Written plural demonstrative.
+accept	1.34:21.4	1.34:21.5	renders	Predicate expressing peaceful relations.
+accept	1.34:21.5,1.34:21.6	1.34:21.7	renders	Preposition and suffix in the relation to us.
+accept	1.34:21.8	1.34:21.9	renders	Volitive force of the settling verb.
+accept	1.34:21.13,1.34:21.14	1.34:21.14	renders	Travel verb with its volitive marker.
+accept	1.34:21.15	1.34:21.15	renders	Object pronoun referring to the land.
+accept	1.34:21.20	1.34:21.21	renders	Completes the Hebrew idiom for spaciousness.
+accept	1.34:21.21	1.34:21.22,1.34:21.23	renders	Compound preposition before.
+accept	1.34:21.22	1.34:21.23	renders	Third-person plural suffix on the compound preposition.
+accept	1.34:21.25	1.34:21.26	renders	Volitive taking verb.
+accept	1.34:21.26	1.34:21.27	renders	Reflexive renders the speaker benefactive.
+accept	1.34:21.27	1.34:21.28	renders	Preposition marking the role of wives.
+accept	1.34:21.33	1.34:21.34	renders	Third-person plural recipient.
+accept	1.34:22.2	1.34:22.2	renders	Preposition introducing the condition described.
+accept	1.34:22.3	1.34:22.3	renders	Written demonstrative.
+accept	1.34:22.5,1.34:22.6	1.34:22.5	renders	Preposition and its first-person plural suffix.
+accept	1.34:22.9	1.34:22.8	renders	Prefix introducing the settling clause.
+accept	1.34:22.11,1.34:22.12	1.34:22.10	renders	Comitative preposition and its suffix.
+accept	1.34:22.14	1.34:22.11	renders	Prefix introducing the becoming clause.
+accept	1.34:22.15	1.34:22.12	renders	Verb expressing becoming.
+accept	1.34:22.17	1.34:22.13	renders	Predicative instrumental renders the result prefix.
+accept	1.34:22.18	1.34:22.16	renders	Temporal prefix introducing the condition.
+accept	1.34:22.19,1.34:22.20	1.34:22.18	renders	Prepositional phrase expressing the affected group.
+accept	1.34:22.26	1.34:22.21,1.34:22.22	renders	Compound comparison connective.
+accept	1.34:23.1,1.34:23.2	1.34:23.1	renders	Livestock and its possessive suffix.
+accept	1.34:23.10	1.34:23.7	renders	Interrogative particle.
+accept	1.34:23.12	1.34:23.9	renders	Predicative possession expressed by the preposition and suffix.
+accept	1.34:23.16,1.34:23.17	1.34:23.13	renders	Preposition and its third-person plural suffix.
+accept	1.34:23.19	1.34:23.15	renders	Volitive force of the settling verb.
+accept	1.34:23.22,1.34:23.23	1.34:23.16	renders	Comitative preposition and its suffix.
+accept	1.34:24.2	1.34:24.2	renders	Verb expressing obedience.
+accept	1.34:24.9	1.34:24.10	renders	Relative word expanding the first participle.
+accept	1.34:24.11	1.34:24.11	renders	First gate noun carries the point of departure.
+accept	1.34:24.22	1.34:24.18	renders	Relative word expanding the second participle.
+accept	1.34:24.24	1.34:24.19	renders	Second gate noun carries the point of departure.
+accept	1.34:25.4	1.34:25.3	renders	Temporal genitive renders the time prefix.
+accept	1.34:25.7	1.34:25.10	renders	Predicate expressing pain.
+accept	1.34:25.24	1.34:25.24	renders	Coming against the city expressed as an attack.
+accept	1.34:25.28	1.34:25.30	renders	Killing verb.
+accept	1.34:25.30	1.34:25.32	renders	Male persons.
+accept	1.34:26.1	1.34:26.1	renders	Additive clause conjunction.
+accept	1.34:26.8	1.34:26.9	renders	Instrumental ending renders the means prefix.
+accept	1.34:26.10	1.34:26.13	renders	Verb for taking Dinah.
+accept	1.34:26.12	1.34:26.16	renders	Source preposition.
+accept	1.34:26.16	1.34:26.19	renders	Part of the conjunction та й.
+accept	1.34:27.3	1.34:27.3	renders	Coming upon rendered as attacking.
+accept	1.34:27.9,1.34:27.10	1.34:27.11	renders	Parts of the causal connective за те що.
+accept	1.34:27.12,1.34:27.13	1.34:27.12	renders	Defilement verb and its plural subject.
+accept	1.34:28.1	1.34:28.21	renders	Taking verb at the end of the Hebrew verse.
+accept	1.34:28.5,1.34:28.6	1.34:28.2	renders	Shared livestock noun and possessive also render the flock.
+accept	1.34:28.12	1.34:28.12,1.34:28.14	renders	Copula of the locative predicate in town.
+accept	1.34:28.14	1.34:28.14	renders	Town noun.
+accept	1.34:28.17	1.34:28.18	renders	Locative prefix for the field.
+accept	1.34:29.12,1.34:29.13,1.34:29.14	1.34:29.12	renders	Multiword rendering of taking captive.
+accept	1.34:29.22	1.34:29.19,1.34:29.21	renders	Copula of the locative predicate in the house.
+accept	1.34:30.10,1.34:30.12	1.34:30.9	renders	Causative rendering of bringing trouble.
+accept	1.34:30.11	1.34:30.10	renders	First-person object pronoun.
+accept	1.34:30.13	1.34:30.11	renders	Connective recasts the explanatory infinitive.
+accept	1.34:30.14,1.34:30.15,1.34:30.16	1.34:30.12	renders	Causative sense and first-person object suffix.
+accept	1.34:30.18	1.34:30.14	renders	Participle meaning inhabitant.
+accept	1.34:30.21	1.34:30.21	renders	Shared Ukrainian preposition also governs the Perizzite.
+accept	1.34:30.24	1.34:30.23	renders	Perizzite ethnonym.
+accept	1.34:30.25	1.34:30.25	renders	Written speaker pronoun rendered collectively.
+accept	1.34:30.26	1.34:30.26	renders	People in the small-number expression.
+accept	1.34:30.27	1.34:30.27	renders	Number idiom conveys fewness.
+accept	1.34:30.29	1.34:30.29	renders	Plural subject encoded by the gathering verb.
+accept	1.34:30.31,1.34:30.32	1.34:30.30	renders	Preposition and its first-person suffix.
+accept	1.34:30.34	1.34:30.31	renders	Part of the conjunction та й.
+accept	1.34:30.36	1.34:30.32	renders	Object suffix of the striking verb.
+accept	1.34:31.4	1.34:31.3	renders	Interrogative prefix.
+accept	1.34:31.5,1.34:31.6,1.34:31.7	1.34:31.6	renders	Subject and modal force of the verb in the question.

@@ -1,0 +1,232 @@
+kind	from	to	relation	reason
+fixed	1.44:1			Missing subject, relative, food, and destination links.
+fixed	1.44:2			Missing placement, payment, and speech links.
+fixed	1.44:3			The passive auxiliary lacked a link.
+unsure	1.44:4			Restored clear links. The source preposition з remains uncertain.
+fixed	1.44:5			Missing question, negation, pronominal, and verbal links.
+fixed	1.44:6			Missing speech, recipient, and demonstrative links.
+fixed	1.44:7			Missing comparison and dative links. The complement marker was misplaced.
+fixed	1.44:8			Missing return, recipient, and lord links.
+fixed	1.44:9			Missing relative, passive, and servitude links.
+unsure	1.44:10			Moved the passive auxiliary. The optative нехай remains uncertain.
+fixed	1.44:11			Missing haste, lowering, sack, and direction links.
+fixed	1.44:12			Missing search, beginning, ending, and preposition links.
+fixed	1.44:13			The subject pronoun lacked a link.
+fixed	1.44:14			Missing entry, locative copula, and direction links.
+fixed	1.44:15			Missing recipient, question, negation, and divination links.
+fixed	1.44:16			Missing speech, dative, inclusive, and passive links.
+fixed	1.44:17			Missing disavowal, passive, and departure links.
+unsure	1.44:18			Restored clear links. The vocative and entreaty overlap in О.
+fixed	1.44:19			Missing pluperfect, interrogative, and possession links.
+fixed	1.44:20			Missing existence, possession, adjective, and maternal relation links.
+fixed	1.44:21			Missing speech forms, addressee, command, and gaze links.
+fixed	1.44:22			Two verbal subjects lacked links.
+fixed	1.44:23			Missing subject, addressee, conditional, and accompaniment links.
+fixed	1.44:24			Restored travel and report links. Hebrew has singular my father.
+ok	1.44:25			
+fixed	1.44:26			Missing speech, brother, presence, and conditional links.
+fixed	1.44:27			Restored recipient and auxiliary links. Hebrew has singular my father.
+fixed	1.44:28			Moved the emphasis and passive links to their respective words.
+fixed	1.44:29			Missing taking, source, consequence, and manner links.
+fixed	1.44:30			Missing temporal, negative existential, and second soul links.
+fixed	1.44:31			Missing negative existential, consequence, and causative verb links.
+unsure	1.44:32			Restored clear links. The surety preposition за remains uncertain.
+fixed	1.44:33			Missing jussive, entreaty, servant role, and dative links.
+fixed	1.44:34			Removed an article link and restored missing verb and noun links.
+refuse	1.44:7.15	1.44:7.16		The prefix marks the complement.
+refuse	1.44:10.17	1.44:10.12		Auxiliary belongs to the preceding passive.
+refuse	1.44:28.10	1.44:28.9		Second emphasis renders the infinitive absolute.
+refuse	1.44:28.11	1.44:28.10		Passive predicate renders the finite verb.
+refuse	1.44:34.17	1.44:34.14		Supplied demonstrative linked to an article.
+accept	1.44:1.3	1.44:1.2	renders	Subject of commanded.
+accept	1.44:1.4,1.44:1.5	1.44:1.4	renders	The one who.
+accept	1.44:1.14	1.44:1.14	renders	Food.
+accept	1.44:1.15	1.44:1.16	renders	Relative element of the comparison.
+accept	1.44:1.17	1.44:1.17	renders	Subject of could.
+accept	1.44:1.23	1.44:1.23	renders	Placement into the opening.
+accept	1.44:2.6	1.44:2.7	renders	Put.
+accept	1.44:2.7	1.44:2.8	renders	Placement into the opening.
+accept	1.44:2.13	1.44:2.15	renders	Price relation of the construct.
+accept	1.44:2.14,1.44:2.15	1.44:2.16	renders	Grain and its possessive suffix.
+accept	1.44:2.18	1.44:2.18	renders	Subject of did.
+accept	1.44:2.23,1.44:2.24,1.44:2.25	1.44:2.23	renders	Subject and pluperfect of spoke.
+accept	1.44:3.7	1.44:3.7	renders	Passive auxiliary.
+accept	1.44:4.2	1.44:4.2	renders	Went out.
+accept	1.44:4.11	1.44:4.11	renders	Addressee prefix.
+accept	1.44:4.12,1.44:4.13	1.44:4.12	renders	The one who.
+accept	1.44:4.15,1.44:4.16	1.44:4.14	renders	House and its possessive suffix.
+accept	1.44:4.18	1.44:4.16	renders	Pursue.
+accept	1.44:4.26	1.44:4.22	renders	Part of the connective та й.
+accept	1.44:4.28	1.44:4.24	renders	To them.
+accept	1.44:4.29	1.44:4.25	renders	Why.
+accept	1.44:5.1	1.44:5.1	renders	Question particle.
+accept	1.44:5.3	1.44:5.2	renders	Negation.
+accept	1.44:5.4	1.44:5.4	renders	Correlative head of the relative clause.
+accept	1.44:5.7,1.44:5.8	1.44:5.7	renders	Preposition and suffix for the drinking vessel.
+accept	1.44:5.15	1.44:5.11	renders	Finite divination verb.
+accept	1.44:5.16	1.44:5.12	renders	Instrumental pronoun.
+accept	1.44:5.18,1.44:5.19,1.44:5.20	1.44:5.13	renders	You did evil.
+accept	1.44:5.21,1.44:5.23	1.44:5.14	renders	Relative construction and its object.
+accept	1.44:5.22	1.44:5.15	renders	Did in the relative clause.
+accept	1.44:6.6	1.44:6.4	renders	Spoke.
+accept	1.44:6.7	1.44:6.5	renders	To them.
+accept	1.44:6.8	1.44:6.10	renders	Demonstrative.
+accept	1.44:7.4	1.44:7.3	renders	To him.
+accept	1.44:7.5	1.44:7.4	renders	Why.
+accept	1.44:7.9	1.44:7.7,1.44:7.11	renders	Such as these.
+accept	1.44:7.12	1.44:7.12	renders	Be it far.
+accept	1.44:7.13	1.44:7.13	renders	Dative renders the prefix.
+accept	1.44:7.15	1.44:7.15	renders	Introduces the disavowed action.
+accept	1.44:7.17	1.44:7.17,1.44:7.21	renders	Such as this.
+accept	1.44:8.10,1.44:8.11	1.44:8.8	renders	We returned.
+accept	1.44:8.12	1.44:8.9	renders	To you.
+accept	1.44:8.23	1.44:8.18	renders	Lord.
+accept	1.44:9.1,1.44:9.2	1.44:9.3	renders	With whom absorbs the resumptive pronoun.
+accept	1.44:9.6,1.44:9.8,1.44:9.9	1.44:9.2	renders	Subject and future passive of find.
+accept	1.44:9.12	1.44:9.7	renders	Subject of die.
+accept	1.44:9.16	1.44:9.11	renders	Will become.
+accept	1.44:9.17	1.44:9.14	renders	Instrumental renders the role prefix.
+accept	1.44:9.18	1.44:9.13	renders	Possessive suffix on lord.
+accept	1.44:9.19	1.44:9.12,1.44:9.13	renders	Dative lord.
+accept	1.44:10.2	1.44:10.2	renders	Subject of replied.
+accept	1.44:10.4	1.44:10.3	renders	Discourse particle introducing agreement.
+accept	1.44:10.6	1.44:10.5	renders	As.
+accept	1.44:10.7,1.44:10.8	1.44:10.6	renders	Your words rendered as you said.
+accept	1.44:10.9,1.44:10.11	1.44:10.7	renders	So and its supplied copula.
+accept	1.44:10.12	1.44:10.8	renders	Explicit subject pronoun.
+accept	1.44:10.13,1.44:10.14	1.44:10.11	renders	With whom absorbs the resumptive pronoun.
+accept	1.44:10.15,1.44:10.17	1.44:10.10	renders	Subject and auxiliary of the passive.
+accept	1.44:10.18,1.44:10.19	1.44:10.12	renders	Subject and verb of becoming.
+accept	1.44:10.21	1.44:10.14	renders	Marks the predicative servant role.
+accept	1.44:11.2	1.44:11.2	renders	Hastened rendered adverbially.
+accept	1.44:11.3,1.44:11.4	1.44:11.4	renders	They lowered.
+accept	1.44:11.7	1.44:11.7	renders	First sack occurrence.
+accept	1.44:11.8	1.44:11.8	renders	Directional ending on ground.
+accept	1.44:12.2,1.44:12.3,1.44:12.4	1.44:12.2	renders	He began searching.
+accept	1.44:12.5	1.44:12.6	renders	Began.
+accept	1.44:12.6	1.44:12.3	renders	Marks the starting point.
+accept	1.44:12.9	1.44:12.11	renders	Finished.
+accept	1.44:12.10	1.44:12.8	renders	Instrumental marks the endpoint.
+accept	1.44:13.3	1.44:13.2	renders	Subject of tore.
+accept	1.44:14.2	1.44:14.2	renders	Entered.
+accept	1.44:14.7	1.44:14.6	renders	Directional ending on house.
+accept	1.44:14.13	1.44:14.11	renders	Copula of the locative predicate.
+accept	1.44:14.17	1.44:14.13	renders	Subject of fell.
+accept	1.44:14.18	1.44:14.14	renders	Prefix in before his face.
+accept	1.44:14.19,1.44:14.20	1.44:14.15	renders	Face and its possessive suffix.
+accept	1.44:14.21	1.44:14.16	renders	Directional ending on ground.
+accept	1.44:15.3,1.44:15.4	1.44:15.3	renders	To them.
+accept	1.44:15.8	1.44:15.5	renders	Part of the interrogative що за.
+accept	1.44:15.9	1.44:15.7	renders	Deed.
+accept	1.44:15.13	1.44:15.12	renders	Question particle.
+accept	1.44:15.14,1.44:15.16	1.44:15.14	renders	You knew.
+accept	1.44:15.15	1.44:15.13	renders	Negation.
+accept	1.44:15.18	1.44:15.16	renders	Infinitive absolute conveys emphasis.
+accept	1.44:15.19	1.44:15.17	renders	Finite divination verb.
+accept	1.44:15.20,1.44:15.22	1.44:15.20	renders	Comparison expressed as такий як.
+accept	1.44:16.7	1.44:16.6	renders	Dative renders the prefix.
+accept	1.44:16.10,1.44:16.11	1.44:16.9	renders	Will speak.
+accept	1.44:16.12	1.44:16.11	renders	Third interrogative occurrence.
+accept	1.44:16.20	1.44:16.19	renders	First-person plural suffix.
+accept	1.44:16.22	1.44:16.21,1.44:16.22	renders	Dative lord.
+accept	1.44:16.23	1.44:16.22	renders	Possessive suffix on lord.
+accept	1.44:16.24	1.44:16.23	renders	First inclusive particle.
+accept	1.44:16.26	1.44:16.25	renders	Second inclusive particle.
+accept	1.44:16.27	1.44:16.26	renders	Correlative head of the free relative.
+accept	1.44:16.29	1.44:16.30	renders	In.
+accept	1.44:16.30,1.44:16.31	1.44:16.31	renders	Hand and its possessive suffix.
+accept	1.44:16.32	1.44:16.27	renders	Passive auxiliary.
+accept	1.44:17.4	1.44:17.3	renders	Be it far.
+accept	1.44:17.5	1.44:17.4	renders	First to me occurrence.
+accept	1.44:17.6	1.44:17.5	renders	Introduces the disavowed action.
+accept	1.44:17.8	1.44:17.7	renders	This.
+accept	1.44:17.11	1.44:17.14	renders	In.
+accept	1.44:17.14	1.44:17.11	renders	Passive auxiliary.
+accept	1.44:17.20	1.44:17.19	renders	Marks the predicative servant role.
+accept	1.44:17.24	1.44:17.22	renders	Go.
+accept	1.44:17.25	1.44:17.23	renders	Preposition in the peace formula.
+accept	1.44:18.7	1.44:18.5	renders	Part of the connective та й.
+accept	1.44:18.12,1.44:18.13	1.44:18.9	renders	Let him speak.
+accept	1.44:18.17	1.44:18.13	renders	Direction into the ears.
+accept	1.44:18.19,1.44:18.20	1.44:18.15	renders	Second lord and its possessive suffix.
+accept	1.44:18.22	1.44:18.18	renders	Jussive auxiliary.
+accept	1.44:18.27	1.44:18.20	renders	Marks the target of anger.
+accept	1.44:18.32	1.44:18.23	renders	First part of the comparative expression.
+accept	1.44:18.33	1.44:18.24	renders	Comparison prefix on Pharaoh.
+accept	1.44:19.4	1.44:19.2	renders	Pluperfect auxiliary.
+accept	1.44:19.8	1.44:19.7	renders	Question particle.
+accept	1.44:19.9	1.44:19.8	renders	Existential predicate.
+accept	1.44:19.10,1.44:19.11	1.44:19.9	renders	Possessive preposition and suffix.
+accept	1.44:20.7	1.44:20.5	renders	Existential predicate.
+accept	1.44:20.8,1.44:20.9	1.44:20.6	renders	Possessive preposition and suffix.
+accept	1.44:20.13	1.44:20.12	renders	Small.
+accept	1.44:20.25	1.44:20.21	renders	Relation to his mother.
+accept	1.44:21.2,1.44:21.3	1.44:21.2	renders	Subject and pluperfect of said.
+accept	1.44:21.6	1.44:21.3	renders	Dative renders the addressee preposition.
+accept	1.44:21.7,1.44:21.10	1.44:21.5	renders	Bring down and its object suffix.
+accept	1.44:21.8	1.44:21.6	renders	To in to me.
+accept	1.44:21.12,1.44:21.14	1.44:21.8	renders	Cohortative verb and auxiliary.
+accept	1.44:21.17,1.44:21.18	1.44:21.10	renders	Upon him.
+accept	1.44:22.16	1.44:22.14	renders	Subject of the second leave verb.
+accept	1.44:22.21	1.44:22.18	renders	Subject of die.
+accept	1.44:23.2	1.44:23.2	renders	Subject of said.
+accept	1.44:23.5	1.44:23.3	renders	Dative renders the addressee preposition.
+accept	1.44:23.6	1.44:23.5	renders	Conditional conjunction.
+accept	1.44:23.9,1.44:23.10	1.44:23.11	renders	With you.
+accept	1.44:23.15	1.44:23.13	renders	Finite person and tense of the construction.
+accept	1.44:24.4,1.44:24.5,1.44:24.6	1.44:24.4	renders	Subject and pluperfect of went up.
+accept	1.44:24.10	1.44:24.5	renders	Repeats the preposition before the apposition.
+accept	1.44:24.14,1.44:24.15	1.44:24.9	renders	We reported.
+accept	1.44:24.16	1.44:24.10	renders	To him.
+accept	1.44:26.3	1.44:26.2	renders	Replied.
+accept	1.44:26.9,1.44:26.10	1.44:26.9	renders	First our brother occurrence.
+accept	1.44:26.11	1.44:26.8	renders	Existence in the first condition.
+accept	1.44:26.12,1.44:26.13	1.44:26.12	renders	First with us occurrence.
+accept	1.44:26.14	1.44:26.13	renders	Conjunction introducing the consequence.
+accept	1.44:26.16	1.44:26.14	renders	Subject of will go down.
+accept	1.44:26.23	1.44:26.22	renders	Man.
+accept	1.44:26.24	1.44:26.23	renders	Conjunction introducing the second condition.
+accept	1.44:26.28,1.44:26.29	1.44:26.27	renders	Negative existential predicate.
+accept	1.44:26.30,1.44:26.31	1.44:26.28	renders	Second with us occurrence.
+accept	1.44:27.3,1.44:27.4	1.44:27.5	renders	To us.
+accept	1.44:27.13	1.44:27.10	renders	Pluperfect auxiliary.
+accept	1.44:28.2	1.44:28.2	renders	Went out.
+accept	1.44:28.4	1.44:28.6	renders	First-person suffix in from me.
+accept	1.44:28.7	1.44:28.8	renders	Subject of said.
+accept	1.44:28.9	1.44:28.9	renders	First emphatic particle.
+accept	1.44:28.10	1.44:28.10	renders	Infinitive absolute conveys second emphasis.
+accept	1.44:28.11,1.44:28.12	1.44:28.11	renders	Finite passive and its subject.
+accept	1.44:28.14	1.44:28.14	renders	Subject of saw.
+accept	1.44:28.18	1.44:28.15	renders	Marks the extent of until.
+accept	1.44:28.19	1.44:28.15,1.44:28.16	renders	Until now.
+accept	1.44:29.2	1.44:29.2	renders	Take.
+accept	1.44:29.6	1.44:29.6	renders	From.
+accept	1.44:29.7	1.44:29.8	renders	My presence rendered as me.
+accept	1.44:29.12	1.44:29.12	renders	Conjunction introducing the consequence.
+accept	1.44:29.13	1.44:29.13	renders	Bring down.
+accept	1.44:29.18	1.44:29.16,1.44:29.17	renders	Instrumental renders the manner prefix and noun.
+accept	1.44:30.3	1.44:30.3	renders	Temporal prefix.
+accept	1.44:30.14	1.44:30.11	renders	Existential component of the negation.
+accept	1.44:30.15,1.44:30.16	1.44:30.12	renders	With us.
+accept	1.44:30.21	1.44:30.16	renders	Prefix marking what is bound to it.
+accept	1.44:30.23	1.44:30.17	renders	Demonstrative identifies the other possessor.
+accept	1.44:31.8	1.44:31.6	renders	Negative existential.
+accept	1.44:31.9	1.44:31.9	renders	Conjunction introducing death as consequence.
+accept	1.44:31.12	1.44:31.12	renders	Bring down.
+accept	1.44:32.11	1.44:32.14	renders	Subject of will bring.
+accept	1.44:32.15,1.44:32.16	1.44:32.15	renders	To you.
+accept	1.44:32.18	1.44:32.17	renders	Will sin.
+accept	1.44:32.19	1.44:32.18	renders	Prefix marks the person wronged.
+accept	1.44:32.22,1.44:32.24	1.44:32.22	renders	Days and their adverbial duration.
+accept	1.44:33.3,1.44:33.5	1.44:33.3	renders	Let him stay.
+accept	1.44:33.4	1.44:33.4	renders	Entreaty particle.
+accept	1.44:33.11	1.44:33.9	renders	Marks the predicative servant role.
+accept	1.44:33.13	1.44:33.10,1.44:33.11	renders	Dative lord.
+accept	1.44:33.14	1.44:33.11	renders	Possessive suffix on lord.
+accept	1.44:33.17	1.44:33.15	renders	Jussive auxiliary.
+accept	1.44:34.4	1.44:34.3	renders	Go up.
+accept	1.44:34.11	1.44:34.10	renders	First-person suffix in with me.
+accept	1.44:34.12	1.44:34.9	renders	Negative existential.
+accept	1.44:34.14	1.44:34.11	renders	Negative component of lest.
+accept	1.44:34.16	1.44:34.12	renders	Dative subject renders the first-person verb form.
+accept	1.44:34.18	1.44:34.15	renders	Calamity.

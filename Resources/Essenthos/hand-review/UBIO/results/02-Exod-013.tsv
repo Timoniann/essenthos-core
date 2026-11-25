@@ -1,0 +1,139 @@
+kind	from	to	relation	reason
+fixed	2.13:1			Missing quotative prefix.
+fixed	2.13:2			Missing relative, prepositions, and pronouns.
+fixed	2.13:3			Missing demonstrative, relative, instrumental, object pronoun, and auxiliary links.
+ok	2.13:4			
+fixed	2.13:5			Missing suffix, relative, auxiliary, case, and main-clause links.
+fixed	2.13:6			Missing temporal prefix.
+fixed	2.13:7			Missing auxiliary and both visibility phrases.
+unsure	2.13:8			Corrected the day demonstrative. The demonstrative and relative in the explanation remain uncertain.
+fixed	2.13:9			Missing pronouns, prepositions, and copula.
+fixed	2.13:10			Missing main verb, temporal prefix, and annual expression links.
+fixed	2.13:11			Missing object suffix, comparison, oath, and dative links.
+fixed	2.13:12			Missing relative, firstborn offspring, and possession links.
+fixed	2.13:13			Missing firstborn paraphrase, instrumental prefix, and neck-breaking clause links.
+fixed	2.13:14			Missing time adverb, object suffix, reply, and preposition links.
+unsure	2.13:15			The expanded references to Pharaoh’s heart and refusal remain uncertain.
+fixed	2.13:16			Missing subject pronoun and instrumental links.
+fixed	2.13:17			Missing temporal clause, subject and object pronouns, copula, and return clause links.
+fixed	2.13:18			Corrected the detour link and added the destination, departure, and armed formation links.
+fixed	2.13:19			Missing accompaniment, oath auxiliary, emphasis, pronouns, and departure links.
+fixed	2.13:20			Corrected Etham’s target and added missing encampment and boundary links.
+fixed	2.13:21			Missing links for going before them, giving light, and the final purpose clause.
+fixed	2.13:22			Missing departure verb and spatial phrase links.
+refuse	2.13:8.5	2.13:8.6		Demonstrative linked to the article.
+refuse	2.13:18.6	2.13:18.13		Detour adjective linked to armed formation.
+refuse	2.13:20.9	2.13:20.10		Etham linked to the boundary noun.
+accept	2.13:1.6	2.13:1.6	renders	Converb expresses quotative subordination.
+accept	2.13:2.5	2.13:2.5	renders	Relative introduces the opener paraphrase.
+accept	2.13:2.12	2.13:2.11	renders	Preposition with mankind.
+accept	2.13:2.15	2.13:2.15	renders	Preposition with cattle.
+accept	2.13:2.17,2.13:2.18	2.13:2.18	renders	Preposition and first-person suffix.
+accept	2.13:2.19	2.13:2.19	renders	Independent subject pronoun.
+accept	2.13:3.7	2.13:3.12	renders	Day demonstrative.
+accept	2.13:3.9	2.13:3.13	renders	Temporal relative.
+accept	2.13:3.18	2.13:3.21,2.13:3.22	renders	Instrumental strength expresses prefix and noun.
+accept	2.13:3.22	2.13:3.26	renders	Second-person plural object pronoun.
+accept	2.13:3.23	2.13:3.28	renders	Place reference in the fused adverb.
+accept	2.13:3.26	2.13:3.31	renders	Future auxiliary of eating.
+accept	2.13:5.6	2.13:5.4	renders	Object suffix on the verb of bringing.
+accept	2.13:5.19,2.13:5.20	2.13:5.22	renders	Resumptive phrase expresses the land’s relative relation.
+accept	2.13:5.22	2.13:5.23	renders	Auxiliary of the prior oath.
+accept	2.13:5.23	2.13:5.24	renders	Dative renders recipient prefix.
+accept	2.13:5.27	2.13:5.28	renders	Second-person recipient of giving.
+accept	2.13:5.29	2.13:5.30	renders	Relative introduces the translated participle.
+accept	2.13:5.34	2.13:5.34	renders	Conjunction introduces the main clause.
+accept	2.13:5.35,2.13:5.36,2.13:5.37	2.13:5.35	renders	Subject and future form of serving.
+accept	2.13:5.38	2.13:5.40	renders	Demonstrative modifying service.
+accept	2.13:5.40	2.13:5.45	renders	Demonstrative modifying month.
+accept	2.13:5.41	2.13:5.41	renders	Temporal genitive expresses the prefix.
+accept	2.13:6.7	2.13:6.6	renders	Temporal genitive renders the day prefix.
+accept	2.13:7.2	2.13:7.2	renders	Future auxiliary of passive eating.
+accept	2.13:7.9	2.13:7.9	renders	First visibility verb.
+accept	2.13:7.10,2.13:7.11	2.13:7.10	renders	First possessive prepositional phrase.
+accept	2.13:7.15	2.13:7.14	renders	Second visibility verb.
+accept	2.13:7.16,2.13:7.17	2.13:7.15	renders	Second possessive prepositional phrase.
+accept	2.13:8.3	2.13:8.3,2.13:8.4	renders	Dative son renders prefix and noun.
+accept	2.13:8.4	2.13:8.4	renders	Possessive suffix on son.
+accept	2.13:8.5	2.13:8.9	renders	Demonstrative modifying day.
+accept	2.13:8.6	2.13:8.5	renders	Temporal genitive expresses the prefix.
+accept	2.13:8.7	2.13:8.10	renders	Converb expresses quotative subordination.
+accept	2.13:8.9	2.13:8.12,2.13:8.13	renders	Renders the compound preposition.
+accept	2.13:8.12	2.13:8.15	renders	Verb of doing.
+accept	2.13:8.15	2.13:8.18	renders	Temporal conjunction renders the infinitive prefix.
+accept	2.13:9.3	2.13:9.3	renders	Second-person recipient of the sign.
+accept	2.13:9.4	2.13:9.2	renders	Expresses the verb’s implicit subject.
+accept	2.13:9.5	2.13:9.4	renders	Predicative prefix before sign.
+accept	2.13:9.19	2.13:9.14	renders	Written copula with instruction.
+accept	2.13:9.25	2.13:9.20	renders	Instrumental hand renders the prefix.
+accept	2.13:9.29	2.13:9.25	renders	Source preposition before Egypt.
+accept	2.13:10.3	2.13:10.2	renders	Main verb of keeping.
+accept	2.13:10.6	2.13:10.8	renders	Temporal prefix before appointed time.
+accept	2.13:10.11	2.13:10.11	renders	First interval in the annual expression.
+accept	2.13:10.12	2.13:10.12	renders	Renders the directional ending.
+accept	2.13:11.5	2.13:11.4	renders	Object suffix on the verb of bringing.
+accept	2.13:11.10	2.13:11.10,2.13:11.11	renders	Renders the compound comparison conjunction.
+accept	2.13:11.11,2.13:11.12	2.13:11.12	renders	Oath verb and pluperfect auxiliary.
+accept	2.13:11.13	2.13:11.13	renders	Second-person recipient of the oath.
+accept	2.13:11.15	2.13:11.15	renders	Dative renders recipient prefix.
+accept	2.13:11.20	2.13:11.19	renders	Second-person recipient of the land.
+accept	2.13:12.4	2.13:12.4	renders	Relative introduces the opener paraphrase.
+accept	2.13:12.11	2.13:12.10,2.13:12.11	renders	Substantivized adjective renders firstborn offspring.
+accept	2.13:12.15,2.13:12.16	2.13:12.15	renders	Possession phrase renders prefix and suffix.
+accept	2.13:13.4,2.13:13.5,2.13:13.6	2.13:13.3	renders	Relative clause renders the donkey’s firstborn.
+accept	2.13:13.8	2.13:13.6	renders	Instrumental case renders the exchange prefix.
+accept	2.13:13.13	2.13:13.12	renders	Conjunction introduces the consequence.
+accept	2.13:13.15	2.13:13.13	renders	Object suffix identifies whose neck is broken.
+accept	2.13:14.4	2.13:14.6	renders	Time adverb for the next day.
+accept	2.13:14.6	2.13:14.4	renders	Object suffix on the verb of asking.
+accept	2.13:14.9	2.13:14.7	renders	Converb expresses quotative subordination.
+accept	2.13:14.11	2.13:14.10	renders	Demonstrative inside the question.
+accept	2.13:14.12	2.13:14.11	renders	Conjunction introducing the reply.
+accept	2.13:14.13	2.13:14.12	renders	Verb of replying.
+accept	2.13:14.14	2.13:14.13	renders	Preposition with third-person suffix.
+accept	2.13:14.15	2.13:14.14,2.13:14.15	renders	Instrumental strength expresses prefix and noun.
+accept	2.13:14.21	2.13:14.19	renders	First source preposition before Egypt.
+accept	2.13:15.5	2.13:15.4	renders	Expresses the causative action of hardening.
+accept	2.13:15.9	2.13:15.6	renders	Conjunction introduces the infinitive complement.
+accept	2.13:15.25,2.13:15.26	2.13:15.20	renders	Two-word expression of the endpoint.
+accept	2.13:15.29	2.13:15.23	renders	Preposition in the compound causal expression.
+accept	2.13:15.32,2.13:15.33	2.13:15.26	renders	Part of the periphrastic sacrifice verb.
+accept	2.13:15.35	2.13:15.27	renders	Dative renders recipient prefix.
+accept	2.13:15.37	2.13:15.33	renders	Adjective expresses male sex.
+accept	2.13:15.39	2.13:15.30	renders	Relative introduces the opener paraphrase.
+accept	2.13:16.3	2.13:16.2	renders	Expresses the verb’s implicit subject.
+accept	2.13:16.16	2.13:16.13,2.13:16.14	renders	Instrumental strength expresses prefix and noun.
+accept	2.13:17.3	2.13:17.3	renders	Temporal conjunction renders the infinitive prefix.
+accept	2.13:17.5,2.13:17.6	2.13:17.4	renders	Release verb and auxiliary in the temporal clause.
+accept	2.13:17.12,2.13:17.13	2.13:17.11	renders	Leading verb and object suffix.
+accept	2.13:17.18	2.13:17.17	renders	Copula expresses the adjectival predicate.
+accept	2.13:17.20	2.13:17.18	renders	Independent pronoun referring to the route.
+accept	2.13:17.26	2.13:17.23	renders	Verb of reconsidering.
+accept	2.13:17.30	2.13:17.27	renders	Infinitive suffix supplies the collective subject.
+accept	2.13:17.34	2.13:17.22	renders	Lest also governs the coordinated return.
+accept	2.13:17.35	2.13:17.30	renders	Verb of returning.
+accept	2.13:18.2,2.13:18.6	2.13:18.2	renders	Leading around expresses the causative turn.
+accept	2.13:18.10	2.13:18.10	renders	Preposition expresses the bare destination phrase.
+accept	2.13:18.14	2.13:18.14	renders	Verb of going up out of Egypt.
+accept	2.13:18.20	2.13:18.13	renders	Describes the Israelites as armed.
+accept	2.13:19.4,2.13:19.5	2.13:19.7	renders	First accompaniment phrase with Moses.
+accept	2.13:19.10,2.13:19.12	2.13:19.10	renders	Subject pronoun and pluperfect auxiliary.
+accept	2.13:19.15	2.13:19.14	renders	Converb expresses quotative subordination.
+accept	2.13:19.16	2.13:19.16	renders	Emphasis renders the infinitive absolute.
+accept	2.13:19.19	2.13:19.19	renders	Second-person plural object pronoun.
+accept	2.13:19.21,2.13:19.22	2.13:19.21	renders	Subject and verb of carrying out.
+accept	2.13:19.23,2.13:19.24	2.13:19.26	renders	Second accompaniment phrase with Israel.
+accept	2.13:19.25,2.13:19.26	2.13:19.23	renders	Bones and first-person possessive suffix.
+accept	2.13:19.27	2.13:19.24	renders	Source prefix expressed within the adverb.
+accept	2.13:20.7	2.13:20.6	renders	Encampment verb.
+accept	2.13:20.9	2.13:20.8	renders	Place name Etham.
+accept	2.13:20.10	2.13:20.9	renders	Locative prefix before boundary.
+accept	2.13:20.11	2.13:20.10	renders	Boundary of the wilderness.
+accept	2.13:21.4	2.13:21.4,2.13:21.5	renders	Renders the compound spatial preposition.
+accept	2.13:21.5	2.13:21.5	renders	Third-person plural suffix in the spatial phrase.
+accept	2.13:21.20	2.13:21.20	renders	Verb of giving light.
+accept	2.13:21.21	2.13:21.21	renders	Dative recipient of light.
+accept	2.13:21.22	2.13:21.22	renders	Purpose prefix before going.
+accept	2.13:22.2	2.13:22.2	renders	Verb of departing.
+accept	2.13:22.11	2.13:22.12	renders	Prepositional part of the spatial expression.
+accept	2.13:22.12	2.13:22.13	renders	Face noun in the spatial expression.

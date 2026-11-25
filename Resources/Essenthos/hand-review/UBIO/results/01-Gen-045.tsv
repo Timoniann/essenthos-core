@@ -1,0 +1,161 @@
+kind	from	to	relation	reason
+fixed	1.45:1			Restored missing actions, pronouns, and prepositional links.
+fixed	1.45:2			Restored the crying expression and both hearing verbs.
+fixed	1.45:3			Added the question particle, answer verb, and pronoun links.
+fixed	1.45:4			Added the preposition, subject, auxiliary, and relative object links.
+fixed	1.45:5			Restored the prohibition, pronouns, eyes, and purpose preposition.
+fixed	1.45:6			Added the deictic particle, locative preposition, and existential verbs.
+unsure	1.45:7			Corrected the beneficiary link. Some wording in the survival paraphrase remains uncertain.
+fixed	1.45:8			Restored pronouns and relations expressed by Ukrainian case and adjective forms.
+fixed	1.45:9			Added missing verbs, pronouns, and relations expressed by case.
+fixed	1.45:10			Restored the approach preposition, shared livestock wording, and final possessive.
+fixed	1.45:11			Added the object pronoun, famine copula, and final possessive.
+fixed	1.45:12			Added both verbs and the addressee pronoun.
+fixed	1.45:13			Restored the first father phrase and the bringing verb. The final Hebrew possessive means my, while UBIO reads your.
+fixed	1.45:14			Added the subject pronoun and completed the compound conjunction.
+fixed	1.45:15			Added pronouns, the accompaniment preposition, and the second element of afterward.
+fixed	1.45:16			Restored the announcement, locative relation, and elements of the evaluation.
+fixed	1.45:17			Added the dative addressee, arrival verb, and directional links.
+fixed	1.45:18			Completed the conjunction and added the approach and recipient links.
+fixed	1.45:19			Added the passive paraphrase, demonstrative, and reflexive recipient.
+fixed	1.45:20			Restored the eye phrase, prohibition, and final possession clause.
+fixed	1.45:21			Added both recipients and both prepositions.
+fixed	1.45:22			Restored the distributive recipient phrase and Benjamin's dative relation.
+fixed	1.45:23			Added the first recipient relation, subject pronoun, and journey preposition.
+fixed	1.45:24			Added subjects, the departure verb, both addressee words, and the negation.
+fixed	1.45:25			Completed the compound conjunction and linked the first destination preposition.
+fixed	1.45:26			Restored the recipients, clause marker, rule phrase, and past auxiliary.
+unsure	1.45:27			Restored pronouns and the addressee preposition. The source of the temporal connector remains uncertain.
+unsure	1.45:28			Completed the temporal expression. Whether the emphatic particle renders the cohortative remains uncertain.
+refuse	1.45:7.8	1.45:7.6		Beneficiary preposition linked to the purpose prefix.
+accept	1.45:1.6	1.45:1.7	renders	Presence relation before all.
+accept	1.45:1.8	1.45:1.10	renders	Relative clause renders the participle.
+accept	1.45:1.10,1.45:1.11	1.45:1.11	renders	Suffixed preposition expresses both words.
+accept	1.45:1.13	1.45:1.12	renders	Part of the compound conjunction.
+accept	1.45:1.15	1.45:1.14	renders	Causative imperative to bring out.
+accept	1.45:1.17	1.45:1.16	renders	People renders the generic noun.
+accept	1.45:1.19	1.45:1.18	renders	First-person prepositional suffix.
+accept	1.45:1.22	1.45:1.21	renders	Existential rendering of stood.
+accept	1.45:1.23,1.45:1.24	1.45:1.23	renders	Suffixed accompaniment preposition.
+accept	1.45:1.26	1.45:1.24	renders	Temporal prefix on the infinitive.
+accept	1.45:1.28	1.45:1.25	renders	Reflexive disclosure verb.
+accept	1.45:1.29	1.45:1.27	renders	Dative renders the addressee preposition.
+accept	1.45:2.2	1.45:2.2	renders	Subject carried by the finite verb.
+accept	1.45:2.3	1.45:2.4	renders	Adverb conveys the audible voice.
+accept	1.45:2.4	1.45:2.2,1.45:2.6	renders	Finite crying verb renders the action and weeping.
+accept	1.45:2.6	1.45:2.8	renders	First hearing verb.
+accept	1.45:2.9	1.45:2.11	renders	Second hearing verb.
+accept	1.45:3.9	1.45:3.8	renders	Interrogative particle.
+accept	1.45:3.19	1.45:3.18	renders	Object suffix of the answer clause.
+accept	1.45:3.20	1.45:3.17	renders	Infinitive of answering.
+accept	1.45:3.24	1.45:3.22	renders	Suffix identifies the person they feared.
+accept	1.45:4.9	1.45:4.8	renders	Approach preposition.
+accept	1.45:4.15	1.45:4.12	renders	Subject of the second speech verb.
+accept	1.45:4.21	1.45:4.18	renders	Object relative absorbs the resumptive pronoun.
+accept	1.45:4.24	1.45:4.17	renders	Auxiliary of the past selling verb.
+accept	1.45:5.6,1.45:5.8,1.45:5.9	1.45:5.7	renders	Jussive verb rendered by a periphrasis.
+accept	1.45:5.7	1.45:5.6	renders	Negation in the second prohibition.
+accept	1.45:5.11,1.45:5.12	1.45:5.9	renders	Eye noun with possessive suffix.
+accept	1.45:5.16	1.45:5.12	renders	Object pronoun of sold.
+accept	1.45:5.22	1.45:5.17	renders	Object suffix of sent.
+accept	1.45:5.23	1.45:5.19	renders	Prefix contributes to the compound preposition.
+accept	1.45:5.24	1.45:5.20	renders	Second-person plural suffix.
+accept	1.45:5.25	1.45:5.15	renders	Purpose preposition.
+accept	1.45:6.2	1.45:6.2	renders	Deictic particle.
+accept	1.45:6.6	1.45:6.6	renders	Locative prefix.
+accept	1.45:6.10	1.45:6.13	renders	Existential verb in the remaining years clause.
+accept	1.45:6.15	1.45:6.15	renders	Existential force of the negative predicate.
+accept	1.45:7.3	1.45:7.2	renders	Object suffix of sent.
+accept	1.45:7.5	1.45:7.4	renders	Prefix contributes to the compound preposition.
+accept	1.45:7.6	1.45:7.5	renders	Second-person plural suffix.
+accept	1.45:7.7	1.45:7.6,1.45:7.7	renders	Purpose expressed by the infinitive.
+accept	1.45:7.8,1.45:7.9	1.45:7.8	renders	First suffixed beneficiary preposition.
+accept	1.45:7.12	1.45:7.9	renders	Remaining renders the remnant noun verbally.
+accept	1.45:7.17,1.45:7.20,1.45:7.21	1.45:7.15	renders	Periphrastic rendering of keep alive.
+accept	1.45:7.18,1.45:7.19	1.45:7.16	renders	Second suffixed beneficiary preposition.
+accept	1.45:7.24	1.45:7.18	renders	Survivors render the escaped remnant.
+accept	1.45:8.7	1.45:8.6	renders	Independent first-person object pronoun.
+accept	1.45:8.12,1.45:8.14	1.45:8.12	renders	Verb carries both subject and object.
+accept	1.45:8.15	1.45:8.13	renders	Instrumental expresses the appointed role.
+accept	1.45:8.16	1.45:8.15	renders	Adjective expresses the relation to Pharaoh.
+accept	1.45:8.18	1.45:8.18	renders	Instrumental expresses the appointed role.
+accept	1.45:8.20	1.45:8.20	renders	Genitive expresses lordship over the household.
+accept	1.45:8.25	1.45:8.25	renders	Genitive expresses the domain of rule.
+accept	1.45:9.1	1.45:9.1	renders	Imperative to hasten.
+accept	1.45:9.8	1.45:9.6	renders	Part of the compound conjunction.
+accept	1.45:9.9	1.45:9.7	renders	Speech verb before the message.
+accept	1.45:9.10	1.45:9.8	renders	Suffixed addressee preposition.
+accept	1.45:9.12	1.45:9.10	renders	Speech verb introducing Joseph's words.
+accept	1.45:9.18	1.45:9.13	renders	First-person suffix of made.
+accept	1.45:9.19	1.45:9.15	renders	Instrumental expresses the appointed role.
+accept	1.45:9.21	1.45:9.17	renders	Genitive expresses the domain of lordship.
+accept	1.45:9.24	1.45:9.21	renders	Direction toward the speaker.
+accept	1.45:10.9	1.45:10.9	renders	Preposition after near.
+accept	1.45:10.23,1.45:10.24	1.45:10.17	renders	Shared livestock noun and possessive cover the flock.
+accept	1.45:10.28	1.45:10.23	renders	Suffixed preposition expresses possession.
+accept	1.45:11.3	1.45:11.3	renders	Second-person object pronoun.
+accept	1.45:11.7	1.45:11.9	renders	Supplied copula asserts continuing famine.
+accept	1.45:11.21	1.45:11.18	renders	Suffixed preposition expresses possession.
+accept	1.45:12.10	1.45:12.4	renders	Seeing participle.
+accept	1.45:12.15	1.45:12.12	renders	Speaking participle.
+accept	1.45:12.17	1.45:12.13	renders	Second-person plural addressee suffix.
+accept	1.45:13.3	1.45:13.3,1.45:13.4	renders	Dative father noun includes the recipient relation.
+accept	1.45:13.4	1.45:13.4	renders	First-person possessive suffix.
+accept	1.45:13.20	1.45:13.18	renders	Causative verb for bringing down.
+accept	1.45:14.3	1.45:14.2	renders	Subject carried by fell.
+accept	1.45:14.10	1.45:14.7	renders	Part of the compound conjunction.
+accept	1.45:15.3	1.45:15.2	renders	Subject carried by kissed.
+accept	1.45:15.10	1.45:15.8	renders	Plural suffix of over them.
+accept	1.45:15.12	1.45:15.11	renders	Afterward incorporates after that.
+accept	1.45:15.16,1.45:15.17	1.45:15.14	renders	Suffixed accompaniment preposition.
+accept	1.45:16.2	1.45:16.4	renders	Passive hearing rendered as news spreading.
+accept	1.45:16.3	1.45:16.5	renders	Bare noun expresses the place.
+accept	1.45:16.6	1.45:16.3	renders	News renders the report noun.
+accept	1.45:16.12,1.45:16.13	1.45:16.13	renders	Copula and subject render the evaluation verb.
+accept	1.45:16.16	1.45:16.15	renders	Eyes in the Pharaoh phrase.
+accept	1.45:16.20	1.45:16.19	renders	Eyes in the servants phrase.
+accept	1.45:17.8	1.45:17.7	renders	Dative renders the addressee preposition.
+accept	1.45:17.15	1.45:17.14	renders	Part of the compound conjunction.
+accept	1.45:17.17	1.45:17.16	renders	Arrival imperative.
+accept	1.45:17.18	1.45:17.17	renders	Preposition renders the directional ending.
+accept	1.45:18.9	1.45:18.8	renders	Part of the compound conjunction.
+accept	1.45:18.11	1.45:18.10	renders	Direction toward the speaker.
+accept	1.45:18.16	1.45:18.13	renders	Suffixed recipient preposition.
+accept	1.45:19.3	1.45:19.3	renders	Receiving the order renders the passive verb.
+accept	1.45:19.7	1.45:19.4	renders	Demonstrative object of do.
+accept	1.45:19.9	1.45:19.7	renders	Reflexive beneficiary.
+accept	1.45:20.2,1.45:20.3	1.45:20.2	renders	Eye noun and possessive suffix.
+accept	1.45:20.4,1.45:20.6	1.45:20.4	renders	Jussive verb of pitying or sparing.
+accept	1.45:20.5	1.45:20.3	renders	Prohibitive negation.
+accept	1.45:20.14	1.45:20.12	renders	Suffixed preposition expresses possession.
+accept	1.45:20.15	1.45:20.13	renders	Independent subject pronoun.
+accept	1.45:21.9	1.45:21.8	renders	Recipient of the wagons.
+accept	1.45:21.11	1.45:21.11	renders	Preposition in the command idiom.
+accept	1.45:21.16	1.45:21.16	renders	Recipient of the provisions.
+accept	1.45:21.18	1.45:21.18	renders	Purpose preposition for the journey.
+accept	1.45:22.3	1.45:22.1,1.45:22.2	renders	Dative quantifier expresses both recipient and totality.
+accept	1.45:22.4	1.45:22.2	renders	Plural suffix of all of them.
+accept	1.45:22.5	1.45:22.4	renders	Distributive dative also renders the prefix.
+accept	1.45:22.9	1.45:22.10	renders	Dative name expresses the recipient relation.
+accept	1.45:23.2	1.45:23.2	renders	Dative father noun expresses the recipient relation.
+accept	1.45:23.5	1.45:23.4	renders	Subject carried by sent.
+accept	1.45:23.25	1.45:23.24	renders	Purpose preposition for the journey.
+accept	1.45:24.3	1.45:24.2	renders	Subject carried by sent away.
+accept	1.45:24.8	1.45:24.6	renders	Departure verb.
+accept	1.45:24.11	1.45:24.8	renders	Subject carried by said.
+accept	1.45:24.12,1.45:24.13	1.45:24.9	renders	Suffixed addressee preposition.
+accept	1.45:24.14	1.45:24.10	renders	Prohibitive negation.
+accept	1.45:25.7	1.45:25.5	renders	Part of the compound conjunction.
+accept	1.45:25.9	1.45:25.7	renders	Bare place noun expresses the first destination.
+accept	1.45:26.3	1.45:26.3	renders	Suffixed addressee preposition.
+accept	1.45:26.9	1.45:26.10	renders	Marker of the second reported clause.
+accept	1.45:26.11	1.45:26.12	renders	Ruling participle.
+accept	1.45:26.12	1.45:26.13	renders	Preposition marks the domain of rule.
+accept	1.45:26.21,1.45:26.24	1.45:26.22	renders	Subject and past auxiliary belong to believed.
+accept	1.45:26.25	1.45:26.23	renders	Suffixed complement of believed.
+accept	1.45:27.3	1.45:27.3	renders	Suffixed addressee preposition.
+accept	1.45:27.9	1.45:27.9	renders	Subject carried by spoke.
+accept	1.45:27.10,1.45:27.11	1.45:27.10	renders	Preposition and suffix identify the addressees.
+accept	1.45:27.15	1.45:27.12	renders	Subject carried by saw.
+accept	1.45:27.22	1.45:27.21	renders	Object pronoun of the carrying infinitive.
+accept	1.45:28.15	1.45:28.12	renders	Prefix forms part of the temporal connective.

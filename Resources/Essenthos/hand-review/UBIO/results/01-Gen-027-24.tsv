@@ -1,0 +1,179 @@
+kind	from	to	relation	reason
+fixed	1.27:24			Missing subject pronouns and demonstrative.
+fixed	1.27:25			Missing verbs, pronouns, mood marker, and function words.
+fixed	1.27:26			Missing object of the preposition and request particle.
+fixed	1.27:27			Missing pronouns, garment, connective, and final blessing verb.
+fixed	1.27:28			Missing wish marker, recipient, source preposition, and wine qualifier.
+fixed	1.27:29			Missing jussive markers, verb forms, and pronouns.
+unsure	1.27:30			Reassigned the exit verb to the finite form. Separate rendering of the infinitive emphasis is uncertain.
+fixed	1.27:31			Missing verbs, auxiliaries, pronouns, and prepositions.
+fixed	1.27:32			Second possessive was on the wrong noun. Recipient and subject links were missing.
+fixed	1.27:33			Trembling noun was linked to the verb. Other clause links were missing.
+fixed	1.27:34			Missing degree, addressee, and emphatic pronoun links.
+fixed	1.27:35			Missing subject, instrumental prefix, past auxiliary, and connective.
+unsure	1.27:36			The causal link is clear. The opening question force is uncertain.
+fixed	1.27:37			Missing recipient, role, provision, and question links.
+fixed	1.27:38			Missing question marker, possessive phrase, and blessing pronouns.
+fixed	1.27:39			Missing privative prepositions, addressee suffix, and height component.
+fixed	1.27:40			Adversative adverb was linked to the wrong word. Conditional and neck links were missing.
+fixed	1.27:41			Object pronoun was linked to father. Mourning and wish links were missing.
+fixed	1.27:42			Missing dative prefix, son phrases, and final clause links.
+fixed	1.27:43			Missing reflexive dative and directional ending.
+fixed	1.27:44			Pronoun was linked to the quantity word. Duration and return links were missing.
+fixed	1.27:45			Missing pronouns, auxiliaries, retrieval verb, and source adverb.
+fixed	1.27:46			Missing addressee, life, cause, comparison, and question links.
+refuse	1.27:30.13	1.27:30.14		Exit verb renders the finite form.
+refuse	1.27:32.16	1.27:32.11		Second possessive modifies firstborn.
+refuse	1.27:33.4	1.27:33.2		Trembling noun has its own counterpart.
+refuse	1.27:40.14	1.27:40.10		Adversative adverb does not render the verb.
+refuse	1.27:41.9	1.27:41.11		Object pronoun belongs to the blessing verb.
+refuse	1.27:44.4	1.27:44.5		Pronoun renders the suffix on with.
+accept	1.27:24.3	1.27:24.2	renders	Subject of the first speech verb.
+accept	1.27:24.4	1.27:24.4	renders	Demonstrative in the question.
+accept	1.27:24.10	1.27:24.8	renders	Subject of the reply.
+accept	1.27:25.4	1.27:25.3	renders	Imperative to bring near.
+accept	1.27:25.6	1.27:25.4	renders	First-person recipient.
+accept	1.27:25.8	1.27:25.6	renders	Cohortative mood.
+accept	1.27:25.10	1.27:25.7	renders	Source preposition.
+accept	1.27:25.13,1.27:25.14	1.27:25.9	renders	Son and possessive suffix.
+accept	1.27:25.15	1.27:25.10	renders	Purpose conjunction.
+accept	1.27:25.17	1.27:25.11	renders	Object suffix of bless.
+accept	1.27:25.21,1.27:25.22	1.27:25.14	renders	Bringing verb and its subject.
+accept	1.27:25.23	1.27:25.15	renders	Recipient of what was brought.
+accept	1.27:25.25	1.27:25.17	renders	Subject of eating.
+accept	1.27:25.29	1.27:25.20	renders	Recipient of the wine.
+accept	1.27:25.32	1.27:25.23	renders	Subject of drinking.
+accept	1.27:26.4	1.27:26.3	renders	Pronoun suffixed to the preposition.
+accept	1.27:26.9	1.27:26.7	renders	Particle accompanying the request.
+accept	1.27:27.2	1.27:27.2	renders	Subject of approaching.
+accept	1.27:27.6	1.27:27.5	renders	Pronominal complement of kissing.
+accept	1.27:27.8	1.27:27.7	renders	Subject of smelling.
+accept	1.27:27.11,1.27:27.12	1.27:27.10	renders	Garment and possessive suffix.
+accept	1.27:27.17	1.27:27.13	renders	Part of the compound connective.
+accept	1.27:27.27,1.27:27.29	1.27:27.22	renders	Blessing verb and object suffix.
+accept	1.27:28.2	1.27:28.2	renders	Jussive mood of give.
+accept	1.27:28.4	1.27:28.3	renders	Recipient of the gift.
+accept	1.27:28.10	1.27:28.11	renders	Source preposition for earth's richness.
+accept	1.27:28.18	1.27:28.19	renders	Newness conveyed by the wine term.
+accept	1.27:29.1,1.27:29.2	1.27:29.1	renders	Wish marker and object suffix of serve.
+accept	1.27:29.7,1.27:29.9	1.27:29.4	renders	First bowing verb and wish marker.
+accept	1.27:29.8	1.27:29.5	renders	Recipient of the first homage.
+accept	1.27:29.10	1.27:29.7	renders	Imperative of be.
+accept	1.27:29.16	1.27:29.12	renders	Wish marker for the second bowing verb.
+accept	1.27:29.17	1.27:29.13	renders	Recipient of the second homage.
+accept	1.27:29.22	1.27:29.16	renders	Relative subject of the cursing participle.
+accept	1.27:29.27,1.27:29.29	1.27:29.19	renders	Relative subject and object of the blessing participle.
+accept	1.27:30.3	1.27:30.4	renders	Second part of the temporal conjunction.
+accept	1.27:30.4,1.27:30.5	1.27:30.5	renders	Completion verb and past auxiliary.
+accept	1.27:30.7	1.27:30.7	renders	Infinitive marker in the verbal complement.
+accept	1.27:30.11,1.27:30.12	1.27:30.13	renders	Compound particle expressing immediacy.
+accept	1.27:30.13,1.27:30.14	1.27:30.15	renders	Finite exit verb and past auxiliary.
+accept	1.27:30.16	1.27:30.18	renders	Second part of the compound source preposition.
+accept	1.27:30.21	1.27:30.22	renders	Connective introducing Esau's arrival.
+accept	1.27:31.4	1.27:31.2	renders	Preparation verb.
+accept	1.27:31.8	1.27:31.8	renders	Dative ending expresses the recipient prefix.
+accept	1.27:31.13	1.27:31.11	renders	Subject of the speech verb.
+accept	1.27:31.14	1.27:31.12	renders	Preposition introducing the addressee.
+accept	1.27:31.17,1.27:31.18	1.27:31.14	renders	Rising verb and wish marker.
+accept	1.27:31.22	1.27:31.17	renders	Wish marker for eating.
+accept	1.27:31.24	1.27:31.18	renders	Source preposition.
+accept	1.27:31.29	1.27:31.21,1.27:31.22	renders	Compound purpose expression.
+accept	1.27:31.32,1.27:31.33	1.27:31.23	renders	Blessing verb and object suffix.
+accept	1.27:32.3,1.27:32.4	1.27:32.3	renders	Recipient preposition and suffix.
+accept	1.27:32.11	1.27:32.9	renders	Subject of the reply.
+accept	1.27:32.16	1.27:32.12	renders	Possessive suffix on firstborn.
+accept	1.27:33.4	1.27:33.4	renders	Cognate noun meaning trembling.
+accept	1.27:33.5	1.27:33.6	renders	Degree marker in the intensifying phrase.
+accept	1.27:33.6	1.27:33.7	renders	Intensifier.
+accept	1.27:33.7	1.27:33.5	renders	Adjective modifying trembling.
+accept	1.27:33.9	1.27:33.8	renders	Part of the compound connective.
+accept	1.27:33.12,1.27:33.13	1.27:33.11	renders	Emphatic then in the question.
+accept	1.27:33.15,1.27:33.18	1.27:33.14	renders	Relative clause renders the hunting participle.
+accept	1.27:33.20	1.27:33.18	renders	Preposition of the recipient phrase.
+accept	1.27:33.24	1.27:33.20	renders	First-person subject of eating.
+accept	1.27:33.26	1.27:33.21	renders	Partitive preposition.
+accept	1.27:33.28	1.27:33.23	renders	Prefix in the compound temporal marker.
+accept	1.27:33.29	1.27:33.25	renders	Arrival verb.
+accept	1.27:33.35	1.27:33.28	renders	Additive particle introducing the confirmation.
+accept	1.27:33.36	1.27:33.30	renders	Subject of the finite copula.
+accept	1.27:34.1	1.27:34.1	renders	Temporal marker before hearing.
+accept	1.27:34.10	1.27:34.10	renders	Adjective describing the cry.
+accept	1.27:34.12	1.27:34.13	renders	Extent component of the degree expression.
+accept	1.27:34.16	1.27:34.16	renders	Subject of the speech verb.
+accept	1.27:34.17	1.27:34.17	renders	Preposition introducing the addressee.
+accept	1.27:34.21	1.27:34.19	renders	Object suffix of bless.
+accept	1.27:34.22	1.27:34.20	renders	Additive particle.
+accept	1.27:34.23	1.27:34.21	renders	Independent emphatic first-person pronoun.
+accept	1.27:35.2	1.27:35.2	renders	Subject of the reply.
+accept	1.27:35.4	1.27:35.5	renders	Instrumental ending renders the manner prefix.
+accept	1.27:35.6	1.27:35.3	renders	Past auxiliary of the arrival verb.
+accept	1.27:35.10	1.27:35.7	renders	Part of the compound connective.
+accept	1.27:36.4	1.27:36.4	renders	Causal element in the opening clause.
+accept	1.27:36.5	1.27:36.5	renders	Naming verb.
+accept	1.27:36.6,1.27:36.7	1.27:36.6	renders	Name and possessive suffix.
+accept	1.27:36.10,1.27:36.14	1.27:36.9	renders	Subject and object of the supplanting verb.
+accept	1.27:36.12	1.27:36.11	renders	Number expressed by the dual.
+accept	1.27:36.19	1.27:36.16	renders	Presentative particle before now.
+accept	1.27:36.26	1.27:36.21	renders	Subject of the second speech verb.
+accept	1.27:36.27	1.27:36.22	renders	Question marker in the request.
+accept	1.27:36.28,1.27:36.30	1.27:36.24	renders	Setting-aside verb and its subject.
+accept	1.27:36.31	1.27:36.25	renders	Preposition of the beneficiary phrase.
+accept	1.27:37.6	1.27:37.6	renders	Preposition introducing Esau as addressee.
+accept	1.27:37.13,1.27:37.14	1.27:37.11	renders	Preposition and pronominal suffix.
+accept	1.27:37.17	1.27:37.17	renders	Recipient of the servants.
+accept	1.27:37.21	1.27:37.18	renders	Prefix marking the role of servants.
+accept	1.27:37.25,1.27:37.26	1.27:37.24	renders	Provision verb and object suffix.
+accept	1.27:37.27	1.27:37.21	renders	Grain rendered as bread.
+accept	1.27:37.29,1.27:37.30	1.27:37.23	renders	New wine expressed in two words.
+accept	1.27:37.33,1.27:37.34	1.27:37.27	renders	Emphatic then in the question.
+accept	1.27:37.35	1.27:37.26	renders	Beneficiary of the proposed action.
+accept	1.27:38.7	1.27:38.6	renders	Interrogative prefix.
+accept	1.27:38.8,1.27:38.9	1.27:38.10	renders	Possessive relation and pronominal suffix.
+accept	1.27:38.11	1.27:38.9	renders	Demonstrative referring to the blessing.
+accept	1.27:38.16	1.27:38.12	renders	Object suffix of bless.
+accept	1.27:38.17	1.27:38.13	renders	Additive particle.
+accept	1.27:38.18	1.27:38.14	renders	Independent emphatic first-person pronoun.
+accept	1.27:38.27	1.27:38.20	renders	Part of the compound connective.
+accept	1.27:39.7	1.27:39.5	renders	Part of the compound connective.
+accept	1.27:39.10	1.27:39.7	renders	Pronoun suffixed to the preposition.
+accept	1.27:39.15	1.27:39.9	renders	Privative preposition with earth's richness.
+accept	1.27:39.19	1.27:39.16	renders	Privative preposition with dew.
+accept	1.27:39.22	1.27:39.21	renders	Height component of from above.
+accept	1.27:40.2	1.27:40.2	renders	Preposition expressing means of living.
+accept	1.27:40.10	1.27:40.8	renders	Subject of serving.
+accept	1.27:40.15	1.27:40.11,1.27:40.12	renders	Compound temporal conjunction.
+accept	1.27:40.17	1.27:40.14	renders	Connective introducing the result.
+accept	1.27:40.21	1.27:40.18	renders	Second part of the compound preposition for removal.
+accept	1.27:40.22,1.27:40.23	1.27:40.19	renders	Neck and possessive suffix.
+accept	1.27:41.8,1.27:41.9	1.27:41.10	renders	Blessing verb and object suffix.
+accept	1.27:41.18,1.27:41.19	1.27:41.17	renders	Approach verb and wish marker.
+accept	1.27:41.22	1.27:41.19	renders	Preposition expresses the mourning noun's construct relation.
+accept	1.27:42.3	1.27:42.3	renders	Dative ending expresses the recipient prefix.
+accept	1.27:42.6,1.27:42.8	1.27:42.8	renders	Elder son's noun and possessive suffix.
+accept	1.27:42.15,1.27:42.16	1.27:42.17	renders	Younger son's noun and possessive suffix.
+accept	1.27:42.18	1.27:42.20	renders	Part of the compound connective.
+accept	1.27:42.21	1.27:42.22	renders	Pronoun suffixed to the preposition.
+accept	1.27:42.26	1.27:42.26	renders	Reflexive consolation verb.
+accept	1.27:42.27,1.27:42.28	1.27:42.28	renders	Phrase introducing the content of the consolation.
+accept	1.27:42.29,1.27:42.30	1.27:42.29	renders	Killing verb and object suffix.
+accept	1.27:43.12	1.27:43.10	renders	Reflexive dative.
+accept	1.27:43.17	1.27:43.14	renders	Preposition renders the directional ending.
+accept	1.27:44.3,1.27:44.4	1.27:44.3	renders	Preposition and pronominal suffix.
+accept	1.27:44.6	1.27:44.4	renders	Days rendered as a span of time.
+accept	1.27:44.7	1.27:44.6	renders	Limit marker in the until clause.
+accept	1.27:44.9	1.27:44.8	renders	Verb of turning away.
+accept	1.27:45.8	1.27:45.5	renders	Second-person suffix on the source preposition.
+accept	1.27:45.10	1.27:45.7	renders	Subject of forgetting.
+accept	1.27:45.15	1.27:45.10	renders	Past auxiliary of doing.
+accept	1.27:45.16	1.27:45.11	renders	Pronominal recipient.
+accept	1.27:45.17	1.27:45.12	renders	Sequential connective introducing the result.
+accept	1.27:45.21,1.27:45.22	1.27:45.15	renders	Retrieval verb and object suffix.
+accept	1.27:45.23	1.27:45.16,1.27:45.17	renders	Source preposition and place adverb.
+accept	1.27:45.25,1.27:45.26	1.27:45.19	renders	Modal auxiliary and first-person subject.
+accept	1.27:46.4	1.27:46.4	renders	Dative ending expresses the addressee relation.
+accept	1.27:46.5	1.27:46.8	renders	Life as the thing found wearisome.
+accept	1.27:46.6,1.27:46.7	1.27:46.6	renders	Loathing verb and first-person experiencer.
+accept	1.27:46.8	1.27:46.9,1.27:46.10	renders	Compound causal preposition.
+accept	1.27:46.18	1.27:46.20	renders	Comparison prefix.
+accept	1.27:46.25	1.27:46.26	renders	Question word of purpose.
+accept	1.27:46.27	1.27:46.28	renders	Life rendered as an infinitive.

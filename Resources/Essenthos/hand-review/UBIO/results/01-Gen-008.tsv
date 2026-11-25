@@ -1,0 +1,138 @@
+kind	from	to	relation	reason
+fixed	1.8:1			Restored the animal, the wind verb, and prepositional links.
+fixed	1.8:2			Restored the verb for the rain stopping.
+fixed	1.8:3			Corrected the clause conjunction and restored the recession and timing links.
+fixed	1.8:4			Restored the date links and the verb for the ark settling.
+fixed	1.8:5			Removed a misplaced conjunction link and restored the recession, date, and mountaintop links.
+fixed	1.8:6			Restored the elapsed-time expression and the subject of the making verb.
+fixed	1.8:7			Restored the subjects, the raven’s movements, and the compound preposition.
+fixed	1.8:8			Restored the subject, reflexive, purpose marker, question marker, and compound preposition.
+fixed	1.8:9			Corrected the first object pronoun and restored links for the resting place and return.
+fixed	1.8:10			Restored the subject of waiting and the adjective modifying days.
+fixed	1.8:11			Restored the dove’s return, the evening phrase, and the links for the leaf in her beak.
+fixed	1.8:12			Restored subject, adjective, object pronoun, and return links.
+unsure	1.8:13			Restored the date and drying links. The force of «аж» before «ось» remains uncertain.
+fixed	1.8:14			Moved «сьомого» to the numeral and restored date relations.
+fixed	1.8:15			Restored the speech verb, divine title, and dative relation.
+fixed	1.8:16			Corrected the possessive on the sons and restored the accompaniment and kinship links.
+fixed	1.8:17			Restored animal, accompaniment, participle, and exhortation links.
+fixed	1.8:18			Restored accompaniment and daughters-in-law links.
+fixed	1.8:19			Moved «за» to its prefix and restored participle and subject links.
+fixed	1.8:20			Restored the dative prefix and the subject of taking.
+fixed	1.8:21			Corrected the repeated adverb and restored speech, youth, and comparison links.
+fixed	1.8:22			Restored the link for «дні».
+refuse	1.8:3.8	1.8:3.10		Conjunction inside the preceding return expression.
+refuse	1.8:5.9	1.8:5.6		Conjunction inside the preceding recession expression.
+refuse	1.8:9.31	1.8:9.30		Object pronoun of the later bringing clause.
+refuse	1.8:14.6	1.8:14.7		Numeral linked to the neighboring prefix.
+refuse	1.8:16.12	1.8:16.12		Possessive belongs to the first occurrence of sons.
+refuse	1.8:19.12	1.8:19.17		Preposition renders the preceding lamed.
+refuse	1.8:21.13	1.8:21.36		Adverb belongs to the first promise.
+accept	1.8:1.9	1.8:1.10	renders	Wild animal noun.
+accept	1.8:1.16,1.8:1.17	1.8:1.17	renders	With him in one suffixed preposition.
+accept	1.8:1.22	1.8:1.22	renders	Caused the wind to pass.
+accept	1.8:1.24	1.8:1.25	renders	Preposition over the earth.
+accept	1.8:2.12	1.8:2.10	renders	Verb for the rain stopping.
+accept	1.8:3.4	1.8:3.6	renders	Over component of the compound preposition.
+accept	1.8:3.6	1.8:3.11	renders	Second occurrence of returning.
+accept	1.8:3.7	1.8:3.9	renders	Continuative sense of the going idiom.
+accept	1.8:3.8	1.8:3.12	renders	Conjunction opening the recession clause.
+accept	1.8:3.9,1.8:3.11	1.8:3.13	renders	Periphrastic rendering of the diminishing verb.
+accept	1.8:3.12	1.8:3.17	renders	After expresses the endpoint in the Hebrew phrase.
+accept	1.8:4.3	1.8:4.5	renders	Temporal genitive renders the month prefix.
+accept	1.8:4.4	1.8:4.10	renders	Preposition introducing the day of the month.
+accept	1.8:4.5	1.8:4.11,1.8:4.12	renders	Compound numeral seventeen.
+accept	1.8:4.7	1.8:4.14	renders	Genitive expresses the day’s relation to the month.
+accept	1.8:4.9	1.8:4.2	renders	Verb for the ark settling.
+accept	1.8:5.2	1.8:5.5	renders	Continuative sense of the going idiom.
+accept	1.8:5.4	1.8:5.4,1.8:5.7	renders	Past verb renders were diminishing.
+accept	1.8:5.10	1.8:5.16,1.8:5.17	renders	Temporal genitive renders on the first.
+accept	1.8:5.13	1.8:5.18	renders	Genitive expresses the day’s relation to the month.
+accept	1.8:5.14	1.8:5.21	renders	Verb for becoming visible.
+accept	1.8:5.16	1.8:5.22	renders	Tops of the mountains.
+accept	1.8:6.3	1.8:6.3,1.8:6.4	renders	After renders the elapsed-time expression.
+accept	1.8:6.12	1.8:6.15	renders	Subject carried by the making verb.
+accept	1.8:7.3	1.8:7.2	renders	Subject carried by the sending verb.
+accept	1.8:7.6,1.8:7.7	1.8:7.7	renders	Flight verb and its explicit subject.
+accept	1.8:7.8	1.8:7.8	renders	Outward movement in the paired expression.
+accept	1.8:7.10	1.8:7.10	renders	Return movement in the paired expression.
+accept	1.8:7.16	1.8:7.16	renders	Over component of the compound preposition.
+accept	1.8:8.3	1.8:8.2	renders	Subject carried by the sending verb.
+accept	1.8:8.5	1.8:8.7	renders	Reflexive renders the pronominal suffix.
+accept	1.8:8.7	1.8:8.8	renders	Purpose marker before the infinitive.
+accept	1.8:8.9	1.8:8.10	renders	Indirect question marker.
+accept	1.8:8.13	1.8:8.15	renders	Over component of the compound preposition.
+accept	1.8:9.6	1.8:9.6	renders	Place component of resting place.
+accept	1.8:9.15	1.8:9.12	renders	Suffix on the first to him.
+accept	1.8:9.30,1.8:9.31	1.8:9.27	renders	Subject and object carried by the taking verb.
+accept	1.8:9.33	1.8:9.28	renders	Second part of the compound conjunction.
+accept	1.8:9.35	1.8:9.31	renders	Suffix on the second to him.
+accept	1.8:9.36	1.8:9.32	renders	Direction into the ark.
+accept	1.8:10.2	1.8:10.2	renders	Subject carried by the waiting verb.
+accept	1.8:10.5	1.8:10.6	renders	Adjective meaning other or additional.
+accept	1.8:11.2	1.8:11.5	renders	Dove noun.
+accept	1.8:11.3	1.8:11.2	renders	Coming verb in the return context.
+accept	1.8:11.5	1.8:11.3	renders	Suffix of to him.
+accept	1.8:11.6	1.8:11.8	renders	Adjective renders the evening noun.
+accept	1.8:11.7	1.8:11.6	renders	Temporal genitive expresses the time relation.
+accept	1.8:11.11,1.8:11.13	1.8:11.15	renders	Beak and its feminine possessor.
+accept	1.8:11.12	1.8:11.14	renders	Locative prefix on the beak.
+accept	1.8:11.16	1.8:11.13	renders	Plucked modifier of the leaf.
+accept	1.8:11.23	1.8:11.24	renders	Over component of the compound preposition.
+accept	1.8:12.2	1.8:12.2	renders	Subject carried by the waiting verb.
+accept	1.8:12.5	1.8:12.6	renders	Adjective meaning other or additional.
+accept	1.8:12.15	1.8:12.16	renders	Suffix of to him.
+accept	1.8:12.16	1.8:12.14	renders	Feminine subject carried by the finite verb.
+accept	1.8:12.18	1.8:12.15	renders	Return infinitive.
+accept	1.8:13.3	1.8:13.3	renders	Temporal genitive expresses the year relation.
+accept	1.8:13.4	1.8:13.6,1.8:13.7	renders	Six hundred component of the year.
+accept	1.8:13.6	1.8:13.4	renders	One component of the year.
+accept	1.8:13.8	1.8:13.9	renders	Temporal genitive of the first-month expression.
+accept	1.8:13.9	1.8:13.12,1.8:13.13	renders	Temporal genitive renders on the first day.
+accept	1.8:13.11	1.8:13.14	renders	Genitive expresses the day’s relation to the month.
+accept	1.8:13.14	1.8:13.21	renders	Over component of the compound preposition.
+accept	1.8:13.18	1.8:13.25	renders	Verb for removing the covering.
+accept	1.8:13.19	1.8:13.28	renders	Covering of the ark.
+accept	1.8:13.25	1.8:13.35	renders	Drying verb in the second clause.
+accept	1.8:13.26	1.8:13.36	renders	Surface of the ground.
+accept	1.8:14.2	1.8:14.2	renders	Temporal genitive renders the month prefix.
+accept	1.8:14.6	1.8:14.8	renders	Seven component of twenty-seven.
+accept	1.8:14.7	1.8:14.7	renders	Temporal genitive renders the day prefix.
+accept	1.8:14.8	1.8:14.12	renders	Genitive expresses the day’s relation to the month.
+accept	1.8:15.2	1.8:15.2	renders	Speech verb.
+accept	1.8:15.3	1.8:15.4	renders	Dative renders the addressee preposition.
+accept	1.8:15.4	1.8:15.3	renders	Divine title rendered as Lord.
+accept	1.8:16.6,1.8:16.7	1.8:16.13	renders	With you in one suffixed preposition.
+accept	1.8:16.11,1.8:16.12	1.8:16.9	renders	First occurrence of sons and its possessive suffix.
+accept	1.8:16.14	1.8:16.11,1.8:16.12	renders	Daughters-in-law renders wives of sons.
+accept	1.8:16.15	1.8:16.12	renders	Possessive suffix on the second occurrence of sons.
+accept	1.8:17.2	1.8:17.3	renders	Animal noun.
+accept	1.8:17.5	1.8:17.5	renders	Suffix of with you in the relative clause.
+accept	1.8:17.10	1.8:17.9	renders	Among the birds.
+accept	1.8:17.13	1.8:17.13	renders	Among the cattle.
+accept	1.8:17.16	1.8:17.17	renders	Among the creeping animals.
+accept	1.8:17.19,1.8:17.20	1.8:17.22	renders	Relative clause renders the creeping participle.
+accept	1.8:17.21	1.8:17.23	renders	Preposition on the earth in the relative clause.
+accept	1.8:17.24,1.8:17.25	1.8:17.27	renders	Accompaniment and its pronoun after the command.
+accept	1.8:17.27,1.8:17.29	1.8:17.29	renders	Hortative marker and subject of swarming.
+accept	1.8:17.33,1.8:17.36,1.8:17.37	1.8:17.34	renders	Hortative, subject, and verb for being fruitful.
+accept	1.8:17.39	1.8:17.36	renders	Verb for multiplying.
+accept	1.8:18.5,1.8:18.6	1.8:18.11	renders	With him in one suffixed preposition.
+accept	1.8:18.13	1.8:18.9,1.8:18.10	renders	Daughters-in-law renders wives of sons.
+accept	1.8:18.14	1.8:18.10	renders	Possessive suffix on the second occurrence of sons.
+accept	1.8:19.8,1.8:19.9	1.8:19.12	renders	Relative clause renders the moving participle.
+accept	1.8:19.12	1.8:19.16	renders	Lamed expresses classification by families.
+accept	1.8:19.18	1.8:19.18	renders	Plural subject carried by the exit verb.
+accept	1.8:20.5	1.8:20.5	renders	Dative ending renders the recipient prefix.
+accept	1.8:20.8	1.8:20.8	renders	Subject carried by the taking verb.
+accept	1.8:21.2	1.8:21.2	renders	Verb for smelling the aroma.
+accept	1.8:21.4	1.8:21.5	renders	Aroma noun.
+accept	1.8:21.7	1.8:21.11	renders	Preposition in the expression for speaking inwardly.
+accept	1.8:21.11,1.8:21.15	1.8:21.14	renders	Subject and future auxiliary render the finite verb’s form.
+accept	1.8:21.13	1.8:21.17	renders	Adverb in the first promise.
+accept	1.8:21.18	1.8:21.21,1.8:21.22	renders	Compound preposition meaning because of.
+accept	1.8:21.26,1.8:21.27,1.8:21.28	1.8:21.32	renders	Periphrasis for youth with its possessive suffix.
+accept	1.8:21.33	1.8:21.35	renders	First-person future inflection of the second promise.
+accept	1.8:21.36	1.8:21.42,1.8:21.43	renders	Compound conjunction meaning as.
+accept	1.8:21.39,1.8:21.40	1.8:21.44	renders	Main verb and past auxiliary render the Hebrew verb.
+accept	1.8:22.4	1.8:22.3	renders	Days in the duration phrase.

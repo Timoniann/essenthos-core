@@ -1,0 +1,155 @@
+kind	from	to	relation	reason
+fixed	1.41:30			Missing temporal phrase, famine years, and passive auxiliary.
+fixed	1.41:31			Missing demonstrative, temporal clause, and auxiliaries.
+fixed	1.41:32			Missing explanatory construction, prepositions, and predicates.
+fixed	1.41:33			Both jussive particles lacked links.
+unsure	1.41:34			Added clear links. The source of the explicit reference to crops is uncertain.
+fixed	1.41:35			Missing verb-form words, demonstrative, relative clause, and food purpose.
+fixed	1.41:36			Missing food, duration, passive, and instrumental links.
+ok	1.41:37			
+fixed	1.41:38			Missing recipient, question marker, comparison, and locative links.
+fixed	1.41:39			Missing recipient, causal, verbal, negative, and comparative links.
+fixed	1.41:40			Missing command phrase, verbal forms, and comparative pronoun.
+fixed	1.41:41			Missing recipient preposition, appointment verb, and object pronoun.
+fixed	1.41:42			Missing links in the removal, clothing, and necklace clauses.
+fixed	1.41:43			The causative connector was on the chariot's relative marker. Several other links were missing.
+fixed	1.41:44			Missing recipient, suffixed pronoun, and negative subject links.
+fixed	1.41:45			Missing recipient, marital role, place name, and motion verb.
+fixed	1.41:46			Separated the preposition from 'face' and restored age, verbal, and traversal links.
+fixed	1.41:47			Missing years, production verb, and measure phrase.
+fixed	1.41:48			Missing subject, locative pronouns, and second placement verb.
+fixed	1.41:49			Missing sea, clause markers, and negative existential links.
+fixed	1.41:50			Missing dative, time, birth, famine, and place-name links.
+fixed	1.41:51			Missing parts of the causative clause and the suffixed hardship noun.
+fixed	1.41:52			The fertility verb lacked its lexical link.
+fixed	1.41:53			The word for years lacked a link.
+fixed	1.41:54			Missing years, infinitive, comparison, and anterior auxiliary.
+fixed	1.41:55			Missing onset, request, recipient, and speech-clause links.
+fixed	1.41:56			Missing location, relative clause, grain, and recipient links.
+fixed	1.41:57			Missing first occurrence of earth and parts of the purchase phrase.
+refuse	1.41:43.3	1.41:43.8		Hebrew relative marks chariot ownership.
+refuse	1.41:46.10	1.41:46.9		The adjacent noun is rendered by «лицем».
+accept	1.41:30.2,1.41:30.3	1.41:30.6	renders	Temporal preposition and its suffix.
+accept	1.41:30.6	1.41:30.4	renders	Years.
+accept	1.41:30.7	1.41:30.5	renders	First famine occurrence.
+accept	1.41:30.9	1.41:30.8	renders	Future passive auxiliary.
+accept	1.41:31.3	1.41:31.3	renders	Future auxiliary.
+accept	1.41:31.6	1.41:31.5	renders	Abundance.
+accept	1.41:31.9	1.41:31.10	renders	Part of the compound causal preposition.
+accept	1.41:31.10	1.41:31.14	renders	Demonstrative modifying famine.
+accept	1.41:31.12,1.41:31.13,1.41:31.14	1.41:31.15,1.41:31.16	renders	Relative clause expands the temporal expression.
+accept	1.41:31.17	1.41:31.18	renders	Copula for the adjectival predicate.
+accept	1.41:32.2	1.41:32.2	renders	Introduces the fact being explained.
+accept	1.41:32.5	1.41:32.6	renders	Dative renders the preposition.
+accept	1.41:32.7,1.41:32.8	1.41:32.9	renders	Expanded explanatory connective.
+accept	1.41:32.12	1.41:32.10	renders	Established or decreed.
+accept	1.41:32.13	1.41:32.13,1.41:32.14	renders	Compound source preposition.
+accept	1.41:32.18	1.41:32.22	renders	Carry it out.
+accept	1.41:33.3	1.41:33.3	renders	First jussive particle.
+accept	1.41:33.11	1.41:33.10	renders	Second jussive particle.
+accept	1.41:34.1	1.41:34.1	renders	First jussive particle.
+accept	1.41:34.7	1.41:34.5	renders	Officers.
+accept	1.41:34.11,1.41:34.16,1.41:34.17	1.41:34.10	renders	Jussive expression for collecting a fifth.
+accept	1.41:34.14	1.41:34.16	renders	Years.
+accept	1.41:35.3	1.41:35.2	renders	Subject of the first collection verb.
+accept	1.41:35.7	1.41:35.13	renders	Demonstrative modifying years.
+accept	1.41:35.10,1.41:35.11	1.41:35.11	renders	Relative clause renders the participle.
+accept	1.41:35.13,1.41:35.14	1.41:35.15	renders	Mood and subject of the second collection verb.
+accept	1.41:35.20	1.41:35.20	renders	Food noun expresses intended use.
+accept	1.41:35.25	1.41:35.25	renders	Jussive force of the keeping verb.
+accept	1.41:36.4	1.41:36.4	renders	Food.
+accept	1.41:36.5	1.41:36.5	renders	Preposition introducing the reserve.
+accept	1.41:36.9	1.41:36.10	renders	Preposition introducing the duration.
+accept	1.41:36.11	1.41:36.12	renders	Years.
+accept	1.41:36.12	1.41:36.14	renders	Famine modifying years.
+accept	1.41:36.21,1.41:36.22	1.41:36.22	renders	Future passive verb phrase.
+accept	1.41:36.23	1.41:36.25	renders	Instrumental renders the causal preposition.
+accept	1.41:38.5	1.41:38.4	renders	Recipient expressed by the dative.
+accept	1.41:38.6	1.41:38.6	renders	Interrogative marker.
+accept	1.41:38.8	1.41:38.10	renders	Man.
+accept	1.41:38.9	1.41:38.8	renders	Comparative prefix.
+accept	1.41:38.14,1.41:38.15	1.41:38.14	renders	Locative preposition and its suffix.
+accept	1.41:39.4	1.41:39.4	renders	Recipient expressed by the dative.
+accept	1.41:39.5	1.41:39.6	renders	Introduces the grounds for Pharaoh's conclusion.
+accept	1.41:39.7	1.41:39.7	renders	Made known.
+accept	1.41:39.12	1.41:39.13	renders	Negative existential.
+accept	1.41:39.13,1.41:39.17	1.41:39.17	renders	Correlative expression for likeness.
+accept	1.41:40.7	1.41:40.6,1.41:40.7	renders	Command expressed as words, with genitive government.
+accept	1.41:40.9	1.41:40.7	renders	Mouth in the command phrase.
+accept	1.41:40.10,1.41:40.11	1.41:40.8	renders	Future verb phrase for obedience.
+accept	1.41:40.17,1.41:40.19	1.41:40.14	renders	First-person subject and comparative predicate.
+accept	1.41:40.21	1.41:40.15	renders	Second-person comparative suffix.
+accept	1.41:41.4	1.41:41.4	renders	Recipient expressed by the dative.
+accept	1.41:41.7	1.41:41.7	renders	Appointed or placed.
+accept	1.41:41.8	1.41:41.8	renders	Suffixed object pronoun.
+accept	1.41:42.6	1.41:42.7	renders	Completes the compound preposition meaning 'off'.
+accept	1.41:42.10	1.41:42.9	renders	Part of the compound conjunction «та й».
+accept	1.41:42.12	1.41:42.11	renders	Object pronoun referring to the ring.
+accept	1.41:42.17	1.41:42.16	renders	Clothed.
+accept	1.41:42.18	1.41:42.17	renders	Object pronoun referring to Joseph.
+accept	1.41:42.20	1.41:42.18	renders	Garments.
+accept	1.41:42.23	1.41:42.25	renders	Preposition governing the neck.
+accept	1.41:42.26	1.41:42.21	renders	Placed the necklace.
+accept	1.41:43.3,1.41:43.5	1.41:43.2	renders	Parts of the expanded causative 'made him ride'.
+accept	1.41:43.4	1.41:43.3	renders	The person made to ride.
+accept	1.41:43.6	1.41:43.9	renders	Possessor of the chariot.
+accept	1.41:43.8	1.41:43.4	renders	Instrumental expresses the riding preposition.
+accept	1.41:43.11	1.41:43.12	renders	Prepositional part of 'before his face'.
+accept	1.41:43.12,1.41:43.13	1.41:43.13	renders	Face and its possessive suffix.
+accept	1.41:43.16	1.41:43.16	renders	Placed or appointed.
+accept	1.41:43.17	1.41:43.17	renders	Object pronoun of the appointment.
+accept	1.41:44.4	1.41:44.4	renders	Recipient expressed by the dative.
+accept	1.41:44.9	1.41:44.9	renders	Second-person suffix of 'without'.
+accept	1.41:44.10	1.41:44.10,1.41:44.12	renders	Negation and indefinite subject together mean 'no one'.
+accept	1.41:45.9	1.41:45.9	renders	Suffixed recipient pronoun.
+accept	1.41:45.10	1.41:45.16	renders	Preposition introducing the marital role.
+accept	1.41:45.16	1.41:45.15	renders	Place name On.
+accept	1.41:45.19	1.41:45.19	renders	Free rendering of Joseph's motion verb.
+accept	1.41:46.3	1.41:46.3	renders	Copula in the nominal age expression.
+accept	1.41:46.8,1.41:46.9	1.41:46.7	renders	Standing and its suffixed subject.
+accept	1.41:46.10	1.41:46.8	renders	Prepositional part of 'before Pharaoh's face'.
+accept	1.41:46.11	1.41:46.9	renders	Face in the first presence phrase.
+accept	1.41:46.16	1.41:46.14	renders	Went out.
+accept	1.41:46.18	1.41:46.17	renders	Completes the compound preposition of departure.
+accept	1.41:46.23	1.41:46.22	renders	Preposition of traversal.
+accept	1.41:47.5	1.41:47.7	renders	Years.
+accept	1.41:47.7	1.41:47.2	renders	Land produced.
+accept	1.41:47.8	1.41:47.10	renders	Prefix introducing the measure.
+accept	1.41:47.9,1.41:47.10	1.41:47.11	renders	Full handfuls express the measure.
+accept	1.41:48.3	1.41:48.2	renders	Subject expressed by the verb form.
+accept	1.41:48.23	1.41:48.24	renders	Suffix referring to the city.
+accept	1.41:48.24	1.41:48.25	renders	Second placement verb.
+accept	1.41:48.26	1.41:48.27	renders	Locative suffix referring to the city.
+accept	1.41:49.8	1.41:49.8	renders	Adjective renders the genitive noun 'sea'.
+accept	1.41:49.10	1.41:49.12	renders	Part of the compound connector meaning 'until'.
+accept	1.41:49.12	1.41:49.14	renders	Complement marker absorbed by the infinitive.
+accept	1.41:49.14,1.41:49.15	1.41:49.17	renders	Analytic negative existential.
+accept	1.41:50.2	1.41:50.2	renders	Dative renders the recipient prefix.
+accept	1.41:50.3	1.41:50.7	renders	Part of the compound temporal connector.
+accept	1.41:50.4	1.41:50.9	renders	Arrival of the famine year.
+accept	1.41:50.6	1.41:50.12	renders	Famine modifying year.
+accept	1.41:50.7	1.41:50.4	renders	Were born.
+accept	1.41:50.12	1.41:50.15	renders	Suffixed recipient pronoun.
+accept	1.41:50.17	1.41:50.20	renders	Place name On.
+accept	1.41:51.11,1.41:51.12	1.41:51.10	renders	Causative clause and the first-person object recast as its subject.
+accept	1.41:51.15,1.41:51.16	1.41:51.14	renders	Hardship and its possessive suffix.
+accept	1.41:52.7	1.41:52.9	renders	Made fruitful.
+accept	1.41:53.4	1.41:53.4	renders	Years.
+accept	1.41:54.3	1.41:54.7,1.41:54.8	renders	Infinitive complement of 'began'.
+accept	1.41:54.5	1.41:54.4	renders	Years.
+accept	1.41:54.7	1.41:54.9,1.41:54.10	renders	Compound comparison connector.
+accept	1.41:54.9	1.41:54.11	renders	Auxiliary marking prior speech.
+accept	1.41:55.8	1.41:55.7	renders	Auxiliary in the onset of crying.
+accept	1.41:55.12	1.41:55.12	renders	Marks what the people cried for.
+accept	1.41:55.18	1.41:55.18	renders	Dative renders the recipient prefix.
+accept	1.41:55.23,1.41:55.25	1.41:55.25	renders	Subject and verb of Joseph's speech.
+accept	1.41:55.24	1.41:55.26	renders	Suffixed recipient pronoun.
+accept	1.41:55.26	1.41:55.24	renders	Correlative object of the headless relative.
+accept	1.41:56.5	1.41:56.5	renders	Preposition governing the surface phrase.
+accept	1.41:56.13	1.41:56.15	renders	Relative marker.
+accept	1.41:56.14,1.41:56.15,1.41:56.16	1.41:56.16	renders	Locative predicate with copula and suffixed pronoun.
+accept	1.41:56.19	1.41:56.18	renders	Grain is implicit in the trading verb.
+accept	1.41:56.20	1.41:56.19,1.41:56.20	renders	Egypt and its recipient prefix.
+accept	1.41:57.5	1.41:57.4	renders	First occurrence of earth.
+accept	1.41:57.8	1.41:57.7	renders	The Ukrainian infinitive expresses purpose.
+accept	1.41:57.9	1.41:57.8	renders	Grain is implicit in the buying verb.

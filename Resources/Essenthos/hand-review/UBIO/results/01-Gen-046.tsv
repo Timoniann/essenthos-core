@@ -1,0 +1,140 @@
+kind	from	to	relation	reason
+fixed	1.46:1			Restored possession, direction, the first half of Beersheba, and the dative prefix.
+fixed	1.46:2			Restored the first speech verb, its recipient marker, the night modifier, and both parts of the reply.
+fixed	1.46:3			Restored the first divine title, descent verb, pronouns, and result construction.
+fixed	1.46:4			Distinguished the infinitive absolute from the finite verb and restored the gesture and pronouns.
+fixed	1.46:5			Completed Beersheba and the transport phrase and restored the object pronoun.
+fixed	1.46:6			Restored the livestock, descendants, and accompanying phrase.
+fixed	1.46:7			Restored the main verb, both accompanying phrases, and family terms.
+fixed	1.46:8			Linked the relative clause to the Hebrew participle.
+ok	1.46:9			
+ok	1.46:10			
+ok	1.46:11			
+fixed	1.46:12			Restored the written copula.
+ok	1.46:13			
+ok	1.46:14			
+fixed	1.46:15			Restored the subject pronoun and dative prefix.
+ok	1.46:16			
+ok	1.46:17			
+fixed	1.46:18			Restored the auxiliary, object references, dative prefixes, and compound number.
+ok	1.46:19			
+fixed	1.46:20			Restored the birth verbs, recipient links, relative object, and place name.
+ok	1.46:21			
+fixed	1.46:22			Restored the dative prefix and completed the compound number.
+ok	1.46:23			
+ok	1.46:24			
+fixed	1.46:25			Restored the auxiliary, object references, and dative prefixes.
+fixed	1.46:26			Restored the participial and prepositional links.
+fixed	1.46:27			Restored the birth verb, recipient, household relation, and arrival clause.
+fixed	1.46:28			Restored the subject, both occurrences of 'before', and the route and destination links.
+fixed	1.46:29			Restored the meeting and destination markers, appearance clause, neck, and duration.
+fixed	1.46:30			Moved the subject pronoun to the verb of dying and restored both temporal links.
+fixed	1.46:31			Restored the reporting verb, recipient links, connective, and locative copula.
+fixed	1.46:32			Completed the occupational, livestock, transport, and possession links.
+fixed	1.46:33			Restored the pronoun for those summoned.
+fixed	1.46:34			Restored the occupation, time limit, paired particles, purpose clause, and final relations.
+refuse	1.46:4.10	1.46:4.7		Renders the infinitive absolute.
+refuse	1.46:30.9	1.46:30.10		Explicit subject of the verb of dying.
+accept	1.46:1.7	1.46:1.7	renders	Possession expressed by suffixed lamed.
+accept	1.46:1.10	1.46:1.10	renders	Directional ending of the place name.
+accept	1.46:1.11	1.46:1.10	renders	First component of Beersheba.
+accept	1.46:1.15	1.46:1.15	renders	Dative renders recipient prefix.
+accept	1.46:2.2	1.46:2.2	renders	First speech verb.
+accept	1.46:2.4	1.46:2.4	renders	Preposition marking the addressee.
+accept	1.46:2.7	1.46:2.9	renders	Night rendered adjectivally.
+accept	1.46:2.14	1.46:2.15	renders	Subject encoded in the reply verb.
+accept	1.46:2.16,1.46:2.17	1.46:2.16	renders	Presentative and first-person suffix.
+accept	1.46:3.3	1.46:3.2	renders	Subject encoded in the speech verb.
+accept	1.46:3.6	1.46:3.5	renders	First divine title.
+accept	1.46:3.12	1.46:3.11	renders	Verb of descent.
+accept	1.46:3.16,1.46:3.17,1.46:3.18	1.46:3.17	renders	Verb with first-person subject and second-person object.
+accept	1.46:3.21	1.46:3.14	renders	Instrumental renders the result marked by lamed.
+accept	1.46:4.4	1.46:4.3	renders	Pronoun carried by the preposition.
+accept	1.46:4.10	1.46:4.9	renders	Repeated verb renders the infinitive absolute.
+accept	1.46:4.15	1.46:4.12	renders	Renders putting the hand over the eyes.
+accept	1.46:4.17	1.46:4.13	renders	Possessive suffix on hand.
+accept	1.46:5.5	1.46:5.5	renders	First component of Beersheba.
+accept	1.46:5.19	1.46:5.20	renders	Instrumental renders transport prefix.
+accept	1.46:5.25	1.46:5.28	renders	Suffixed object marker carries the pronoun.
+accept	1.46:6.4,1.46:6.5	1.46:6.4	renders	Livestock and its possessive suffix.
+accept	1.46:6.21	1.46:6.19	renders	Descendants rendered as family.
+accept	1.46:6.23,1.46:6.24	1.46:6.20	renders	Accompaniment preposition and its suffix.
+accept	1.46:7.1,1.46:7.2	1.46:7.13	renders	Verb of bringing and its subject.
+accept	1.46:7.3,1.46:7.4	1.46:7.14	renders	Accompaniment phrase attached to the main verb.
+accept	1.46:7.11,1.46:7.12	1.46:7.4	renders	Sons and their possessive suffix.
+accept	1.46:7.13,1.46:7.14	1.46:7.5	renders	Accompaniment phrase after the sons.
+accept	1.46:7.23,1.46:7.24	1.46:7.12	renders	Descendants and their possessive suffix.
+accept	1.46:8.6,1.46:8.7	1.46:8.7	renders	Relative clause renders the arrival participle.
+accept	1.46:12.24	1.46:12.22	renders	Written copula.
+accept	1.46:15.6	1.46:15.5	renders	Feminine subject encoded in the verb.
+accept	1.46:15.7	1.46:15.6	renders	Dative renders recipient prefix.
+accept	1.46:18.6	1.46:18.5	renders	Pluperfect auxiliary of the giving verb.
+accept	1.46:18.8	1.46:18.4	renders	Resumes the object of the relative clause.
+accept	1.46:18.11	1.46:18.7	renders	Leah's dative renders recipient prefix.
+accept	1.46:18.15	1.46:18.13	renders	Pronoun renders the demonstrative object.
+accept	1.46:18.16	1.46:18.14	renders	Jacob's dative renders recipient prefix.
+accept	1.46:18.17	1.46:18.16,1.46:18.17	renders	Full compound number sixteen.
+accept	1.46:20.2	1.46:20.2	renders	Passive birth verb.
+accept	1.46:20.3	1.46:20.3	renders	Dative renders recipient prefix.
+accept	1.46:20.11	1.46:20.8	renders	Resumes the object of the relative clause.
+accept	1.46:20.12	1.46:20.9	renders	Active birth verb in the relative clause.
+accept	1.46:20.13	1.46:20.10	renders	Suffixed dative preposition.
+accept	1.46:20.18	1.46:20.15	renders	Place name On.
+accept	1.46:22.6	1.46:22.6	renders	Dative renders recipient prefix.
+accept	1.46:22.9	1.46:22.11	renders	Teen component of fourteen.
+accept	1.46:25.5	1.46:25.4	renders	Resumes the object of the relative clause.
+accept	1.46:25.8	1.46:25.5	renders	Pluperfect auxiliary of the giving verb.
+accept	1.46:25.11	1.46:25.7	renders	Rachel's dative renders recipient prefix.
+accept	1.46:25.15	1.46:25.13	renders	Pronoun renders the demonstrative object.
+accept	1.46:25.16	1.46:25.14	renders	Jacob's dative renders recipient prefix.
+accept	1.46:26.3	1.46:26.5	renders	Relative word for the arrival participle.
+accept	1.46:26.5	1.46:26.6	renders	Lamed expresses association with Jacob.
+accept	1.46:26.7	1.46:26.8	renders	Directional ending of Egypt.
+accept	1.46:26.10	1.46:26.9	renders	Participle of descent.
+accept	1.46:26.11	1.46:26.9	renders	Source relation expressed by the construct participle.
+accept	1.46:26.14	1.46:26.11,1.46:26.12,1.46:26.13	renders	Whole compound preposition of exclusion.
+accept	1.46:27.5	1.46:27.5	renders	Passive birth verb.
+accept	1.46:27.6	1.46:27.6	renders	Suffixed dative preposition.
+accept	1.46:27.13	1.46:27.14	renders	Genitive expresses household membership marked by lamed.
+accept	1.46:27.15,1.46:27.17	1.46:27.18	renders	Relative word and auxiliary of the arrival clause.
+accept	1.46:28.3	1.46:28.4	renders	Subject encoded in the sending verb.
+accept	1.46:28.4	1.46:28.5	renders	Prefix in the first compound preposition.
+accept	1.46:28.5	1.46:28.6	renders	Suffix in the first 'before' phrase.
+accept	1.46:28.11	1.46:28.11,1.46:28.12	renders	Second compound preposition meaning 'before'.
+accept	1.46:28.12	1.46:28.12	renders	Suffix in the second 'before' phrase.
+accept	1.46:28.13	1.46:28.10	renders	The way is implicit in giving directions.
+accept	1.46:28.14	1.46:28.13	renders	Directional ending of the first Goshen.
+accept	1.46:28.19	1.46:28.16	renders	Directional ending of land.
+accept	1.46:29.8	1.46:29.7	renders	Directional prefix in the meeting expression.
+accept	1.46:29.12	1.46:29.11	renders	Directional ending of Goshen.
+accept	1.46:29.15,1.46:29.16	1.46:29.13	renders	Appearance verb and its subject.
+accept	1.46:29.17	1.46:29.14	renders	Suffixed preposition after the appearance verb.
+accept	1.46:29.22	1.46:29.18	renders	First occurrence of neck.
+accept	1.46:29.24	1.46:29.19	renders	Part of the compound connective introducing weeping.
+accept	1.46:29.26	1.46:29.23	renders	Duration of the weeping.
+accept	1.46:30.7	1.46:30.8	renders	Temporal idiom meaning 'now'.
+accept	1.46:30.9	1.46:30.6	renders	First-person subject of the verb of dying.
+accept	1.46:30.10	1.46:30.9	renders	The converb conveys 'after seeing'.
+accept	1.46:31.14	1.46:31.12	renders	Verb of reporting.
+accept	1.46:31.15	1.46:31.13	renders	Dative renders addressee prefix.
+accept	1.46:31.17	1.46:31.15	renders	Part of the compound connective introducing speech.
+accept	1.46:31.19	1.46:31.17	renders	Suffixed preposition for the addressee.
+accept	1.46:31.27	1.46:31.23	renders	Copula of the locative predicate.
+accept	1.46:31.32	1.46:31.27	renders	Directional preposition before the pronoun.
+accept	1.46:32.5	1.46:32.5	renders	Flock tended by the shepherds.
+accept	1.46:32.7	1.46:32.9	renders	Written copula.
+accept	1.46:32.8	1.46:32.8	renders	Livestock component of the occupational term.
+accept	1.46:32.10,1.46:32.11	1.46:32.18	renders	Bringing verb and its plural subject.
+accept	1.46:32.15	1.46:32.11	renders	Shared livestock noun includes the small stock.
+accept	1.46:32.16	1.46:32.11	renders	Shared possessive also renders the small-stock suffix.
+accept	1.46:32.20,1.46:32.21	1.46:32.17	renders	Possessive predicate and its copula.
+accept	1.46:33.5	1.46:33.5	renders	Pronoun carried by suffixed lamed.
+accept	1.46:34.4	1.46:34.3,1.46:34.4	renders	Occupational term renders 'men of livestock'.
+accept	1.46:34.11	1.46:34.10	renders	Reinforces the endpoint of the time range.
+accept	1.46:34.12	1.46:34.10	renders	The prefix of 'until now' renders the time limit.
+accept	1.46:34.13	1.46:34.12	renders	First particle in the paired construction.
+accept	1.46:34.15	1.46:34.14	renders	Second particle in the paired construction.
+accept	1.46:34.18	1.46:34.16	renders	Prefix of the compound purpose marker.
+accept	1.46:34.20	1.46:34.18	renders	Verb of settling or dwelling.
+accept	1.46:34.25	1.46:34.23	renders	Renders the construct relation to Egypt.
+accept	1.46:34.29	1.46:34.27	renders	Flock tended by the shepherd.

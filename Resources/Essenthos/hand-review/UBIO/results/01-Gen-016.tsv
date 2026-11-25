@@ -1,0 +1,275 @@
+kind	from	to	relation	reason
+fixed	1.16:1			Missing verb, possessive construction, and suffix links.
+fixed	1.16:2			Missing complements, request particle, and parts of the family-building idiom.
+fixed	1.16:3			Missing temporal, object, recipient, and role links.
+fixed	1.16:4			Missing subject pronouns, clause connectives, and verb phrase.
+fixed	1.16:5			Missing prepositions, pronouns, and verb forms.
+fixed	1.16:6			Missing recipient, relative phrase, possessive, and suffixed verb links.
+fixed	1.16:7			The road's construct state expresses destination.
+fixed	1.16:8			Missing source question and verb links.
+fixed	1.16:9			Missing both parts of the recipient phrase.
+fixed	1.16:10			Missing recipient, infinitive absolute, subject, and negation.
+fixed	1.16:11			Missing recipient, presentative suffix, and pregnancy predicate.
+unsure	1.16:12			The word-level targets of the simile and among-phrase markers are uncertain.
+fixed	1.16:13			Missing participial phrases, pronouns, and question words.
+unsure	1.16:14			Corrected the well name. The link between воно and the presentative is uncertain.
+fixed	1.16:15			Missing recipient prefix.
+fixed	1.16:16			Missing age copula, both year nouns, and birth clause links.
+fixed	1.17:1			Missing copula, second year noun, and connective and prepositional links.
+fixed	1.17:2			Missing pronominal phrases and second intensifier.
+fixed	1.17:3			Missing speech verb and addressee phrase.
+fixed	1.17:4			Missing relationship phrase, result prefix, and multitude.
+fixed	1.17:5			Missing future auxiliary, suffixed verb links, and multitude.
+unsure	1.17:6			The link for the first emergence verb and its source preposition is uncertain.
+fixed	1.17:7			Wrong occurrence of lamed and missing clause and suffix links.
+fixed	1.17:8			Missing recipients, result prefixes, and temporal suffix.
+fixed	1.17:9			Missing verb, addressee preposition, and temporal links.
+fixed	1.17:10			Missing demonstrative, resumptive, verb-form, and prepositional links.
+fixed	1.17:11			Missing location, result, and pronoun links.
+fixed	1.17:12			The universal quantifier was linked in the wrong phrase. Several other links were missing.
+fixed	1.17:13			Missing emphatic repetition, mood, purchase relation, and result prefix.
+fixed	1.17:14			Missing future auxiliary, location, demonstrative, and subject pronoun.
+fixed	1.17:15			Missing addressee preposition, prohibitive mood, and first name phrase.
+fixed	1.17:16			Missing object and subject pronouns, including the recast nations clause.
+fixed	1.17:17			Missing question markers, age expressions, and verb-form links.
+fixed	1.17:18			Missing optative phrase, verb, and preposition.
+fixed	1.17:19			Missing discourse particles, pronouns, verbs, and purpose clause links.
+fixed	1.17:20			Missing suffixed verb links, object pronouns, intensifier, and part of twelve.
+fixed	1.17:21			Missing relative resumptive, birth verb, and both time markers.
+fixed	1.17:22			Missing subject, conversation partner, and part of the source preposition.
+fixed	1.17:23			Missing construct relations, temporal links, and conversation partner.
+fixed	1.17:24			Missing age copula, year noun, and temporal connective.
+fixed	1.17:25			Missing age copula, part of thirteen, and temporal connective.
+fixed	1.17:26			Missing demonstrative, temporal prefix, and passive auxiliary.
+fixed	1.17:27			Missing purchase relation, source phrase, and companion phrase.
+refuse	1.16:14.5	1.16:14.8		Well is the separate preceding noun.
+refuse	1.17:7.27	1.17:7.17		This prefix introduces the purpose infinitive.
+refuse	1.17:12.11	1.17:12.7		The Hebrew quantifier modifies male.
+accept	1.16:1.6	1.16:1.6	renders	Bearing verb.
+accept	1.16:1.7	1.16:1.7	renders	Suffixed recipient.
+accept	1.16:1.9,1.16:1.10,1.16:1.11	1.16:1.9	renders	Possessive predicate expressed as an existential construction.
+accept	1.16:1.15,1.16:1.16	1.16:1.13	renders	Name and its possessive suffix.
+accept	1.16:2.4	1.16:2.4	renders	Dative expresses the addressee preposition.
+accept	1.16:2.8	1.16:2.8	renders	Object suffix of restrain.
+accept	1.16:2.10	1.16:2.11	renders	Childbearing infinitive.
+accept	1.16:2.11	1.16:2.12	renders	Imperative of come.
+accept	1.16:2.12	1.16:2.13	renders	Particle urging the requested action.
+accept	1.16:2.18	1.16:2.18	renders	Feminine suffix of the source preposition.
+accept	1.16:2.20,1.16:2.21	1.16:2.17	renders	First-person form and idiom of obtaining offspring.
+accept	1.16:2.25	1.16:2.22	renders	Dative expresses the complement prefix.
+accept	1.16:3.10	1.16:3.11	renders	Part of the expression meaning after.
+accept	1.16:3.13	1.16:3.15,1.16:3.16	renders	Genitive of duration and the dwelling infinitive.
+accept	1.16:3.20	1.16:3.23	renders	Feminine object suffix.
+accept	1.16:3.21	1.16:3.24	renders	Dative expresses the recipient prefix.
+accept	1.16:3.24	1.16:3.28	renders	Lamed marking the role of wife.
+accept	1.16:4.2	1.16:4.2	renders	Subject of entered.
+accept	1.16:4.9,1.16:4.11	1.16:4.7	renders	Connective introducing the temporal clause.
+accept	1.16:4.10	1.16:4.8	renders	Subject of saw.
+accept	1.16:4.15	1.16:4.11	renders	Connective introducing the result.
+accept	1.16:4.16,1.16:4.17	1.16:4.12	renders	Inchoative verb recast as taking someone lightly.
+accept	1.16:5.4	1.16:5.4	renders	Dative expresses the addressee preposition.
+accept	1.16:5.7,1.16:5.8	1.16:5.7	renders	Upon and its second-person suffix.
+accept	1.16:5.10,1.16:5.11	1.16:5.9	renders	Past verb and its auxiliary.
+accept	1.16:5.14	1.16:5.11	renders	Placement into the lap.
+accept	1.16:5.18	1.16:5.13	renders	Temporal force of the clause connective.
+accept	1.16:5.19	1.16:5.14	renders	Subject of saw.
+accept	1.16:5.23	1.16:5.17	renders	Connective introducing the result.
+accept	1.16:5.24	1.16:5.18	renders	Inchoative part of the verb phrase.
+accept	1.16:5.27	1.16:5.21	renders	Jussive force of judge.
+accept	1.16:5.31	1.16:5.23	renders	First-person suffix of between.
+accept	1.16:5.33,1.16:5.34	1.16:5.25	renders	Second occurrence of between with its suffix.
+accept	1.16:6.13	1.16:6.11	renders	Suffixed recipient.
+accept	1.16:6.14,1.16:6.15	1.16:6.13	renders	Relative phrase expressing the nominalized adjective.
+accept	1.16:6.18,1.16:6.19	1.16:6.15	renders	Eyes and their possessive suffix.
+accept	1.16:6.22,1.16:6.23	1.16:6.17	renders	Oppression verb and its object suffix.
+accept	1.16:7.15	1.16:7.16	renders	Destination relation of the construct noun.
+accept	1.16:8.6	1.16:8.6,1.16:8.7	renders	Whence combines where and from.
+accept	1.16:8.8	1.16:8.8	renders	Demonstrative particle in the question.
+accept	1.16:8.9,1.16:8.10	1.16:8.9	renders	Arrival verb and its second-person subject.
+accept	1.16:8.14	1.16:8.12	renders	Verb of going.
+accept	1.16:9.5,1.16:9.6	1.16:9.3	renders	Recipient preposition and its suffix.
+accept	1.16:10.5,1.16:10.6	1.16:10.3	renders	Recipient preposition and its suffix.
+accept	1.16:10.7	1.16:10.6	renders	Emphasis of the infinitive absolute.
+accept	1.16:10.15	1.16:10.12	renders	Subject of the passive verb.
+accept	1.16:10.16	1.16:10.11	renders	Adjectival negation renders the Hebrew negator.
+accept	1.16:11.4,1.16:11.5	1.16:11.3	renders	Recipient preposition and its suffix.
+accept	1.16:11.8	1.16:11.6	renders	Second-person suffix on the presentative.
+accept	1.16:11.9	1.16:11.7	renders	Predicate expressing pregnancy.
+accept	1.16:12.6	1.16:12.4	renders	Wild donkey is a single Hebrew noun.
+accept	1.16:12.8	1.16:12.5	renders	Mankind.
+accept	1.16:12.11	1.16:12.7	renders	First preposition in the reciprocal clauses.
+accept	1.16:12.16,1.16:12.17	1.16:12.13	renders	Second preposition and its suffix.
+accept	1.16:12.19,1.16:12.20,1.16:12.21	1.16:12.19	renders	Dwelling verb, future auxiliary, and subject.
+accept	1.16:12.22	1.16:12.15,1.16:12.16	renders	Compound preposition of proximity.
+accept	1.16:13.3	1.16:13.2	renders	Subject of named.
+accept	1.16:13.6,1.16:13.7	1.16:13.6	renders	Relative clause renders the speaking participle.
+accept	1.16:13.9	1.16:13.7	renders	Feminine suffix on the addressee preposition.
+accept	1.16:13.12	1.16:13.10	renders	Noun of seeing.
+accept	1.16:13.16	1.16:13.13	renders	Interrogative prefix.
+accept	1.16:13.17	1.16:13.14	renders	Particle meaning even.
+accept	1.16:13.19,1.16:13.20	1.16:13.16	renders	Seeing verb and its first-person subject.
+accept	1.16:13.21	1.16:13.17	renders	Preposition directing the gaze.
+accept	1.16:13.22,1.16:13.23,1.16:13.24,1.16:13.25	1.16:13.18	renders	Participial phrase and its first-person suffix.
+accept	1.16:14.1	1.16:14.1	renders	First part of the causal expression.
+accept	1.16:14.2	1.16:14.6	renders	First occurrence of well.
+accept	1.16:14.3	1.16:14.3	renders	Passive auxiliary of the naming paraphrase.
+accept	1.16:14.5	1.16:14.7	renders	Well in the place name.
+accept	1.16:14.6,1.16:14.7,1.16:14.8,1.16:14.9	1.16:14.8	renders	Translation of Lahai Roi as a phrase.
+accept	1.16:14.14	1.16:14.13	renders	Second occurrence of between.
+accept	1.16:15.4	1.16:15.4	renders	Dative expresses the recipient prefix.
+accept	1.16:16.3	1.16:16.3	renders	Copula of the nominal age predicate.
+accept	1.16:16.6	1.16:16.5	renders	Years following eighty.
+accept	1.16:16.9	1.16:16.8	renders	Years following six.
+accept	1.16:16.10	1.16:16.9	renders	Temporal prefix on the infinitive.
+accept	1.16:16.12,1.16:16.13	1.16:16.10	renders	Birth infinitive rendered as a past verb phrase.
+accept	1.16:16.14	1.16:16.14	renders	Dative expresses the recipient prefix.
+accept	1.17:1.2	1.17:1.2	renders	Explicit Hebrew copula.
+accept	1.17:1.9	1.17:1.9	renders	Years following nine.
+accept	1.17:1.10	1.17:1.10	renders	Vav of the appearance clause rendered temporally.
+accept	1.17:1.13	1.17:1.13	renders	Dative expresses the addressee preposition.
+accept	1.17:1.15	1.17:1.15	renders	Second word of the compound connective.
+accept	1.17:1.18	1.17:1.17	renders	Pronominal suffix on the addressee preposition.
+accept	1.17:1.23	1.17:1.22	renders	Prepositional element of before my face.
+accept	1.17:2.7	1.17:2.4	renders	First-person suffix of between.
+accept	1.17:2.9,1.17:2.10	1.17:2.6	renders	Second between and its suffix.
+accept	1.17:2.12	1.17:2.12	renders	Second half of the repeated intensifier.
+accept	1.17:2.14	1.17:2.9	renders	Suffixed direct object.
+accept	1.17:3.9,1.17:3.10	1.17:3.8	renders	Speech partner preposition and its suffix.
+accept	1.17:3.11	1.17:3.7	renders	Main speech verb.
+accept	1.17:4.5,1.17:4.6	1.17:4.4	renders	With and its second-person suffix.
+accept	1.17:4.10	1.17:4.7	renders	Predicative instrumental renders the result prefix.
+accept	1.17:4.11	1.17:4.9	renders	Multitude rendered as many.
+accept	1.17:5.3	1.17:5.3	renders	Future auxiliary of the naming verb.
+accept	1.17:5.15,1.17:5.17	1.17:5.16	renders	Making verb and its object suffix.
+accept	1.17:5.19	1.17:5.14	renders	Multitude rendered as many.
+accept	1.17:6.2,1.17:6.3,1.17:6.6	1.17:6.2	renders	Causative fertility verb and first-person subject.
+accept	1.17:6.4	1.17:6.3	renders	Suffixed direct object of the fertility verb.
+accept	1.17:6.5	1.17:6.6	renders	Second half of the repeated intensifier.
+accept	1.17:6.8,1.17:6.12	1.17:6.8	renders	Making verb and its second-person object suffix.
+accept	1.17:6.9	1.17:6.9	renders	Result prefix recast as a subordinate connective.
+accept	1.17:6.16,1.17:6.17	1.17:6.13	renders	Source preposition and suffix in the kings clause.
+accept	1.17:7.3	1.17:7.2	renders	Establishing the covenant.
+accept	1.17:7.7	1.17:7.5	renders	First-person suffix of between.
+accept	1.17:7.8	1.17:7.6	renders	Connective before the second party.
+accept	1.17:7.9,1.17:7.10	1.17:7.7	renders	Second between and its suffix.
+accept	1.17:7.11	1.17:7.8	renders	Connective before the third party.
+accept	1.17:7.12	1.17:7.9	renders	Third occurrence of between.
+accept	1.17:7.14	1.17:7.10	renders	First occurrence of offspring.
+accept	1.17:7.16	1.17:7.11	renders	Suffix on the first after.
+accept	1.17:7.17	1.17:7.12	renders	Prefix marking duration across generations.
+accept	1.17:7.20	1.17:7.14	renders	Prefix marking the covenant's resulting status.
+accept	1.17:7.23	1.17:7.17	renders	Introduces the purpose clause.
+accept	1.17:7.24,1.17:7.25	1.17:7.18	renders	Infinitive rendered as a finite verb with its understood subject.
+accept	1.17:7.26	1.17:7.20	renders	Predicative instrumental renders the role prefix.
+accept	1.17:7.27,1.17:7.28	1.17:7.19	renders	Beneficiary preposition and its suffix.
+accept	1.17:7.34	1.17:7.25	renders	Suffix on the second after.
+accept	1.17:8.4	1.17:8.3	renders	First suffixed recipient.
+accept	1.17:8.6	1.17:8.5	renders	Dative expresses the recipient prefix.
+accept	1.17:8.9	1.17:8.7	renders	Second-person suffix of after.
+accept	1.17:8.16	1.17:8.15	renders	Prefix marking possession as the purpose.
+accept	1.17:8.22	1.17:8.20	renders	Suffixed beneficiary.
+accept	1.17:8.23	1.17:8.21	renders	Predicative instrumental renders the role prefix.
+accept	1.17:9.3	1.17:9.4	renders	Dative expresses the addressee preposition.
+accept	1.17:9.9	1.17:9.10	renders	Keeping the covenant.
+accept	1.17:9.15	1.17:9.14	renders	Second-person suffix of after.
+accept	1.17:9.16	1.17:9.15	renders	Prefix marking the generational span.
+accept	1.17:10.1	1.17:10.1	renders	Written demonstrative.
+accept	1.17:10.5	1.17:10.3	renders	Resumptive completes the rendering of the relative.
+accept	1.17:10.6,1.17:10.8	1.17:10.4	renders	Subject and future auxiliary of keep.
+accept	1.17:10.10	1.17:10.5	renders	First-person suffix of between.
+accept	1.17:10.12,1.17:10.13	1.17:10.7	renders	Second between and its plural suffix.
+accept	1.17:10.15	1.17:10.9	renders	Third between.
+accept	1.17:10.19	1.17:10.11	renders	Second-person suffix of after.
+accept	1.17:10.20	1.17:10.12	renders	Directive force of the circumcision infinitive.
+accept	1.17:10.26,1.17:10.27	1.17:10.13	renders	Relationship preposition and its plural suffix.
+accept	1.17:11.5	1.17:11.4	renders	Marks the flesh as the site of circumcision.
+accept	1.17:11.12	1.17:11.7	renders	Subject implicit in the verb become.
+accept	1.17:11.13	1.17:11.8	renders	Predicative instrumental renders the result prefix.
+accept	1.17:11.16	1.17:11.11	renders	First-person suffix of between.
+accept	1.17:11.18,1.17:11.19	1.17:11.13	renders	Second between and its plural suffix.
+accept	1.17:12.2	1.17:12.7	renders	Quantifier of every male.
+accept	1.17:12.5	1.17:12.2,1.17:12.3,1.17:12.4	renders	Eight-day age expression rendered as one adjective.
+accept	1.17:12.6,1.17:12.7	1.17:12.6	renders	Relationship preposition and its plural suffix.
+accept	1.17:12.8,1.17:12.9	1.17:12.5	renders	Future passive verb phrase.
+accept	1.17:12.10	1.17:12.9	renders	Prefix marking the generational span.
+accept	1.17:12.14,1.17:12.17	1.17:12.13	renders	Correlative words of the coordination.
+accept	1.17:12.20	1.17:12.14	renders	Purchase construct expresses payment.
+accept	1.17:12.22	1.17:12.16	renders	Source preposition.
+accept	1.17:12.23	1.17:12.18,1.17:12.19	renders	Construct expression for a foreigner.
+accept	1.17:12.25	1.17:12.24	renders	Written subject pronoun.
+accept	1.17:13.1,1.17:13.2	1.17:13.1	renders	Topical phrase renders emphatic infinitive repetition.
+accept	1.17:13.3	1.17:13.2	renders	Directive mood of the finite verb.
+accept	1.17:13.11	1.17:13.6	renders	Purchase construct expresses payment.
+accept	1.17:13.21	1.17:13.13	renders	Predicative instrumental renders the result prefix.
+accept	1.17:14.7	1.17:14.6	renders	Future auxiliary of be circumcised.
+accept	1.17:14.9	1.17:14.8	renders	Marks the flesh as the site of circumcision.
+accept	1.17:14.18	1.17:14.15	renders	Demonstrative following soul.
+accept	1.17:14.22	1.17:14.20	renders	Subject of broke.
+accept	1.17:15.3	1.17:15.4	renders	Dative expresses the addressee preposition.
+accept	1.17:15.8	1.17:15.9	renders	Directive mood in the naming prohibition.
+accept	1.17:15.9,1.17:15.10	1.17:15.11	renders	First name noun and its possessive suffix.
+accept	1.17:16.4	1.17:16.3	renders	Suffixed object of the first blessing.
+accept	1.17:16.8	1.17:16.7	renders	Suffix of the first source preposition.
+accept	1.17:16.11	1.17:16.8	renders	Suffixed recipient of the gift.
+accept	1.17:16.14,1.17:16.15	1.17:16.11	renders	Subject and object of the second blessing.
+accept	1.17:16.18,1.17:16.19	1.17:16.13	renders	Source phrase recasts the feminine subject of become.
+accept	1.17:16.26	1.17:16.18	renders	Suffix of the source preposition in the kings clause.
+accept	1.17:17.11	1.17:17.9	renders	Subject of the inward speech verb.
+accept	1.17:17.15	1.17:17.12	renders	First interrogative prefix.
+accept	1.17:17.16	1.17:17.13	renders	Preposition marking the prospective father.
+accept	1.17:17.17	1.17:17.14,1.17:17.15,1.17:17.16	renders	Hundred-year age expression rendered as one word.
+accept	1.17:17.18	1.17:17.17	renders	Future auxiliary of be born.
+accept	1.17:17.21	1.17:17.19,1.17:17.21	renders	Interrogative force in the Sarah clause.
+accept	1.17:17.23,1.17:17.24	1.17:17.22	renders	Age construction with daughter.
+accept	1.17:18.6,1.17:18.7	1.17:18.7	renders	Two-word optative expression.
+accept	1.17:18.9	1.17:18.9	renders	Verb of living.
+accept	1.17:18.10	1.17:18.10	renders	Prepositional element of before your face.
+accept	1.17:19.2	1.17:19.1	renders	Connective of God's reply.
+accept	1.17:19.4	1.17:19.4	renders	Particle introducing God's correction.
+accept	1.17:19.9	1.17:19.7	renders	Birth participle rendered as future.
+accept	1.17:19.10	1.17:19.8	renders	Suffixed recipient.
+accept	1.17:19.12	1.17:19.11	renders	Subject of the naming verb.
+accept	1.17:19.20,1.17:19.21	1.17:19.19	renders	With and its pronominal suffix.
+accept	1.17:19.23	1.17:19.16	renders	Establishing the covenant.
+accept	1.17:19.24,1.17:19.25	1.17:19.20	renders	Result prefix expanded into a clause.
+accept	1.17:19.32	1.17:19.25	renders	Third-person suffix of after.
+accept	1.17:20.5,1.17:20.6	1.17:20.4	renders	Hearing verb and its second-person object.
+accept	1.17:20.10	1.17:20.7	renders	Suffixed object of blessing.
+accept	1.17:20.12	1.17:20.9	renders	Causative part of make fruitful.
+accept	1.17:20.13	1.17:20.10	renders	Suffixed object of make fruitful.
+accept	1.17:20.16	1.17:20.16	renders	Second half of the repeated intensifier.
+accept	1.17:20.18	1.17:20.13	renders	Suffixed object of multiply.
+accept	1.17:20.19,1.17:20.20	1.17:20.20	renders	Begetting verb and its subject.
+accept	1.17:20.21	1.17:20.17	renders	Units component of twelve.
+accept	1.17:20.25	1.17:20.23	renders	Resultative instrumental renders the prefix.
+accept	1.17:20.26,1.17:20.27,1.17:20.28	1.17:20.22	renders	Making verb with its subject and object.
+accept	1.17:21.5	1.17:21.4	renders	Establishing the covenant.
+accept	1.17:21.6	1.17:21.5	renders	Comitative preposition with Isaac.
+accept	1.17:21.9	1.17:21.7	renders	Resumptive completes the rendering of the relative.
+accept	1.17:21.11	1.17:21.8	renders	Birth verb.
+accept	1.17:21.12	1.17:21.9	renders	Suffixed recipient.
+accept	1.17:21.13	1.17:21.11	renders	Preposition of the appointed time.
+accept	1.17:21.16	1.17:21.20	renders	Other or next year.
+accept	1.17:21.17	1.17:21.16	renders	Temporal genitive expresses the year prefix.
+accept	1.17:22.2	1.17:22.2	renders	Subject of finished.
+accept	1.17:22.5,1.17:22.6	1.17:22.5	renders	With and its pronominal suffix.
+accept	1.17:22.10	1.17:22.10	renders	Second part of the compound source preposition.
+accept	1.17:23.10	1.17:23.10	renders	Household location expressed by the birth construct.
+accept	1.17:23.15,1.17:23.17	1.17:23.15	renders	Nominal purchase rendered as a relative with a price phrase.
+accept	1.17:23.33	1.17:23.33	renders	Written demonstrative of the day.
+accept	1.17:23.35	1.17:23.28	renders	Temporal genitive expresses the time prefix.
+accept	1.17:23.36	1.17:23.34,1.17:23.35	renders	Combined prefix and relative connective.
+accept	1.17:23.39,1.17:23.40	1.17:23.37	renders	With and its pronominal suffix.
+accept	1.17:24.3	1.17:24.3	renders	Copula of the nominal age predicate.
+accept	1.17:24.8	1.17:24.7	renders	Year noun after the compound numeral.
+accept	1.17:24.9	1.17:24.8	renders	Temporal prefix on the circumcision infinitive.
+accept	1.17:25.3	1.17:25.4	renders	Copula of the nominal age predicate.
+accept	1.17:25.5	1.17:25.5	renders	Units component of thirteen.
+accept	1.17:25.7	1.17:25.8	renders	Temporal prefix on the circumcision infinitive.
+accept	1.17:26.1	1.17:26.6	renders	Written demonstrative of the day.
+accept	1.17:26.3	1.17:26.1	renders	Temporal genitive expresses the time prefix.
+accept	1.17:26.4	1.17:26.7	renders	Past passive auxiliary.
+accept	1.17:27.10	1.17:27.8	renders	Purchase construct expresses payment.
+accept	1.17:27.12	1.17:27.10,1.17:27.11	renders	Compound preposition of source.
+accept	1.17:27.13	1.17:27.12,1.17:27.13	renders	Construct expression for a foreigner.
+accept	1.17:27.16,1.17:27.17	1.17:27.15	renders	With and its pronominal suffix.

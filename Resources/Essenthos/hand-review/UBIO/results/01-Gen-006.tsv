@@ -1,0 +1,127 @@
+kind	from	to	relation	reason
+fixed	1.6:1			Missing subordinator, subject noun and dative pronoun.
+fixed	1.6:2			Missing subject pronoun and reflexive dative.
+unsure	1.6:3			Added verb and pronoun links. The alignment of «бо блудить вона» remains uncertain.
+fixed	1.6:4			Missing links in the time phrases, birth clause and description of the mighty men.
+fixed	1.6:5			Missing perception verb, possessive and time expression.
+fixed	1.6:6			Missing past auxiliary, subject pronoun and preposition.
+fixed	1.6:7			Missing subject pronouns, limit phrases and final verb with its object.
+ok	1.6:8			
+fixed	1.6:9			Missing written copula and accompaniment preposition.
+ok	1.6:10			
+fixed	1.6:11			The preposition was on the face noun, and «лицем» lacked its link.
+fixed	1.6:12			Missing perception verb, subject pronoun and quantifier.
+fixed	1.6:13			Missing speaker, prepositions and suffix links. «із землі» expresses removal and its preposition stays unlinked.
+fixed	1.6:14			Missing dative, coating phrase, object pronoun and directional links.
+fixed	1.6:15			Missing demonstrative and pronoun links.
+unsure	1.6:16			Corrected the placement verb and added missing links. The correspondence of locative «в» to לַ remains uncertain.
+fixed	1.6:17			Missing links for «under», the first relative and both locative phrases.
+fixed	1.6:18			Missing covenant verb, possessive and both accompaniment phrases.
+fixed	1.6:19			Repeated quantifiers were misassigned, and several phrase links were missing.
+fixed	1.6:20			Corrected the kind phrases and added missing links. Plural «їх» stays unlinked because the Hebrew suffix is singular.
+unsure	1.6:21			Added consumption and dative links. It is unclear whether «набери» also renders the gathering verb.
+fixed	1.6:22			Missing comparison, object pronoun and final subject pronoun.
+refuse	1.6:11.4	1.6:11.6		The face noun is rendered by «лицем».
+refuse	1.6:16.16	1.6:16.18		The placement verb was linked to the side noun.
+refuse	1.6:19.8	1.6:19.3		The first «усього» belongs to «two of each».
+refuse	1.6:19.10	1.6:19.7		This «усього» modifies «живого».
+refuse	1.6:20.3	1.6:20.5		«за» renders the preceding lamed.
+refuse	1.6:20.18	1.6:20.18		«за» renders the preceding lamed.
+accept	1.6:1.3	1.6:1.3	renders	Clause introducer.
+accept	1.6:1.5	1.6:1.6	renders	Subject noun meaning humankind.
+accept	1.6:1.11	1.6:1.16	renders	Suffixed dative pronoun.
+accept	1.6:2.9	1.6:2.12	renders	Written subject pronoun.
+accept	1.6:2.12	1.6:2.15	renders	Suffixed dative rendered reflexively.
+accept	1.6:3.5,1.6:3.8	1.6:3.5	renders	Auxiliary and infinitive render the finite verb.
+accept	1.6:3.11	1.6:3.10,1.6:3.11	renders	Adverb renders the prefixed eternity expression.
+accept	1.6:3.15	1.6:3.15	renders	Written subject of the flesh clause.
+accept	1.6:3.19	1.6:3.19	renders	Possessive suffix on «days».
+accept	1.6:4.1	1.6:4.7	renders	Temporal preposition in «За тих днів».
+accept	1.6:4.2	1.6:4.11	renders	Demonstrative in «those days».
+accept	1.6:4.4	1.6:4.4	renders	Locative prefix in «на землі».
+accept	1.6:4.7	1.6:4.2	renders	Name for the giants.
+accept	1.6:4.11	1.6:4.15	renders	Demonstrative element in «after that».
+accept	1.6:4.13	1.6:4.17	renders	Part of the verbal phrase «стали приходити».
+accept	1.6:4.21,1.6:4.23	1.6:4.26	renders	Birth verb with its expressed subject.
+accept	1.6:4.22	1.6:4.27	renders	Suffixed dative pronoun.
+accept	1.6:4.24	1.6:4.28	renders	Demonstrative renders the written pronoun.
+accept	1.6:4.28	1.6:4.36	renders	Adjective renders the genitive of renown.
+accept	1.6:4.29	1.6:4.32	renders	Temporal source prefix.
+accept	1.6:5.2	1.6:5.2	renders	Verb of seeing.
+accept	1.6:5.15	1.6:5.16	renders	Possessive suffix on «heart».
+accept	1.6:5.18	1.6:5.19,1.6:5.21	renders	Adverb renders the whole-day expression.
+accept	1.6:6.3	1.6:6.2	renders	Past auxiliary of the regret verb.
+accept	1.6:6.12	1.6:6.13	renders	Subject expressed by the grief verb.
+accept	1.6:6.13	1.6:6.14	renders	Preposition in the heart phrase.
+accept	1.6:7.8	1.6:7.9	renders	First-person subject of «created».
+accept	1.6:7.16	1.6:7.17	renders	Completes the first «аж до» phrase.
+accept	1.6:7.18,1.6:7.19	1.6:7.19	renders	Second limit preposition.
+accept	1.6:7.22,1.6:7.23	1.6:7.22	renders	Third limit preposition.
+accept	1.6:7.29,1.6:7.30,1.6:7.31	1.6:7.29	renders	Making verb with first-person subject and plural object suffix.
+accept	1.6:9.7	1.6:9.8	renders	Written verb of being.
+accept	1.6:9.16	1.6:9.11	renders	Accompaniment preposition.
+accept	1.6:11.4	1.6:11.5	renders	Preposition in «перед лицем».
+accept	1.6:11.6	1.6:11.6	renders	Face noun.
+accept	1.6:12.2	1.6:12.2	renders	Verb of seeing.
+accept	1.6:12.8	1.6:12.9	renders	Subject expressed by the first corruption verb.
+accept	1.6:12.9	1.6:12.12	renders	Quantifier modifying flesh.
+accept	1.6:13.3	1.6:13.3	renders	Title used for the divine speaker.
+accept	1.6:13.4	1.6:13.4	renders	Preposition introducing Noah as addressee.
+accept	1.6:13.10	1.6:13.10	renders	Preposition in «перед лицем».
+accept	1.6:13.17	1.6:13.17	renders	Source prefix in «від них».
+accept	1.6:13.18	1.6:13.18	renders	Plural suffix in the source phrase.
+accept	1.6:13.21	1.6:13.20	renders	First-person suffix on the presentative.
+accept	1.6:13.22,1.6:13.23	1.6:13.21	renders	Destruction verb and its plural object suffix.
+accept	1.6:14.2	1.6:14.2	renders	Suffixed dative rendered reflexively.
+accept	1.6:14.12	1.6:14.19,1.6:14.21	renders	Instrumental case renders the prefix with the pitch noun.
+accept	1.6:14.13	1.6:14.12	renders	Coating verb.
+accept	1.6:14.14	1.6:14.13	renders	Suffixed object pronoun.
+accept	1.6:14.15	1.6:14.14	renders	Adverb incorporates the source prefix.
+accept	1.6:14.17	1.6:14.17,1.6:14.18	renders	Adverb renders «from outside».
+accept	1.6:15.2	1.6:15.2	renders	Demonstrative rendered as «this way».
+accept	1.6:15.3	1.6:15.5	renders	Suffixed object pronoun.
+accept	1.6:15.13	1.6:15.14	renders	Possessive suffix on the breadth noun.
+accept	1.6:15.18	1.6:15.18	renders	Possessive suffix on the height noun.
+accept	1.6:16.1	1.6:16.1	renders	Opening in the first instruction.
+accept	1.6:16.2	1.6:16.2	renders	First making verb.
+accept	1.6:16.7	1.6:16.7	renders	Preposition marking the cubit measure.
+accept	1.6:16.9	1.6:16.9	renders	Object suffix of the finishing verb.
+accept	1.6:16.10	1.6:16.10	renders	Source prefix in «від гори».
+accept	1.6:16.11	1.6:16.12	renders	Top of the ark.
+accept	1.6:16.16	1.6:16.19	renders	Placement verb.
+accept	1.6:16.17	1.6:16.17	renders	Locative prefix in «на боці».
+accept	1.6:16.18,1.6:16.19	1.6:16.18	renders	Side noun and its possessive suffix.
+accept	1.6:16.21	1.6:16.24	renders	Object suffix on the final making verb.
+accept	1.6:16.27	1.6:16.23	renders	Third level.
+accept	1.6:17.10	1.6:17.21	renders	«під» portion of «з-під».
+accept	1.6:17.15	1.6:17.16	renders	Relative introducing the breath clause.
+accept	1.6:17.16,1.6:17.17	1.6:17.17	renders	Prefixed preposition and its pronominal suffix.
+accept	1.6:17.23	1.6:17.26	renders	Locative prefix in the final clause.
+accept	1.6:18.2	1.6:18.2	renders	Verb establishing the covenant.
+accept	1.6:18.5	1.6:18.4	renders	First-person possessive suffix on covenant.
+accept	1.6:18.6,1.6:18.7	1.6:18.5	renders	First accompaniment phrase with its pronoun.
+accept	1.6:18.23,1.6:18.24	1.6:18.19	renders	Final accompaniment phrase with its pronoun.
+accept	1.6:19.7	1.6:19.10	renders	Preposition in «two of each».
+accept	1.6:19.8	1.6:19.11	renders	Quantifier in «two of each».
+accept	1.6:19.9	1.6:19.2	renders	Preposition governing «all the living».
+accept	1.6:19.10	1.6:19.3	renders	Quantifier modifying «living».
+accept	1.6:19.12	1.6:19.6	renders	Preposition governing «all flesh».
+accept	1.6:19.13	1.6:19.7	renders	Quantifier modifying flesh.
+accept	1.6:19.17	1.6:19.17	renders	Causative verb in «keep alive».
+accept	1.6:19.19,1.6:19.20	1.6:19.18	renders	Accompaniment preposition and its suffix.
+accept	1.6:20.3	1.6:20.4	renders	First preposition meaning «according to».
+accept	1.6:20.4,1.6:20.5	1.6:20.5	renders	First kind noun and its possessive suffix.
+accept	1.6:20.9	1.6:20.10	renders	Second preposition meaning «according to».
+accept	1.6:20.18	1.6:20.17	renders	Third preposition meaning «according to».
+accept	1.6:20.26,1.6:20.27	1.6:20.23	renders	Directional preposition and its suffix.
+accept	1.6:20.28	1.6:20.24	renders	Purpose prefix.
+accept	1.6:20.31	1.6:20.25	renders	Resultative complement in «keep alive».
+accept	1.6:21.4	1.6:21.4	renders	Suffixed dative rendered reflexively.
+accept	1.6:21.9,1.6:21.11	1.6:21.9	renders	Expressed subject and nominal rendering of the eating verb.
+accept	1.6:21.14,1.6:21.15	1.6:21.15	renders	Second-person suffixed dative.
+accept	1.6:21.17,1.6:21.18	1.6:21.17	renders	Third-person plural suffixed dative.
+accept	1.6:21.19	1.6:21.18	renders	Prefix in «for food».
+accept	1.6:21.20	1.6:21.19	renders	Food noun in the final phrase.
+accept	1.6:22.5	1.6:22.4,1.6:22.6	renders	Comparative linker introducing the relative clause.
+accept	1.6:22.7	1.6:22.8	renders	Suffixed object of «commanded».
+accept	1.6:22.11	1.6:22.11	renders	Third-person subject of the final verb.

@@ -1,0 +1,204 @@
+kind	from	to	relation	reason
+ok	2.12:1			
+fixed	2.12:2			Restored the predicate and the missing month relations.
+fixed	2.12:3			Moved the opening verb off the preposition and restored missing grammatical links.
+unsure	2.12:4			The exact alignment of the paraphrase «щоб з'їсти» is uncertain.
+fixed	2.12:5			Completed the age expression and restored the condition, mood, and source links.
+fixed	2.12:6			Completed the compound number and restored the pronouns and time expressions.
+fixed	2.12:7			Removed an article link and restored the partitive, mood, and doorway expressions.
+fixed	2.12:8			Moved «травах» to the bitter-herb expression and restored both eating clauses.
+unsure	2.12:9			The division of «бо … тільки» across the Hebrew exceptive expression is uncertain.
+fixed	2.12:10			Restored the two source expressions, the second time limit, and the fire preposition.
+fixed	2.12:11			Moved «так» to the manner adverb and restored pronouns and verb forms.
+fixed	2.12:12			Corrected the location prefix and restored the night, striking, and judgment expressions.
+fixed	2.12:13			Restored the relative clause, actions, and suffixed prepositions.
+fixed	2.12:14			Restored the demonstrative, festival expressions, and object pronouns.
+fixed	2.12:15			Swapped the source prefixes back and restored the causative paraphrase.
+fixed	2.12:16			Restored the time and recipient relations and the two making clauses.
+fixed	2.12:17			Moved the first demonstrative to its own word and restored both observance verbs.
+fixed	2.12:18			Removed an article link and completed the dates. UBIO omits the first evening.
+fixed	2.12:19			Restored the auxiliary, demonstrative, and native-born expression.
+fixed	2.12:20			Added the infinitive to the first eating verb.
+fixed	2.12:21			Restored the compound connective, recipients, and small-livestock expression.
+fixed	2.12:22			Restored both basin nouns, the contact expression, and the departure prefix.
+fixed	2.12:23			Restored the verbs for seeing, allowing, and entering, and the first purpose marker.
+fixed	2.12:24			Restored the demonstrative, ordinance relation, recipient, and duration.
+fixed	2.12:25			Restored the recipient, promise expression, observance verb, and demonstrative.
+fixed	2.12:26			Restored the addressee, demonstrative, and full interrogative expression.
+refuse	2.12:3.1	2.12:3.2		Imperative placed on recipient preposition.
+refuse	2.12:7.4	2.12:7.4		Supplied demonstrative placed on article.
+refuse	2.12:8.18	2.12:8.17		Herbs placed on eating verb.
+refuse	2.12:9.7	2.12:9.7		Wrong occurrence in cooking expression.
+refuse	2.12:9.8	2.12:9.6		Duplicate link to first cooking form.
+refuse	2.12:11.5	2.12:11.5		Manner adverb placed on hips noun.
+refuse	2.12:12.6	2.12:12.6		Night prefix belongs to a different phrase.
+refuse	2.12:15.22	2.12:15.25		Prefix belongs to separation from Israel.
+refuse	2.12:15.34	2.12:15.27		Prefix belongs to the date range.
+refuse	2.12:17.8	2.12:17.8		Demonstrative placed on the emphasis word.
+refuse	2.12:18.15	2.12:18.12		Supplied demonstrative placed on elided article.
+accept	2.12:2.3,2.12:2.4	2.12:2.5	renders	First suffixed recipient prefix.
+accept	2.12:2.5	2.12:2.6	renders	Beginning renders head.
+accept	2.12:2.8	2.12:2.10	renders	Second suffixed recipient prefix.
+accept	2.12:2.10	2.12:2.11	renders	Among marks the comparison set.
+accept	2.12:3.1	2.12:3.1	renders	Opening speech imperative.
+accept	2.12:3.4	2.12:3.2	renders	Dative marks the addressee.
+accept	2.12:3.8	2.12:3.10	renders	Substantive ordinal means tenth day.
+accept	2.12:3.10	2.12:3.11	renders	Genitive marks the month of the date.
+accept	2.12:3.11	2.12:3.17	renders	Particle expresses jussive mood.
+accept	2.12:3.13	2.12:3.18	renders	Suffixed beneficiary prefix.
+accept	2.12:3.16	2.12:3.21	renders	Allocation by ancestral household.
+accept	2.12:3.20	2.12:3.25	renders	Allocation per household.
+accept	2.12:4.3,2.12:4.6	2.12:4.3	renders	Future expression of being too small.
+accept	2.12:4.11	2.12:4.11	renders	Particle expresses directive force.
+accept	2.12:4.15	2.12:4.16	renders	Nearest renders the proximity adjective.
+accept	2.12:4.19,2.12:4.20	2.12:4.14	renders	Neighbor and its possessive suffix.
+accept	2.12:4.21	2.12:4.19	renders	Preposition marks the basis for counting.
+accept	2.12:4.25,2.12:4.26	2.12:4.23,2.12:4.24	renders	Compound expression meaning according to.
+accept	2.12:4.28	2.12:4.25	renders	Possessive suffix on food.
+accept	2.12:4.29	2.12:4.26	renders	Counting verb.
+accept	2.12:4.30	2.12:4.27	renders	Preposition marks the lamb counted for.
+accept	2.12:5.2,2.12:5.3	2.12:5.7	renders	Suffixed prefix expresses possession.
+accept	2.12:5.4	2.12:5.6	renders	Particle expresses the directive.
+accept	2.12:5.6,2.12:5.7	2.12:5.2	renders	Full expression for unblemished.
+accept	2.12:5.9	2.12:5.5	renders	Year completes the age expression.
+accept	2.12:5.12	2.12:5.8	renders	Source prefix before sheep.
+accept	2.12:6.2,2.12:6.4	2.12:6.2	renders	Directive mood and verbal subject.
+accept	2.12:6.5,2.12:6.6	2.12:6.3	renders	Suffixed recipient prefix.
+accept	2.12:6.8,2.12:6.9	2.12:6.6	renders	Full expression for until.
+accept	2.12:6.10	2.12:6.8	renders	Teen component of fourteenth.
+accept	2.12:6.12	2.12:6.14	renders	Explicit demonstrative.
+accept	2.12:6.13	2.12:6.10	renders	Genitive marks the month of the date.
+accept	2.12:6.16	2.12:6.17	renders	Suffixed direct object.
+accept	2.12:6.21	2.12:6.22	renders	Preposition expresses the twilight interval.
+accept	2.12:7.2	2.12:7.2	renders	Particle expresses the taking directive.
+accept	2.12:7.5	2.12:7.3	renders	Genitive expresses the blood portion.
+accept	2.12:7.7,2.12:7.8	2.12:7.7	renders	Directive to apply the blood.
+accept	2.12:7.11	2.12:7.11	renders	Side position is part of doorpost meaning.
+accept	2.12:7.16	2.12:7.15	renders	Upper position is part of lintel meaning.
+accept	2.12:7.17	2.12:7.16	renders	Location preposition before houses.
+accept	2.12:7.23	2.12:7.21	renders	Suffixed direct object.
+accept	2.12:7.24,2.12:7.25	2.12:7.22	renders	Locative preposition and its suffix.
+accept	2.12:8.2,2.12:8.3	2.12:8.2	renders	First eating directive.
+accept	2.12:8.4	2.12:8.10	renders	Night demonstrative.
+accept	2.12:8.5	2.12:8.6	renders	Temporal genitive renders the night prefix.
+accept	2.12:8.9	2.12:8.11	renders	Preposition renders the roast construct relation.
+accept	2.12:8.13,2.12:8.14,2.12:8.15	2.12:8.17	renders	Second eating directive and object suffix.
+accept	2.12:8.16	2.12:8.15	renders	Preposition introducing bitter herbs.
+accept	2.12:8.18	2.12:8.16	renders	Herbs complete the substantive bitter expression.
+accept	2.12:9.3,2.12:9.4	2.12:9.3	renders	Source preposition and its suffix.
+accept	2.12:9.7	2.12:9.6	renders	First cooking form.
+accept	2.12:9.14	2.12:9.12	renders	Restrictive part of the exceptive expression.
+accept	2.12:9.16	2.12:9.13	renders	Preposition renders the roast construct relation.
+accept	2.12:9.20	2.12:9.16	renders	Accompaniment with the shanks.
+accept	2.12:9.24	2.12:9.19	renders	Accompaniment with the innards.
+accept	2.12:10.4,2.12:10.5	2.12:10.4	renders	First suffixed source preposition.
+accept	2.12:10.6	2.12:10.2	renders	Negative concord expresses leaving nothing.
+accept	2.12:10.12	2.12:10.10	renders	Second source preposition's pronoun suffix.
+accept	2.12:10.13	2.12:10.11	renders	Second until marker.
+accept	2.12:10.16	2.12:10.13	renders	Preposition before fire.
+accept	2.12:11.3	2.12:11.4	renders	First suffixed direct object.
+accept	2.12:11.4	2.12:11.3	renders	Auxiliary of the first eating verb.
+accept	2.12:11.5	2.12:11.2	renders	Manner adverb meaning thus.
+accept	2.12:11.8	2.12:11.6	renders	Girded participle.
+accept	2.12:11.24	2.12:11.16	renders	Second suffixed direct object.
+accept	2.12:11.28	2.12:11.20	renders	Pronoun in the Passover predicate.
+accept	2.12:12.2	2.12:12.2	renders	Passing verb.
+accept	2.12:12.4	2.12:12.10	renders	Night demonstrative.
+accept	2.12:12.5	2.12:12.6	renders	Temporal genitive renders the night prefix.
+accept	2.12:12.6	2.12:12.3	renders	Prefix before the first Egypt location.
+accept	2.12:12.10	2.12:12.12	renders	Striking verb.
+accept	2.12:12.18,2.12:12.19	2.12:12.21	renders	Full expression for the range endpoint.
+accept	2.12:12.22	2.12:12.24	renders	Preposition introducing those judged.
+accept	2.12:12.28	2.12:12.29	renders	Judgment noun.
+accept	2.12:13.5	2.12:13.5	renders	Suffixed recipient prefix.
+accept	2.12:13.6	2.12:13.6	renders	Predicative instrumental renders the prefix.
+accept	2.12:13.10	2.12:13.11	renders	Relative marker for the houses.
+accept	2.12:13.14	2.12:13.15	renders	Seeing verb.
+accept	2.12:13.18	2.12:13.20	renders	Passing-over verb.
+accept	2.12:13.19	2.12:13.21	renders	Pronoun on the suffixed preposition.
+accept	2.12:13.23,2.12:13.24	2.12:13.25	renders	Locative preposition and its suffix.
+accept	2.12:13.27	2.12:13.29	renders	Temporal linker before the striking clause.
+accept	2.12:13.28,2.12:13.29	2.12:13.30	renders	Striking verb and its first-person suffix.
+accept	2.12:14.3	2.12:14.6	renders	Day demonstrative.
+accept	2.12:14.5,2.12:14.6	2.12:14.7	renders	Suffixed recipient prefix.
+accept	2.12:14.7	2.12:14.8	renders	Predicative instrumental renders the prefix.
+accept	2.12:14.11	2.12:14.12	renders	First suffixed direct object.
+accept	2.12:14.12	2.12:14.13	renders	As marks the festival's role.
+accept	2.12:14.16	2.12:14.16	renders	Preposition before generations.
+accept	2.12:14.18	2.12:14.17	renders	Generations noun.
+accept	2.12:14.20	2.12:14.18	renders	As marks the ordinance's role.
+accept	2.12:14.23,2.12:14.24,2.12:14.25	2.12:14.20	renders	Final celebration verb and object suffix.
+accept	2.12:15.6	2.12:15.5	renders	Adversative force of the restrictive particle.
+accept	2.12:15.8	2.12:15.6	renders	Temporal genitive renders the first-day prefix.
+accept	2.12:15.9,2.12:15.10,2.12:15.11,2.12:15.12	2.12:15.11	renders	Full paraphrase of causing to cease.
+accept	2.12:15.19	2.12:15.17	renders	Relative pronoun unpacks the eating participle.
+accept	2.12:15.22	2.12:15.27	renders	Source prefix for the first day.
+accept	2.12:15.33	2.12:15.24	renders	Demonstrative modifying soul.
+accept	2.12:15.34	2.12:15.25	renders	Separation prefix before Israel.
+accept	2.12:16.3	2.12:16.2	renders	Temporal genitive renders the first-day prefix.
+accept	2.12:16.4	2.12:16.17	renders	Shared verb for both assemblies.
+accept	2.12:16.5,2.12:16.6	2.12:16.18	renders	Suffixed prefix for those holding assemblies.
+accept	2.12:16.11	2.12:16.10	renders	Temporal genitive renders the seventh-day prefix.
+accept	2.12:16.14	2.12:16.19	renders	Quantifier under negation.
+accept	2.12:16.17	2.12:16.22	renders	Auxiliary of the prohibited action.
+accept	2.12:16.19,2.12:16.20	2.12:16.23	renders	Locative preposition and its suffix.
+accept	2.12:16.21	2.12:16.24	renders	Restrictive particle.
+accept	2.12:16.25	2.12:16.27	renders	Dative renders the prefix for each person.
+accept	2.12:16.26	2.12:16.30	renders	Resumptive pronoun.
+accept	2.12:16.27	2.12:16.31	renders	Prefix within the expression for alone.
+accept	2.12:16.28	2.12:16.33	renders	Final making verb.
+accept	2.12:16.29	2.12:16.34	renders	Translation recasts the suffixed recipient as actor.
+accept	2.12:17.3,2.12:17.4	2.12:17.2	renders	First observance verb and future auxiliary.
+accept	2.12:17.8	2.12:17.12	renders	First day demonstrative.
+accept	2.12:17.9	2.12:17.7	renders	Temporal genitive renders the day phrase's prefix.
+accept	2.12:17.14	2.12:17.16	renders	Source prefix before Egypt.
+accept	2.12:17.19	2.12:17.20	renders	Second observance verb.
+accept	2.12:17.20	2.12:17.25	renders	Second day demonstrative.
+accept	2.12:17.22	2.12:17.26	renders	Preposition before generations.
+accept	2.12:17.24	2.12:17.27	renders	Generations noun.
+accept	2.12:17.25	2.12:17.28	renders	As marks the ordinance's role.
+accept	2.12:18.1,2.12:18.2	2.12:18.3	renders	Substantive ordinal means first month.
+accept	2.12:18.2	2.12:18.1	renders	Temporal genitive renders the first-month prefix.
+accept	2.12:18.3	2.12:18.5,2.12:18.6	renders	Both parts of the compound fourteenth.
+accept	2.12:18.4	2.12:18.4	renders	Temporal genitive renders the fourteenth-day prefix.
+accept	2.12:18.5	2.12:18.8	renders	Genitive marks the month of the first date.
+accept	2.12:18.14	2.12:18.19	renders	One component of twenty-first.
+accept	2.12:18.17	2.12:18.22	renders	Genitive marks the month of the final date.
+accept	2.12:19.5	2.12:19.5	renders	Future auxiliary of being found.
+accept	2.12:19.12	2.12:19.10	renders	Relative pronoun unpacks the eating participle.
+accept	2.12:19.19	2.12:19.17	renders	Demonstrative modifying soul.
+accept	2.12:19.25	2.12:19.21	renders	Preposition before sojourners.
+accept	2.12:19.27	2.12:19.24	renders	Second alternative's compound connective.
+accept	2.12:19.29,2.12:19.30,2.12:19.31	2.12:19.26	renders	Relative clause unpacks native-born.
+accept	2.12:19.32	2.12:19.26	renders	Preposition renders the native-of construct relation.
+accept	2.12:20.5	2.12:20.4	renders	Infinitive of the first eating verb.
+accept	2.12:21.8	2.12:21.8	renders	Part of the compound connective «та й».
+accept	2.12:21.10,2.12:21.11	2.12:21.10	renders	Addressee preposition and its suffix.
+accept	2.12:21.15	2.12:21.14	renders	Suffixed beneficiary prefix.
+accept	2.12:21.16,2.12:21.17	2.12:21.15	renders	Full expression for small livestock.
+accept	2.12:21.18	2.12:21.16	renders	Preposition marks allocation by clan.
+accept	2.12:22.11	2.12:22.13	renders	First basin noun.
+accept	2.12:22.13	2.12:22.15	renders	Contact verb.
+accept	2.12:22.14,2.12:22.15	2.12:22.18	renders	Full expression for lintel.
+accept	2.12:22.15	2.12:22.16	renders	Genitive marks the first target of contact.
+accept	2.12:22.18	2.12:22.20	renders	Genitive marks the second target of contact.
+accept	2.12:22.23	2.12:22.30	renders	Second basin noun.
+accept	2.12:22.29	2.12:22.36	renders	Source prefix before the doorway.
+accept	2.12:23.4	2.12:23.4	renders	Infinitive after motion expresses purpose.
+accept	2.12:23.7	2.12:23.9	renders	Seeing verb.
+accept	2.12:23.25	2.12:23.29	renders	Giving verb expresses permission.
+accept	2.12:23.27	2.12:23.33	renders	Entering infinitive.
+accept	2.12:24.5	2.12:24.7	renders	Demonstrative modifying the matter.
+accept	2.12:24.7	2.12:24.8	renders	As renders the ordinance prefix.
+accept	2.12:24.9,2.12:24.10	2.12:24.10	renders	Suffixed beneficiary prefix.
+accept	2.12:24.15	2.12:24.14	renders	Duration marker.
+accept	2.12:24.16	2.12:24.15	renders	Eternity expression.
+accept	2.12:25.11	2.12:25.11	renders	Suffixed recipient prefix.
+accept	2.12:25.13	2.12:25.12,2.12:25.13	renders	Compound linker meaning as.
+accept	2.12:25.14,2.12:25.16	2.12:25.14	renders	Verbal subject and past auxiliary.
+accept	2.12:25.20	2.12:25.16	renders	Observance verb.
+accept	2.12:25.21	2.12:25.21	renders	Demonstrative modifying service.
+accept	2.12:26.5	2.12:26.5	renders	Suffixed addressee preposition.
+accept	2.12:26.9	2.12:26.11	renders	Demonstrative identifying the service.
+accept	2.12:26.10	2.12:26.7	renders	Part of the interrogative «що за».
+accept	2.12:26.12	2.12:26.12	renders	Possessive renders the suffixed prefix.

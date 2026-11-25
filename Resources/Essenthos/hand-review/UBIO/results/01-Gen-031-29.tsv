@@ -1,0 +1,185 @@
+kind	from	to	relation	reason
+unsure	1.31:29			Restored clear links. The opening idiom, the subject of speaking, and the paired negatives remain uncertain.
+fixed	1.31:30			Moved the subject to the finite verb and restored emphasis and preposition links.
+fixed	1.31:31			Restored clause and pronoun links, including the shift in person in reported thought.
+fixed	1.31:32			Restored verbal forms, pronouns, and prepositions.
+fixed	1.31:33			Restored directional prepositions, negative concord, and the subject pronoun.
+fixed	1.31:34			Restored the opening verb, coordination, prepositions, and negative concord.
+fixed	1.31:35			Corrected the preposition and restored verbal forms, nouns, and pronouns.
+fixed	1.31:36			Restored anger, preposition, interrogative, and pronoun links.
+fixed	1.31:37			Restored the place adverb, jussive, and suffixed numeral.
+fixed	1.31:38			Restored duration, accompaniment, implied offspring, and subject links.
+fixed	1.31:39			Moved the demand verb off the neighboring noun and restored links for the paraphrased expressions.
+fixed	1.31:40			Moved frost off the sleep verb and restored time prefixes and clause links.
+fixed	1.31:41			Corrected the wage possessive and restored the compound numeral and other missing links.
+fixed	1.31:42			Restored conditional wording, the possession relation, and the expanded title.
+fixed	1.31:43			Restored predicate nouns, possession, datives, and the relative clause.
+fixed	1.31:44			Restored the invitation, the witness complement, and suffixed prepositions.
+fixed	1.31:45			Restored the role expressed by the pillar complement.
+fixed	1.31:46			Removed an article link and restored the dative, subject, and coordination.
+fixed	1.31:47			Restored both naming objects and the two-part Aramaic name.
+fixed	1.31:48			Restored the heap and witness, suffixed prepositions, and causal expression.
+fixed	1.31:49			Restored the reason clause, jussive, and suffixed prepositions.
+fixed	1.31:50			Restored the finite action, comparison, and suffixed prepositions.
+fixed	1.31:51			The translation reverses speaker and addressee. Name links follow identity.
+fixed	1.31:52			Restored oath wording, repeated heap references, and prepositions.
+fixed	1.31:53			Restored the suffixed preposition and expanded oath title.
+fixed	1.31:54			Restored the first mountain preposition and the purpose of the invitation.
+fixed	1.31:55			Restored early rising, the morning prefix, descendants, coordination, and destination.
+refuse	1.31:30.6	1.31:30.6		Subject belongs to the finite verb.
+refuse	1.31:35.20	1.31:35.16		Preposition belongs to the prefixed relation.
+refuse	1.31:39.16	1.31:39.8		Demand verb linked to neighboring hand noun.
+refuse	1.31:40.9	1.31:40.13		Frost linked to the sleep clause's verb.
+refuse	1.31:41.29	1.31:41.22		Reflexive refers to Laban. Hebrew suffix refers to Jacob.
+refuse	1.31:46.20	1.31:46.18		Supplied demonstrative linked to the article.
+accept	1.31:29.2	1.31:29.1	renders	Possession paraphrases existence.
+accept	1.31:29.4,1.31:29.5	1.31:29.4	renders	Hand and possessive suffix.
+accept	1.31:29.6	1.31:29.3	renders	Power noun.
+accept	1.31:29.9,1.31:29.10	1.31:29.7	renders	Accompaniment and its pronoun.
+accept	1.31:29.11	1.31:29.8	renders	Harm done.
+accept	1.31:29.19	1.31:29.13	renders	Past auxiliary belongs to the saying verb.
+accept	1.31:29.20	1.31:29.14	renders	Direction of speech.
+accept	1.31:29.24,1.31:29.26	1.31:29.19	renders	Negative complement renders the avoidance relation.
+accept	1.31:29.28	1.31:29.21	renders	Accompaniment preposition.
+accept	1.31:30.3	1.31:30.3	renders	Infinitive absolute emphasizes departure.
+accept	1.31:30.6	1.31:30.7	renders	Subject of the finite longing verb.
+accept	1.31:30.9	1.31:30.8	renders	Object of longing.
+accept	1.31:30.15	1.31:30.12	renders	Subject of stealing.
+accept	1.31:31.6	1.31:31.6	renders	Direction of speech.
+accept	1.31:31.8	1.31:31.8	renders	Part of the causal conjunction.
+accept	1.31:31.13	1.31:31.11	renders	Saying recast as thought.
+accept	1.31:31.14,1.31:31.17	1.31:31.12	renders	Together render lest.
+accept	1.31:31.16,1.31:31.18	1.31:31.13	renders	Taking verb and its subject, recast in third person.
+accept	1.31:31.20	1.31:31.17	renders	First-person suffix.
+accept	1.31:32.1	1.31:32.1	renders	With whom the gods are found.
+accept	1.31:32.4	1.31:32.3	renders	Subject of finding.
+accept	1.31:32.9,1.31:32.10	1.31:32.7	renders	Future auxiliary and subject of living.
+accept	1.31:32.16	1.31:32.11	renders	Reflexive dative of recognition.
+accept	1.31:32.19,1.31:32.20	1.31:32.13	renders	With me as a possession expression.
+accept	1.31:32.23	1.31:32.16	renders	Reflexive dative of taking.
+accept	1.31:33.4	1.31:33.4	renders	Direction into Jacob's tent.
+accept	1.31:33.8	1.31:33.8	renders	Direction into Leah's tent.
+accept	1.31:33.12	1.31:33.12	renders	Direction into the servants' tent.
+accept	1.31:33.17	1.31:33.18	renders	Negative concord expresses the same negation.
+accept	1.31:33.22	1.31:33.21	renders	Subject of going out.
+accept	1.31:33.28	1.31:33.27	renders	Direction into Rachel's tent.
+accept	1.31:34.3	1.31:34.3	renders	Verb for taking the idols.
+accept	1.31:34.8	1.31:34.9	renders	Direction into the saddle.
+accept	1.31:34.12	1.31:34.13	renders	Part of the compound conjunction.
+accept	1.31:34.14,1.31:34.15	1.31:34.15	renders	Preposition and its plural suffix.
+accept	1.31:34.22	1.31:34.24	renders	Negative concord expresses the same negation.
+accept	1.31:35.7,1.31:35.9,1.31:35.10	1.31:35.6	renders	Jussive and the expression of anger.
+accept	1.31:35.12	1.31:35.8	renders	Eyes noun.
+accept	1.31:35.13,1.31:35.14	1.31:35.9	renders	My lord rendered as my father.
+accept	1.31:35.16	1.31:35.12	renders	Subject of ability.
+accept	1.31:35.17	1.31:35.11	renders	Negation of ability.
+accept	1.31:35.20	1.31:35.15	renders	Prepositional part of the expression before you.
+accept	1.31:35.21,1.31:35.22	1.31:35.16	renders	Face and possessive suffix.
+accept	1.31:35.24	1.31:35.20	renders	Prepositional part of the possession expression.
+accept	1.31:35.27	1.31:35.18	renders	Custom or way.
+accept	1.31:35.31	1.31:35.22	renders	Subject of searching.
+accept	1.31:36.4	1.31:36.2	renders	Anger expressed by the Hebrew verb.
+accept	1.31:36.7	1.31:36.7	renders	Preposition governing the opponent.
+accept	1.31:36.14	1.31:36.14	renders	Direction of speech.
+accept	1.31:36.19	1.31:36.18	renders	Second interrogative.
+accept	1.31:36.26	1.31:36.22	renders	First-person suffix on after.
+accept	1.31:37.16	1.31:37.13	renders	Place adverb.
+accept	1.31:37.24	1.31:37.19	renders	Jussive force of the judgment verb.
+accept	1.31:37.28,1.31:37.29	1.31:37.21	renders	Both of us.
+accept	1.31:38.2	1.31:38.1	renders	Temporal demonstrative rendered as elapsed duration.
+accept	1.31:38.5,1.31:38.6	1.31:38.5	renders	With you.
+accept	1.31:38.14,1.31:38.15	1.31:38.10	renders	Own offspring implicit in the miscarriage verb.
+accept	1.31:38.20	1.31:38.15	renders	Subject of eating.
+accept	1.31:39.2,1.31:39.3	1.31:39.1	renders	Wild animal implied by torn prey.
+accept	1.31:39.6	1.31:39.3	renders	Causative verb means bring.
+accept	1.31:39.7,1.31:39.8	1.31:39.4	renders	To you.
+accept	1.31:39.10	1.31:39.5	renders	Emphasis of the independent first-person pronoun.
+accept	1.31:39.11,1.31:39.12	1.31:39.6	renders	Bearing the loss and its object suffix.
+accept	1.31:39.15	1.31:39.8	renders	My hand rendered as me.
+accept	1.31:39.16,1.31:39.18	1.31:39.9	renders	Demand verb and its object suffix.
+accept	1.31:39.19,1.31:39.20,1.31:39.21	1.31:39.10	renders	Expanded passive for the daytime theft.
+accept	1.31:39.24,1.31:39.25	1.31:39.13	renders	Expanded passive for the nighttime theft.
+accept	1.31:40.3	1.31:40.2	renders	Fused daytime preposition.
+accept	1.31:40.5	1.31:40.5	renders	Object suffix of devouring.
+accept	1.31:40.6	1.31:40.6	renders	Dry heat.
+accept	1.31:40.8	1.31:40.9	renders	Fused nighttime preposition.
+accept	1.31:40.9	1.31:40.8	renders	Frost noun.
+accept	1.31:40.13	1.31:40.13	renders	Sleep departing.
+accept	1.31:41.1	1.31:41.1	renders	Opening demonstrative.
+accept	1.31:41.2	1.31:41.2	renders	Opening first-person dative.
+accept	1.31:41.10	1.31:41.7	renders	Object suffix of serving.
+accept	1.31:41.11	1.31:41.8,1.31:41.9	renders	Compound numeral fourteen.
+accept	1.31:41.21	1.31:41.18	renders	Flock noun.
+accept	1.31:41.27	1.31:41.20	renders	Changing the wages.
+accept	1.31:41.28	1.31:41.22	renders	Recipient expresses the Hebrew first-person wage possessor.
+accept	1.31:42.2,1.31:42.13	1.31:42.1	renders	Conditional mood and negation across both subjects.
+accept	1.31:42.5	1.31:42.10	renders	Prepositional part of the relation to Jacob.
+accept	1.31:42.14,1.31:42.15	1.31:42.7	renders	Expanded title for the one feared.
+accept	1.31:42.18	1.31:42.11	renders	Introduces the conditional result.
+accept	1.31:42.22	1.31:42.14	renders	Counterfactual form of sending.
+accept	1.31:43.13,1.31:43.14	1.31:43.14	renders	Children and first-person possessive suffix.
+accept	1.31:43.16	1.31:43.17	renders	Subject flock.
+accept	1.31:43.18	1.31:43.18	renders	Predicate flock.
+accept	1.31:43.24	1.31:43.25	renders	Resumptive subject of possession.
+accept	1.31:43.25	1.31:43.24	renders	Possessive predicate.
+accept	1.31:43.27	1.31:43.27	renders	Dative ending renders the prefix.
+accept	1.31:43.31	1.31:43.31,1.31:43.32	renders	Dative pronoun renders to these.
+accept	1.31:43.35	1.31:43.36	renders	Children's dative ending renders the prefix.
+accept	1.31:43.38	1.31:43.39	renders	Verb for bearing children.
+accept	1.31:43.39	1.31:43.38	renders	Resumptive pronoun makes the relative object explicit.
+accept	1.31:44.3	1.31:44.3	renders	Imperative invitation.
+accept	1.31:44.10	1.31:44.10	renders	Demonstrative expresses the verb's subject.
+accept	1.31:44.12	1.31:44.11	renders	Instrumental expresses the witness role.
+accept	1.31:44.14	1.31:44.13	renders	First-person suffix on between.
+accept	1.31:44.16,1.31:44.17	1.31:44.15	renders	Between and its second-person suffix.
+accept	1.31:45.8	1.31:45.7	renders	As marks the role of the bare pillar complement.
+accept	1.31:46.4	1.31:46.4	renders	Dative ending renders the prefix.
+accept	1.31:46.11	1.31:46.9	renders	Subject of gathering the stones.
+accept	1.31:46.13	1.31:46.11	renders	Part of the compound conjunction.
+accept	1.31:47.3	1.31:47.3	renders	Pronominal object of Laban's naming verb.
+accept	1.31:47.5	1.31:47.5,1.31:47.6	renders	Both parts of the Aramaic name.
+accept	1.31:47.8	1.31:47.10	renders	Pronominal object of Jacob's naming verb.
+accept	1.31:48.4	1.31:48.7	renders	Demonstrative for this heap.
+accept	1.31:48.5	1.31:48.5	renders	Heap noun.
+accept	1.31:48.6	1.31:48.8	renders	Witness predicate.
+accept	1.31:48.8	1.31:48.9	renders	First-person suffix on between.
+accept	1.31:48.10,1.31:48.11	1.31:48.11	renders	Between and its second-person suffix.
+accept	1.31:48.13	1.31:48.14	renders	Prepositional part of therefore.
+accept	1.31:48.18	1.31:48.17	renders	Possessive suffix on name.
+accept	1.31:49.3	1.31:49.4	renders	Relative introduces the reason for the name.
+accept	1.31:49.5,1.31:49.6	1.31:49.6	renders	Jussive form of watching.
+accept	1.31:49.9	1.31:49.8	renders	First-person suffix on between.
+accept	1.31:49.11,1.31:49.12	1.31:49.10	renders	Between and its second-person suffix.
+accept	1.31:50.4	1.31:50.2	renders	Action of mistreating.
+accept	1.31:50.12	1.31:50.9	renders	Preposition meaning in addition to.
+accept	1.31:50.19	1.31:50.13	renders	First-person plural suffix on with.
+accept	1.31:50.25	1.31:50.17	renders	First-person suffix on between.
+accept	1.31:50.27,1.31:50.28	1.31:50.19	renders	Between and its second-person suffix.
+accept	1.31:51.4	1.31:51.4	renders	Preposition marks the addressee.
+accept	1.31:51.7	1.31:51.10	renders	Demonstrative for this heap.
+accept	1.31:51.8	1.31:51.8	renders	Heap noun.
+accept	1.31:51.14	1.31:51.16	renders	Verb for setting up the pillar.
+accept	1.31:51.16,1.31:51.17	1.31:51.17	renders	Between and its first-person suffix.
+accept	1.31:51.19,1.31:51.20	1.31:51.19	renders	Between and its second-person suffix.
+accept	1.31:52.2	1.31:52.5	renders	Demonstrative for the subject heap.
+accept	1.31:52.3	1.31:52.3	renders	Subject heap.
+accept	1.31:52.5	1.31:52.7	renders	Witness predicate for the pillar.
+accept	1.31:52.8	1.31:52.10	renders	Introduces the first oath stipulation.
+accept	1.31:52.12	1.31:52.19	renders	Demonstrative in the first crossing clause.
+accept	1.31:52.13	1.31:52.17	renders	Heap in the first crossing clause.
+accept	1.31:52.14,1.31:52.15	1.31:52.14	renders	To you in the first crossing clause.
+accept	1.31:52.20	1.31:52.25	renders	Direction toward me in the second clause.
+accept	1.31:52.22	1.31:52.30	renders	Demonstrative in the second crossing clause.
+accept	1.31:52.23	1.31:52.28	renders	Heap in the second crossing clause.
+accept	1.31:52.25	1.31:52.36	renders	Demonstrative for the pillar being crossed.
+accept	1.31:52.27	1.31:52.37	renders	Preposition of harmful purpose.
+accept	1.31:53.3	1.31:53.7	renders	First-person plural suffix on between.
+accept	1.31:53.15	1.31:53.13,1.31:53.14	renders	Instrumental oath formula and the one feared.
+accept	1.31:53.16	1.31:53.14	renders	Relative object in the expanded title.
+accept	1.31:54.5	1.31:54.5	renders	First mountain preposition.
+accept	1.31:54.11	1.31:54.12	renders	Infinitive expresses the purpose of the invitation.
+accept	1.31:55.4	1.32:1.2	renders	Early is part of the rising verb.
+accept	1.31:55.5	1.32:1.4	renders	Fused morning preposition.
+accept	1.31:55.8	1.32:1.10	renders	Laban's sons rendered as grandchildren.
+accept	1.31:55.19	1.32:1.19	renders	Part of the compound conjunction.
+accept	1.31:55.22	1.32:1.22	renders	Destination preposition.

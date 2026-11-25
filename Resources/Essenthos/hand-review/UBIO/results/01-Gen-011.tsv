@@ -1,0 +1,146 @@
+kind	from	to	relation	reason
+ok	1.11:1			
+fixed	1.11:2			Missing temporal, subject, and content links.
+fixed	1.11:3			Misplaced beneficiary preposition and missing links for burning and materials.
+fixed	1.11:4			Missing exhortation, verb, pronoun, and preposition links.
+ok	1.11:5			
+unsure	1.11:6			Added missing links. The alignment of the first це and of ось is uncertain.
+fixed	1.11:7			Missing exhortation, purpose marker, and reciprocal links.
+fixed	1.11:8			Missing object pronoun, source adverb, and preposition links.
+fixed	1.11:9			Missing causal, possessive, and spatial links.
+fixed	1.11:10			Missing copula and part of the sequential conjunction.
+fixed	1.11:11			Missing parts of the temporal conjunction and a subject pronoun.
+fixed	1.11:12			Missing part of the conjunction and a subject pronoun.
+fixed	1.11:13			Missing temporal conjunction components, subject pronouns, and the year unit for four hundred.
+fixed	1.11:14			Missing clause connectives and a subject pronoun.
+fixed	1.11:15			Missing temporal conjunction components, subject pronouns, and the year unit for four hundred.
+fixed	1.11:16			Missing clause connectives and a subject pronoun.
+fixed	1.11:17			Missing temporal conjunction components, subject pronouns, and both year units.
+fixed	1.11:18			Missing links for the clause connectives.
+fixed	1.11:19			Missing temporal conjunction components, dual numeral, year units, and subject pronoun.
+fixed	1.11:20			Missing part of the sequential conjunction.
+fixed	1.11:21			Missing temporal conjunction components, dual numeral, year units, and subject pronoun.
+fixed	1.11:22			Missing part of the sequential conjunction.
+fixed	1.11:23			Missing parts of the temporal conjunction and a subject pronoun.
+fixed	1.11:24			Missing part of the conjunction and a subject pronoun.
+fixed	1.11:25			Missing temporal conjunction components, subject pronouns, and age expressions.
+fixed	1.11:26			Missing links for the clause connectives.
+ok	1.11:27			
+fixed	1.11:28			Missing opening connective and lifetime expression.
+fixed	1.11:29			Missing reflexive beneficiary phrase.
+fixed	1.11:30			Missing copula, possession, and child links.
+fixed	1.11:31			Missing movement, destination, and settlement links. Вийшов renders a plural Hebrew verb.
+fixed	1.11:32			Missing copula and both year units.
+refuse	1.11:3.16	1.11:3.18		Beneficiary linked to the substitution prefix.
+accept	1.11:2.3	1.11:2.3	renders	Temporal preposition rendered as a conjunction.
+accept	1.11:2.7	1.11:2.4	renders	Subject suffix of the infinitive.
+accept	1.11:2.12	1.11:2.9	renders	Valley or plain.
+accept	1.11:2.13	1.11:2.8	renders	Finding verb.
+accept	1.11:2.15	1.11:2.14	renders	Settling verb.
+accept	1.11:3.5	1.11:3.4	renders	Dative renders the preposition to.
+accept	1.11:3.10	1.11:3.12	renders	Burning noun supplies the emphasis.
+accept	1.11:3.14	1.11:3.14	renders	Verb of becoming.
+accept	1.11:3.16,1.11:3.17	1.11:3.15	renders	Beneficiary preposition with pronominal suffix.
+accept	1.11:3.18	1.11:3.18	renders	Preposition marking what brick replaces.
+accept	1.11:3.22	1.11:3.22	renders	Earth pitch is bitumen.
+accept	1.11:3.24	1.11:3.24	renders	Dative renders the suffixed preposition.
+accept	1.11:3.25	1.11:3.25	renders	Preposition marking use as mortar.
+accept	1.11:3.26	1.11:3.27	renders	Lime renders the mortar material.
+accept	1.11:4.4	1.11:4.3	renders	Exhortation before the proposal.
+accept	1.11:4.6	1.11:4.4	renders	Cohortative of building.
+accept	1.11:4.7	1.11:4.5	renders	Dative renders the suffixed preposition.
+accept	1.11:4.12	1.11:4.10	renders	Possessive suffix on the tower top.
+accept	1.11:4.14	1.11:4.11	renders	Marks the position reached by the tower top.
+accept	1.11:4.18,1.11:4.19	1.11:4.16	renders	Second beneficiary preposition with suffix.
+accept	1.11:4.22	1.11:4.19	renders	First-person plural verb subject.
+accept	1.11:4.23	1.11:4.18	renders	Negative force of lest.
+accept	1.11:4.25	1.11:4.20	renders	Preposition governing surface.
+accept	1.11:6.11,1.11:6.12	1.11:6.11	renders	Whole group and its pronominal suffix.
+accept	1.11:6.18	1.11:6.16	renders	Doing rendered as work.
+accept	1.11:6.20,1.11:6.25	1.11:6.20	renders	Finite verb of impossibility.
+accept	1.11:6.22	1.11:6.22	renders	Quantifier under negation.
+accept	1.11:6.23,1.11:6.24	1.11:6.21	renders	Suffixed preposition marks those affected.
+accept	1.11:6.27	1.11:6.24	renders	Plural subject of the planning verb.
+accept	1.11:7.1	1.11:7.1	renders	Exhortation before the proposal.
+accept	1.11:7.4	1.11:7.4	renders	Cohortative of confounding.
+accept	1.11:7.8	1.11:7.7	renders	Introduces the purpose clause.
+accept	1.11:7.11	1.11:7.9	renders	Plural subject of the hearing verb.
+accept	1.11:7.12	1.11:7.11	renders	Language in the reciprocal clause.
+accept	1.11:7.14	1.11:7.12	renders	Second half of the reciprocal expression.
+accept	1.11:8.3	1.11:8.4	renders	Suffixed object pronoun.
+accept	1.11:8.4	1.11:8.5,1.11:8.6	renders	From there in one adverb.
+accept	1.11:8.6	1.11:8.7	renders	Preposition governing surface.
+accept	1.11:9.2	1.11:9.1	renders	First component of the causal expression.
+accept	1.11:9.5,1.11:9.6	1.11:9.4	renders	Name with possessive suffix.
+accept	1.11:9.18	1.11:9.15,1.11:9.16	renders	From there in one adverb.
+accept	1.11:9.20	1.11:9.19	renders	Preposition governing surface.
+accept	1.11:9.21	1.11:9.20	renders	Surface of the earth.
+accept	1.11:10.5	1.11:10.5	renders	Copula of the nominal age predicate.
+accept	1.11:10.10	1.11:10.8	renders	Part of the sequential conjunction та й.
+accept	1.11:11.5,1.11:11.6	1.11:11.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:11.14	1.11:11.12	renders	Subject of the second begetting verb.
+accept	1.11:12.9	1.11:12.8	renders	Part of the sequential conjunction та й.
+accept	1.11:12.11	1.11:12.9	renders	Subject of the begetting verb.
+accept	1.11:13.5,1.11:13.6	1.11:13.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:13.8	1.11:13.5	renders	Subject suffix of the infinitive.
+accept	1.11:13.12	1.11:13.13	renders	Year unit for four hundred.
+accept	1.11:13.18	1.11:13.15	renders	Subject of the second begetting verb.
+accept	1.11:14.2	1.11:14.1	renders	Clause-initial transition rendered by же.
+accept	1.11:14.7	1.11:14.6	renders	Part of the sequential conjunction та й.
+accept	1.11:14.9	1.11:14.7	renders	Subject of the begetting verb.
+accept	1.11:15.5,1.11:15.6	1.11:15.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:15.8	1.11:15.5	renders	Subject suffix of the infinitive.
+accept	1.11:15.12	1.11:15.13	renders	Year unit for four hundred.
+accept	1.11:15.18	1.11:15.15	renders	Subject of the second begetting verb.
+accept	1.11:16.2	1.11:16.1	renders	Clause-initial transition rendered by же.
+accept	1.11:16.9	1.11:16.8	renders	Part of the sequential conjunction та й.
+accept	1.11:16.11	1.11:16.9	renders	Subject of the begetting verb.
+accept	1.11:17.5,1.11:17.6	1.11:17.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:17.8	1.11:17.5	renders	Subject suffix of the infinitive.
+accept	1.11:17.12	1.11:17.13	renders	Year unit for four hundred.
+accept	1.11:17.15	1.11:17.9	renders	Year unit for thirty.
+accept	1.11:17.18	1.11:17.15	renders	Subject of the second begetting verb.
+accept	1.11:18.2	1.11:18.1	renders	Clause-initial transition rendered by же.
+accept	1.11:18.7	1.11:18.6	renders	Part of the sequential conjunction та й.
+accept	1.11:19.5,1.11:19.6	1.11:19.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:19.9	1.11:19.11	renders	Dual form means two hundred.
+accept	1.11:19.11	1.11:19.12	renders	Year unit for two hundred.
+accept	1.11:19.14	1.11:19.9	renders	Year unit for nine.
+accept	1.11:19.17	1.11:19.14	renders	Subject of the second begetting verb.
+accept	1.11:20.9	1.11:20.8	renders	Part of the sequential conjunction та й.
+accept	1.11:21.5,1.11:21.6	1.11:21.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:21.9	1.11:21.11	renders	Dual form means two hundred.
+accept	1.11:21.11	1.11:21.12	renders	Year unit for two hundred.
+accept	1.11:21.14	1.11:21.9	renders	Year unit for seven.
+accept	1.11:21.17	1.11:21.14	renders	Subject of the second begetting verb.
+accept	1.11:22.7	1.11:22.6	renders	Part of the sequential conjunction та й.
+accept	1.11:23.5,1.11:23.6	1.11:23.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:23.14	1.11:23.11	renders	Subject of the second begetting verb.
+accept	1.11:24.9	1.11:24.8	renders	Part of the sequential conjunction та й.
+accept	1.11:24.11	1.11:24.9	renders	Subject of the begetting verb.
+accept	1.11:25.5,1.11:25.6	1.11:25.4	renders	Complete the temporal conjunction meaning after.
+accept	1.11:25.8	1.11:25.5	renders	Subject suffix of the infinitive.
+accept	1.11:25.10	1.11:25.12	renders	One hundred.
+accept	1.11:25.11	1.11:25.13	renders	Year unit for one hundred.
+accept	1.11:25.13	1.11:25.8,1.11:25.9	renders	Both components of nineteen.
+accept	1.11:25.14	1.11:25.10	renders	Year unit for nineteen.
+accept	1.11:25.17	1.11:25.15	renders	Subject of the second begetting verb.
+accept	1.11:26.2	1.11:26.1	renders	Clause-initial transition rendered by же.
+accept	1.11:26.7	1.11:26.6	renders	Part of the sequential conjunction та й.
+accept	1.11:28.2	1.11:28.1	renders	Clause-initial transition rendered by же.
+accept	1.11:28.4	1.11:28.4	renders	Preposition in the lifetime expression.
+accept	1.11:28.5	1.11:28.5	renders	Presence rendered as lifetime.
+accept	1.11:29.6,1.11:29.7	1.11:29.6	renders	Beneficiary preposition with pronominal suffix.
+accept	1.11:30.4	1.11:30.2	renders	Written verb of being.
+accept	1.11:30.6,1.11:30.8	1.11:30.6	renders	Possession and its feminine singular possessor.
+accept	1.11:30.7	1.11:30.7	renders	Child or offspring.
+accept	1.11:31.23	1.11:31.21	renders	Part of the sequential conjunction та й.
+accept	1.11:31.24	1.11:31.22	renders	Verb of going out.
+accept	1.11:31.25,1.11:31.26	1.11:31.23	renders	Comitative preposition with pronominal suffix.
+accept	1.11:31.32	1.11:31.29	renders	Directional ending of the land noun.
+accept	1.11:31.38	1.11:31.33	renders	Extent in the expression аж до.
+accept	1.11:31.42	1.11:31.35	renders	Part of the sequential conjunction та й.
+accept	1.11:31.44	1.11:31.36	renders	Settling verb.
+accept	1.11:32.2	1.11:32.2	renders	Written verb of being.
+accept	1.11:32.7	1.11:32.9	renders	Year unit for two hundred.
+accept	1.11:32.10	1.11:32.6	renders	Year unit for five.

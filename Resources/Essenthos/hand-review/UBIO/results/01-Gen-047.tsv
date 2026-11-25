@@ -1,0 +1,210 @@
+kind	from	to	relation	reason
+fixed	1.47:1			Missing dative, conjunction, and pronoun links.
+fixed	1.47:2			Missing subject, partitive, noun, and phrase links.
+fixed	1.47:3			Missing dative, flock, and paired additive particles.
+fixed	1.47:4			Missing arrival, purpose, possession, and request links.
+fixed	1.47:5			Missing speech, possessive, and destination links.
+fixed	1.47:6			Missing pronouns, location, mood, and ability links.
+fixed	1.47:7			The preposition was linked to the adjacent face noun.
+fixed	1.47:8			The age question lacked links.
+fixed	1.47:9			Mislinked time noun and missing verb and time links.
+fixed	1.47:10			Missing compound conjunction component and face noun.
+fixed	1.47:11			Missing settlement, recipient, location, and comparison links.
+fixed	1.47:12			The purpose prefix belongs to the phrase about the children's number.
+fixed	1.47:13			Missing negative existential, predicate, and causal phrase links.
+fixed	1.47:14			Missing participial relative, provisions, and directional ending.
+fixed	1.47:15			Missing arrival, speech, pronoun, and causal links.
+fixed	1.47:16			Missing recipient and exchange preposition.
+fixed	1.47:17			Missing recipients, exchange prefix, and temporal links.
+fixed	1.47:18			Missing clause, possession, negative concord, and exception links.
+fixed	1.47:19			Missing modal, prepositional, pronominal, and verb links.
+fixed	1.47:20			Missing famine verb, affected group, and ownership prefix.
+fixed	1.47:21			Missing pronouns, destination, and endpoint links.
+unsure	1.47:22			Uncertain whether the allowance noun also covers the added wording about living on it.
+fixed	1.47:23			Missing presentation particle, purchase verb, and pronouns.
+fixed	1.47:24			Missing harvest, fractional unit, and distribution links.
+fixed	1.47:25			Missing links for keeping alive, the wish, and the dative.
+fixed	1.47:26			Missing decree, temporal, levy, and ownership links.
+fixed	1.47:27			Missing possession, locative pronoun, and subject links.
+fixed	1.47:28			The conjunctions were swapped in the reversed numeral. Several links were missing.
+fixed	1.47:29			Missing temporal, destination, verb, and pronoun links.
+fixed	1.47:30			Missing object suffixes and links in the reply.
+fixed	1.47:31			Missing subject and recipient of the oath.
+refuse	1.47:7.11	1.47:7.10		Renders the prefix before the face noun.
+refuse	1.47:9.7	1.47:9.8		Renders the preceding years noun.
+refuse	1.47:12.5	1.47:12.15		Prefix introduces the measure of provision.
+refuse	1.47:28.18	1.47:28.18		Connects the hundred and forty.
+refuse	1.47:28.20	1.47:28.20		Connects the forty and seven.
+accept	1.47:1.6	1.47:1.6	renders	Dative renders the recipient prefix.
+accept	1.47:1.8	1.47:1.8	renders	Part of the compound conjunction.
+accept	1.47:1.23	1.47:1.20	renders	Possessive renders the suffixed preposition.
+accept	1.47:1.30	1.47:1.26	renders	Plural suffix on the presentative.
+accept	1.47:2.3	1.47:2.5	renders	Subject encoded in the verb.
+accept	1.47:2.4	1.47:2.2	renders	Partitive preposition.
+accept	1.47:2.8	1.47:2.7	renders	Men being counted.
+accept	1.47:2.10	1.47:2.8	renders	Part of the compound conjunction.
+accept	1.47:2.13	1.47:2.10	renders	Prefix in the expression for presence.
+accept	1.47:2.14	1.47:2.11	renders	Face noun in the expression for presence.
+accept	1.47:3.13	1.47:3.10	renders	Dative renders the addressee preposition.
+accept	1.47:3.15	1.47:3.13	renders	Flock governed by the shepherd term.
+accept	1.47:3.18	1.47:3.15	renders	First additive particle.
+accept	1.47:3.20	1.47:3.17	renders	Second additive particle.
+accept	1.47:4.4	1.47:4.3	renders	Dative renders the addressee preposition.
+accept	1.47:4.5,1.47:4.6	1.47:4.10	renders	Arrival verb and its subject ending.
+accept	1.47:4.7	1.47:4.5	renders	Purpose prefix on the infinitive.
+accept	1.47:4.17	1.47:4.17	renders	Relative marker.
+accept	1.47:4.18,1.47:4.19	1.47:4.18	renders	Possessive predication expressed by the preposition.
+accept	1.47:4.30	1.47:4.29	renders	Jussive expressed by a mood auxiliary.
+accept	1.47:4.31	1.47:4.30	renders	Particle softening the request.
+accept	1.47:5.2	1.47:5.2	renders	Main speech verb.
+accept	1.47:5.6	1.47:5.6	renders	Gerund renders the prefixed speech formula.
+accept	1.47:5.10,1.47:5.11	1.47:5.10	renders	Brothers and possessive suffix.
+accept	1.47:5.13,1.47:5.14	1.47:5.12	renders	Destination preposition and its suffix.
+accept	1.47:6.3	1.47:6.5	renders	Independent pronoun referring to the land.
+accept	1.47:6.4	1.47:6.3	renders	Prefix in the expression for presence.
+accept	1.47:6.5,1.47:6.6	1.47:6.4	renders	Face noun and its possessive suffix.
+accept	1.47:6.9	1.47:6.7	renders	Noun in the expression for the best part.
+accept	1.47:6.18	1.47:6.16	renders	Jussive expressed by a mood auxiliary.
+accept	1.47:6.27,1.47:6.28	1.47:6.25	renders	Preposition and plural suffix.
+accept	1.47:6.29	1.47:6.24	renders	Existential predication.
+accept	1.47:6.30	1.47:6.27	renders	Adjective renders the noun of ability.
+accept	1.47:6.36	1.47:6.34	renders	Possessive renders the suffixed preposition.
+accept	1.47:7.8	1.47:7.7	renders	Part of the compound conjunction.
+accept	1.47:7.11	1.47:7.9	renders	Prefix in the expression for presence.
+accept	1.47:8.6	1.47:8.6,1.47:8.7	renders	Compound interrogative of quantity.
+accept	1.47:8.7	1.47:8.8	renders	Days in the age question.
+accept	1.47:8.8	1.47:8.9	renders	Time renders years.
+accept	1.47:8.9,1.47:8.10	1.47:8.10	renders	Life and its possessive suffix.
+accept	1.47:9.7	1.47:9.7	renders	Time renders the first years noun.
+accept	1.47:9.8	1.47:9.8	renders	Sojourning noun.
+accept	1.47:9.17	1.47:9.16	renders	Written copula.
+accept	1.47:9.19	1.47:9.18	renders	Time renders the second years noun.
+accept	1.47:9.24,1.47:9.25	1.47:9.22	renders	Attainment verb and its subject ending.
+accept	1.47:9.27	1.47:9.25	renders	Time renders the third years noun.
+accept	1.47:10.6	1.47:10.6	renders	Part of the compound conjunction.
+accept	1.47:10.9	1.47:10.10	renders	Face noun.
+accept	1.47:11.2	1.47:11.2	renders	Causative settlement verb.
+accept	1.47:11.11	1.47:11.11	renders	Recipient preposition with plural suffix.
+accept	1.47:11.18	1.47:11.17	renders	Noun in the expression for the best part.
+accept	1.47:11.24	1.47:11.23,1.47:11.24	renders	Comparative relative expression.
+accept	1.47:12.17,1.47:12.19	1.47:12.16	renders	Measure expressed by counting mouths.
+accept	1.47:12.18	1.47:12.15	renders	Prefix introducing the measure.
+accept	1.47:12.20	1.47:12.18	renders	Children being provided for.
+accept	1.47:13.4	1.47:13.3	renders	Verb in the negative existential.
+accept	1.47:13.11	1.47:13.9	renders	Verb supporting the severity predicate.
+accept	1.47:13.21	1.47:13.21	renders	Part of the compound causal preposition.
+accept	1.47:14.6	1.47:14.9	renders	Relative word renders the participle.
+accept	1.47:14.16	1.47:14.19	renders	Provisions purchased.
+accept	1.47:14.25	1.47:14.29	renders	Directional ending on the house noun.
+accept	1.47:15.12	1.47:15.13	renders	Arrival verb.
+accept	1.47:15.17	1.47:15.18,1.47:15.19	renders	Gerund renders the prefixed speech formula.
+accept	1.47:15.23	1.47:15.25	renders	Dative subject renders the verb's person.
+accept	1.47:15.25,1.47:15.26	1.47:15.26	renders	Preposition of presence and its suffix.
+accept	1.47:15.27,1.47:15.28	1.47:15.27	renders	Compound causal conjunction.
+accept	1.47:16.10	1.47:16.8	renders	Recipient preposition with plural suffix.
+accept	1.47:16.11	1.47:16.9	renders	Exchange prefix.
+accept	1.47:17.10	1.47:17.9	renders	Recipient preposition with plural suffix.
+accept	1.47:17.13	1.47:17.12	renders	Exchange prefix before horses.
+accept	1.47:17.17	1.47:17.17	renders	Flock also renders the livestock head noun.
+accept	1.47:17.20	1.47:17.22	renders	Herds render the second livestock head noun.
+accept	1.47:17.26,1.47:17.30	1.47:17.30	renders	Subject and object encoded in the verb.
+accept	1.47:17.27	1.47:17.41	renders	Temporal demonstrative.
+accept	1.47:17.28	1.47:17.37	renders	Temporal genitive renders the prefix.
+accept	1.47:18.2	1.47:18.2	renders	Ending of the year.
+accept	1.47:18.3	1.47:18.6	renders	Demonstrative modifying the year.
+accept	1.47:18.9	1.47:18.9	renders	Suffix on the destination preposition.
+accept	1.47:18.11	1.47:18.10	renders	Temporal genitive renders the prefix.
+accept	1.47:18.13	1.47:18.15	renders	Part of the compound conjunction.
+accept	1.47:18.15	1.47:18.17	renders	Recipient preposition with suffix.
+accept	1.47:18.17,1.47:18.18	1.47:18.19	renders	Paraphrase of concealing the facts.
+accept	1.47:18.23	1.47:18.24	renders	Exhaustion of the silver.
+accept	1.47:18.26	1.47:18.28	renders	Herds render the livestock head noun.
+accept	1.47:18.27	1.47:18.30	renders	Livestock in the genitive phrase.
+accept	1.47:18.28	1.47:18.31	renders	Preposition marking possession.
+accept	1.47:18.31	1.47:18.33	renders	Negative concord in the remaining clause.
+accept	1.47:18.34	1.47:18.35	renders	Part of the compound preposition of presence.
+accept	1.47:18.37	1.47:18.39	renders	Part of the compound exception marker.
+accept	1.47:19.3	1.47:19.2	renders	Modal auxiliary in the death question.
+accept	1.47:19.5	1.47:19.3	renders	Prefix in the expression of presence.
+accept	1.47:19.8	1.47:19.5	renders	First additive particle.
+accept	1.47:19.12	1.47:19.8	renders	Land in the first coordinated phrase.
+accept	1.47:19.14	1.47:19.10	renders	Object pronoun on the suffixed marker.
+accept	1.47:19.21	1.47:19.18	renders	Written verb of being.
+accept	1.47:19.27	1.47:19.23	renders	Dative renders the service prefix.
+accept	1.47:19.29	1.47:19.26	renders	Subject encoded in the imperative.
+accept	1.47:19.41	1.47:19.37	renders	Verb of becoming desolate.
+accept	1.47:20.15,1.47:20.17	1.47:20.16	renders	Strengthening verb and past auxiliary.
+accept	1.47:20.19,1.47:20.20	1.47:20.17	renders	Preposition and suffix marking the affected people.
+accept	1.47:20.24	1.47:20.24	renders	Possessive adjective renders the ownership prefix.
+accept	1.47:21.3	1.47:21.5	renders	Subject encoded in the transfer verb.
+accept	1.47:21.5	1.47:21.6	renders	Object pronoun on the suffixed marker.
+accept	1.47:21.6	1.47:21.7	renders	Destination prefix.
+accept	1.47:21.13	1.47:21.15	renders	Part of the endpoint expression.
+accept	1.47:21.16	1.47:21.16	renders	Possessive suffix on the second endpoint.
+accept	1.47:22.6	1.47:22.6	renders	Subject encoded in the purchase verb.
+accept	1.47:22.10,1.47:22.11,1.47:22.14	1.47:22.8	renders	Existence of a fixed allowance.
+accept	1.47:22.15	1.47:22.13	renders	Part of the compound source preposition.
+accept	1.47:22.18	1.47:22.16	renders	Subject encoded in the eating verb.
+accept	1.47:22.24	1.47:22.21	renders	Recipient preposition with plural suffix.
+accept	1.47:22.26	1.47:22.23	renders	Part of the compound causal expression.
+accept	1.47:23.6	1.47:23.7	renders	First presentative particle.
+accept	1.47:23.7	1.47:23.8	renders	Purchase verb.
+accept	1.47:23.12	1.47:23.9	renders	Object pronoun on the suffixed marker.
+accept	1.47:23.17	1.47:23.18	renders	Recipient preposition with plural suffix.
+accept	1.47:24.3	1.47:24.5	renders	Harvest yield.
+accept	1.47:24.7	1.47:24.8	renders	Unit in the expression for one fifth.
+accept	1.47:24.8	1.47:24.9	renders	Dative renders the recipient prefix.
+accept	1.47:24.12	1.47:24.15	renders	Written verb of being.
+accept	1.47:24.13	1.47:24.16	renders	First recipient preposition with suffix.
+accept	1.47:24.14	1.47:24.17	renders	Purpose prefix before seed.
+accept	1.47:24.16	1.47:24.18	renders	Preposition expresses the seed's construct relation.
+accept	1.47:24.19	1.47:24.22	renders	Purpose prefix before your food.
+accept	1.47:24.20,1.47:24.21	1.47:24.23	renders	Food noun and its second-person suffix.
+accept	1.47:24.23	1.47:24.25	renders	Dative renders the beneficiary prefix.
+accept	1.47:24.23,1.47:24.24	1.47:24.26	renders	Correlative phrase renders the headless relative.
+accept	1.47:24.29	1.47:24.30	renders	Purpose prefix in the children's food phrase.
+accept	1.47:24.30	1.47:24.31	renders	Food noun renders the eating infinitive.
+accept	1.47:25.4,1.47:25.5,1.47:25.6,1.47:25.7,1.47:25.8	1.47:25.3	renders	Causative keeping alive with subject and object.
+accept	1.47:25.9	1.47:25.4	renders	Mood auxiliary expresses the wish.
+accept	1.47:25.20	1.47:25.12	renders	Dative renders the service prefix.
+accept	1.47:26.3	1.47:26.2	renders	Verb of establishing the decree.
+accept	1.47:26.4	1.47:26.3	renders	Object pronoun on the suffixed marker.
+accept	1.47:26.5	1.47:26.5	renders	Prefix marking what it was established as.
+accept	1.47:26.6	1.47:26.6	renders	Decree noun.
+accept	1.47:26.7	1.47:26.12	renders	Preposition applying the decree to the land.
+accept	1.47:26.10	1.47:26.7	renders	Part of the temporal endpoint expression.
+accept	1.47:26.12	1.47:26.11	renders	Adjective renders the temporal demonstrative.
+accept	1.47:26.14	1.47:26.17	renders	Prefix introducing the fifth part.
+accept	1.47:26.16	1.47:26.19	renders	Unit in the expression for one fifth.
+accept	1.47:26.19	1.47:26.24,1.47:26.25	renders	Compound expression meaning alone.
+accept	1.47:26.25	1.47:26.28	renders	Possessive adjective renders the ownership prefix.
+accept	1.47:27.12,1.47:27.13	1.47:27.12	renders	Locative preposition and its suffix.
+accept	1.47:27.14	1.47:27.11	renders	Noun in the periphrasis for taking possession.
+accept	1.47:27.16	1.47:27.14	renders	Subject encoded in the fertility verb.
+accept	1.47:28.7	1.47:28.7,1.47:28.8	renders	Compound numeral seventeen.
+accept	1.47:28.11	1.47:28.12	renders	Days of Jacob's life.
+accept	1.47:28.13	1.47:28.14	renders	Years in the description of his life.
+accept	1.47:28.14,1.47:28.15	1.47:28.15	renders	Life noun and its possessive suffix.
+accept	1.47:28.17	1.47:28.22	renders	Years attached to the hundred.
+accept	1.47:28.18	1.47:28.20	renders	Connects the hundred and forty.
+accept	1.47:28.20	1.47:28.18	renders	Connects the forty and seven.
+accept	1.47:29.3	1.47:29.3	renders	Days approaching their end.
+accept	1.47:29.5	1.47:29.5	renders	Prefix on the death infinitive.
+accept	1.47:29.6	1.47:29.6	renders	Noun renders the death infinitive.
+accept	1.47:29.9	1.47:29.8	renders	Subject encoded in the calling verb.
+accept	1.47:29.10	1.47:29.9	renders	Destination prefix before son.
+accept	1.47:29.13	1.47:29.11	renders	Destination prefix before Joseph.
+accept	1.47:29.16	1.47:29.13	renders	Part of the compound conjunction.
+accept	1.47:29.18	1.47:29.15	renders	Addressee preposition with suffix.
+accept	1.47:29.33	1.47:29.28	renders	Verb of acting toward Jacob.
+accept	1.47:29.35	1.47:29.29	renders	First-person suffix on the comitative.
+accept	1.47:29.36	1.47:29.30	renders	Kindness in the paired expression.
+accept	1.47:29.41	1.47:29.35	renders	Object suffix on the burial verb.
+accept	1.47:30.10	1.47:30.6	renders	Object suffix on carrying out.
+accept	1.47:30.15	1.47:30.10	renders	Object suffix on burial.
+accept	1.47:30.20	1.47:30.14	renders	Subject encoded in the reply verb.
+accept	1.47:30.23	1.47:30.16	renders	Verb of carrying out the request.
+accept	1.47:30.24	1.47:30.17	renders	Prefix expressing accordance.
+accept	1.47:30.25,1.47:30.26	1.47:30.18	renders	Word noun and its possessive suffix.
+accept	1.47:31.8	1.47:31.6	renders	Subject encoded in the oath verb.
+accept	1.47:31.10	1.47:31.7	renders	Recipient preposition with suffix.

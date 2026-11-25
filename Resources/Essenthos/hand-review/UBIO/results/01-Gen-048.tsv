@@ -1,0 +1,152 @@
+kind	from	to	relation	reason
+fixed	1.48:1			Missing demonstrative, auxiliary, dative, subject and reflexive links.
+fixed	1.48:2			Missing speech verb, pronouns, prepositions and part of the conjunction.
+fixed	1.48:3			Missing past auxiliary and suffixed object pronoun.
+fixed	1.48:4			Missing pronouns, verbs, result and recipient markers, and duration.
+fixed	1.48:5			Missing recipient, temporal, directional, possessive and comparison links.
+fixed	1.48:6			Missing offspring, pronouns, future passive and prepositions.
+fixed	1.48:7			Missing temporal, verb-form, pronoun and directional links.
+fixed	1.48:8			Missing demonstrative rendering and part of the conjunction.
+fixed	1.48:9			Missing locative, request particle, imperative and pronouns.
+fixed	1.48:10			Missing predicate, cause, infinitive, pronouns and embrace verb.
+fixed	1.48:11			Missing expectation, causative, object pronoun and additive particle.
+fixed	1.48:12			Missing object, bowing, directional links and part of the conjunction.
+fixed	1.48:13			Missing hand suffixes, instrumental prefixes, prepositions and pronoun.
+fixed	1.48:14			Missing subject pronoun, concessive connector and part of the conjunction.
+fixed	1.48:15			Missing subject, face expression, participial relative and temporal links.
+fixed	1.48:16			Missing participial, jussive, passive, fish imagery and locative links.
+fixed	1.48:17			Missing placement, right hand, displeasure and transfer links.
+ok	1.48:18			
+fixed	1.48:19			Missing refusal, additive and adversative particles, result and comparison links.
+fixed	1.48:20			Demonstrative linked to an article, with several missing form and relation links.
+fixed	1.48:21			Missing second-person plural suffix link.
+fixed	1.48:22			Missing recipient, portion, past auxiliary and instrumental prefixes.
+refuse	1.48:20.5	1.48:20.4		Demonstrative linked to the elided article.
+accept	1.48:1.4	1.48:1.7	renders	Demonstrative modifying the events.
+accept	1.48:1.8	1.48:1.9	renders	Auxiliary of the impersonal speech verb.
+accept	1.48:1.9	1.48:1.10	renders	Dative ending renders the recipient prefix.
+accept	1.48:1.15	1.48:1.16	renders	Subject expressed by the verb form.
+accept	1.48:1.17,1.48:1.18	1.48:1.20	renders	Preposition and its pronominal suffix.
+accept	1.48:2.2,1.48:2.3	1.48:2.2	renders	Reporting verb and its subject.
+accept	1.48:2.4	1.48:2.3	renders	Preposition introducing Jacob as recipient.
+accept	1.48:2.9,1.48:2.10	1.48:2.11	renders	Direction and second-person suffix.
+accept	1.48:2.19	1.48:2.15	renders	Part of the compound conjunction.
+accept	1.48:3.9	1.48:3.8	renders	Past auxiliary of the appearance verb.
+accept	1.48:3.18	1.48:3.17	renders	First-person object suffix.
+accept	1.48:4.3	1.48:4.2	renders	Subject of the speech verb.
+accept	1.48:4.4	1.48:4.3	renders	Preposition of the suffixed recipient phrase.
+accept	1.48:4.7	1.48:4.4	renders	First-person suffix on the presentative.
+accept	1.48:4.9	1.48:4.5	renders	Second-person object of making fruitful.
+accept	1.48:4.11,1.48:4.12	1.48:4.7	renders	Multiplication verb and its object.
+accept	1.48:4.14,1.48:4.15	1.48:4.9	renders	Making verb and its object.
+accept	1.48:4.16	1.48:4.10,1.48:4.11	renders	Instrumental renders the assembly and result relation.
+accept	1.48:4.23	1.48:4.20	renders	Dative ending renders the recipient prefix.
+accept	1.48:4.26	1.48:4.22	renders	Second-person suffix of after.
+accept	1.48:4.28	1.48:4.24	renders	Perpetual duration of the possession.
+accept	1.48:5.7	1.48:5.7	renders	Suffixed dative of birth.
+accept	1.48:5.11	1.48:5.11	renders	Temporal limit before arrival.
+accept	1.48:5.14,1.48:5.15	1.48:5.13	renders	Direction and second-person suffix.
+accept	1.48:5.18	1.48:5.16	renders	Explicit plural subject pronoun.
+accept	1.48:5.19	1.48:5.15	renders	First predicative possessive.
+accept	1.48:5.23	1.48:5.20	renders	Comparison prefix before Reuben.
+accept	1.48:5.28	1.48:5.25	renders	Second predicative possessive.
+accept	1.48:6.2,1.48:6.3	1.48:6.2	renders	Offspring noun and its possessive suffix.
+accept	1.48:6.6,1.48:6.7	1.48:6.5	renders	After and its plural suffix.
+accept	1.48:6.8	1.48:6.7	renders	Resumptive pronoun expresses the copula's plural subject.
+accept	1.48:6.10	1.48:6.6	renders	Predicative possessive renders the suffixed dative.
+accept	1.48:6.11,1.48:6.12,1.48:6.13	1.48:6.11	renders	Subject and future passive of naming.
+accept	1.48:6.14	1.48:6.8	renders	Preposition in the naming expression.
+accept	1.48:7.5,1.48:7.6	1.48:7.4	renders	Arrival verb and past auxiliary.
+accept	1.48:7.10	1.48:7.8	renders	First-person suffix in Rachel's death clause.
+accept	1.48:7.17	1.48:7.16	renders	Temporal connector renders the prefix.
+accept	1.48:7.18,1.48:7.19	1.48:7.17	renders	Existential rendering of the distance still remaining.
+accept	1.48:7.21	1.48:7.19	renders	Land in the measure of distance.
+accept	1.48:7.27,1.48:7.29,1.48:7.30	1.48:7.24	renders	Burial verb carries subject, tense and object.
+accept	1.48:7.34	1.48:7.27	renders	Destination relation of the construct road noun.
+accept	1.48:7.36	1.48:7.29	renders	Identifying pronoun before Bethlehem.
+accept	1.48:8.7	1.48:8.7	renders	Part of the compound conjunction.
+accept	1.48:8.10	1.48:8.10	renders	Personal pronoun renders the demonstrative.
+accept	1.48:9.14	1.48:9.12,1.48:9.13	renders	Here renders the full locative phrase.
+accept	1.48:9.16	1.48:9.15	renders	Subject pronoun of the reply.
+accept	1.48:9.18,1.48:9.20	1.48:9.16	renders	Imperative and its plural object suffix.
+accept	1.48:9.19	1.48:9.17	renders	Particle softening the request.
+accept	1.48:9.21	1.48:9.18	renders	Direction in the suffixed preposition.
+accept	1.48:9.24	1.48:9.20	renders	First-person subject of blessing.
+accept	1.48:10.4,1.48:10.5	1.48:10.4	renders	Both words render becoming heavy.
+accept	1.48:10.6	1.48:10.5	renders	Prefix expressing cause.
+accept	1.48:10.8	1.48:10.8	renders	Subject of the ability verb.
+accept	1.48:10.11	1.48:10.10	renders	Infinitive of seeing.
+accept	1.48:10.17	1.48:10.14	renders	Pronoun carried by the directional preposition.
+accept	1.48:10.19	1.48:10.16	renders	Subject of the kissing verb.
+accept	1.48:10.21	1.48:10.17	renders	Pronoun in the kissing clause.
+accept	1.48:10.23	1.48:10.19	renders	Embrace verb.
+accept	1.48:10.24	1.48:10.20	renders	Pronoun in the embrace clause.
+accept	1.48:11.7,1.48:11.8	1.48:11.9	renders	Expectation verb and its first-person subject.
+accept	1.48:11.15,1.48:11.17	1.48:11.12	renders	Both verbs render the causative of seeing.
+accept	1.48:11.16	1.48:11.13	renders	First-person object of the Hebrew causative.
+accept	1.48:11.18	1.48:11.15	renders	Additive particle before the offspring.
+accept	1.48:12.4	1.48:12.4	renders	Plural object suffix.
+accept	1.48:12.9	1.48:12.8	renders	Part of the compound conjunction.
+accept	1.48:12.10	1.48:12.9	renders	Descent renders the bowing verb.
+accept	1.48:12.11	1.48:12.10	renders	Preposition of the face-down posture.
+accept	1.48:12.14	1.48:12.12	renders	Direction expressed by the ending on earth.
+accept	1.48:13.7	1.48:13.9	renders	Possessive suffix of the right hand.
+accept	1.48:13.8	1.48:13.8	renders	Instrumental ending renders the right-hand prefix.
+accept	1.48:13.9	1.48:13.10	renders	Preposition before Israel's left side.
+accept	1.48:13.14	1.48:13.17	renders	Possessive suffix of the left hand.
+accept	1.48:13.15	1.48:13.16	renders	Instrumental ending renders the left-hand prefix.
+accept	1.48:13.16	1.48:13.18	renders	Preposition before Israel's right side.
+accept	1.48:13.20	1.48:13.21	renders	Part of the compound conjunction.
+accept	1.48:13.22	1.48:13.23	renders	Pronoun carried by the directional preposition.
+accept	1.48:14.7	1.48:14.6	renders	Part of the compound conjunction.
+accept	1.48:14.21	1.48:14.21	renders	Subject of the crossing verb.
+accept	1.48:14.25	1.48:14.24	renders	Concessive rendering of the clause connector.
+accept	1.48:15.2	1.48:15.2	renders	Subject of the blessing verb.
+accept	1.48:15.6	1.48:15.5	renders	Part of the compound conjunction.
+accept	1.48:15.10	1.48:15.12	renders	Preposition in the expression before his face.
+accept	1.48:15.11,1.48:15.12	1.48:15.13	renders	Face noun and its possessive suffix.
+accept	1.48:15.19	1.48:15.20	renders	Relative introduces the rendered participle.
+accept	1.48:15.21	1.48:15.21	renders	First-person object of shepherding.
+accept	1.48:15.22	1.48:15.22	renders	Temporal starting point expressed by from.
+accept	1.48:15.23	1.48:15.23	renders	First-person lifetime expressed as existence.
+accept	1.48:15.24	1.48:15.24	renders	Part of the expression marking the endpoint.
+accept	1.48:15.26	1.48:15.28	renders	Demonstrative modifying day.
+accept	1.48:16.2,1.48:16.3	1.48:16.4	renders	Relative clause renders the redeeming participle.
+accept	1.48:16.4	1.48:16.5	renders	First-person object of redemption.
+accept	1.48:16.8	1.48:16.9	renders	Jussive of blessing.
+accept	1.48:16.13,1.48:16.14,1.48:16.15	1.48:16.14	renders	Jussive passive of naming.
+accept	1.48:16.16,1.48:16.17	1.48:16.15	renders	Locative preposition and plural suffix.
+accept	1.48:16.29,1.48:16.30,1.48:16.31,1.48:16.33	1.48:16.24	renders	Plural subject and fish imagery of multiplying.
+accept	1.48:16.34	1.48:16.27,1.48:16.28	renders	Single preposition renders in the midst.
+accept	1.48:17.7	1.48:17.5	renders	Placement verb.
+accept	1.48:17.8	1.48:17.7	renders	Right hand also renders the construct hand noun.
+accept	1.48:17.15,1.48:17.16,1.48:17.17,1.48:17.18	1.48:17.13	renders	Subject pronoun and idiom of displeasure.
+accept	1.48:17.19	1.48:17.15	renders	Evaluator expressed by the suffix on eyes.
+accept	1.48:17.21	1.48:17.17	renders	Subject of the grasping verb.
+accept	1.48:17.27	1.48:17.21	renders	Infinitive of removal.
+accept	1.48:17.28	1.48:17.22	renders	Feminine object pronoun referring to the hand.
+accept	1.48:17.29	1.48:17.24	renders	Above component of the compound preposition.
+accept	1.48:17.32	1.48:17.27	renders	Preposition of the destination head.
+accept	1.48:19.4,1.48:19.5	1.48:19.2	renders	Negative willingness phrase renders refusal.
+accept	1.48:19.15	1.48:19.12	renders	Instrumental predicate renders the result prefix.
+accept	1.48:19.16	1.48:19.15	renders	Repeated conjunction also expresses addition.
+accept	1.48:19.20	1.48:19.19	renders	Adversative force of the compound connector.
+accept	1.48:19.21	1.48:19.20	renders	Possessive suffix of brother.
+accept	1.48:19.22	1.48:19.22	renders	Adjective describing the younger brother.
+accept	1.48:19.25	1.48:19.23	renders	Comparative predicate renders the greatness verb.
+accept	1.48:19.27	1.48:19.24	renders	Pronoun suffixed to the comparison preposition.
+accept	1.48:20.2	1.48:20.2	renders	Subject expressed by the blessing verb.
+accept	1.48:20.5	1.48:20.7	renders	Demonstrative in the expression that day.
+accept	1.48:20.6	1.48:20.3	renders	Temporal genitive renders the time prefix.
+accept	1.48:20.7	1.48:20.9	renders	First occurrence of saying.
+accept	1.48:20.8	1.48:20.10	renders	Instrumental pronoun renders by you.
+accept	1.48:20.9,1.48:20.10	1.48:20.11	renders	Future form of Israel's blessing verb.
+accept	1.48:20.13,1.48:20.16	1.48:20.15	renders	Jussive force and second-person object suffix.
+accept	1.48:20.17	1.48:20.17	renders	Comparison prefix before Ephraim.
+accept	1.48:20.25	1.48:20.26	renders	Prefix forming the expression before.
+accept	1.48:21.13	1.48:21.12	renders	Second-person plural suffix on with.
+accept	1.48:22.3	1.48:22.4	renders	Suffixed recipient preposition.
+accept	1.48:22.9	1.48:22.5	renders	Portion renders the figurative sense of shoulder.
+accept	1.48:22.13	1.48:22.10	renders	Past auxiliary of the taking verb.
+accept	1.48:22.18	1.48:22.15	renders	Instrumental ending renders the sword prefix.
+accept	1.48:22.20	1.48:22.18	renders	Instrumental ending renders the bow prefix.

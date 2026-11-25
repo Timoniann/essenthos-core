@@ -1,0 +1,220 @@
+kind	from	to	relation	reason
+fixed	1.49:1			Restored the compound conjunction, clause links, and time phrase.
+fixed	1.49:2			Restored the opening imperative and the subject of «слухайте».
+fixed	1.49:3			Restored the shared subject and the final parallel predicates.
+unsure	1.49:4			Restored the bed and verb links. The opening «Ти» and the force of «і» remain uncertain. The final Hebrew verb is third person.
+fixed	1.49:5			Restored the copula and the words for weapons and violence.
+fixed	1.49:6			Corrected the repeated preposition and restored the missing clause links.
+fixed	1.49:7			Restored two content words and two subject pronouns.
+fixed	1.49:8			Restored the vocative particle, pronouns, and location phrase.
+fixed	1.49:9			Restored Judah’s name, the cub modifier, and the missing verb links.
+fixed	1.49:10			Moved «законодавець» to its own word and restored the surrounding links.
+fixed	1.49:11			Restored the prepositions, donkey phrases, washing verb, and garments.
+fixed	1.49:12			Restored the two prepositions and completed the compound predicates.
+fixed	1.49:13			Restored the dwelling verb, shore phrases, and boundary preposition.
+fixed	1.49:14			Restored the nominal predicate and the participial relative.
+fixed	1.49:15			Restored subject pronouns, rest, and the forced-labor phrase.
+fixed	1.49:16			Restored the partitive construction and «родів».
+fixed	1.49:17			Restored the snake description, biting clause, and direction of the fall.
+fixed	1.49:18			Restored the source of salvation, the waiting verb, and the vocative particle.
+fixed	1.49:19			Restored the raiding band, attack complements, and second attack verb.
+fixed	1.49:20			Restored the copula and the two-word future verb.
+fixed	1.49:21			Moved «вільна» to the release participle and restored the second predicate.
+fixed	1.49:22			Restored the parallel branch imagery and movement over the wall.
+fixed	1.49:23			Restored the shooting and hostility clauses and the expression for archers.
+fixed	1.49:24			Restored the opening predicate, «звідти», and the final titles.
+fixed	1.49:25			Restored God, the pronouns, and the descriptions of height and depth.
+fixed	1.49:26			Moved «пожаданих» to the desire noun and restored the comparison and blessing phrases.
+fixed	1.49:27			Restored the wolf’s action, the eating clause, and both time prepositions.
+fixed	1.49:28			Completed the compound number and restored clause and distributive links.
+fixed	1.49:29			Restored the command and burial complements, pronouns, and prepositions.
+fixed	1.49:30			Removed the article link and restored the compound prepositions and purchase phrase.
+ok	1.49:31			
+fixed	1.49:32			Restored the suffixed locative, the copula, and the full source construction.
+fixed	1.49:33			Restored the command, movement, death, and subject links.
+refuse	1.49:6.26	1.49:6.12		Belongs to the second prepositional phrase.
+refuse	1.49:10.10	1.49:10.10		The Hebrew noun denotes feet.
+refuse	1.49:21.2	1.49:21.2		The doe noun lacks the sense of release.
+refuse	1.49:26.12	1.49:26.6		This word denotes the speaker’s parents.
+refuse	1.49:30.2	1.49:30.2		The Hebrew word is the elided article.
+accept	1.49:1.8	1.49:1.6	renders	Part of the compound conjunction «та й».
+accept	1.49:1.13	1.49:1.10	renders	Renders the reporting verb.
+accept	1.49:1.14	1.49:1.11	renders	Renders the suffixed dative.
+accept	1.49:1.16	1.49:1.15	renders	Renders the object pronoun suffix.
+accept	1.49:1.17	1.49:1.14	renders	Renders what will befall them.
+accept	1.49:1.18	1.49:1.16,1.49:1.17	renders	Combines the preposition with the end noun.
+accept	1.49:2.1	1.49:2.1	renders	Renders the gathering imperative.
+accept	1.49:2.4	1.49:2.3	renders	Makes the imperative subject explicit.
+accept	1.49:3.9,1.49:3.16	1.49:3.3	renders	Restates the shared explicit subject.
+accept	1.49:3.12	1.49:3.8	renders	Renders the first expression of preeminence.
+accept	1.49:3.13	1.49:3.9	renders	Renders the dignity noun.
+accept	1.49:3.14	1.49:3.10	renders	Coordinates the final pair of predicates.
+accept	1.49:3.15	1.49:3.11	renders	Renders the second expression of preeminence.
+accept	1.49:3.17	1.49:3.12	renders	Renders the might noun.
+accept	1.49:4.3	1.49:4.1	renders	Supplies the past form of the opening predicate.
+accept	1.49:4.11,1.49:4.12	1.49:4.8	renders	Together render the first ascent verb.
+accept	1.49:4.13,1.49:4.14	1.49:4.9	renders	Render the first couch as the destination.
+accept	1.49:4.15,1.49:4.16	1.49:4.10	renders	Render father and its possessive suffix.
+accept	1.49:4.18	1.49:4.12	renders	Renders the verb of defilement.
+accept	1.49:4.20	1.49:4.13	renders	Expresses the second couch as the destination.
+accept	1.49:5.4	1.49:5.4	renders	Supplies the copula for the predicate «брати».
+accept	1.49:5.7	1.49:5.7	renders	Renders the word Ohienko interprets as weapons.
+accept	1.49:5.9	1.49:5.6	renders	Renders the violence noun.
+accept	1.49:6.1,1.49:6.6	1.49:6.4	renders	Render the first verb and its jussive force.
+accept	1.49:6.2	1.49:6.1	renders	Renders the preposition of the first clause.
+accept	1.49:6.3,1.49:6.4	1.49:6.2	renders	Render the counsel noun and its possessive.
+accept	1.49:6.10	1.49:6.9	renders	Renders the second verb’s jussive force.
+accept	1.49:6.15	1.49:6.6	renders	Renders the preposition of the second clause.
+accept	1.49:6.16,1.49:6.17	1.49:6.7	renders	Render the assembly noun and its possessive.
+accept	1.49:6.19	1.49:6.14	renders	Makes the killing verb’s plural subject explicit.
+accept	1.49:6.20	1.49:6.12	renders	Renders the preposition before anger.
+accept	1.49:6.26	1.49:6.17	renders	Renders the preposition before self-will.
+accept	1.49:6.27,1.49:6.28	1.49:6.18	renders	Render the will noun and its possessive.
+accept	1.49:6.29	1.49:6.20	renders	Renders the ox noun.
+accept	1.49:6.30,1.49:6.31	1.49:6.19	renders	Spell out Ohienko’s rendering of the hamstringing action.
+accept	1.49:7.5	1.49:7.4	renders	Renders the first adjective of anger.
+accept	1.49:7.8	1.49:7.6	renders	Renders the wrath noun.
+accept	1.49:7.11	1.49:7.8	renders	Makes the feminine subject explicit.
+accept	1.49:7.14	1.49:7.9	renders	Makes the first-person subject explicit.
+accept	1.49:8.1	1.49:8.1	renders	Marks Judah as the person addressed.
+accept	1.49:8.4	1.49:8.3	renders	Renders the praise verb’s object suffix.
+accept	1.49:8.5,1.49:8.6	1.49:8.4	renders	Render brothers and their possessive suffix.
+accept	1.49:8.9	1.49:8.6	renders	Renders the contact preposition.
+accept	1.49:8.10	1.49:8.7	renders	Renders the neck noun.
+accept	1.49:8.16	1.49:8.10	renders	Renders the suffixed dative.
+accept	1.49:9.1	1.49:9.3	renders	Renders Judah’s name.
+accept	1.49:9.3	1.49:9.1	renders	Expresses the youth of the cub.
+accept	1.49:9.7	1.49:9.7	renders	Renders the ascent from prey.
+accept	1.49:9.10,1.49:9.11	1.49:9.8	renders	Render the crouching verb and its subject.
+accept	1.49:9.12	1.49:9.9	renders	Renders the lying-down verb.
+accept	1.49:9.18,1.49:9.20	1.49:9.16	renders	Render the raising verb and its object suffix.
+accept	1.49:10.2	1.49:10.2	renders	Renders the verb of departure.
+accept	1.49:10.6	1.49:10.6	renders	Coordinates the second item under the negation.
+accept	1.49:10.8,1.49:10.9	1.49:10.10	renders	Render the body-part noun and its possessive suffix.
+accept	1.49:10.10	1.49:10.7	renders	Renders the lawgiver participle.
+accept	1.49:10.11	1.49:10.11,1.49:10.12	renders	Renders the compound temporal connective.
+accept	1.49:10.15,1.49:10.16	1.49:10.16	renders	Render the suffixed dative and its possessive predication.
+accept	1.49:10.17	1.49:10.17	renders	Renders the obedience noun.
+accept	1.49:11.1	1.49:11.1	renders	Makes the binding participle’s subject explicit.
+accept	1.49:11.3	1.49:11.2	renders	Renders the first attachment preposition.
+accept	1.49:11.5,1.49:11.6,1.49:11.7	1.49:11.5	renders	Render the donkey colt and its possessive.
+accept	1.49:11.9	1.49:11.7	renders	Renders the second attachment preposition.
+accept	1.49:11.12	1.49:11.10	renders	Renders the offspring noun.
+accept	1.49:11.13,1.49:11.14	1.49:11.11	renders	Render the she-ass and its possessive suffix.
+accept	1.49:11.15,1.49:11.18,1.49:11.19	1.49:11.12	renders	Render the washing verb, its subject, and its future form.
+accept	1.49:11.16,1.49:11.17	1.49:11.16	renders	Render the clothing noun and its possessive.
+accept	1.49:11.23,1.49:11.24	1.49:11.21	renders	Render the second garment and its possessive.
+accept	1.49:12.1	1.49:12.3	renders	Renders the preposition before wine.
+accept	1.49:12.4,1.49:12.5	1.49:12.1	renders	Render the dullness predicate with its supporting verb.
+accept	1.49:12.7	1.49:12.8	renders	Renders the preposition before milk.
+accept	1.49:12.9	1.49:12.6,1.49:12.7	renders	Combines whiteness and teeth in one adjective.
+accept	1.49:13.3	1.49:13.5	renders	Completes the future form of the dwelling verb.
+accept	1.49:13.4	1.49:13.2	renders	Renders the first shore preposition.
+accept	1.49:13.5	1.49:13.3	renders	Renders the first shore noun.
+accept	1.49:13.6	1.49:13.4	renders	Renders the sea noun adjectivally.
+accept	1.49:13.7	1.49:13.8	renders	Renders the second shore preposition.
+accept	1.49:13.10,1.49:13.11	1.49:13.9	renders	Spell out the shore’s relation to the ships.
+accept	1.49:13.16	1.49:13.13	renders	Renders the boundary preposition.
+accept	1.49:14.2,1.49:14.4	1.49:14.2	renders	Render the ass predicate and its supplied copula.
+accept	1.49:14.3	1.49:14.3	renders	Renders the bone noun adjectivally.
+accept	1.49:14.5	1.49:14.4	renders	Introduces the clause rendering the participle.
+accept	1.49:15.3	1.49:15.2	renders	Makes the seeing verb’s subject explicit.
+accept	1.49:15.4	1.49:15.3	renders	Renders the rest noun.
+accept	1.49:15.10	1.49:15.11	renders	Supports the finite predicate of pleasantness.
+accept	1.49:15.13	1.49:15.13	renders	Makes the bending verb’s subject explicit.
+accept	1.49:15.21	1.49:15.21	renders	Renders the serving participle.
+accept	1.49:15.22	1.49:15.19	renders	Renders the preposition before tribute.
+accept	1.49:15.23	1.49:15.20	renders	Renders the tribute noun.
+accept	1.49:16.8	1.49:16.5	renders	Expresses the partitive relation of «one of».
+accept	1.49:16.10	1.49:16.6	renders	Renders the tribes noun.
+accept	1.49:17.2	1.49:17.1	renders	Renders the written verb of being.
+accept	1.49:17.4	1.49:17.4	renders	Renders the first roadside preposition.
+accept	1.49:17.6,1.49:17.7	1.49:17.6	renders	Render the adder as a venomous snake.
+accept	1.49:17.8	1.49:17.7	renders	Renders the second roadside preposition.
+accept	1.49:17.9	1.49:17.8	renders	Renders the path noun.
+accept	1.49:17.10,1.49:17.13	1.49:17.10	renders	Render the biting participle as a relative clause.
+accept	1.49:17.11	1.49:17.11	renders	Renders the heels noun.
+accept	1.49:17.17,1.49:17.18	1.49:17.16	renders	Together render the backward direction.
+accept	1.49:18.2,1.49:18.3	1.49:18.2	renders	Express whose salvation it is as its source.
+accept	1.49:18.4	1.49:18.3	renders	Renders the waiting verb.
+accept	1.49:18.5	1.49:18.4	renders	Marks the Lord as the person addressed.
+accept	1.49:19.2,1.49:19.3	1.49:19.3	renders	Render the attack verb’s object suffix as a prepositional phrase.
+accept	1.49:19.4	1.49:19.2	renders	Renders the raiding band.
+accept	1.49:19.8	1.49:19.6	renders	Renders the second attack verb.
+accept	1.49:19.9,1.49:19.11	1.49:19.7	renders	Render the heel as the point of attack.
+accept	1.49:20.4	1.49:20.3	renders	Supplies the copula for the adjective.
+accept	1.49:20.8,1.49:20.9	1.49:20.7	renders	Together render the future giving verb.
+accept	1.49:21.2	1.49:21.3	renders	Renders the participle of release.
+accept	1.49:21.4,1.49:21.7	1.49:21.5	renders	Render the giving participle as a finite clause.
+accept	1.49:21.5	1.49:21.7	renders	Renders beauty as an adjective.
+accept	1.49:22.2	1.49:22.1	renders	Renders the first offspring noun in the branch metaphor.
+accept	1.49:22.4	1.49:22.4	renders	Renders the repeated offspring noun in the branch metaphor.
+accept	1.49:22.5	1.49:22.5	renders	Renders the repeated fruitfulness expression.
+accept	1.49:22.6	1.49:22.6	renders	Renders the preposition before the spring.
+accept	1.49:22.9	1.49:22.8	renders	Renders the daughters as branches.
+accept	1.49:22.10	1.49:22.10	renders	Renders the preposition before the wall.
+accept	1.49:22.11	1.49:22.11	renders	Renders the wall noun.
+accept	1.49:22.12	1.49:22.9	renders	Renders the branches’ movement.
+accept	1.49:23.4	1.49:23.3	renders	Introduces the shooting clause.
+accept	1.49:23.5,1.49:23.6,1.49:23.7	1.49:23.4	renders	Render the verb as shooting with a bow.
+accept	1.49:23.8	1.49:23.5	renders	Introduces the hostility clause.
+accept	1.49:23.9,1.49:23.10,1.49:23.12	1.49:23.6	renders	Render the hostility verb, its auxiliary, and its object.
+accept	1.49:23.11	1.49:23.7,1.49:23.8	renders	Renders the expression «masters of arrows».
+accept	1.49:24.2	1.49:24.2	renders	Renders the verb of remaining.
+accept	1.49:24.3	1.49:24.3,1.49:24.4	renders	The instrumental adjective renders the phrase of firmness.
+accept	1.49:24.7	1.49:24.7	renders	Supports the finite predicate of agility.
+accept	1.49:24.16	1.49:24.14,1.49:24.15	renders	Combines «from» and «there».
+accept	1.49:24.18	1.49:24.17	renders	Renders the stone title as «Твердиня».
+accept	1.49:24.19	1.49:24.18	renders	Expands Israel as the people descended from him.
+accept	1.49:25.4	1.49:25.2	renders	Renders the name for God.
+accept	1.49:25.5	1.49:25.3	renders	Renders the father noun’s possessive suffix.
+accept	1.49:25.8,1.49:25.10	1.49:25.5	renders	Render the helping verb’s subject and object.
+accept	1.49:25.15,1.49:25.17	1.49:25.10	renders	Render the blessing verb’s subject and object.
+accept	1.49:25.20,1.49:25.21,1.49:25.22	1.49:25.14	renders	Expand the location above into a relative clause.
+accept	1.49:25.25	1.49:25.17	renders	Introduces the clause rendering the participle.
+accept	1.49:25.26	1.49:25.18	renders	Renders the location below.
+accept	1.49:26.4	1.49:26.3	renders	Completes the predicate of becoming superior.
+accept	1.49:26.6	1.49:26.4	renders	Renders the comparative preposition.
+accept	1.49:26.8	1.49:26.6	renders	Renders the parents noun.
+accept	1.49:26.10	1.49:26.7	renders	Part of «аж до» expressing the limit.
+accept	1.49:26.12	1.49:26.8	renders	Renders the desire noun adjectivally.
+accept	1.49:26.13	1.49:26.9	renders	Renders the hills as heights.
+accept	1.49:26.14	1.49:26.10	renders	Renders the eternity noun adjectivally.
+accept	1.49:26.15	1.49:26.11	renders	Renders the verb’s wish force.
+accept	1.49:26.18	1.49:26.12	renders	Renders the preposition before Joseph’s head.
+accept	1.49:26.21	1.49:26.16	renders	Renders the preposition before the crown.
+accept	1.49:26.23,1.49:26.24	1.49:26.18	renders	Render the one singled out and his relation to his brothers.
+accept	1.49:27.2	1.49:27.3	renders	Renders the tearing action as a characteristic.
+accept	1.49:27.4	1.49:27.4	renders	The temporal adverb incorporates the preposition.
+accept	1.49:27.5,1.49:27.6	1.49:27.7	renders	Render the eating verb and its subject.
+accept	1.49:27.9	1.49:27.10	renders	Renders the preposition before evening.
+accept	1.49:28.3	1.49:28.5	renders	Completes the compound numeral twelve.
+accept	1.49:28.7	1.49:28.8	renders	Renders the demonstrative.
+accept	1.49:28.10	1.49:28.11	renders	Renders the suffixed dative.
+accept	1.49:28.14	1.49:28.14	renders	Makes the first blessing verb’s subject explicit.
+accept	1.49:28.16	1.49:28.15	renders	Renders the first independent object pronoun.
+accept	1.49:28.17	1.49:28.16	renders	Renders the distributive use of the man noun.
+accept	1.49:28.22	1.49:28.21	renders	Renders the second independent object pronoun.
+accept	1.49:29.2	1.49:29.2	renders	Makes the command verb’s subject explicit.
+accept	1.49:29.4	1.49:29.3	renders	Renders the pronominal complement of the command.
+accept	1.49:29.7,1.49:29.8	1.49:29.6	renders	Render the preposition and its pronoun suffix.
+accept	1.49:29.12,1.49:29.13	1.49:29.10	renders	Render the kin noun and its possessive.
+accept	1.49:29.14	1.49:29.11	renders	Renders the burial imperative.
+accept	1.49:29.15	1.49:29.12	renders	Renders the independent first-person object pronoun.
+accept	1.49:29.16	1.49:29.13	renders	Renders the preposition before the ancestors.
+accept	1.49:29.19	1.49:29.15	renders	Renders the burial preposition before the cave.
+accept	1.49:29.22	1.49:29.19	renders	Renders the preposition before the field.
+accept	1.49:30.5	1.49:30.5	renders	Renders the preposition before the field.
+accept	1.49:30.9	1.49:30.10,1.49:30.11	renders	Renders the compound preposition opposite Mamre.
+accept	1.49:30.17	1.49:30.17	renders	Completes the past form of the purchase verb.
+accept	1.49:30.19	1.49:30.23	renders	Completes the compound source preposition.
+accept	1.49:30.22	1.49:30.27	renders	Renders the purpose preposition before the holding.
+accept	1.49:30.24	1.49:30.28	renders	Expresses the purpose relation of the construct noun.
+accept	1.49:32.5,1.49:32.6	1.49:32.8	renders	Render the locative preposition and its pronoun suffix.
+accept	1.49:32.7	1.49:32.1	renders	Supplies the copula for the acquisition predicate.
+accept	1.49:32.9	1.49:32.10	renders	Completes the compound source preposition.
+accept	1.49:33.4	1.49:33.5	renders	Renders the command infinitive as a noun.
+accept	1.49:33.8	1.49:33.9	renders	Renders the drawing-in verb.
+accept	1.49:33.14	1.49:33.14	renders	Part of the compound conjunction «та й».
+accept	1.49:33.15	1.49:33.15	renders	Renders the death verb euphemistically.
+accept	1.49:33.17	1.49:33.17	renders	Makes the gathering verb’s subject explicit.

@@ -1,0 +1,134 @@
+kind	from	to	relation	reason
+fixed	1.28:1			Two missing pronoun links.
+fixed	1.28:2			Missing destination, place-name, kinship, and pronoun links.
+fixed	1.28:3			Missing object pronouns and predicate links.
+fixed	1.28:4			Missing recipients, purpose clause, and past auxiliary.
+fixed	1.28:5			Missing subject pronoun and destination links.
+fixed	1.28:6			Blessing object mislinked. Destination and reflexive links missing.
+fixed	1.28:7			Missing destination and place-name links.
+ok	1.28:8			
+fixed	1.28:9			Missing additive and marital-role prepositions.
+fixed	1.28:10			Missing first name component and destination marker.
+fixed	1.28:11			Missing verbs, auxiliaries, pronouns, and locative links.
+unsure	1.28:12			Unclear whether «аж» renders the directional ending or adds emphasis.
+fixed	1.28:13			Missing stance, relative clause, and recipient links.
+fixed	1.28:14			Missing direction markers, pronoun, and clan noun.
+fixed	1.28:15			Missing pronouns, scope, temporal limit, and verb forms.
+fixed	1.28:16			Missing existential predicate and location links.
+fixed	1.28:17			Missing subject, exclamation, and exception links.
+fixed	1.28:18			Missing time, pronoun, and result links.
+fixed	1.28:19			Missing demonstrative, contrast, temporal prefix, and copula links.
+fixed	1.28:20			Missing vow, protection, relative clause, and purpose links.
+fixed	1.28:21			Missing subject pronoun and prepositional links.
+fixed	1.28:22			Missing demonstrative, result, partitive, and tithing links.
+refuse	1.28:6.21	1.28:6.21		The verbal suffix marks the subject of blessing.
+refuse	1.28:12.13	1.28:12.10		The particle modifies the stated extent.
+accept	1.28:1.7	1.28:1.8	renders	Suffixed object pronoun.
+accept	1.28:1.10	1.28:1.10	renders	Object suffix on the command verb.
+accept	1.28:2.3	1.28:2.3	renders	Directional suffix on Paddan.
+accept	1.28:2.5	1.28:2.4	renders	Aram component of the place name.
+accept	1.28:2.6	1.28:2.5	renders	Directional suffix on house.
+accept	1.28:2.11	1.28:2.8	renders	First occurrence of mother.
+accept	1.28:2.14	1.28:2.11	renders	Suffixed reflexive beneficiary.
+accept	1.28:2.15	1.28:2.12,1.28:2.13	renders	From there in one word.
+accept	1.28:3.5	1.28:3.5	renders	Suffixed object of blessing.
+accept	1.28:3.8	1.28:3.7	renders	Object suffix on the fertility verb.
+accept	1.28:3.11	1.28:3.9	renders	Object suffix on the multiplication verb.
+accept	1.28:3.15	1.28:3.12,1.28:3.13	renders	Instrumental renders the lamed predicate.
+accept	1.28:4.3	1.28:4.3	renders	First recipient occurrence.
+accept	1.28:4.6	1.28:4.7	renders	Second recipient occurrence.
+accept	1.28:4.8	1.28:4.9	renders	Dative renders the recipient prefix.
+accept	1.28:4.11	1.28:4.11	renders	Pronoun on the accompaniment preposition.
+accept	1.28:4.12	1.28:4.12	renders	Purpose prefix.
+accept	1.28:4.13,1.28:4.14	1.28:4.13	renders	Recasts taking possession as transfer to the possessor.
+accept	1.28:4.22	1.28:4.18	renders	Past auxiliary with gave.
+accept	1.28:4.24	1.28:4.20	renders	Dative renders the recipient prefix.
+accept	1.28:5.7	1.28:5.7	renders	Subject of the motion verb.
+accept	1.28:5.8	1.28:5.8	renders	Directional suffix on Paddan.
+accept	1.28:5.10	1.28:5.9	renders	Aram component of the place name.
+accept	1.28:6.11	1.28:6.12	renders	Directional suffix on Paddan.
+accept	1.28:6.13	1.28:6.13	renders	Aram component of the place name.
+accept	1.28:6.16	1.28:6.16	renders	Suffixed reflexive beneficiary.
+accept	1.28:6.17	1.28:6.17,1.28:6.18	renders	From there in one word.
+accept	1.28:6.21	1.28:6.22	renders	Independent suffixed object of blessing.
+accept	1.28:7.13	1.28:7.11	renders	Directional suffix on Paddan.
+accept	1.28:7.15	1.28:7.12	renders	Aram component of the place name.
+accept	1.28:9.15	1.28:9.16	renders	In addition to his wives.
+accept	1.28:9.18	1.28:9.19	renders	Prefix marking the role as wife.
+accept	1.28:10.5	1.28:10.5	renders	First component of Beersheba.
+accept	1.28:10.8	1.28:10.9	renders	Directional suffix on Haran.
+accept	1.28:11.3,1.28:11.4	1.28:11.2	renders	Subject and past auxiliary of the encounter verb.
+accept	1.28:11.5	1.28:11.3	renders	Preposition governing the place encountered.
+accept	1.28:11.9	1.28:11.7	renders	Lodging verb.
+accept	1.28:11.13,1.28:11.14	1.28:11.10	renders	Sunset verb with its past auxiliary.
+accept	1.28:11.17	1.28:11.14	renders	Subject of the taking verb.
+accept	1.28:11.24,1.28:11.25	1.28:11.21	renders	Possessive suffix and head-place relation.
+accept	1.28:11.28	1.28:11.23	renders	Subject of the lying-down verb.
+accept	1.28:11.30	1.28:11.24	renders	Locative prefix with lay down.
+accept	1.28:11.31	1.28:11.28	renders	Demonstrative modifying the last place occurrence.
+accept	1.28:12.3	1.28:12.2	renders	Dative expresses the dreamer's person.
+accept	1.28:12.6	1.28:12.6	renders	Participle describing the ladder's placement.
+accept	1.28:12.7	1.28:12.7	renders	Directional suffix on earth.
+accept	1.28:12.11	1.28:12.9	renders	Possessive suffix on top.
+accept	1.28:12.12	1.28:12.10	renders	Verb meaning reach.
+accept	1.28:12.19	1.28:12.17	renders	Ascending participle.
+accept	1.28:12.22,1.28:12.23	1.28:12.20	renders	Preposition and its pronoun suffix.
+accept	1.28:13.4	1.28:13.4	renders	Standing verb.
+accept	1.28:13.5,1.28:13.6	1.28:13.5	renders	Preposition and its pronoun suffix.
+accept	1.28:13.19	1.28:13.21	renders	Preposition in the relative clause.
+accept	1.28:13.20	1.28:13.18,1.28:13.21	renders	Relative pronoun incorporates the resumptive suffix.
+accept	1.28:13.26	1.28:13.22	renders	Suffixed recipient.
+accept	1.28:13.28	1.28:13.25	renders	Dative renders the recipient prefix.
+accept	1.28:14.11	1.28:14.10	renders	Directional suffix on west.
+accept	1.28:14.14	1.28:14.12	renders	Directional suffix on east.
+accept	1.28:14.17	1.28:14.14	renders	Directional suffix on north.
+accept	1.28:14.20	1.28:14.16	renders	Directional suffix on south.
+accept	1.28:14.24,1.28:14.25	1.28:14.19	renders	Preposition and its pronoun suffix.
+accept	1.28:14.31	1.28:14.21	renders	Clans in the blessing clause.
+accept	1.28:15.5	1.28:15.4	renders	Pronoun suffix on with.
+accept	1.28:15.10	1.28:15.7,1.28:15.8	renders	In every place in one word.
+accept	1.28:15.11	1.28:15.9	renders	Relative marker with a motion verb.
+accept	1.28:15.15	1.28:15.12	renders	Object suffix on the return verb.
+accept	1.28:15.20,1.28:15.23	1.28:15.20	renders	Subject and object of leaving.
+accept	1.28:15.24	1.28:15.21	renders	Marks the temporal limit.
+accept	1.28:15.27	1.28:15.24	renders	Verb meaning do.
+accept	1.28:15.30,1.28:15.31	1.28:15.27	renders	Speaking verb with its past auxiliary.
+accept	1.28:15.32	1.28:15.28	renders	Suffixed recipient of speech.
+accept	1.28:16.12	1.28:16.9	renders	Verb expresses the assertion of presence.
+accept	1.28:16.13	1.28:16.11	renders	Locative prefix.
+accept	1.28:16.14	1.28:16.15	renders	Demonstrative modifying place.
+accept	1.28:17.3	1.28:17.2	renders	Subject of the fear verb.
+accept	1.28:17.6	1.28:17.5	renders	Exclamatory degree marker.
+accept	1.28:17.11	1.28:17.11	renders	Negative existential.
+accept	1.28:17.12,1.28:17.13	1.28:17.13,1.28:17.14	renders	Exceptive construction rendered as a unit.
+accept	1.28:18.4	1.28:18.2	renders	Earliness expressed by the rising verb.
+accept	1.28:18.5	1.28:18.4	renders	Fused preposition in the morning adverb.
+accept	1.28:18.11	1.28:18.13	renders	Past auxiliary with placed.
+accept	1.28:18.12,1.28:18.13	1.28:18.14	renders	Possessive suffix and head-place relation.
+accept	1.28:18.17	1.28:18.17	renders	Suffixed object of setting up.
+accept	1.28:18.18	1.28:18.18	renders	Marks the pillar's predicative role.
+accept	1.28:18.24	1.28:18.23	renders	Possessive suffix on top.
+accept	1.28:19.3	1.28:19.2	renders	Subject of the naming verb.
+accept	1.28:19.5	1.28:19.8	renders	Demonstrative modifying place.
+accept	1.28:19.8	1.28:19.11	renders	Contrast contributed by the adversative particle.
+accept	1.28:19.12	1.28:19.16	renders	Temporal prefix in the fused adverb.
+accept	1.28:19.13	1.28:19.12	renders	Supplied copula links to the predicate Luz.
+accept	1.28:20.2	1.28:20.2	renders	Support verb expresses the act of vowing.
+accept	1.28:20.10	1.28:20.10	renders	Pronoun suffix on with.
+accept	1.28:20.12,1.28:20.13,1.28:20.14	1.28:20.12	renders	Future verb phrase and its suffixed object.
+accept	1.28:20.15	1.28:20.13	renders	Locative prefix on road.
+accept	1.28:20.16	1.28:20.17	renders	Demonstrative modifying road.
+accept	1.28:20.18	1.28:20.18	renders	Relative marker introducing the travel clause.
+accept	1.28:20.19	1.28:20.19	renders	First-person ending renders the explicit subject.
+accept	1.28:20.24	1.28:20.25	renders	Ukrainian infinitive expresses the bread's purpose.
+accept	1.28:20.27	1.28:20.29	renders	Ukrainian infinitive expresses the garment's purpose.
+accept	1.28:21.2	1.28:21.2	renders	First-person subject of returning.
+accept	1.28:21.3	1.28:21.3	renders	Preposition of manner with peace.
+accept	1.28:21.14	1.28:21.12	renders	Instrumental renders the lamed predicate.
+accept	1.28:22.2	1.28:22.5	renders	Demonstrative modifying stone.
+accept	1.28:22.6	1.28:22.7	renders	Setting verb in the relative clause.
+accept	1.28:22.7	1.28:22.8	renders	Marks the pillar's predicative role.
+accept	1.28:22.13	1.28:22.18	renders	Partitive relation conveyed by the suffixed tithing verb.
+accept	1.28:22.19	1.28:22.18	renders	First-person subject of the finite tithing verb.
+accept	1.28:22.20,1.28:22.21	1.28:22.17	renders	Cognate phrase renders the infinitive absolute.
+accept	1.28:22.24	1.28:22.19	renders	Suffixed recipient of the tithe.

@@ -1,0 +1,167 @@
+kind	from	to	relation	reason
+fixed	1.39:1			Restored the passive auxiliary, two titles, and the final verb with its object.
+fixed	1.39:2			Restored the preposition, verb subjects, and expression of prosperity.
+fixed	1.39:3			Restored the preposition and pronoun in the first clause.
+fixed	1.39:4			Restored the object of serving, the possession predicate, and the giving verb.
+fixed	1.39:5			Restored temporal, possessive, and causal links and two verbs.
+fixed	1.39:6			Corrected the first adjective and restored pronouns, the exception, and omitted content links.
+fixed	1.39:7			Restored the demonstrative, lifting verb, direction, and pronouns.
+fixed	1.39:8			Restored the subjects, the phrase meaning with me, and the final possession and giving links.
+fixed	1.39:9			Separated the exception from the causal clause and restored pronouns and predicates.
+fixed	1.39:10			Restored the daily idiom, clause markers, dative, and pronouns.
+fixed	1.39:11			Restored the day, arrival, work, negation, and household links.
+fixed	1.39:12			Restored prepositions, pronouns, the compound conjunction, and the destination.
+fixed	1.39:13			Restored the subject, part of the compound conjunction, and the destination.
+unsure	1.39:14			Restored pronouns, purpose markers, and the auxiliary. The rendering of the Hebrew word for man is uncertain.
+fixed	1.39:15			Restored the hearing verb and subject, the apodosis marker, and the final directional phrase.
+fixed	1.39:16			Restored the reflexive and temporal preposition. UBIO shifts the narrator's third person to first person.
+fixed	1.39:17			Restored address, manner, purpose, and verb-form links.
+fixed	1.39:18			Restored subject pronouns, the apodosis marker, and the phrase meaning with me.
+fixed	1.39:19			Restored the temporal prefix, reported words, verb, and addressee.
+fixed	1.39:20			Reversed the swapped prisoner and confinement links and restored missing predicates and pronouns.
+fixed	1.39:21			Restored prepositions, pronouns, kindness, and the prison modifier.
+fixed	1.39:22			Restored the opening clause, locative copula, and final past predicate.
+fixed	1.39:23			Restored the title, negation, causal expression, and locative predicate.
+refuse	1.39:6.24	1.39:6.25		The adjective renders beautiful. The noun means form.
+refuse	1.39:9.17	1.39:9.14		This occurrence belongs to the exception idiom.
+refuse	1.39:20.17	1.39:20.14		The passive predicate renders the bound participle.
+refuse	1.39:20.19	1.39:20.17		The noun renders the prisoners in the construct phrase.
+accept	1.39:1.3	1.39:1.3	renders	Auxiliary of the passive verb
+accept	1.39:1.11	1.39:1.8	renders	Court official
+accept	1.39:1.16	1.39:1.13	renders	Man
+accept	1.39:1.22,1.39:1.23	1.39:1.20	renders	Bringing down and its object suffix
+accept	1.39:2.4	1.39:2.4	renders	Preposition meaning with
+accept	1.39:2.7	1.39:2.7	renders	Subject of became
+accept	1.39:2.10,1.39:2.11,1.39:2.12	1.39:2.9	renders	Relative clause renders the prosperous participle
+accept	1.39:2.14,1.39:2.15	1.39:2.11	renders	Verb of residence and its subject
+accept	1.39:3.7,1.39:3.8	1.39:3.6	renders	Preposition meaning with and its pronominal suffix
+accept	1.39:4.10	1.39:4.9	renders	Object pronoun of served
+accept	1.39:4.21	1.39:4.16,1.39:4.17	renders	Existence and dative together express possession
+accept	1.39:4.22	1.39:4.18	renders	Giving
+accept	1.39:5.3	1.39:5.3,1.39:5.4	renders	Temporal expression meaning since
+accept	1.39:5.4,1.39:5.5	1.39:5.5	renders	Appointment verb and its subject
+accept	1.39:5.14	1.39:5.14	renders	Possessor shifted to subject
+accept	1.39:5.15	1.39:5.13	renders	Existential predicate rendered as having
+accept	1.39:5.21	1.39:5.22	renders	Prefix of the compound causal preposition
+accept	1.39:5.24	1.39:5.26	renders	Written verb of being
+accept	1.39:5.30	1.39:5.33	renders	Possessor shifted to subject
+accept	1.39:5.31	1.39:5.32	renders	Second existential predicate rendered as having
+accept	1.39:6.2	1.39:6.2	renders	Subject of left
+accept	1.39:6.6	1.39:6.5	renders	Dative with suffix expresses possession
+accept	1.39:6.13	1.39:6.11	renders	Subject of knew
+accept	1.39:6.14,1.39:6.15	1.39:6.12	renders	Preposition and its pronominal suffix
+accept	1.39:6.17	1.39:6.14,1.39:6.15	renders	Two particles form the exception idiom
+accept	1.39:6.20	1.39:6.20	renders	Eating
+accept	1.39:6.24	1.39:6.24	renders	First occurrence of beautiful
+accept	1.39:6.25	1.39:6.25	renders	Physical form
+accept	1.39:6.27	1.39:6.27	renders	Second occurrence of beautiful
+accept	1.39:7.4	1.39:7.7	renders	Demonstrative
+accept	1.39:7.7	1.39:7.9	renders	Lifting the eyes
+accept	1.39:7.10	1.39:7.14	renders	Preposition indicating direction
+accept	1.39:7.17	1.39:7.17	renders	Subject of said
+accept	1.39:7.19,1.39:7.20	1.39:7.19	renders	Preposition and first-person suffix
+accept	1.39:8.2	1.39:8.2	renders	Subject of refused
+accept	1.39:8.15,1.39:8.16	1.39:8.12	renders	Preposition and first-person suffix
+accept	1.39:8.17	1.39:8.13	renders	Indefinite object under negation
+accept	1.39:8.23	1.39:8.21	renders	Pronominal possessor
+accept	1.39:8.24,1.39:8.25	1.39:8.22	renders	Giving verb and its subject
+accept	1.39:9.1	1.39:9.1	renders	Negative existential
+accept	1.39:9.4	1.39:9.7	renders	Demonstrative
+accept	1.39:9.7	1.39:9.8	renders	First-person suffix on the comparative preposition
+accept	1.39:9.9	1.39:9.11	renders	Subject of withheld
+accept	1.39:9.13	1.39:9.12	renders	First-person suffix on the second preposition
+accept	1.39:9.15	1.39:9.14	renders	First particle of the exception idiom
+accept	1.39:9.16	1.39:9.16	renders	Second-person object suffix
+accept	1.39:9.17	1.39:9.17,1.39:9.18	renders	Compound causal conjunction
+accept	1.39:9.18	1.39:9.19	renders	Independent second-person pronoun
+accept	1.39:9.24	1.39:9.23	renders	Doing the deed
+accept	1.39:9.30	1.39:9.32	renders	Preposition marking whom the sin concerns
+accept	1.39:10.3	1.39:10.3	renders	Introduces the subordinate speech clause
+accept	1.39:10.4	1.39:10.4	renders	Subject suffix of the speaking infinitive
+accept	1.39:10.5	1.39:10.7,1.39:10.8	renders	Repeated noun means day after day
+accept	1.39:10.7	1.39:10.5	renders	Dative ending renders direction of speech
+accept	1.39:10.9	1.39:10.11	renders	Subject of listened
+accept	1.39:10.12	1.39:10.12	renders	Pronominal complement of listening
+accept	1.39:10.13	1.39:10.13	renders	Introduces the first infinitival complement
+accept	1.39:10.16	1.39:10.15	renders	Third-person feminine suffix
+accept	1.39:10.20	1.39:10.18	renders	Third-person feminine suffix on with
+accept	1.39:11.4	1.39:11.5	renders	Day in the temporal idiom
+accept	1.39:11.6,1.39:11.7	1.39:11.9	renders	Arrival verb and its subject
+accept	1.39:11.8	1.39:11.11	renders	House with directional ending
+accept	1.39:11.10	1.39:11.14	renders	Work
+accept	1.39:11.15	1.39:11.25	renders	House in the final locative phrase
+accept	1.39:11.16,1.39:11.17	1.39:11.16	renders	Negative existential predicate
+accept	1.39:11.21	1.39:11.21	renders	House in the household construct chain
+accept	1.39:12.5	1.39:12.3	renders	Preposition meaning by in the grasping phrase
+accept	1.39:12.11,1.39:12.12	1.39:12.8	renders	Preposition and first-person suffix
+accept	1.39:12.14	1.39:12.10	renders	Subject of left
+accept	1.39:12.22	1.39:12.14	renders	Part of the compound conjunction
+accept	1.39:12.26	1.39:12.19	renders	Outside as destination
+accept	1.39:13.7	1.39:13.6	renders	Subject of left
+accept	1.39:13.15	1.39:13.10	renders	Part of the compound conjunction
+accept	1.39:13.17	1.39:13.13	renders	Outside as destination
+accept	1.39:14.7	1.39:14.6	renders	Part of the compound conjunction
+accept	1.39:14.9	1.39:14.8	renders	Dative addressed to the household
+accept	1.39:14.12	1.39:14.12	renders	Subject of brought
+accept	1.39:14.17	1.39:14.16	renders	Purpose marker for the mocking clause
+accept	1.39:14.20	1.39:14.18	renders	Instrumental pronoun renders preposition and suffix
+accept	1.39:14.21,1.39:14.23	1.39:14.19	renders	Subject and past auxiliary of came
+accept	1.39:14.24	1.39:14.20	renders	Direction toward the speaker
+accept	1.39:14.26	1.39:14.21	renders	Purpose marker for lying down
+accept	1.39:14.28,1.39:14.29	1.39:14.23	renders	Preposition and first-person suffix
+accept	1.39:14.34	1.39:14.26	renders	Instrumental ending renders the manner prefix
+accept	1.39:15.4,1.39:15.5	1.39:15.4	renders	Hearing infinitive and its subject suffix
+accept	1.39:15.13	1.39:15.10	renders	Conjunction introducing the result
+accept	1.39:15.17,1.39:15.18	1.39:15.13	renders	Locative preposition and first-person suffix
+accept	1.39:15.20	1.39:15.14	renders	Part of the compound conjunction
+accept	1.39:15.24	1.39:15.19	renders	Outside as destination
+accept	1.39:16.7	1.39:16.4	renders	Reflexive renders the locative suffix
+accept	1.39:16.9	1.39:16.5	renders	Temporal preposition meaning until
+accept	1.39:17.2	1.39:17.2	renders	Subject of recounted
+accept	1.39:17.4	1.39:17.3	renders	Dative pronoun of the addressee
+accept	1.39:17.5	1.39:17.8	renders	Demonstrative modifying words
+accept	1.39:17.6	1.39:17.4	renders	Instrumental ending renders the manner relation
+accept	1.39:17.8	1.39:17.12	renders	Direction toward the speaker
+accept	1.39:17.10,1.39:17.11	1.39:17.11	renders	Coming verb and its past auxiliary
+accept	1.39:17.16,1.39:17.18	1.39:17.18	renders	Bringing verb and its second-person subject
+accept	1.39:17.19,1.39:17.20	1.39:17.19	renders	Preposition and first-person plural suffix
+accept	1.39:17.21	1.39:17.20	renders	Purpose marker for mocking
+accept	1.39:17.23	1.39:17.22	renders	Instrumental pronoun renders preposition and suffix
+accept	1.39:18.5	1.39:18.4	renders	First-person subject suffix of lifting
+accept	1.39:18.10	1.39:18.8	renders	Conjunction introducing the result
+accept	1.39:18.11	1.39:18.9	renders	Subject of left
+accept	1.39:18.15,1.39:18.16	1.39:18.11	renders	Locative preposition and first-person suffix
+accept	1.39:18.18	1.39:18.12	renders	Part of the compound conjunction
+accept	1.39:19.3	1.39:19.3	renders	Temporal prefix meaning when
+accept	1.39:19.11	1.39:19.10	renders	Speaking verb of the relative clause
+accept	1.39:19.12	1.39:19.11	renders	Dative pronoun of the addressee
+accept	1.39:19.14	1.39:19.14,1.39:19.18	renders	Such combines the likeness prefix and demonstrative
+accept	1.39:19.16	1.39:19.16	renders	Things in the quotation
+accept	1.39:19.17	1.39:19.19	renders	Doing the deed
+accept	1.39:19.18	1.39:19.20	renders	First-person dative
+accept	1.39:20.3	1.39:20.5	renders	Object pronoun of took
+accept	1.39:20.7	1.39:20.6	renders	Part of the compound conjunction
+accept	1.39:20.8,1.39:20.9	1.39:20.7	renders	Putting verb and its object suffix
+accept	1.39:20.12	1.39:20.11	renders	Prison modifier in the first occurrence
+accept	1.39:20.16,1.39:20.17	1.39:20.17	renders	Passive auxiliary and bound participle
+accept	1.39:20.19	1.39:20.14	renders	Prisoners belonging to the king
+accept	1.39:20.21,1.39:20.22	1.39:20.19	renders	Verb of remaining and its subject
+accept	1.39:21.4	1.39:21.4	renders	Preposition meaning with
+accept	1.39:21.8,1.39:21.9	1.39:21.8	renders	Directional preposition and its suffix
+accept	1.39:21.10	1.39:21.9	renders	Kindness extended to Joseph
+accept	1.39:21.13	1.39:21.12	renders	Suffix on favor identifies Joseph
+accept	1.39:21.18	1.39:21.18	renders	Prison modifier of house
+accept	1.39:22.2	1.39:22.3	renders	Chief
+accept	1.39:22.3	1.39:22.6	renders	First prison modifier
+accept	1.39:22.4	1.39:22.4	renders	First occurrence of house
+accept	1.39:22.5	1.39:22.2	renders	Giving into Joseph's hand
+accept	1.39:22.12	1.39:22.15	renders	Copula expresses the locative predication
+accept	1.39:22.21	1.39:22.26,1.39:22.27	renders	Past auxiliary and participle form one predicate
+accept	1.39:23.1	1.39:23.2	renders	Chief
+accept	1.39:23.2	1.39:23.5	renders	Prison modifier of house
+accept	1.39:23.4	1.39:23.1	renders	Negation of seeing
+accept	1.39:23.5	1.39:23.6	renders	Seeing
+accept	1.39:23.6	1.39:23.8	renders	Quantifier within the negated indefinite object
+accept	1.39:23.10	1.39:23.12,1.39:23.13	renders	Compound causal conjunction
+accept	1.39:23.11	1.39:23.14	renders	First occurrence of YHWH rendered as God
+accept	1.39:23.12,1.39:23.13,1.39:23.14	1.39:23.15	renders	Locative predicate with copula, preposition, and pronoun

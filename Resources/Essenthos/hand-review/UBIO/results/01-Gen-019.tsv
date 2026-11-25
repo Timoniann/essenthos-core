@@ -1,0 +1,286 @@
+kind	from	to	relation	reason
+fixed	1.19:1			Missing time, direction, and encounter links.
+fixed	1.19:2			Missing address, invitation, and lodging links.
+fixed	1.19:3			Wrong target for the intensifier and missing verb and pronoun links.
+fixed	1.19:4			Missing temporal negation, subject, and range links.
+fixed	1.19:5			Demonstrative linked to an article and several clause links missing.
+fixed	1.19:6			Missing directional and suffix links.
+fixed	1.19:7			Missing prohibition and part of the verbal expression.
+fixed	1.19:8			Cohortative marker mislinked and several clause links missing.
+fixed	1.19:9			Judging linked to the emphatic infinitive and several links missing.
+fixed	1.19:10			Second directional preposition linked to the first occurrence.
+fixed	1.19:11			First doorway linked to the second occurrence and several links missing.
+fixed	1.19:12			Missing adverb and possessive constructions.
+fixed	1.19:13			Missing demonstrative, verbs, and their complements.
+fixed	1.19:14			Missing speech, participial clause, and other clause links.
+fixed	1.19:15			Missing dawn, relative clause, negation, and cause links.
+fixed	1.19:16			Missing subject, compassion phrase, and grasping phrase links.
+fixed	1.19:17			Missing escape and prohibition links. The singular agent is supplied for a plural source.
+fixed	1.19:18			Missing addressee, prohibition, and entreaty links.
+fixed	1.19:19			Missing verbal phrases, pronouns, and purpose links.
+fixed	1.19:20			Missing first destination, pronouns, cohortative, and question marker.
+fixed	1.19:21			Missing idiomatic response and subordinate clause links.
+fixed	1.19:22			Missing escape verb, subject, and part of the causal expression.
+fixed	1.19:23			Missing both verbs and the destination marker.
+fixed	1.19:24			Missing rain predicate and parts of two prepositional expressions.
+fixed	1.19:25			Missing destruction verb, demonstrative, and vegetation noun.
+fixed	1.19:26			Possessive adjective linked to the verb and missing verb and pronoun links.
+unsure	1.19:27			Corrected several links. The target of the explicit motion verb is uncertain.
+fixed	1.19:28			Missing gaze, surface, ascent, and source relations.
+fixed	1.19:29			Missing temporal clauses, overthrow noun, and relative clause links.
+fixed	1.19:30			Missing pronoun on the suffixed preposition.
+fixed	1.19:31			Missing speaker, addressee relation, negation, and comparison links.
+fixed	1.19:32			Missing invitation, drink verb, pronoun, and offspring links.
+fixed	1.19:33			Missing night, subject, and action links.
+fixed	1.19:34			Missing timing, speech, and action links.
+fixed	1.19:35			Missing night, pronoun, and action links.
+ok	1.19:36			
+fixed	1.19:37			Missing birth subject and time links. Demonstrative mislinked to the article.
+fixed	1.19:38			Missing possessive and time links. Demonstrative mislinked to the article.
+refuse	1.19:3.3	1.19:3.2		The separate adverb supplies the intensity.
+refuse	1.19:5.10	1.19:5.9		The noun article has no counterpart.
+refuse	1.19:8.10	1.19:8.11		The Ukrainian auxiliary renders cohortative mood.
+refuse	1.19:9.20	1.19:9.14		The noun expresses the finite act of judging.
+refuse	1.19:10.12	1.19:10.11		This preposition introduces the house.
+refuse	1.19:11.5	1.19:11.23		This is the first doorway occurrence.
+refuse	1.19:26.4	1.19:26.2		The possessive adjective identifies the wife's possessor.
+refuse	1.19:27.14	1.19:27.14		The following noun renders the face.
+refuse	1.19:37.15	1.19:37.14		The article has no counterpart.
+refuse	1.19:38.17	1.19:38.17		The article has no counterpart.
+accept	1.19:1.5	1.19:1.6	renders	The place name bears the directional ending.
+accept	1.19:1.7	1.19:1.7,1.19:1.9	renders	The adverb renders the evening time phrase.
+accept	1.19:1.19	1.19:1.22	renders	Third-person plural suffix.
+accept	1.19:1.20	1.19:1.21,1.19:1.22	renders	The adverb renders the directional encounter phrase.
+accept	1.19:1.24	1.19:1.26	renders	The earth noun bears the directional ending.
+accept	1.19:2.2	1.19:2.1	renders	Part of the compound conjunction.
+accept	1.19:2.5,1.19:2.6	1.19:2.5	renders	Vocative noun and possessive suffix.
+accept	1.19:2.7	1.19:2.6	renders	Invitation to turn aside.
+accept	1.19:2.23	1.19:2.20	renders	Preposition introducing their way.
+accept	1.19:2.33	1.19:2.29	renders	Lodging verb.
+accept	1.19:2.34	1.19:2.26	renders	Locative prefix.
+accept	1.19:2.35	1.19:2.28	renders	Place of lodging.
+accept	1.19:3.2,1.19:3.6	1.19:3.2	renders	Subject and verb of pressing.
+accept	1.19:3.3	1.19:3.4	renders	Separate adverb of intensity.
+accept	1.19:3.4,1.19:3.5	1.19:3.3	renders	Preposition and its plural suffix.
+accept	1.19:3.8,1.19:3.11,1.19:3.12,1.19:3.13	1.19:3.6	renders	Subject and expression for turning aside.
+accept	1.19:3.10	1.19:3.7	renders	Pronoun on the first directional preposition.
+accept	1.19:3.21	1.19:3.13	renders	Subject of making the feast.
+accept	1.19:3.22,1.19:3.23	1.19:3.14	renders	Benefactive preposition and suffix.
+accept	1.19:4.1,1.19:4.3	1.19:4.1	renders	Together they express not yet.
+accept	1.19:4.2	1.19:4.2	renders	Plural subject of lying down.
+accept	1.19:4.11	1.19:4.13	renders	Starting point of the age range.
+accept	1.19:4.12	1.19:4.14	renders	Younger end of the age range.
+accept	1.19:4.13,1.19:4.14	1.19:4.16	renders	Expression marking the upper limit.
+accept	1.19:4.18	1.19:4.21	renders	The adverb includes the source relation.
+accept	1.19:5.3	1.19:5.2	renders	Verb of calling out.
+accept	1.19:5.8	1.19:5.7	renders	Dative pronoun renders the suffixed preposition.
+accept	1.19:5.14	1.19:5.15	renders	Temporal noun means tonight here.
+accept	1.19:5.15,1.19:5.16	1.19:5.13	renders	Directional preposition and second-person suffix.
+accept	1.19:5.18	1.19:5.16	renders	Imperative to bring them out.
+accept	1.19:5.20,1.19:5.21	1.19:5.17	renders	Directional preposition and first-person plural suffix.
+accept	1.19:5.22,1.19:5.23	1.19:5.19	renders	Purpose expressed by the cohortative and its subject.
+accept	1.19:5.24	1.19:5.20	renders	Object pronoun on the suffixed marker.
+accept	1.19:6.4	1.19:6.6	renders	The entrance noun bears the directional ending.
+accept	1.19:6.6,1.19:6.7	1.19:6.3	renders	Directional preposition and plural suffix.
+accept	1.19:6.12	1.19:6.11	renders	Reflexive renders the suffix of behind.
+accept	1.19:7.5	1.19:7.3	renders	Prohibitive negation.
+accept	1.19:7.7	1.19:7.6	renders	Evil is part of the verb's meaning.
+accept	1.19:8.2	1.19:8.3	renders	Preposition in the possessive construction.
+accept	1.19:8.5	1.19:8.5	renders	Daughters.
+accept	1.19:8.10,1.19:8.11,1.19:8.15	1.19:8.10	renders	Cohortative mood, subject, and bringing out.
+accept	1.19:8.12	1.19:8.12	renders	Object pronoun on the suffixed marker.
+accept	1.19:8.14	1.19:8.13	renders	Second-person plural suffix.
+accept	1.19:8.17	1.19:8.15	renders	Plural subject of the imperative.
+accept	1.19:8.18	1.19:8.16	renders	Dative pronoun renders the suffixed preposition.
+accept	1.19:8.20	1.19:8.17	renders	Introduces the standard for the action.
+accept	1.19:8.21	1.19:8.21	renders	The dative conveys whose judgment is meant.
+accept	1.19:8.22,1.19:8.23	1.19:8.19	renders	Idiomatic expression for what is good or pleasing.
+accept	1.19:8.25	1.19:8.23	renders	The dative renders the recipient prefix.
+accept	1.19:8.26	1.19:8.27	renders	Explicit demonstrative.
+accept	1.19:8.27	1.19:8.28	renders	Prohibitive negation.
+accept	1.19:8.29	1.19:8.30	renders	Thing acted on under negation.
+accept	1.19:8.31	1.19:8.32	renders	Preposition in the purpose expression.
+accept	1.19:8.32	1.19:8.33	renders	Pronominal element of the purpose expression.
+accept	1.19:8.33	1.19:8.34	renders	Plural subject of coming.
+accept	1.19:8.35	1.19:8.35	renders	Preposition introducing shelter.
+accept	1.19:9.3	1.19:9.2	renders	First speech verb.
+accept	1.19:9.4	1.19:9.3	renders	Command to move.
+accept	1.19:9.6	1.19:9.4	renders	Direction away.
+accept	1.19:9.11	1.19:9.9	renders	Auxiliary of the prior arrival.
+accept	1.19:9.18,1.19:9.20	1.19:9.13	renders	Together they express the finite judging verb.
+accept	1.19:9.23,1.19:9.26	1.19:9.16	renders	Together they express doing harm.
+accept	1.19:9.25	1.19:9.17	renders	Dative pronoun renders the suffixed preposition.
+accept	1.19:9.27,1.19:9.28	1.19:9.18	renders	Comparison preposition and its plural suffix.
+accept	1.19:9.33	1.19:9.21	renders	Pressure directed against the man.
+accept	1.19:9.35	1.19:9.24	renders	Repeated prefix before Lot.
+accept	1.19:10.1	1.19:10.1	renders	Temporal connective conveys the narrative sequence.
+accept	1.19:10.8	1.19:10.8	renders	Causative verb of bringing in.
+accept	1.19:10.10,1.19:10.11	1.19:10.11	renders	Direction toward the men and its reflexive rendering.
+accept	1.19:10.12	1.19:10.13	renders	The house noun bears the directional ending.
+accept	1.19:11.5	1.19:11.6	renders	Doorway where the men were.
+accept	1.19:11.6	1.19:11.6	renders	Preposition expresses the doorway's construct relation.
+accept	1.19:11.9,1.19:11.10	1.19:11.9	renders	Subject and verb of striking.
+accept	1.19:11.11	1.19:11.10	renders	The instrumental case renders the means prefix.
+accept	1.19:11.14,1.19:11.15	1.19:11.16	renders	Expression marking the upper limit.
+accept	1.19:11.20	1.19:11.21	renders	Searching conveys trying to find.
+accept	1.19:12.7	1.19:12.7	renders	Adverb meaning still or else.
+accept	1.19:12.9,1.19:12.10	1.19:12.9	renders	Possessive preposition and second-person suffix.
+accept	1.19:12.24	1.19:12.19	renders	Possessive predicate renders the suffixed preposition.
+accept	1.19:13.4	1.19:13.8	renders	Explicit demonstrative.
+accept	1.19:13.7	1.19:13.10	renders	Growth of the outcry.
+accept	1.19:13.10	1.19:13.12,1.19:13.13	renders	Before renders the phrase for being in someone's presence.
+accept	1.19:13.14,1.19:13.15	1.19:13.16	renders	Sending verb and first-person plural object suffix.
+accept	1.19:13.16	1.19:13.18	renders	Purpose prefix.
+accept	1.19:13.18	1.19:13.19	renders	Object suffix of destroy.
+accept	1.19:14.5	1.19:14.5	renders	Verb of speaking to the sons-in-law.
+accept	1.19:14.9,1.19:14.10,1.19:14.11	1.19:14.8	renders	Relative construction renders the prospective taking participle.
+accept	1.19:14.18	1.19:14.14	renders	Source preposition.
+accept	1.19:14.19	1.19:14.18	renders	Explicit demonstrative.
+accept	1.19:14.27	1.19:14.30	renders	Eyes in the perception idiom.
+accept	1.19:14.29	1.19:14.26	renders	Subject of the finite verb.
+accept	1.19:15.2	1.19:15.2	renders	Temporal conjunction.
+accept	1.19:15.3	1.19:15.5	renders	Verb of rising.
+accept	1.19:15.4,1.19:15.5	1.19:15.4	renders	Together they render daybreak.
+accept	1.19:15.7	1.19:15.9	renders	The angels.
+accept	1.19:15.19,1.19:15.20	1.19:15.23	renders	Relative clause renders the participle of presence.
+accept	1.19:15.24	1.19:15.24	renders	Negative element of lest.
+accept	1.19:15.26	1.19:15.26	renders	Causal use of the preposition.
+accept	1.19:16.3	1.19:16.2	renders	Subject of hesitating.
+accept	1.19:16.8	1.19:16.18	renders	Causal prefix introducing compassion.
+accept	1.19:16.10,1.19:16.11	1.19:16.21	renders	Preposition and suffix mark the recipient of compassion.
+accept	1.19:16.12	1.19:16.19	renders	Love renders compassion.
+accept	1.19:16.13	1.19:16.4	renders	Verb of taking hold.
+accept	1.19:16.14	1.19:16.7	renders	Grasping preposition for Lot's hand.
+accept	1.19:16.15,1.19:16.16	1.19:16.8	renders	Lot's hand and its possessive suffix.
+accept	1.19:16.18	1.19:16.10	renders	Grasping preposition for the wife's hand.
+accept	1.19:16.19	1.19:16.11	renders	The wife's hand.
+accept	1.19:16.23	1.19:16.14	renders	Grasping preposition for the daughters' hands.
+accept	1.19:16.24	1.19:16.15	renders	The daughters' hands.
+accept	1.19:16.33	1.19:16.26,1.19:16.28	renders	The prefixes complete the compound outside construction.
+accept	1.19:17.3	1.19:17.3	renders	Temporal prefix on the infinitive.
+accept	1.19:17.7	1.19:17.4	renders	Verb of bringing out.
+accept	1.19:17.9	1.19:17.7	renders	Direction outside.
+accept	1.19:17.13	1.19:17.10	renders	First imperative to escape.
+accept	1.19:17.17	1.19:17.14	renders	Prohibited act of looking.
+accept	1.19:17.18,1.19:17.19	1.19:17.15	renders	Behind and its second-person suffix.
+accept	1.19:17.21	1.19:17.17	renders	Second prohibitive negation.
+accept	1.19:17.22	1.19:17.18	renders	Verb of stopping or staying.
+accept	1.19:17.23	1.19:17.20	renders	Universal scope under the prohibition.
+accept	1.19:17.26	1.19:17.25	renders	Second imperative to escape.
+accept	1.19:17.27	1.19:17.24	renders	The mountain noun bears the directional ending.
+accept	1.19:17.31	1.19:17.26	renders	Negative element of lest.
+accept	1.19:17.32	1.19:17.27	renders	Verb of perishing.
+accept	1.19:18.3	1.19:18.4	renders	Dative pronoun renders the suffixed preposition.
+accept	1.19:18.5	1.19:18.5	renders	Negative plea.
+accept	1.19:18.6,1.19:18.7	1.19:18.6	renders	Emphatic particles convey the entreaty.
+accept	1.19:19.10,1.19:19.11	1.19:19.9	renders	Subject and verb of increasing.
+accept	1.19:19.15	1.19:19.12	renders	Verb of doing.
+accept	1.19:19.16	1.19:19.11	renders	Resumptive pronoun supplies the object of the relative clause.
+accept	1.19:19.17,1.19:19.18	1.19:19.13	renders	Comitative preposition and first-person suffix.
+accept	1.19:19.19	1.19:19.14	renders	Purpose prefix.
+accept	1.19:19.21,1.19:19.22	1.19:19.15	renders	Keeping alive includes the expression for remaining alive.
+accept	1.19:19.29	1.19:19.23	renders	Infinitive of escape.
+accept	1.19:19.30	1.19:19.25	renders	The mountain noun bears the directional ending.
+accept	1.19:19.33,1.19:19.34	1.19:19.26	renders	Apprehension and negation are part of lest.
+accept	1.19:19.35,1.19:19.36	1.19:19.27	renders	Verb of overtaking and its object suffix.
+accept	1.19:19.39,1.19:19.40	1.19:19.31	renders	First-person subject and verb of dying.
+accept	1.19:20.7	1.19:20.10	renders	First occurrence of the destination adverb.
+accept	1.19:20.9	1.19:20.12	renders	First explicit pronoun for the town.
+accept	1.19:20.11,1.19:20.12,1.19:20.13	1.19:20.14	renders	Cohortative mood, verb, and first-person subject.
+accept	1.19:20.15	1.19:20.17	renders	Interrogative particle.
+accept	1.19:20.17	1.19:20.20	renders	Second explicit pronoun for the town.
+accept	1.19:21.3	1.19:21.2	renders	Subject of the reply.
+accept	1.19:21.5	1.19:21.3	renders	Suffix of the directional preposition.
+accept	1.19:21.6	1.19:21.4	renders	Presentative particle.
+accept	1.19:21.8	1.19:21.5,1.19:21.6	renders	Granting the request renders the idiom of lifting the face.
+accept	1.19:21.9	1.19:21.8	renders	Preposition introducing the matter granted.
+accept	1.19:21.10	1.19:21.6	renders	Second-person possessor in the Hebrew idiom.
+accept	1.19:21.11	1.19:21.10	renders	The matter under discussion is the request.
+accept	1.19:21.12	1.19:21.13	renders	Prefix introducing the negative infinitive clause.
+accept	1.19:21.14	1.19:21.15	renders	Infinitive of overturning.
+accept	1.19:21.16	1.19:21.19	renders	Part of the relative phrase marking the topic of speech.
+accept	1.19:21.19	1.19:21.20	renders	Verb of speaking.
+accept	1.19:22.2	1.19:22.2	renders	Imperative of escape.
+accept	1.19:22.5	1.19:22.6	renders	First-person subject of being able.
+accept	1.19:22.15	1.19:22.13	renders	Part of the compound expression for therefore.
+accept	1.19:23.2	1.19:23.3	renders	Rising renders the sun's coming out.
+accept	1.19:23.7	1.19:23.9	renders	Verb of arriving.
+accept	1.19:23.8	1.19:23.10	renders	Zoar bears the directional ending.
+accept	1.19:24.3,1.19:24.8	1.19:24.3	renders	Together they express causing rain.
+accept	1.19:24.4	1.19:24.7	renders	The shared preposition also governs Gomorrah.
+accept	1.19:24.13	1.19:24.13	renders	Part of the compound source preposition.
+accept	1.19:25.2	1.19:25.2	renders	Verb of overturning.
+accept	1.19:25.3	1.19:25.7	renders	Explicit demonstrative.
+accept	1.19:25.13	1.19:25.20	renders	Vegetation renders what sprouts.
+accept	1.19:26.4	1.19:26.3	renders	Lot's name spells out the possessor carried by the suffix.
+accept	1.19:26.5	1.19:26.2	renders	Verb of looking back.
+accept	1.19:26.7	1.19:26.5	renders	Third-person suffix on behind.
+accept	1.19:27.4	1.19:27.2	renders	Rising early includes the adverb.
+accept	1.19:27.5	1.19:27.4	renders	The morning adverb includes the temporal prefix.
+accept	1.19:27.10	1.19:27.12	renders	The relative adverb also conveys the resumptive there.
+accept	1.19:27.12,1.19:27.13	1.19:27.11	renders	Past auxiliary and subject of standing.
+accept	1.19:27.14	1.19:27.13	renders	Preposition in the expression for being before someone.
+accept	1.19:28.2	1.19:28.2	renders	Subject of looking.
+accept	1.19:28.4	1.19:28.3	renders	Preposition before Sodom and Gomorrah.
+accept	1.19:28.9	1.19:28.9	renders	Preposition before the whole plain.
+accept	1.19:28.11	1.19:28.11	renders	Surface of the land.
+accept	1.19:28.18	1.19:28.19	renders	Verb of rising.
+accept	1.19:28.20	1.19:28.20	renders	The construct noun marks the smoke's source.
+accept	1.19:28.24	1.19:28.24	renders	The second construct noun marks the smoke's source.
+accept	1.19:29.3	1.19:29.3	renders	First temporal infinitive prefix.
+accept	1.19:29.18	1.19:29.22	renders	Noun meaning overthrow.
+accept	1.19:29.19	1.19:29.23	renders	Second temporal infinitive prefix.
+accept	1.19:29.20	1.19:29.24	renders	Verb of overturning.
+accept	1.19:29.23	1.19:29.28	renders	Relative marker.
+accept	1.19:29.25,1.19:29.26	1.19:29.30	renders	Locative preposition and plural suffix.
+accept	1.19:30.15	1.19:30.14	renders	Third-person suffix on with.
+accept	1.19:31.3	1.19:31.4	renders	The older daughter.
+accept	1.19:31.4	1.19:31.5	renders	The dative also renders the addressee preposition.
+accept	1.19:31.10	1.19:31.12	renders	Existential negation.
+accept	1.19:31.16,1.19:31.17	1.19:31.18	renders	Directional preposition and first-person plural suffix.
+accept	1.19:31.18	1.19:31.19	renders	Comparison prefix.
+accept	1.19:31.20	1.19:31.20	renders	The construct relation gives the geographic scope of the custom.
+accept	1.19:32.1	1.19:32.1	renders	Invitational imperative.
+accept	1.19:32.2	1.19:32.2	renders	Verb of giving drink.
+accept	1.19:32.9	1.19:32.8	renders	Third-person suffix on with.
+accept	1.19:32.12	1.19:32.13	renders	Offspring renders seed.
+accept	1.19:32.13	1.19:32.11	renders	Source prefix.
+accept	1.19:33.2	1.19:33.6	renders	Temporal genitive also conveys the time prefix.
+accept	1.19:33.3	1.19:33.9	renders	Explicit demonstrative for that night.
+accept	1.19:33.4	1.19:33.2	renders	Plural subject of giving drink.
+accept	1.19:33.10	1.19:33.11	renders	Verb of coming.
+accept	1.19:33.11	1.19:33.13	renders	The older daughter.
+accept	1.19:33.13	1.19:33.14	renders	Part of the compound conjunction.
+accept	1.19:33.14	1.19:33.15	renders	Verb of lying down.
+accept	1.19:33.15	1.19:33.16	renders	Comitative preposition.
+accept	1.19:33.19,1.19:33.21	1.19:33.20	renders	Subject and verb of knowing.
+accept	1.19:33.26	1.19:33.24	renders	Second temporal prefix.
+accept	1.19:33.27	1.19:33.25	renders	Second action, getting up.
+accept	1.19:34.4	1.19:34.3	renders	Temporal genitive conveys the prefix in the next-day expression.
+accept	1.19:34.6	1.19:34.8	renders	The older daughter.
+accept	1.19:34.8	1.19:34.9	renders	The dative also renders the addressee preposition.
+accept	1.19:34.9	1.19:34.12	renders	Presentative particle.
+accept	1.19:34.11,1.19:34.12	1.19:34.14	renders	Together they render last night.
+accept	1.19:34.13,1.19:34.14	1.19:34.13	renders	Verb of lying down and past auxiliary.
+accept	1.19:34.15	1.19:34.15	renders	Comitative preposition.
+accept	1.19:34.18,1.19:34.19	1.19:34.17	renders	Verb of giving drink and object suffix.
+accept	1.19:34.23	1.19:34.21	renders	Temporal noun means tonight here.
+accept	1.19:34.25,1.19:34.26	1.19:34.23	renders	Imperative of coming and its subject.
+accept	1.19:34.27	1.19:34.24	renders	Imperative of lying down.
+accept	1.19:34.29	1.19:34.25	renders	Third-person suffix on with.
+accept	1.19:34.32	1.19:34.30	renders	Offspring renders seed.
+accept	1.19:35.3	1.19:35.4	renders	Temporal genitive also conveys the time prefix.
+accept	1.19:35.4	1.19:35.8	renders	Explicit demonstrative for that night.
+accept	1.19:35.5	1.19:35.2	renders	Plural subject of giving drink.
+accept	1.19:35.14	1.19:35.16	renders	Part of the compound conjunction.
+accept	1.19:35.15	1.19:35.17	renders	Verb of lying down.
+accept	1.19:35.17	1.19:35.18	renders	Third-person suffix on with.
+accept	1.19:35.19,1.19:35.21	1.19:35.21	renders	Subject and verb of knowing.
+accept	1.19:35.26	1.19:35.25	renders	Second temporal prefix.
+accept	1.19:35.27	1.19:35.26	renders	Second action, getting up.
+accept	1.19:37.3	1.19:37.4	renders	The older daughter.
+accept	1.19:37.13	1.19:37.13	renders	Part of the expression marking the endpoint.
+accept	1.19:37.15	1.19:37.15	renders	The temporal expression points to the present day.
+accept	1.19:38.9	1.19:38.10	renders	Possessive suffix on name.
+accept	1.19:38.15	1.19:38.16	renders	Part of the expression marking the endpoint.
+accept	1.19:38.17	1.19:38.18	renders	The temporal expression points to the present day.

@@ -1,0 +1,86 @@
+kind	from	to	relation	reason
+fixed	1.36:1			Added the identity marker.
+ok	1.36:2			
+ok	1.36:3			
+fixed	1.36:4			Added the recipient prefix.
+fixed	1.36:5			Added the passive auxiliary and recipient pronoun.
+fixed	1.36:6			Added two livestock nouns and part of the conjunction.
+unsure	1.36:7			Added clear links. The infinitive leaves the subject їм implicit.
+ok	1.36:8			
+ok	1.36:9			
+ok	1.36:10			
+ok	1.36:11			
+fixed	1.36:12			Added Esau and two prefix links.
+ok	1.36:13			
+fixed	1.36:14			Added the subject pronoun and recipient prefix.
+fixed	1.36:15			Added the second occurrence of Esau.
+ok	1.36:16			
+ok	1.36:17			
+ok	1.36:18			
+fixed	1.36:19			Added the identity marker.
+ok	1.36:20			
+ok	1.36:21			
+ok	1.36:22			
+ok	1.36:23			
+fixed	1.36:24			Added demonstratives, auxiliary, hot springs, and herding clause links.
+ok	1.36:25			
+ok	1.36:26			
+fixed	1.36:27			Added the demonstrative.
+ok	1.36:28			
+ok	1.36:29			
+fixed	1.36:30			Added the distributive prefix.
+fixed	1.36:31			Relinked king and completed the preposition links.
+ok	1.36:32			
+ok	1.36:33			
+ok	1.36:34			
+fixed	1.36:35			Added the relative rendering of the participle.
+fixed	1.36:36			Added the source prefix.
+fixed	1.36:37			Added the river qualifier.
+ok	1.36:38			
+fixed	1.36:39			Added the death verb and successor's name.
+fixed	1.36:40			Corrected the links to the three prefixes.
+ok	1.36:41			
+ok	1.36:42			
+fixed	1.36:43			Added the distributive prefix.
+refuse	1.36:31.11	1.36:31.12		King renders the adjoining noun.
+refuse	1.36:40.6	1.36:40.7		The preposition renders the preceding prefix.
+accept	1.36:1.5	1.36:1.5	renders	Renders the pronoun's identifying force.
+accept	1.36:4.4	1.36:4.4	renders	Dative marks the recipient.
+accept	1.36:5.13	1.36:5.16	renders	Auxiliary of the passive verb.
+accept	1.36:5.14	1.36:5.17	renders	Renders the suffixed recipient pronoun.
+accept	1.36:6.18	1.36:6.19	renders	Renders the first livestock noun.
+accept	1.36:6.22	1.36:6.23	renders	Renders the second livestock noun.
+accept	1.36:6.34	1.36:6.33	renders	Part of the compound conjunction.
+accept	1.36:7.4	1.36:7.2	renders	Renders the written copula.
+accept	1.36:7.6	1.36:7.5	renders	Introduces the comparative complement.
+accept	1.36:7.17	1.36:7.14	renders	Renders the infinitive of bearing.
+accept	1.36:7.18	1.36:7.15	renders	Renders the suffixed object pronoun.
+accept	1.36:7.19	1.36:7.16,1.36:7.17	renders	Renders the compound causal preposition.
+accept	1.36:12.5	1.36:12.5	renders	Genitive expresses possession marked by the prefix.
+accept	1.36:12.6	1.36:12.8	renders	Names Esau as Eliphaz's father.
+accept	1.36:12.11	1.36:12.11	renders	Dative marks the recipient.
+accept	1.36:14.14	1.36:14.13	renders	Renders the verb's feminine subject.
+accept	1.36:14.15	1.36:14.14	renders	Dative marks the recipient.
+accept	1.36:15.8	1.36:15.8	renders	Names Esau as Eliphaz's father.
+accept	1.36:19.4	1.36:19.7	renders	Renders the pronoun's identifying force.
+accept	1.36:24.2	1.36:24.2	renders	Renders the opening demonstrative.
+accept	1.36:24.9	1.36:24.9	renders	Renders the identifying pronoun.
+accept	1.36:24.13	1.36:24.12	renders	Auxiliary in the form of found.
+accept	1.36:24.16,1.36:24.17	1.36:24.15	renders	Together render the Hebrew noun as hot springs.
+accept	1.36:24.18	1.36:24.19	renders	Renders the temporal prefix.
+accept	1.36:24.19	1.36:24.20	renders	Renders the verb of herding.
+accept	1.36:24.21	1.36:24.24	renders	Genitive marks ownership of the donkeys.
+accept	1.36:27.1	1.36:27.1	renders	Renders the opening demonstrative.
+accept	1.36:30.10	1.36:30.11	renders	Renders the distributive prefix.
+accept	1.36:31.9	1.36:31.10	renders	Completes the compound preposition for before.
+accept	1.36:31.11	1.36:31.13	renders	Renders the noun for king.
+accept	1.36:31.12	1.36:31.14	renders	Renders the prefix relating the king to Israel's sons.
+accept	1.36:35.11,1.36:35.12	1.36:35.11	renders	Relative clause renders the participle.
+accept	1.36:36.9	1.36:36.8	renders	Renders the source prefix.
+accept	1.36:37.11	1.36:37.11	renders	Adjective renders the river qualifier.
+accept	1.36:39.2	1.36:39.2	renders	Renders the verb of dying.
+accept	1.36:39.10	1.36:39.9	renders	Names the same successor.
+accept	1.36:40.6	1.36:40.6	renders	Renders the prefix for grouping by clans.
+accept	1.36:40.9	1.36:40.8	renders	Renders the prefix for grouping by places.
+accept	1.36:40.13	1.36:40.10	renders	Instrumental conveys grouping by names.
+accept	1.36:43.13	1.36:43.8	renders	Renders the prefix for grouping by settlements.

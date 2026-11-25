@@ -1,0 +1,215 @@
+kind	from	to	relation	reason
+fixed	1.18:1			Filled the missing pronoun, tree, and setting links.
+fixed	1.18:2			Added the subject, encounter, and directional links.
+fixed	1.18:3			Added the negative, possessive, and compound expressions.
+fixed	1.18:4			Linked the opening verb.
+fixed	1.18:5			Completed the verb phrases, subjects, and connectives.
+fixed	1.18:6			Linked the direction expressed by the tent noun.
+fixed	1.18:7			Completed the calf, recipient, and preparation links.
+fixed	1.18:8			Completed the calf phrase and the placement and position links.
+fixed	1.18:9			Added both missing pronouns.
+unsure	1.18:10			Corrected the return verb. Exact links within the annual time idiom are uncertain.
+fixed	1.18:11			Moved the possessive preposition to the Sarah clause.
+fixed	1.18:12			Added the possessives, temporal clause, and verb.
+unsure	1.18:13			The link for the Ukrainian quotation lead-in is uncertain.
+unsure	1.18:14			Exact links within the annual time idiom are uncertain.
+fixed	1.18:15			Added the speaker pronoun and emphatic reply particle.
+fixed	1.18:16			Added the origin, direction, companion, and purpose links.
+fixed	1.18:17			Added the question particle and prospective auxiliary.
+fixed	1.18:18			Added the emphatic infinitive, finite verb, adjective, and prepositional phrase.
+fixed	1.18:19			Corrected the household possessive and completed the clause links.
+fixed	1.18:20			Added the first causal phrase and the change-of-state verb.
+unsure	1.18:21			Moved the negation to the final condition. The cry suffix is singular, while the Ukrainian pronoun is plural.
+fixed	1.18:22			Moved the preposition off the face noun and linked the noun itself.
+fixed	1.18:23			Added the compound conjunction, question particle, and verb.
+fixed	1.18:24			Added the question particle, pardon verb, recipient case, and copula.
+fixed	1.18:25			Removed the displaced demonstrative link and completed both prohibitions and the final question.
+fixed	1.18:26			Completed the pardon verb, recipient, and causal phrase.
+fixed	1.18:27			Added the conjunction, attention marker, past auxiliary, and possessive.
+fixed	1.18:28			Linked the lack verb phrase, question particle, and subject.
+fixed	1.18:29			Added the speech and reply links, including the iterative expression.
+fixed	1.18:30			Completed the two volitive phrases and the possessive.
+fixed	1.18:31			Added the attention marker, auxiliary, possessive, and reply verb.
+fixed	1.18:32			Completed the volitives, restriction, possessive, and causal phrase.
+fixed	1.18:33			Completed the temporal connective, completion verb, and destination.
+refuse	1.18:10.8	1.18:10.3		The return verb renders the finite form.
+refuse	1.18:11.9	1.18:11.7		This preposition belongs to the Sarah clause.
+refuse	1.18:19.12	1.18:19.11		This possessive modifies the household.
+refuse	1.18:21.8	1.18:21.15		The Hebrew negation belongs to the final condition.
+refuse	1.18:22.15	1.18:22.15		The face noun is rendered by лицем.
+refuse	1.18:25.16	1.18:25.9		The demonstrative belongs to the earlier clause.
+accept	1.18:1.4	1.18:1.3	renders	Pronominal suffix.
+accept	1.18:1.6	1.18:1.5	renders	Locative preposition.
+accept	1.18:1.7	1.18:1.6	renders	Tree noun.
+accept	1.18:1.12	1.18:1.11	renders	Locative use of opening.
+accept	1.18:1.14	1.18:1.11	renders	Entrance relation in the construct.
+accept	1.18:1.16,1.18:1.17	1.18:1.14	renders	Temporal preposition phrase.
+accept	1.18:1.18	1.18:1.17	renders	Day rendered adjectivally.
+accept	1.18:2.2	1.18:2.2	renders	Subject of lifted.
+accept	1.18:2.7	1.18:2.4	renders	Part of the compound conjunction.
+accept	1.18:2.13,1.18:2.14	1.18:2.11	renders	Preposition and its suffix.
+accept	1.18:2.22	1.18:2.16,1.18:2.17	renders	Directional encounter expression.
+accept	1.18:2.23	1.18:2.17	renders	Encounter suffix.
+accept	1.18:2.26	1.18:2.24	renders	Directional ending on earth.
+accept	1.18:3.2	1.18:3.1	renders	Part of the compound conjunction.
+accept	1.18:3.6	1.18:3.5	renders	Particle reinforcing the entreating condition.
+accept	1.18:3.13	1.18:3.10	renders	Prohibitive negation.
+accept	1.18:3.15	1.18:3.13,1.18:3.14	renders	Compound preposition meaning past.
+accept	1.18:3.16	1.18:3.15	renders	Servant possessive suffix.
+accept	1.18:4.1	1.18:4.1	renders	Taking water rendered as bringing it.
+accept	1.18:5.2,1.18:5.5,1.18:5.6	1.18:5.2	renders	Cohortative verb, mood particle, and subject.
+accept	1.18:5.8	1.18:5.6	renders	Subject of the plural imperative.
+accept	1.18:5.12	1.18:5.8	renders	Temporal adverb afterward.
+accept	1.18:5.13	1.18:5.9	renders	First verb of passing.
+accept	1.18:5.15	1.18:5.11	renders	Preposition in the reason expression.
+accept	1.18:5.16	1.18:5.12	renders	Demonstrative in the reason expression.
+accept	1.18:5.17,1.18:5.18	1.18:5.13	renders	Subject and verb of the second passing.
+accept	1.18:5.19	1.18:5.14	renders	Preposition governed by passing.
+accept	1.18:5.20	1.18:5.15	renders	Servant possessive suffix.
+accept	1.18:5.25	1.18:5.19	renders	Command to do.
+accept	1.18:5.27	1.18:5.20,1.18:5.21	renders	Compound comparative connective.
+accept	1.18:5.28	1.18:5.22	renders	Verb of speaking.
+accept	1.18:6.4	1.18:6.5	renders	Directional ending on tent.
+accept	1.18:7.8	1.18:7.11	renders	Tenderness rendered as youth.
+accept	1.18:7.11	1.18:7.9,1.18:7.10	renders	Calf rendered from the construct phrase.
+accept	1.18:7.14	1.18:7.16,1.18:7.18	renders	Dative recipient and servant noun.
+accept	1.18:7.17	1.18:7.20	renders	Haste rendered adverbially.
+accept	1.18:7.18	1.18:7.23	renders	Suffixed direct-object pronoun.
+accept	1.18:7.19	1.18:7.22	renders	Verb of preparing.
+accept	1.18:8.7	1.18:8.9	renders	Cattle supplies the meaning of calf.
+accept	1.18:8.8	1.18:8.10,1.18:8.11	renders	Relative clause rendered as a participle.
+accept	1.18:8.10	1.18:8.12	renders	Part of the conjunction before placement.
+accept	1.18:8.11	1.18:8.13	renders	Setting the food before them.
+accept	1.18:8.12	1.18:8.14,1.18:8.15	renders	Compound preposition meaning before.
+accept	1.18:8.13	1.18:8.15	renders	Suffix in the compound preposition.
+accept	1.18:8.15	1.18:8.17	renders	Contrastive independent subject pronoun.
+accept	1.18:8.17,1.18:8.18	1.18:8.19	renders	Preposition and its suffix.
+accept	1.18:9.4	1.18:9.3	renders	Pronominal suffix.
+accept	1.18:9.10	1.18:9.8	renders	Subject of the reply verb.
+accept	1.18:10.7	1.18:10.3	renders	Infinitive absolute supplies the emphasis.
+accept	1.18:10.8	1.18:10.4	renders	Finite return verb.
+accept	1.18:10.9,1.18:10.10	1.18:10.5	renders	Preposition and second-person suffix.
+accept	1.18:10.18,1.18:10.20	1.18:10.13	renders	Existential possession expressed by lamed.
+accept	1.18:10.28	1.18:10.19	renders	Locative use of opening.
+accept	1.18:10.31	1.18:10.23	renders	Relative subject renders the resumptive pronoun.
+accept	1.18:10.32,1.18:10.34	1.18:10.24	renders	Locative predicate and its pronominal suffix.
+accept	1.18:11.2	1.18:11.1	renders	Discourse conjunction rendered as же.
+accept	1.18:11.6	1.18:11.5	renders	Copula of the old-age predicate.
+accept	1.18:11.7	1.18:11.7,1.18:11.9	renders	In days rendered as a genitive of age.
+accept	1.18:11.9	1.18:11.13	renders	Possessive preposition before Sarah.
+accept	1.18:11.12	1.18:11.12	renders	Written infinitive of being.
+accept	1.18:12.5,1.18:12.6	1.18:12.5	renders	Interior noun and its possessive suffix.
+accept	1.18:12.8	1.18:12.8	renders	Temporal connective.
+accept	1.18:12.9,1.18:12.10	1.18:12.9	renders	Subject suffix and verb of wearing out.
+accept	1.18:12.13	1.18:12.10	renders	Written verb of being.
+accept	1.18:12.15	1.18:12.11	renders	Suffixed preposition of possession.
+accept	1.18:12.16	1.18:12.13	renders	Connective introducing the husband's condition.
+accept	1.18:13.7	1.18:13.7	renders	Emphatic demonstrative after why.
+accept	1.18:13.11	1.18:13.12	renders	Interrogative marker.
+accept	1.18:13.12	1.18:13.13	renders	Emphasis from even.
+accept	1.18:13.13	1.18:13.14	renders	Adverb meaning really.
+accept	1.18:13.15	1.18:13.16	renders	Circumstantial conjunction rendered as when.
+accept	1.18:14.1	1.18:14.1	renders	Interrogative marker.
+accept	1.18:14.2	1.18:14.3	renders	Preposition marking the limit of difficulty.
+accept	1.18:14.4,1.18:14.6	1.18:14.2	renders	Copula and degree in the finite difficulty predicate.
+accept	1.18:14.8	1.18:14.6	renders	Preposition of appointed time.
+accept	1.18:14.10	1.18:14.8	renders	Appointed time noun.
+accept	1.18:14.13,1.18:14.14	1.18:14.10	renders	Preposition and second-person suffix.
+accept	1.18:14.21	1.18:14.15	renders	Conjunction introducing Sarah's clause.
+accept	1.18:14.23	1.18:14.16	renders	Possessive lamed rendered as have.
+accept	1.18:15.11	1.18:15.11	renders	Subject of the reply verb.
+accept	1.18:15.14	1.18:15.13	renders	Asseverative particle in the reply.
+accept	1.18:16.3	1.18:16.3,1.18:16.4	renders	From there in one word.
+accept	1.18:16.8	1.18:16.9	renders	Preposition after looked.
+accept	1.18:16.14	1.18:16.15	renders	Companion suffix.
+accept	1.18:16.15	1.18:16.16	renders	Purpose marker.
+accept	1.18:17.4	1.18:17.4	renders	Interrogative marker.
+accept	1.18:17.11	1.18:17.11	renders	Prospective sense of the participle.
+accept	1.18:18.3	1.18:18.3	renders	Emphasis from the infinitive absolute.
+accept	1.18:18.4	1.18:18.4	renders	Finite verb of becoming.
+accept	1.18:18.5	1.18:18.5	renders	Resultative lamed rendered by the instrumental.
+accept	1.18:18.8	1.18:18.9	renders	Adjective meaning mighty.
+accept	1.18:18.10,1.18:18.11	1.18:18.12	renders	Preposition and third-person suffix.
+accept	1.18:19.2,1.18:19.3,1.18:19.4	1.18:19.2	renders	Selection verb with subject and object suffixes.
+accept	1.18:19.5	1.18:19.3,1.18:19.4	renders	Compound purpose connective.
+accept	1.18:19.6	1.18:19.5	renders	Subject of the command verb.
+accept	1.18:19.11,1.18:19.12	1.18:19.10	renders	Household noun and possessive suffix.
+accept	1.18:19.14	1.18:19.11	renders	Suffix of after him.
+accept	1.18:19.17	1.18:19.13	renders	Subject of keeping.
+accept	1.18:19.28,1.18:19.29,1.18:19.30	1.18:19.21	renders	Final purpose connective.
+accept	1.18:19.32	1.18:19.22	renders	Bringing about rendered as fulfilling.
+accept	1.18:19.36,1.18:19.37	1.18:19.28	renders	Speaking verb and past auxiliary.
+accept	1.18:19.38,1.18:19.39	1.18:19.29	renders	Preposition and its suffix.
+accept	1.18:20.4,1.18:20.5,1.18:20.6	1.18:20.8	renders	First clause connector rendered as a causal phrase.
+accept	1.18:20.16	1.18:20.13	renders	Change of state in the heaviness predicate.
+accept	1.18:21.2	1.18:21.2	renders	Particle reinforcing the resolution to descend.
+accept	1.18:21.3	1.18:21.1	renders	First-person subject of descending.
+accept	1.18:21.5	1.18:21.3	renders	Part of the compound conjunction.
+accept	1.18:21.7	1.18:21.5	renders	Interrogative marker.
+accept	1.18:21.9,1.18:21.10	1.18:21.11	renders	Action verb and plural subject.
+accept	1.18:21.11,1.18:21.12	1.18:21.6	renders	Correlative expression of comparison.
+accept	1.18:21.13	1.18:21.7	renders	Outcry noun.
+accept	1.18:21.14	1.18:21.7	renders	Relation expressed by the outcry suffix.
+accept	1.18:21.16,1.18:21.17	1.18:21.9	renders	Participle rendered as a relative clause.
+accept	1.18:21.18	1.18:21.10	renders	Preposition of destination.
+accept	1.18:21.22	1.18:21.12	renders	Destruction noun.
+accept	1.18:21.23	1.18:21.13	renders	Conjunction introducing the alternative.
+accept	1.18:21.24	1.18:21.14	renders	Conditional particle.
+accept	1.18:21.25	1.18:21.15	renders	Negation of the final condition.
+accept	1.18:21.27	1.18:21.16	renders	Knowing rendered as seeing in the reply to the condition.
+accept	1.18:22.3	1.18:22.3,1.18:22.4	renders	From there in one word.
+accept	1.18:22.8	1.18:22.9	renders	Directional ending on Sodom.
+accept	1.18:22.12	1.18:22.12	renders	Part of the expression meaning still.
+accept	1.18:22.15	1.18:22.14	renders	Preposition in the before-face expression.
+accept	1.18:22.17	1.18:22.15	renders	Face noun.
+accept	1.18:23.5	1.18:23.4	renders	Part of the compound conjunction.
+accept	1.18:23.7	1.18:23.6	renders	Interrogative marker.
+accept	1.18:23.8	1.18:23.8	renders	Verb of destroying.
+accept	1.18:24.8	1.18:24.9	renders	Interrogative marker.
+accept	1.18:24.13	1.18:24.14	renders	Sparing rendered as pardoning.
+accept	1.18:24.15	1.18:24.15	renders	Recipient lamed rendered by the dative.
+accept	1.18:24.23	1.18:24.24	renders	Copula of the locative predicate.
+accept	1.18:25.1,1.18:25.2	1.18:25.1	renders	First prohibition expressed by the interjection.
+accept	1.18:25.3	1.18:25.2	renders	First suffixed preposition of address.
+accept	1.18:25.5	1.18:25.5,1.18:25.7,1.18:25.9	renders	Like this thing rendered as thus.
+accept	1.18:25.15	1.18:25.22	renders	Second occurrence of the wicked person.
+accept	1.18:25.18,1.18:25.19	1.18:25.23	renders	Second prohibition expressed by the interjection.
+accept	1.18:25.20	1.18:25.24	renders	Second suffixed preposition of address.
+accept	1.18:25.21	1.18:25.25	renders	Interrogative marker.
+accept	1.18:25.23,1.18:25.24	1.18:25.26	renders	Substantival participle rendered as the one who judges.
+accept	1.18:25.29	1.18:25.31	renders	Verb of doing justice.
+accept	1.18:25.30	1.18:25.32	renders	Justice noun.
+accept	1.18:26.15	1.18:26.15	renders	Sparing rendered as pardoning.
+accept	1.18:26.17	1.18:26.16,1.18:26.19	renders	Dative recipient and place noun.
+accept	1.18:26.18	1.18:26.20	renders	Prefix of the compound causal preposition.
+accept	1.18:26.19	1.18:26.21	renders	Suffix of for their sake.
+accept	1.18:27.5	1.18:27.4	renders	Part of the compound conjunction.
+accept	1.18:27.7	1.18:27.6	renders	Attention marker meaning behold.
+accept	1.18:27.10	1.18:27.8	renders	Past auxiliary of dared.
+accept	1.18:27.14	1.18:27.12	renders	Possessive in the form of address.
+accept	1.18:28.5,1.18:28.6	1.18:28.2	renders	Lacking rendered as not having.
+accept	1.18:28.8	1.18:28.7	renders	Interrogative marker.
+accept	1.18:28.9	1.18:28.8	renders	Second-person subject of destroying.
+accept	1.18:29.2	1.18:29.5	renders	First speech verb.
+accept	1.18:29.4	1.18:29.6	renders	Pronominal suffix.
+accept	1.18:29.5	1.18:29.2	renders	Subject of the finite iterative verb.
+accept	1.18:29.6	1.18:29.2,1.18:29.3	renders	Continued speech rendered as speaking again.
+accept	1.18:29.8	1.18:29.7	renders	Part of the conjunction before said.
+accept	1.18:29.18	1.18:29.16	renders	Verb of doing in the reply.
+accept	1.18:29.20	1.18:29.17	renders	Prefix of the compound causal preposition.
+accept	1.18:30.4	1.18:30.5	renders	Mood particle of the jussive.
+accept	1.18:30.8	1.18:30.7	renders	Possessive in the form of address.
+accept	1.18:30.11,1.18:30.13	1.18:30.9	renders	Mood particle and cohortative speech verb.
+accept	1.18:31.4	1.18:31.3	renders	Attention marker meaning behold.
+accept	1.18:31.7	1.18:31.5	renders	Past auxiliary of dared.
+accept	1.18:31.11	1.18:31.9	renders	Possessive in the form of address.
+accept	1.18:31.20	1.18:31.17	renders	Destroying rendered as doing the threatened act.
+accept	1.18:31.22	1.18:31.18	renders	Prefix of the compound causal preposition.
+accept	1.18:32.4	1.18:32.5	renders	Mood particle of the jussive.
+accept	1.18:32.8	1.18:32.7	renders	Possessive in the form of address.
+accept	1.18:32.11,1.18:32.13	1.18:32.9	renders	Mood particle and cohortative speech verb.
+accept	1.18:32.14	1.18:32.10	renders	Restrictive particle meaning only.
+accept	1.18:32.28	1.18:32.21	renders	Prefix of the compound causal preposition.
+accept	1.18:33.4	1.18:33.5	renders	Relative component of the temporal connective.
+accept	1.18:33.5	1.18:33.6	renders	Verb of finishing.
+accept	1.18:33.12	1.18:33.14	renders	Preposition marking the destination.

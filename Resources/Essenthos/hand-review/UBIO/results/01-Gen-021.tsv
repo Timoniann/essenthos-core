@@ -1,0 +1,187 @@
+kind	from	to	relation	reason
+fixed	1.21:1			Restored comparisons, verb forms, and dative.
+fixed	1.21:2			Restored dative, temporal phrases, and speech clause.
+fixed	1.21:3			Restored participial relative and both recipient pronouns.
+fixed	1.21:4			Corrected the son occurrence and completed the age and command clauses.
+fixed	1.21:5			Restored copula, temporal relation, and recipient.
+fixed	1.21:6			Completed the hearing and laughter clauses.
+fixed	1.21:7			Restored three verbs and two prepositional relations.
+fixed	1.21:8			Restored passive auxiliary and feast verb.
+fixed	1.21:9			Restored pluperfect auxiliary, dative, and participial clause.
+fixed	1.21:10			Restored both maidservant phrases, dative, auxiliary, and accompaniment.
+fixed	1.21:11			Linked the displeasure idiom and completed the causal expression.
+fixed	1.21:12			Restored divine title, prohibition, causal phrases, and verb forms.
+fixed	1.21:13			Restored maidservant, verb, object suffix, and result prefix.
+fixed	1.21:14			Restored early rising, motion, connectors, and place-name component.
+unsure	1.21:15			The translation shifts ‘from the skin’ to ‘in the skin’. The preposition link is uncertain.
+fixed	1.21:16			Restored reflexive, compound adverbials, prohibitive mood, and subject.
+fixed	1.21:17			Restored two dative pronouns and the locative relative.
+fixed	1.21:18			Restored possessive, object pronoun, and result prefix.
+fixed	1.21:19			Completed the compound conjunction.
+fixed	1.21:20			Restored accompaniment, growth verb, subjects, and archer component.
+fixed	1.21:21			Restored subject and recipient pronouns.
+fixed	1.21:22			Completed the time phrase, quotation formula, and accompaniment.
+fixed	1.21:23			Restored oath formula, case relations, and verb forms.
+ok	1.21:24			
+fixed	1.21:25			Completed causal expression, relative object, and pluperfect.
+fixed	1.21:26			Restored subject, demonstrative, negative coordination, and reporting verb.
+fixed	1.21:27			Completed livestock phrase, conjunction, dative, and plural subject.
+fixed	1.21:28			Completed the partitive phrase and adverb.
+fixed	1.21:29			Restored pronoun, demonstrative, relative object, and adverbial prefix.
+fixed	1.21:30			Restored subject pronouns and the purpose and testimony clause.
+fixed	1.21:31			Corrected the subject and demonstrative and restored the oath clause.
+fixed	1.21:32			Restored the covenant verb's subject and place-name component.
+fixed	1.21:33			Removed the spurious Abraham link and restored the planting verb, place name, and divine title.
+fixed	1.21:34			Restored the dwelling verb.
+refuse	1.21:4.5	1.21:4.7		Wrong occurrence of ‘son’
+refuse	1.21:15.12	1.21:15.16		Partitive belongs to the construct head
+refuse	1.21:31.4	1.21:31.8		Hebrew demonstrative modifies the place
+refuse	1.21:33.2	1.21:33.5		Supplied Abraham linked to place-name component
+accept	1.21:1.5	1.21:1.6,1.21:1.7	renders	Comparative construction
+accept	1.21:1.7	1.21:1.8	renders	Pluperfect auxiliary
+accept	1.21:1.9	1.21:1.10	renders	Action verb
+accept	1.21:1.11	1.21:1.12	renders	Dative renders recipient prefix
+accept	1.21:1.12	1.21:1.14,1.21:1.15	renders	Second comparative construction
+accept	1.21:1.13	1.21:1.16	renders	Subject encoded in verb
+accept	1.21:2.7	1.21:2.6	renders	Dative renders recipient prefix
+accept	1.21:2.8	1.21:2.9	renders	Temporal preposition
+accept	1.21:2.11	1.21:2.11	renders	Preposition of appointed time
+accept	1.21:2.12,1.21:2.13	1.21:2.13	renders	Appointed time expressed in two words
+accept	1.21:2.15,1.21:2.16	1.21:2.14	renders	Oblique relative referring to the time
+accept	1.21:2.17	1.21:2.15	renders	Speech verb
+accept	1.21:2.18	1.21:2.16	renders	Pronoun carried by the suffix
+accept	1.21:3.7	1.21:3.8	renders	Relative clause renders participle
+accept	1.21:3.9	1.21:3.9	renders	First suffixed recipient
+accept	1.21:3.12	1.21:3.12	renders	Second suffixed recipient
+accept	1.21:4.5	1.21:4.6	renders	Isaac as Abraham's son
+accept	1.21:4.7,1.21:4.8	1.21:4.7	renders	Age construction recast as a temporal clause
+accept	1.21:4.12	1.21:4.10,1.21:4.11	renders	Comparative construction
+accept	1.21:4.15	1.21:4.12	renders	Pluperfect auxiliary
+accept	1.21:4.16	1.21:4.13	renders	Pronoun carried by the suffix
+accept	1.21:5.3	1.21:5.3	renders	Copula of the age predicate
+accept	1.21:5.7	1.21:5.6	renders	Temporal subordinator renders prefix
+accept	1.21:5.9	1.21:5.8	renders	Suffixed recipient pronoun
+accept	1.21:6.8	1.21:6.8	renders	Universal quantifier
+accept	1.21:6.9	1.21:6.10	renders	Relative pronoun renders participle
+accept	1.21:6.11	1.21:6.11	renders	Future auxiliary
+accept	1.21:6.13,1.21:6.14	1.21:6.12	renders	Preposition and pronoun with laughter
+accept	1.21:7.5	1.21:7.4	renders	Speech verb
+accept	1.21:7.6	1.21:7.5	renders	Dative renders recipient prefix
+accept	1.21:7.8	1.21:7.7	renders	Nursing verb
+accept	1.21:7.11	1.21:7.11	renders	Childbearing verb
+accept	1.21:7.14	1.21:7.13	renders	Temporal preposition
+accept	1.21:8.5	1.21:8.6	renders	Passive auxiliary
+accept	1.21:8.8	1.21:8.8	renders	Verb of giving the feast
+accept	1.21:9.9	1.21:9.10	renders	Pluperfect auxiliary
+accept	1.21:9.10	1.21:9.11	renders	Dative renders recipient prefix
+accept	1.21:9.11,1.21:9.12	1.21:9.13	renders	Finite clause renders predicative participle
+accept	1.21:10.4	1.21:10.3	renders	Dative renders recipient prefix
+accept	1.21:10.6	1.21:10.9	renders	First demonstrative
+accept	1.21:10.7	1.21:10.7	renders	First maidservant
+accept	1.21:10.13	1.21:10.15	renders	Future auxiliary
+accept	1.21:10.16	1.21:10.20	renders	Second demonstrative
+accept	1.21:10.17	1.21:10.18	renders	Second maidservant
+accept	1.21:10.18,1.21:10.19	1.21:10.21	renders	Compound expression of accompaniment
+accept	1.21:11.4,1.21:11.6,1.21:11.7,1.21:11.8	1.21:11.2	renders	Displeasure expressed by an idiomatic predicate
+accept	1.21:11.10	1.21:11.9	renders	Prepositional component of causal idiom
+accept	1.21:12.3	1.21:12.3	renders	Divine title renders Elohim here
+accept	1.21:12.4	1.21:12.4	renders	Dative renders recipient preposition
+accept	1.21:12.5,1.21:12.6	1.21:12.6	renders	Negative jussive particle
+accept	1.21:12.7,1.21:12.8,1.21:12.9,1.21:12.10	1.21:12.7	renders	Displeasure expressed by an idiomatic predicate
+accept	1.21:12.11	1.21:12.9	renders	Experiencer rendered from second-person suffix
+accept	1.21:12.12	1.21:12.7	renders	Pronominal subject of the predicate
+accept	1.21:12.13	1.21:12.10	renders	First causal preposition
+accept	1.21:12.16	1.21:12.14	renders	Second causal preposition
+accept	1.21:12.21	1.21:12.18	renders	Sarah's speech verb
+accept	1.21:12.28	1.21:12.25	renders	Instrumental renders the prefix
+accept	1.21:12.29	1.21:12.27	renders	Future passive auxiliary
+accept	1.21:12.31	1.21:12.28	renders	Suffixed recipient pronoun
+accept	1.21:13.4	1.21:13.6	renders	Maidservant noun
+accept	1.21:13.6,1.21:13.7	1.21:13.9	renders	Verb and its object suffix
+accept	1.21:13.8	1.21:13.7	renders	Instrumental renders result prefix
+accept	1.21:14.3	1.21:14.2	renders	Verb specifies rising early
+accept	1.21:14.18	1.21:14.20	renders	Additive conjunction before the child
+accept	1.21:14.21	1.21:14.24	renders	Part of compound conjunction
+accept	1.21:14.25,1.21:14.26	1.21:14.27	renders	Motion verb and its subject
+accept	1.21:14.28	1.21:14.28	renders	Part of compound conjunction
+accept	1.21:14.32	1.21:14.32	renders	First component of Beer-sheba
+accept	1.21:15.2	1.21:15.2	renders	Verb of exhaustion
+accept	1.21:15.5	1.21:15.7	renders	Waterskin noun
+accept	1.21:15.7,1.21:15.8	1.21:15.9	renders	Verb and its subject
+accept	1.21:15.12	1.21:15.14	renders	Partitive relation carried by construct head
+accept	1.21:16.6	1.21:16.5	renders	Suffixed reflexive dative
+accept	1.21:16.7	1.21:16.6	renders	Prefix of first ‘opposite’ expression
+accept	1.21:16.8	1.21:16.8	renders	Part of the distance adverbial
+accept	1.21:16.15	1.21:16.14	renders	Jussive force of negative particle
+accept	1.21:16.16	1.21:16.15	renders	First-person subject encoded in verb
+accept	1.21:16.24	1.21:16.22	renders	Prefix of second ‘opposite’ expression
+accept	1.21:16.30	1.21:16.28	renders	Part of compound conjunction
+accept	1.21:17.17	1.21:17.19	renders	Suffixed recipient pronoun
+accept	1.21:17.19	1.21:17.21	renders	Suffixed second-person dative
+accept	1.21:17.28	1.21:17.32,1.21:17.33	renders	Locative relative construction
+accept	1.21:18.6	1.21:18.9	renders	Possessive suffix on ‘hand’
+accept	1.21:18.8	1.21:18.10	renders	Pronoun carried by the prepositional suffix
+accept	1.21:18.11	1.21:18.12	renders	Instrumental renders result prefix
+accept	1.21:19.19	1.21:19.18	renders	Part of compound conjunction
+accept	1.21:20.2	1.21:20.4	renders	Accompaniment preposition
+accept	1.21:20.7,1.21:20.8	1.21:20.8	renders	Growth verb and its subject
+accept	1.21:20.15	1.21:20.15	renders	Subject encoded in ‘became’
+accept	1.21:20.16	1.21:20.17	renders	Bowman component of compound noun
+accept	1.21:21.3	1.21:21.2	renders	Subject encoded in verb
+accept	1.21:21.11	1.21:21.8	renders	Suffixed recipient pronoun
+accept	1.21:22.3	1.21:22.3	renders	Temporal genitive renders the prefix
+accept	1.21:22.4	1.21:22.7	renders	Demonstrative modifying ‘time’
+accept	1.21:22.16	1.21:22.17	renders	Prefix of the quotation formula
+accept	1.21:22.18,1.21:22.19	1.21:22.20	renders	Accompaniment preposition and its suffix
+accept	1.21:23.6	1.21:23.5	renders	Instrumental renders oath preposition
+accept	1.21:23.8,1.21:23.10	1.21:23.8	renders	Conditional particle introduces negative oath
+accept	1.21:23.11	1.21:23.9	renders	Verb of dealing falsely
+accept	1.21:23.14	1.21:23.12,1.21:23.13	renders	Offspring and its governed relation
+accept	1.21:23.17	1.21:23.15	renders	Governed relation before ‘grandson’
+accept	1.21:23.20	1.21:23.17	renders	Comparative relation
+accept	1.21:23.25,1.21:23.26	1.21:23.22	renders	Relation and second-person suffix
+accept	1.21:23.27	1.21:23.21	renders	First verb of doing
+accept	1.21:23.28	1.21:23.23	renders	Subject of second verb of doing
+accept	1.21:23.30,1.21:23.31	1.21:23.24	renders	Accompaniment and first-person suffix
+accept	1.21:23.33	1.21:23.26	renders	Accompaniment with the land
+accept	1.21:23.36,1.21:23.40	1.21:23.30	renders	Sojourning verb and its subject
+accept	1.21:23.37,1.21:23.38	1.21:23.31	renders	Locative preposition and its suffix
+accept	1.21:25.5	1.21:25.6	renders	Prepositional component of causal idiom
+accept	1.21:25.9	1.21:25.11	renders	Resumptive object of relative clause
+accept	1.21:25.11	1.21:25.12	renders	Pluperfect auxiliary
+accept	1.21:26.4	1.21:26.5	renders	First-person subject encoded in verb
+accept	1.21:26.9	1.21:26.12	renders	Demonstrative modifying ‘matter’
+accept	1.21:26.11	1.21:26.13,1.21:26.14	renders	First additive connector in negative context
+accept	1.21:26.14	1.21:26.17	renders	Verb of reporting
+accept	1.21:26.17	1.21:26.20	renders	Second additive particle in negative context
+accept	1.21:27.7	1.21:27.4	renders	Shared head of ‘small livestock’
+accept	1.21:27.9	1.21:27.7	renders	Part of compound conjunction
+accept	1.21:27.11	1.21:27.9	renders	Dative renders recipient prefix
+accept	1.21:27.14	1.21:27.13	renders	Pronoun carried by ‘both’
+accept	1.21:28.6	1.21:28.6	renders	Partitive relation carried by construct head
+accept	1.21:28.8	1.21:28.8	renders	Head noun of ‘small livestock’
+accept	1.21:28.9	1.21:28.9	renders	Prefix of ‘apart’ expression
+accept	1.21:29.7	1.21:29.7	renders	Explicit pronoun ‘they’
+accept	1.21:29.10	1.21:29.11	renders	Demonstrative modifying ewe lambs
+accept	1.21:29.13	1.21:29.12	renders	Resumptive object of relative clause
+accept	1.21:29.15	1.21:29.14	renders	Prefix of ‘apart’ expression
+accept	1.21:30.2	1.21:30.2	renders	Anaphoric subject encoded in verb
+accept	1.21:30.10	1.21:30.7	renders	Second-person subject encoded in verb
+accept	1.21:30.12	1.21:30.10,1.21:30.11	renders	Compound purpose expression
+accept	1.21:30.13,1.21:30.14	1.21:30.13	renders	Preposition and first-person suffix
+accept	1.21:30.15	1.21:30.12	renders	Written verb ‘be’
+accept	1.21:30.16	1.21:30.14	renders	Predicative prefix before ‘testimony’
+accept	1.21:30.17	1.21:30.15	renders	Testimony noun
+accept	1.21:30.21	1.21:30.22	renders	Demonstrative modifying the well
+accept	1.21:31.1	1.21:31.1	renders	Prepositional component of ‘therefore’
+accept	1.21:31.4	1.21:31.3	renders	Subject encoded in naming verb
+accept	1.21:31.5	1.21:31.8	renders	Demonstrative modifying the place
+accept	1.21:31.7	1.21:31.9	renders	First component of Beer-sheba
+accept	1.21:31.10	1.21:31.13	renders	Oath-taking verb
+accept	1.21:31.11	1.21:31.14	renders	Pronoun carried by ‘both’
+accept	1.21:32.4	1.21:32.2	renders	Subject encoded in covenant verb
+accept	1.21:32.6	1.21:32.5	renders	First component of Beer-sheba
+accept	1.21:33.3	1.21:33.2	renders	Planting verb
+accept	1.21:33.6	1.21:33.5	renders	First component of Beer-sheba
+accept	1.21:33.12	1.21:33.13	renders	Divine title El
+accept	1.21:34.3	1.21:34.2	renders	Sojourning verb

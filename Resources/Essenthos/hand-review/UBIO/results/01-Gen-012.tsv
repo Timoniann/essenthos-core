@@ -1,0 +1,247 @@
+kind	from	to	relation	reason
+fixed	1.12:1			Missing imperative, nouns, possessive, and relative.
+fixed	1.12:2			Missing verb forms, pronouns, and result construction.
+fixed	1.12:3			Wrong curse verb and missing clause links.
+fixed	1.12:4			Missing temporal, age, and pronoun links.
+fixed	1.12:5			Missing relative, directional, and verb-person links.
+unsure	1.12:6			Mamre replaces Moreh. The link for the supplied residence verb is uncertain.
+fixed	1.12:7			Missing dative, subject, and participle links.
+fixed	1.12:8			Missing prepositional, directional, and verb links.
+fixed	1.12:9			Missing main verb, continuation, and direction links.
+fixed	1.12:10			Missing past auxiliary and predicate link.
+fixed	1.12:11			Missing temporal, verbal, particle, and appearance links.
+fixed	1.12:12			Missing temporal, pronoun, and verbal links.
+fixed	1.12:13			Missing imperative, purpose, and cause links.
+fixed	1.12:14			Missing temporal prefix and past auxiliary.
+fixed	1.12:15			Missing object pronouns, prepositions, and passive auxiliary.
+fixed	1.12:16			Missing subject, possession, and shared livestock head.
+fixed	1.12:17			Missing compound causal preposition.
+fixed	1.12:18			Missing demonstrative and reporting verb.
+fixed	1.12:19			Missing interrogative, verbal, and pronoun links.
+fixed	1.12:20			Missing reference and possession links.
+fixed	1.13:1			Missing emphatic subject, possession, accompaniment, and direction.
+fixed	1.13:2			Missing predicate and copula.
+fixed	1.13:3			Missing journey, endpoint, and relative-clause links.
+fixed	1.13:4			Missing resumptive, subject, and temporal prefix.
+fixed	1.13:5			Missing additive, possession, and livestock links.
+unsure	1.13:6			The supplied dative subject of the first infinitive is uncertain.
+fixed	1.13:7			Missing verbs and second occurrence of between.
+fixed	1.13:8			Wrong between occurrence and missing clause links.
+fixed	1.13:9			Missing interrogative, idiom, and conditional links.
+fixed	1.13:10			Wrong predicate target and missing temporal and comparison links.
+fixed	1.13:11			Missing reflexive, directional, and reciprocal links.
+fixed	1.13:12			Missing plain descriptor and endpoint phrase.
+fixed	1.13:13			Missing copula and preposition.
+fixed	1.13:14			Missing speech, temporal, locative, and directional links.
+fixed	1.13:15			Missing recipient and duration links.
+fixed	1.13:16			Missing verbal, consequence, and additive links.
+fixed	1.13:17			Missing extent prefixes and pronouns.
+fixed	1.13:18			Missing tenting, relative, and dative links.
+refuse	1.12:3.9	1.12:3.6		This is the speaker's curse verb.
+refuse	1.12:6.13	1.12:6.12		Mamre and Moreh are distinct names.
+refuse	1.13:8.16	1.13:8.12		This occurrence introduces your person, not my shepherds.
+refuse	1.13:10.12	1.13:10.14		This word means all of it.
+accept	1.12:1.6	1.12:1.6	renders	Verb of departure.
+accept	1.12:1.8,1.12:1.9	1.12:1.9	renders	Land with its possessive suffix.
+accept	1.12:1.12	1.12:1.12	renders	Kinship noun.
+accept	1.12:1.21	1.12:1.20	renders	Relative word.
+accept	1.12:2.2	1.12:2.3	renders	Instrumental expresses the result prefix.
+accept	1.12:2.4,1.12:2.5,1.12:2.6	1.12:2.2	renders	Making verb with subject and object.
+accept	1.12:2.10	1.12:2.7	renders	Object suffix on blessing verb.
+accept	1.12:2.12	1.12:2.9	renders	Verb of making great.
+accept	1.12:2.16,1.12:2.17	1.12:2.12	renders	Being verb with subject.
+accept	1.12:3.2	1.12:3.2	renders	Speaker's blessing verb.
+accept	1.12:3.3,1.12:3.4,1.12:3.5	1.12:3.3	renders	Relative clause renders suffixed blessing participle.
+accept	1.12:3.7	1.12:3.4	renders	Adversative conjunction.
+accept	1.12:3.6,1.12:3.8,1.12:3.9,1.12:3.10	1.12:3.5	renders	Relative clause and correlative render suffixed participle.
+accept	1.12:3.11	1.12:3.6	renders	Speaker's curse verb.
+accept	1.12:3.14,1.12:3.15	1.12:3.9	renders	Preposition with second-person suffix.
+accept	1.12:3.17	1.12:3.11	renders	Clan noun.
+accept	1.12:4.4	1.12:4.4,1.12:4.5	renders	Compound conjunction meaning as.
+accept	1.12:4.5,1.12:4.6	1.12:4.6	renders	Speech verb with past auxiliary.
+accept	1.12:4.8	1.12:4.7	renders	Suffix of directional preposition.
+accept	1.12:4.11,1.12:4.12	1.12:4.11	renders	Accompaniment preposition and suffix.
+accept	1.12:4.16	1.12:4.13	renders	Conjunction opening the age clause.
+accept	1.12:4.17	1.12:4.15	renders	Verb expresses the idiomatic age predicate.
+accept	1.12:4.20	1.12:4.20	renders	Years associated with seventy.
+accept	1.12:4.23	1.12:4.17	renders	Years associated with five.
+accept	1.12:4.24	1.12:4.21	renders	Temporal prefix.
+accept	1.12:4.25	1.12:4.22	renders	Departure verb in temporal clause.
+accept	1.12:5.15	1.12:5.16	renders	Relative introducing the property clause.
+accept	1.12:5.18	1.12:5.21	renders	Collective noun for persons.
+accept	1.12:5.20	1.12:5.22	renders	Resumptive completes the object relative.
+accept	1.12:5.25	1.12:5.26	renders	Part of the compound conjunction.
+accept	1.12:5.29	1.12:5.30	renders	Directional ending on first land noun.
+accept	1.12:5.33	1.12:5.34	renders	Directional ending on second land noun.
+accept	1.12:5.36	1.12:5.33	renders	Plural subject of arrival verb.
+accept	1.12:6.2	1.12:6.2	renders	Verb of passing through.
+accept	1.12:6.4	1.12:6.4	renders	Preposition of traversal.
+accept	1.12:6.6,1.12:6.7	1.12:6.7	renders	First endpoint expression.
+accept	1.12:6.10	1.12:6.10	renders	Part of second endpoint expression.
+accept	1.12:6.12	1.12:6.11	renders	Tree noun.
+accept	1.12:7.4	1.12:7.4	renders	Dative expresses the recipient preposition.
+accept	1.12:7.7	1.12:7.10	renders	First-person subject of giving verb.
+accept	1.12:7.11	1.12:7.8	renders	Dative expresses the recipient prefix.
+accept	1.12:7.14	1.12:7.17	renders	Subject of building verb.
+accept	1.12:7.18	1.12:7.20	renders	Dative expresses the recipient prefix.
+accept	1.12:7.19	1.12:7.23	renders	Relative word renders the participle.
+accept	1.12:7.21	1.12:7.24	renders	Suffixed preposition expresses to him.
+accept	1.12:8.2	1.12:8.3,1.12:8.4	renders	Adverb combines from and there.
+accept	1.12:8.3	1.12:8.2	renders	Subject of movement verb.
+accept	1.12:8.5	1.12:8.6	renders	Directional ending on mountain noun.
+accept	1.12:8.7	1.12:8.7	renders	Prefix introducing east.
+accept	1.12:8.9	1.12:8.9	renders	Prefix locating east relative to Bethel.
+accept	1.12:8.14	1.12:8.12	renders	Verb of pitching the tent.
+accept	1.12:8.16	1.12:8.15	renders	Prefix introducing west.
+accept	1.12:8.20	1.12:8.20	renders	Prefix introducing the second east.
+accept	1.12:8.23	1.12:8.23	renders	Subject of building verb.
+accept	1.12:8.26	1.12:8.26	renders	Dative expresses the recipient prefix.
+accept	1.12:9.2	1.12:9.2	renders	Finite journey verb.
+accept	1.12:9.4,1.12:9.5	1.12:9.4,1.12:9.6	renders	Adverbial phrase renders continued journeying.
+accept	1.12:9.6	1.12:9.8	renders	Directional ending on south.
+accept	1.12:10.3	1.12:10.2	renders	Past auxiliary of the occurrence verb.
+accept	1.12:10.20	1.12:10.15	renders	Verbal part of the famine predicate.
+accept	1.12:11.3	1.12:11.3,1.12:11.4	renders	Compound temporal conjunction.
+accept	1.12:11.4,1.12:11.5	1.12:11.5	renders	Subject and nearness expressed by approach verb.
+accept	1.12:11.6	1.12:11.7	renders	Verb of coming.
+accept	1.12:11.11	1.12:11.10	renders	Past auxiliary of speech verb.
+accept	1.12:11.16	1.12:11.14	renders	Attention particle.
+accept	1.12:11.17	1.12:11.15	renders	Emphatic particle in the opening expression.
+accept	1.12:11.21	1.12:11.21	renders	Written second-person pronoun.
+accept	1.12:11.24	1.12:11.19	renders	Preposition expresses the adjective's construct relation.
+accept	1.12:11.25	1.12:11.20	renders	Noun of appearance.
+accept	1.12:12.3	1.12:12.3	renders	Temporal conjunction.
+accept	1.12:12.5	1.12:12.5	renders	Suffixed object of seeing.
+accept	1.12:12.13	1.12:12.13	renders	Plural subject of killing verb.
+accept	1.12:12.14	1.12:12.14	renders	First-person object suffix.
+accept	1.12:12.17	1.12:12.16	renders	Suffixed object of keeping alive.
+accept	1.12:12.18,1.12:12.19	1.12:12.17	renders	Verb means keep alive.
+accept	1.12:13.1	1.12:13.1	renders	Speech imperative.
+accept	1.12:13.2	1.12:13.2	renders	Request particle.
+accept	1.12:13.6	1.12:13.4	renders	Written second-person pronoun.
+accept	1.12:13.7,1.12:13.14	1.12:13.5	renders	Purpose marker scopes over both clauses.
+accept	1.12:13.9	1.12:13.6	renders	Verbal part of being well.
+accept	1.12:13.10	1.12:13.8	renders	Prefix in the first causal expression.
+accept	1.12:13.11	1.12:13.9	renders	Second-person suffix of causal expression.
+accept	1.12:13.15	1.12:13.12	renders	First person renders my life.
+accept	1.12:13.16,1.12:13.17	1.12:13.11	renders	Verb of remaining alive.
+accept	1.12:13.18	1.12:13.13,1.12:13.14	renders	Compound causal preposition.
+accept	1.12:13.19	1.12:13.14	renders	Second-person suffix of causal expression.
+accept	1.12:14.3	1.12:14.3	renders	Temporal prefix before infinitive.
+accept	1.12:14.5	1.12:14.4	renders	Past auxiliary of arrival verb.
+accept	1.12:15.3	1.12:15.3	renders	Object pronoun of seeing.
+accept	1.12:15.8	1.12:15.8	renders	Object pronoun of praising.
+accept	1.12:15.9	1.12:15.9	renders	Preposition introducing Pharaoh after praising.
+accept	1.12:15.13	1.12:15.12	renders	Passive auxiliary.
+accept	1.12:15.16	1.12:15.15	renders	Expresses the house as the destination.
+accept	1.12:16.2,1.12:16.6	1.12:16.4	renders	Subject and verbal part of doing good.
+accept	1.12:16.7	1.12:16.6	renders	Lexical part of the causal preposition.
+accept	1.12:16.10	1.12:16.8	renders	Existential verb recast as acquisition.
+accept	1.12:16.11	1.12:16.9	renders	Acquiring subject renders the Hebrew possessor.
+accept	1.12:16.15	1.12:16.10	renders	Shared livestock head also renders the first noun.
+accept	1.12:17.10	1.12:17.11,1.12:17.12	renders	Compound causal preposition.
+accept	1.12:18.9	1.12:18.9	renders	Demonstrative in the question.
+accept	1.12:18.15	1.12:18.14	renders	Verb of telling.
+accept	1.12:19.1	1.12:19.1	renders	Part of the two-word interrogative.
+accept	1.12:19.3,1.12:19.4	1.12:19.2	renders	Speech verb and its second-person subject.
+accept	1.12:19.5	1.12:19.4	renders	Written third-person pronoun.
+accept	1.12:19.10	1.12:19.8	renders	Suffixed preposition expresses for myself.
+accept	1.12:19.12	1.12:19.6	renders	Past auxiliary of taking verb.
+accept	1.12:19.13	1.12:19.9	renders	Prefix expresses taking as wife.
+accept	1.12:19.15	1.12:19.7	renders	Suffixed object of taking.
+accept	1.12:19.23	1.12:19.16	renders	Part of the compound conjunction.
+accept	1.12:20.5,1.12:20.6	1.12:20.3	renders	Suffixed preposition expresses concerning him.
+accept	1.12:20.16,1.12:20.17,1.12:20.18	1.12:20.16	renders	Possessive predicate renders the suffixed preposition.
+accept	1.13:1.6	1.13:1.6	renders	Emphatic rendering of written subject.
+accept	1.13:1.13,1.13:1.14,1.13:1.15	1.13:1.12	renders	Possessive predicate renders the suffixed preposition.
+accept	1.13:1.18,1.13:1.19,1.13:1.20	1.13:1.15	renders	Accompaniment phrase with pronoun.
+accept	1.13:1.21	1.13:1.17	renders	Directional ending on Negev.
+accept	1.13:2.3,1.13:2.5	1.13:2.3	renders	Nominal predicate with supplied copula.
+accept	1.13:3.3	1.13:3.2	renders	Subject of movement verb.
+accept	1.13:3.4	1.13:3.3	renders	Prefix introducing the journeys.
+accept	1.13:3.5	1.13:3.4	renders	Journey noun.
+accept	1.13:3.9,1.13:3.10	1.13:3.8	renders	First endpoint expression.
+accept	1.13:3.12	1.13:3.10	renders	Part of second endpoint expression.
+accept	1.13:3.15	1.13:3.13,1.13:3.15	renders	Locative relative combines where and there.
+accept	1.13:3.16	1.13:3.17,1.13:3.19	renders	Temporal adverb combines prefix and noun.
+accept	1.13:3.23	1.13:3.23	renders	Second occurrence of between.
+accept	1.13:4.5	1.13:4.5	renders	Resumptive completes the object relative.
+accept	1.13:4.6	1.13:4.6	renders	Subject of making verb.
+accept	1.13:4.9	1.13:4.8	renders	Prefix expressed within the temporal adverb.
+accept	1.13:5.1,1.13:5.2	1.13:5.2	renders	Additive expression means likewise.
+accept	1.13:5.4	1.13:5.3	renders	Possessive prefix introducing Lot.
+accept	1.13:5.6	1.13:5.6	renders	Relative word renders the participle.
+accept	1.13:5.7	1.13:5.7	renders	Accompaniment preposition.
+accept	1.13:5.13	1.13:5.10	renders	Shared livestock head also renders the first noun.
+accept	1.13:5.14	1.13:5.9	renders	Written verb of being.
+accept	1.13:5.16	1.13:5.14	renders	Tent noun.
+accept	1.13:6.4	1.13:6.4	renders	Suffixed object of containing.
+accept	1.13:6.7	1.13:6.7	renders	Prefix introducing the purpose clause.
+accept	1.13:6.10	1.13:6.8	renders	First occurrence of dwell.
+accept	1.13:6.19	1.13:6.16	renders	Plural subject of ability verb.
+accept	1.13:7.2	1.13:7.2	renders	Verb of occurrence.
+accept	1.13:7.9	1.13:7.9	renders	Second occurrence of between.
+accept	1.13:7.17	1.13:7.20	renders	Verb of dwelling.
+accept	1.13:8.6,1.13:8.9	1.13:8.8	renders	Jussive being verb and mood auxiliary.
+accept	1.13:8.7	1.13:8.9	renders	Quarrel noun.
+accept	1.13:8.11	1.13:8.10	renders	First-person suffix of between.
+accept	1.13:8.13	1.13:8.12	renders	Between introducing the addressee.
+accept	1.13:8.16	1.13:8.14	renders	Between introducing my shepherds.
+accept	1.13:8.17,1.13:8.18	1.13:8.15	renders	First shepherd noun with possessive.
+accept	1.13:8.19	1.13:8.16	renders	Conjunction introducing your shepherds.
+accept	1.13:8.20	1.13:8.17	renders	Between introducing your shepherds.
+accept	1.13:8.21	1.13:8.18	renders	Second shepherd noun.
+accept	1.13:8.24,1.13:8.26	1.13:8.21	renders	Kinship phrase renders brothers.
+accept	1.13:9.1	1.13:9.1	renders	Interrogative particle.
+accept	1.13:9.5	1.13:9.6	renders	Prefix of the before your face expression.
+accept	1.13:9.6,1.13:9.7	1.13:9.7	renders	Face noun with its possessive suffix.
+accept	1.13:9.10	1.13:9.11	renders	First-person suffix.
+accept	1.13:9.12	1.13:9.14	renders	Makes movement explicit in the elliptical leftward condition.
+accept	1.13:9.17	1.13:9.16	renders	Direction in the verb meaning go right.
+accept	1.13:9.19	1.13:9.18	renders	Second conditional particle.
+accept	1.13:10.12	1.13:10.15	renders	Predicate meaning irrigated.
+accept	1.13:10.13,1.13:10.14	1.13:10.14	renders	Totality noun with third-person suffix.
+accept	1.13:10.15,1.13:10.16	1.13:10.31	renders	Endpoint phrase renders approach to Zoar.
+accept	1.13:10.18	1.13:10.16	renders	Prefix of the compound temporal preposition.
+accept	1.13:10.19,1.13:10.20	1.13:10.16,1.13:10.17	renders	Completes the temporal conjunction meaning before.
+accept	1.13:10.24	1.13:10.18	renders	Past auxiliary of destruction verb.
+accept	1.13:10.27	1.13:10.25	renders	First comparison prefix.
+accept	1.13:10.29	1.13:10.26	renders	Garden noun.
+accept	1.13:11.4	1.13:11.3	renders	Suffixed preposition means for himself.
+accept	1.13:11.11	1.13:11.13	renders	Preposition in the eastward expression.
+accept	1.13:11.12	1.13:11.14	renders	East direction noun.
+accept	1.13:11.14	1.13:11.16	renders	Plural subject of separation verb.
+accept	1.13:11.18	1.13:11.20	renders	Second member of the reciprocal expression.
+accept	1.13:12.10	1.13:12.12	renders	Adjective expresses the plain named by the noun.
+accept	1.13:12.15,1.13:12.16	1.13:12.15	renders	Endpoint expression.
+accept	1.13:13.4	1.13:13.4,1.13:13.6	renders	Copula shared by both predicates.
+accept	1.13:13.9	1.13:13.7	renders	Preposition expresses relation to the Lord.
+accept	1.13:14.2	1.13:14.3	renders	Speech verb.
+accept	1.13:14.6	1.13:14.6	renders	Temporal relation introducing Lot's departure.
+accept	1.13:14.10	1.13:14.10	renders	Third-person suffix in the separation phrase.
+accept	1.13:14.18	1.13:14.21	renders	Locative relative absorbs the resumptive there.
+accept	1.13:14.20	1.13:14.22	renders	Directional ending on north.
+accept	1.13:14.23	1.13:14.24	renders	Directional ending on south.
+accept	1.13:14.26	1.13:14.26	renders	Directional ending on east.
+accept	1.13:14.29	1.13:14.28	renders	Directional ending on west.
+accept	1.13:15.10	1.13:15.14,1.13:15.15	renders	Duration adverb renders until eternity.
+accept	1.13:15.11	1.13:15.9	renders	Suffixed recipient preposition.
+accept	1.13:15.13	1.13:15.12	renders	Dative expresses the recipient prefix.
+accept	1.13:16.2	1.13:16.2	renders	Verb of making.
+accept	1.13:16.10	1.13:16.9	renders	Part of the consequence conjunction.
+accept	1.13:16.13	1.13:16.12	renders	Indefinite person in the condition.
+accept	1.13:16.14	1.13:16.11	renders	Verb of ability.
+accept	1.13:16.20	1.13:16.19	renders	Part of the additive expression.
+accept	1.13:16.24	1.13:16.21	renders	Future passive auxiliary.
+accept	1.13:17.5	1.13:17.6	renders	Prefix of the length expression.
+accept	1.13:17.6	1.13:17.7	renders	Possessive suffix on length.
+accept	1.13:17.8	1.13:17.9	renders	Prefix of the breadth expression.
+accept	1.13:17.9	1.13:17.10	renders	Possessive suffix on breadth.
+accept	1.13:17.11	1.13:17.12	renders	Suffixed recipient preposition.
+accept	1.13:17.12	1.13:17.13	renders	Object suffix of giving verb.
+accept	1.13:18.3	1.13:18.2	renders	Verbal component of pitching tents.
+accept	1.13:18.9	1.13:18.8	renders	Locative prefix among the trees.
+accept	1.13:18.10	1.13:18.9	renders	Tree noun.
+accept	1.13:18.15	1.13:18.11	renders	Resumptive completes the relative subject.
+accept	1.13:18.17	1.13:18.15	renders	Subject of building verb.
+accept	1.13:18.21	1.13:18.18	renders	Dative expresses the recipient prefix.

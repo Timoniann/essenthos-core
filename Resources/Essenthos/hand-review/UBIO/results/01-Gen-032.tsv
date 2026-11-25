@@ -1,0 +1,218 @@
+kind	from	to	relation	reason
+fixed	1.32:1			Missing direction and object pronoun links.
+fixed	1.32:2			Missing temporal connective, subject, and demonstrative links.
+fixed	1.32:3			Missing links for direction, reflexive, and region.
+fixed	1.32:4			Missing pronoun, verb, and preposition links.
+fixed	1.32:5			Missing possession, purpose, and recipient links.
+fixed	1.32:6			Missing speech, auxiliary, encounter, and personal links.
+fixed	1.32:7			Missing auxiliary, accompaniment, and camp links.
+fixed	1.32:8			Missing survival and remaining links.
+fixed	1.32:9			Missing links in the address and quoted promise.
+fixed	1.32:10			Missing links in the unworthiness paraphrase, past forms, and prepositional phrases.
+fixed	1.32:11			Missing plea particle, pronouns, and links in the feared outcome.
+fixed	1.32:12			Infinitive linked to the finite verb and several links missing.
+fixed	1.32:13			Missing subject, time, hand phrase, and gift links.
+fixed	1.32:14			Missing link for male goats.
+ok	1.32:15			
+fixed	1.32:16			Missing distributive, spatial, and verb links.
+fixed	1.32:17			Missing subject, object, interrogative, and spatial links.
+unsure	1.32:18			Possession, recipients, and pronouns corrected. The force of сам is uncertain.
+fixed	1.32:19			Missing links in the command and instructions.
+fixed	1.32:20			Missing mood, pronoun, instrument, and clause links.
+fixed	1.32:21			Missing movement, location, and time links.
+fixed	1.32:22			Eleven needed both number words. Subject, time, and children links were missing.
+fixed	1.32:23			Missing crossing and possession links.
+fixed	1.32:24			Dawn adjective linked to rising. Temporal and accompaniment links were missing.
+fixed	1.32:25			Dislocation linked to the joint. Pronoun and preposition links were missing.
+fixed	1.32:26			Dawn adjective linked to rising. Conditional and pronoun links were missing.
+fixed	1.32:27			Missing interrogative and pronoun links.
+fixed	1.32:28			Missing future auxiliary and part of the adversative expression.
+fixed	1.32:29			Missing request particle, pronouns, and question links.
+fixed	1.32:30			Missing past auxiliary and face-to-face preposition links.
+fixed	1.32:31			Missing sunrise, recipient, and temporal clause links.
+unsure	1.32:32			Causal, temporal, and touch links corrected. The rendering of the final בְ is uncertain.
+refuse	1.32:12.6	1.32:13.5		Ukrainian infinitive renders the Hebrew infinitive absolute.
+refuse	1.32:22.16	1.32:23.19		Eleven renders the full compound numeral.
+refuse	1.32:24.15	1.32:25.11		Adjective describes dawn.
+refuse	1.32:25.15	1.32:26.14		Joint noun cannot render dislocation.
+refuse	1.32:26.7	1.32:27.5		Adjective describes dawn.
+accept	1.32:1.4	1.32:2.4	renders	Directional preposition.
+accept	1.32:1.9	1.32:2.8	renders	Pronoun carried by the preposition.
+accept	1.32:2.4	1.32:3.4,1.32:3.5	renders	Temporal connective.
+accept	1.32:2.11	1.32:3.11	renders	Subject carried by the verb.
+accept	1.32:2.14	1.32:3.16	renders	Demonstrative modifying place.
+accept	1.32:3.5	1.32:4.5	renders	Prefix in the spatial expression.
+accept	1.32:3.6	1.32:4.6	renders	Reflexive renders the possessive suffix.
+accept	1.32:3.11	1.32:4.10	renders	Direction carried by the noun ending.
+accept	1.32:3.15	1.32:4.12	renders	Region or open country.
+accept	1.32:4.3	1.32:5.3	renders	Suffixed object pronoun.
+accept	1.32:4.4	1.32:5.4	renders	Gerund renders the quotative infinitive construction.
+accept	1.32:4.8	1.32:5.8	renders	Dative renders the recipient prefix.
+accept	1.32:4.9	1.32:5.10	renders	Dative renders the repeated recipient prefix.
+accept	1.32:4.11	1.32:5.13	renders	Speech verb in the quoted formula.
+accept	1.32:4.15,1.32:4.16	1.32:5.18	renders	Dwelling verb and its first-person subject.
+accept	1.32:4.22	1.32:5.21	renders	Дотепер includes the endpoint preposition.
+accept	1.32:5.2	1.32:6.2	renders	Existential verb in the possession construction.
+accept	1.32:5.3	1.32:6.3	renders	Suffixed first-person possessor.
+accept	1.32:5.16	1.32:6.14,1.32:6.15	renders	Purpose infinitive of reporting.
+accept	1.32:5.17	1.32:6.16	renders	Dative renders the recipient prefix.
+accept	1.32:5.19	1.32:6.18	renders	Purpose marker before finding.
+accept	1.32:6.8	1.32:7.8	renders	Speech verb introducing the report.
+accept	1.32:6.11	1.32:7.9	renders	Past auxiliary of the arrival verb.
+accept	1.32:6.18,1.32:6.20	1.32:7.16	renders	Movement predicate and its subject.
+accept	1.32:6.21	1.32:7.17	renders	Direction in the encounter expression.
+accept	1.32:6.22	1.32:7.18	renders	Second-person suffix of encounter.
+accept	1.32:6.26	1.32:7.22	renders	People in the count.
+accept	1.32:6.28	1.32:7.23	renders	Pronoun carried by with.
+accept	1.32:7.6	1.32:8.6	renders	Auxiliary of the distress predicate.
+accept	1.32:7.9	1.32:8.9	renders	Subject carried by the division verb.
+accept	1.32:7.13,1.32:7.14,1.32:7.15	1.32:8.14	renders	Predicative accompaniment with its pronoun.
+accept	1.32:7.20	1.32:8.18	renders	Shared Ukrainian livestock noun includes the small stock.
+accept	1.32:7.25	1.32:8.28	renders	Camps formed by the division.
+accept	1.32:8.13	1.32:9.14,1.32:9.19,1.32:9.20	renders	Survival renders the whole result predicate.
+accept	1.32:8.14	1.32:9.18	renders	Remaining camp modifier.
+accept	1.32:9.14,1.32:9.16	1.32:10.13	renders	Relative and subject in the expanded participial clause.
+accept	1.32:9.19	1.32:10.16	renders	Direction to the land.
+accept	1.32:9.23	1.32:10.19	renders	Direction to the birthplace.
+accept	1.32:9.24	1.32:10.20	renders	Place is part of the birthplace expression.
+accept	1.32:9.30	1.32:10.23	renders	Pronoun in the beneficiary expression.
+accept	1.32:10.2	1.32:11.1	renders	Не вартий expresses being too small to merit.
+accept	1.32:10.12,1.32:10.13	1.32:11.12	renders	Past verb and its auxiliary.
+accept	1.32:10.15	1.32:11.13	renders	Dative renders the relation to the servant.
+accept	1.32:10.17	1.32:11.16	renders	Instrumental preposition.
+accept	1.32:10.19,1.32:10.20	1.32:11.17	renders	Staff and its possessive suffix.
+accept	1.32:10.21,1.32:10.23	1.32:11.18	renders	Crossing verb and its past auxiliary.
+accept	1.32:10.24	1.32:11.23	renders	Demonstrative modifying Jordan.
+accept	1.32:10.30	1.32:11.27	renders	Resultative preposition.
+accept	1.32:10.32	1.32:11.29	renders	Camps in the resulting state.
+accept	1.32:11.2	1.32:12.2	renders	Plea particle.
+accept	1.32:11.3	1.32:12.1	renders	First-person object suffix of deliver.
+accept	1.32:11.12	1.32:12.10	renders	Fear predicate.
+accept	1.32:11.14	1.32:12.12	renders	Suffixed object of fear.
+accept	1.32:11.16	1.32:12.14	renders	Subject carried by the arrival verb.
+accept	1.32:11.17,1.32:11.20	1.32:12.13	renders	Lest governs both coordinated actions.
+accept	1.32:11.21,1.32:11.22	1.32:12.16	renders	Strike and its first-person object suffix.
+accept	1.32:11.24	1.32:12.17	renders	Mothers.
+accept	1.32:11.25	1.32:12.18	renders	Preposition joining mothers and children.
+accept	1.32:11.26	1.32:12.19	renders	Children.
+accept	1.32:12.4	1.32:13.3	renders	Past auxiliary of said.
+accept	1.32:12.6,1.32:12.7	1.32:13.4	renders	Infinitive phrase rendering the emphatic infinitive.
+accept	1.32:12.8,1.32:12.9,1.32:12.12	1.32:13.5	renders	Finite promise, its subject, and its content.
+accept	1.32:12.10	1.32:13.6	renders	Prepositional part of with you.
+accept	1.32:12.16	1.32:13.8	renders	Verb of placing the descendants.
+accept	1.32:12.19	1.32:13.14	renders	Adjective renders the genitive sea noun.
+accept	1.32:12.22	1.32:13.15	renders	Resumptive pronoun expresses the relative argument.
+accept	1.32:13.2	1.32:14.2	renders	Subject carried by the lodging verb.
+accept	1.32:13.5	1.32:14.8	renders	Demonstrative modifying night.
+accept	1.32:13.6	1.32:14.4	renders	Temporal genitive renders in that night.
+accept	1.32:13.11	1.32:14.13	renders	Relative word expands the participle.
+accept	1.32:13.12	1.32:14.14	renders	Preposition in the hand idiom.
+accept	1.32:13.15	1.32:14.16	renders	Gift selected for Esau.
+accept	1.32:14.4	1.32:15.4	renders	Male goats.
+accept	1.32:16.3	1.32:17.3	renders	Direction into their hands.
+accept	1.32:16.7	1.32:17.7	renders	Repeated flock noun gives distributive force.
+accept	1.32:16.9	1.32:17.8,1.32:17.9	renders	Expression meaning separately.
+accept	1.32:16.12	1.32:17.11	renders	Subject carried by said.
+accept	1.32:16.16	1.32:17.14	renders	Movement imperative.
+accept	1.32:16.17	1.32:17.15	renders	Prefix in the spatial expression.
+accept	1.32:16.18	1.32:17.16	renders	First-person suffix in before me.
+accept	1.32:16.20	1.32:17.19	renders	Verb of leaving a gap.
+accept	1.32:16.21	1.32:17.18	renders	Space or interval.
+accept	1.32:16.22	1.32:17.23	renders	One Ukrainian preposition serves both sides of between.
+accept	1.32:16.23	1.32:17.21	renders	First flock in the between construction.
+accept	1.32:16.25	1.32:17.24	renders	Second flock in the between construction.
+accept	1.32:17.2	1.32:18.2	renders	Subject carried by commanded.
+accept	1.32:17.5	1.32:18.6	renders	Gerund renders the quotative infinitive construction.
+accept	1.32:17.7,1.32:17.8	1.32:18.9	renders	Encounter verb and its object suffix.
+accept	1.32:17.14	1.32:18.13	renders	Object suffix of ask.
+accept	1.32:17.15	1.32:18.14,1.32:18.15	renders	Так introduces the quoted question.
+accept	1.32:17.16	1.32:18.16	renders	Possessive interrogative renders whose.
+accept	1.32:17.20	1.32:18.21	renders	Second-person subject of go.
+accept	1.32:17.23	1.32:18.23	renders	Possessive relation in the second whose.
+accept	1.32:17.24	1.32:18.25	renders	Demonstrative for the things ahead.
+accept	1.32:17.26	1.32:18.26,1.32:18.27	renders	Spatial expression meaning before.
+accept	1.32:17.27	1.32:18.27	renders	Second-person suffix in before you.
+accept	1.32:18.3	1.32:19.3	renders	Possessive genitive renders the first ownership prefix.
+accept	1.32:18.5	1.32:19.5	renders	Possessive genitive renders the repeated ownership prefix.
+accept	1.32:18.6	1.32:19.8	renders	Demonstrative renders the gift pronoun.
+accept	1.32:18.9	1.32:19.10,1.32:19.11	renders	Dative lord renders recipient prefix and noun.
+accept	1.32:18.10	1.32:19.11	renders	First-person possessive suffix of lord.
+accept	1.32:18.11	1.32:19.12	renders	Dative renders Esau’s recipient prefix.
+accept	1.32:18.18	1.32:19.18	renders	First-person plural suffix of behind.
+accept	1.32:19.3	1.32:20.2	renders	Subject carried by commanded.
+accept	1.32:19.10,1.32:19.11	1.32:20.15	renders	Relative clause expands the walking participle.
+accept	1.32:19.12	1.32:20.16	renders	Preposition meaning behind.
+accept	1.32:19.14	1.32:20.19	renders	Gerund renders the quotative infinitive construction.
+accept	1.32:19.15	1.32:20.21,1.32:20.25	renders	Таким expresses comparison and demonstration.
+accept	1.32:19.16	1.32:20.23	renders	Word or message.
+accept	1.32:19.17	1.32:20.26	renders	Future auxiliary of speak.
+accept	1.32:19.24	1.32:20.31	renders	Suffixed object of find.
+accept	1.32:20.4	1.32:21.3	renders	Additive particle meaning also.
+accept	1.32:20.9	1.32:21.7	renders	First-person plural suffix of behind.
+accept	1.32:20.11	1.32:21.9	renders	Subject carried by said.
+accept	1.32:20.13,1.32:20.14	1.32:21.10	renders	Volitive mood and first-person subject.
+accept	1.32:20.16	1.32:21.11	renders	Personal object renders his face in the appeasement idiom.
+accept	1.32:20.18	1.32:21.12	renders	Gift’s instrumental case renders the prefix.
+accept	1.32:20.19,1.32:20.20	1.32:21.16	renders	Relative clause expands the movement participle.
+accept	1.32:20.21	1.32:21.17	renders	Prefix in the spatial expression.
+accept	1.32:20.22	1.32:21.18	renders	First-person suffix in before me.
+accept	1.32:20.24	1.32:21.21	renders	Потім also renders the reference point in after that.
+accept	1.32:20.30	1.32:21.25	renders	Verb meaning lift.
+accept	1.32:20.31,1.32:20.32	1.32:21.26	renders	Face and its first-person suffix.
+accept	1.32:21.2	1.32:22.2	renders	Movement verb of the gift.
+accept	1.32:21.4	1.32:22.5	renders	Preposition in the expression meaning before.
+accept	1.32:21.5	1.32:22.6	renders	Third-person suffix in before him.
+accept	1.32:21.9	1.32:22.14	renders	Demonstrative modifying night.
+accept	1.32:21.10	1.32:22.10	renders	Temporal genitive renders the night prefix.
+accept	1.32:21.12	1.32:22.17	renders	Camp where he lodged.
+accept	1.32:22.3	1.32:23.2	renders	Subject carried by arose.
+accept	1.32:22.4	1.32:23.6	renders	Demonstrative modifying night.
+accept	1.32:22.5	1.32:23.3	renders	Temporal genitive renders the night prefix.
+accept	1.32:22.16	1.32:23.18,1.32:23.19	renders	Eleven renders the full Hebrew compound.
+accept	1.32:22.17,1.32:22.18	1.32:23.20	renders	Children and their possessive suffix.
+accept	1.32:23.6,1.32:23.7	1.32:24.4	renders	Causative crossing verb carries the across relation.
+accept	1.32:23.10	1.32:24.9	renders	Second occurrence of conveying across.
+accept	1.32:23.11	1.32:24.11	renders	Correlative part of the free relative.
+accept	1.32:23.13,1.32:23.14,1.32:23.15	1.32:24.12	renders	Possessive predicate and its third-person suffix.
+accept	1.32:24.4	1.32:25.4	renders	Prefix in the expression meaning alone.
+accept	1.32:24.8	1.32:25.9	renders	Pronoun carried by with.
+accept	1.32:24.11,1.32:24.12,1.32:24.13	1.32:25.10	renders	Full Ukrainian endpoint conjunction.
+accept	1.32:24.14	1.32:25.11	renders	Rising of dawn.
+accept	1.32:24.15,1.32:24.16	1.32:25.13	renders	Досвітня зоря together means dawn.
+accept	1.32:25.2	1.32:26.2	renders	Subject carried by saw.
+accept	1.32:25.7	1.32:26.6	renders	Pronoun on the complement of prevail.
+accept	1.32:25.10	1.32:26.9	renders	Prepositional complement of touch.
+accept	1.32:25.15	1.32:26.13	renders	Dislocation verb.
+accept	1.32:25.16	1.32:26.14	renders	Second occurrence of the hip joint.
+accept	1.32:25.19	1.32:26.17	renders	Temporal prefix before wrestling.
+accept	1.32:25.20	1.32:26.18	renders	Subject suffix of the wrestling infinitive.
+accept	1.32:25.23	1.32:26.19	renders	Pronoun carried by with.
+accept	1.32:26.6	1.32:27.5	renders	Verb meaning rose.
+accept	1.32:26.7,1.32:26.8	1.32:27.7	renders	Досвітня зоря together means dawn.
+accept	1.32:26.10	1.32:27.9	renders	Subject carried by the reply verb.
+accept	1.32:26.14	1.32:27.11	renders	Second-person object suffix of release.
+accept	1.32:26.15,1.32:26.16	1.32:27.12,1.32:27.13	renders	Both phrases express unless.
+accept	1.32:26.18	1.32:27.14	renders	First-person object suffix of bless.
+accept	1.32:27.4	1.32:28.3	renders	Pronoun carried by to.
+accept	1.32:27.5	1.32:28.4	renders	Interrogative asking the name.
+accept	1.32:27.8	1.32:28.7	renders	Subject carried by the reply verb.
+accept	1.32:28.5	1.32:29.5	renders	Future auxiliary of the passive verb.
+accept	1.32:28.10	1.32:29.9	renders	Second part of the Hebrew adversative expression.
+accept	1.32:29.7	1.32:30.7	renders	Request particle.
+accept	1.32:29.11	1.32:30.10	renders	Subject carried by the reply verb.
+accept	1.32:29.14	1.32:30.13	renders	Verb meaning ask.
+accept	1.32:29.15	1.32:30.14	renders	Preposition introducing what is asked about.
+accept	1.32:29.19	1.32:30.17	renders	Subject carried by blessed.
+accept	1.32:29.21	1.32:30.18	renders	Suffixed object of bless.
+accept	1.32:30.10	1.32:31.9	renders	Past auxiliary of saw.
+accept	1.32:30.13	1.32:31.12	renders	Preposition between the two face nouns.
+accept	1.32:31.2	1.32:32.2	renders	Verb of the sun shining.
+accept	1.32:31.3	1.32:32.3	renders	Suffixed recipient pronoun.
+accept	1.32:31.5	1.32:32.6,1.32:32.7	renders	Temporal connective.
+accept	1.32:31.6	1.32:32.8	renders	Subject carried by crossed.
+accept	1.32:32.1	1.32:33.1	renders	First part of the expression meaning therefore.
+accept	1.32:32.8	1.32:33.11	renders	Relative referring to the sinew.
+accept	1.32:32.12	1.32:33.16	renders	Аж до expresses the endpoint.
+accept	1.32:32.14	1.32:33.20	renders	Сьогодні includes the demonstrative in this day.
+accept	1.32:32.16,1.32:32.18	1.32:33.22	renders	Subject and past auxiliary of touched.
+accept	1.32:32.19	1.32:33.23	renders	Prepositional complement of touched.

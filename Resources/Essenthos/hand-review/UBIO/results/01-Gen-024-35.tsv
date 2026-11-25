@@ -1,0 +1,202 @@
+kind	from	to	relation	reason
+fixed	1.24:35			Corrected the intensifier and completed the verb and livestock links.
+fixed	1.24:36			Restored the old-age expression, recipients, subject, and possession.
+fixed	1.24:37			Restored the source preposition.
+fixed	1.24:38			Restored the adversative idiom and motion verb.
+fixed	1.24:39			Restored the subject, possibility, motion, and following phrase.
+fixed	1.24:40			Restored pronouns and relational words. The translation reverses the roles in the walking clause, leaving «моїм» unlinked.
+fixed	1.24:41			Completed both oath clauses and the conditional links.
+fixed	1.24:42			Completed the petition, conjunction, and pronoun links.
+fixed	1.24:43			Completed the relative clause, water-drawing purpose, and request.
+fixed	1.24:44			Restored the connective, additive particles, and pronouns.
+fixed	1.24:45			Restored the completion verb, directions, pronouns, and drawing-water expression.
+fixed	1.24:46			Moved the first-person subject off the camels and completed both watering clauses.
+fixed	1.24:47			Moved the placement verb off the preposition and restored its subject and related words.
+fixed	1.24:48			Completed the prostration, dative, and guidance links.
+fixed	1.24:49			Restored the conditional, recipients, and directional prepositions.
+fixed	1.24:50			Completed the speech clause and negative construction.
+fixed	1.24:51			Completed the locative phrase, jussive, dative, and temporal forms.
+fixed	1.24:52			Restored the temporal clause marker, prostration, direction, and dative.
+fixed	1.24:53			Completed all three recipient links and the mother's possessive.
+fixed	1.24:54			Restored the companion suffix, morning expression, subject, and destination.
+unsure	1.24:55			Ten matches. The contribution of «хоч» and «з» to rendering the Hebrew alternative is uncertain.
+fixed	1.24:56			Restored the object pronoun, journey phrase, and cohortative.
+fixed	1.24:57			Completed the idiom for asking her personally.
+fixed	1.24:58			Restored the feminine suffix and question marker.
+fixed	1.24:59			Restored the subject pronoun.
+fixed	1.24:60			Restored the addressee, subject, wish, and enemies. «твоїх» shifts the Hebrew third-person suffix to second person.
+fixed	1.24:61			Restored both motion verbs.
+fixed	1.24:62			Completed the past verb form and the journey to the well.
+fixed	1.24:63			Restored the purpose, evening clause, subject, and approaching motion.
+fixed	1.24:64			Restored the lifting verb, conjunction, and compound source preposition.
+fixed	1.24:65			Completed the question, reply, and final clause.
+fixed	1.24:66			Restored the dative prefix and subject pronoun.
+fixed	1.24:67			Restored the directional, marital, pronominal, and passive links.
+refuse	1.24:35.3	1.24:35.3		The intensifier renders מְאֹד.
+refuse	1.24:46.15	1.24:46.13		First-person subject belongs to the verb.
+refuse	1.24:47.25	1.24:47.23		Placement verb linked to a preposition.
+accept	1.24:35.3	1.24:35.6	renders	Degree of blessing.
+accept	1.24:35.8,1.24:35.9,1.24:35.10	1.24:35.8	renders	Subject and becoming great.
+accept	1.24:35.13	1.24:35.10	renders	Subject of giving.
+accept	1.24:35.14	1.24:35.11	renders	Suffixed recipient.
+accept	1.24:35.15,1.24:35.18	1.24:35.14	renders	Large livestock with shared noun.
+accept	1.24:36.6	1.24:36.10	renders	Being old expresses her old age.
+accept	1.24:36.9	1.24:36.7,1.24:36.8	renders	Dative for the second lord occurrence.
+accept	1.24:36.10	1.24:36.8	renders	Possessive on the second lord occurrence.
+accept	1.24:36.13	1.24:36.12	renders	Subject of giving.
+accept	1.24:36.14	1.24:36.13	renders	Recipient of giving.
+accept	1.24:36.18	1.24:36.17	renders	Possessive predicate rendered as having.
+accept	1.24:37.13	1.24:37.11	renders	Source preposition.
+accept	1.24:38.1	1.24:38.1,1.24:38.2	renders	Adversative force of the idiom.
+accept	1.24:38.2	1.24:38.6	renders	Motion verb.
+accept	1.24:39.3	1.24:39.2	renders	First-person subject of saying.
+accept	1.24:39.7	1.24:39.5	renders	Possibility marker.
+accept	1.24:39.11	1.24:39.7	renders	Motion verb.
+accept	1.24:39.12,1.24:39.13	1.24:39.10	renders	Following relation and first-person suffix.
+accept	1.24:40.3	1.24:40.2	renders	Subject of saying.
+accept	1.24:40.4	1.24:40.3	renders	Preposition of address.
+accept	1.24:40.9	1.24:40.7	renders	Relational prefix in the face idiom.
+accept	1.24:40.10	1.24:40.8	renders	Face in the presence idiom.
+accept	1.24:40.16	1.24:40.11	renders	Companion suffix.
+accept	1.24:40.22	1.24:40.16	renders	Subject of taking.
+accept	1.24:41.3,1.24:41.4	1.24:41.2	renders	Predicative complement and subject of being clear.
+accept	1.24:41.6,1.24:41.7	1.24:41.4	renders	First oath and its possessive.
+accept	1.24:41.8	1.24:41.5	renders	Temporal conjunction.
+accept	1.24:41.15	1.24:41.12	renders	Plural subject of giving.
+accept	1.24:41.18	1.24:41.13	renders	Suffixed recipient.
+accept	1.24:41.19	1.24:41.14	renders	Connective introducing the consequence.
+accept	1.24:41.24,1.24:41.25	1.24:41.18	renders	Second oath and its possessive.
+accept	1.24:42.3	1.24:42.2	renders	First-person subject of arriving.
+accept	1.24:42.8	1.24:42.8	renders	Part of the compound conjunction.
+accept	1.24:42.16	1.24:42.14	renders	Conditional force of «коли б».
+accept	1.24:42.18	1.24:42.15	renders	Second-person suffix on the existential.
+accept	1.24:42.19,1.24:42.20	1.24:42.17	renders	Causative meaning of making successful.
+accept	1.24:42.24	1.24:42.22	renders	Route relation and feminine suffix.
+accept	1.24:43.11,1.24:43.12	1.24:43.13	renders	Relative clause renders the participle.
+accept	1.24:43.13,1.24:43.14	1.24:43.15	renders	Drawing water expressed in two words.
+accept	1.24:43.14	1.24:43.14	renders	Purpose expressed by the dependent infinitive.
+accept	1.24:43.17	1.24:43.18	renders	Feminine addressee suffix.
+accept	1.24:43.18	1.24:43.17	renders	Verb of saying.
+accept	1.24:43.19,1.24:43.21	1.24:43.19	renders	Causative imperative and first-person object.
+accept	1.24:44.2	1.24:44.1	renders	Connective introducing her reply.
+accept	1.24:44.6	1.24:44.4	renders	First additive particle.
+accept	1.24:44.8	1.24:44.8	renders	Additive force alongside coordination.
+accept	1.24:44.13,1.24:44.14	1.24:44.11	renders	First-person subject and water implicit in drawing.
+accept	1.24:44.16	1.24:44.12	renders	Independent feminine pronoun.
+accept	1.24:45.3	1.24:45.3	renders	Verb of finishing.
+accept	1.24:45.6	1.24:45.6	renders	Relation in speaking in one's heart.
+accept	1.24:45.9	1.24:45.8	renders	Connective introducing the sudden appearance.
+accept	1.24:45.18,1.24:45.19	1.24:45.15	renders	Possessive phrase for her shoulder.
+accept	1.24:45.23	1.24:45.19	renders	Directional ending on the spring.
+accept	1.24:45.26	1.24:45.20	renders	Part of the compound conjunction.
+accept	1.24:45.28	1.24:45.21	renders	Water implicit in the drawing verb.
+accept	1.24:45.31	1.24:45.23	renders	First-person subject of saying.
+accept	1.24:45.33	1.24:45.24	renders	Feminine addressee suffix.
+accept	1.24:45.36	1.24:45.25	renders	First-person object suffix.
+accept	1.24:46.8	1.24:46.7	renders	Reflexive pronoun renders the feminine suffix.
+accept	1.24:46.9	1.24:46.4	renders	Taking down the pitcher.
+accept	1.24:46.11	1.24:46.8	renders	Part of the compound conjunction.
+accept	1.24:46.15,1.24:46.16	1.24:46.14	renders	First-person subject and watering verb.
+accept	1.24:46.17	1.24:46.12	renders	First additive particle.
+accept	1.24:46.18,1.24:46.19	1.24:46.13	renders	Camels and their possessor.
+accept	1.24:46.21,1.24:46.22	1.24:46.16	renders	First-person subject and drinking verb.
+accept	1.24:46.24	1.24:46.21	renders	Feminine subject of watering.
+accept	1.24:46.26	1.24:46.18	renders	Second additive particle.
+accept	1.24:47.4	1.24:47.3	renders	Feminine suffix on the object marker.
+accept	1.24:47.6	1.24:47.4	renders	Part of the compound conjunction.
+accept	1.24:47.9	1.24:47.8	renders	Independent second-person pronoun.
+accept	1.24:47.21	1.24:47.17	renders	Suffixed recipient.
+accept	1.24:47.25,1.24:47.26	1.24:47.20	renders	Placement verb and its first-person subject.
+accept	1.24:47.27	1.24:47.23	renders	Placement preposition at the nose.
+accept	1.24:47.28,1.24:47.29	1.24:47.24	renders	Nose and its possessor.
+accept	1.24:48.5,1.24:48.6,1.24:48.7	1.24:48.4	renders	Ukrainian expression for prostration.
+accept	1.24:48.8	1.24:48.5	renders	Dative ending renders the prefix.
+accept	1.24:48.17,1.24:48.19	1.24:48.15	renders	Subject and suffixed object of guiding.
+accept	1.24:48.20	1.24:48.16	renders	Instrumental route renders the prefix.
+accept	1.24:49.4	1.24:49.6	renders	Mercy in the paired expression.
+accept	1.24:49.7	1.24:49.4	renders	Plural subject suffix on the existential.
+accept	1.24:49.8	1.24:49.5	renders	Verb of doing.
+accept	1.24:49.9	1.24:49.9	renders	Preposition meaning with.
+accept	1.24:49.14	1.24:49.12	renders	First recipient occurrence.
+accept	1.24:49.15	1.24:49.14	renders	Second conditional conjunction.
+accept	1.24:49.16	1.24:49.13	renders	Connective introducing the alternative.
+accept	1.24:49.20	1.24:49.17	renders	Second recipient occurrence.
+accept	1.24:49.22	1.24:49.19	renders	First-person subject of turning.
+accept	1.24:49.24	1.24:49.20	renders	Direction toward the right.
+accept	1.24:49.26	1.24:49.23	renders	Direction toward the left.
+accept	1.24:50.7	1.24:50.6	renders	Part of the compound conjunction.
+accept	1.24:50.14	1.24:50.14	renders	First-person plural subject of ability.
+accept	1.24:50.17	1.24:50.15	renders	Infinitive of speaking.
+accept	1.24:50.18	1.24:50.16	renders	Suffixed addressee.
+accept	1.24:50.19	1.24:50.13	renders	Negative concord expresses the same negation.
+accept	1.24:51.2	1.24:51.3,1.24:51.4	renders	Preposition formed by the face idiom.
+accept	1.24:51.3	1.24:51.4	renders	Second-person suffix in the face idiom.
+accept	1.24:51.7	1.24:51.6	renders	Part of the compound conjunction.
+accept	1.24:51.11,1.24:51.12	1.24:51.9	renders	Feminine subject and verb of becoming.
+accept	1.24:51.15	1.24:51.11,1.24:51.12	renders	Son with the dative relation.
+accept	1.24:51.18	1.24:51.14,1.24:51.15	renders	Combined conjunction meaning as.
+accept	1.24:51.21	1.24:51.16	renders	Auxiliary of the past speech form.
+accept	1.24:52.3	1.24:52.3,1.24:52.4	renders	Combined temporal conjunction.
+accept	1.24:52.9	1.24:52.10	renders	Connective introducing the resulting action.
+accept	1.24:52.10	1.24:52.11	renders	Verb of prostration.
+accept	1.24:52.11	1.24:52.12	renders	Directional ending on earth.
+accept	1.24:52.13	1.24:52.13	renders	Dative ending renders the prefix.
+accept	1.24:53.14	1.24:53.14	renders	Dative ending renders the prefix.
+accept	1.24:53.19	1.24:53.19,1.24:53.20	renders	Brother and recipient relation.
+accept	1.24:53.22	1.24:53.22,1.24:53.23	renders	Mother and recipient relation.
+accept	1.24:53.23	1.24:53.23	renders	Possessive suffix on mother.
+accept	1.24:54.10	1.24:54.10	renders	Companion suffix.
+accept	1.24:54.15	1.24:54.15,1.24:54.17	renders	Morning prepositional phrase rendered as an adverb.
+accept	1.24:54.18	1.24:54.19	renders	Subject of saying.
+accept	1.24:54.22	1.24:54.21	renders	Destination prefix.
+accept	1.24:55.6,1.24:55.7	1.24:55.5	renders	Mother and her possessive suffix.
+accept	1.24:55.8	1.24:55.6	renders	Jussive force of staying.
+accept	1.24:55.11,1.24:55.12	1.24:55.9	renders	Companion preposition and plural suffix.
+accept	1.24:55.16	1.24:55.12	renders	Numeral ten.
+accept	1.24:56.3	1.24:56.2	renders	Subject of saying.
+accept	1.24:56.4,1.24:56.5	1.24:56.3	renders	Preposition of address and plural suffix.
+accept	1.24:56.8	1.24:56.6	renders	First-person suffix on the object marker.
+accept	1.24:56.12,1.24:56.13	1.24:56.10	renders	Way and its possessor.
+accept	1.24:56.17	1.24:56.13	renders	Cohortative force of going.
+accept	1.24:56.20	1.24:56.14	renders	Destination prefix.
+accept	1.24:57.9	1.24:57.10	renders	Her own mouth conveys asking her personally.
+accept	1.24:58.7	1.24:58.7	renders	Feminine addressee suffix.
+accept	1.24:58.8	1.24:58.8	renders	Yes-or-no question marker.
+accept	1.24:59.3	1.24:59.2	renders	Plural subject of sending.
+accept	1.24:60.7,1.24:60.8	1.24:60.7	renders	Preposition of address and feminine suffix.
+accept	1.24:60.9	1.24:60.9	renders	Independent second-person pronoun.
+accept	1.24:60.19	1.24:60.15	renders	Jussive force of inheriting.
+accept	1.24:60.25	1.24:60.19	renders	Those who hate are the enemies.
+accept	1.24:61.8	1.24:61.7	renders	Mounting the camels.
+accept	1.24:61.12	1.24:61.12	renders	Travel behind the man.
+accept	1.24:62.3,1.24:62.4	1.24:62.3	renders	Past auxiliary and main motion verb.
+accept	1.24:62.6	1.24:62.5	renders	Journey expressed by the motion infinitive.
+accept	1.24:62.7,1.24:62.8	1.24:62.6	renders	Well and its role as destination.
+accept	1.24:63.4	1.24:63.4	renders	Purpose prefix.
+accept	1.24:63.8	1.24:63.9	renders	Temporal prefix introducing evening's approach.
+accept	1.24:63.9	1.24:63.11	renders	Evening.
+accept	1.24:63.10	1.24:63.10	renders	Evening turning rendered as coming on.
+accept	1.24:63.12	1.24:63.13	renders	Subject of lifting.
+accept	1.24:63.20	1.24:63.20	renders	Approaching motion.
+accept	1.24:64.3	1.24:64.2	renders	Verb of lifting.
+accept	1.24:64.7	1.24:64.6	renders	Part of the compound conjunction.
+accept	1.24:64.12	1.24:64.12,1.24:64.13	renders	Compound preposition meaning off.
+accept	1.24:65.6	1.24:65.6	renders	Interrogative pronoun.
+accept	1.24:65.7	1.24:65.10	renders	Demonstrative identifying the man.
+accept	1.24:65.9,1.24:65.11	1.24:65.12	renders	Relative clause renders the participle.
+accept	1.24:65.10	1.24:65.13	renders	Instrumental path renders the locative prefix.
+accept	1.24:65.12	1.24:65.17	renders	First-person plural suffix.
+accept	1.24:65.13	1.24:65.16	renders	Directional prefix in the meeting expression.
+accept	1.24:65.16	1.24:65.19	renders	Verb of replying.
+accept	1.24:65.17	1.24:65.22	renders	Predicative demonstrative renders the independent pronoun.
+accept	1.24:65.21	1.24:65.25	renders	Feminine subject of taking.
+accept	1.24:65.25	1.24:65.28	renders	Part of the compound conjunction.
+accept	1.24:66.4	1.24:66.5	renders	Dative ending renders the prefix.
+accept	1.24:66.9	1.24:66.12	renders	Subject of doing.
+accept	1.24:67.5	1.24:67.5	renders	Directional ending on tent.
+accept	1.24:67.12	1.24:67.9	renders	Subject of taking.
+accept	1.24:67.15	1.24:67.15	renders	Prefix marking the role of wife.
+accept	1.24:67.17	1.24:67.14	renders	Suffixed personal dative.
+accept	1.24:67.18	1.24:67.13	renders	Feminine subject of becoming.
+accept	1.24:67.21	1.24:67.18	renders	Subject of loving.
+accept	1.24:67.26	1.24:67.20	renders	Auxiliary in the passive rendering.

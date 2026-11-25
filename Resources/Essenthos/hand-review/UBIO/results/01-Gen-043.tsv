@@ -1,0 +1,239 @@
+kind	from	to	relation	reason
+fixed	1.43:1			Linked the copula to its predicate.
+fixed	1.43:2			Restored the temporal connective, verb forms, grain noun, and recipient pronoun.
+fixed	1.43:3			Restored the warning, its recipients, and the exception phrase.
+fixed	1.43:4			Restored the conditional, accompaniment, and beneficiary.
+fixed	1.43:5			Restored the first negation, recipient, and exception phrase.
+unsure	1.43:6			The second що introduces a statement where Hebrew uses an interrogative marker.
+fixed	1.43:7			Restored interrogatives, suffixed prepositions, the modal emphasis, and missing verb links.
+fixed	1.43:8			Completed the connective, accompaniment, and repeated inclusive particles.
+fixed	1.43:9			Restored the pledge, shared negation, verb subjects, and relational phrases.
+unsure	1.43:10			The opening А and уже have uncertain counterparts in the Hebrew discourse particles.
+fixed	1.43:11			Restored the recipient, conditional result marker, imperative subject, demonstrative, and resin noun.
+fixed	1.43:12			Restored the hand suffix, instrumental relation, and nominal clause links.
+fixed	1.43:13			Linked the command to return.
+unsure	1.43:14			The counterpart of певно in the repeated bereavement formula is uncertain.
+fixed	1.43:15			Corrected перед and restored the demonstrative, connective, destination, and subject.
+fixed	1.43:16			Completed the steward clause, directional and temporal forms, and slaughter command.
+fixed	1.43:17			Restored the comparative connective, past auxiliary, and directional ending.
+fixed	1.43:18			Restored cause, purpose, passive, and suffixed preposition links.
+unsure	1.43:19			The directional в in the entrance phrase has an uncertain counterpart in the Hebrew construct.
+fixed	1.43:20			Corrected the vocative and restored the appeal, verb forms, and purpose.
+fixed	1.43:21			Restored the destination, distributive noun, object suffix, and instrumental prefix.
+fixed	1.43:22			Restored the purpose phrase, knowing verb, past auxiliary, and prepositions.
+fixed	1.43:23			Restored the speaker pronoun, recipients, and movement links.
+fixed	1.43:24			Restored the directional ending and the donkeys' dative prefix.
+fixed	1.43:25			Restored the subject, temporal limit, and noon prefix.
+fixed	1.43:26			Restored both house directions, the bowing clause, and the recipients.
+fixed	1.43:27			Restored the questions, subject suffixes, and relative clause.
+fixed	1.43:28			Restored dative prefixes, the continuation with its subject suffix, and the prostration phrase.
+fixed	1.43:29			Restored the interrogative, demonstrative, possessive, and blessing links.
+fixed	1.43:30			Restored the possessive, desire and weeping verbs, and room direction.
+fixed	1.43:31			Restored the subject, connective, and serving command.
+fixed	1.43:32			Restored recipients, all three separation phrases, and the remaining clause links.
+fixed	1.43:33			Restored the two relational phrases, younger adjective, and astonishment verb.
+fixed	1.43:34			Restored the serving and comparison phrases, including the fivefold measure.
+refuse	1.43:14.8	1.43:14.8		The face noun is rendered by лицем.
+refuse	1.43:14.25	1.43:14.24		This occurrence is in the dependent clause.
+refuse	1.43:15.26	1.43:15.27		The face noun is rendered by лицем.
+refuse	1.43:20.5	1.43:20.3		The appeal is rendered by Послухай.
+accept	1.43:1.3	1.43:1.4	renders	Supplied copula of the asserted predicate.
+accept	1.43:2.3	1.43:2.3,1.43:2.4	renders	Temporal connective as a unit.
+accept	1.43:2.4	1.43:2.5	renders	Plural verb subject.
+accept	1.43:2.6	1.43:2.7	renders	Eating infinitive.
+accept	1.43:2.7	1.43:2.10	renders	Grain rendered as bread.
+accept	1.43:2.10	1.43:2.12	renders	Past auxiliary of bringing.
+accept	1.43:2.16	1.43:2.17	renders	Recipient suffix.
+accept	1.43:3.3	1.43:3.3	renders	Suffixed recipient preposition.
+accept	1.43:3.7	1.43:3.8	renders	Finite warning verb.
+accept	1.43:3.8	1.43:3.9	renders	Suffixed complement of warning.
+accept	1.43:3.16	1.43:3.17	renders	Exception marker.
+accept	1.43:3.19,1.43:3.20	1.43:3.19	renders	Accompaniment preposition and suffix.
+accept	1.43:4.1	1.43:4.1	renders	Conditional connective.
+accept	1.43:4.6,1.43:4.7	1.43:4.6	renders	Accompaniment preposition and suffix.
+accept	1.43:4.13	1.43:4.10	renders	Suffixed beneficiary preposition.
+accept	1.43:5.3	1.43:5.3	renders	Negation of sending.
+accept	1.43:5.11	1.43:5.11	renders	Suffixed recipient preposition.
+accept	1.43:5.16	1.43:5.15	renders	Exception marker.
+accept	1.43:5.19,1.43:5.20	1.43:5.17	renders	Accompaniment preposition and suffix.
+accept	1.43:6.5,1.43:6.7	1.43:6.5	renders	Both words express doing harm.
+accept	1.43:6.8	1.43:6.6	renders	Suffixed preposition for the affected person.
+accept	1.43:6.9	1.43:6.7	renders	Introduces the act that caused the harm.
+accept	1.43:6.10	1.43:6.8	renders	Reporting verb.
+accept	1.43:6.12	1.43:6.9	renders	The dative ending renders the recipient prefix.
+accept	1.43:6.14	1.43:6.13	renders	Continuation adverb.
+accept	1.43:6.15	1.43:6.14	renders	Possessive relation rendered by have.
+accept	1.43:7.4	1.43:7.3	renders	Infinitive absolute expressed by repetition.
+accept	1.43:7.8,1.43:7.9	1.43:7.7	renders	Topic preposition and its suffix.
+accept	1.43:7.11	1.43:7.9	renders	Second topic preposition.
+accept	1.43:7.12	1.43:7.10	renders	Part of the expression for native place.
+accept	1.43:7.16	1.43:7.13	renders	First quoted interrogative marker.
+accept	1.43:7.21	1.43:7.17	renders	Second quoted interrogative marker.
+accept	1.43:7.22	1.43:7.18	renders	Existential predicate.
+accept	1.43:7.23,1.43:7.24	1.43:7.19	renders	Possessive preposition and suffix.
+accept	1.43:7.27,1.43:7.28	1.43:7.22	renders	Reporting verb and its subject.
+accept	1.43:7.29	1.43:7.23	renders	Suffixed recipient preposition.
+accept	1.43:7.30,1.43:7.31	1.43:7.24,1.43:7.25	renders	Idiomatic expression of accordance.
+accept	1.43:7.34	1.43:7.30	renders	Marker of the final question.
+accept	1.43:7.35	1.43:7.31	renders	Modal rendering of the emphatic infinitive.
+accept	1.43:7.40	1.43:7.35	renders	Causative command to bring.
+accept	1.43:8.13	1.43:8.10	renders	First-person accompaniment suffix.
+accept	1.43:8.17	1.43:8.13	renders	Second part of the connective та й.
+accept	1.43:8.25	1.43:8.20	renders	Inclusive particle before we.
+accept	1.43:8.29	1.43:8.24	renders	Inclusive particle before the children.
+accept	1.43:9.2,1.43:9.3,1.43:9.4	1.43:9.2	renders	Pledge verb and its object phrase.
+accept	1.43:9.10	1.43:9.5	renders	Second-person verb subject.
+accept	1.43:9.13	1.43:9.8	renders	First-person verb subject.
+accept	1.43:9.17,1.43:9.18	1.43:9.9	renders	Directional preposition and suffix.
+accept	1.43:9.20	1.43:9.7	renders	Shared negation extends over both actions.
+accept	1.43:9.22	1.43:9.12	renders	Relational prefix in the face phrase.
+accept	1.43:9.23,1.43:9.24	1.43:9.13	renders	Face noun and its possessive suffix.
+accept	1.43:9.25	1.43:9.14	renders	Connective introducing the conditional result.
+accept	1.43:9.26,1.43:9.27	1.43:9.15	renders	Both words render incurring guilt.
+accept	1.43:9.28,1.43:9.29	1.43:9.16	renders	Relation and suffix of the person wronged.
+accept	1.43:9.30,1.43:9.32	1.43:9.19	renders	Day noun and its adverbial duration.
+accept	1.43:10.2,1.43:10.3,1.43:10.6	1.43:10.2	renders	Negative counterfactual conditional as a unit.
+accept	1.43:10.8	1.43:10.4	renders	Connective introducing the counterfactual result.
+accept	1.43:10.13	1.43:10.6	renders	Past auxiliary of returning.
+accept	1.43:10.14	1.43:10.8	renders	The dual form expresses two.
+accept	1.43:11.3	1.43:11.3	renders	Suffixed recipient preposition.
+accept	1.43:11.9	1.43:11.8	renders	Conditional result marker.
+accept	1.43:11.11	1.43:11.10	renders	Plural imperative subject.
+accept	1.43:11.12	1.43:11.9	renders	Written demonstrative.
+accept	1.43:11.19	1.43:11.19	renders	Causative command to take down.
+accept	1.43:11.21	1.43:11.20	renders	The dative ending renders the recipient prefix.
+accept	1.43:11.30	1.43:11.31	renders	Second resin in the paired list.
+accept	1.43:12.16	1.43:12.18	renders	Possessive suffix on the second hand noun.
+accept	1.43:12.17	1.43:12.17	renders	The instrumental ending renders the prefix.
+accept	1.43:12.19	1.43:12.21	renders	Pronoun in the nominal clause.
+accept	1.43:12.20	1.43:12.20	renders	Nominal predicate meaning mistake.
+accept	1.43:13.7	1.43:13.7	renders	Command to go back.
+accept	1.43:14.4	1.43:14.4	renders	Jussive force of the giving verb.
+accept	1.43:14.6	1.43:14.5	renders	Recipient of mercy.
+accept	1.43:14.8	1.43:14.7	renders	Relational prefix before the face noun.
+accept	1.43:14.13,1.43:14.14	1.43:14.12	renders	Continued wish and implicit subject.
+accept	1.43:14.16	1.43:14.13	renders	Recipient of the released brothers.
+accept	1.43:14.17	1.43:14.16	renders	Adjective meaning other.
+accept	1.43:14.25,1.43:14.26,1.43:14.27	1.43:14.25	renders	Main verb expresses loss of one's child.
+accept	1.43:15.5	1.43:15.9	renders	Written demonstrative modifying the gift.
+accept	1.43:15.19	1.43:15.21	renders	Second part of the connective та й.
+accept	1.43:15.21	1.43:15.23	renders	Bare place name expresses destination.
+accept	1.43:15.25	1.43:15.25	renders	Plural subject of standing.
+accept	1.43:15.26	1.43:15.26	renders	Relational prefix before the face noun.
+accept	1.43:16.5,1.43:16.6	1.43:16.4	renders	Accompaniment preposition and suffix.
+accept	1.43:16.9	1.43:16.9	renders	Recipient prefix before the relative.
+accept	1.43:16.10,1.43:16.11	1.43:16.10	renders	Substantival relative rendered in two words.
+accept	1.43:16.12	1.43:16.11	renders	Copula supplied for the predicative preposition.
+accept	1.43:16.19	1.43:16.18	renders	Directional ending on house.
+accept	1.43:16.22	1.43:16.20	renders	Volitive rendering of the slaughter command.
+accept	1.43:16.24	1.43:16.21	renders	Cognate object rendered as the animal slaughtered.
+accept	1.43:16.29	1.43:16.25	renders	First-person accompaniment suffix.
+accept	1.43:16.34	1.43:16.29	renders	Fused temporal preposition.
+accept	1.43:17.5	1.43:17.5,1.43:17.6	renders	Comparative connective as a unit.
+accept	1.43:17.8	1.43:17.7	renders	Past auxiliary of saying.
+accept	1.43:17.15	1.43:17.16	renders	Directional ending on house.
+accept	1.43:18.8	1.43:18.7	renders	Bare house noun expresses destination.
+accept	1.43:18.14	1.43:18.11,1.43:18.12	renders	Compound causal preposition.
+accept	1.43:18.17	1.43:18.19	renders	Fused temporal preposition.
+accept	1.43:18.22	1.43:18.23	renders	Second passive bringing form.
+accept	1.43:18.23	1.43:18.24	renders	Purpose prefix introducing the series.
+accept	1.43:18.25,1.43:18.26	1.43:18.26	renders	First preposition and its object suffix.
+accept	1.43:18.29,1.43:18.30	1.43:18.30	renders	Second preposition and its object suffix.
+accept	1.43:18.33	1.43:18.35	renders	Prefix marking status as slaves.
+accept	1.43:18.35	1.43:18.34	renders	Pronoun on the suffixed object marker.
+accept	1.43:19.6	1.43:19.6	renders	Written relative marker.
+accept	1.43:19.11	1.43:19.10	renders	Second part of the connective та й.
+accept	1.43:19.13,1.43:19.14	1.43:19.12	renders	Recipient preposition and its suffix.
+accept	1.43:20.3	1.43:20.2	renders	Plural subject of saying.
+accept	1.43:20.4	1.43:20.3	renders	Particle of appeal.
+accept	1.43:20.5	1.43:20.4	renders	Vocative particle belongs with the person addressed.
+accept	1.43:20.9,1.43:20.10	1.43:20.6	renders	Finite descent verb and its past auxiliary.
+accept	1.43:20.11	1.43:20.7	renders	Fused temporal preposition.
+accept	1.43:20.12	1.43:20.10	renders	The infinitive of purpose renders the prefix.
+accept	1.43:21.6	1.43:21.5	renders	Preposition marking the destination.
+accept	1.43:21.15	1.43:21.15	renders	Distributive use of man means each.
+accept	1.43:21.28	1.43:21.24	renders	Pronoun on the suffixed object marker.
+accept	1.43:21.30	1.43:21.25	renders	The instrumental ending renders the prefix.
+accept	1.43:22.2	1.43:22.7	renders	Purpose preposition.
+accept	1.43:22.3	1.43:22.8	renders	Buying verb rendered as an action noun.
+accept	1.43:22.8	1.43:22.5	renders	The instrumental ending renders the prefix.
+accept	1.43:22.11,1.43:22.13	1.43:22.11	renders	Knowing verb and its plural subject.
+accept	1.43:22.16	1.43:22.13	renders	Past auxiliary of putting.
+accept	1.43:22.19	1.43:22.15	renders	Prefix marks where the silver was put.
+accept	1.43:23.2	1.43:23.2	renders	Demonstrative pronoun expresses the verb subject.
+accept	1.43:23.5	1.43:23.4	renders	Recipient of the peace greeting.
+accept	1.43:23.15	1.43:23.12	renders	Recipient of the treasure.
+accept	1.43:23.17	1.43:23.14	renders	Prefix marks the location of the treasure.
+accept	1.43:23.22	1.43:23.17	renders	Coming verb whose subject is silver.
+accept	1.43:23.23	1.43:23.18	renders	Directional preposition before the first-person suffix.
+accept	1.43:23.27,1.43:23.28	1.43:23.21	renders	Directional preposition and third-person plural suffix.
+accept	1.43:24.7	1.43:24.8	renders	Directional ending on house.
+accept	1.43:24.22	1.43:24.19	renders	The dative ending renders the recipient prefix.
+accept	1.43:25.2	1.43:25.2	renders	Plural subject of preparing.
+accept	1.43:25.5	1.43:25.6	renders	Preposition marking the temporal limit.
+accept	1.43:25.8	1.43:25.9	renders	Fused temporal preposition.
+accept	1.43:26.2	1.43:26.2	renders	Verb of Joseph entering.
+accept	1.43:26.4	1.43:26.5	renders	First directional ending on house.
+accept	1.43:26.9	1.43:26.8	renders	Recipient of the gift.
+accept	1.43:26.10	1.43:26.16	renders	Second directional ending on house.
+accept	1.43:26.16	1.43:26.14	renders	Hand noun.
+accept	1.43:26.18,1.43:26.19	1.43:26.18	renders	Bowing verb and its subject.
+accept	1.43:26.20	1.43:26.19	renders	Person receiving the bow.
+accept	1.43:26.21	1.43:26.20	renders	Directional ending on earth.
+accept	1.43:27.2	1.43:27.2	renders	Subject of asking.
+accept	1.43:27.4	1.43:27.3	renders	Suffix identifies the people asked.
+accept	1.43:27.5	1.43:27.4	renders	Preposition introduces the subject of inquiry.
+accept	1.43:27.9	1.43:27.8	renders	First interrogative marker.
+accept	1.43:27.12	1.43:27.10	renders	Father noun.
+accept	1.43:27.14	1.43:27.13	renders	Part of the oblique relative phrase about whom.
+accept	1.43:27.17	1.43:27.14	renders	Verb of reporting.
+accept	1.43:27.18	1.43:27.15	renders	Second interrogative marker.
+accept	1.43:27.19,1.43:27.20	1.43:27.16	renders	Continuation adverb and subject suffix.
+accept	1.43:28.5	1.43:28.4	renders	The dative ending renders the first prefix.
+accept	1.43:28.7	1.43:28.6,1.43:28.7	renders	Father noun and its dative prefix.
+accept	1.43:28.9,1.43:28.10	1.43:28.8	renders	Continuation adverb and subject suffix.
+accept	1.43:28.17,1.43:28.18	1.43:28.13	renders	Completes the expression of prostration.
+accept	1.43:29.3	1.43:29.2	renders	Subject of lifting the eyes.
+accept	1.43:29.7	1.43:29.4	renders	Second part of the connective та й.
+accept	1.43:29.17	1.43:29.13	renders	Interrogative marker.
+accept	1.43:29.18	1.43:29.14	renders	Written demonstrative.
+accept	1.43:29.19	1.43:29.15	renders	Possessive suffix on brother.
+accept	1.43:29.25	1.43:29.19	renders	Verb of telling.
+accept	1.43:29.28,1.43:29.32,1.43:29.33	1.43:29.24	renders	Wish marker and suffixed recipient of favor.
+accept	1.43:30.6,1.43:30.7	1.43:30.6	renders	Compassion noun and its possessive suffix.
+accept	1.43:30.12,1.43:30.13	1.43:30.10	renders	Desire verb and its subject.
+accept	1.43:30.14	1.43:30.12	renders	Infinitive of weeping.
+accept	1.43:30.17	1.43:30.14	renders	Subject of entering.
+accept	1.43:30.18	1.43:30.16	renders	Directional ending on room.
+accept	1.43:31.3	1.43:31.2	renders	Subject of washing.
+accept	1.43:31.11	1.43:31.8	renders	Second part of the connective та й.
+accept	1.43:31.13	1.43:31.10	renders	Imperative to put out bread.
+accept	1.43:32.3	1.43:32.3	renders	First recipient.
+accept	1.43:32.4	1.43:32.4	renders	Prefix in the first separation phrase.
+accept	1.43:32.6	1.43:32.7	renders	Second recipient.
+accept	1.43:32.7	1.43:32.8	renders	Prefix in the second separation phrase.
+accept	1.43:32.9	1.43:32.11	renders	The dative ending renders the recipient prefix.
+accept	1.43:32.10	1.43:32.15	renders	Relative marker renders the participial construction.
+accept	1.43:32.12,1.43:32.13	1.43:32.16	renders	Accompaniment preposition and suffix.
+accept	1.43:32.14	1.43:32.17,1.43:32.18	renders	Third separation phrase as a unit.
+accept	1.43:32.18	1.43:32.21	renders	Ability verb.
+accept	1.43:32.21	1.43:32.26	renders	Accompaniment preposition with the Hebrews.
+accept	1.43:32.24	1.43:32.32	renders	Pronoun in the nominal clause.
+accept	1.43:33.4	1.43:33.3	renders	Relational prefix before the face noun.
+accept	1.43:33.5	1.43:33.4	renders	Pronoun on the suffixed face noun.
+accept	1.43:33.11	1.43:33.11	renders	Adjective for the younger one.
+accept	1.43:33.16	1.43:33.15	renders	Astonishment verb.
+accept	1.43:33.20	1.43:33.19	renders	Preposition in the reciprocal phrase.
+accept	1.43:34.3	1.43:34.2	renders	Serving verb governing the portions.
+accept	1.43:34.5	1.43:34.3	renders	Apposition specifies the portions as food.
+accept	1.43:34.6	1.43:34.5	renders	Second element of the compound source preposition.
+accept	1.43:34.7	1.43:34.6	renders	Reflexive renders the suffixed expression of presence.
+accept	1.43:34.8,1.43:34.9	1.43:34.7	renders	Recipient preposition and suffix.
+accept	1.43:34.11	1.43:34.10	renders	Benjamin's portion.
+accept	1.43:34.13,1.43:34.14	1.43:34.9	renders	Both words render the verb of increase.
+accept	1.43:34.15	1.43:34.12	renders	Comparative min prefix.
+accept	1.43:34.16	1.43:34.13	renders	Portions used as the basis of comparison.
+accept	1.43:34.17,1.43:34.18	1.43:34.14	renders	Quantifier and its plural suffix.
+accept	1.43:34.19	1.43:34.15,1.43:34.16	renders	Fivefold measure rendered as one word.
+accept	1.43:34.22	1.43:34.18	renders	Plural subject of drinking.
+accept	1.43:34.26	1.43:34.21	renders	Accompaniment suffix.

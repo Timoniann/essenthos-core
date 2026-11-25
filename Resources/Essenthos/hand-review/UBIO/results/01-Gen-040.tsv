@@ -1,0 +1,147 @@
+kind	from	to	relation	reason
+fixed	1.40:1			Added the demonstrative, verb phrase, and dative links.
+ok	1.40:2			
+unsure	1.40:3			Corrected the custody preposition. The two supplied locatives remain uncertain.
+fixed	1.40:4			Corrected the custody preposition and added the missing verb, pronoun, and duration links.
+fixed	1.40:5			Added the opening dream clause, case relations, and passive phrase.
+fixed	1.40:6			Added three pronouns and the temporal prefix.
+unsure	1.40:7			Corrected the custody preposition. The source of «в домі» remains uncertain.
+fixed	1.40:8			Added the dream clause, interpreter phrase, pronouns, and question marker.
+unsure	1.40:9			It is unclear whether «Бачив я» renders the presentative or is supplied.
+unsure	1.40:10			Added the vine and flowering links. The force of «сам» remains uncertain.
+fixed	1.40:11			Added the object pronoun and the preposition before «руку».
+fixed	1.40:12			Added the recipient, vine modifier, and resumptive pronoun.
+fixed	1.40:13			Added four prepositions, the object pronoun, and the verb «був».
+fixed	1.40:14			Moved «мені» to the kindness clause and added the missing clause links.
+fixed	1.40:15			Added the passive auxiliary, infinitive emphasis, and remaining clause links.
+unsure	1.40:16			Added the missing narrative verbs. The source of «бачив» in the dream report remains uncertain.
+unsure	1.40:17			The singular «його» refers to food where Hebrew uses a plural object pronoun.
+fixed	1.40:18			Linked «то» to the resumptive pronoun.
+fixed	1.40:19			Added the time preposition and three pronouns.
+fixed	1.40:20			Corrected the two time phrases and supplied the missing verb and noun links.
+fixed	1.40:21			Added both subject pronouns and both prepositions.
+fixed	1.40:22			Added the comparison, past auxiliary, and recipient.
+fixed	1.40:23			Added the second conjunction component and the object phrase.
+refuse	1.40:3.4	1.40:3.5		Preposition linked to the custody noun.
+refuse	1.40:4.18	1.40:4.16		Preposition linked to the custody noun.
+refuse	1.40:7.10	1.40:7.9		Preposition linked to the custody noun.
+refuse	1.40:14.14	1.40:14.15		The beneficiary belongs to the kindness clause.
+refuse	1.40:20.5	1.40:20.3		The prefix belongs to the third-day phrase.
+accept	1.40:1.4	1.40:1.7	renders	Demonstrative modifying the events.
+accept	1.40:1.11,1.40:1.12	1.40:1.8	renders	Verb and past auxiliary.
+accept	1.40:1.13	1.40:1.15,1.40:1.16	renders	Dative renders the prefix and noun.
+accept	1.40:1.14	1.40:1.16	renders	Possessive suffix on the master.
+accept	1.40:1.15	1.40:1.17	renders	Dative also renders the second lamed.
+accept	1.40:3.2	1.40:3.2	renders	Verb of handing over.
+accept	1.40:3.3	1.40:3.3	renders	Suffixed direct object.
+accept	1.40:3.4	1.40:3.4	renders	Prefix expresses being under guard.
+accept	1.40:3.12	1.40:3.13	renders	Prison noun rendered adjectivally.
+accept	1.40:3.16	1.40:3.18	renders	Relative adverb also renders resumptive «there».
+accept	1.40:3.18	1.40:3.17	renders	Auxiliary of the passive participle.
+accept	1.40:4.5	1.40:4.2	renders	Verb of appointing.
+accept	1.40:4.7,1.40:4.8	1.40:4.8	renders	Placement with them.
+accept	1.40:4.10	1.40:4.10	renders	Subject carried by the service verb.
+accept	1.40:4.11	1.40:4.11	renders	Suffixed object of the service verb.
+accept	1.40:4.14	1.40:4.13	renders	Expressed verb of being.
+accept	1.40:4.16,1.40:4.17	1.40:4.14	renders	Indefinite duration expressed by days.
+accept	1.40:4.18	1.40:4.15	renders	Prefix expresses being under guard.
+accept	1.40:5.2	1.40:5.2	renders	Verb of dreaming.
+accept	1.40:5.3	1.40:5.4	renders	Pronominal component of «both of them».
+accept	1.40:5.5	1.40:5.3	renders	First occurrence of the dream noun.
+accept	1.40:5.10	1.40:5.7	renders	Temporal genitive renders the prefix.
+accept	1.40:5.14,1.40:5.15	1.40:5.13	renders	Dream noun and possessive suffix.
+accept	1.40:5.19	1.40:5.20	renders	Possessive genitive renders the belonging relation.
+accept	1.40:5.21	1.40:5.23	renders	Relative introducing the imprisonment clause.
+accept	1.40:5.22	1.40:5.24	renders	Auxiliary of the passive participle.
+accept	1.40:5.25	1.40:5.28	renders	Prison noun rendered adjectivally.
+accept	1.40:6.4	1.40:6.3	renders	Pronominal suffix on the preposition.
+accept	1.40:6.6	1.40:6.5	renders	Morning adverb also expresses the temporal prefix.
+accept	1.40:6.9	1.40:6.10	renders	Suffixed object of seeing.
+accept	1.40:6.11	1.40:6.12	renders	Pronominal suffix on the presentative.
+accept	1.40:7.3	1.40:7.2	renders	Subject carried by the asking verb.
+accept	1.40:7.7,1.40:7.8,1.40:7.9	1.40:7.7	renders	Predicative phrase «were with him».
+accept	1.40:7.10	1.40:7.8	renders	Prefix expresses being under guard.
+accept	1.40:7.14,1.40:7.15	1.40:7.11	renders	Master and possessive suffix.
+accept	1.40:7.18,1.40:7.19	1.40:7.15	renders	Faces and possessive suffix.
+accept	1.40:8.4	1.40:8.3	renders	Recipient encoded by the suffixed preposition.
+accept	1.40:8.5,1.40:8.6	1.40:8.5	renders	Dreaming verb and its experiencers.
+accept	1.40:8.7	1.40:8.4	renders	Dream noun.
+accept	1.40:8.10	1.40:8.9	renders	Suffixed object of interpretation.
+accept	1.40:8.11	1.40:8.8	renders	Existential negation.
+accept	1.40:8.12	1.40:8.7	renders	Agent expressed by the participle.
+accept	1.40:8.15,1.40:8.16	1.40:8.12	renders	Preposition and its pronominal suffix.
+accept	1.40:8.18	1.40:8.14	renders	Interrogative marker.
+accept	1.40:8.21	1.40:8.16	renders	Preposition expressing possession.
+accept	1.40:9.5	1.40:9.8	renders	Recipient dative renders lamed.
+accept	1.40:9.10	1.40:9.12	renders	Suffixed recipient.
+accept	1.40:9.17,1.40:9.18	1.40:9.17	renders	Two-word rendering of the vine.
+accept	1.40:9.19	1.40:9.18	renders	Prefix contributes to the compound preposition.
+accept	1.40:9.20	1.40:9.19	renders	First-person suffix in «before me».
+accept	1.40:10.4	1.40:10.4	renders	Noun component of the vine phrase.
+accept	1.40:10.6	1.40:10.6	renders	Modifier specifies the vine tendrils.
+accept	1.40:10.9	1.40:10.8	renders	Independent subject pronoun.
+accept	1.40:10.11	1.40:10.9	renders	Comparison prefix.
+accept	1.40:10.12	1.40:10.10	renders	Verb of sprouting.
+accept	1.40:10.13	1.40:10.11	renders	The blossom coming forth.
+accept	1.40:10.14	1.40:10.12	renders	Blossom noun.
+accept	1.40:10.16	1.40:10.13	renders	Verb of ripening.
+accept	1.40:10.18	1.40:10.14	renders	Possessive suffix on the clusters.
+accept	1.40:11.14	1.40:11.13	renders	Suffixed object of squeezing.
+accept	1.40:11.22	1.40:11.22	renders	Preposition governing the palm.
+accept	1.40:12.3	1.40:12.3	renders	Suffixed recipient.
+accept	1.40:12.9	1.40:12.9	renders	Modifier specifies the vine tendrils.
+accept	1.40:12.11	1.40:12.12	renders	Resumptive pronoun in the equation.
+accept	1.40:13.2	1.40:13.1	renders	Temporal prefix for the interval.
+accept	1.40:13.11	1.40:13.10	renders	Object suffix on the restoration verb.
+accept	1.40:13.12	1.40:13.11	renders	Preposition governing the position.
+accept	1.40:13.20	1.40:13.17	renders	Preposition introducing the hand as destination.
+accept	1.40:13.23	1.40:13.19	renders	Prefix expressing accordance with custom.
+accept	1.40:13.27	1.40:13.25	renders	Expressed verb of being.
+accept	1.40:14.1	1.40:14.2	renders	Conditional conjunction.
+accept	1.40:14.2,1.40:14.5,1.40:14.6	1.40:14.3	renders	Subject and prepositional object of remembering.
+accept	1.40:14.4	1.40:14.4	renders	Reflexive rendering of «with you».
+accept	1.40:14.7	1.40:14.5,1.40:14.6	renders	Compound temporal conjunction.
+accept	1.40:14.8	1.40:14.7	renders	Auxiliary renders the finite verb.
+accept	1.40:14.9	1.40:14.8	renders	Suffixed dative.
+accept	1.40:14.12	1.40:14.10	renders	Verb of doing kindness.
+accept	1.40:14.14	1.40:14.12	renders	Suffixed beneficiary of the kindness.
+accept	1.40:14.16,1.40:14.17,1.40:14.18	1.40:14.15	renders	Mentioning verb and its prepositional object.
+accept	1.40:14.19	1.40:14.16	renders	Preposition introducing Pharaoh as addressee.
+accept	1.40:14.24	1.40:14.20	renders	Source preposition.
+accept	1.40:14.25	1.40:14.24	renders	Demonstrative modifying the house.
+accept	1.40:15.3	1.40:15.3	renders	Auxiliary renders the finite passive.
+accept	1.40:15.4	1.40:15.2	renders	Infinitive absolute supplies the emphasis.
+accept	1.40:15.12,1.40:15.14	1.40:15.12	renders	Verb and its first-person subject.
+accept	1.40:15.16	1.40:15.14	renders	Subordinator introducing the imprisonment clause.
+accept	1.40:15.17	1.40:15.16	renders	Suffixed direct object.
+accept	1.40:15.19	1.40:15.17	renders	Prefix introduces the pit as destination.
+accept	1.40:16.2	1.40:16.2	renders	Narrative verb of seeing.
+accept	1.40:16.6,1.40:16.8	1.40:16.8	renders	Interpretation verb and its subject.
+accept	1.40:16.13	1.40:16.13	renders	Additive particle in «I too».
+accept	1.40:17.4	1.40:17.6	renders	Adjective meaning upper.
+accept	1.40:17.7	1.40:17.12	renders	Baker noun rendered adjectivally.
+accept	1.40:17.8	1.40:17.11	renders	Product of the baker's work.
+accept	1.40:17.10	1.40:17.9	renders	Food noun.
+accept	1.40:17.17	1.40:17.21,1.40:17.22	renders	Compound preposition means «from above».
+accept	1.40:18.11	1.40:18.13	renders	Resumptive pronoun in the equation.
+accept	1.40:19.2	1.40:19.1	renders	Temporal prefix for the interval.
+accept	1.40:19.10	1.40:19.10	renders	Suffix in the first «from you».
+accept	1.40:19.13	1.40:19.13	renders	Suffixed object of hanging.
+accept	1.40:19.22	1.40:19.23	renders	Suffix in the second «from you».
+accept	1.40:20.4	1.40:20.3	renders	Temporal genitive renders the first prefix.
+accept	1.40:20.5	1.40:20.8	renders	Preposition expresses the birthday phrase's temporal use.
+accept	1.40:20.7	1.40:20.9	renders	Birth expressed by the Hebrew infinitive.
+accept	1.40:20.10,1.40:20.11	1.40:20.13	renders	Feast-making verb and its subject.
+accept	1.40:20.16	1.40:20.17	renders	First occurrence of the servants noun.
+accept	1.40:20.19	1.40:20.19	renders	Subject carried by the lifting verb.
+accept	1.40:20.24	1.40:20.27	renders	Head of the chief baker.
+accept	1.40:20.27	1.40:20.31,1.40:20.32	renders	Compound relation «in the midst of».
+accept	1.40:21.3	1.40:21.2	renders	Subject carried by the restoration verb.
+accept	1.40:21.6	1.40:21.7	renders	Preposition governing the restored position.
+accept	1.40:21.10	1.40:21.10	renders	Subject carried by the giving verb.
+accept	1.40:21.13	1.40:21.13	renders	Preposition governing the palm.
+accept	1.40:22.5	1.40:22.7,1.40:22.8	renders	Compound conjunction meaning «as».
+accept	1.40:22.7	1.40:22.9	renders	Auxiliary of the past interpretation verb.
+accept	1.40:22.8	1.40:22.10	renders	Suffixed recipient.
+accept	1.40:23.9	1.40:23.9	renders	Component of the connective «та й».
+accept	1.40:23.11,1.40:23.12	1.40:23.10	renders	Prepositional object renders the verb's object suffix.

@@ -1,0 +1,159 @@
+kind	from	to	relation	reason
+fixed	1.25:1			Added the iterative adverb and the name noun.
+fixed	1.25:2			Added the recipient pronoun.
+fixed	1.25:3			Added the pluperfect auxiliary.
+fixed	1.25:4			Linked the pronoun to the demonstrative.
+fixed	1.25:5			Added the possession predicate and the recipient prefix.
+fixed	1.25:6			Completed the dative, possession, separation, time, and direction links.
+fixed	1.25:7			Added the subject pronoun, five, and four year occurrences.
+fixed	1.25:8			Added the first death verb, the compound conjunction, and the final subject.
+fixed	1.25:9			Added the object pronoun and completed the location links.
+fixed	1.25:10			Completed the relative construction, source preposition, and verb forms.
+fixed	1.25:11			Added the preposition and well noun.
+fixed	1.25:12			Completed the object relative and Abraham's dative.
+fixed	1.25:13			Added both prefixes rendered by за.
+ok	1.25:14			
+ok	1.25:15			
+fixed	1.25:16			Added the settlement links, compound number, and clan noun.
+fixed	1.25:17			Added the year occurrences and completed the death and gathering clauses.
+fixed	1.25:18			Completed the subject, boundary, route, and settlement links.
+fixed	1.25:19			Linked the topical preposition to the construct noun.
+fixed	1.25:20			Added the temporal marker, subject, marriage markers, and Aram.
+fixed	1.25:21			Completed the prayer, intercession, copula, and pronoun links.
+fixed	1.25:22			Added the womb phrase, subject, conditional marker, demonstrative, and purpose prefix.
+fixed	1.25:23			Added the addressee, people nouns, verb forms, and comparative marker.
+fixed	1.25:24			Added the fulfillment and childbirth verbs.
+fixed	1.25:25			Linked він to the suffix in כֻּלּוֹ.
+fixed	1.25:26			Completed the sequence, heel, age, and birth constructions.
+fixed	1.25:27			Added the growth verb, predicate nouns, and participial clauses.
+fixed	1.25:28			Completed the taste idiom and linked Isaac's pronoun.
+fixed	1.25:29			Corrected the cooking links. UBIO names Isaac where BHSA names Jacob.
+unsure	1.25:30			The first отим and the rendering of the partitive מִן are uncertain.
+fixed	1.25:31			Completed the temporal idiom and linked the recipient.
+fixed	1.25:32			Added the impending-death phrase, interrogative, and demonstrative.
+fixed	1.25:33			Completed the temporal idiom and added both pronouns and Jacob's dative.
+fixed	1.25:34			Swapped the stew and lentil targets and completed the dative, subject, and conjunction.
+refuse	1.25:29.2	1.25:29.4		The target names the cooked food.
+refuse	1.25:34.7	1.25:34.8		The adjective denotes lentils.
+refuse	1.25:34.8	1.25:34.9		The noun denotes the stew.
+accept	1.25:1.3	1.25:1.2	renders	Renders taking a wife again.
+accept	1.25:1.7	1.25:1.8	renders	Renders the name noun.
+accept	1.25:2.4	1.25:2.3	renders	Renders the suffixed recipient.
+accept	1.25:3.4	1.25:3.3	renders	Auxiliary in the pluperfect.
+accept	1.25:4.14	1.25:4.14	renders	Renders the plural demonstrative.
+accept	1.25:5.6	1.25:5.7	renders	Renders the possession predicate.
+accept	1.25:5.7	1.25:5.8	renders	The dative marks the recipient.
+accept	1.25:6.2	1.25:6.2	renders	The dative marks the recipients.
+accept	1.25:6.5,1.25:6.6	1.25:6.7	renders	Together express Abraham's possession.
+accept	1.25:6.14	1.25:6.15	renders	Completes the compound separation preposition.
+accept	1.25:6.19,1.25:6.20	1.25:6.19	renders	Renders the subject suffix and continuing state.
+accept	1.25:6.22	1.25:6.20	renders	Copula for the predicate alive.
+accept	1.25:6.23	1.25:6.21	renders	Renders the directional ending.
+accept	1.25:6.27	1.25:6.24	renders	Renders east in the land name phrase.
+accept	1.25:7.4	1.25:7.4	renders	Years in the opening construct chain.
+accept	1.25:7.8	1.25:7.8	renders	Explicates the verb's subject.
+accept	1.25:7.11	1.25:7.10	renders	Years after one hundred.
+accept	1.25:7.14	1.25:7.13	renders	Years after seventy.
+accept	1.25:7.16	1.25:7.15	renders	Renders five.
+accept	1.25:7.17	1.25:7.16	renders	Years after five.
+accept	1.25:8.2	1.25:8.2	renders	Renders the first death verb.
+accept	1.25:8.4	1.25:8.3	renders	Part of the compound conjunction та й.
+accept	1.25:8.14	1.25:8.13	renders	Explicates the gathering verb's subject.
+accept	1.25:9.3	1.25:9.3	renders	Renders the suffix on the object marker.
+accept	1.25:9.9	1.25:9.8	renders	Marks the cave as the burial location.
+accept	1.25:9.12	1.25:9.12	renders	Marks the field as the burial location.
+accept	1.25:9.19	1.25:9.20	renders	Completes the compound meaning opposite.
+accept	1.25:10.3	1.25:10.3	renders	Completes the object relative що його.
+accept	1.25:10.5,1.25:10.6	1.25:10.4	renders	Renders the buying verb in the pluperfect.
+accept	1.25:10.7	1.25:10.7	renders	Completes the compound source preposition.
+accept	1.25:10.11,1.25:10.12	1.25:10.11	renders	Renders the passive burial verb.
+accept	1.25:11.15	1.25:11.15	renders	Renders the preposition meaning beside.
+accept	1.25:11.16	1.25:11.16	renders	Renders the well noun.
+accept	1.25:12.8	1.25:12.7	renders	Completes the object relative що його.
+accept	1.25:12.10	1.25:12.14	renders	The dative renders the recipient prefix.
+accept	1.25:13.6	1.25:13.6	renders	Renders the prefix before names.
+accept	1.25:13.10	1.25:13.8	renders	Renders the prefix before descendants.
+accept	1.25:16.8	1.25:16.8	renders	Renders the prefix before courts.
+accept	1.25:16.9,1.25:16.10	1.25:16.9	renders	Renders courts and their possessive suffix.
+accept	1.25:16.12	1.25:16.11	renders	Renders the prefix before encampments.
+accept	1.25:16.15	1.25:16.13,1.25:16.14	renders	Renders the compound numeral twelve.
+accept	1.25:16.19	1.25:16.17	renders	Renders the clan noun.
+accept	1.25:17.7	1.25:17.7	renders	Years after one hundred.
+accept	1.25:17.10	1.25:17.10	renders	Years after thirty.
+accept	1.25:17.13	1.25:17.13	renders	Years after seven.
+accept	1.25:17.15	1.25:17.15	renders	Renders the first death verb.
+accept	1.25:17.17	1.25:17.16	renders	Part of the compound conjunction та й.
+accept	1.25:17.19	1.25:17.17	renders	Explicates the subject of умер.
+accept	1.25:17.21,1.25:17.22	1.25:17.19	renders	Renders the passive gathering verb.
+accept	1.25:18.3	1.25:18.2	renders	Explicates the plural subject.
+accept	1.25:18.6	1.25:18.5	renders	Part of the extent expression аж до.
+accept	1.25:18.10	1.25:18.8	renders	Completes the compound meaning opposite Egypt.
+accept	1.25:18.12,1.25:18.13	1.25:18.11	renders	Renders the route expression as one goes.
+accept	1.25:18.14	1.25:18.12	renders	Renders the directional ending on Asshur.
+accept	1.25:18.17,1.25:18.18	1.25:18.17	renders	Renders the final verb and its singular subject.
+accept	1.25:18.19	1.25:18.13	renders	Completes the compound preposition before his brothers.
+accept	1.25:19.4	1.25:19.3	renders	Renders the construct relation in account of Isaac.
+accept	1.25:20.7	1.25:20.7	renders	Renders the temporal prefix.
+accept	1.25:20.8	1.25:20.8	renders	Renders the subject suffix on the infinitive.
+accept	1.25:20.10	1.25:20.22	renders	Renders the reflexive beneficiary.
+accept	1.25:20.11	1.25:20.23	renders	Renders the role marker for a wife.
+accept	1.25:20.19	1.25:20.17	renders	Renders Aram in the place name.
+accept	1.25:21.2	1.25:21.2	renders	Renders Isaac's entreaty.
+accept	1.25:21.4	1.25:21.4	renders	Marks the addressee of the prayer.
+accept	1.25:21.6	1.25:21.6	renders	Completes the compound intercession preposition.
+accept	1.25:21.11	1.25:21.10	renders	Copula for the predicate barren.
+accept	1.25:21.16	1.25:21.14	renders	Renders the pronoun in the response clause.
+accept	1.25:22.5,1.25:22.6	1.25:22.6	renders	Renders the womb and its possessive suffix.
+accept	1.25:22.9	1.25:22.8	renders	Explicates the feminine subject of said.
+accept	1.25:22.12	1.25:22.9	renders	Completes the conditional construction Коли ... то.
+accept	1.25:22.13	1.25:22.11	renders	Part of the interrogative phrase для чого.
+accept	1.25:22.16	1.25:22.12	renders	Renders the demonstrative in the question.
+accept	1.25:22.20	1.25:22.16	renders	The Ukrainian infinitive expresses the purpose.
+accept	1.25:23.3,1.25:23.4	1.25:23.4	renders	Renders the preposition and addressee suffix.
+accept	1.25:23.7	1.25:23.6	renders	Renders the first people noun.
+accept	1.25:23.17,1.25:23.18	1.25:23.14	renders	Renders the future passive verb.
+accept	1.25:23.20,1.25:23.21	1.25:23.19	renders	Renders becoming stronger.
+accept	1.25:23.22	1.25:23.16	renders	Renders the subject people noun.
+accept	1.25:23.23	1.25:23.17	renders	Renders the comparative prefix.
+accept	1.25:23.28	1.25:23.22	renders	Future auxiliary for служити.
+accept	1.25:24.2	1.25:24.2	renders	Renders the days reaching completion.
+accept	1.25:24.6	1.25:24.5	renders	Renders the childbirth infinitive.
+accept	1.25:25.6	1.25:25.6	renders	Renders the pronominal suffix on whole.
+accept	1.25:26.2	1.25:26.3	renders	Completes the compound meaning after that.
+accept	1.25:26.10	1.25:26.9,1.25:26.10	renders	Renders heel and the relation governed by grasping.
+accept	1.25:26.19	1.25:26.18	renders	Copula for the age predicate.
+accept	1.25:26.24	1.25:26.22	renders	Renders childbirth from the children's perspective.
+accept	1.25:26.25	1.25:26.23	renders	The Hebrew object becomes the Ukrainian subject.
+accept	1.25:27.2	1.25:27.2	renders	Renders growing up.
+accept	1.25:27.5	1.25:27.6	renders	Renders becoming.
+accept	1.25:27.7	1.25:27.8	renders	First occurrence of man.
+accept	1.25:27.8	1.25:27.9	renders	Introduces the clause rendering the knowing participle.
+accept	1.25:27.12	1.25:27.11	renders	Man in the phrase man of the field.
+accept	1.25:27.16	1.25:27.15	renders	Man in the description of Jacob.
+accept	1.25:27.17	1.25:27.16	renders	Renders Jacob's descriptive adjective.
+accept	1.25:27.18,1.25:27.21	1.25:27.17	renders	Relative clause renders the dwelling participle.
+accept	1.25:27.19	1.25:27.18	renders	Explicates the tents as the place of dwelling.
+accept	1.25:28.9	1.25:28.9	renders	Renders Isaac's suffix on mouth.
+accept	1.25:28.10	1.25:28.8	renders	Completes the idiom in his mouth.
+accept	1.25:29.2,1.25:29.3	1.25:29.2	renders	Renders the cooking verb in the pluperfect.
+accept	1.25:29.5	1.25:29.4	renders	Renders the cooked food noun.
+accept	1.25:29.13	1.25:29.13	renders	Copula for the exhaustion predicate.
+accept	1.25:30.7	1.25:30.6	renders	Renders the first-person object suffix.
+accept	1.25:30.9	1.25:30.10	renders	First red occurrence.
+accept	1.25:30.10	1.25:30.12	renders	Second red occurrence.
+accept	1.25:30.11	1.25:30.14	renders	Renders the postposed demonstrative.
+accept	1.25:30.15	1.25:30.18	renders	Completes the compound meaning therefore.
+accept	1.25:31.6	1.25:31.5	renders	Completes the temporal idiom meaning now.
+accept	1.25:31.7	1.25:31.10	renders	Renders the first-person recipient.
+accept	1.25:32.6	1.25:32.6,1.25:32.7,1.25:32.8	renders	Renders the full expression for impending death.
+accept	1.25:32.8	1.25:32.10	renders	Renders the interrogative meaning why.
+accept	1.25:32.11	1.25:32.11	renders	Renders the demonstrative.
+accept	1.25:33.7	1.25:33.6	renders	Completes the temporal idiom meaning now.
+accept	1.25:33.9	1.25:33.10	renders	Explicates the oath verb's subject.
+accept	1.25:33.11	1.25:33.11	renders	Renders the recipient of the oath.
+accept	1.25:33.16	1.25:33.16	renders	The dative marks the buyer.
+accept	1.25:34.4	1.25:34.4	renders	The dative marks the recipient.
+accept	1.25:34.7	1.25:34.9	renders	The adjective renders the genitive lentil noun.
+accept	1.25:34.8	1.25:34.8	renders	Renders the stew noun.
+accept	1.25:34.10	1.25:34.11	renders	Explicates the eating verb's subject.
+accept	1.25:34.17	1.25:34.16	renders	Part of the compound conjunction та й.

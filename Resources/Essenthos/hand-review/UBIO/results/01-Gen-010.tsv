@@ -1,0 +1,96 @@
+kind	from	to	relation	reason
+fixed	1.10:1			Missing link for the suffixed preposition.
+ok	1.10:2			
+ok	1.10:3			
+fixed	1.10:4			Conjunction linked to the wrong list item.
+fixed	1.10:5			Missing lexical and possessive links and a misplaced preposition.
+ok	1.10:6			
+ok	1.10:7			
+fixed	1.10:8			Missing links for the conjunction and the mighty man.
+fixed	1.10:9			Misplaced prepositions and missing adjective, noun, and idiom links.
+fixed	1.10:10			Missing copula link.
+fixed	1.10:11			Missing demonstrative and compound conjunction links.
+fixed	1.10:12			Missing second occurrence of the preposition.
+ok	1.10:13			
+fixed	1.10:14			Missing links in the relative clause.
+fixed	1.10:15			Missing link for firstborn.
+ok	1.10:16			
+ok	1.10:17			
+fixed	1.10:18			Missing link for the dispersal verb.
+fixed	1.10:19			Missing copula, direction, and boundary links.
+fixed	1.10:20			Two prepositions linked to neighboring nouns.
+fixed	1.10:21			Mislinked pronoun and missing dative, additive, and age links.
+ok	1.10:22			
+ok	1.10:23			
+ok	1.10:24			
+fixed	1.10:25			Missing dative prefix and enumerative numeral links.
+ok	1.10:26			
+ok	1.10:27			
+ok	1.10:28			
+fixed	1.10:29			Missing demonstrative link.
+fixed	1.10:30			Missing dwelling and direction links.
+fixed	1.10:31			Two misplaced prepositions and one missing preposition link.
+fixed	1.10:32			Missing preposition and demonstrative links.
+refuse	1.10:4.7	1.10:4.8		Conjunction introduces Dodanim.
+refuse	1.10:5.13	1.10:5.13		Preposition renders the preceding prefix.
+refuse	1.10:9.5	1.10:9.6		Face is rendered by лицем.
+refuse	1.10:9.15	1.10:9.16		Face is rendered by лицем.
+refuse	1.10:20.4	1.10:20.5		Preposition renders the preceding prefix.
+refuse	1.10:20.7	1.10:20.7		Preposition renders the preceding prefix.
+refuse	1.10:21.6	1.10:21.6		Hebrew pronoun belongs to the birth clause.
+refuse	1.10:31.4	1.10:31.5		Preposition renders the preceding prefix.
+refuse	1.10:31.7	1.10:31.7		Preposition renders the preceding prefix.
+accept	1.10:1.10	1.10:1.12	renders	Dative pronoun renders the suffixed preposition.
+accept	1.10:4.9	1.10:4.8	renders	Conjunction introducing Dodanim.
+accept	1.10:5.2	1.10:5.2	renders	Pronoun renders the demonstrative.
+accept	1.10:5.3	1.10:5.3	renders	Verb of separation.
+accept	1.10:5.9	1.10:5.9	renders	Distributive use of man.
+accept	1.10:5.10	1.10:5.10	renders	According to their language.
+accept	1.10:5.12	1.10:5.11	renders	Possessive suffix on tongue.
+accept	1.10:5.13	1.10:5.12	renders	According to their clans.
+accept	1.10:8.2	1.10:8.1	renders	Postpositive rendering of the conjunction.
+accept	1.10:8.9	1.10:8.10	renders	Giants renders the mighty man.
+accept	1.10:9.3	1.10:9.3	renders	First occurrence of mighty.
+accept	1.10:9.5	1.10:9.5	renders	Prefix in the first before phrase.
+accept	1.10:9.7	1.10:9.6	renders	First occurrence of face.
+accept	1.10:9.8	1.10:9.8	renders	Therefore also renders the causal preposition.
+accept	1.10:9.11	1.10:9.11	renders	Comparative prefix.
+accept	1.10:9.13	1.10:9.13	renders	Second occurrence of mighty.
+accept	1.10:9.15	1.10:9.15	renders	Prefix in the second before phrase.
+accept	1.10:9.17	1.10:9.16	renders	Second occurrence of face.
+accept	1.10:10.5	1.10:10.2	renders	Written copula.
+accept	1.10:11.2	1.10:11.5	renders	Demonstrative modifying land.
+accept	1.10:11.7	1.10:11.8	renders	Part of the connective та й.
+accept	1.10:12.6	1.10:12.7	renders	Second occurrence of between.
+accept	1.10:14.5	1.10:14.7	renders	Relative marker.
+accept	1.10:14.6	1.10:14.9,1.10:14.10	renders	One adverb renders from there.
+accept	1.10:14.7	1.10:14.8	renders	Verb of going out.
+accept	1.10:15.6	1.10:15.6	renders	Firstborn.
+accept	1.10:18.9	1.10:18.15	renders	Verb of dispersal.
+accept	1.10:19.2	1.10:19.2	renders	Written copula.
+accept	1.10:19.7,1.10:19.8	1.10:19.8	renders	Phrase renders going in that direction.
+accept	1.10:19.10	1.10:19.9	renders	Directional form of Gerar.
+accept	1.10:19.12,1.10:19.13	1.10:19.10	renders	Both words express the limit at Gaza.
+accept	1.10:19.15,1.10:19.16	1.10:19.12	renders	Phrase renders the second directional verb.
+accept	1.10:19.18	1.10:19.13	renders	Directional form of Sodom.
+accept	1.10:19.21	1.10:19.15	renders	Gomorrah as a coordinated destination.
+accept	1.10:19.24	1.10:19.17	renders	Admah as a coordinated destination.
+accept	1.10:19.27	1.10:19.19	renders	Zeboiim as a coordinated destination.
+accept	1.10:19.29,1.10:19.30	1.10:19.20	renders	Both words express the limit at Lasha.
+accept	1.10:20.4	1.10:20.4	renders	According to their clans.
+accept	1.10:20.7	1.10:20.6	renders	According to their languages.
+accept	1.10:21.2	1.10:21.2	renders	Dative ending renders the prefix.
+accept	1.10:21.3	1.10:21.5	renders	Additive particle.
+accept	1.10:21.5	1.10:21.6	renders	Resumptive pronoun in the birth clause.
+accept	1.10:21.12	1.10:21.14	renders	Elder in the age expression.
+accept	1.10:25.2	1.10:25.2	renders	Dative ending renders the prefix.
+accept	1.10:25.7	1.10:25.9	renders	The first of the two sons.
+accept	1.10:29.8	1.10:29.11	renders	Pronoun renders these.
+accept	1.10:30.2	1.10:30.3	renders	Dwelling noun.
+accept	1.10:30.7,1.10:30.8	1.10:30.6	renders	Phrase renders going in that direction.
+accept	1.10:30.10	1.10:30.7	renders	Directional form of Sephar.
+accept	1.10:31.4	1.10:31.4	renders	According to their clans.
+accept	1.10:31.7	1.10:31.6	renders	According to their languages.
+accept	1.10:31.13	1.10:31.10	renders	Prefix expressing grouping by nation.
+accept	1.10:32.5	1.10:32.5	renders	According to their generations.
+accept	1.10:32.14	1.10:32.11	renders	Pronoun renders the second demonstrative.

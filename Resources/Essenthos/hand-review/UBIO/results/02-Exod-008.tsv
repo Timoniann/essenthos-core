@@ -1,0 +1,214 @@
+kind	from	to	relation	reason
+fixed	2.8:1			Restored verbs, pronouns, and mood marking.
+fixed	2.8:2			Restored the boundary noun and instrumental relation.
+fixed	2.8:3			Corrected the bedroom phrase and restored verbs and prepositions.
+fixed	2.8:4			Restored the verb and the three prepositional links.
+fixed	2.8:5			Restored addressee, staff, and waterway links and the command to bring up frogs.
+fixed	2.8:6			Restored the preposition and the second element of the conjunction.
+fixed	2.8:7			Restored the manner phrase, instrumental relation, and verb.
+fixed	2.8:8			Restored predicates, pronouns, and mood marking.
+fixed	2.8:9			Restored the idiomatic request, prayer verb, and prepositional phrases.
+unsure	2.8:10			Restored pronoun, preposition, and negation links. The target for Такого is uncertain.
+unsure	2.8:11			Restored the pronominal suffix link. Він appears to be a typo for від.
+fixed	2.8:12			Restored compound prepositions and the past-tense verbal phrase.
+fixed	2.8:13			Restored the courtyard noun.
+fixed	2.8:14			Restored the emphasis expressed by the repeated noun.
+fixed	2.8:15			Restored verb forms, the object pronoun, and the comparative expression.
+fixed	2.8:16			Restored the earth modifier, verb form, and result relation.
+unsure	2.8:17			Restored the staff preposition and conjunction. Він refers to dust where the Hebrew clause names the gnats.
+fixed	2.8:18			Restored the manner phrase and prepositional links.
+fixed	2.8:19			Restored pronouns, the dative relation, verb forms, and the comparative expression.
+fixed	2.8:20			Corrected the phrase before Pharaoh and restored missing verbal and directional links.
+fixed	2.8:21			Restored negation, suffixes, swarm expressions, and the locative relative clause.
+fixed	2.8:22			Moved the demonstrative off the article and restored temporal, verbal, and locative links.
+fixed	2.8:23			Restored the verb, distinction, shared preposition, and sign.
+fixed	2.8:24			Corrected the swarm modifier and restored arrival, direction, and cause links.
+fixed	2.8:25			Restored the preposition, speech verb, and dative phrase.
+unsure	2.8:26			Restored the sacrifice phrases and other missing links. The correspondence of Тож to the Hebrew particle is uncertain.
+fixed	2.8:27			Completed the three-day expression and restored sacrifice, dative, and speech links.
+fixed	2.8:28			Restored the object pronoun, sacrifice phrase, dative, and prayer.
+fixed	2.8:29			Restored the compound preposition, swarm noun, prohibition, and sacrifice phrase.
+fixed	2.8:30			Restored the compound preposition and the prayer verb phrase.
+fixed	2.8:31			Restored the removal verb, swarm noun, and negative concord.
+fixed	2.8:32			Moved the possessive to its suffix and restored verbal and temporal links.
+refuse	2.8:3.16	2.7:28.14		Room noun is rendered by кімнати.
+refuse	2.8:20.12	2.8:16.13		Face noun is rendered by лицем.
+refuse	2.8:22.3	2.8:18.4		Demonstrative linked to elided article.
+refuse	2.8:24.7	2.8:20.7		Modifier linked to the swarm noun.
+refuse	2.8:32.5	2.8:28.4		Possessive linked to bare object marker.
+accept	2.8:1.2	2.7:26.2	renders	Speech verb.
+accept	2.8:1.6	2.7:26.6	renders	Motion command.
+accept	2.8:1.10	2.7:26.9	renders	Part of the compound conjunction.
+accept	2.8:1.12	2.7:26.11	renders	Suffixed addressee.
+accept	2.8:1.14	2.7:26.13	renders	Speech verb in the formula.
+accept	2.8:1.16	2.7:26.15	renders	Release command.
+accept	2.8:1.20,2.8:1.23	2.7:26.19	renders	Volitive force and first-person object suffix.
+accept	2.8:2.11	2.7:27.12	renders	Boundary or territory noun.
+accept	2.8:2.13	2.7:27.13	renders	Instrumental case renders the prefix.
+accept	2.8:3.2,2.8:3.4	2.7:28.2	renders	Two-word rendering of the swarming verb.
+accept	2.8:3.7,2.8:3.8	2.7:28.7	renders	Ascent verb and its subject.
+accept	2.8:3.10	2.7:28.9	renders	Entry verb.
+accept	2.8:3.11	2.7:28.10	renders	Preposition for entry into the house.
+accept	2.8:3.15	2.7:28.13	renders	Preposition for entry into the bedroom.
+accept	2.8:3.16,2.8:3.18	2.7:28.15	renders	Genitive modifier and its possessive suffix.
+accept	2.8:3.17	2.7:28.14	renders	Room noun.
+accept	2.8:3.24	2.7:28.20	renders	Preposition for the servants' houses.
+accept	2.8:3.29	2.7:28.24	renders	Preposition before the people.
+accept	2.8:3.33	2.7:28.27	renders	Preposition before the ovens.
+accept	2.8:3.37	2.7:28.30	renders	Preposition before the kneading troughs.
+accept	2.8:4.2,2.8:4.3	2.7:29.2	renders	Preposition with second-person suffix.
+accept	2.8:4.5	2.7:29.4	renders	Preposition before the people.
+accept	2.8:4.9	2.7:29.7	renders	Preposition before all the servants.
+accept	2.8:4.13	2.7:29.10	renders	Ascent verb.
+accept	2.8:5.7	2.8:1.7	renders	Dative renders the addressee preposition.
+accept	2.8:5.11	2.8:1.12	renders	Preposition introducing the staff.
+accept	2.8:5.13	2.8:1.13	renders	Possessive suffix on staff.
+accept	2.8:5.14	2.8:1.14	renders	Preposition before the rivers.
+accept	2.8:5.15	2.8:1.16	renders	River noun.
+accept	2.8:5.16	2.8:1.17	renders	Preposition before the streams.
+accept	2.8:5.19	2.8:1.21	renders	Preposition before the pools.
+accept	2.8:5.22	2.8:1.25	renders	Causative command to bring up.
+accept	2.8:6.6	2.8:2.6	renders	Preposition before the waters.
+accept	2.8:6.13	2.8:2.13	renders	Part of the compound conjunction.
+accept	2.8:7.3	2.8:3.3	renders	Part of the expression meaning likewise.
+accept	2.8:7.9	2.8:3.6	renders	Instrumental case renders the prefix.
+accept	2.8:7.11	2.8:3.9	renders	Causative verb of bringing up.
+accept	2.8:8.8	2.8:4.9	renders	Part of the compound conjunction.
+accept	2.8:8.13,2.8:8.14	2.8:4.15	renders	Volitive particle and removal verb.
+accept	2.8:8.18	2.8:4.18	renders	First-person suffix on the preposition.
+accept	2.8:8.24,2.8:8.25	2.8:4.23	renders	First-person subject and release verb.
+accept	2.8:8.29	2.8:4.28	renders	Volitive force of the sacrifice verb.
+accept	2.8:9.4	2.8:5.4	renders	Dative renders the addressee prefix.
+accept	2.8:9.5	2.8:5.6	renders	Idiomatic request to set the time.
+accept	2.8:9.6	2.8:5.7	renders	First-person suffix in the request.
+accept	2.8:9.9	2.8:5.10	renders	Intercession verb.
+accept	2.8:9.10,2.8:9.11	2.8:5.11	renders	Benefactive preposition with second-person suffix.
+accept	2.8:9.13	2.8:5.13	renders	Benefactive prefix before the servants.
+accept	2.8:9.14	2.8:5.14	renders	Servant noun.
+accept	2.8:9.24	2.8:5.22	renders	Second-person suffix on the preposition.
+accept	2.8:9.26	2.8:5.24	renders	Source prefix before the houses.
+accept	2.8:10.2	2.8:6.2	renders	Subject of the first speech verb.
+accept	2.8:10.4	2.8:6.3	renders	Prefix for the appointed time.
+accept	2.8:10.9	2.8:6.7	renders	Prefix meaning according to.
+accept	2.8:10.16	2.8:6.12	renders	Existential negation.
+accept	2.8:11.5	2.8:7.5	renders	Second-person suffix on the preposition.
+accept	2.8:12.6	2.8:8.7	renders	Second element of the compound source preposition.
+accept	2.8:12.13	2.8:8.14,2.8:8.15	renders	Compound expression meaning concerning.
+accept	2.8:12.17,2.8:12.18	2.8:8.19	renders	Past verb with its auxiliary.
+accept	2.8:12.19	2.8:8.20	renders	Preposition marking whom the frogs were brought upon.
+accept	2.8:13.14	2.8:9.16	renders	Courtyard noun.
+accept	2.8:14.4	2.8:10.4	renders	First noun of the emphatic repetition.
+accept	2.8:15.5	2.8:11.5	renders	Verb introducing the relief.
+accept	2.8:15.9	2.8:11.9	renders	Verbal part of becoming hardened.
+accept	2.8:15.16	2.8:11.15	renders	Third-person plural suffix.
+accept	2.8:15.17	2.8:11.16,2.8:11.17	renders	Compound comparative conjunction.
+accept	2.8:15.19	2.8:11.18	renders	Past auxiliary of the speech verb.
+accept	2.8:16.7	2.8:12.7	renders	Dative renders the addressee preposition.
+accept	2.8:16.12	2.8:12.12	renders	Part of the compound conjunction.
+accept	2.8:16.14	2.8:12.17	renders	Adjective renders the genitive earth noun.
+accept	2.8:16.17,2.8:16.18	2.8:12.19	renders	Volitive force and subject of the verb.
+accept	2.8:16.20	2.8:12.20	renders	Predicative instrumental renders the result prefix.
+accept	2.8:17.10	2.8:13.9	renders	Preposition introducing the staff.
+accept	2.8:17.14	2.8:13.11	renders	Part of the compound conjunction.
+accept	2.8:18.3	2.8:14.3	renders	Part of the expression meaning likewise.
+accept	2.8:18.7	2.8:14.6	renders	Instrumental case renders the prefix.
+accept	2.8:18.17	2.8:14.20	renders	Preposition before humankind.
+accept	2.8:18.20	2.8:14.24	renders	Preposition before livestock.
+accept	2.8:19.4	2.8:15.5	renders	Dative renders the addressee preposition.
+accept	2.8:19.5	2.8:15.9	renders	Independent demonstrative use of the pronoun.
+accept	2.8:19.11	2.8:15.11	renders	Verbal part of the hardened predicate.
+accept	2.8:19.14	2.8:15.16	renders	Subject of the hearing verb.
+accept	2.8:19.17	2.8:15.17	renders	Third-person plural suffix.
+accept	2.8:19.18	2.8:15.18,2.8:15.19	renders	Compound comparative conjunction.
+accept	2.8:19.20	2.8:15.20	renders	Past auxiliary of the speech verb.
+accept	2.8:20.7	2.8:16.6	renders	Earliness expressed by the verb.
+accept	2.8:20.8	2.8:16.7	renders	Fused adverb renders the temporal prefix.
+accept	2.8:20.10	2.8:16.10	renders	Part of the compound conjunction.
+accept	2.8:20.12	2.8:16.12	renders	Prepositional element of before the face.
+accept	2.8:20.16,2.8:20.17	2.8:16.16	renders	Motion participle and its expressed subject.
+accept	2.8:20.18	2.8:16.18	renders	Directional ending on the water noun.
+accept	2.8:20.21	2.8:16.20	renders	Second-person subject of the speech verb.
+accept	2.8:20.23	2.8:16.21	renders	Suffixed addressee.
+accept	2.8:20.25	2.8:16.23	renders	Speech verb in the formula.
+accept	2.8:20.27	2.8:16.25	renders	Release command.
+accept	2.8:20.31,2.8:20.34	2.8:16.28	renders	Volitive force and first-person object suffix.
+accept	2.8:21.4	2.8:17.3	renders	Negation of the release clause.
+accept	2.8:21.5	2.8:17.4	renders	Release verb.
+accept	2.8:21.10	2.8:17.7	renders	First-person suffix on the presentative.
+accept	2.8:21.12,2.8:21.13	2.8:17.9	renders	Preposition and its second-person suffix.
+accept	2.8:21.15	2.8:17.11	renders	Preposition before the servants.
+accept	2.8:21.16	2.8:17.12	renders	Servant noun.
+accept	2.8:21.19	2.8:17.14	renders	Preposition before the people.
+accept	2.8:21.23	2.8:17.17	renders	Preposition before the houses.
+accept	2.8:21.26	2.8:17.21	renders	Swarm component of the first occurrence.
+accept	2.8:21.33	2.8:17.28	renders	Second occurrence of the swarm noun.
+accept	2.8:21.37	2.8:17.35	renders	Preposition of the locative predicate.
+accept	2.8:21.38	2.8:17.33,2.8:17.35	renders	Relative pronoun incorporates the resumptive suffix.
+accept	2.8:21.40	2.8:17.35	renders	Verb expresses the locative predicate.
+accept	2.8:22.3	2.8:18.7	renders	Demonstrative in the time expression.
+accept	2.8:22.4	2.8:18.3	renders	Temporal genitive renders the time prefix.
+accept	2.8:22.10	2.8:18.13	renders	Verb expressing presence in Goshen.
+accept	2.8:22.11,2.8:22.12	2.8:18.14	renders	Preposition with its feminine suffix.
+accept	2.8:22.13	2.8:18.15	renders	Purpose prefix.
+accept	2.8:22.15	2.8:18.17	renders	Existential verb.
+accept	2.8:22.17	2.8:18.19	renders	Swarm component of the noun.
+accept	2.8:22.25	2.8:18.25,2.8:18.26	renders	Compound expression meaning in the midst of.
+accept	2.8:23.2	2.8:19.2	renders	Verb of making the distinction.
+accept	2.8:23.4	2.8:19.3	renders	Noun rendered as distinction in context.
+accept	2.8:23.5	2.8:19.7	renders	Shared preposition also governs the second people.
+accept	2.8:23.14	2.8:19.13	renders	Sign noun.
+accept	2.8:24.6	2.8:20.6	renders	Arrival verb.
+accept	2.8:24.7	2.8:20.8	renders	Adjective expressing the swarm's magnitude.
+accept	2.8:24.8	2.8:20.7	renders	First swarm noun.
+accept	2.8:24.9	2.8:20.9	renders	Directional ending on the first house noun.
+accept	2.8:24.13	2.8:20.12	renders	Preposition expressing the second house as destination.
+accept	2.8:24.18	2.8:20.15	renders	Preposition before all Egypt.
+accept	2.8:24.23	2.8:20.19	renders	Destruction verb.
+accept	2.8:24.25	2.8:20.23	renders	Second element of the causal preposition.
+accept	2.8:24.27	2.8:20.25	renders	Swarm component of the second occurrence.
+accept	2.8:25.7	2.8:21.7	renders	Addressee prefix before Aaron.
+accept	2.8:25.9	2.8:21.10	renders	Speech verb rendered as a participial form.
+accept	2.8:25.14	2.8:21.13,2.8:21.14	renders	Dative renders the prefix and divine noun.
+accept	2.8:26.5	2.8:22.5	renders	Predicate of appropriateness.
+accept	2.8:26.11	2.8:22.10	renders	Preposition expresses the first construct relation.
+accept	2.8:26.13,2.8:26.14,2.8:26.15,2.8:26.16,2.8:26.17	2.8:22.12	renders	First sacrifice verb with its subject and modal phrase.
+accept	2.8:26.18	2.8:22.13	renders	Dative renders the recipient prefix.
+accept	2.8:26.19	2.8:22.15	renders	God noun.
+accept	2.8:26.22,2.8:26.23,2.8:26.24	2.8:22.17	renders	Remaining elements of the second sacrifice phrase.
+accept	2.8:26.27	2.8:22.19	renders	Preposition expresses the second construct relation.
+accept	2.8:26.29	2.8:22.21	renders	Prefix in the expression before their eyes.
+accept	2.8:26.33,2.8:26.36	2.8:22.25	renders	Plural subject and first-person plural object suffix.
+accept	2.8:27.1	2.8:23.3	renders	Day component of the compound adjective.
+accept	2.8:27.5	2.8:23.5	renders	Preposition before the wilderness.
+accept	2.8:27.8	2.8:23.9	renders	Verbal part of the sacrifice phrase.
+accept	2.8:27.10	2.8:23.10	renders	Dative renders the recipient prefix.
+accept	2.8:27.11	2.8:23.12	renders	God noun.
+accept	2.8:27.13	2.8:23.13,2.8:23.14	renders	Compound comparative conjunction.
+accept	2.8:27.14,2.8:27.15	2.8:23.15	renders	Speech verb and its subject.
+accept	2.8:27.16	2.8:23.16	renders	Dative pronoun renders the suffixed preposition.
+accept	2.8:28.6	2.8:24.6	renders	Object pronoun on the suffixed marker.
+accept	2.8:28.9	2.8:24.8	renders	Verbal part of the sacrifice phrase.
+accept	2.8:28.11	2.8:24.9	renders	Dative renders the recipient prefix.
+accept	2.8:28.12	2.8:24.11	renders	God noun.
+accept	2.8:28.20	2.8:24.20	renders	Going verb.
+accept	2.8:28.21	2.8:24.21	renders	Command to intercede.
+accept	2.8:28.23	2.8:24.22	renders	First-person suffix on the preposition.
+accept	2.8:29.7,2.8:29.8	2.8:25.8	renders	Second part of the compound preposition and its suffix.
+accept	2.8:29.16	2.8:25.16	renders	Swarm component of the noun.
+accept	2.8:29.30	2.8:25.27	renders	Volitive force of the jussive verb.
+accept	2.8:29.33	2.8:25.29	renders	Verb of dealing deceitfully.
+accept	2.8:29.35	2.8:25.30	renders	Purpose prefix before the negative construction.
+accept	2.8:29.37	2.8:25.32	renders	Release verb.
+accept	2.8:29.39	2.8:25.37	renders	Verbal part of the sacrifice phrase.
+accept	2.8:29.41	2.8:25.38	renders	Dative renders the recipient prefix.
+accept	2.8:30.4	2.8:26.5	renders	Second element of the compound source preposition.
+accept	2.8:30.7,2.8:30.8	2.8:26.8	renders	Two-word rendering of the prayer verb.
+accept	2.8:31.8	2.8:27.8	renders	Removal verb.
+accept	2.8:31.9	2.8:27.10	renders	Swarm component of the noun.
+accept	2.8:31.23	2.8:27.18	renders	Negative concord reinforces the clause negation.
+accept	2.8:32.3	2.8:28.2	renders	Causative part of the hardening phrase.
+accept	2.8:32.5	2.8:28.5	renders	Possessive suffix on heart.
+accept	2.8:32.8	2.8:28.6	renders	Part of the additive expression.
+accept	2.8:32.9	2.8:28.11	renders	Temporal demonstrative.
+accept	2.8:32.10	2.8:28.7	renders	Temporal instrumental renders the prefix.
+accept	2.8:32.13,2.8:32.14	2.8:28.14	renders	Release verb and its subject.

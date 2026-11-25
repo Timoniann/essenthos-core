@@ -1,0 +1,197 @@
+kind	from	to	relation	reason
+ok	2.14:1			
+fixed	2.14:2			Corrected the suffix target and restored command, mood, and preposition links.
+fixed	2.14:3			Restored the verb and two preposition links.
+fixed	2.14:4			Restored verbal and preposition links. «вами» shifts the Hebrew third person to second person.
+fixed	2.14:5			Restored the question words, release verb, and serving phrase.
+fixed	2.14:6			Restored the subject pronoun and reflexive complement.
+fixed	2.14:7			Restored the subject and the phrase with the collective suffix.
+fixed	2.14:8			Restored the causative wording, subject pronoun, and instrumental phrase.
+fixed	2.14:9			Reassigned three conjunctions and a locative preposition, and restored the object and participial links.
+fixed	2.14:10			Restored the lifting verb and two pronoun links.
+unsure	2.14:11			Restored clear links. The division of the opening causal phrase remains uncertain.
+fixed	2.14:12			Restored interrogative, verbal, prepositional, and suffix links.
+fixed	2.14:13			Reassigned «уже» and completed the command, beneficiary, and duration links.
+fixed	2.14:14			Restored the future auxiliary and beneficiary phrase.
+fixed	2.14:15			Restored the question word, subject, preposition, and mood marker.
+fixed	2.14:16			Restored the preposition and jussive marker.
+fixed	2.14:17			Restored the suffix, pursuit phrase, passive verb phrase, and instrument prepositions.
+fixed	2.14:18			Completed the passive verb phrase and restored three instrument prepositions.
+fixed	2.14:19			Restored both movement verbs, the relative word, and the prepositional phrases.
+fixed	2.14:20			Restored subject pronouns, the expanded location phrase, and the reciprocal pair.
+fixed	2.14:21			Restored two verbs, the wind adjective, and the case and preposition links.
+fixed	2.14:22			Restored the locative links, water subject, copula, and beneficiary phrase.
+fixed	2.14:23			Restored the pronoun in the pursuit phrase.
+fixed	2.14:24			Restored the time phrase, direction, compound connective, and expanded verb.
+unsure	2.14:25			Restored clear links. The mapping of «з» after «колеса» and «що» in the expanded causative remains uncertain.
+fixed	2.14:26			Restored the preposition, jussive, and possessives for collective Egypt.
+fixed	2.14:27			Restored links for dawn, the sea’s strength, flight, and the final verb.
+fixed	2.14:28			Restored the army dative, participial clause, and final negative expression.
+fixed	2.14:29			Restored the movement verb, path, copula, beneficiary, and side prepositions.
+fixed	2.14:30			Moved the demonstrative off the article and restored both verbs and the temporal link.
+fixed	2.14:31			Restored the adjective, noun, verb, inchoative auxiliary, and subject pronoun.
+refuse	2.14:2.21	2.14:2.22		The encampment verb carries no object pronoun.
+refuse	2.14:9.10	2.14:9.5		This conjunction introduces the horsemen.
+refuse	2.14:9.13	2.14:9.16		This conjunction introduces the army.
+refuse	2.14:9.16	2.14:9.18		This conjunction introduces the overtaking verb.
+refuse	2.14:9.25	2.14:9.21		The place name does not carry the preposition.
+refuse	2.14:13.26	2.14:13.28		The separate adverb renders «уже» here.
+refuse	2.14:30.4	2.14:30.5		The elided article carries no demonstrative.
+accept	2.14:2.1	2.14:2.1	renders	Speech command.
+accept	2.14:2.3	2.14:2.2	renders	Dative marks the addressee.
+accept	2.14:2.5	2.14:2.6	renders	Jussive of returning.
+accept	2.14:2.9	2.14:2.8	renders	Jussive of encamping.
+accept	2.14:2.11	2.14:2.9	renders	Prefix of the first compound preposition.
+accept	2.14:2.16	2.14:2.15	renders	Second occurrence of ‘between’.
+accept	2.14:2.18	2.14:2.18,2.14:2.19	renders	Compound preposition before Baal Zephon.
+accept	2.14:2.20,2.14:2.21	2.14:2.21	renders	‘Opposite’ with its pronominal suffix.
+accept	2.14:3.4	2.14:3.4	renders	Preposition introduces the people spoken about.
+accept	2.14:3.7	2.14:3.7	renders	Describes their disorientation.
+accept	2.14:3.14	2.14:3.13	renders	Prepositional relation with ‘them’.
+accept	2.14:4.7,2.14:4.8	2.14:4.7	renders	Subject and future auxiliary of pursuing.
+accept	2.14:4.13,2.14:4.14	2.14:4.10	renders	First-person form of the glorification verb.
+accept	2.14:4.15	2.14:4.11	renders	Instrumental preposition before Pharaoh.
+accept	2.14:4.18	2.14:4.14	renders	Instrumental preposition before the army.
+accept	2.14:4.29	2.14:4.24	renders	Verb for what they did.
+accept	2.14:5.22	2.14:5.21	renders	Interrogative ‘what’.
+accept	2.14:5.23	2.14:5.22	renders	Demonstrative ‘this’.
+accept	2.14:5.27	2.14:5.25	renders	Verb of releasing Israel.
+accept	2.14:5.30,2.14:5.31	2.14:5.29	renders	Serving and its first-person plural suffix.
+accept	2.14:6.3	2.14:6.2	renders	Subject encoded in the harnessing verb.
+accept	2.14:6.11	2.14:6.9	renders	Reflexive renders the suffix of ‘with’.
+accept	2.14:7.3	2.14:7.2	renders	Subject encoded in the taking verb.
+accept	2.14:7.15,2.14:7.16	2.14:7.14	renders	‘All of them’ renders the quantifier and collective suffix.
+accept	2.14:8.3	2.14:8.2	renders	Part of the expanded causative verb.
+accept	2.14:8.10	2.14:8.10	renders	Subject encoded in the pursuit verb.
+accept	2.14:8.19	2.14:8.20	renders	Adjective modifying ‘hand’.
+accept	2.14:8.20	2.14:8.18	renders	Instrumental case renders the prefix.
+accept	2.14:9.5	2.14:9.4	renders	Suffix of ‘after’.
+accept	2.14:9.10	2.14:9.16	renders	Conjunction introducing the horsemen.
+accept	2.14:9.13	2.14:9.18	renders	Conjunction introducing the army.
+accept	2.14:9.16	2.14:9.5	renders	Conjunction introducing the overtaking verb.
+accept	2.14:9.18	2.14:9.7	renders	Suffixed direct-object pronoun.
+accept	2.14:9.19,2.14:9.20,2.14:9.22	2.14:9.8	renders	Temporal clause expands the encamping participle.
+accept	2.14:9.25	2.14:9.20	renders	Locative preposition before Pi Hahiroth.
+accept	2.14:9.27	2.14:9.22	renders	Prefix of the compound preposition.
+accept	2.14:10.5	2.14:10.5	renders	Verb of lifting the eyes.
+accept	2.14:10.15	2.14:10.14	renders	Suffix of ‘after’.
+accept	2.14:10.19	2.14:10.16	renders	Subject encoded in the fear verb.
+accept	2.14:11.2	2.14:11.3	renders	Dative marks the addressee.
+accept	2.14:11.3	2.14:11.2	renders	Speech verb rendered as reproach.
+accept	2.14:11.4	2.14:11.5	renders	Interrogative marker.
+accept	2.14:11.9	2.14:11.8	renders	Existential predicate in ‘there were no’.
+accept	2.14:11.14	2.14:11.12	renders	Verb of taking them away.
+accept	2.14:11.16	2.14:11.14	renders	Infinitive of dying.
+accept	2.14:11.19	2.14:11.18	renders	Interrogative ‘what’.
+accept	2.14:11.20	2.14:11.19	renders	Demonstrative ‘this’.
+accept	2.14:11.21	2.14:11.20	renders	Verb for what he did.
+accept	2.14:11.23	2.14:11.21	renders	Suffixed dative ‘to us’.
+accept	2.14:11.24	2.14:11.22	renders	Purpose prefix.
+accept	2.14:11.25	2.14:11.23	renders	Verb of bringing out.
+accept	2.14:12.1	2.14:12.1	renders	Interrogative marker.
+accept	2.14:12.2	2.14:12.3	renders	Demonstrative ‘this’.
+accept	2.14:12.4	2.14:12.5	renders	Substantival pronoun for the thing spoken.
+accept	2.14:12.7	2.14:12.7	renders	Verb of speaking.
+accept	2.14:12.8,2.14:12.9	2.14:12.8	renders	Preposition and its addressee suffix.
+accept	2.14:12.13	2.14:12.13	renders	Command to leave them alone.
+accept	2.14:12.14	2.14:12.14	renders	First-person plural suffix of the preposition.
+accept	2.14:12.16,2.14:12.18	2.14:12.16	renders	Mood marker and verb of serving.
+accept	2.14:12.23	2.14:12.22	renders	Noun renders the infinitive of serving.
+accept	2.14:12.27	2.14:12.26	renders	First-person plural suffix on dying.
+accept	2.14:13.8	2.14:13.9	renders	Command to stand.
+accept	2.14:13.15	2.14:13.17	renders	Suffixed beneficiary.
+accept	2.14:13.22	2.14:13.28	renders	‘Any more’ renders the verb of continuing.
+accept	2.14:13.26	2.14:13.31	renders	Adverb of continuation under negation.
+accept	2.14:13.27	2.14:13.32	renders	The word ‘forever’ also renders the temporal limit.
+accept	2.14:14.2	2.14:14.2	renders	Future auxiliary of fighting.
+accept	2.14:14.4,2.14:14.5	2.14:14.3	renders	Preposition and beneficiary suffix.
+accept	2.14:15.6	2.14:15.6	renders	Interrogative introducing the question.
+accept	2.14:15.7	2.14:15.7	renders	Subject encoded in the crying verb.
+accept	2.14:15.8	2.14:15.8	renders	Preposition of ‘to me’.
+accept	2.14:15.15	2.14:15.14	renders	Jussive of setting out.
+accept	2.14:16.10	2.14:16.10	renders	Preposition over the sea.
+accept	2.14:16.16	2.14:16.16	renders	Jussive of entering.
+accept	2.14:17.4	2.14:17.3	renders	First-person suffix on the presentative.
+accept	2.14:17.12,2.14:17.13	2.14:17.10	renders	‘After’ and its pronominal suffix.
+accept	2.14:17.15,2.14:17.16,2.14:17.17	2.14:17.12	renders	Auxiliary, subject, and participle render the finite verb.
+accept	2.14:17.18	2.14:17.13	renders	Instrumental preposition before Pharaoh.
+accept	2.14:17.21	2.14:17.16	renders	Instrumental preposition before the army.
+accept	2.14:17.26	2.14:17.19	renders	Instrumental preposition before the chariots.
+accept	2.14:17.30	2.14:17.22	renders	Instrumental preposition before the horsemen.
+accept	2.14:18.8,2.14:18.10	2.14:18.8	renders	Auxiliary and participle render the glorification verb.
+accept	2.14:18.11	2.14:18.9	renders	Instrumental preposition before Pharaoh.
+accept	2.14:18.14	2.14:18.11	renders	Instrumental preposition before the chariots.
+accept	2.14:18.18	2.14:18.14	renders	Instrumental preposition before the horsemen.
+accept	2.14:19.2	2.14:19.2	renders	First movement verb, with the angel as subject.
+accept	2.14:19.5	2.14:19.7	renders	Relative word expands the walking participle.
+accept	2.14:19.7	2.14:19.8	renders	Prefix of the compound preposition.
+accept	2.14:19.13	2.14:19.15	renders	Suffix in the angel’s destination phrase.
+accept	2.14:19.15	2.14:19.17	renders	Second movement verb, with the pillar as subject.
+accept	2.14:19.19	2.14:19.22	renders	Suffix on the expression for their front.
+accept	2.14:19.23	2.14:19.26	renders	Suffix in the pillar’s final location phrase.
+accept	2.14:20.3	2.14:20.2	renders	Subject encoded in the entering verb.
+accept	2.14:20.4,2.14:20.5	2.14:20.3	renders	Expanded expression for entering between the camps.
+accept	2.14:20.10	2.14:20.7	renders	Second occurrence of ‘between’.
+accept	2.14:20.24	2.14:20.18	renders	Subject encoded in the lighting verb.
+accept	2.14:20.30	2.14:20.25	renders	First member of the reciprocal pair.
+accept	2.14:20.32	2.14:20.27	renders	Second member of the reciprocal pair.
+accept	2.14:21.6	2.14:21.6	renders	Preposition over the sea.
+accept	2.14:21.10	2.14:21.10	renders	Causative verb of driving the sea.
+accept	2.14:21.12	2.14:21.18	renders	Adjective describing the wind’s strength.
+accept	2.14:21.14	2.14:21.15	renders	Instrumental case renders the preposition.
+accept	2.14:21.18	2.14:21.23	renders	Verb of making the sea dry ground.
+accept	2.14:21.20	2.14:21.27	renders	Predicative instrumental renders the resultative prefix.
+accept	2.14:22.9	2.14:22.9	renders	Preposition before dry ground.
+accept	2.14:22.12	2.14:22.14	renders	‘Sea’ renders the waters in this clause.
+accept	2.14:22.13	2.14:22.16	renders	Copula asserts the wall predicate.
+accept	2.14:22.14,2.14:22.15	2.14:22.15	renders	Preposition and beneficiary suffix.
+accept	2.14:22.17	2.14:22.17	renders	Preposition on the right side.
+accept	2.14:22.21	2.14:22.20	renders	Preposition on the left side.
+accept	2.14:23.7	2.14:23.6	renders	Suffix of ‘after’.
+accept	2.14:24.3	2.14:24.3	renders	Temporal preposition.
+accept	2.14:24.4	2.14:24.6	renders	Adjective renders the morning genitive.
+accept	2.14:24.9	2.14:24.10	renders	Preposition directed toward the camp.
+accept	2.14:24.18	2.14:24.18	renders	Part of the compound connective «та й».
+accept	2.14:24.19,2.14:24.20,2.14:24.21	2.14:24.19	renders	Expanded expression for throwing into confusion.
+accept	2.14:25.2	2.14:25.2	renders	Verb of removing the wheels.
+accept	2.14:25.8,2.14:25.10,2.14:25.13	2.14:25.7	renders	Expanded driving verb and its object suffix.
+accept	2.14:25.11,2.14:25.12	2.14:25.9	renders	Predicative phrase renders the difficulty.
+accept	2.14:25.23,2.14:25.24	2.14:25.20	renders	Preposition and beneficiary suffix.
+accept	2.14:25.25	2.14:25.21	renders	Preposition marks the opponent in battle.
+accept	2.14:26.9	2.14:26.9	renders	Preposition over the sea.
+accept	2.14:26.12,2.14:26.13	2.14:26.13	renders	Jussive of the waters returning.
+accept	2.14:26.18	2.14:26.19	renders	Chariot suffix refers to collective Egypt.
+accept	2.14:26.23	2.14:26.22	renders	Horsemen suffix refers to collective Egypt.
+accept	2.14:27.6	2.14:27.6	renders	Preposition over the sea.
+accept	2.14:27.11	2.14:27.13	renders	Prefix introduces the temporal infinitive.
+accept	2.14:27.12	2.14:27.14	renders	Verb for the turning of daybreak.
+accept	2.14:27.14	2.14:27.16	renders	Preposition marking the state restored.
+accept	2.14:27.15,2.14:27.16	2.14:27.17	renders	The sea’s strength and its possessive suffix.
+accept	2.14:27.19	2.14:27.20	renders	Flight participle.
+accept	2.14:27.20	2.14:27.21	renders	Prefix of the expression for facing the sea.
+accept	2.14:27.21	2.14:27.22	renders	Suffix refers to the sea.
+accept	2.14:27.23	2.14:27.24	renders	Verb of throwing the Egyptians into the sea.
+accept	2.14:28.11	2.14:28.14,2.14:28.16	renders	Dative army noun renders the prefix and noun.
+accept	2.14:28.12	2.14:28.19	renders	Relative word expands the entering participle.
+accept	2.14:28.15	2.14:28.20	renders	Suffix of ‘after’.
+accept	2.14:28.18	2.14:28.27	renders	Scalar particle in ‘not even one’.
+accept	2.14:28.19	2.14:28.28	renders	‘A single one’ within the negative clause.
+accept	2.14:28.20,2.14:28.21	2.14:28.26	renders	Partitive phrase renders ‘among them’.
+accept	2.14:28.22	2.14:28.24	renders	Negation of remaining.
+accept	2.14:28.23	2.14:28.25	renders	Verb of remaining.
+accept	2.14:29.4	2.14:29.4	renders	Verb of walking.
+accept	2.14:29.5	2.14:29.5	renders	Instrumental path expression renders the prefix.
+accept	2.14:29.10	2.14:29.14	renders	‘Sea’ renders the waters in this clause.
+accept	2.14:29.11	2.14:29.16	renders	Copula asserts the wall predicate.
+accept	2.14:29.12,2.14:29.13	2.14:29.15	renders	Preposition and beneficiary suffix.
+accept	2.14:29.15	2.14:29.17	renders	Preposition on the right side.
+accept	2.14:29.19	2.14:29.20	renders	Preposition on the left side.
+accept	2.14:30.2	2.14:30.2	renders	Verb of delivering Israel.
+accept	2.14:30.4	2.14:30.8	renders	Demonstrative ‘that’.
+accept	2.14:30.5	2.14:30.4	renders	Temporal genitive renders ‘on’.
+accept	2.14:30.11	2.14:30.15	renders	Second clause’s verb of seeing.
+accept	2.14:31.4	2.14:31.8	renders	Adjective describing the hand.
+accept	2.14:31.5	2.14:31.6	renders	Noun ‘hand’.
+accept	2.14:31.7	2.14:31.10	renders	Verb for what the Lord displayed.
+accept	2.14:31.12	2.14:31.15	renders	Inchoative auxiliary in ‘began to fear’.
+accept	2.14:31.19	2.14:31.21	renders	Subject encoded in the belief verb, with the people treated collectively.

@@ -1,0 +1,249 @@
+kind	from	to	relation	reason
+fixed	1.22:1			Restored the demonstrative, clause connective, and pronouns.
+fixed	1.22:2			Separated the possessive occurrences and restored missing command and relative links.
+fixed	1.22:3			Restored timing, accompaniment, woodcutting, and pronoun links.
+fixed	1.22:4			Completed the temporal and distance expressions.
+fixed	1.22:5			Restored the addressee, imperative, and destination links.
+fixed	1.22:6			Restored the wood and its purpose relation.
+fixed	1.22:7			Restored speech, response, and offering links.
+fixed	1.22:8			Restored the beneficiary and purpose links.
+fixed	1.22:9			Restored relative, recipient, object, and spatial links.
+fixed	1.22:10			Restored the slaughter infinitive.
+fixed	1.22:11			Restored the call, pronouns, and response formula.
+fixed	1.22:12			Restored the second prohibition and completed the compound adjective and withholding phrase.
+fixed	1.22:13			Restored connective and preposition links. «один» stays unlinked because BHSA reads ‘behind’.
+fixed	1.22:14			Restored the demonstrative, relative, and both verbs of seeing.
+fixed	1.22:15			Restored the calling verb.
+fixed	1.22:16			Restored the oath, causal phrase, demonstrative, and withholding verb.
+fixed	1.22:17			Restored the result marker, object, and construct relation. «твоїх» stays unlinked because the Hebrew suffix is third person.
+fixed	1.22:18			Completed the reflexive blessing, means, and causal clause.
+fixed	1.22:19			Corrected both Abraham links and completed both occurrences of Beer-sheba.
+fixed	1.22:20			Restored the demonstrative, speech formula, and recipient prepositions.
+ok	1.22:21			
+ok	1.22:22			
+fixed	1.22:23			Restored Milcah’s verb and Nahor’s recipient preposition.
+fixed	1.22:24			Restored the naming phrase and the emphatic subject.
+fixed	1.23:1			Restored the first ‘life’ and each occurrence of ‘years’.
+fixed	1.23:2			Restored the identifying pronoun and the object phrases of mourning and weeping.
+fixed	1.23:3			Completed the departure phrase and restored the speech verb and addressee.
+fixed	1.23:4			Restored both accompaniment phrases, the burial purpose, and the departure phrase.
+fixed	1.23:5			Restored the speech verb and its recipient.
+fixed	1.23:6			Restored the listening command, possessive and prepositional phrases, and withholding clause.
+fixed	1.23:7			Restored the two dative prepositions.
+fixed	1.23:8			Restored the speech, willingness, departure, and intercession phrases.
+fixed	1.23:9			Completed both giving clauses, the price phrase, and the burial-property expression.
+fixed	1.23:10			Restored the dwelling verb, audience phrase, and entry participle.
+fixed	1.23:11			Restored the first-person subjects, recipients, and location phrases.
+fixed	1.23:12			Completed the compound preposition ‘before’.
+fixed	1.23:13			Restored the speech verb, audience, wish, and burial clause.
+fixed	1.23:14			Restored the speech recipient.
+fixed	1.23:15			Restored the listening object, rhetorical subject, and both sides of ‘between’.
+fixed	1.23:16			Restored the recipient, relative clause, audience, and merchant weight phrase.
+fixed	1.23:17			Restored the transfer verb and completed the relative and location phrases.
+fixed	1.23:18			Restored the purchase, recipient, witness, and entry links.
+fixed	1.23:19			Completed the time and place expressions and restored the identifying pronoun.
+fixed	1.23:20			Restored the transfer verb and completed the location, recipient, purpose, and source links.
+refuse	1.22:2.7	1.22:2.6		Possessive belongs to ‘only one’.
+refuse	1.22:19.3	1.22:19.12		Place-name component for a personal name.
+refuse	1.22:19.18	1.22:19.18		Place-name component for a personal name.
+accept	1.22:1.4	1.22:1.7	renders	Demonstrative ‘these’.
+accept	1.22:1.6	1.22:1.8	renders	Waw introducing what happened.
+accept	1.22:1.12	1.22:1.15	renders	Subject of the first speech verb.
+accept	1.22:1.14	1.22:1.16	renders	Recipient suffix.
+accept	1.22:1.17	1.22:1.19	renders	Subject of the reply.
+accept	1.22:1.20	1.22:1.20	renders	First-person suffix.
+accept	1.22:2.5	1.22:2.6	renders	Possessive suffix on ‘son’.
+accept	1.22:2.7	1.22:2.8	renders	Possessive suffix on ‘only one’.
+accept	1.22:2.10	1.22:2.9	renders	Resumptive object of the relative construction.
+accept	1.22:2.16	1.22:2.14	renders	Imperative ‘go’.
+accept	1.22:2.17	1.22:2.15	renders	Ethical dative with pronominal suffix.
+accept	1.22:2.24	1.22:2.21	renders	Object suffix on the offering verb.
+accept	1.22:2.25	1.22:2.23	renders	Preposition marking the offering role.
+accept	1.22:2.29	1.22:2.26	renders	Partitive relation in ‘one of’.
+accept	1.22:2.33,1.22:2.34	1.22:2.29	renders	Resumptive phrase for the mountain relative.
+accept	1.22:3.4	1.22:3.2	renders	Early rising expressed in two words.
+accept	1.22:3.5	1.22:3.4	renders	Fused temporal preposition in ‘вранці’.
+accept	1.22:3.12,1.22:3.13	1.22:3.16	renders	Accompaniment preposition and suffix.
+accept	1.22:3.21	1.22:3.23	renders	Purpose relation in the wood construct.
+accept	1.22:3.23	1.22:3.23	renders	Wood being split.
+accept	1.22:3.24	1.22:3.22	renders	Wood-splitting verb.
+accept	1.22:3.29	1.22:3.28	renders	Subject of the going verb.
+accept	1.22:3.33,1.22:3.34	1.22:3.32	renders	Resumptive phrase for the place relative.
+accept	1.22:3.36	1.22:3.34	renders	Recipient preposition with suffix.
+accept	1.22:4.3	1.22:4.1	renders	Temporal genitive expresses ‘on’.
+accept	1.22:4.13	1.22:4.17	renders	Adverb includes the distance noun’s meaning.
+accept	1.22:5.5	1.22:5.4	renders	Dative marks the addressee.
+accept	1.22:5.6	1.22:5.6	renders	Imperative ‘sit’.
+accept	1.22:5.7	1.22:5.7	renders	Ethical dative with suffix.
+accept	1.22:5.16	1.22:5.18	renders	Extent marker in ‘аж туди’.
+accept	1.22:5.17	1.22:5.19	renders	Deictic destination.
+accept	1.22:5.23	1.22:5.24	renders	Plural recipient suffix.
+accept	1.22:6.4	1.22:6.5	renders	Wood of the offering.
+accept	1.22:6.5	1.22:6.5	renders	Purpose relation in the wood construct.
+accept	1.22:7.8	1.22:7.8	renders	Speech verb rendered as a participle.
+accept	1.22:7.12	1.22:7.11	renders	Subject of the reply.
+accept	1.22:7.14,1.22:7.15	1.22:7.12	renders	Presentative and first-person suffix.
+accept	1.22:7.29	1.22:7.26	renders	Offering purpose preposition.
+accept	1.22:8.7	1.22:8.6	renders	Beneficiary preposition with suffix.
+accept	1.22:8.8	1.22:8.9	renders	Offering purpose preposition.
+accept	1.22:9.7,1.22:9.8	1.22:9.6	renders	Resumptive phrase for the place relative.
+accept	1.22:9.10	1.22:9.8	renders	Recipient preposition with suffix.
+accept	1.22:9.19	1.22:9.19	renders	Wood-arranging verb.
+accept	1.22:9.27	1.22:9.30	renders	Independent suffixed object marker.
+accept	1.22:9.30	1.22:9.34,1.22:9.36	renders	Prefixes completing the compound ‘above’.
+accept	1.22:10.10	1.22:10.12	renders	Slaughter infinitive.
+accept	1.22:11.2	1.22:11.2	renders	Angel’s calling verb.
+accept	1.22:11.4	1.22:11.3	renders	Recipient suffix.
+accept	1.22:11.14	1.22:11.14	renders	Subject of the reply.
+accept	1.22:11.16,1.22:11.17	1.22:11.15	renders	Presentative and first-person suffix.
+accept	1.22:12.5	1.22:12.4	renders	Verb for extending the hand.
+accept	1.22:12.12	1.22:12.12	renders	Recipient preposition with suffix.
+accept	1.22:12.13	1.22:12.10	renders	Second prohibition particle.
+accept	1.22:12.14	1.22:12.11	renders	Verb ‘do’.
+accept	1.22:12.21	1.22:12.19	renders	God component of ‘God-fearing’.
+accept	1.22:12.24	1.22:12.23	renders	Withholding verb.
+accept	1.22:12.25,1.22:12.26	1.22:12.28	renders	Preposition and first-person suffix in the withholding phrase.
+accept	1.22:13.9	1.22:13.8	renders	Connective introducing the sudden sight.
+accept	1.22:13.17	1.22:13.16	renders	Instrumental marks how the ram was caught.
+accept	1.22:13.27	1.22:13.28	renders	Offering purpose preposition.
+accept	1.22:14.6	1.22:14.8	renders	Postposed demonstrative ‘that’.
+accept	1.22:14.8	1.22:14.10	renders	First seeing verb in the place name.
+accept	1.22:14.9	1.22:14.11	renders	Relative introducing the saying.
+accept	1.22:14.16	1.22:14.18	renders	Niphal ‘appear’.
+accept	1.22:15.6	1.22:15.2	renders	Second calling verb.
+accept	1.22:16.3	1.22:16.4	renders	Oath verb.
+accept	1.22:16.4	1.22:16.3	renders	Instrumental renders preposition and suffix.
+accept	1.22:16.6	1.22:16.5	renders	Divine declaration.
+accept	1.22:16.8	1.22:16.8	renders	Causal element of ‘тому що’.
+accept	1.22:16.9	1.22:16.9	renders	Relative element of the causal construction.
+accept	1.22:16.12	1.22:16.15	renders	Demonstrative ‘this’.
+accept	1.22:16.16,1.22:16.17	1.22:16.18	renders	Withholding verb and past auxiliary.
+accept	1.22:17.1	1.22:17.1	renders	Resumptive marker before the promised result.
+accept	1.22:17.5	1.22:17.3	renders	Second-person object suffix.
+accept	1.22:17.13	1.22:17.10	renders	Locative wording of the stars construct.
+accept	1.22:18.6	1.22:18.3	renders	Instrumental expresses the means of blessing.
+accept	1.22:18.8,1.22:18.9	1.22:18.2	renders	Reflexive blessing expressed analytically.
+accept	1.22:18.10,1.22:18.11	1.22:18.9	renders	Causal phrase ‘через те’.
+accept	1.22:18.13	1.22:18.11	renders	Hearing in the sense of obeying.
+accept	1.22:18.16	1.22:18.12	renders	Governed genitive in the obedience expression.
+accept	1.22:19.3	1.22:19.3	renders	Abraham in the return clause.
+accept	1.22:19.9	1.22:19.7	renders	Plural subject of ‘arose’.
+accept	1.22:19.15	1.22:19.12	renders	First Beer-sheba’s Beer component.
+accept	1.22:19.18	1.22:19.16	renders	Abraham in the settlement clause.
+accept	1.22:19.20	1.22:19.18	renders	Second Beer-sheba’s Beer component.
+accept	1.22:20.4	1.22:20.7	renders	Demonstrative for the events.
+accept	1.22:20.8	1.22:20.10	renders	Dative marks Abraham as recipient.
+accept	1.22:20.9	1.22:20.12,1.22:20.13	renders	Quotation introduction ‘thus’ for ‘saying’.
+accept	1.22:20.15	1.22:20.20	renders	Dative marks Nahor as beneficiary.
+accept	1.22:23.7	1.22:23.8	renders	Milcah’s childbearing verb.
+accept	1.22:23.9	1.22:23.10	renders	Dative marks Nahor as beneficiary.
+accept	1.22:24.5,1.22:24.6,1.22:24.7	1.22:24.4	renders	Naming phrase with a possessive suffix.
+accept	1.22:24.10	1.22:24.8	renders	Additive ‘also’.
+accept	1.22:24.11	1.22:24.9	renders	Independent subject pronoun.
+accept	1.23:1.3	1.23:1.3	renders	First ‘life’ occurrence.
+accept	1.23:1.6	1.23:1.6	renders	Years after one hundred.
+accept	1.23:1.9	1.23:1.9	renders	Years after twenty.
+accept	1.23:1.12	1.23:1.12	renders	Years after seven.
+accept	1.23:1.13	1.23:1.13	renders	Years in the closing lifespan formula.
+accept	1.23:2.6	1.23:2.6	renders	Pronoun identifying Kiriath-arba as Hebron.
+accept	1.23:2.14	1.23:2.15	renders	Lamenting verb.
+accept	1.23:2.15	1.23:2.16	renders	Preposition introducing the one mourned.
+accept	1.23:2.19,1.23:2.20	1.23:2.20	renders	Object suffix expressed as ‘за нею’.
+accept	1.23:3.4	1.23:3.5	renders	Second element of the compound departure preposition.
+accept	1.23:3.5	1.23:3.6	renders	Face in the departure phrase.
+accept	1.23:3.10	1.23:3.9	renders	Main speaking verb.
+accept	1.23:3.11	1.23:3.10	renders	Dative expresses the addressee relation.
+accept	1.23:4.5,1.23:4.6	1.23:4.5	renders	First accompaniment preposition and suffix.
+accept	1.23:4.8,1.23:4.9	1.23:4.10	renders	Second accompaniment phrase, ‘among yourselves’.
+accept	1.23:4.12	1.23:4.8	renders	Purpose relation in the burial-property construct.
+accept	1.23:4.15,1.23:4.16	1.23:4.12	renders	Cohortative force and first-person subject.
+accept	1.23:4.20	1.23:4.15	renders	Prefix contributing to the compound ‘from before’.
+accept	1.23:4.21,1.23:4.22	1.23:4.16	renders	Face noun and first-person suffix.
+accept	1.23:5.8	1.23:5.8	renders	Verb introducing the reply.
+accept	1.23:5.9	1.23:5.9	renders	Recipient preposition with suffix.
+accept	1.23:6.1,1.23:6.2	1.23:6.1	renders	Listening imperative and object suffix.
+accept	1.23:6.8	1.23:6.6,1.23:6.7	renders	‘Серед’ renders ‘in the midst’.
+accept	1.23:6.9	1.23:6.7	renders	First-person plural suffix on ‘midst’.
+accept	1.23:6.12	1.23:6.9	renders	Partitive relation in ‘choice of’.
+accept	1.23:6.18	1.23:6.14	renders	Indefinite person under negation.
+accept	1.23:6.20	1.23:6.15	renders	Plural suffix in ‘from us’.
+accept	1.23:6.22	1.23:6.19	renders	Withholding verb.
+accept	1.23:6.25,1.23:6.26	1.23:6.20	renders	‘From’ and its second-person suffix.
+accept	1.23:6.27	1.23:6.21	renders	Preposition relating withholding to burial.
+accept	1.23:7.6	1.23:7.6	renders	Dative marks the people as recipients of the bow.
+accept	1.23:7.9	1.23:7.10	renders	Dative renders the repeated preposition.
+accept	1.23:8.3	1.23:8.2	renders	Main speaking verb.
+accept	1.23:8.4,1.23:8.5	1.23:8.3	renders	Speech complement and plural suffix.
+accept	1.23:8.7	1.23:8.5	renders	Verb introducing the quotation.
+accept	1.23:8.9	1.23:8.9	renders	Second-person plural suffix in the willingness idiom.
+accept	1.23:8.10	1.23:8.7,1.23:8.8,1.23:8.9	renders	Predicate paraphrases the Hebrew willingness idiom.
+accept	1.23:8.14	1.23:8.15	renders	Prefix contributing to the compound ‘from before’.
+accept	1.23:8.15,1.23:8.16	1.23:8.16	renders	Face noun and first-person suffix.
+accept	1.23:8.19	1.23:8.17	renders	First-person object suffix.
+accept	1.23:8.21,1.23:8.22	1.23:8.19	renders	Urging verb expressed as a phrase.
+accept	1.23:8.23	1.23:8.20	renders	Beneficiary preposition in ‘для мене’.
+accept	1.23:9.2,1.23:9.5	1.23:9.2	renders	Jussive force and third-person subject.
+accept	1.23:9.9	1.23:9.9	renders	Suffixed preposition expressing ownership.
+accept	1.23:9.17,1.23:9.18	1.23:9.16	renders	Full silver value expressed as full weight.
+accept	1.23:9.19,1.23:9.21,1.23:9.22	1.23:9.17	renders	Second giving verb with mood marker and object suffix.
+accept	1.23:9.20	1.23:9.18	renders	Recipient of the second giving verb.
+accept	1.23:9.23	1.23:9.19,1.23:9.20	renders	‘Поміж’ renders ‘in the midst’.
+accept	1.23:9.24	1.23:9.20	renders	Second-person plural suffix on ‘midst’.
+accept	1.23:9.25	1.23:9.21	renders	Preposition marking the intended property use.
+accept	1.23:9.27	1.23:9.22	renders	Purpose relation in the burial-property construct.
+accept	1.23:10.3	1.23:10.3	renders	Dwelling participle.
+accept	1.23:10.4	1.23:10.4,1.23:10.5	renders	‘Серед’ renders ‘in the midst’.
+accept	1.23:10.12,1.23:10.13	1.23:10.15	renders	Connective recasts the audience preposition.
+accept	1.23:10.14	1.23:10.16	renders	Hearing expressed by the Hebrew ‘ears’ idiom.
+accept	1.23:10.19,1.23:10.20	1.23:10.21	renders	Relative clause renders the entry participle.
+accept	1.23:11.5	1.23:11.3	renders	Object suffix on ‘listen’.
+accept	1.23:11.8	1.23:11.6	renders	Subject suffix of the field gift.
+accept	1.23:11.9	1.23:11.7	renders	Recipient of the field gift.
+accept	1.23:11.13,1.23:11.14	1.23:11.12	renders	Location preposition with its suffix.
+accept	1.23:11.15,1.23:11.16	1.23:11.14	renders	Cave gift verb and first-person subject.
+accept	1.23:11.17	1.23:11.13	renders	Recipient of the cave gift.
+accept	1.23:11.18	1.23:11.15	renders	Preposition in ‘before the eyes’.
+accept	1.23:11.19	1.23:11.16	renders	Eyes in the witness formula.
+accept	1.23:11.23	1.23:11.19	renders	Subject of the final giving verb.
+accept	1.23:11.26	1.23:11.20	renders	Recipient of the final giving verb.
+accept	1.23:12.4	1.23:12.4	renders	Prefix in the compound ‘before’.
+accept	1.23:13.3	1.23:13.2	renders	Main speaking verb.
+accept	1.23:13.6,1.23:13.7	1.23:13.5	renders	Connective recasts the audience preposition.
+accept	1.23:13.8,1.23:13.9	1.23:13.6	renders	Hearing phrase renders the Hebrew ‘ears’ idiom.
+accept	1.23:13.15	1.23:13.15	renders	Particle expresses the wish.
+accept	1.23:13.17	1.23:13.16	renders	Object suffix on ‘listen’.
+accept	1.23:13.23	1.23:13.18	renders	Payment relation in ‘silver of the field’.
+accept	1.23:13.26	1.23:13.21	renders	Second-person subject of the imperative.
+accept	1.23:13.28	1.23:13.22	renders	First-person suffix in ‘from me’.
+accept	1.23:13.30	1.23:13.24	renders	Cohortative force of the burial verb.
+accept	1.23:13.32,1.23:13.33	1.23:13.26	renders	Deceased person and possessive suffix.
+accept	1.23:14.6	1.23:14.8	renders	Recipient preposition with suffix.
+accept	1.23:15.4	1.23:15.2	renders	First-person object suffix.
+accept	1.23:15.11	1.23:15.12	renders	Independent subject pronoun.
+accept	1.23:15.13	1.23:15.8	renders	First-person suffix on the first ‘between’.
+accept	1.23:15.15,1.23:15.16	1.23:15.10	renders	Second ‘between’ with its suffix.
+accept	1.23:16.8	1.23:16.9	renders	Dative marks Ephron as recipient.
+accept	1.23:16.10	1.23:16.14	renders	Preposition expresses the relative’s topic relation.
+accept	1.23:16.12,1.23:16.13,1.23:16.14	1.23:16.15	renders	Speech verb with subject and past auxiliary.
+accept	1.23:16.15,1.23:16.16	1.23:16.16	renders	Connective recasts the audience preposition.
+accept	1.23:16.17	1.23:16.17	renders	Hearing expresses the Hebrew ‘ears’ idiom.
+accept	1.23:16.24,1.23:16.25	1.23:16.24,1.23:16.25,1.23:16.27	renders	Merchant weight renders the market-acceptance expression.
+accept	1.23:17.2	1.23:17.2	renders	Verb establishing the property transfer.
+accept	1.23:17.8	1.23:17.5	renders	Resumptive subject of the first relative.
+accept	1.23:17.10	1.23:17.10	renders	Prefix in the compound ‘before’.
+accept	1.23:17.16,1.23:17.17	1.23:17.19	renders	Location preposition and field-referencing suffix.
+accept	1.23:18.1	1.23:18.3,1.23:18.4	renders	Predicative instrumental renders ‘as a purchase’.
+accept	1.23:18.2	1.23:18.1	renders	Dative marks Abraham as recipient.
+accept	1.23:18.3	1.23:18.5	renders	Preposition introducing the witness setting.
+accept	1.23:18.4	1.23:18.6	renders	Presence renders the Hebrew ‘eyes’ idiom.
+accept	1.23:18.8,1.23:18.9,1.23:18.10	1.23:18.11	renders	Relative entry clause with its directional complement.
+accept	1.23:19.3	1.23:19.3	renders	Deictic element of ‘after this’.
+accept	1.23:19.9	1.23:19.9	renders	Preposition introducing the burial location.
+accept	1.23:19.13	1.23:19.14	renders	Preposition in the compound ‘before’.
+accept	1.23:19.15	1.23:19.17	renders	Pronoun identifying the place as Hebron.
+accept	1.23:20.2	1.23:20.2	renders	Verb establishing the property transfer.
+accept	1.23:20.7,1.23:20.8	1.23:20.9	renders	Location preposition and field-referencing suffix.
+accept	1.23:20.9	1.23:20.10	renders	Dative marks Abraham as recipient.
+accept	1.23:20.10	1.23:20.12	renders	Preposition marking the intended property use.
+accept	1.23:20.12	1.23:20.13	renders	Purpose relation in the burial-property construct.
+accept	1.23:20.14	1.23:20.16	renders	Second element of the personal-source construction.

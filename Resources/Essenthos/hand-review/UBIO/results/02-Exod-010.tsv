@@ -1,0 +1,255 @@
+kind	from	to	relation	reason
+fixed	2.10:1			Missing causative, purpose, and location links.
+fixed	2.10:2			Missing subject, kinship, location, and verb links.
+fixed	2.10:3			Missing verbs, pronouns, and mood markers.
+fixed	2.10:4			Missing infinitive, subject, and destination links.
+fixed	2.10:5			Missing subjects, modal words, and links in the descriptions.
+unsure	2.10:6			The locust agent and the plural possessives remain uncertain.
+fixed	2.10:7			Missing pronouns, question marker, and part of the negation.
+fixed	2.10:8			Missing pronouns, title, and second question word and verb.
+fixed	2.10:9			Subject on a possessive suffix. Missing accompaniment and livestock links.
+fixed	2.10:10			Missing jussive, pronouns, and comparison links.
+fixed	2.10:11			Missing imperative and object pronouns.
+fixed	2.10:12			Missing spatial preposition, locust construction, and jussives.
+fixed	2.10:13			Missing prepositions, demonstrative, and verb.
+fixed	2.10:14			Missing movement, comparison, and temporal links.
+fixed	2.10:15			Missing surface, subject, land modifier, and negative coordination.
+fixed	2.10:16			Missing dative, title, and recipient pronoun.
+fixed	2.10:17			Demonstrative on an article. Missing prayer and removal links.
+fixed	2.10:18			Missing subject pronoun and prayer verb.
+fixed	2.10:19			Missing action, pronoun, destination, and boundary links.
+fixed	2.10:20			Missing causative verb component and release clause links.
+unsure	2.10:21			The source of the second existential verb remains uncertain.
+fixed	2.10:22			Missing direction and verb of occurrence.
+fixed	2.10:23			Missing reciprocal, distributive, place, and dative links.
+fixed	2.10:24			First livestock noun linked to the second herd. Missing jussive links.
+fixed	2.10:25			Missing giving, hand, sacrifice, and recipient links.
+fixed	2.10:26			Missing suffixed pronouns, purpose phrase, and title.
+fixed	2.10:27			Missing causative verb component and subject pronoun.
+fixed	2.10:28			Missing command, pronouns, and temporal construction links.
+fixed	2.10:29			Recurrence adverb on the neighboring word. Missing reply and subject links.
+fixed	2.11:1			Missing temporal, directional, and expulsion links.
+fixed	2.11:2			Missing command, particles, and second distributive phrase links.
+fixed	2.11:3			Missing additive particle and copula.
+fixed	2.11:4			Missing speech verb and parts of the midnight and location phrases.
+fixed	2.11:5			Missing quantifier, firstborn occurrence, and relative and partitive links.
+fixed	2.11:6			Missing location, relative, comparison, and verb links.
+fixed	2.11:7			Missing scope, range, action, and second comparison preposition.
+fixed	2.11:8			Anger modifier on a prefix. Missing preposition, idiom, and pronoun links.
+fixed	2.11:9			Missing object pronoun, purpose connector, and modal auxiliary.
+fixed	2.11:10			Preposition on the face noun. Missing verbs, demonstrative, and land links.
+refuse	2.10:9.4	2.10:9.5		Subject belongs to the first going verb.
+refuse	2.10:17.8	2.10:17.7		Hebrew article has no counterpart.
+refuse	2.10:24.14	2.10:24.15		First livestock noun denotes the flock.
+refuse	2.10:29.8	2.10:29.8		Renders the recurrence verb.
+refuse	2.11:8.30	2.11:8.30		Renders the heat noun.
+refuse	2.11:10.9	2.11:10.13		The face noun is rendered by лицем.
+accept	2.10:1.11	2.10:1.11	renders	Causative component of made hard.
+accept	2.10:1.19	2.10:1.18	renders	Purpose connector.
+accept	2.10:1.24	2.10:1.22,2.10:1.23	renders	Renders in the midst of.
+accept	2.10:1.25	2.10:1.23	renders	Pronoun carried by the suffix.
+accept	2.10:2.3	2.10:2.3	renders	Subject carried by the verb.
+accept	2.10:2.10	2.10:2.8,2.10:2.9	renders	Grandson renders son of your son.
+accept	2.10:2.11	2.10:2.9	renders	Possessive carried by the suffix.
+accept	2.10:2.13,2.10:2.14	2.10:2.12	renders	Action and first-person subject.
+accept	2.10:2.22	2.10:2.19	renders	Action of performing the signs.
+accept	2.10:2.24,2.10:2.25	2.10:2.20	renders	Preposition and its plural suffix.
+accept	2.10:2.28,2.10:2.29	2.10:2.22	renders	Future auxiliary and verb.
+accept	2.10:3.2	2.10:3.2	renders	Verb of entering.
+accept	2.10:3.9	2.10:3.8	renders	Part of the conjunction та й.
+accept	2.10:3.11	2.10:3.10	renders	Recipient carried by the suffix.
+accept	2.10:3.13	2.10:3.12	renders	Verb introducing the quotation.
+accept	2.10:3.17	2.10:3.17	renders	Marks the limit in the question.
+accept	2.10:3.20	2.10:3.19	renders	Auxiliary of the refusal verb.
+accept	2.10:3.24	2.10:3.23	renders	First-person suffix in the expression.
+accept	2.10:3.25	2.10:3.24	renders	Imperative to release.
+accept	2.10:3.29,2.10:3.32	2.10:3.27	renders	Jussive force and object suffix.
+accept	2.10:4.5	2.10:4.6	renders	Infinitive of releasing.
+accept	2.10:4.10	2.10:4.9	renders	First-person suffix on behold.
+accept	2.10:4.14	2.10:4.13	renders	Preposition marking the destination.
+accept	2.10:5.3	2.10:5.2	renders	Subject of covering.
+accept	2.10:5.4	2.10:5.4	renders	Surface in the Hebrew idiom.
+accept	2.10:5.8,2.10:5.9	2.10:5.9	renders	Ability and future auxiliary.
+accept	2.10:5.14	2.10:5.16	renders	Subject of the first eating verb.
+accept	2.10:5.16	2.10:5.20	renders	Renders what escaped.
+accept	2.10:5.18	2.10:5.23	renders	Dative pronoun on the first preposition.
+accept	2.10:5.23	2.10:5.28	renders	Subject of the second eating verb.
+accept	2.10:5.26	2.10:5.34	renders	Relative word rendering the participle.
+accept	2.10:5.28	2.10:5.35	renders	Dative pronoun on the second preposition.
+accept	2.10:5.30	2.10:5.38	renders	Ground from which the trees grow.
+accept	2.10:6.2	2.10:6.2	renders	Verb of filling.
+accept	2.10:6.24	2.10:6.19	renders	Starting point of the time span.
+accept	2.10:6.26,2.10:6.27	2.10:6.21	renders	Existence and its subject suffix.
+accept	2.10:6.30	2.10:6.25	renders	Part of the endpoint expression.
+accept	2.10:6.32	2.10:6.29	renders	Today incorporates this day.
+accept	2.10:6.34,2.10:6.35	2.10:6.31	renders	Turning verb and its subject.
+accept	2.10:7.6	2.10:7.5	renders	Recipient carried by the suffix.
+accept	2.10:7.7	2.10:7.6	renders	Marks the limit in the question.
+accept	2.10:7.12	2.10:7.11	renders	Predicate instrumental renders the lamed.
+accept	2.10:7.13	2.10:7.13	renders	Imperative to release.
+accept	2.10:7.17,2.10:7.18	2.10:7.18	renders	Jussive marker and subject.
+accept	2.10:7.23	2.10:7.22	renders	Interrogative particle.
+accept	2.10:7.24	2.10:7.24	renders	Subject of knowing.
+accept	2.10:7.26	2.10:7.23	renders	Negative component of not yet.
+accept	2.10:7.29	2.10:7.26	renders	Renders Egypt's destruction.
+accept	2.10:8.9	2.10:8.11	renders	Subject of speaking.
+accept	2.10:8.10	2.10:8.12	renders	Plural recipient carried by the suffix.
+accept	2.10:8.15	2.10:8.17	renders	God in the possessive title.
+accept	2.10:8.19	2.10:8.20	renders	Second occurrence of who.
+accept	2.10:8.20	2.10:8.22	renders	Renders the going participle.
+accept	2.10:9.2	2.10:9.2	renders	Verb introducing Moses' answer.
+accept	2.10:9.4	2.10:9.9	renders	Subject of the first going verb.
+accept	2.10:9.6	2.10:9.4	renders	Accompaniment with the young.
+accept	2.10:9.8	2.10:9.5	renders	Possessive suffix on the young.
+accept	2.10:9.10	2.10:9.7	renders	Accompaniment with the old.
+accept	2.10:9.11,2.10:9.12	2.10:9.8	renders	The old and their possessive suffix.
+accept	2.10:9.13	2.10:9.10	renders	Accompaniment with the sons.
+accept	2.10:9.17	2.10:9.13	renders	Accompaniment with the daughters.
+accept	2.10:9.20	2.10:9.15	renders	Accompaniment with the flock.
+accept	2.10:9.22,2.10:9.23	2.10:9.16	renders	Flock noun and its possessive suffix.
+accept	2.10:9.25	2.10:9.18	renders	Accompaniment with the herd.
+accept	2.10:9.26,2.10:9.27,2.10:9.28	2.10:9.19	renders	Herd phrase and its possessive suffix.
+accept	2.10:9.31,2.10:9.32	2.10:9.24	renders	Possessive construction renders for us.
+accept	2.10:10.2	2.10:10.2	renders	Subject of the reply.
+accept	2.10:10.4,2.10:10.5	2.10:10.4	renders	Jussive marker and verb of being.
+accept	2.10:10.9	2.10:10.7	renders	Plural suffix on with.
+accept	2.10:10.10	2.10:10.8,2.10:10.9	renders	Renders the compound comparative connector.
+accept	2.10:10.13	2.10:10.11	renders	Suffixed object pronoun.
+accept	2.10:10.20	2.10:10.17	renders	Substantive component of something evil.
+accept	2.10:10.22	2.10:10.18	renders	Preposition meaning in front of.
+accept	2.10:10.23	2.10:10.19	renders	Plural suffix in the spatial expression.
+accept	2.10:11.2,2.10:11.3	2.10:11.3	renders	Third-person rendering of the command.
+accept	2.10:11.5	2.10:11.6	renders	Men addressed by the command.
+accept	2.10:11.7	2.10:11.7	renders	Part of the conjunction та й.
+accept	2.10:11.11	2.10:11.12	renders	Suffixed object of seeking.
+accept	2.10:11.16	2.10:11.17	renders	Suffixed object of expulsion.
+accept	2.10:12.9	2.10:12.8	renders	Preposition over the first mention of Egypt.
+accept	2.10:12.12	2.10:12.11	renders	Instrumental renders the prefixed preposition.
+accept	2.10:12.14,2.10:12.15,2.10:12.16	2.10:12.15	renders	Jussive marker, subject, and verb.
+accept	2.10:12.21	2.10:12.20	renders	Jussive marker for eating.
+accept	2.10:12.24	2.10:12.25	renders	Adjective renders the land genitive.
+accept	2.10:13.6	2.10:13.6	renders	Preposition for extending the staff.
+accept	2.10:13.14	2.10:13.14	renders	Preposition for driving the wind.
+accept	2.10:13.18	2.10:13.21	renders	Demonstrative modifying day.
+accept	2.10:13.22	2.10:13.28	renders	Verb of morning's arrival.
+accept	2.10:14.2	2.10:14.2	renders	Verb of the locusts' arrival.
+accept	2.10:14.4	2.10:14.5	renders	Preposition marking where they came.
+accept	2.10:14.13	2.10:14.13	renders	Territory noun.
+accept	2.10:14.15	2.10:14.15	renders	Abundance renders heavy.
+accept	2.10:14.16	2.10:14.17	renders	Prefix in the compound meaning before.
+accept	2.10:14.17	2.10:14.18	renders	Pronoun carried by the suffix.
+accept	2.10:14.22,2.10:14.23	2.10:14.23	renders	Comparison and its pronominal suffix.
+accept	2.10:14.26	2.10:14.25	renders	Pronominal suffix on after.
+accept	2.10:15.4	2.10:15.4	renders	Surface in the Hebrew idiom.
+accept	2.10:15.12	2.10:15.13	renders	Subject of eating.
+accept	2.10:15.14	2.10:15.18	renders	Adjective renders the land genitive.
+accept	2.10:15.31	2.10:15.37	renders	Conjunction before the second negative alternative.
+accept	2.10:15.32	2.10:15.38	renders	Preposition on the field vegetation.
+accept	2.10:16.9	2.10:16.11	renders	Part of the conjunction та й.
+accept	2.10:16.13	2.10:16.14	renders	Dative case renders the lamed.
+accept	2.10:16.14	2.10:16.16	renders	God in the possessive title.
+accept	2.10:16.17	2.10:16.18	renders	Dative pronoun carried by the suffix.
+accept	2.10:17.12	2.10:17.11	renders	Preposition marking the addressee of prayer.
+accept	2.10:17.17,2.10:17.19	2.10:17.15	renders	Jussive marker and removal verb.
+accept	2.10:17.21	2.10:17.17	renders	First-person suffix in from upon me.
+accept	2.10:18.2	2.10:18.2	renders	Subject of departing.
+accept	2.10:18.7	2.10:18.7	renders	Verb of entreating.
+accept	2.10:19.2,2.10:19.8	2.10:19.2	renders	Together render reversal of the wind.
+accept	2.10:19.10	2.10:19.9	renders	Subject of carrying the locusts.
+accept	2.10:19.14	2.10:19.13	renders	Part of the conjunction та й.
+accept	2.10:19.15,2.10:19.16	2.10:19.14	renders	Casting verb and its object suffix.
+accept	2.10:19.17,2.10:19.19	2.10:19.15	renders	Sea noun and its directional ending.
+accept	2.10:19.22	2.10:19.20	renders	Renders one under negation.
+accept	2.10:19.27	2.10:19.23	renders	Territory noun.
+accept	2.10:20.3	2.10:20.2	renders	Causative component of made hard.
+accept	2.10:20.8,2.10:20.11	2.10:20.9	renders	Release verb and its subject.
+accept	2.10:21.9	2.10:21.8	renders	Direction toward heaven.
+accept	2.10:21.12	2.10:21.12	renders	Written verb of being.
+accept	2.10:21.14	2.10:21.14	renders	Preposition over the land.
+accept	2.10:21.18	2.10:21.18	renders	Volitive force of the felt-darkness clause.
+accept	2.10:22.6	2.10:22.6	renders	Direction toward heaven.
+accept	2.10:22.9	2.10:22.10	renders	Verb of occurrence.
+accept	2.10:23.4	2.10:23.5	renders	Second half of the reciprocal expression.
+accept	2.10:23.6	2.10:23.9	renders	Distributive person under negation.
+accept	2.10:23.10,2.10:23.11	2.10:23.11	renders	Place and its possessive suffix.
+accept	2.10:23.16	2.10:23.15	renders	Dative case renders the lamed.
+accept	2.10:24.6	2.10:24.6	renders	Part of the conjunction та й.
+accept	2.10:24.14	2.10:24.13	renders	First livestock noun denotes the flock.
+accept	2.10:24.17,2.10:24.18	2.10:24.15	renders	Large livestock renders the herd.
+accept	2.10:24.19,2.10:24.20	2.10:24.16	renders	Jussive marker and verb of staying.
+accept	2.10:24.24	2.10:24.19	renders	Jussive marker for going.
+accept	2.10:24.27	2.10:24.20	renders	Plural suffix on with.
+accept	2.10:25.4	2.10:25.6	renders	Command to give.
+accept	2.10:25.5	2.10:25.7	renders	Preposition in the hand expression.
+accept	2.10:25.6,2.10:25.7	2.10:25.8	renders	Hand and its possessive suffix.
+accept	2.10:25.14,2.10:25.15	2.10:25.13	renders	Together render performing the sacrifice.
+accept	2.10:25.16	2.10:25.14	renders	Dative case renders the lamed.
+accept	2.10:25.17	2.10:25.16	renders	God in the possessive title.
+accept	2.10:26.7	2.10:26.5	renders	First-person plural suffix on with.
+accept	2.10:26.13,2.10:26.14	2.10:26.10	renders	Source preposition and its suffix.
+accept	2.10:26.17	2.10:26.12	renders	Preposition marks the purpose.
+accept	2.10:26.18	2.10:26.13	renders	Verbal noun renders serving.
+accept	2.10:26.20	2.10:26.16	renders	God in the possessive title.
+accept	2.10:27.2	2.10:27.2	renders	Causative component of made hard.
+accept	2.10:27.8	2.10:27.9	renders	Subject of the verb of willingness.
+accept	2.10:28.3	2.10:28.3	renders	Recipient carried by the suffix.
+accept	2.10:28.5	2.10:28.5	renders	Command to go.
+accept	2.10:28.7	2.10:28.7	renders	First-person suffix in away from me.
+accept	2.10:28.10	2.10:28.11	renders	Subject of the finite recurrence verb.
+accept	2.10:28.18	2.10:28.15	renders	Temporal genitive renders on the day.
+accept	2.10:28.19	2.10:28.17	renders	Introduces the temporal infinitive as a clause.
+accept	2.10:28.23	2.10:28.19	renders	Subject of dying.
+accept	2.10:29.4	2.10:29.4	renders	Adverb meaning thus.
+accept	2.10:29.5	2.10:29.5	renders	Verb of speaking.
+accept	2.10:29.7	2.10:29.7	renders	First-person subject of the finite verb.
+accept	2.10:29.8	2.10:29.7	renders	Renders doing the action again.
+accept	2.11:1.16	2.11:1.16	renders	Includes that in after that.
+accept	2.11:1.17	2.11:1.17	renders	Subject of the first release verb.
+accept	2.11:1.19	2.11:1.18	renders	Object suffix of the first release clause.
+accept	2.11:1.20	2.11:1.19	renders	Includes from in the first from here.
+accept	2.11:1.22	2.11:1.21	renders	Temporal use of the comparative prefix.
+accept	2.11:1.23,2.11:1.24,2.11:1.25	2.11:1.22	renders	Subject suffix and expanded temporal infinitive.
+accept	2.11:1.28	2.11:1.23	renders	Adverb renders completeness.
+accept	2.11:1.29	2.11:1.26	renders	Object suffix of the expulsion clause.
+accept	2.11:1.30	2.11:1.25	renders	Finite verb of driving out.
+accept	2.11:1.31	2.11:1.27	renders	Includes from in the second from here.
+accept	2.11:2.1	2.11:2.1	renders	Imperative of speaking.
+accept	2.11:2.2	2.11:2.2	renders	Particle urging the command.
+accept	2.11:2.7	2.11:2.8	renders	Jussive marker for asking.
+accept	2.11:2.14	2.11:2.14	renders	Feminine distributive subject.
+accept	2.11:2.15	2.11:2.15	renders	Source preposition before the female neighbor.
+accept	2.11:3.11	2.11:3.11	renders	Part of the additive phrase також і.
+accept	2.11:3.15	2.11:3.15	renders	Copula supplied for the asserted predicate.
+accept	2.11:4.5	2.11:4.5	renders	Verb introducing the Lord's words.
+accept	2.11:4.8	2.11:4.10	renders	Midnight includes night.
+accept	2.11:4.11	2.11:4.13,2.11:4.14	renders	Renders in the midst of.
+accept	2.11:5.3	2.11:5.3	renders	Distributive quantifier.
+accept	2.11:5.8	2.11:5.9	renders	Firstborn of Pharaoh.
+accept	2.11:5.10	2.11:5.12	renders	Relative word rendering the sitting participle.
+accept	2.11:5.24	2.11:5.25	renders	Partitive preposition renders the construct relation.
+accept	2.11:6.5	2.11:6.5	renders	Preposition marking extent across the land.
+accept	2.11:6.9	2.11:6.9	renders	Relative connector.
+accept	2.11:6.10,2.11:6.11,2.11:6.12	2.11:6.10	renders	First comparison and its suffix.
+accept	2.11:6.14	2.11:6.12	renders	Verb of past occurrence.
+accept	2.11:6.16,2.11:6.18	2.11:6.14	renders	Second comparison and its suffix.
+accept	2.11:6.21	2.11:6.16	renders	Future occurrence in the recurrence expression.
+accept	2.11:7.2	2.11:7.2	renders	Renders the relation to Israel's sons.
+accept	2.11:7.6	2.11:7.11	renders	Source preposition in the range.
+accept	2.11:7.9,2.11:7.10	2.11:7.14	renders	Endpoint phrase аж до.
+accept	2.11:7.15	2.11:7.7	renders	Verb in the tongue idiom.
+accept	2.11:7.27	2.11:7.24	renders	Second occurrence of between.
+accept	2.11:8.7	2.11:8.6	renders	Prepositional part of to me.
+accept	2.11:8.19	2.11:8.19,2.11:8.20	renders	Obedience renders the at-your-feet idiom.
+accept	2.11:8.20	2.11:8.20	renders	Second-person suffix recast as an object.
+accept	2.11:8.22	2.11:8.23	renders	Demonstrative part of after that.
+accept	2.11:8.26	2.11:8.26	renders	Subject of the final departing verb.
+accept	2.11:8.30	2.11:8.31	renders	Renders the heat of anger.
+accept	2.11:9.8	2.11:9.8	renders	Plural pronoun carried by the suffix.
+accept	2.11:9.10	2.11:9.10	renders	Purpose connector.
+accept	2.11:9.11	2.11:9.11	renders	Modal auxiliary in the purpose clause.
+accept	2.11:10.5	2.11:10.5	renders	Verb of performing the wonders.
+accept	2.11:10.7	2.11:10.11	renders	Demonstrative modifying wonders.
+accept	2.11:10.9	2.11:10.12	renders	Prefix renders the relation before.
+accept	2.11:10.13	2.11:10.16	renders	Causative component of made hard.
+accept	2.11:10.19,2.11:10.21	2.11:10.23	renders	Release verb and its subject.
+accept	2.11:10.25,2.11:10.26	2.11:10.28	renders	Land and its possessive suffix.
