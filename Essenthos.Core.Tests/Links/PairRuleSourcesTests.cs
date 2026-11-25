@@ -36,6 +36,7 @@ public sealed class PairRuleSourcesTests : IDisposable
             ("1.1:3", [("בְּנֹו", Suffix), ("אֹתֹו", null)]));
         Method(store, "RUSV-BHSA", MappingMethods.Composed,
             Row("1.1:1.2", "1.1:1.2"), Row("1.1:2.1", "1.1:2.1"), Row("1.1:3.1", "1.1:3.1"), Row("1.1:3.2", "1.1:3.2"));
+        Floors(store, "RUSV-BHSA", Admitted);
 
         var rows = Write(store, "RUSV-BHSA", MappingMethods.Possessive);
 
@@ -55,9 +56,9 @@ public sealed class PairRuleSourcesTests : IDisposable
         Text(store, "BHSA", "hbo", "critical-edition", ("1.1:1", [("וַ", null), ("בְּנֹו", Suffix)]));
         Method(store, "RUSV-BHSA", MappingMethods.Composed, Row("1.1:1.2", "1.1:1.2"));
         Method(store, "RUSV-BHSA", MappingMethods.Aligner, Row("1.1:1.3", "1.1:1.1"));
+        Floors(store, "RUSV-BHSA", Admitted);
         Write(store, "RUSV-BHSA", MappingMethods.Possessive).Should().BeEmpty("an aligner the floors admit reaches the word");
-        File.WriteAllLines(Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, MappingProducts.Folder, "RUSV-BHSA", "floors.tsv"),
-            ["# producer   by hand", "readings\tfrom\tright\tscored\tbasis", "aligner\trefused\t0.67\t40\t26 of 40 right"]);
+        Floors(store, "RUSV-BHSA", Admitted, "aligner\trefused\t0.67\t40\t26 of 40 right");
 
         Write(store, "RUSV-BHSA", MappingMethods.Possessive).Should().ContainSingle()
             .Which.Should().Match<MappingRow>(row => row.From == "1.1:1.3" && row.To == "1.1:1.2");
@@ -74,6 +75,12 @@ public sealed class PairRuleSourcesTests : IDisposable
         using var reader = store.Open(MappingProducts.Of(pair, method), MappingRow.Schema);
         return reader.ReadAll();
     }
+
+    private const string Admitted = "as stems and through kjv\t0.25\t0.95\t40\t38 of 40 right";
+
+    private static void Floors(ProductStore store, string pair, params string[] lines) =>
+        File.WriteAllLines(Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, MappingProducts.Folder, pair, "floors.tsv"),
+            ["# producer   by hand", "readings\tfrom\tright\tscored\tbasis", .. lines]);
 
     private static MappingRow Row(string from, string to) =>
         new(from, to, "renders", MappingMethods.Composed, 0.5, "SIL.Machine, aligned as stems and through KJV", null, null, null);

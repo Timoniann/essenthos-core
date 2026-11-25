@@ -311,8 +311,8 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     /// <summary>
     /// Which answers a run writes: measured on the pair's own statements where it has enough, and
     /// otherwise on the other texts in its language that state the target, each composed the same
-    /// way; a floor the pair sets by hand (<see cref="HandFloors"/>) comes before either, and what only the middle texts found is
-    /// refused unless such a floor admits it (<see cref="Admission.RefusingMiddlesAlone"/>). Also returns
+    /// way; a floor the pair sets by hand (<see cref="HandFloors"/>) comes before either, and a combination no such floor names is
+    /// refused (<see cref="Admission.RefusingUnnamed"/>). Also returns
     /// what each combination scored from each confidence up, for a dry run to print.
     /// </summary>
     /// <param name="refuseUnmeasured">See <see cref="Admission.RefusingUnmeasured"/>.</param>
@@ -332,7 +332,8 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         CancellationToken cancellationToken)
     {
         var pair = MappingProducts.Pair(fromSlug, toSlug);
-        var hand = HandFloors.AsRoutes(pair, HandFloors.Read(texts.Store, pair), viaSlugs);
+        var floors = HandFloors.Read(texts.Store, pair);
+        var hand = HandFloors.AsRoutes(pair, floors, viaSlugs);
 
         // A daughter read through one middle text has that one way to the target; where a hand floor measured it, what another
         // text of its language would borrow is never read, and no proxy's hops are trained for it.
@@ -360,7 +361,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         }
 
         admission = admission.With(hand).RefusingUnmeasured(refuseUnmeasured);
-        return (daughter ? admission : admission.RefusingMiddlesAlone(hand), measured);
+        return (daughter ? admission : admission.RefusingUnnamed(hand, HandFloors.NamesEvery(floors)), measured);
     }
 
     /// <summary>What <see cref="Admit"/> measures or borrows, before the pair's hand floors and the refusal of the unmeasured.</summary>

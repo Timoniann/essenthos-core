@@ -8,8 +8,8 @@ namespace Essenthos.Core.Tests.Links;
 
 /// <summary>
 /// Floors a pair sets by hand for its composition, <c>mapping/&lt;pair&gt;/floors</c> (PRB-1607): the merge refuses the kept
-/// composed rows under them, a composition takes them before what it measures, and an unmeasured combination one family of
-/// readings found is refused only when a composition asks (NOT-0228).
+/// composed rows under them, a composition takes them before what it measures, and a combination no line names is refused
+/// (NOT-0228).
 /// </summary>
 public sealed class HandFloorsTests : IDisposable
 {
@@ -130,27 +130,33 @@ public sealed class HandFloorsTests : IDisposable
 
         var floors = HandFloors.Read(_store, Pair);
 
-        floors.Select(f => (f.Name, f.From)).Should().Equal(("as written", null), ("as written and as stems", 0.9), (HandFloors.MiddlesAlone, null));
+        floors.Select(f => (f.Name, f.From)).Should().Equal(("as written", null), ("as written and as stems", 0.9), (HandFloors.Others, null));
         HandFloors.For(floors, "SIL.Machine, aligned as stems and as written")!.From.Should().Be(0.9, "a combination is its set of readings");
         HandFloors.For(floors, "SIL.Machine ibm4").Should().BeNull("an aligner row is no composition's");
         MappingProducts.Methods(_store, Pair).Should().BeEmpty();
-        HandFloors.Read(_store, "KJV-BHSA").Should().ContainSingle().Which.Name.Should().Be(HandFloors.MiddlesAlone,
-            "without a line of its own a pair still refuses what only the middle texts found");
+        HandFloors.Read(_store, "KJV-BHSA").Should().ContainSingle().Which.Name.Should().Be(HandFloors.Others,
+            "without a line of its own a pair still refuses every combination");
         HandFloors.Read(_store, "SWETE-BHSA").Should().BeEmpty("a daughter reaches its target through its middle text by design");
     }
 
+    private IReadOnlyList<HandFloor> Lines(string pair, params string[] lines)
+    {
+        var folder = Path.Combine(_root, ProductStore.EssenthosFolder, MappingProducts.Folder, pair);
+        Directory.CreateDirectory(folder);
+        File.WriteAllLines(Path.Combine(folder, "floors.tsv"), ["# producer   by hand", "readings\tfrom\tright\tscored\tbasis", .. lines]);
+        return HandFloors.Read(_store, pair);
+    }
+
     /// <summary>
-    /// What only the middle texts found is refused in the merge unless a line of the pair admits its combination (NOT-0228): the
-    /// owner refused the King James and Berean routes to the Hebrew, and a pair without lines is held to that as one with them.
+    /// A composed link whose combination no line of the pair names is refused in the merge (NOT-0228): the English New Testament
+    /// pairs' direct combinations, admitted from proxies, wrote new links that read 45-70% right.
     /// </summary>
     [Fact]
-    public void The_merge_refuses_what_only_middle_texts_found_unless_a_line_admits_it()
+    public void The_merge_refuses_every_combination_no_line_names()
     {
-        IReadOnlyList<HandFloor> floors =
-        [
-            HandFloors.Parse(Pair, new HandFloorRow("through KJV and through BSB", "0.8", "0.91", "11", "10 of 11 right")),
-            .. HandFloors.Read(_store, "KJV-BHSA"),
-        ];
+        var floors = Lines("WEB-NESTLE1904",
+            "through KJV and through BSB\t0.8\t0.91\t11\t10 of 11 right",
+            "as written and as stems and through KJV\t0.25\t0.98\t40\t39 of 40 right");
 
         var output = Merge(
             [
@@ -158,23 +164,56 @@ public sealed class HandFloorsTests : IDisposable
                 Composed("1.1:1.2", "1.1:1.2", 0.9, "SIL.Machine, aligned through BSB and through KJV"),
                 Composed("1.1:1.3", "1.1:1.3", 0.7, "SIL.Machine, aligned through KJV and through BSB"),
                 Composed("1.1:1.4", "1.1:1.4", 0.3, Both),
-                Composed("1.1:1.5", "1.1:1.5", 0.99, "SIL.Machine, aligned through KJV and through BSB and through LUTH1912"),
+                Composed("1.1:1.5", "1.1:1.5", 0.99, Direct),
             ],
             floors);
 
         output.Final.Where(r => r.Settled).Select(r => r.From).Should().Equal(["1.1:1.2", "1.1:1.4"]);
         var statuses = output.Methods[MappingMethods.Composed].Select(r => r.Status).ToList();
+        statuses[0].Should().Be("refused-by floor: through kjv refused; no hand floor of the pair names that combination (NOT-0228)");
+        statuses[2].Should().Be("refused-by floor: through kjv and through bsb under 0.80; 10 of 11 right");
+        statuses[4].Should().Be("refused-by floor: as written and as stems refused; no hand floor of the pair names that combination (NOT-0228)");
+        HandFloors.Refuses(floors, Composed("1.1:1.1", "1.1:1.1", 0.99, Direct)).Should().BeTrue("names are placed past it");
+        HandFloors.AsRoutes("WEB-NESTLE1904", floors, ["KJV", "BSB"]).Should().HaveCount(2, "the refusal is no route of a composition");
+        HandFloors.NamesEvery(floors).Should().BeTrue();
+    }
+
+    /// <summary>
+    /// A pair not yet read by hand may keep its other combinations on the floors its composition measures or borrows: only what
+    /// the middle texts alone found stays refused, as the owner refused the King James and Berean routes to the Hebrew.
+    /// </summary>
+    [Fact]
+    public void A_pair_whose_other_combinations_stand_as_measured_refuses_only_what_middle_texts_alone_found()
+    {
+        var floors = Lines("ASV-BHSA",
+            "through KJV and through BSB\t0.8\t0.91\t11\t10 of 11 right",
+            "Every other combination\tas measured\t\t\tnot read by hand yet");
+
+        var output = Merge(
+            [
+                Composed("1.1:1.1", "1.1:1.1", 0.99, Middle),
+                Composed("1.1:1.2", "1.1:1.2", 0.9, "SIL.Machine, aligned through BSB and through KJV"),
+                Composed("1.1:1.3", "1.1:1.3", 0.3, Both),
+                Composed("1.1:1.4", "1.1:1.4", 0.99, "SIL.Machine, aligned through KJV and through BSB and through LUTH1912"),
+            ],
+            floors);
+
+        output.Final.Where(r => r.Settled).Select(r => r.From).Should().Equal(["1.1:1.2", "1.1:1.3"]);
+        var statuses = output.Methods[MappingMethods.Composed].Select(r => r.Status).ToList();
         statuses[0].Should().Be(
             "refused-by floor: through kjv refused; only the middle texts found it, and no hand floor of the pair admits that (NOT-0228)");
-        statuses[2].Should().Be("refused-by floor: through kjv and through bsb under 0.80; 10 of 11 right");
-        statuses[4].Should().StartWith("refused-by floor: through kjv and through bsb and through luth1912 refused;");
-        HandFloors.Refuses(floors, Composed("1.1:1.1", "1.1:1.1", 0.99, Middle)).Should().BeTrue("names are placed past it");
+        statuses[3].Should().StartWith("refused-by floor: through kjv and through bsb and through luth1912 refused;");
         HandFloors.For(floors, Direct).Should().BeNull();
-        HandFloors.AsRoutes(Pair, floors, ["KJV", "BSB"]).Should().ContainSingle("the refusal is no route of a composition");
+        HandFloors.NamesEvery(floors).Should().BeFalse();
+        floors.Select(f => f.Name).Should().Equal("through kjv and through bsb", HandFloors.MiddlesAlone);
+        FluentActions.Invoking(() => Lines("JPS1917-BHSA", "every other combination\t0.5\t\t\t")).Should().Throw<InvalidDataException>()
+            .WithMessage("*'refused' or 'as measured'*");
+        FluentActions.Invoking(() => Lines("JPS1917-BHSA", "every other combination\trefused\t\t\t", "every other combination\tas measured\t\t\t"))
+            .Should().Throw<InvalidDataException>().WithMessage("*stands twice*");
     }
 
     [Fact]
-    public void A_composition_refuses_what_only_middle_texts_found_unless_a_hand_floor_admits_it()
+    public void A_composition_refuses_every_combination_no_hand_floor_names()
     {
         var measured = Admission.Measure(
             Enumerable.Range(0, 400).SelectMany(i => new[]
@@ -182,22 +221,32 @@ public sealed class HandFloorsTests : IDisposable
                 new RoutedLink(i, 1, 0.3 + i / 1000.0, Route.Composed),
                 new RoutedLink(i, 1, 0.3 + i / 1000.0, Route.Composed | Route.ComposedAgain),
                 new RoutedLink(i, 1, 0.3 + i / 1000.0, Route.Reduced | Route.Composed),
+                new RoutedLink(i, 1, 0.3 + i / 1000.0, Route.Written | Route.Reduced),
             }),
             Enumerable.Range(0, 400).ToDictionary(i => (long)i, _ => new HashSet<long> { 1 }), 0.25);
-        var hand = HandFloors.AsRoutes(Pair, [HandFloors.Parse(Pair, new HandFloorRow("through kjv and through bsb", "0.8", "0.9", "10", "9 of 10"))],
+        var hand = HandFloors.AsRoutes(Pair,
+            [
+                HandFloors.Parse(Pair, new HandFloorRow("through kjv and through bsb", "0.8", "0.9", "10", "9 of 10")),
+                HandFloors.Parse(Pair, new HandFloorRow("as stems and through kjv", "0.5", "0.95", "40", "38 of 40")),
+            ],
             ["KJV", "BSB"]);
 
-        var bound = measured.With(hand).RefusingMiddlesAlone(hand);
+        var bound = measured.With(hand).RefusingUnnamed(hand);
+        var middles = measured.With(hand).RefusingUnnamed(hand, direct: false);
 
         measured.Admits(new RoutedLink(1, 1, 0.9, Route.Composed)).Should().BeTrue("measured right every time on the statements");
-        bound.Admits(new RoutedLink(1, 1, 0.9, Route.Composed)).Should().BeFalse("no hand floor admits the King James alone");
+        bound.Admits(new RoutedLink(1, 1, 0.9, Route.Composed)).Should().BeFalse("no hand floor names the King James alone");
         bound.Admits(new RoutedLink(1, 1, 0.9, Route.Composed | Route.ComposedAgain)).Should().BeTrue("its hand floor is 0.80");
         bound.Admits(new RoutedLink(1, 1, 0.7, Route.Composed | Route.ComposedAgain)).Should().BeFalse();
-        bound.Admits(new RoutedLink(1, 1, 0.9, Route.Reduced | Route.Composed)).Should().BeTrue("a direct reading found it too");
-        Admission.Everything(0.25).RefusingMiddlesAlone(new Dictionary<Route, RouteFloor>())
-            .Admits(new RoutedLink(1, 1, 0.9, Route.ComposedAgain)).Should().BeFalse("a pair nothing measured is held to it too");
-        bound.Describe("KJV", "BSB").Should().Contain("what only the middle texts found refused")
-            .And.NotMatchRegex("written:[^;]*[ :,]KJV from", "a measured floor of the King James alone is not written");
+        bound.Admits(new RoutedLink(1, 1, 0.6, Route.Reduced | Route.Composed)).Should().BeTrue("its hand floor is 0.50");
+        bound.Admits(new RoutedLink(1, 1, 0.9, Route.Written | Route.Reduced)).Should().BeFalse("no hand floor names the direct readings alone");
+        middles.Admits(new RoutedLink(1, 1, 0.9, Route.Written | Route.Reduced)).Should().BeTrue("a pair not yet read keeps what it measured");
+        middles.Admits(new RoutedLink(1, 1, 0.9, Route.Composed)).Should().BeFalse("but not what only the middle texts found");
+        Admission.Everything(0.25).RefusingUnnamed(new Dictionary<Route, RouteFloor>())
+            .Admits(new RoutedLink(1, 1, 0.9, Route.Written | Route.ComposedAgain)).Should().BeFalse("a pair nothing measured is held to it too");
+        bound.Describe("KJV", "BSB").Should().Contain("every combination no hand floor names refused").And.EndWith("nothing else")
+            .And.NotMatchRegex(@"written:[^;]*W\+R from", "a measured floor of the direct readings alone is not written");
+        middles.Describe("KJV", "BSB").Should().Contain("what only the middle texts found refused");
     }
 
     [Fact]

@@ -127,8 +127,9 @@ internal static partial class ForgeVerbs
             + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise; --verses writes only the rows of FROM words in those verses and keeps every other row of the file. Reads no database.",
             Align, Least: 2),
         new("aligner-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
-            "Write each aligned pair's aligner method file from the answer stored in Resources/Alignments for both texts' words, where an input moved. "
-            + "Never trains: a pair with no answer for its words keeps its file and waits for align. Reads no database.",
+            "Write each aligned pair's aligner method file from the answer stored in Resources/Alignments for both texts' words, where an input moved, "
+            + "training the answer where none stored was made from those words (unless ESSENTHOS_NO_MODEL_RUNS is set without ESSENTHOS_ALIGNER_RUNS: "
+            + "then the pair keeps its file and waits). Reads no database.",
             (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Aligner)),
         new("compose", "<from> <via[,via[,via]]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--dry-run] [--verses <range,...>] [--from <Resources>]",
             "Compose a text's links to an original through aligned intermediates from the store's files into the pair's composed method file, training "
@@ -136,7 +137,8 @@ internal static partial class ForgeVerbs
             + "FROM words in those verses, keeping every other row of the file. Reads no database.", Compose, Least: 3),
         new("composed-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
             "Write each composed pair's composed method file as its composition is declared, from the stored answers, the middle texts' finals and the "
-            + "pair's final, where an input moved. Never trains. Reads no database.",
+            + "pair's final, where an input moved, training the hops it lacks as aligner-pairs does. The store build draws a declared composition "
+            + "again by itself when what it reads moved or its merge lost composed rows. Reads no database.",
             (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Composed)),
         new("score", "<from> <to> [--min <c,...>] [--model <m>] [--surface] [--stated] [--suppletion] [--pairs <file>] [--from <Resources>]",
             "What an aligner threshold costs, against the stated links of the pair's final in the store. Reads no database; writes nothing but the aligner's workspace.", Score, Least: 2),

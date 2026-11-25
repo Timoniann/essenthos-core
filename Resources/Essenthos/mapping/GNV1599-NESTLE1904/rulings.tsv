@@ -5,3 +5,6 @@
 action	from	to	relation	source	reason
 accept	40.1:11.4		expands		Iakim: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one
 accept	40.1:11.6		expands		Iakim: Matthew 1:11 names Jehoiakim (Eliakim, 2 Kings 23:34; 1 Chronicles 3:15-16), which the translation supplies and NESTLE1904 does not hold; no word of it renders this one
+refuse	47.1:15.9	47.1:15.7	renders		to / πρὸς: Claude, 2026-11-25, hand read of the redraw's new links (PRB-2039, seed 2042): wrong, neighbour: infinitive marker of ἐλθεῖν; vnto renders πρός
+refuse	45.14:3.17	45.14:3.14	renders		not / μὴ: Claude, 2026-11-25, hand read of the redraw's new links (PRB-2039, seed 2042): wrong, wrong occurrence of μή (not renders μή before ἐσθίων)
+refuse	42.14:31.5	42.14:31.8	renders		to / εἰς: Claude, 2026-11-25, hand read of the redraw's new links (PRB-2039, seed 2042): wrong, neighbour: infinitive marker of συμβαλεῖν

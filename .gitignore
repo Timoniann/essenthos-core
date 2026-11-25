@@ -216,9 +216,10 @@ Resources/Essenthos/names/exported/
 Resources/Essenthos/tables/
 Resources/Essenthos/carried/
 
-# The mapping: every pair's method files, merge and verse links (2.5 GB). Carried: the rulings people edit, and the measured precision.
+# The mapping: every pair's method files, merge and verse links (2.5 GB). Carried: the rulings and floors people edit, the measured precision, and the redraws held by hand.
 Resources/Essenthos/mapping/*
 !Resources/Essenthos/mapping/measures.tsv
+!Resources/Essenthos/mapping/redraw-holds.tsv
 !Resources/Essenthos/mapping/*/
 Resources/Essenthos/mapping/*/*
 !Resources/Essenthos/mapping/*/rulings.tsv

@@ -652,9 +652,9 @@ internal sealed record AlignedPair(
 
 /// <summary>
 /// The <c>aligner</c> file of a pair from SIL's aligner (<see cref="AlignerFiles"/>): the answer stored in
-/// <c>Resources/Alignments</c> for the two texts' words as they stand, read into rows. The build never trains: where no
-/// stored answer was made from the words the store holds, the pair's file stays as it was and its rows on a moved verse
-/// wait for <c>forge align</c> (D1).
+/// <c>Resources/Alignments</c> for the two texts' words as they stand, read into rows. Where no stored answer was made from
+/// the words the store holds, it trains one beside the others; only where <see cref="Loading.ModelRuns"/> refuses the aligner
+/// does the pair's file stay as it was, its rows on a moved verse waiting for <c>forge align</c>.
 /// </summary>
 internal sealed class AlignerSource : IPairSource
 {
@@ -712,9 +712,6 @@ internal sealed class AlignerSource : IPairSource
 
     public AlignerSource(IReadOnlyList<AlignedPair>? pairs = null) => _pairs = pairs ?? Pairs;
 
-    /// <summary>Whether a pair whose stored answers were made from other words is trained here (<c>forge align</c>), or waits.</summary>
-    public bool Trains { get; init; }
-
     public string Method => MappingMethods.Aligner;
 
     public string Name => "aligner";
@@ -743,7 +740,7 @@ internal sealed class AlignerSource : IPairSource
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
-        var files = new AlignerFiles(texts, new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(log)) { Trains = Trains });
+        var files = new AlignerFiles(texts, new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(log)));
         var (rows, outcome) = files.Align(Declared(pair)).GetAwaiter().GetResult();
         log(outcome.ToString());
         return rows;

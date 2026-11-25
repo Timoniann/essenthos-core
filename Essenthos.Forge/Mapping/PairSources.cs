@@ -120,6 +120,14 @@ internal static class PairSources
         ];
     }
 
+    /// <summary>What the pair's file of these sources reads: both texts and every source's own inputs, each with its hash.</summary>
+    public static List<ProductInput> Inputs(ProductStore store, string pair, IEnumerable<IPairSource> sources) =>
+    [
+        .. MethodFiles.TextInputs(store, pair)
+            .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
+            .DistinctBy(input => input.Path),
+    ];
+
     /// <summary>Writes the pair's method file from its sources, unless every input is as the file was made from.</summary>
     /// <param name="registry">The sources to read, <see cref="All"/> unless a verb runs one of them otherwise (a model allowed to train).</param>
     public static Outcome Write(ProductTexts texts, string file, string pair, bool force, Action<string> log, IReadOnlyList<IPairSource>? registry = null)
@@ -127,10 +135,7 @@ internal static class PairSources
         registry ??= All;
         var store = texts.Store;
         var sources = registry.Where(source => source.File == file && source.States(store, pair)).ToList();
-        var inputs = MethodFiles.TextInputs(store, pair)
-            .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
-            .DistinctBy(input => input.Path)
-            .ToList();
+        var inputs = Inputs(store, pair, sources);
         var product = MappingProducts.Of(pair, file);
         if (!force && store.Exists(product) && !store.NeedsBuild(product, ProductKind.Machine, inputs))
         {
@@ -147,14 +152,16 @@ internal static class PairSources
             }
             catch (StoredAlignmentMissingException missing)
             {
-                // D1: a model trained again is not the same model, so the build never trains one. The file keeps the rows
-                // it has; the merge holds those of a moved verse stale until the pair is aligned again by hand.
+                // The aligner may not train here (ModelRuns): the file keeps the rows it has, and the merge holds those of a
+                // moved verse stale until the pair is drawn again with model runs allowed.
                 return new Outcome(pair, false, null, [.. sources.Select(s => s.Name)], $"{missing.Message}: run forge {Regenerates(file)} for it");
             }
 
             log($"{pair} {source.Name}: {rows.Count - before} rows");
         }
 
+        // An answer the aligner trained while the rows were made is read by the file too.
+        inputs = Inputs(store, pair, sources);
         var yielded = rows.Where(row => row.Status == MappingStatus.YieldsToStated).ToList();
         rows.RemoveAll(row => row.Status == MappingStatus.YieldsToStated);
 
@@ -181,16 +188,13 @@ internal static class PairSources
     {
         var store = texts.Store;
         var sources = registry.Where(source => source.File == file && source.States(store, pair)).ToList();
-        var inputs = MethodFiles.TextInputs(store, pair)
-            .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
-            .DistinctBy(input => input.Path)
-            .ToList();
         var rows = new List<MappingRow>();
         foreach (var source in sources)
         {
             rows.AddRange(source.Rows(texts, pair, line => log($"{pair} {source.Name}: {line}")));
         }
 
+        var inputs = Inputs(store, pair, sources);
         var (written, held) = MethodFiles.WriteVerses(store, pair, file, rows, verses, producer, inputs);
         log($"{pair}: {rows.Count(row => MethodFiles.Within(row.From, verses))} of the sources' {rows.Count} rows stand in {string.Join(",", verses)}"
             + (held == 0 ? string.Empty : $"; {held} of them cite a verse the pair's hashes hold otherwise, and the merge will hold them stale"));
