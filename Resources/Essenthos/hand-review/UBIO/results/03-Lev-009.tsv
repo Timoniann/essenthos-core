@@ -1,0 +1,286 @@
+kind	from	to	relation	reason
+fixed	3.9:1			Linked the temporal genitive to the Hebrew preposition.
+fixed	3.9:2			Completed the cattle, sacrifice, and presence expressions.
+fixed	3.9:3			Completed the future verb and the animal and offering expressions.
+fixed	3.9:4			Corrected the presence phrase and filled missing links.
+fixed	3.9:5			Completed the verbs, conjunction, and location phrases.
+fixed	3.9:6			Linked the past auxiliary, appearance verb, and recipient.
+fixed	3.9:7			Linked missing imperatives, pronouns, and offering phrases.
+fixed	3.9:8			Linked the approach verb, conjunction, and offering phrase.
+fixed	3.9:9			Linked the recipient, subject pronoun, and compound conjunction.
+unsure	3.9:10			The attachment preposition на before печінці may reflect the first מִן.
+fixed	3.9:11			Linked skin and completed the outside expression.
+fixed	3.9:12			Linked the subject pronouns, offering noun, and delivery phrase.
+fixed	3.9:13			Linked the delivery and burning clauses.
+fixed	3.9:14			Linked the subject pronoun and the altar locative.
+fixed	3.9:15			Completed the subject, conjunction, and sacrifice expressions.
+fixed	3.9:16			Linked the performance verb, its object, and the manner prefix.
+fixed	3.9:17			Completed the verbal, possessive, and exception expressions.
+fixed	3.9:18			Linked the bull, possession, delivery, and sprinkling forms.
+fixed	3.9:19			Linked the bull, covering expression, and liver relation.
+fixed	3.9:20			Linked the subject pronoun and altar locative.
+fixed	3.9:21			Corrected the presence phrase and linked the right side and manner expressions.
+fixed	3.9:22			Completed the blessing and sin-offering expressions.
+fixed	3.9:23			Linked the subject pronoun, appearance verb, and recipient preposition.
+fixed	3.9:24			Linked the missing verbs and the full cry-of-joy expression.
+fixed	3.10:1			Linked the distributive, placement, presence, and command expressions.
+fixed	3.10:2			Linked both face nouns, consumption, and its suffixed object.
+fixed	3.10:3			Completed the relative phrase, passive verbs, and presence expression.
+fixed	3.10:4			Linked the addressee and the compound conjunction and destination.
+fixed	3.10:5			Completed the movement, object, destination, and command links.
+unsure	3.10:6			The second consequence has no local Hebrew negation. Its Ukrainian не remains unsettled.
+fixed	3.10:7			Linked the subject pronoun and both words of the anointing relation.
+ok	3.10:8			
+fixed	3.10:9			Completed the prohibition, correlative coordination, and entry and purpose phrases.
+fixed	3.10:10			Linked the purpose prefix and three repeated prepositions.
+fixed	3.10:11			Linked the purpose prefix, addressee pronoun, and agency expression.
+fixed	3.10:12			Linked the surviving sons, source, unleavened form, and full superlative.
+fixed	3.10:13			Completed the pronoun, portion, source, and passive command links.
+fixed	3.10:14			Separated the sacrifice noun from the peace-offering modifier and completed the portion links.
+fixed	3.10:15			Completed the presentation, recipient, and statute phrases.
+fixed	3.10:16			Linked the emphatic infinitive, passive form, and repeated prepositions.
+fixed	3.10:17			Completed the offering, purpose, and presence phrases. Я stays unlinked because the Hebrew verb is third person.
+fixed	3.10:18			Linked the future auxiliary, emphasis, object, and comparison.
+fixed	3.10:19			Completed the offering and verbal expressions and linked the question marker.
+fixed	3.10:20			Completed the approval verb and the suffixed eye expression.
+refuse	3.9:2.23	3.9:2.20		Лице renders the face noun
+refuse	3.9:4.10	3.9:4.10		Лицем renders the face noun
+refuse	3.9:5.18	3.9:5.19		Лицем renders the face noun
+refuse	3.9:21.10	3.9:21.14		Лицем renders the face noun
+refuse	3.10:1.23	3.10:1.21		Лице renders the face noun
+refuse	3.10:2.14	3.10:2.14		Лицем renders the face noun
+refuse	3.10:14.33	3.10:14.29		Мирних renders the peace-offering modifier
+refuse	3.10:15.16	3.10:15.17		Лицем renders the face noun
+refuse	3.10:17.26	3.10:17.29		Лицем renders the face noun
+refuse	3.10:19.17	3.10:19.16		Лице renders the face noun
+accept	3.9:1.4	3.9:1.3	renders	Temporal genitive renders the preposition
+accept	3.9:2.2	3.9:2.1	renders	Part of the compound conjunction
+accept	3.9:2.7	3.9:2.6	renders	Reflexive beneficiary
+accept	3.9:2.9	3.9:2.8	renders	Origin expressed by the construct noun
+accept	3.9:2.10,3.9:2.11	3.9:2.9	renders	Two words specify cattle
+accept	3.9:2.12	3.9:2.10	renders	First offering purpose
+accept	3.9:2.14	3.9:2.11	renders	Part of the sin-offering term
+accept	3.9:2.18	3.9:2.14	renders	Second offering purpose
+accept	3.9:2.23	3.9:2.19	renders	Preposition in the presence phrase
+accept	3.9:2.25	3.9:2.20	renders	Face noun
+accept	3.9:3.6	3.9:3.5	renders	Lexical part of the future verb
+accept	3.9:3.9	3.9:3.10	renders	Completes the male-goat expression
+accept	3.9:3.10	3.9:3.11	renders	Sin-offering purpose
+accept	3.9:3.11,3.9:3.12	3.9:3.12	renders	Parts of the sin-offering term
+accept	3.9:3.18	3.9:3.18	renders	Year in the age expression
+accept	3.9:3.19	3.9:3.19	renders	Part of the expression for unblemished
+accept	3.9:3.21	3.9:3.20	renders	Burnt-offering purpose
+accept	3.9:4.2	3.9:4.2	renders	Bull noun
+accept	3.9:4.5	3.9:4.5	renders	Peace-offering purpose
+accept	3.9:4.8	3.9:4.7	renders	Slaughter purpose
+accept	3.9:4.9	3.9:4.8	renders	Slaughter action
+accept	3.9:4.10	3.9:4.9	renders	Preposition in the presence phrase
+accept	3.9:4.12	3.9:4.10	renders	Face noun
+accept	3.9:4.21	3.9:4.22	renders	Appearance verb
+accept	3.9:4.22	3.9:4.23	renders	Suffixed recipient
+accept	3.9:5.3	3.9:5.2	renders	Taking verb
+accept	3.9:5.6	3.9:5.5	renders	Past auxiliary of the command verb
+accept	3.9:5.8	3.9:5.7	renders	Directional part of the front-of expression
+accept	3.9:5.12	3.9:5.12	renders	Approach verb
+accept	3.9:5.16	3.9:5.16	renders	Part of the compound conjunction
+accept	3.9:5.18	3.9:5.18	renders	Preposition in the presence phrase
+accept	3.9:5.20	3.9:5.19	renders	Face noun
+accept	3.9:6.10	3.9:6.8	renders	Past auxiliary of the command verb
+accept	3.9:6.13	3.9:6.12	renders	Appearance verb
+accept	3.9:6.14	3.9:6.13	renders	Suffixed recipient
+accept	3.9:7.6	3.9:7.6	renders	Approach imperative
+accept	3.9:7.10	3.9:7.11	renders	First performance imperative
+accept	3.9:7.13	3.9:7.13	renders	Part of the sin-offering term
+accept	3.9:7.19	3.9:7.18	renders	First atonement imperative
+accept	3.9:7.20	3.9:7.19	renders	Reflexive rendered from the suffix
+accept	3.9:7.24	3.9:7.25	renders	Second performance imperative
+accept	3.9:7.26	3.9:7.27	renders	Beneficiary relation of the construct noun
+accept	3.9:7.30	3.9:7.32	renders	Pronoun from the suffixed preposition
+accept	3.9:7.31	3.9:7.33,3.9:7.34	renders	Compound comparison conjunction
+accept	3.9:7.33	3.9:7.35	renders	Past auxiliary of the command verb
+accept	3.9:8.2	3.9:8.2	renders	Approach verb
+accept	3.9:8.7	3.9:8.7	renders	Part of the compound conjunction
+accept	3.9:8.10,3.9:8.11	3.9:8.12	renders	Parts of the sin-offering term
+accept	3.9:8.12	3.9:8.14	renders	Possessor in the suffixed preposition
+accept	3.9:9.6	3.9:9.8	renders	Recipient suffix
+accept	3.9:9.10	3.9:9.10	renders	Subject of the dipping verb
+accept	3.9:9.16	3.9:9.15	renders	Part of the compound conjunction
+accept	3.9:10.11	3.9:10.18	renders	Part of the sin-offering term
+accept	3.9:10.14	3.9:10.21	renders	Altar noun carries the locative ending
+accept	3.9:10.16	3.9:10.22,3.9:10.23	renders	Compound comparison conjunction
+accept	3.9:10.19	3.9:10.24	renders	Past auxiliary of the command verb
+accept	3.9:11.4	3.9:11.8	renders	Skin noun
+accept	3.9:11.8	3.9:11.13,3.9:11.15	renders	Prefixes of the compound outside expression
+accept	3.9:12.3	3.9:12.2	renders	Subject of the slaughter verb
+accept	3.9:12.4	3.9:12.5	renders	Part of the burnt-offering term
+accept	3.9:12.9	3.9:12.7	renders	Delivery verb
+accept	3.9:12.10	3.9:12.10	renders	Suffixed recipient
+accept	3.9:12.13	3.9:12.15	renders	Subject of the sprinkling verb
+accept	3.9:13.3	3.9:13.5	renders	Delivery verb
+accept	3.9:13.4	3.9:13.6	renders	Suffixed recipient
+accept	3.9:13.5	3.9:13.8	renders	Possessive suffix on pieces
+accept	3.9:13.6	3.9:13.7,3.9:13.8	renders	Instrumental conveys the distributive prefix
+accept	3.9:13.10,3.9:13.11	3.9:13.14	renders	Subject and burning verb
+accept	3.9:14.3	3.9:14.2	renders	Subject of the washing verb
+accept	3.9:14.11	3.9:14.16	renders	Altar noun carries the locative ending
+accept	3.9:15.3	3.9:15.2	renders	Subject of the offering verb
+accept	3.9:15.5	3.9:15.4	renders	Beneficiary relation of the construct noun
+accept	3.9:15.11	3.9:15.12	renders	Part of the sin-offering term
+accept	3.9:15.15	3.9:15.17	renders	Part of the compound conjunction
+accept	3.9:15.19,3.9:15.20,3.9:15.21	3.9:15.20	renders	Offering action, object suffix, and construction
+accept	3.9:16.6,3.9:16.7	3.9:16.7	renders	Performance verb and its object suffix
+accept	3.9:16.8	3.9:16.8	renders	Conformity to the ordinance
+accept	3.9:17.2	3.9:17.2	renders	Subject of the offering verb
+accept	3.9:17.7	3.9:17.7	renders	Filling verb
+accept	3.9:17.8,3.9:17.9	3.9:17.9	renders	Source preposition and its suffix
+accept	3.9:17.10,3.9:17.11	3.9:17.8	renders	Hand noun and possessive suffix
+accept	3.9:17.13	3.9:17.10	renders	Part of the compound conjunction
+accept	3.9:17.17	3.9:17.15,3.9:17.16	renders	Prefixes of the exception expression
+accept	3.9:17.19	3.9:17.20	renders	Morning rendered adjectivally
+accept	3.9:18.3	3.9:18.2	renders	Subject of the slaughter verb
+accept	3.9:18.4	3.9:18.5	renders	Bull noun
+accept	3.9:18.10,3.9:18.11	3.9:18.14	renders	Possession expressed by verb and dative
+accept	3.9:18.15	3.9:18.18	renders	Delivery verb
+accept	3.9:18.16	3.9:18.24	renders	Suffixed recipient
+accept	3.9:18.19,3.9:18.21	3.9:18.26	renders	Subject and object of the sprinkling verb
+accept	3.9:19.5	3.9:19.7	renders	Bull noun
+accept	3.9:19.11,3.9:19.12	3.9:19.16	renders	Substantival covering and relative expression
+accept	3.9:19.19	3.9:19.21	renders	Attachment expressed by the construct noun
+accept	3.9:20.8	3.9:20.10	renders	Subject of the burning verb
+accept	3.9:20.11	3.9:20.14	renders	Altar noun carries the locative ending
+accept	3.9:21.4	3.9:21.9	renders	Right side rendered adjectivally
+accept	3.9:21.8	3.9:21.12	renders	Manner expressed by the cognate accusative
+accept	3.9:21.10	3.9:21.13	renders	Preposition in the presence phrase
+accept	3.9:21.12	3.9:21.14	renders	Face noun
+accept	3.9:21.13	3.9:21.16,3.9:21.17	renders	Compound comparison conjunction
+accept	3.9:21.15	3.9:21.18	renders	Past auxiliary of the command verb
+accept	3.9:22.9	3.9:22.9	renders	Part of the compound conjunction
+accept	3.9:22.11	3.9:22.10	renders	Object suffix referring to the people
+accept	3.9:22.15	3.9:22.14	renders	Offering action in the infinitive
+accept	3.9:22.16,3.9:22.17	3.9:22.16	renders	Parts of the sin-offering term
+accept	3.9:23.11	3.9:23.10	renders	Subject of the departure verb
+accept	3.9:23.18	3.9:23.17	renders	Appearance verb
+accept	3.9:23.20	3.9:23.20	renders	Recipient dative renders the preposition
+accept	3.9:24.2	3.9:24.2	renders	Departure verb
+accept	3.9:24.8	3.9:24.9	renders	Fire consuming the offerings
+accept	3.9:24.17	3.9:24.21	renders	Seeing verb
+accept	3.9:24.20,3.9:24.21,3.9:24.22,3.9:24.23	3.9:24.26	renders	Joyful cry and its subject
+accept	3.9:24.25	3.9:24.27	renders	Part of the compound conjunction
+accept	3.10:1.8	3.10:1.8	renders	Distributive use of the noun
+accept	3.10:1.12	3.10:1.11	renders	Putting verb
+accept	3.10:1.13,3.10:1.14	3.10:1.12	renders	Locative preposition and its suffix
+accept	3.10:1.18	3.10:1.16	renders	Prepositional part of the suffixed form
+accept	3.10:1.22	3.10:1.19	renders	Presentation verb
+accept	3.10:1.23	3.10:1.20	renders	Preposition in the presence phrase
+accept	3.10:1.25	3.10:1.21	renders	Face noun
+accept	3.10:1.29,3.10:1.32	3.10:1.27	renders	Subject and past auxiliary of the command verb
+accept	3.10:1.34	3.10:1.28	renders	Suffixed object of the command
+accept	3.10:2.5	3.10:2.6	renders	First face noun
+accept	3.10:2.8	3.10:2.8	renders	Part of the compound conjunction
+accept	3.10:2.9	3.10:2.9	renders	Fire consuming them
+accept	3.10:2.10	3.10:2.10	renders	Suffixed object pronoun
+accept	3.10:2.14	3.10:2.13	renders	Preposition in the presence phrase
+accept	3.10:2.16	3.10:2.14	renders	Second face noun
+accept	3.10:3.7	3.10:3.7	renders	Correlative of the free relative clause
+accept	3.10:3.11	3.10:3.8	renders	Past auxiliary of the speaking verb
+accept	3.10:3.17,3.10:3.18	3.10:3.14	renders	First-person subject and future auxiliary
+accept	3.10:3.21	3.10:3.16	renders	Preposition in the compound presence expression
+accept	3.10:3.25	3.10:3.21	renders	Lexical part of the passive verb
+accept	3.10:4.12	3.10:4.13	renders	Part of the compound conjunction
+accept	3.10:4.14,3.10:4.15	3.10:4.15	renders	Addressee preposition and its suffix
+accept	3.10:4.22	3.10:4.25,3.10:4.26,3.10:4.28	renders	Prefixes of the directional outside expression
+accept	3.10:5.3	3.10:5.2	renders	Approach verb
+accept	3.10:5.5	3.10:5.3	renders	Part of the compound conjunction
+accept	3.10:5.6,3.10:5.7	3.10:5.4	renders	Carrying verb and its object suffix
+accept	3.10:5.11	3.10:5.7,3.10:5.8,3.10:5.10	renders	Prefixes of the directional outside expression
+accept	3.10:5.13	3.10:5.13,3.10:5.14	renders	Compound comparison conjunction
+accept	3.10:5.14,3.10:5.15	3.10:5.15	renders	Speaking verb rendered as a prior command
+accept	3.10:6.7	3.10:6.7	renders	Preposition before Eleazar
+accept	3.10:6.10	3.10:6.10	renders	Preposition before Ithamar
+accept	3.10:6.16	3.10:6.14	renders	First prohibitive negation
+accept	3.10:6.23	3.10:6.20	renders	Conjunction introducing the first consequence
+accept	3.10:6.24	3.10:6.22	renders	Subject of the dying verb expressed as dative
+accept	3.10:6.28	3.10:6.23	renders	Purpose carried by the coordinated consequence
+accept	3.10:6.33,3.10:6.34	3.10:6.28	renders	Anger verb and its subject
+accept	3.10:6.36	3.10:6.30	renders	Brother noun
+accept	3.10:6.41	3.10:6.34	renders	Future auxiliary of the mourning verb
+accept	3.10:6.46	3.10:6.39	renders	Burning verb
+accept	3.10:7.8	3.10:7.7	renders	Subject of the departure verb
+accept	3.10:7.13,3.10:7.14	3.10:7.14	renders	Preposition and second-person suffix
+accept	3.10:9.4	3.10:9.3	renders	Noun in the strong-drink expression
+accept	3.10:9.6	3.10:9.5	renders	Drinking verb
+accept	3.10:9.7,3.10:9.9	3.10:9.7	renders	Correlative coordination under negation
+accept	3.10:9.12,3.10:9.13	3.10:9.9	renders	Accompaniment preposition and its suffix
+accept	3.10:9.14	3.10:9.10	renders	Temporal preposition
+accept	3.10:9.15,3.10:9.16	3.10:9.11	renders	Entry infinitive and its subject suffix
+accept	3.10:9.20	3.10:9.15	renders	Conjunction introducing the consequence
+accept	3.10:9.21	3.10:9.17	renders	Subject of the dying verb expressed as dative
+accept	3.10:10.2	3.10:10.2	renders	Infinitive purpose prefix
+accept	3.10:10.7	3.10:10.8	renders	Second between preposition
+accept	3.10:10.10	3.10:10.12	renders	Third between preposition
+accept	3.10:10.13	3.10:10.16	renders	Fourth between preposition
+accept	3.10:11.2	3.10:11.2	renders	Infinitive purpose prefix
+accept	3.10:11.12	3.10:11.14	renders	Addressee suffix
+accept	3.10:11.14	3.10:11.15,3.10:11.16	renders	Agency expressed by the by-hand idiom
+accept	3.10:12.12	3.10:12.14	renders	Participle describing the surviving sons
+accept	3.10:12.19	3.10:12.21	renders	Source preposition
+accept	3.10:12.24	3.10:12.24	renders	Part of the compound conjunction
+accept	3.10:12.27	3.10:12.26	renders	Unleavened form
+accept	3.10:12.31	3.10:12.33	renders	Explicit subject pronoun
+accept	3.10:12.32	3.10:12.31	renders	First noun of the superlative construct
+accept	3.10:13.4	3.10:13.3	renders	Suffixed object pronoun
+accept	3.10:13.9	3.10:13.12	renders	Explicit subject pronoun
+accept	3.10:13.11	3.10:13.8	renders	First portion noun
+accept	3.10:13.13	3.10:13.9	renders	Conjunction between the portions
+accept	3.10:13.14,3.10:13.15	3.10:13.10	renders	Two-word rendering of the second portion
+accept	3.10:13.16,3.10:13.17	3.10:13.11	renders	Sons and possessive suffix
+accept	3.10:13.18	3.10:13.13	renders	Source preposition
+accept	3.10:13.24	3.10:13.18	renders	First-person passive subject rendered as dative
+accept	3.10:14.20	3.10:14.20	renders	Accompaniment suffix
+accept	3.10:14.23	3.10:14.22	renders	First portion noun
+accept	3.10:14.25	3.10:14.23	renders	Conjunction between the portions
+accept	3.10:14.26	3.10:14.24	renders	Part of the second portion expression
+accept	3.10:14.32	3.10:14.29	renders	Peace-offering modifier
+accept	3.10:14.33	3.10:14.28	renders	Sacrifice noun
+accept	3.10:15.6	3.10:15.8	renders	Preposition before the fire offerings
+accept	3.10:15.14	3.10:15.15	renders	Manner expressed by the cognate accusative
+accept	3.10:15.16	3.10:15.16	renders	Preposition in the presence phrase
+accept	3.10:15.18	3.10:15.17	renders	Face noun
+accept	3.10:15.21	3.10:15.20	renders	Subject of the verb of being
+accept	3.10:15.22,3.10:15.23	3.10:15.21	renders	Beneficiary preposition and its suffix
+accept	3.10:15.29	3.10:15.25	renders	Accompaniment suffix
+accept	3.10:15.30	3.10:15.26	renders	Preposition before the permanent statute
+accept	3.10:15.33	3.10:15.29,3.10:15.30	renders	Compound comparison conjunction
+accept	3.10:16.3,3.10:16.4	3.10:16.5	renders	Parts of the sin-offering term
+accept	3.10:16.6	3.10:16.6	renders	Infinitive absolute expresses emphasis
+accept	3.10:16.11,3.10:16.12	3.10:16.11	renders	Subject and past auxiliary of passive verb
+accept	3.10:16.16	3.10:16.14	renders	Preposition before Eleazar
+accept	3.10:16.19	3.10:16.17	renders	Preposition before Ithamar
+accept	3.10:17.2	3.10:17.3	renders	Subject of the eating verb
+accept	3.10:17.6	3.10:17.6	renders	Part of the sin-offering term
+accept	3.10:17.12	3.10:17.14	renders	Explicit subject pronoun
+accept	3.10:17.13	3.10:17.12	renders	First noun of the superlative construct
+accept	3.10:17.15	3.10:17.16	renders	Suffixed object pronoun
+accept	3.10:17.18	3.10:17.18	renders	Suffixed recipient
+accept	3.10:17.19	3.10:17.19	renders	First infinitive purpose prefix
+accept	3.10:17.25	3.10:17.27	renders	Pronoun from the suffixed preposition
+accept	3.10:17.26	3.10:17.28	renders	Preposition in the presence phrase
+accept	3.10:17.28	3.10:17.29	renders	Face noun
+accept	3.10:18.9	3.10:18.11	renders	Future auxiliary of the finite verb
+accept	3.10:18.10	3.10:18.10	renders	Infinitive absolute expresses emphasis
+accept	3.10:18.12	3.10:18.12	renders	Suffixed object pronoun
+accept	3.10:18.15	3.10:18.16,3.10:18.17	renders	Compound comparison conjunction
+accept	3.10:19.2	3.10:19.2	renders	Speaking verb
+accept	3.10:19.9	3.10:19.9	renders	Subject of the offering verb
+accept	3.10:19.10,3.10:19.11,3.10:19.12	3.10:19.11	renders	Sin-offering expression and possessive suffix
+accept	3.10:19.17	3.10:19.15	renders	Preposition in the presence phrase
+accept	3.10:19.19	3.10:19.16	renders	Face noun
+accept	3.10:19.21	3.10:19.19	renders	Happening verb
+accept	3.10:19.22	3.10:19.20	renders	Suffixed pronoun rendered as recipient
+accept	3.10:19.23	3.10:19.22	renders	Demonstrative referring to the events
+accept	3.10:19.25,3.10:19.27	3.10:19.24	renders	Auxiliary and lexical verb of eating
+accept	3.10:19.29	3.10:19.25	renders	Part of the second sin-offering term
+accept	3.10:19.32	3.10:19.28	renders	Interrogative prefix
+accept	3.10:19.33,3.10:19.34,3.10:19.35	3.10:19.29	renders	Auxiliary, subject, and predicate of approval
+accept	3.10:20.6,3.10:20.7	3.10:20.5	renders	Subject and predicate of approval
+accept	3.10:20.9,3.10:20.10	3.10:20.7	renders	Eye noun and possessive suffix

@@ -1,0 +1,180 @@
+kind	from	to	relation	reason
+ok	2.25:1			
+fixed	2.25:2			Wrong possessive target and missing verb and recipient links.
+fixed	2.25:3			Missing source preposition and pronoun.
+fixed	2.25:4			Missing second word of the scarlet expression.
+fixed	2.25:5			Mislinked color adverb and missing skin and ram links.
+fixed	2.25:6			Missing purpose prepositions.
+fixed	2.25:7			Missing setting relation and recipient prepositions.
+fixed	2.25:8			Missing directive particle and phrase of location.
+fixed	2.25:9			Missing comparison prefix and possessive suffix.
+fixed	2.25:10			Missing subject pronoun and material relation.
+fixed	2.25:11			Missing object pronoun and parts of the spatial expressions.
+fixed	2.25:12			Missing beneficiary phrase.
+fixed	2.25:13			Missing material relation and object pronoun.
+fixed	2.25:14			Missing location, purpose, and instrument links.
+fixed	2.25:15			Missing ark adjective, departure verb, and pronouns.
+fixed	2.25:16			Missing subject and recipient pronouns.
+unsure	2.25:17			Restored both possessives. The material preposition’s target is uncertain.
+fixed	2.25:18			Missing object pronoun and source prefix.
+fixed	2.25:19			Missing source expressions, second numeral, and final making verb.
+fixed	2.25:20			Missing upward direction, instrument, and parts of the face clauses.
+fixed	2.25:21			Missing spatial adverb, second placement verb, and pronouns.
+fixed	2.25:22			Missing verb forms, pronouns, and parts of compound prepositions.
+ok	2.25:23			
+fixed	2.25:24			Missing object pronoun and beneficiary phrase.
+fixed	2.25:25			Missing beneficiary phrase and measure preposition.
+fixed	2.25:26			Missing beneficiary, material relation, connector, corners, and leg phrase.
+fixed	2.25:27			Missing part of opposite, the copula, and the socket expression.
+fixed	2.25:28			Missing object pronoun, instrument phrase, and carrying verb.
+unsure	2.25:29			The two libation vessels and their possessives remain uncertain.
+fixed	2.25:30			Missing display designation and presence phrase.
+fixed	2.25:31			Swapped possessive and missing material, passive, and component links.
+fixed	2.25:32			Missing first branch noun and three possessives.
+fixed	2.25:33			Missing branch locations and relative participle link.
+fixed	2.25:34			Missing shaft sense and two possessives.
+fixed	2.25:35			Missing source pronouns and parts of the closing branch phrase.
+fixed	2.25:36			Missing branch noun, directive particle, and pronouns.
+fixed	2.25:37			Missing lamp possessives, directive forms, and direction phrase.
+fixed	2.25:38			Missing possessives and parts of the coal-pan expression.
+fixed	2.25:39			Missing making verb, object pronoun, and demonstrative.
+fixed	2.25:40			Mislinked pattern preposition and missing recipient pronoun.
+refuse	2.25:2.18	2.25:2.14		Possessive belongs to heart.
+refuse	2.25:5.4	2.25:5.2		Color belongs to the reddening participle.
+refuse	2.25:31.20	2.25:31.14		This possessive belongs to the cups.
+refuse	2.25:40.5	2.25:40.6		According to renders the preceding prefix.
+accept	2.25:2.6,2.25:2.8	2.25:2.6	renders	Directive particle and finite verb render the taking.
+accept	2.25:2.9	2.25:2.7	renders	For renders the recipient prefix.
+accept	2.25:2.18	2.25:2.15	renders	His renders the suffix on heart.
+accept	2.25:2.22,2.25:2.23	2.25:2.18	renders	For me renders the contribution’s first-person suffix.
+accept	2.25:3.7	2.25:3.7	renders	From renders the source prefix.
+accept	2.25:3.8	2.25:3.8	renders	Them renders the suffixed preposition.
+accept	2.25:4.6	2.25:4.7	renders	Scarlet renders the full Hebrew dye expression.
+accept	2.25:5.2	2.25:5.2	renders	First occurrence of skins.
+accept	2.25:5.3	2.25:5.3	renders	Adjective renders the genitive rams.
+accept	2.25:5.4	2.25:5.4	renders	Red color is part of the participle.
+accept	2.25:6.2	2.25:6.2	renders	For lighting renders the first purpose prefix.
+accept	2.25:6.5	2.25:6.6	renders	For the oil renders the second purpose prefix.
+accept	2.25:7.6	2.25:7.4	renders	For setting expresses the construct relation.
+accept	2.25:7.8	2.25:7.6	renders	Preposition for the ephod.
+accept	2.25:7.11	2.25:7.10	renders	Preposition for the breastpiece.
+accept	2.25:8.2	2.25:8.2	renders	Let expresses the verb’s directive force.
+accept	2.25:8.8	2.25:8.7,2.25:8.8	renders	Among renders in the midst.
+accept	2.25:8.9	2.25:8.8	renders	Them renders the suffix on midst.
+accept	2.25:9.1	2.25:9.1	renders	As renders the comparison prefix.
+accept	2.25:9.12	2.25:9.15	renders	Its renders the suffix on furnishings.
+accept	2.25:10.3	2.25:10.2	renders	They renders the verb’s plural subject.
+accept	2.25:10.5	2.25:10.3	renders	Of acacia wood expresses the ark’s construct relation.
+accept	2.25:11.3	2.25:11.3	renders	It renders the suffixed object form.
+accept	2.25:11.6	2.25:11.6,2.25:11.7	renders	From inside renders the compound expression.
+accept	2.25:11.8	2.25:11.9	renders	From is part of the fused adverb.
+accept	2.25:11.14,2.25:11.15	2.25:11.14	renders	Over it renders the suffixed preposition.
+accept	2.25:12.3,2.25:12.4	2.25:12.3	renders	For it renders the suffixed beneficiary prefix.
+accept	2.25:13.4	2.25:13.3	renders	Of acacia wood expresses the poles’ construct relation.
+accept	2.25:13.9	2.25:13.8	renders	Them renders the suffixed object form.
+accept	2.25:14.7	2.25:14.9	renders	On renders the preposition before sides.
+accept	2.25:14.10	2.25:14.13	renders	So as to renders the purpose prefix.
+accept	2.25:14.11	2.25:14.18	renders	With them renders the suffixed instrumental prefix.
+accept	2.25:14.12	2.25:14.14	renders	Carry renders the infinitive.
+accept	2.25:15.2	2.25:15.4	renders	Adjective renders the genitive ark.
+accept	2.25:15.8,2.25:15.9	2.25:15.9	renders	Departure verb and its plural subject.
+accept	2.25:15.11	2.25:15.10	renders	It renders the suffix on from.
+accept	2.25:16.8	2.25:16.10	renders	I renders the verb’s first-person form.
+accept	2.25:16.9	2.25:16.11	renders	To you renders the suffixed preposition.
+accept	2.25:17.12	2.25:17.9	renders	Its renders the suffix on length.
+accept	2.25:17.18	2.25:17.14	renders	Its renders the suffix on width.
+accept	2.25:18.9	2.25:18.8	renders	Them renders the suffixed object form.
+accept	2.25:18.10	2.25:18.9	renders	From renders the prefix before both ends.
+accept	2.25:19.5	2.25:19.5	renders	From renders the first end’s prefix.
+accept	2.25:19.7	2.25:19.7,2.25:19.8	renders	From here renders from this.
+accept	2.25:19.9	2.25:19.11	renders	One describes the second cherub.
+accept	2.25:19.11	2.25:19.12	renders	From renders the second end’s prefix.
+accept	2.25:19.13	2.25:19.14,2.25:19.15	renders	From there renders the second deictic phrase.
+accept	2.25:19.14	2.25:19.16	renders	From renders the prefix before the cover.
+accept	2.25:19.17	2.25:19.19	renders	Making verb in the closing clause.
+accept	2.25:20.7	2.25:20.7,2.25:20.8	renders	Upward renders the directional expression.
+accept	2.25:20.11	2.25:20.10	renders	Instrumental case renders the prefix.
+accept	2.25:20.17	2.25:20.17	renders	One renders the first half of the reciprocal idiom.
+accept	2.25:20.22	2.25:20.23	renders	Written copula in the closing clause.
+accept	2.25:21.5	2.25:21.9,2.25:21.10,2.25:21.11	renders	From above renders the compound spatial adverb.
+accept	2.25:21.12	2.25:21.16	renders	Placement verb in the second clause.
+accept	2.25:21.15	2.25:21.21	renders	I renders the giving verb’s first-person form.
+accept	2.25:21.16	2.25:21.22	renders	To you renders the suffixed preposition.
+accept	2.25:22.2,2.25:22.3,2.25:22.5	2.25:22.2	renders	Subject, auxiliary, and verb render the promised encounter.
+accept	2.25:22.4	2.25:22.3	renders	To you renders the suffixed recipient prefix.
+accept	2.25:22.8	2.25:22.6	renders	Auxiliary renders the speaking verb’s future sense.
+accept	2.25:22.10,2.25:22.11	2.25:22.7	renders	With you renders the suffixed preposition.
+accept	2.25:22.12	2.25:22.9	renders	Above is the second part of from above.
+accept	2.25:22.14	2.25:22.13	renders	Between is the second part of from between.
+accept	2.25:22.25	2.25:22.26	renders	You renders the suffix on the object form.
+accept	2.25:22.26	2.25:22.27	renders	For renders the direction toward Israel’s sons.
+accept	2.25:24.3	2.25:24.3	renders	It renders the suffixed object form.
+accept	2.25:24.10,2.25:24.11	2.25:24.8	renders	For it renders the suffixed beneficiary prefix.
+accept	2.25:25.4,2.25:25.5	2.25:25.3	renders	For it renders the suffixed beneficiary prefix.
+accept	2.25:25.6	2.25:25.5	renders	Preposition expresses the extent measured by the handbreadth.
+accept	2.25:26.3,2.25:26.4	2.25:26.3	renders	For it renders the suffixed beneficiary prefix.
+accept	2.25:26.7	2.25:26.5	renders	Of gold expresses the rings’ construct relation.
+accept	2.25:26.10	2.25:26.7	renders	Part of the compound conjunction та й.
+accept	2.25:26.16	2.25:26.15	renders	Corners renders the corner noun.
+accept	2.25:26.18	2.25:26.17	renders	At renders the relation to the four legs.
+accept	2.25:26.19	2.25:26.19	renders	Its renders the suffix on legs.
+accept	2.25:27.1	2.25:27.1	renders	Prefix is part of the compound meaning opposite.
+accept	2.25:27.3	2.25:27.5	renders	Will be renders the written copula.
+accept	2.25:27.6	2.25:27.8	renders	For renders the first purpose prefix.
+accept	2.25:27.7	2.25:27.9	renders	Insertion expresses the socket’s function.
+accept	2.25:28.10	2.25:28.10	renders	Them renders the suffixed object form.
+accept	2.25:28.13,2.25:28.14	2.25:28.14	renders	On them renders the suffixed preposition.
+accept	2.25:28.15,2.25:28.16	2.25:28.13	renders	Future auxiliary and verb render the passive carrying form.
+accept	2.25:29.14	2.25:29.10	renders	Purpose clause renders the Hebrew relative construction.
+accept	2.25:29.15	2.25:29.12	renders	With them renders the suffixed instrumental preposition.
+accept	2.25:29.16	2.25:29.11	renders	Pour renders the libation verb.
+accept	2.25:29.20	2.25:29.16	renders	Them renders the suffixed object form.
+accept	2.25:30.6	2.25:30.7	renders	Display adjective renders face in the bread designation.
+accept	2.25:30.9	2.25:30.8	renders	Before renders the prefix in the presence idiom.
+accept	2.25:30.10,2.25:30.11	2.25:30.9	renders	My face renders the suffixed noun.
+accept	2.25:31.4	2.25:31.3	renders	Of gold expresses the lampstand’s construct relation.
+accept	2.25:31.9,2.25:31.10,2.25:31.11	2.25:31.7	renders	Directive and passive verb phrase render the Hebrew passive form.
+accept	2.25:31.14,2.25:31.15	2.25:31.10	renders	Shaft and its possessive render the suffixed noun.
+accept	2.25:31.17,2.25:31.18	2.25:31.12	renders	Branches and their possessive render the suffixed noun.
+accept	2.25:31.19,2.25:31.20	2.25:31.13	renders	Cups and their possessive render the suffixed noun.
+accept	2.25:31.22	2.25:31.14	renders	Its renders the suffix on knobs.
+accept	2.25:31.25	2.25:31.16	renders	Its renders the suffix on flowers.
+accept	2.25:31.28	2.25:31.17	renders	It renders the suffix on from.
+accept	2.25:32.3	2.25:32.3	renders	Branches in the opening count.
+accept	2.25:32.7	2.25:32.6	renders	Its renders the suffix on both sides.
+accept	2.25:32.14	2.25:32.11	renders	Its renders the suffix on the first side.
+accept	2.25:32.22	2.25:32.19	renders	Its renders the suffix on the second side.
+accept	2.25:33.5	2.25:33.8	renders	One describes the first branch.
+accept	2.25:33.6	2.25:33.6	renders	Branch in the first location phrase.
+accept	2.25:33.14	2.25:33.16	renders	In renders the second branch’s prefix.
+accept	2.25:33.15	2.25:33.18	renders	Branch in the second location phrase.
+accept	2.25:33.16	2.25:33.20	renders	The other renders one in the parallel clause.
+accept	2.25:33.21	2.25:33.25	renders	On renders the relation to the six branches.
+accept	2.25:33.24	2.25:33.30	renders	Relative pronoun renders the participial construction.
+accept	2.25:34.3	2.25:34.4	renders	Lampstand here refers to its central shaft.
+accept	2.25:34.9	2.25:34.8	renders	Its renders the suffix on knobs.
+accept	2.25:34.12	2.25:34.10	renders	Its renders the suffix on flowers.
+accept	2.25:35.7	2.25:35.7	renders	It renders the suffix on the first from.
+accept	2.25:35.14,2.25:35.15	2.25:35.14	renders	From it renders the second suffixed preposition.
+accept	2.25:35.23	2.25:35.21	renders	It renders the suffix on the third from.
+accept	2.25:35.24	2.25:35.22	renders	Preposition renders the relation to the six branches.
+accept	2.25:35.26	2.25:35.25	renders	Branches in the closing count.
+accept	2.25:35.27	2.25:35.27	renders	Relative pronoun renders the participial construction.
+accept	2.25:36.5	2.25:36.3	renders	Branches render the suffixed branch noun.
+accept	2.25:36.6	2.25:36.5	renders	Let expresses the copula’s directive force.
+accept	2.25:36.8,2.25:36.9	2.25:36.4	renders	From it renders the suffixed source preposition.
+accept	2.25:36.11	2.25:36.6	renders	It renders the suffix in the whole of it.
+accept	2.25:37.5,2.25:37.6	2.25:37.4	renders	For it renders the first lamp noun’s possessive suffix.
+accept	2.25:37.8	2.25:37.7	renders	Let expresses the lighting verb’s directive force.
+accept	2.25:37.10	2.25:37.9	renders	Its renders the suffix on the second lamp noun.
+accept	2.25:37.13,2.25:37.14,2.25:37.15	2.25:37.11	renders	Directive, subject, and verb render the shining form.
+accept	2.25:37.16	2.25:37.12	renders	On renders the directional preposition.
+accept	2.25:37.17,2.25:37.19	2.25:37.14	renders	Front and its render the suffixed face noun.
+accept	2.25:37.18	2.25:37.13	renders	Side renders the direction noun.
+accept	2.25:38.2	2.25:38.2	renders	Its renders the suffix on tongs.
+accept	2.25:38.5,2.25:38.6,2.25:38.7	2.25:38.4	renders	Possessive and coal-pan phrase render the suffixed utensil noun.
+accept	2.25:39.5	2.25:39.4	renders	Making verb renders the original action.
+accept	2.25:39.6	2.25:39.5	renders	It renders the suffixed object form.
+accept	2.25:39.9	2.25:39.11	renders	This renders these with the collective vessel noun.
+accept	2.25:40.5	2.25:40.5	renders	According to renders the pattern’s prefix.
+accept	2.25:40.9	2.25:40.8	renders	To you renders the explicit subject of the passive.

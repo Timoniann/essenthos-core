@@ -1,0 +1,90 @@
+kind	from	to	relation	reason
+fixed	2.24:1			Missing subject pronoun and part of the adverb.
+fixed	2.24:2			Missing mood marker, expression of being alone, pronoun, and verb.
+fixed	2.24:3			Missing dative prefix, noun, and parts of two phrases.
+fixed	2.24:4			Missing subject, time expressions, and parts of both compound numbers.
+fixed	2.24:5			Missing subjects and sacrifice links.
+fixed	2.24:6			Missing links for both pouring clauses.
+fixed	2.24:7			Missing subject, prefix in the hearing expression, and final verb.
+fixed	2.24:8			Incorrect article link and missing demonstrative, pronoun, and noun links.
+ok	2.24:9			
+fixed	2.24:10			Sapphire linked to the slab. Several phrase links were missing.
+fixed	2.24:11			Missing subject, verb, and prepositional links.
+fixed	2.24:12			Missing direction, recipient, material, and subject links.
+fixed	2.24:13			Missing preposition of direction.
+fixed	2.24:14			Missing links in the instructions to the elders.
+fixed	2.24:15			Missing preposition of direction.
+fixed	2.24:16			Missing object suffix, temporal prefix, and subject pronoun.
+fixed	2.24:17			Missing noun, comparison prefix, relative, and preposition.
+fixed	2.24:18			Missing ascent verb, its preposition, and the verb of staying.
+refuse	2.24:8.4	2.24:8.5		Supplied demonstrative on the Hebrew article.
+refuse	2.24:10.14	2.24:10.11		Adjacent noun means slab.
+accept	2.24:1.5	2.24:1.4	renders	Subject of the speech verb.
+accept	2.24:1.22	2.24:1.22	renders	Adverb also renders distance.
+accept	2.24:2.3	2.24:2.2	renders	Jussive force of the approach verb.
+accept	2.24:2.7	2.24:2.4,2.24:2.5	renders	Together express being alone.
+accept	2.24:2.15	2.24:2.17	renders	Pronoun carried by the suffixed preposition.
+accept	2.24:2.17	2.24:2.16	renders	Verb of going up.
+accept	2.24:3.7	2.24:3.6	renders	Dative ending renders the prefix.
+accept	2.24:3.13	2.24:3.17	renders	Renders the ordinances.
+accept	2.24:3.18	2.24:3.24	renders	Single voice includes the number one.
+accept	2.24:3.22	2.24:3.29	renders	Everything also absorbs the noun for words.
+accept	2.24:4.9,2.24:4.10	2.24:4.9	renders	Subject and earliness of rising.
+accept	2.24:4.11	2.24:4.10	renders	Adverb includes the temporal prefix.
+accept	2.24:4.19	2.24:4.21	renders	Completes the first twelve.
+accept	2.24:4.23	2.24:4.24,2.24:4.25	renders	Second compound number twelve.
+accept	2.24:5.3	2.24:5.2	renders	Subject of the sending verb.
+accept	2.24:5.8	2.24:5.8	renders	Plural subject of the offering verb.
+accept	2.24:5.12	2.24:5.11	renders	Verb of offering sacrifices.
+accept	2.24:5.13	2.24:5.12	renders	General noun for sacrifices.
+accept	2.24:5.15	2.24:5.13	renders	Noun in the expression for peace offerings.
+accept	2.24:6.7	2.24:6.8	renders	Putting the blood into bowls.
+accept	2.24:6.8	2.24:6.9	renders	Preposition of placement in the bowls.
+accept	2.24:6.9	2.24:6.11	renders	Renders the bowls.
+accept	2.24:6.15	2.24:6.16	renders	Casting the blood onto the altar.
+accept	2.24:7.3	2.24:7.2	renders	Subject of the taking verb.
+accept	2.24:7.9	2.24:7.8	renders	Adverb renders the phrase meaning in their hearing.
+accept	2.24:7.20	2.24:7.20	renders	Renders hearing in the sense of heeding.
+accept	2.24:8.13	2.24:8.14	renders	Presentative particle.
+accept	2.24:8.20	2.24:8.21	renders	Plural pronoun in the suffixed preposition.
+accept	2.24:8.23	2.24:8.27	renders	Renders the demonstrative these.
+accept	2.24:8.24	2.24:8.25	renders	Renders the words or matters.
+accept	2.24:10.2	2.24:10.2	renders	Plural subject of the seeing verb.
+accept	2.24:10.11	2.24:10.9	renders	First comparison prefix.
+accept	2.24:10.12,2.24:10.13	2.24:10.10	renders	Workmanship noun and its construct relation.
+accept	2.24:10.14	2.24:10.13	renders	Renders the gemstone.
+accept	2.24:10.15	2.24:10.11	renders	Renders the slab.
+accept	2.24:10.18	2.24:10.16	renders	Renders the sense of the very heavens.
+accept	2.24:10.20	2.24:10.19	renders	Prefix marking respect or reference.
+accept	2.24:11.2,2.24:11.4	2.24:11.7	renders	Verb of extending and its subject.
+accept	2.24:11.7	2.24:11.2	renders	Preposition marking the target.
+accept	2.24:11.9	2.24:11.3	renders	Renders the partitive construct relation.
+accept	2.24:12.7	2.24:12.7	renders	Preposition in the suffixed form.
+accept	2.24:12.9	2.24:12.9	renders	Renders the mountain noun’s directional ending.
+accept	2.24:12.16	2.24:12.15	renders	Recipient expressed by the suffixed preposition.
+accept	2.24:12.17	2.24:12.19	renders	Adjective renders the material noun.
+accept	2.24:12.24	2.24:12.27	renders	First-person subject of writing.
+accept	2.24:13.11	2.24:13.10	renders	Preposition of direction toward the mountain.
+accept	2.24:14.5	2.24:14.5	renders	Subject of the speech verb.
+accept	2.24:14.6	2.24:14.6	renders	Renders the imperative to stay.
+accept	2.24:14.8	2.24:14.8	renders	Preposition of location.
+accept	2.24:14.9,2.24:14.10	2.24:14.9	renders	Demonstrative identifies the place.
+accept	2.24:14.11	2.24:14.10	renders	Marks the endpoint in the until clause.
+accept	2.24:14.16	2.24:14.13	renders	Pronoun carried by the preposition.
+accept	2.24:14.22,2.24:14.24	2.24:14.19	renders	Copula and pronoun of the locative predicate.
+accept	2.24:14.25	2.24:14.20	renders	Renders who.
+accept	2.24:14.26	2.24:14.21	renders	Verb renders the possessor construction.
+accept	2.24:14.27	2.24:14.22	renders	Renders a matter or dispute.
+accept	2.24:14.28,2.24:14.29	2.24:14.23	renders	Verb of approach and its jussive force.
+accept	2.24:14.30,2.24:14.31	2.24:14.24	renders	Preposition and its plural pronoun.
+accept	2.24:15.4	2.24:15.4	renders	Preposition of direction toward the mountain.
+accept	2.24:16.11	2.24:16.9	renders	Object pronoun in the verb suffix.
+accept	2.24:16.16	2.24:16.18	renders	Temporal genitive renders the prefix.
+accept	2.24:16.17	2.24:16.15	renders	Subject of the calling verb.
+accept	2.24:17.2	2.24:17.2	renders	Renders appearance.
+accept	2.24:17.5	2.24:17.5	renders	Renders the comparison prefix.
+accept	2.24:17.7	2.24:17.7	renders	Relative word unpacking the participle.
+accept	2.24:17.12	2.24:17.12	renders	Renders the prefix in the sight expression.
+accept	2.24:18.8	2.24:18.9	renders	Renders the ascent verb.
+accept	2.24:18.9	2.24:18.10	renders	Preposition of direction toward the mountain.
+accept	2.24:18.13	2.24:18.14	renders	Renders being or staying on the mountain.

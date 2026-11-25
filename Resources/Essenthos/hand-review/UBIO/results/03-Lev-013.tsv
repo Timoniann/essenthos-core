@@ -1,0 +1,175 @@
+kind	from	to	relation	reason
+fixed	3.13:1			Shared preposition also governs Aaron.
+fixed	3.13:2			Missing subject, passive forms, and prepositions.
+fixed	3.13:3			Declaration linked to its object pronoun.
+fixed	3.13:4			Missing spot, pronouns, and duration marker.
+fixed	3.13:5			Missing object suffix, verbs, and time expressions.
+fixed	3.13:6			Demonstrative linked to a conjunction.
+fixed	3.13:7			Finite verb linked to the emphatic infinitive.
+fixed	3.13:8			Missing inspection, spread, and declaration links.
+fixed	3.13:9			Missing first occurrence of the verb be.
+fixed	3.13:10			Missing subject pronoun and result and location links.
+fixed	3.13:11			Missing demonstrative and declaration complement.
+unsure	3.13:12			Emphatic infinitive corrected. Exact alignment of the closing visual extent phrase is uncertain.
+fixed	3.13:13			Missing declaration, entirety, and pronoun links.
+fixed	3.13:14			Missing temporal clause, location, and predicate links.
+fixed	3.13:15			Missing declaration complement and repeated pronouns.
+fixed	3.13:16			Missing recurrence, result prefix, and subject.
+fixed	3.13:17			Missing change, declaration, and pronoun links.
+fixed	3.13:18			Missing conditional, locations, and healing subject.
+fixed	3.13:19			Missing second white adjective and dative relation.
+fixed	3.13:20			Missing verbs, suffixes, and location prefix.
+fixed	3.13:21			Missing location, negation, pronouns, and duration marker.
+fixed	3.13:22			Infinitive and finite verb separated. Skin disease wording is contextual.
+fixed	3.13:23			Missing staying verb, boil, and declaration complement.
+fixed	3.13:24			Missing causal relation, verb, and growth noun.
+fixed	3.13:25			Declaration linked to its object pronoun.
+fixed	3.13:26			Missing comparative adjective, pronouns, and duration marker.
+fixed	3.13:27			Infinitive and finite verb separated. UBIO says eighth and Hebrew says seventh. The ordinal stays unlinked.
+fixed	3.13:28			Missing location phrase, pronouns, and second burn noun.
+fixed	3.13:29			Missing conditional and location links.
+fixed	3.13:30			Missing appearance, location, hair, and repeated pronouns.
+refuse	3.13:3.32	3.13:3.36		Object pronoun carries no declaration.
+refuse	3.13:6.14	3.13:6.17		Demonstrative modifies the lesion.
+refuse	3.13:7.4	3.13:7.3		Infinitive supplies emphasis.
+refuse	3.13:12.4	3.13:12.3		Infinitive supplies emphasis.
+refuse	3.13:22.4	3.13:22.3		Infinitive supplies emphasis.
+refuse	3.13:25.25	3.13:25.28		Object pronoun carries no declaration.
+refuse	3.13:27.9	3.13:27.11		Infinitive supplies emphasis.
+accept	3.13:1.4	3.13:1.7	renders	Shared preposition governs Aaron.
+accept	3.13:2.1	3.13:2.1	renders	Person named in the condition.
+accept	3.13:2.20	3.13:2.17	renders	Predicative lamed marks the resulting lesion.
+accept	3.13:2.25,3.13:2.26	3.13:2.21	renders	Passive action and its subject.
+accept	3.13:2.27	3.13:2.27	renders	Shared preposition governs the alternative destination.
+accept	3.13:3.14	3.13:3.17	renders	Result relation of turning.
+accept	3.13:3.17	3.13:3.20	renders	Appearance noun.
+accept	3.13:3.20	3.13:3.24	renders	Comparative preposition.
+accept	3.13:3.26	3.13:3.29	renders	Written pronoun.
+accept	3.13:3.29	3.13:3.31	renders	Object suffix of the inspection verb.
+accept	3.13:3.32,3.13:3.34	3.13:3.35	renders	Declaration of uncleanness.
+accept	3.13:4.3	3.13:4.3	renders	Spot noun.
+accept	3.13:4.5	3.13:4.5	renders	Written pronoun.
+accept	3.13:4.11,3.13:4.12	3.13:4.12	renders	Appearance noun and possessive suffix.
+accept	3.13:4.22	3.13:4.19	renders	Result relation of turning.
+accept	3.13:4.27	3.13:4.27	renders	Lesion denotes the affected person.
+accept	3.13:4.28	3.13:4.29	renders	Adverbial duration.
+accept	3.13:5.3	3.13:5.2	renders	Object suffix of the inspection verb.
+accept	3.13:5.6	3.13:5.5	renders	Temporal genitive renders the prefix.
+accept	3.13:5.13	3.13:5.14	renders	Lesion stayed unchanged.
+accept	3.13:5.24	3.13:5.30	renders	Second occurrence.
+accept	3.13:5.25	3.13:5.29	renders	Adverbial duration.
+accept	3.13:6.3	3.13:6.5	renders	Independent suffixed object marker.
+accept	3.13:6.6	3.13:6.6	renders	Temporal genitive renders the prefix.
+accept	3.13:6.11	3.13:6.14	renders	Verb of fading.
+accept	3.13:6.22	3.13:6.26	renders	Predicative marker in the declaration.
+accept	3.13:6.25	3.13:6.30	renders	Written pronoun.
+accept	3.13:6.28	3.13:6.32	renders	Subject of the washing verb.
+accept	3.13:6.32	3.13:6.34	renders	Part of the sequential conjunction.
+accept	3.13:7.3	3.13:7.3	renders	Infinitive absolute emphasis.
+accept	3.13:7.4	3.13:7.4	renders	Finite spreading verb.
+accept	3.13:7.11	3.13:7.12	renders	Dative renders the destination.
+accept	3.13:7.12	3.13:7.15	renders	Purpose preposition.
+accept	3.13:7.16,3.13:7.17	3.13:7.18	renders	Appearance verb and its subject.
+accept	3.13:8.2	3.13:8.2	renders	Inspection verb.
+accept	3.13:8.8	3.13:8.7	renders	Spreading verb.
+accept	3.13:8.15,3.13:8.16	3.13:8.14	renders	Predicative complement of the declaration.
+accept	3.13:8.18	3.13:8.18	renders	Written pronoun.
+accept	3.13:9.2	3.13:9.4	renders	Existential verb in the condition.
+accept	3.13:10.11	3.13:10.13	renders	Written subject pronoun.
+accept	3.13:10.14	3.13:10.14	renders	Result relation of turning.
+accept	3.13:10.17	3.13:10.21	renders	Location prefix on the swelling.
+accept	3.13:10.18	3.13:10.23	renders	Second swelling occurrence.
+accept	3.13:11.2	3.13:11.3	renders	Written pronoun rendered demonstratively.
+accept	3.13:11.13,3.13:11.14	3.13:11.8	renders	Predicative complement of the declaration.
+accept	3.13:12.3	3.13:12.3	renders	Infinitive absolute emphasis.
+accept	3.13:12.4	3.13:12.4	renders	Finite outbreak verb.
+accept	3.13:12.15	3.13:12.18	renders	Lesion denotes the affected person.
+accept	3.13:12.19	3.13:12.22	renders	Part of the endpoint expression.
+accept	3.13:12.21,3.13:12.22	3.13:12.23	renders	Feet noun and possessive suffix.
+accept	3.13:12.26	3.13:12.27	renders	Eyes noun.
+accept	3.13:13.12	3.13:13.13	renders	Conjunction introduces the consequence.
+accept	3.13:13.13,3.13:13.14,3.13:13.15	3.13:13.14	renders	Declarative predicate and its subject.
+accept	3.13:13.19,3.13:13.20	3.13:13.18	renders	Entirety and pronominal suffix.
+accept	3.13:13.22	3.13:13.19	renders	Result relation of turning.
+accept	3.13:13.25	3.13:13.22	renders	Written pronoun in the final clause.
+accept	3.13:14.3	3.13:14.2,3.13:14.3	renders	Temporal genitive renders prefix and day.
+accept	3.13:14.4	3.13:14.3	renders	Temporal clause renders the construct relation.
+accept	3.13:14.5,3.13:14.6	3.13:14.5	renders	Location prefix and pronominal suffix.
+accept	3.13:14.7	3.13:14.4	renders	Passive appearance infinitive.
+accept	3.13:14.10,3.13:14.11	3.13:14.8	renders	Subject and change of state.
+accept	3.13:15.9,3.13:15.10	3.13:15.11	renders	Predicative complement of the declaration.
+accept	3.13:15.15	3.13:15.17	renders	Pronoun in the first nominal clause.
+accept	3.13:15.17	3.13:15.19	renders	Pronoun in the second nominal clause.
+accept	3.13:16.5	3.13:16.3	renders	Return verb expresses recurrence.
+accept	3.13:16.7	3.13:16.10	renders	Resultative lamed.
+accept	3.13:16.10	3.13:16.13	renders	Subject of the coming verb.
+accept	3.13:17.7	3.13:17.7	renders	Verb of turning.
+accept	3.13:17.9	3.13:17.10	renders	Resultative lamed.
+accept	3.13:17.13,3.13:17.16	3.13:17.13	renders	Declaration of cleanness.
+accept	3.13:17.19	3.13:17.20	renders	Written pronoun.
+accept	3.13:18.3	3.13:18.3	renders	Conditional particle.
+accept	3.13:18.5,3.13:18.6	3.13:18.5	renders	Location prefix and pronominal suffix.
+accept	3.13:18.7	3.13:18.6	renders	Location prefix on skin.
+accept	3.13:18.12	3.13:18.10	renders	Subject of the healing verb.
+accept	3.13:19.9	3.13:19.11	renders	White adjective modifying the spot.
+accept	3.13:19.14	3.13:19.15	renders	Dative renders the destination.
+accept	3.13:20.2	3.13:20.2	renders	Inspection verb.
+accept	3.13:20.6,3.13:20.7	3.13:20.7	renders	Appearance noun and possessive suffix.
+accept	3.13:20.15	3.13:20.14	renders	Result relation of turning.
+accept	3.13:20.20,3.13:20.21	3.13:20.17	renders	Object suffix and predicative marker.
+accept	3.13:20.25	3.13:20.22	renders	Written pronoun in the diagnosis.
+accept	3.13:20.26,3.13:20.27	3.13:20.26	renders	Outbreak verb and its subject.
+accept	3.13:20.28	3.13:20.23	renders	Location prefix on boil.
+accept	3.13:21.9,3.13:21.10	3.13:21.9	renders	Location prefix and pronominal suffix.
+accept	3.13:21.14,3.13:21.15	3.13:21.14	renders	Negation and feminine pronominal suffix.
+accept	3.13:21.16	3.13:21.13	renders	Comparative adjective.
+accept	3.13:21.20	3.13:21.19	renders	Written pronoun in the fading clause.
+accept	3.13:21.26	3.13:21.26	renders	Adverbial duration.
+accept	3.13:22.3	3.13:22.3	renders	Infinitive absolute emphasis.
+accept	3.13:22.4	3.13:22.4	renders	Finite spreading verb.
+accept	3.13:22.9,3.13:22.11	3.13:22.9	renders	Declaration of uncleanness.
+accept	3.13:22.10	3.13:22.12	renders	Independent suffixed object marker.
+accept	3.13:22.15	3.13:22.14	renders	Written pronoun.
+accept	3.13:23.5	3.13:23.4	renders	Verb of staying in place.
+accept	3.13:23.6	3.13:23.3	renders	Location expressed by the suffixed locative.
+accept	3.13:23.11	3.13:23.12	renders	Written pronoun in the diagnosis.
+accept	3.13:23.13	3.13:23.11	renders	Boil noun.
+accept	3.13:23.18,3.13:23.19	3.13:23.14	renders	Predicative complement of the declaration.
+accept	3.13:24.9	3.13:24.7	renders	Causal relation expressed by the construct.
+accept	3.13:24.12	3.13:24.10	renders	Second verb of being.
+accept	3.13:24.13	3.13:24.11	renders	Growth noun.
+accept	3.13:25.3	3.13:25.3	renders	Feminine object suffix.
+accept	3.13:25.11	3.13:25.8	renders	Result relation of turning.
+accept	3.13:25.14,3.13:25.15	3.13:25.15	renders	Appearance noun and possessive suffix.
+accept	3.13:25.20	3.13:25.21	renders	First written diagnosis pronoun.
+accept	3.13:25.23	3.13:25.25	renders	Outbreak verb.
+accept	3.13:25.25,3.13:25.28	3.13:25.27	renders	Declaration of uncleanness.
+accept	3.13:25.27	3.13:25.28	renders	Masculine object suffix.
+accept	3.13:25.32	3.13:25.33	renders	Second written diagnosis pronoun.
+accept	3.13:26.14	3.13:26.16	renders	Feminine suffix on the negation.
+accept	3.13:26.16	3.13:26.15	renders	Comparative adjective.
+accept	3.13:26.20	3.13:26.21	renders	Written pronoun in the fading clause.
+accept	3.13:26.26	3.13:26.28	renders	Adverbial duration.
+accept	3.13:27.6	3.13:27.5	renders	Temporal genitive renders the prefix.
+accept	3.13:27.8	3.13:27.11	renders	Infinitive absolute emphasis.
+accept	3.13:27.9	3.13:27.12	renders	Finite spreading verb.
+accept	3.13:27.14,3.13:27.16	3.13:27.17	renders	Declaration of uncleanness.
+accept	3.13:27.15	3.13:27.20	renders	Independent suffixed object marker.
+accept	3.13:27.20	3.13:27.23	renders	Written pronoun.
+accept	3.13:28.4	3.13:28.4	renders	Verb of staying in place.
+accept	3.13:28.5,3.13:28.6,3.13:28.7	3.13:28.3	renders	Suffixed locative means in its place.
+accept	3.13:28.13	3.13:28.13	renders	Pronoun in the fading clause.
+accept	3.13:28.15	3.13:28.18	renders	Pronoun in the swelling diagnosis.
+accept	3.13:28.22	3.13:28.20	renders	Predicative marker in the declaration.
+accept	3.13:28.26	3.13:28.26	renders	Second burn occurrence.
+accept	3.13:28.27	3.13:28.27	renders	Pronoun in the scar diagnosis.
+accept	3.13:29.5	3.13:29.5	renders	Conditional particle.
+accept	3.13:29.7,3.13:29.8	3.13:29.7	renders	Location prefix and pronominal suffix.
+accept	3.13:29.10	3.13:29.9	renders	Location prefix on head.
+accept	3.13:29.13	3.13:29.12	renders	Location prefix on beard.
+accept	3.13:30.8	3.13:30.10	renders	Appearance noun.
+accept	3.13:30.14,3.13:30.15	3.13:30.16	renders	Location prefix and pronominal suffix.
+accept	3.13:30.18	3.13:30.17	renders	Hair noun.
+accept	3.13:30.23	3.13:30.21	renders	Predicative marker in the declaration.
+accept	3.13:30.26	3.13:30.26	renders	Pronoun in the first diagnosis.
+accept	3.13:30.27	3.13:30.33	renders	Pronoun in the second diagnosis.

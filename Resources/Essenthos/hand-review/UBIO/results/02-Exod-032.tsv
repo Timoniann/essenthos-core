@@ -1,0 +1,219 @@
+kind	from	to	relation	reason
+fixed	2.32:1			Missing verbs, pronouns, prepositions, and demonstrative.
+fixed	2.32:2			Missing recipient and directional preposition.
+fixed	2.32:3			Missing reflexive phrase and conjunction component.
+fixed	2.32:4			Missing verbs, subject, objects, and material term.
+fixed	2.32:5			Missing spatial phrase, verb, and conjunction component.
+fixed	2.32:6			Missing subject, verb links, and temporal and purpose markers.
+fixed	2.32:7			Missing speech verb.
+fixed	2.32:8			Missing verbs, auxiliary, arguments, and conjunction.
+fixed	2.32:9			Missing demonstrative and compound adjective.
+fixed	2.32:10			Missing imperatives, pronouns, and prepositional relations.
+fixed	2.32:11			Missing petition phrase, verb, and instrumental prefixes.
+unsure	2.32:12			Uncertain whether від renders the reversed relation of לְ before ‘your people.’
+fixed	2.32:13			Corrected the preposition after ‘remember’ and supplied missing phrase links.
+fixed	2.32:14			Missing verbs, relative phrase component, and recipient prefix.
+fixed	2.32:15			Missing side, direction, and auxiliary links.
+fixed	2.32:16			Missing second ‘writing’ and its pronoun.
+fixed	2.32:17			Missing shouting clause and second ‘sound.’
+fixed	2.32:18			Missing speaker pronoun and both contrasting cries.
+fixed	2.32:19			Missing temporal conjunction, subjects, verb, and object.
+fixed	2.32:20			Missing subjects, grinding result, and prepositional links.
+fixed	2.32:21			Missing addressee relation, verbs, and pronouns.
+fixed	2.32:22			Missing jussive phrase, explicit pronoun, and ‘evil.’
+fixed	2.32:23			Missing walking phrase, demonstrative, and pronouns.
+fixed	2.32:24			Missing pronouns, possessive construction, and demonstrative.
+fixed	2.32:25			Moved ‘let loose’ to its verb and linked its object and the disgrace phrase.
+fixed	2.32:26			Missing allegiance and directional links.
+fixed	2.32:27			Missing speech, movement, and object links.
+fixed	2.32:28			Demonstrative was linked to an elided article. The day also needed its temporal prefix.
+fixed	2.32:29			Missing consecration idiom and prepositional relations.
+fixed	2.32:30			Missing temporal prefix in ‘the next day.’
+fixed	2.32:31			Missing demonstrative, subject, and beneficiary.
+unsure	2.32:32			Uncertain whether б belongs with the conditional conjunction or the verb.
+fixed	2.32:33			Moved ‘from’ to its prefix and added relative, recipient, and book links.
+fixed	2.32:34			Missing destination, speech, spatial phrase, and punishment links.
+fixed	2.32:35			Missing blow, causal construction, subject, and auxiliary.
+refuse	2.32:13.2	2.32:13.1		The preposition renders the following לְ phrases.
+refuse	2.32:25.10	2.32:25.14		This noun renders ‘disgrace.’
+refuse	2.32:28.12	2.32:28.14		An elided article cannot render the demonstrative.
+refuse	2.32:33.11	2.32:33.10		A separate prefix carries ‘from.’
+accept	2.32:1.5	2.32:1.6	renders	Verb meaning ‘delayed.’
+accept	2.32:1.13	2.32:1.17	renders	Preposition introducing Aaron.
+accept	2.32:1.16	2.32:1.19	renders	Part of the compound conjunction та й.
+accept	2.32:1.19	2.32:1.21	renders	Pronominal suffix of the preposition.
+accept	2.32:1.25,2.32:1.26	2.32:1.27	renders	Analytic future of ‘walk.’
+accept	2.32:1.27	2.32:1.28,2.32:1.29	renders	The idiom expresses ‘before.’
+accept	2.32:1.28	2.32:1.29	renders	First-person plural suffix.
+accept	2.32:1.30	2.32:1.31	renders	Demonstrative before Moses.
+accept	2.32:1.35,2.32:1.36	2.32:1.36	renders	Past auxiliary and first-person plural object.
+accept	2.32:1.40	2.32:1.41	renders	First-person plural subject of ‘know.’
+accept	2.32:1.45	2.32:1.44	renders	Suffixed preposition meaning ‘to him.’
+accept	2.32:2.3	2.32:2.3	renders	Suffixed preposition meaning ‘to them.’
+accept	2.32:2.20	2.32:2.18	renders	Directional preposition in ‘to me.’
+accept	2.32:3.5,2.32:3.6	2.32:3.2	renders	The reflexive verb expresses removal from oneself.
+accept	2.32:3.14	2.32:3.13	renders	Part of the compound conjunction та й.
+accept	2.32:4.2,2.32:4.3	2.32:4.2	renders	‘Took’ and its third-person subject.
+accept	2.32:4.5	2.32:4.3	renders	Source preposition in ‘from their hand.’
+accept	2.32:4.9	2.32:4.6	renders	Shaping verb.
+accept	2.32:4.10	2.32:4.7	renders	Suffixed object pronoun.
+accept	2.32:4.12	2.32:4.10	renders	Ohienko renders the shaping term as clay.
+accept	2.32:4.15,2.32:4.16	2.32:4.12	renders	‘From it’ expresses the object of ‘made it into.’
+accept	2.32:5.8	2.32:5.7,2.32:5.8	renders	The idiom expresses ‘before.’
+accept	2.32:5.9	2.32:5.8	renders	Third-person masculine suffix.
+accept	2.32:5.11	2.32:5.10	renders	Verb meaning ‘called.’
+accept	2.32:5.14	2.32:5.12	renders	Part of the compound conjunction та й.
+accept	2.32:6.3,2.32:6.6	2.32:6.2	renders	Plural subject and early-morning sense of the verb.
+accept	2.32:6.4	2.32:6.3	renders	Temporal prefix in ‘on the next day.’
+accept	2.32:6.8	2.32:6.6	renders	Verb for offering the burnt offerings.
+accept	2.32:6.11	2.32:6.9	renders	Verb for bringing the peace offering.
+accept	2.32:6.17,2.32:6.20	2.32:6.15	renders	Purpose prefix shared by eating and drinking.
+accept	2.32:6.24	2.32:6.21	renders	The infinitive expresses why they rose.
+accept	2.32:7.3	2.32:7.2	renders	Verb meaning ‘spoke.’
+accept	2.32:8.1	2.32:8.1	renders	Verb meaning ‘turned aside.’
+accept	2.32:8.8,2.32:8.9,2.32:8.10	2.32:8.7	renders	Past auxiliary, first-person subject, and plural object.
+accept	2.32:8.12	2.32:8.9	renders	Suffixed preposition meaning ‘for themselves.’
+accept	2.32:8.17	2.32:8.14	renders	Recipient of the bowing.
+accept	2.32:8.19,2.32:8.21	2.32:8.16	renders	Two-word rendering of ‘sacrificed.’
+accept	2.32:8.20	2.32:8.17	renders	Recipient of the sacrifice.
+accept	2.32:8.22,2.32:8.23	2.32:8.18	renders	Compound conjunction introducing ‘said.’
+accept	2.32:8.31	2.32:8.24	renders	Second-person object suffix.
+accept	2.32:9.9	2.32:9.11	renders	Demonstrative modifying the first ‘people.’
+accept	2.32:9.13	2.32:9.15,2.32:9.16	renders	Compound adjective renders ‘hard of neck.’
+accept	2.32:10.3	2.32:10.3	renders	Imperative meaning ‘leave alone.’
+accept	2.32:10.4	2.32:10.4	renders	First-person suffix in the imperative phrase.
+accept	2.32:10.9,2.32:10.10	2.32:10.8	renders	Suffixed preposition meaning ‘against them.’
+accept	2.32:10.12,2.32:10.13,2.32:10.14	2.32:10.10	renders	Destruction verb with its subject and object.
+accept	2.32:10.16	2.32:10.13	renders	Suffixed object pronoun.
+accept	2.32:10.19	2.32:10.14	renders	The instrumental expresses what Moses will become.
+accept	2.32:11.3,2.32:11.4	2.32:11.2	renders	Two-word rendering of the petition verb.
+accept	2.32:11.5	2.32:11.5	renders	‘Face’ in the petition idiom.
+accept	2.32:11.10	2.32:11.8	renders	Part of the compound conjunction та й.
+accept	2.32:11.17	2.32:11.14	renders	Preposition marking whom the anger is against.
+accept	2.32:11.22	2.32:11.17	renders	Causative verb meaning ‘brought out.’
+accept	2.32:11.26	2.32:11.21	renders	Instrumental case renders the first בְּ.
+accept	2.32:11.30	2.32:11.25	renders	Instrumental case renders the second בְּ.
+accept	2.32:12.2,2.32:12.3	2.32:12.2	renders	Analytic future of ‘say.’
+accept	2.32:12.5	2.32:12.4	renders	The converb renders the quotative infinitive construction.
+accept	2.32:12.6	2.32:12.6	renders	Preposition marking harmful intent.
+accept	2.32:12.7	2.32:12.7	renders	First occurrence of ‘evil.’
+accept	2.32:12.8,2.32:12.10	2.32:12.8	renders	‘Brought out’ and its subject.
+accept	2.32:12.12	2.32:12.11	renders	Object pronoun of ‘kill.’
+accept	2.32:12.20	2.32:12.18,2.32:12.19,2.32:12.20	renders	Whole expression meaning ‘from the surface.’
+accept	2.32:12.22	2.32:12.23	renders	Imperative meaning ‘turn back.’
+accept	2.32:12.24	2.32:12.25	renders	Heat or fierceness of anger.
+accept	2.32:12.28	2.32:12.27	renders	Part of the compound conjunction та й.
+accept	2.32:12.29	2.32:12.28	renders	Ohienko renders relenting as averting the harm.
+accept	2.32:13.2	2.32:13.2,2.32:13.4,2.32:13.7	renders	One Ukrainian preposition governs all three names.
+accept	2.32:13.11	2.32:13.12	renders	Recipients of the oath.
+accept	2.32:13.13	2.32:13.11	renders	Past auxiliary in the oath verb.
+accept	2.32:13.14	2.32:13.13	renders	Instrumental reflexive renders ‘by yourself.’
+accept	2.32:13.17	2.32:13.16	renders	Recipients of the speech.
+accept	2.32:13.20	2.32:13.19	renders	First occurrence of ‘descendants.’
+accept	2.32:13.29,2.32:13.30	2.32:13.30	renders	Resumptive phrase completes the relative construction.
+accept	2.32:13.31	2.32:13.31	renders	First-person verb ‘said.’
+accept	2.32:13.34	2.32:13.33	renders	Dative marks the recipients of the land.
+accept	2.32:13.36	2.32:13.36	renders	Plural subject of ‘take possession.’
+accept	2.32:13.38	2.32:13.37	renders	The adverb incorporates the duration prefix.
+accept	2.32:14.2	2.32:14.2	renders	Ohienko renders relenting as averting the harm.
+accept	2.32:14.5	2.32:14.7	renders	Part of the prepositional relative про яке.
+accept	2.32:14.7	2.32:14.8	renders	Speech verb.
+accept	2.32:14.11	2.32:14.11	renders	Dative case expresses the recipient prefix.
+accept	2.32:15.16	2.32:15.18	renders	Preposition in ‘from both sides.’
+accept	2.32:15.19	2.32:15.20	renders	Noun meaning ‘sides.’
+accept	2.32:15.20	2.32:15.22	renders	‘From here’ incorporates the first demonstrative.
+accept	2.32:15.22	2.32:15.24,2.32:15.25	renders	‘From there’ renders the second directional phrase.
+accept	2.32:15.24	2.32:15.27	renders	Past copula of the second participial predicate.
+accept	2.32:16.9	2.32:16.10	renders	Second occurrence of ‘writing.’
+accept	2.32:16.10	2.32:16.12	renders	Independent pronoun for the writing.
+accept	2.32:17.6	2.32:17.8	renders	Temporal conjunction renders the force of בְּ.
+accept	2.32:17.7,2.32:17.8	2.32:17.9	renders	The clause renders ‘its shouting.’
+accept	2.32:17.10	2.32:17.10	renders	Part of the compound conjunction та й.
+accept	2.32:17.14	2.32:17.14	renders	Sound of battle, the second occurrence.
+accept	2.32:18.2	2.32:18.2	renders	Subject pronoun of the reply.
+accept	2.32:18.6	2.32:18.4,2.32:18.5	renders	‘Cry’ renders ‘sound of shouting.’
+accept	2.32:18.7,2.32:18.8	2.32:18.6	renders	The phrase spells out the sense of victorious strength.
+accept	2.32:18.11	2.32:18.9,2.32:18.10	renders	‘Cry’ renders the second ‘sound of shouting.’
+accept	2.32:18.12	2.32:18.11	renders	Weakness in the defeat phrase.
+accept	2.32:19.3	2.32:19.3,2.32:19.4	renders	Compound temporal conjunction meaning ‘when.’
+accept	2.32:19.4	2.32:19.5	renders	Subject of ‘approached.’
+accept	2.32:19.15	2.32:19.17	renders	Verb describing the anger flaring.
+accept	2.32:19.19	2.32:19.21	renders	Subject of ‘threw.’
+accept	2.32:19.26	2.32:19.27	renders	Part of the compound conjunction та й.
+accept	2.32:19.28	2.32:19.29	renders	Object pronoun referring to the tablets.
+accept	2.32:20.3	2.32:20.2	renders	Subject of ‘took.’
+accept	2.32:20.7	2.32:20.7	renders	Plural subject of ‘made.’
+accept	2.32:20.9	2.32:20.8	renders	Part of the compound conjunction та й.
+accept	2.32:20.11	2.32:20.10	renders	Preposition in ‘in the fire.’
+accept	2.32:20.14	2.32:20.14	renders	Grinding verb.
+accept	2.32:20.15	2.32:20.15,2.32:20.16	renders	Compound conjunction meaning ‘until.’
+accept	2.32:20.16,2.32:20.17	2.32:20.17	renders	Result of being ground fine.
+accept	2.32:20.20	2.32:20.20	renders	Preposition meaning ‘on.’
+accept	2.32:20.21	2.32:20.21	renders	‘Face’ in the sense of surface.
+accept	2.32:21.4	2.32:21.4	renders	Dative Aaron renders the addressee preposition.
+accept	2.32:21.6	2.32:21.7	renders	Verb meaning ‘did.’
+accept	2.32:21.7	2.32:21.8	renders	Suffixed preposition meaning ‘to you.’
+accept	2.32:21.11,2.32:21.14	2.32:21.14	renders	‘Brought’ and its second-person subject.
+accept	2.32:21.15,2.32:21.16	2.32:21.15	renders	Suffixed preposition meaning ‘upon it.’
+accept	2.32:22.4,2.32:22.6	2.32:22.5	renders	Volitive particle and the verb of flaring anger.
+accept	2.32:22.15	2.32:22.16	renders	Independent pronoun referring to the people.
+accept	2.32:22.17	2.32:22.15	renders	Noun meaning ‘evil.’
+accept	2.32:23.9,2.32:23.10	2.32:23.8	renders	Analytic future of ‘walk.’
+accept	2.32:23.11	2.32:23.9,2.32:23.10	renders	The idiom expresses ‘before.’
+accept	2.32:23.12	2.32:23.10	renders	First-person plural suffix.
+accept	2.32:23.14	2.32:23.12	renders	Demonstrative before Moses.
+accept	2.32:23.23	2.32:23.22	renders	First-person plural subject of ‘know.’
+accept	2.32:23.28	2.32:23.25	renders	Suffixed preposition meaning ‘to him.’
+accept	2.32:24.3	2.32:24.2	renders	First-person subject of ‘said.’
+accept	2.32:24.4,2.32:24.5	2.32:24.3	renders	Suffixed preposition meaning ‘to them.’
+accept	2.32:24.7	2.32:24.4	renders	‘Has’ renders the possessive לְ construction.
+accept	2.32:24.10,2.32:24.11	2.32:24.7	renders	The reflexive imperative expresses removal from oneself.
+accept	2.32:24.14	2.32:24.9	renders	Plural subject of ‘gave.’
+accept	2.32:24.24	2.32:24.21	renders	Demonstrative modifying ‘calf.’
+accept	2.32:25.10,2.32:25.11	2.32:25.11	renders	‘Let loose’ and its object suffix.
+accept	2.32:25.12	2.32:25.13	renders	Result prefix in ‘to disgrace.’
+accept	2.32:25.13	2.32:25.14	renders	Ohienko renders the noun as disgrace.
+accept	2.32:26.10	2.32:26.11	renders	Prefix expressing allegiance to the LORD.
+accept	2.32:26.12	2.32:26.13	renders	Directional preposition in ‘to me.’
+accept	2.32:26.17	2.32:26.16	renders	Pronominal suffix in ‘to him.’
+accept	2.32:27.3	2.32:27.2	renders	Subject of the first ‘said.’
+accept	2.32:27.4,2.32:27.5	2.32:27.3	renders	Suffixed preposition meaning ‘to them.’
+accept	2.32:27.7	2.32:27.5	renders	Speech verb after ‘thus.’
+accept	2.32:27.15	2.32:27.12	renders	Preposition meaning ‘upon.’
+accept	2.32:27.16	2.32:27.13	renders	Noun meaning ‘thigh.’
+accept	2.32:27.20	2.32:27.16	renders	Imperative meaning ‘return.’
+accept	2.32:27.23	2.32:27.19	renders	Direction toward the second gate.
+accept	2.32:27.34	2.32:27.32	renders	Noun meaning ‘fellow.’
+accept	2.32:27.38,2.32:27.39	2.32:27.36	renders	‘Neighbor’ and its possessive suffix.
+accept	2.32:28.12	2.32:28.17	renders	Demonstrative in ‘that day.’
+accept	2.32:28.13	2.32:28.13	renders	The temporal genitive renders ‘on the day.’
+accept	2.32:29.4,2.32:29.6	2.32:29.4,2.32:29.5	renders	‘Consecrate yourselves’ renders the hand-filling idiom.
+accept	2.32:29.12	2.32:29.12	renders	Preposition marking the relation to the son.
+accept	2.32:29.16	2.32:29.15	renders	Preposition marking the relation to the brother.
+accept	2.32:29.20	2.32:29.18	renders	Purpose prefix before ‘give.’
+accept	2.32:29.24	2.32:29.20	renders	Suffixed preposition marking who receives the blessing.
+accept	2.32:30.3	2.32:30.3	renders	Temporal prefix in ‘on the next day.’
+accept	2.32:31.7	2.32:31.6	renders	Part of the compound conjunction та й.
+accept	2.32:31.11	2.32:31.13	renders	Demonstrative modifying ‘people.’
+accept	2.32:31.15	2.32:31.17	renders	Plural subject of ‘made.’
+accept	2.32:31.17	2.32:31.18	renders	Suffixed preposition meaning ‘for themselves.’
+accept	2.32:32.3	2.32:32.3	renders	First conditional conjunction.
+accept	2.32:32.11	2.32:32.7	renders	Second conditional conjunction.
+accept	2.32:32.12	2.32:32.8	renders	Negation in ‘if not.’
+accept	2.32:32.14	2.32:32.9	renders	First-person object suffix of ‘wipe out.’
+accept	2.32:33.6	2.32:33.6,2.32:33.7	renders	Fused relative sense ‘whoever.’
+accept	2.32:33.8	2.32:33.9	renders	Suffixed preposition meaning ‘against me.’
+accept	2.32:33.11	2.32:33.11	renders	Source prefix meaning ‘from.’
+accept	2.32:33.12,2.32:33.13	2.32:33.12	renders	‘Book’ and its first-person possessive suffix.
+accept	2.32:34.7,2.32:34.8	2.32:34.8,2.32:34.9	renders	Directional relative phrase meaning ‘to where.’
+accept	2.32:34.9	2.32:34.10	renders	Speech verb.
+accept	2.32:34.11	2.32:34.11	renders	Suffixed preposition meaning ‘to you.’
+accept	2.32:34.16	2.32:34.15	renders	Prepositional component of ‘before your face.’
+accept	2.32:34.17,2.32:34.18	2.32:34.16	renders	‘Face’ and its second-person suffix.
+accept	2.32:34.22,2.32:34.23	2.32:34.20	renders	Punishment infinitive and its first-person suffix.
+accept	2.32:34.25	2.32:34.23	renders	Plural suffix marking whom God will punish.
+accept	2.32:35.3	2.32:35.2	renders	Verb meaning ‘struck.’
+accept	2.32:35.6	2.32:35.7	renders	Preposition introducing the reason.
+accept	2.32:35.7	2.32:35.8	renders	Correlative те completes the causal relative phrase.
+accept	2.32:35.9	2.32:35.9	renders	Plural subject of the first ‘made.’
+accept	2.32:35.15	2.32:35.14	renders	Past auxiliary of Aaron’s ‘made.’

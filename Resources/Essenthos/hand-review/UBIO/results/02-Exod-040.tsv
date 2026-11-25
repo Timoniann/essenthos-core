@@ -1,0 +1,173 @@
+kind	from	to	relation	reason
+fixed	2.40:1			Missing quotative infinitive marker.
+fixed	2.40:2			Missing ordinals, temporal markers, and tent links.
+fixed	2.40:3			Missing covering verb.
+fixed	2.40:4			Missing arrangement noun and possessives.
+fixed	2.40:5			Missing parts of two prepositional relations.
+fixed	2.40:6			Missing locative prefix and second tent noun.
+fixed	2.40:7			Missing second «між» and «туди».
+fixed	2.40:8			Missing placement verb and curtain noun.
+fixed	2.40:9			Missing oil, conjunction component, and pronoun links.
+fixed	2.40:10			Incomplete superlative link.
+fixed	2.40:11			Missing base noun and both pronouns.
+fixed	2.40:12			Missing conjunction component, object pronoun, and instrument marker.
+fixed	2.40:13			Missing adjective, pronouns, and future auxiliary.
+fixed	2.40:14			Missing approach verb and object pronoun.
+fixed	2.40:15			Missing comparison, verbal forms, and priesthood clause links.
+fixed	2.40:16			Missing comparison, auxiliary, and pronouns.
+fixed	2.40:17			Missing ordinals, implied day, and temporal markers.
+fixed	2.40:18			Missing first «дав» and four possessives.
+unsure	2.40:19			Removed the article link. Whether «внутрішньою» directly renders the dwelling noun is uncertain.
+fixed	2.40:20			Missing subject, first placement verb, and spatial links.
+fixed	2.40:21			Missing subject, verbs, comparison, and auxiliary.
+fixed	2.40:22			Missing subject, tent noun, and spatial markers.
+fixed	2.40:23			Separated «перед» from «лицем» and restored missing links.
+fixed	2.40:24			Missing placement verb, tent noun, and directional marker.
+fixed	2.40:25			Separated «перед» from «лицем» and restored comparison and auxiliary.
+fixed	2.40:26			Missing placement verb and locative prefix.
+fixed	2.40:27			Missing incense verb, subject, preposition, comparison, and auxiliary.
+fixed	2.40:28			Missing hanging verb and entrance phrase links.
+fixed	2.40:29			Missing placement, location, comparison, and auxiliary links.
+fixed	2.40:30			Missing second «між», «туди», and purpose marker.
+fixed	2.40:31			Missing preposition and its pronoun.
+fixed	2.40:32			Missing entrance verb, comparison, and auxiliary.
+fixed	2.40:33			Missing hanging verb and markers governed by «навколо».
+fixed	2.40:34			Missing first tent noun.
+fixed	2.40:35			Missing infinitive marker and locative phrase links.
+fixed	2.40:36			Missing temporal conjunction and source prefix.
+fixed	2.40:37			Missing subject pronouns and temporal links.
+fixed	2.40:38			Missing copula, written verb, prepositions, and pronouns.
+refuse	2.40:19.5	2.40:19.7		Definite article carries no adjective.
+refuse	2.40:23.7	2.40:23.7		«лицем» renders the face noun.
+refuse	2.40:25.4	2.40:25.6		«лицем» renders the face noun.
+accept	2.40:1.6	2.40:1.6	renders	Quotative infinitive rendered as a converb.
+accept	2.40:2.1	2.40:2.6	renders	First month ordinal.
+accept	2.40:2.3	2.40:2.8	renders	Cardinal used for the first day.
+accept	2.40:2.4	2.40:2.1,2.40:2.7	renders	Temporal genitive carries both day markers.
+accept	2.40:2.5	2.40:2.9	renders	Genitive marks the month relation.
+accept	2.40:2.7,2.40:2.8	2.40:2.14	renders	Dwelling noun and its construct relation.
+accept	2.40:3.7	2.40:3.9	renders	Covering verb.
+accept	2.40:4.6,2.40:4.7	2.40:4.9	renders	Prescribed arrangement and its possessive suffix.
+accept	2.40:4.13	2.40:4.18	renders	Possessive suffix on lamps.
+accept	2.40:5.7	2.40:5.9	renders	Prefix in the compound locative.
+accept	2.40:5.14	2.40:5.20	renders	Genitive expresses the entrance relation.
+accept	2.40:6.5	2.40:6.7	renders	Prefix in the compound locative.
+accept	2.40:6.8	2.40:6.11	renders	Tent in «скинії заповіту».
+accept	2.40:7.8	2.40:7.10	renders	Second occurrence of between.
+accept	2.40:7.12	2.40:7.15	renders	Locative adverb.
+accept	2.40:8.6	2.40:8.8	renders	Verb for giving the screen.
+accept	2.40:8.7	2.40:8.10	renders	Gate screen noun.
+accept	2.40:9.3	2.40:9.4	renders	Anointing oil noun.
+accept	2.40:9.6	2.40:9.7	renders	Part of the conjunction «та й».
+accept	2.40:9.12,2.40:9.13	2.40:9.16	renders	Preposition and its pronominal suffix.
+accept	2.40:9.16	2.40:9.19	renders	Suffixed object pronoun.
+accept	2.40:9.20	2.40:9.23	renders	Possessive suffix on implements.
+accept	2.40:9.23	2.40:9.25	renders	Subject carried by the verb.
+accept	2.40:10.15	2.40:10.20	renders	First noun of the superlative expression.
+accept	2.40:11.5,2.40:11.6	2.40:11.8	renders	Base noun and its possessive suffix.
+accept	2.40:11.9	2.40:11.11	renders	Suffixed object pronoun.
+accept	2.40:12.12	2.40:12.12	renders	Part of the conjunction «та й».
+accept	2.40:12.14	2.40:12.14	renders	Suffixed plural object pronoun.
+accept	2.40:12.15	2.40:12.15	renders	Instrumental case renders the prefix.
+accept	2.40:13.5	2.40:13.8	renders	Adjective renders the genitive of holiness.
+accept	2.40:13.9	2.40:13.11	renders	Object pronoun of anointing.
+accept	2.40:13.12	2.40:13.14	renders	Object pronoun of consecration.
+accept	2.40:13.14,2.40:13.15	2.40:13.16	renders	Subject and future auxiliary of priestly service.
+accept	2.40:13.17	2.40:13.17	renders	Suffixed first-person dative.
+accept	2.40:14.2	2.40:14.4	renders	Verb for bringing near.
+accept	2.40:14.7	2.40:14.7	renders	Suffixed plural object pronoun.
+accept	2.40:15.3	2.40:15.3	renders	Suffixed plural object pronoun.
+accept	2.40:15.4	2.40:15.4,2.40:15.5	renders	Compound comparison marker.
+accept	2.40:15.5	2.40:15.6	renders	Anointing verb in the comparison.
+accept	2.40:15.9	2.40:15.10	renders	Future auxiliary of priestly service.
+accept	2.40:15.12	2.40:15.11	renders	Suffixed first-person dative.
+accept	2.40:15.14	2.40:15.13	renders	Finite verb introducing the clause.
+accept	2.40:15.15	2.40:15.14	renders	Clause introducer renders infinitival subordination.
+accept	2.40:15.16,2.40:15.17	2.40:15.17	renders	Anointing noun and its possessive suffix.
+accept	2.40:15.18	2.40:15.15	renders	Infinitive of being rendered as a finite verb.
+accept	2.40:15.19,2.40:15.20	2.40:15.16	renders	Prepositional relation and plural suffix.
+accept	2.40:15.21	2.40:15.18	renders	Preposition introducing the priesthood.
+accept	2.40:15.24	2.40:15.21	renders	Preposition introducing the generations.
+accept	2.40:16.5	2.40:16.4,2.40:16.6	renders	Comparison and relative relation.
+accept	2.40:16.8	2.40:16.7	renders	Past auxiliary of the command.
+accept	2.40:16.9	2.40:16.9	renders	Suffixed object pronoun.
+accept	2.40:16.11	2.40:16.11	renders	Subject of the second action.
+accept	2.40:17.3	2.40:17.7	renders	First month ordinal.
+accept	2.40:17.4	2.40:17.3	renders	Temporal genitive of the first month.
+accept	2.40:17.6	2.40:17.8	renders	Temporal genitive of the year.
+accept	2.40:17.7,2.40:17.8	2.40:17.14	renders	Substantival numeral means first day.
+accept	2.40:17.8	2.40:17.13	renders	Temporal genitive of the day.
+accept	2.40:17.9	2.40:17.15	renders	Genitive marks the month relation.
+accept	2.40:18.6	2.40:18.8	renders	Verb for setting the bases.
+accept	2.40:18.8	2.40:18.10	renders	Possessive suffix on bases.
+accept	2.40:18.12	2.40:18.14	renders	Possessive suffix on boards.
+accept	2.40:18.16	2.40:18.18	renders	Possessive suffix on bars.
+accept	2.40:18.20	2.40:18.22	renders	Possessive suffix on pillars.
+accept	2.40:19.9	2.40:19.14	renders	Adjective renders the genitive tent noun.
+accept	2.40:19.11,2.40:19.12	2.40:19.15	renders	Preposition and its pronominal suffix.
+accept	2.40:19.13	2.40:19.16,2.40:19.17	renders	Prefixes of the compound adverb.
+accept	2.40:19.14	2.40:19.19,2.40:19.20	renders	Compound comparison marker.
+accept	2.40:19.17	2.40:19.21	renders	Past auxiliary of the command.
+accept	2.40:20.3	2.40:20.2	renders	Subject of the taking verb.
+accept	2.40:20.5	2.40:20.4	renders	Placement of the testimony.
+accept	2.40:20.10	2.40:20.16	renders	Preposition in the poles clause.
+accept	2.40:20.16	2.40:20.24	renders	Preposition in the cover clause.
+accept	2.40:20.19	2.40:20.27,2.40:20.28,2.40:20.29	renders	Compound adverb meaning from above.
+accept	2.40:21.3	2.40:21.2	renders	Subject of the bringing verb.
+accept	2.40:21.8	2.40:21.10	renders	Putting up the curtain.
+accept	2.40:21.12	2.40:21.16	renders	Screening the ark.
+accept	2.40:21.15	2.40:21.21,2.40:21.22	renders	Compound comparison marker.
+accept	2.40:21.18	2.40:21.23	renders	Past auxiliary of the command.
+accept	2.40:22.3	2.40:22.2	renders	Subject of the placement verb.
+accept	2.40:22.6	2.40:22.7	renders	Tent in «скинію заповіту».
+accept	2.40:22.11	2.40:22.13	renders	Directional suffix on north.
+accept	2.40:22.13	2.40:22.14,2.40:22.16	renders	Prefixes of the compound outside relation.
+accept	2.40:23.3,2.40:23.4	2.40:23.3	renders	Preposition and its pronominal suffix.
+accept	2.40:23.7	2.40:23.6	renders	Prepositional part of the locative.
+accept	2.40:23.9	2.40:23.7	renders	Face noun rendered explicitly.
+accept	2.40:23.10	2.40:23.9,2.40:23.10	renders	Compound comparison marker.
+accept	2.40:24.2	2.40:24.2	renders	Lampstand placement verb.
+accept	2.40:24.5	2.40:24.7	renders	Tent in «скинії заповіту».
+accept	2.40:24.12	2.40:24.16	renders	Directional suffix on south.
+accept	2.40:25.4	2.40:25.5	renders	Prepositional part of the locative.
+accept	2.40:25.6	2.40:25.6	renders	Face noun rendered explicitly.
+accept	2.40:25.7	2.40:25.8,2.40:25.9	renders	Compound comparison marker.
+accept	2.40:25.10	2.40:25.10	renders	Past auxiliary of the command.
+accept	2.40:26.2	2.40:26.2	renders	Altar placement verb.
+accept	2.40:26.8	2.40:26.10	renders	Prefix in the compound locative.
+accept	2.40:27.2,2.40:27.3	2.40:27.2	renders	Incense offering verb and its subject.
+accept	2.40:27.4	2.40:27.3	renders	Preposition of the suffixed locative.
+accept	2.40:27.8	2.40:27.6,2.40:27.7	renders	Compound comparison marker.
+accept	2.40:27.11	2.40:27.8	renders	Past auxiliary of the command.
+accept	2.40:28.2	2.40:28.2	renders	Putting up the entrance screen.
+accept	2.40:28.3	2.40:28.6	renders	Adjective renders the entrance noun.
+accept	2.40:28.5	2.40:28.7	renders	Prefix marking the entrance relation.
+accept	2.40:29.4	2.40:29.6	renders	Altar placement verb.
+accept	2.40:29.5	2.40:29.7	renders	Locative force of the bare entrance noun.
+accept	2.40:29.8	2.40:29.9	renders	Tent in «скинії заповіту».
+accept	2.40:29.12,2.40:29.13	2.40:29.13	renders	Preposition and its pronominal suffix.
+accept	2.40:29.18	2.40:29.21,2.40:29.22	renders	Compound comparison marker.
+accept	2.40:29.21	2.40:29.23	renders	Past auxiliary of the command.
+accept	2.40:30.8	2.40:30.10	renders	Second occurrence of between.
+accept	2.40:30.11	2.40:30.15	renders	Directional adverb.
+accept	2.40:30.14	2.40:30.17	renders	Purpose prefix before washing.
+accept	2.40:31.3,2.40:31.4	2.40:31.3	renders	Source preposition and its pronominal suffix.
+accept	2.40:32.3	2.40:32.2	renders	Verb of entering.
+accept	2.40:32.14	2.40:32.13,2.40:32.14	renders	Compound comparison marker.
+accept	2.40:32.17	2.40:32.15	renders	Past auxiliary of the command.
+accept	2.40:33.4	2.40:33.7,2.40:33.11	renders	Shared preposition governs both coordinated nouns.
+accept	2.40:33.9	2.40:33.15	renders	Putting up the gate screen.
+accept	2.40:34.4	2.40:34.6	renders	Tent in «скинію заповіту».
+accept	2.40:35.5	2.40:35.5	renders	Infinitive marking of the complement.
+accept	2.40:35.12,2.40:35.13	2.40:35.12	renders	Preposition and its pronominal suffix.
+accept	2.40:36.2	2.40:36.2	renders	Temporal prefix introducing the ascent.
+accept	2.40:36.5	2.40:36.6	renders	Source component of «з-над».
+accept	2.40:37.9	2.40:37.9	renders	Plural subject carried by the verb.
+accept	2.40:37.11	2.40:37.10	renders	Part of the endpoint expression «аж до».
+accept	2.40:37.13	2.40:37.11	renders	Temporal relative renders the day construct.
+accept	2.40:37.14	2.40:37.12	renders	Subject suffix of the ascent infinitive.
+accept	2.40:38.5	2.40:38.4	renders	Copula asserts the locative predicate.
+accept	2.40:38.10	2.40:38.10	renders	Written verb of being in the fire clause.
+accept	2.40:38.12,2.40:38.13	2.40:38.12	renders	Preposition and its pronominal suffix.
+accept	2.40:38.14	2.40:38.13	renders	Prefix of the expression «на очах».
+accept	2.40:38.21	2.40:38.20	renders	Possessive suffix on journeys.

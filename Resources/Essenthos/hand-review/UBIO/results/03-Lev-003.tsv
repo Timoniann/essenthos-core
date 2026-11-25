@@ -1,0 +1,98 @@
+kind	from	to	relation	reason
+fixed	3.3:1			Restored the offering, pronoun, and preposition links.
+fixed	3.3:2			Restored the connective, object pronoun, and entrance relations.
+fixed	3.3:3			Corrected the sacrifice noun and restored the subject, relative, and object links.
+fixed	3.3:4			Restored the prepositions and the removal verb with its object.
+fixed	3.3:5			Restored the object pronoun, altar locative, offering noun, and scent noun.
+fixed	3.3:6			Corrected the sacrifice noun and restored the prepositions and object pronoun.
+fixed	3.3:7			Restored the offering relation, object pronoun, and links for the presence phrase.
+fixed	3.3:8			Restored the connective, pronouns, and prefix in the presence phrase.
+fixed	3.3:9			Corrected the sacrifice noun and restored the subject, tail modifier, and relative links.
+fixed	3.3:10			Restored the prepositions and the removal verb with its object.
+fixed	3.3:11			Restored the suffixed object, altar locative, and offering noun.
+fixed	3.3:12			Restored the offering verb with its object and corrected the preposition.
+fixed	3.3:13			Restored the connective, pronouns, and prefix in the presence phrase.
+fixed	3.3:14			Restored the subject, suffixed preposition, offering noun, and relative.
+fixed	3.3:15			Restored the prepositions and the removal verb with its object.
+fixed	3.3:16			Restored the altar locative, offering noun, and scent phrase.
+fixed	3.3:17			Restored the nouns for generations and settlements.
+refuse	3.3:1.20	3.3:1.19		The face noun is rendered by лице.
+refuse	3.3:3.6	3.3:3.6		The noun renders זבח.
+refuse	3.3:6.10	3.3:6.9		The noun renders זבח.
+refuse	3.3:7.10	3.3:7.11		The face noun is rendered by лице.
+refuse	3.3:9.6	3.3:9.6		The noun renders זבח.
+refuse	3.3:12.9	3.3:12.8		The face noun is rendered by лице.
+accept	3.3:1.3	3.3:1.5	renders	Possessive suffix on the offering noun.
+accept	3.3:1.4	3.3:1.5	renders	The shared noun also renders his offering.
+accept	3.3:1.16	3.3:1.17	renders	Subject expressed by the verb form.
+accept	3.3:1.18	3.3:1.17	renders	Object suffix on the offering verb.
+accept	3.3:1.20	3.3:1.18	renders	Prepositional prefix before the face noun.
+accept	3.3:1.22	3.3:1.19	renders	Renders the face noun.
+accept	3.3:2.10	3.3:2.7	renders	Part of the compound conjunction та й.
+accept	3.3:2.12	3.3:2.8	renders	Object suffix on the slaughter verb.
+accept	3.3:2.13	3.3:2.9	renders	The entrance noun expresses location.
+accept	3.3:2.15	3.3:2.9	renders	Expresses the construct relation to the tent.
+accept	3.3:3.3	3.3:3.2	renders	Subject expressed by the verb form.
+accept	3.3:3.6	3.3:3.4	renders	Renders the sacrifice noun.
+accept	3.3:3.8	3.3:3.7	renders	Completes the translation of fire offering.
+accept	3.3:3.12	3.3:3.14	renders	Introduces the relative rendering of the participle.
+accept	3.3:3.14	3.3:3.17	renders	Renders the first occurrence of innards.
+accept	3.3:4.7	3.3:4.11	renders	Preposition in the suffixed form.
+accept	3.3:4.10	3.3:4.13	renders	Preposition before the loins.
+accept	3.3:4.14	3.3:4.20	renders	Preposition before the liver.
+accept	3.3:4.16,3.3:4.17	3.3:4.26	renders	Removal verb and its object suffix.
+accept	3.3:4.18	3.3:4.23	renders	Preposition meaning together with the kidneys.
+accept	3.3:5.3	3.3:5.3	renders	Renders the standalone object pronoun.
+accept	3.3:5.6	3.3:5.7	renders	Renders the altar noun's locative ending.
+accept	3.3:5.18	3.3:5.19	renders	Completes the translation of fire offering.
+accept	3.3:5.19	3.3:5.20	renders	Renders the scent noun.
+accept	3.3:6.3	3.3:6.3	renders	Marks the source of the offering.
+accept	3.3:6.8	3.3:6.7	renders	Purpose prefix before the sacrifice noun.
+accept	3.3:6.10	3.3:6.8	renders	Renders the sacrifice noun.
+accept	3.3:6.19	3.3:6.16	renders	Object suffix on the offering verb.
+accept	3.3:7.4	3.3:7.6	renders	Expresses the lamb's role as the offering.
+accept	3.3:7.9	3.3:7.9	renders	Renders the standalone object pronoun.
+accept	3.3:7.10	3.3:7.10	renders	Prepositional prefix before the face noun.
+accept	3.3:7.12	3.3:7.11	renders	Renders the face noun.
+accept	3.3:8.10	3.3:8.8	renders	Part of the compound conjunction та й.
+accept	3.3:8.12	3.3:8.10	renders	Renders the standalone object pronoun.
+accept	3.3:8.13	3.3:8.11	renders	Prefix in the compound preposition meaning before.
+accept	3.3:8.21	3.3:8.20	renders	Possessive suffix on the blood noun.
+accept	3.3:9.2	3.3:9.2	renders	Subject expressed by the verb form.
+accept	3.3:9.6	3.3:9.4	renders	Renders the sacrifice noun.
+accept	3.3:9.8	3.3:9.7	renders	Completes the translation of fire offering.
+accept	3.3:9.11	3.3:9.13	renders	Renders the adjective meaning whole.
+accept	3.3:9.13	3.3:9.18	renders	Relative pronoun renders the verb's object suffix.
+accept	3.3:9.15	3.3:9.14	renders	Prefix in the compound preposition meaning beside.
+accept	3.3:9.19	3.3:9.24	renders	Introduces the relative rendering of the participle.
+accept	3.3:9.21	3.3:9.27	renders	Renders the innards covered by the fat.
+accept	3.3:10.7	3.3:10.11	renders	Preposition in the suffixed form.
+accept	3.3:10.10	3.3:10.13	renders	Preposition before the loins.
+accept	3.3:10.14	3.3:10.20	renders	Preposition before the liver.
+accept	3.3:10.16,3.3:10.17	3.3:10.26	renders	Removal verb and its object suffix.
+accept	3.3:10.18	3.3:10.23	renders	Preposition meaning together with the kidneys.
+accept	3.3:11.4	3.3:11.2	renders	Object suffix on the burning verb.
+accept	3.3:11.5	3.3:11.6	renders	Renders the altar noun's locative ending.
+accept	3.3:11.9	3.3:11.8	renders	Completes the translation of fire offering.
+accept	3.3:12.7,3.3:12.8	3.3:12.6	renders	Offering verb and its object suffix.
+accept	3.3:12.9	3.3:12.7	renders	Prepositional prefix before the face noun.
+accept	3.3:13.7	3.3:13.6	renders	Possessive suffix on the head noun.
+accept	3.3:13.9	3.3:13.7	renders	Part of the compound conjunction та й.
+accept	3.3:13.11	3.3:13.9	renders	Renders the standalone object pronoun.
+accept	3.3:13.12	3.3:13.10	renders	Prefix in the compound preposition meaning before.
+accept	3.3:13.20	3.3:13.19	renders	Possessive suffix on the blood noun.
+accept	3.3:14.2	3.3:14.2	renders	Subject expressed by the verb form.
+accept	3.3:14.4,3.3:14.5	3.3:14.3	renders	Source preposition and its pronoun suffix.
+accept	3.3:14.8	3.3:14.5	renders	Renders the fire offering noun.
+accept	3.3:14.12	3.3:14.12	renders	Introduces the relative rendering of the participle.
+accept	3.3:15.7	3.3:15.11	renders	Preposition in the suffixed form.
+accept	3.3:15.10	3.3:15.13	renders	Preposition before the loins.
+accept	3.3:15.14	3.3:15.20	renders	Preposition before the liver.
+accept	3.3:15.16,3.3:15.17	3.3:15.26	renders	Removal verb and its object suffix.
+accept	3.3:15.18	3.3:15.23	renders	Preposition meaning together with the kidneys.
+accept	3.3:16.5	3.3:16.6	renders	Renders the altar noun's locative ending.
+accept	3.3:16.10	3.3:16.8	renders	Completes the translation of fire offering.
+accept	3.3:16.11	3.3:16.9	renders	Purpose prefix introducing the scent phrase.
+accept	3.3:16.13	3.3:16.10	renders	Renders the scent noun.
+accept	3.3:17.6	3.3:17.4	renders	Renders the generations noun.
+accept	3.3:17.9	3.3:17.7	renders	Renders the settlements noun.

@@ -1,0 +1,218 @@
+kind	from	to	relation	reason
+fixed	2.21:1			Added the laws and the phrase meaning before them.
+fixed	2.21:2			Added the Hebrew adjective, verb forms, seventh-year expression, and release terms.
+fixed	2.21:3			Added the arrival, expressions of being alone, and the wife and companion links.
+fixed	2.21:4			Added the missing verbs, recipient pronouns, and second word for being alone.
+fixed	2.21:5			Moved the speech verb to the finite form and linked the emphasis and freedom phrase.
+fixed	2.21:6			Added the first bringing clause, the ear possessor, the instrument, and the service clause.
+fixed	2.21:7			Added the seller, status prefix, and departure comparison.
+fixed	2.21:8			Added the appointment and redemption links, including the dative reading at position 7.
+fixed	2.21:9			Added the recipient and the prefix meaning according to.
+fixed	2.21:10			Corrected the link for married life and added the clothing, possessors, and verb.
+fixed	2.21:11			Added the subject, the nominal sense of these, the recipient, and the payment.
+fixed	2.21:12			Added the striking participle and the subject pronouns for the two verbs.
+fixed	2.21:13			Added the relative, divine action, destination, and place-setting clause.
+fixed	2.21:14			Added the plotter, verb phrase, and prepositional links.
+fixed	2.21:15			Added the participial relative, disjunction, and penalty subject.
+fixed	2.21:16			Added the participial relative, object suffix, alternative, and passive forms.
+fixed	2.21:17			Added the participial relative, disjunction, and penalty subject.
+fixed	2.21:18			Added the auxiliary, instrumental prefixes, subject, and destination prefix.
+fixed	2.21:19			Added verb forms, the support and compensation expressions, and healing emphasis.
+fixed	2.21:20			Moved the emphasis to the infinitive absolute and added the instrument and missing predicate links.
+fixed	2.21:21			Added the survival subject, dual days, and passive penalty.
+fixed	2.21:22			Added the fight, birth, penalty, and judicial assessment links.
+fixed	2.21:23			Added the verb for the harm occurring.
+ok	2.21:24			
+ok	2.21:25			
+fixed	2.21:26			Added the striker, destruction clause, release terms, and final eye.
+fixed	2.21:27			Added the release subject and object, freedom terms, and final tooth phrase.
+fixed	2.21:28			Moved the stoning auxiliary to the finite verb and added the flesh and innocence links.
+fixed	2.21:29			Added prior behavior, guarding, killing, and stoning links.
+fixed	2.21:30			Added both imposition phrases, the first ransom, and the relative amount.
+fixed	2.21:31			Removed the supplied ox from the goring verb and added the ruling clause links.
+fixed	2.21:32			Added the goring verb and the owner's dative and possessor.
+fixed	2.21:33			Added the actor, second pit, covering suffix, destination, and donkey.
+fixed	2.21:34			Added the repayment verb and recipient links.
+fixed	2.21:35			Moved the indefinite possessor to the genitive noun and added the sale proceeds and division links.
+fixed	2.21:36			Added the alternative, prior behavior, guarding, restitution, and carcass links.
+refuse	2.21:5.6	2.21:5.3		The finite verb carries the speech action.
+refuse	2.21:10.14	2.21:10.6		Married life renders conjugal intercourse.
+refuse	2.21:20.18	2.21:20.18		The infinitive absolute carries the emphasis.
+refuse	2.21:28.12	2.21:28.12		The auxiliary belongs to the finite passive.
+refuse	2.21:31.3	2.21:31.6		The translation supplies the ox as subject.
+refuse	2.21:35.3	2.21:35.3		The indefinite possessor renders the genitive man.
+accept	2.21:1.3	2.21:1.4	renders	The laws.
+accept	2.21:1.7	2.21:1.7,2.21:1.8	renders	Compound preposition meaning before.
+accept	2.21:1.8	2.21:1.8	renders	Third-person plural suffix.
+accept	2.21:2.3	2.21:2.4	renders	Hebrew adjective.
+accept	2.21:2.5,2.21:2.6,2.21:2.7	2.21:2.7	renders	Modal, subject, and verb of service.
+accept	2.21:2.11	2.21:2.9,2.21:2.11	renders	Temporal case renders in the seventh.
+accept	2.21:2.12	2.21:2.12	renders	Departure modal.
+accept	2.21:2.14	2.21:2.16	renders	Without payment.
+accept	2.21:2.15	2.21:2.13	renders	Release destination prefix.
+accept	2.21:2.16	2.21:2.15	renders	Freedom.
+accept	2.21:3.2,2.21:3.3	2.21:3.4	renders	Arrival verb and its subject.
+accept	2.21:3.5	2.21:3.3	renders	First expression of being alone.
+accept	2.21:3.6	2.21:3.7	renders	Departure modal.
+accept	2.21:3.8	2.21:3.6	renders	Second expression of being alone.
+accept	2.21:3.13	2.21:3.9	renders	Having a wife renders being her husband.
+accept	2.21:3.14	2.21:3.10	renders	Wife in the condition.
+accept	2.21:3.17	2.21:3.15	renders	Companion pronoun carried by the preposition.
+accept	2.21:4.4	2.21:4.3	renders	Giving verb.
+accept	2.21:4.5	2.21:4.4	renders	Recipient of the gift.
+accept	2.21:4.9	2.21:4.7	renders	Bearing children.
+accept	2.21:4.10	2.21:4.8	renders	Recipient in the birth clause.
+accept	2.21:4.19,2.21:4.20	2.21:4.16	renders	Modal and verb of belonging.
+accept	2.21:4.26	2.21:4.21	renders	Departure modal.
+accept	2.21:4.29	2.21:4.23	renders	Expression of being alone.
+accept	2.21:5.5	2.21:5.3	renders	Infinitive absolute of emphasis.
+accept	2.21:5.6	2.21:5.4	renders	Finite speech verb.
+accept	2.21:5.18,2.21:5.19	2.21:5.17	renders	The phrase expresses going out free.
+accept	2.21:6.2,2.21:6.5,2.21:6.6	2.21:6.2	renders	First bringing verb with modal and object.
+accept	2.21:6.19	2.21:6.16	renders	Part of the compound conjunction та й.
+accept	2.21:6.24	2.21:6.20	renders	External possessor of the ear.
+accept	2.21:6.25	2.21:6.21	renders	Instrumental case renders the prefix.
+accept	2.21:6.27,2.21:6.28,2.21:6.29,2.21:6.30	2.21:6.25	renders	Subject, auxiliary, service verb, and object suffix.
+accept	2.21:6.31	2.21:6.26,2.21:6.27	renders	Duration phrase meaning forever.
+accept	2.21:7.3	2.21:7.4	renders	Indefinite seller.
+accept	2.21:7.7	2.21:7.7	renders	Status prefix.
+accept	2.21:7.10,2.21:7.11	2.21:7.10	renders	Departure verb and feminine subject.
+accept	2.21:7.12	2.21:7.11	renders	Comparison prefix.
+accept	2.21:7.13	2.21:7.12	renders	Departure in the comparison.
+accept	2.21:8.5	2.21:8.4	renders	Eyes.
+accept	2.21:8.8	2.21:8.6	renders	Relative pronoun.
+accept	2.21:8.10,2.21:8.11	2.21:8.8	renders	Appointment auxiliary and feminine object suffix.
+accept	2.21:8.12	2.21:8.7	renders	Reflexive dative renders the reading לו.
+accept	2.21:8.17	2.21:8.10	renders	Redemption action.
+accept	2.21:8.19,2.21:8.20	2.21:8.15	renders	Authority to sell and the person who holds it.
+accept	2.21:8.23	2.21:8.11	renders	Destination of the sale.
+accept	2.21:8.26	2.21:8.18	renders	Temporal prefix rendered by a conjunction.
+accept	2.21:8.28	2.21:8.20	renders	Feminine suffix on the preposition.
+accept	2.21:9.10	2.21:9.11	renders	Feminine recipient.
+accept	2.21:9.11	2.21:9.6	renders	According to the rule.
+accept	2.21:10.3	2.21:10.4	renders	Reflexive beneficiary.
+accept	2.21:10.7	2.21:10.10	renders	Diminishing verb.
+accept	2.21:10.9	2.21:10.5	renders	Food possessor.
+accept	2.21:10.10,2.21:10.11	2.21:10.6	renders	Clothing and its feminine possessor.
+accept	2.21:10.14,2.21:10.15	2.21:10.8	renders	Married life and its feminine possessor.
+accept	2.21:11.3	2.21:11.6	renders	Masculine subject of doing.
+accept	2.21:11.6	2.21:11.4	renders	Makes the substantive sense of these explicit.
+accept	2.21:11.9	2.21:11.7	renders	Feminine recipient.
+accept	2.21:11.15	2.21:11.12	renders	Silver as the release payment.
+accept	2.21:12.1,2.21:12.2	2.21:12.1	renders	Relative clause renders the striking participle.
+accept	2.21:12.5	2.21:12.4	renders	Subject of dying.
+accept	2.21:12.7	2.21:12.6	renders	Subject of the finite passive.
+accept	2.21:13.2	2.21:13.2	renders	Relative pronoun.
+accept	2.21:13.7	2.21:13.8	renders	Causing the encounter.
+accept	2.21:13.9	2.21:13.9	renders	Directional preposition into his hand.
+accept	2.21:13.13	2.21:13.12	renders	Appointing a place.
+accept	2.21:13.14	2.21:13.13	renders	Second-person recipient.
+accept	2.21:13.16	2.21:13.17	renders	Directional there incorporated into куди.
+accept	2.21:14.3	2.21:14.4	renders	Indefinite actor.
+accept	2.21:14.4,2.21:14.5	2.21:14.3	renders	Auxiliary and verb of plotting.
+accept	2.21:14.12	2.21:14.9	renders	Manner prefix.
+accept	2.21:14.16	2.21:14.12	renders	Second component of the compound source preposition.
+accept	2.21:14.19	2.21:14.15	renders	Purpose prefix.
+accept	2.21:15.2	2.21:15.2	renders	Relative pronoun rendering the participle.
+accept	2.21:15.6	2.21:15.4	renders	Disjunctive sense of the conjunction.
+accept	2.21:15.9	2.21:15.7	renders	Subject of the finite passive.
+accept	2.21:16.2	2.21:16.2	renders	Relative pronoun rendering the participle.
+accept	2.21:16.7	2.21:16.5	renders	Object suffix of selling.
+accept	2.21:16.8	2.21:16.6	renders	Conjunction introducing the alternative.
+accept	2.21:16.9,2.21:16.10	2.21:16.7	renders	Auxiliary and subject of being found.
+accept	2.21:16.15	2.21:16.11	renders	Subject of the finite passive penalty.
+accept	2.21:17.2	2.21:17.2	renders	Relative pronoun rendering the participle.
+accept	2.21:17.6	2.21:17.4	renders	Disjunctive sense of the conjunction.
+accept	2.21:17.9	2.21:17.7	renders	Subject of the finite passive.
+accept	2.21:18.3	2.21:18.3	renders	Future auxiliary of quarreling.
+accept	2.21:18.10	2.21:18.10	renders	Instrumental case renders the first prefix.
+accept	2.21:18.12	2.21:18.13	renders	Instrumental case renders the second prefix.
+accept	2.21:18.14	2.21:18.17	renders	Subject of dying.
+accept	2.21:18.19	2.21:18.20	renders	Destination prefix.
+accept	2.21:19.4	2.21:19.4	renders	Future auxiliary of walking.
+accept	2.21:19.6	2.21:19.5	renders	Locative prefix incorporated into the adverb.
+accept	2.21:19.7	2.21:19.8	renders	Preposition expressing reliance on a support.
+accept	2.21:19.8	2.21:19.9	renders	Support.
+accept	2.21:19.11,2.21:19.12	2.21:19.11	renders	Auxiliary and predicate of acquittal.
+accept	2.21:19.13,2.21:19.14,2.21:19.15	2.21:19.13	renders	Relative construction renders the striking participle.
+accept	2.21:19.17	2.21:19.16	renders	Directive modal attached to giving.
+accept	2.21:19.20,2.21:19.21,2.21:19.22	2.21:19.15	renders	Lost time and its possessor.
+accept	2.21:19.24	2.21:19.18	renders	Healing emphasis in the infinitive absolute.
+accept	2.21:20.3	2.21:20.4	renders	Indefinite actor.
+accept	2.21:20.10	2.21:20.10,2.21:20.12	renders	Rod and its instrumental prefix.
+accept	2.21:20.12	2.21:20.14	renders	Subject of dying.
+accept	2.21:20.18	2.21:20.17	renders	Emphatic infinitive absolute.
+accept	2.21:20.20,2.21:20.21	2.21:20.18	renders	Passive penalty and its subject.
+accept	2.21:21.3	2.21:21.6	renders	Subject of surviving.
+accept	2.21:21.7,2.21:21.8	2.21:21.5	renders	Dual form means two days.
+accept	2.21:21.11,2.21:21.12	2.21:21.8	renders	Auxiliary and passive penalty.
+accept	2.21:22.3,2.21:22.4	2.21:22.3	renders	Auxiliary and fighting verb.
+accept	2.21:22.7	2.21:22.6	renders	Striking the woman.
+accept	2.21:22.11	2.21:22.10	renders	Miscarriage renders coming out.
+accept	2.21:22.12,2.21:22.13	2.21:22.11	renders	The child and the maternal suffix in the recast clause.
+accept	2.21:22.18	2.21:22.14	renders	Harm occurring.
+accept	2.21:22.21,2.21:22.22	2.21:22.17	renders	Auxiliary and finite passive penalty.
+accept	2.21:22.23	2.21:22.18,2.21:22.19	renders	Comparative and relative expression meaning as.
+accept	2.21:22.25,2.21:22.26	2.21:22.21	renders	Preposition and its masculine suffix.
+accept	2.21:22.27	2.21:22.22	renders	Husband.
+accept	2.21:22.29	2.21:22.24	renders	Woman in the construct phrase.
+accept	2.21:22.31	2.21:22.26	renders	Subject of giving.
+accept	2.21:22.33	2.21:22.27	renders	Prefix expressing the basis of payment.
+accept	2.21:22.34	2.21:22.28	renders	Judges' adjudication expressed as a ruling.
+accept	2.21:23.3	2.21:23.4	renders	Harm occurring.
+accept	2.21:26.3	2.21:26.4	renders	Indefinite striker.
+accept	2.21:26.15,2.21:26.16	2.21:26.13	renders	Destruction verb and object suffix for the eye.
+accept	2.21:26.17	2.21:26.17	renders	Subject of releasing.
+accept	2.21:26.18	2.21:26.14	renders	Release destination prefix.
+accept	2.21:26.19	2.21:26.16	renders	Freedom.
+accept	2.21:26.23	2.21:26.19	renders	Eye in the compensation phrase.
+accept	2.21:27.11,2.21:27.15	2.21:27.12	renders	Subject and suffixed object of releasing.
+accept	2.21:27.12	2.21:27.9	renders	Release destination prefix.
+accept	2.21:27.13	2.21:27.11	renders	Freedom.
+accept	2.21:27.17,2.21:27.18	2.21:27.14	renders	Final tooth and its possessor.
+accept	2.21:28.9	2.21:28.11	renders	Subject of dying.
+accept	2.21:28.12	2.21:28.13	renders	Auxiliary of the finite stoning verb.
+accept	2.21:28.17,2.21:28.18	2.21:28.20	renders	Flesh and its possessor.
+accept	2.21:28.26	2.21:28.25	renders	Predicate of innocence.
+accept	2.21:29.4,2.21:29.5	2.21:29.4	renders	Copula and predicate of habitual goring.
+accept	2.21:29.7	2.21:29.7	renders	Yesterday.
+accept	2.21:29.9,2.21:29.10	2.21:29.8	renders	Day before yesterday.
+accept	2.21:29.19,2.21:29.20,2.21:29.22	2.21:29.15	renders	Guarding verb with subject and object suffix.
+accept	2.21:29.24	2.21:29.17	renders	Causing death.
+accept	2.21:29.30,2.21:29.31	2.21:29.23	renders	Auxiliary and pronominal subject of stoning.
+accept	2.21:30.2,2.21:30.3	2.21:30.4	renders	First preposition and masculine suffix.
+accept	2.21:30.5	2.21:30.3	renders	First passive imposition.
+accept	2.21:30.6	2.21:30.2	renders	Ransom being imposed.
+accept	2.21:30.13	2.21:30.9,2.21:30.10,2.21:30.11	renders	Relative quantity expressed by the full phrase.
+accept	2.21:30.14	2.21:30.12	renders	Auxiliary of the second imposition.
+accept	2.21:30.15,2.21:30.16	2.21:30.13	renders	Second preposition and masculine suffix.
+accept	2.21:31.9	2.21:31.12	renders	Passive doing.
+accept	2.21:31.10	2.21:31.13	renders	Masculine recipient.
+accept	2.21:31.11	2.21:31.7	renders	Prefix meaning according to.
+accept	2.21:31.13	2.21:31.9	renders	Ruling.
+accept	2.21:32.2	2.21:32.3	renders	Goring verb.
+accept	2.21:32.11	2.21:32.12,2.21:32.13	renders	Master and the prefix rendered by dative case.
+accept	2.21:32.12	2.21:32.13	renders	Possessive suffix on master.
+accept	2.21:33.3	2.21:33.4	renders	Indefinite actor in the opening clause.
+accept	2.21:33.8	2.21:33.10	renders	Second pit occurrence.
+accept	2.21:33.12	2.21:33.13	renders	Object suffix on covering.
+accept	2.21:33.15	2.21:33.16	renders	Directional there.
+accept	2.21:33.18	2.21:33.19	renders	Donkey.
+accept	2.21:34.4	2.21:34.6	renders	Returning the money.
+accept	2.21:34.6	2.21:34.7	renders	Dative case renders the recipient prefix.
+accept	2.21:34.11	2.21:34.13	renders	Masculine recipient of the carcass.
+accept	2.21:35.3	2.21:35.5	renders	Indefinite possessor of the first ox.
+accept	2.21:35.5	2.21:35.3	renders	Striking verb.
+accept	2.21:35.6	2.21:35.7	renders	Second ox occurrence.
+accept	2.21:35.7,2.21:35.8	2.21:35.8	renders	Neighbor and his possessive suffix.
+accept	2.21:35.10,2.21:35.11	2.21:35.10	renders	Dying verb and its pronominal subject.
+accept	2.21:35.17,2.21:35.18,2.21:35.19	2.21:35.21	renders	Money and its suffix expressed as proceeds for the ox.
+accept	2.21:35.21	2.21:35.19	renders	First verb of dividing in half.
+accept	2.21:36.1	2.21:36.1	renders	Introduces the alternative case.
+accept	2.21:36.7,2.21:36.8	2.21:36.5	renders	Copula and predicate of habitual goring.
+accept	2.21:36.10	2.21:36.8	renders	Yesterday.
+accept	2.21:36.12,2.21:36.13	2.21:36.9	renders	Day before yesterday.
+accept	2.21:36.18,2.21:36.19	2.21:36.12	renders	Guarding verb and object suffix.
+accept	2.21:36.22,2.21:36.23	2.21:36.15	renders	Directive modal and finite restitution verb.
+accept	2.21:36.29	2.21:36.22	renders	Dead animal.
+accept	2.21:36.31	2.21:36.24	renders	Masculine recipient of the carcass.

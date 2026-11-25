@@ -1,0 +1,226 @@
+kind	from	to	relation	reason
+fixed	2.22:1			The indefinite subject was missing, and the second livestock noun pointed to the lamb.
+fixed	2.22:2			Added the passive auxiliaries, result connective, and bloodguilt phrase.
+fixed	2.22:3			Added the first condition, the bloodguilt predicate, and the possession clause.
+fixed	2.22:4			Separated the emphasis from the passive and linked the range and restitution command.
+fixed	2.22:5			Added the grazing verbs and both parts of the restitution phrase.
+fixed	2.22:6			Added the encounter, burning, and relative clause links.
+fixed	2.22:7			Added the recipient, purpose, passive, and restitution links.
+fixed	2.22:8			Added the passive predicates, owner, and oath clause links.
+unsure	2.22:9			The possessive його in the claim has no clear individual Hebrew target.
+fixed	2.22:10			Added the opening action, catch-all category, and missing verb and negation links.
+fixed	2.22:11			Moved the taking verb to its proper rendering and completed the oath and restitution links.
+fixed	2.22:12			Separated the theft emphasis from the passive and completed the source and recipient links.
+fixed	2.22:13			Added the emphasis, the bringing of evidence, and subject pronouns.
+fixed	2.22:14			Added the source relation, death verb, and owner's absence.
+fixed	2.22:15			Added the possessives, the owner's presence, and the hire clause links.
+fixed	2.22:16			Added links for the bride-price and taking her as a wife.
+fixed	2.22:17			Separated the refusal from its emphasis and corrected the bride-price phrase.
+fixed	2.22:18			Added the sorceress and the rest of the keeping-alive phrase.
+fixed	2.22:19			Linked the relative word to the participle.
+fixed	2.22:20			Added the participial subject, recipient prefix, and exception.
+fixed	2.22:21			Linked the shared negation and future auxiliary to both clauses.
+fixed	2.22:22			Added the future auxiliary.
+fixed	2.22:23			Separated the finite cry from its emphasis and linked the collective pronouns.
+fixed	2.22:24			Added the killing verb, its object, the instrumental prefix, and children.
+fixed	2.22:25			Removed the link for the added adjective and restored the pronominal and relational links.
+fixed	2.22:26			Completed the pledge phrase and linked the return, recipient, and deadline.
+fixed	2.22:27			Added the covering predicates, question, and missing links in the closing condition.
+fixed	2.22:28			Added both future auxiliaries.
+fixed	2.22:29			Corrected the negation and linked the delay verb, produce, and recipient.
+fixed	2.22:30			Added the dative and temporal prefixes, possessives, and giving verb.
+fixed	2.22:31			Added the people, the dative recipient, and the object pronoun.
+refuse	2.22:1.25	2.21:37.22		This is the small livestock, not the lamb.
+refuse	2.22:4.5	2.22:3.2		The auxiliary belongs to the finite passive.
+refuse	2.22:11.23	2.22:10.14		The supplied defendant does not render taking.
+refuse	2.22:12.4	2.22:11.3		The auxiliary belongs to the finite passive.
+refuse	2.22:17.5	2.22:16.2		The refusal renders the finite verb.
+refuse	2.22:17.15	2.22:16.11		The adjective renders the genitive virgins.
+refuse	2.22:23.11	2.22:22.7		The finite cry belongs to the finite verb.
+refuse	2.22:25.15	2.22:24.14		The creditor term does not express severity.
+refuse	2.22:29.1	2.22:28.1		The negation does not render the produce.
+accept	2.22:1.2	2.21:37.3	renders	Indefinite subject.
+accept	2.22:1.25	2.21:37.19	renders	Head noun of small livestock.
+accept	2.22:2.3	2.22:1.5	renders	Auxiliary of being found.
+accept	2.22:2.8	2.22:1.9	renders	Auxiliary of being struck.
+accept	2.22:2.10,2.22:2.11	2.22:1.10	renders	Result expressed by the conjunction.
+accept	2.22:2.15	2.22:1.14	renders	Blood means bloodguilt here.
+accept	2.22:2.17,2.22:2.18,2.22:2.19,2.22:2.20	2.22:1.13	renders	Liability phrase spells out the suffixed person.
+accept	2.22:3.2	2.22:2.1	renders	First conditional.
+accept	2.22:3.3	2.22:2.2	renders	Sunrise verb.
+accept	2.22:3.5,2.22:3.6	2.22:2.5	renders	Preposition and its suffix.
+accept	2.22:3.8,2.22:3.9,2.22:3.10	2.22:2.7	renders	Predicate assigning bloodguilt.
+accept	2.22:3.11	2.22:2.6	renders	Blood means bloodguilt here.
+accept	2.22:3.14	2.22:2.8	renders	Infinitive absolute emphasis.
+accept	2.22:3.18,2.22:3.21	2.22:2.12	renders	Possessor and predicative possession.
+accept	2.22:4.3	2.22:3.7	renders	Stolen property.
+accept	2.22:4.4	2.22:3.2	renders	Infinitive absolute emphasis.
+accept	2.22:4.5	2.22:3.3	renders	Auxiliary of the finite passive.
+accept	2.22:4.11	2.22:3.8	renders	Start of the range.
+accept	2.22:4.13,2.22:4.14	2.22:3.10	renders	First endpoint expression.
+accept	2.22:4.16	2.22:3.12	renders	Second endpoint preposition.
+accept	2.22:4.17	2.22:3.13	renders	Lamb.
+accept	2.22:4.19	2.22:3.16	renders	Restitution command.
+accept	2.22:5.2	2.22:4.3	renders	Indefinite subject.
+accept	2.22:5.3	2.22:4.2	renders	First grazing verb.
+accept	2.22:5.8	2.22:4.8	renders	Releasing the livestock.
+accept	2.22:5.11	2.22:4.11	renders	Conjunction before the second grazing verb.
+accept	2.22:5.12,2.22:5.13	2.22:4.12	renders	Analytic future of the second grazing verb.
+accept	2.22:5.14	2.22:4.13	renders	Field preposition.
+accept	2.22:5.15	2.22:4.15	renders	Belonging to another.
+accept	2.22:5.18,2.22:5.19	2.22:4.16	renders	The best of, first construct.
+accept	2.22:5.20,2.22:5.21	2.22:4.17	renders	Field and its possessive suffix.
+accept	2.22:5.23,2.22:5.24	2.22:4.19	renders	The best of, second construct.
+accept	2.22:6.5,2.22:6.6	2.22:5.5	renders	Phrase for coming upon the thorns.
+accept	2.22:6.9,2.22:6.10	2.22:5.8	renders	Passive of being consumed.
+accept	2.22:6.20	2.22:5.19	renders	Relative word unpacking the participle.
+accept	2.22:6.22	2.22:5.22	renders	The fire that was started.
+accept	2.22:7.2	2.22:6.3	renders	Indefinite giver.
+accept	2.22:7.5	2.22:6.4	renders	Dative recipient renders the preposition.
+accept	2.22:7.8	2.22:6.8	renders	Goods left for safekeeping.
+accept	2.22:7.9	2.22:6.9	renders	Purpose prefix.
+accept	2.22:7.12,2.22:7.14	2.22:6.12	renders	Passive subject and theft predicate.
+accept	2.22:7.24	2.22:6.21	renders	Restitution verb.
+accept	2.22:8.5,2.22:8.6	2.22:7.3	renders	Passive of being found.
+accept	2.22:8.8	2.22:7.8	renders	Owner of the house.
+accept	2.22:8.10,2.22:8.11	2.22:7.7	renders	Passive rendering of appearing before the judges.
+accept	2.22:8.16	2.22:7.14	renders	Introduces the clause about laying hands on property.
+accept	2.22:8.21	2.22:7.18	renders	Preposition marking the property touched.
+accept	2.22:8.22	2.22:7.19	renders	Neighbor's goods.
+accept	2.22:9.1	2.22:8.1	renders	Opening preposition of scope.
+accept	2.22:9.3	2.22:8.3	renders	First occurrence of case.
+accept	2.22:9.5	2.22:8.5	renders	Preposition introducing the ox.
+accept	2.22:9.7	2.22:8.7	renders	Preposition introducing the donkey.
+accept	2.22:9.9	2.22:8.9	renders	Preposition introducing the sheep.
+accept	2.22:9.11	2.22:8.11	renders	Preposition introducing the garment.
+accept	2.22:9.13	2.22:8.13	renders	Preposition introducing lost property.
+accept	2.22:9.15	2.22:8.15	renders	Lost property.
+accept	2.22:9.16	2.22:8.16	renders	Part of the relative phrase про яке.
+accept	2.22:9.18,2.22:9.19	2.22:8.17	renders	Verb of saying and its indefinite subject.
+accept	2.22:9.20	2.22:8.18	renders	Introduces the claim.
+accept	2.22:9.21	2.22:8.20	renders	Demonstrative in the claim.
+accept	2.22:9.23	2.22:8.24	renders	Mood of bringing the case forward.
+accept	2.22:9.27	2.22:8.21	renders	Preposition marking the case's destination.
+accept	2.22:9.28	2.22:8.23	renders	First judicial reference.
+accept	2.22:9.30	2.22:8.29	renders	Second judicial reference.
+accept	2.22:9.31,2.22:9.32,2.22:9.33	2.22:8.28	renders	Phrase meaning declare guilty.
+accept	2.22:9.34	2.22:8.30	renders	Resumed subject of restitution.
+accept	2.22:9.38	2.22:8.32	renders	Dative recipient renders the prefix.
+accept	2.22:10.2	2.22:9.3	renders	Indefinite giver.
+accept	2.22:10.3	2.22:9.2	renders	Giving verb.
+accept	2.22:10.5	2.22:9.4	renders	Dative recipient renders the preposition.
+accept	2.22:10.6	2.22:9.14	renders	Purpose prefix.
+accept	2.22:10.7	2.22:9.15	renders	Keeping in custody.
+accept	2.22:10.13	2.22:9.11	renders	Conjunction introducing the catch-all alternative.
+accept	2.22:10.14,2.22:10.15	2.22:9.12	renders	Catch-all quantifier for the remaining animals.
+accept	2.22:10.18,2.22:10.19	2.22:9.17	renders	Death verb and its subject.
+accept	2.22:10.24	2.22:9.21	renders	Auxiliary of being taken.
+accept	2.22:10.29	2.22:9.22	renders	Negative concord renders the Hebrew negation.
+accept	2.22:11.3	2.22:10.3	renders	Mood of the oath's being made.
+accept	2.22:11.7	2.22:10.6	renders	Introduces the content of the oath.
+accept	2.22:11.8	2.22:10.8	renders	Subject of the verb of stretching out.
+accept	2.22:11.13	2.22:10.10	renders	Preposition marking the property touched.
+accept	2.22:11.14	2.22:10.11	renders	The neighbor's property.
+accept	2.22:11.19	2.22:10.15	renders	Possessive suffix on owner.
+accept	2.22:11.20,2.22:11.21	2.22:10.14	renders	Taking verb and its mood.
+accept	2.22:11.25,2.22:11.26	2.22:10.18	renders	Analytic future of making restitution.
+accept	2.22:12.3	2.22:11.3	renders	Infinitive absolute emphasis.
+accept	2.22:12.4	2.22:11.4	renders	Auxiliary of the finite passive.
+accept	2.22:12.6,2.22:12.7	2.22:11.6	renders	The rest of the compound source preposition and its suffix.
+accept	2.22:12.9	2.22:11.7	renders	Restitution command.
+accept	2.22:12.11	2.22:11.8	renders	Dative recipient renders the prefix.
+accept	2.22:12.12	2.22:11.9	renders	Possessive suffix on owner.
+accept	2.22:13.2	2.22:12.2	renders	Infinitive absolute emphasis.
+accept	2.22:13.5	2.22:12.3	renders	Subject of being torn.
+accept	2.22:13.6,2.22:13.7,2.22:13.8	2.22:12.4	renders	Bringing verb with mood and object suffix.
+accept	2.22:13.9,2.22:13.10	2.22:12.5	renders	Predicative phrase as evidence.
+accept	2.22:13.14	2.22:12.9	renders	Subject of the restitution verb.
+accept	2.22:14.3	2.22:13.4	renders	Indefinite borrower.
+accept	2.22:14.5	2.22:13.6	renders	Completes the compound source preposition.
+accept	2.22:14.10	2.22:13.9	renders	Subject of being injured.
+accept	2.22:14.14	2.22:13.11	renders	Death verb.
+accept	2.22:14.17	2.22:13.12	renders	Possessive suffix on owner.
+accept	2.22:14.18,2.22:14.19	2.22:13.13	renders	Negative existential predicate.
+accept	2.22:14.20,2.22:14.21	2.22:13.14	renders	Accompaniment preposition and suffix.
+accept	2.22:15.3	2.22:14.2	renders	Possessive suffix on owner.
+accept	2.22:15.5,2.22:15.6,2.22:15.7	2.22:14.3	renders	Predicate of accompaniment with its suffix.
+accept	2.22:15.12	2.22:14.8	renders	Names the animal expressed by the pronoun.
+accept	2.22:15.13	2.22:14.7	renders	Copula of the hired predicate.
+accept	2.22:15.16	2.22:14.9	renders	Verb of going into the hire payment.
+accept	2.22:15.21	2.22:14.11	renders	Possessive suffix on the hire payment.
+accept	2.22:16.3	2.22:15.4	renders	Indefinite subject.
+accept	2.22:16.12	2.22:15.11	renders	Suffix on the accompaniment preposition.
+accept	2.22:16.16,2.22:16.20	2.22:15.13	renders	The suffix identifies the woman in both parts of the rendering.
+accept	2.22:16.17,2.22:16.19	2.22:15.13	renders	Verb of acquiring a bride by paying a bride-price.
+accept	2.22:16.21	2.22:15.14	renders	Reflexive rendering of for himself.
+accept	2.22:16.22	2.22:15.15	renders	Prefix marking the role of wife.
+accept	2.22:17.4	2.22:16.2	renders	Infinitive absolute emphasis.
+accept	2.22:17.5	2.22:16.3	renders	Finite verb of refusing.
+accept	2.22:17.6	2.22:16.5,2.22:16.6	renders	Infinitival complement of refusing.
+accept	2.22:17.7	2.22:16.6	renders	Object suffix on giving.
+accept	2.22:17.8	2.22:16.7	renders	Pronominal recipient.
+accept	2.22:17.9	2.22:16.9	renders	Mood of the weighing command.
+accept	2.22:17.13	2.22:16.10	renders	Part of the preposition згідно з.
+accept	2.22:17.14	2.22:16.11	renders	Bride-price.
+accept	2.22:17.15	2.22:16.13	renders	Adjective rendering the genitive virgins.
+accept	2.22:18.1	2.22:17.1	renders	Sorceress.
+accept	2.22:18.4,2.22:18.5	2.22:17.3	renders	Part of the phrase meaning keep alive.
+accept	2.22:19.2	2.22:18.2	renders	Relative word unpacking the participle.
+accept	2.22:20.1,2.22:20.2	2.22:19.1	renders	Generic subject of the sacrificing participle.
+accept	2.22:20.5	2.22:19.2	renders	Dative recipient renders the prefix.
+accept	2.22:20.6	2.22:19.6	renders	Exception marker.
+accept	2.22:20.7	2.22:19.8	renders	Бога names YHWH here.
+accept	2.22:20.8	2.22:19.9,2.22:19.10	renders	Expression meaning alone.
+accept	2.22:21.3	2.22:20.6	renders	Shared negation also renders the second negative.
+accept	2.22:21.4	2.22:20.4,2.22:20.7	renders	Shared future auxiliary serves both verbs.
+accept	2.22:21.5	2.22:20.4	renders	First oppression verb.
+accept	2.22:22.6	2.22:21.6	renders	Future auxiliary.
+accept	2.22:23.4	2.22:22.2	renders	Infinitive absolute emphasis.
+accept	2.22:23.6	2.22:22.4	renders	Collective plural renders the distributive object suffix.
+accept	2.22:23.8	2.22:22.6	renders	Condition introducing the cry.
+accept	2.22:23.9,2.22:23.11	2.22:22.8	renders	Finite cry and its collectively rendered subject.
+accept	2.22:23.12,2.22:23.13	2.22:22.9	renders	Preposition and its first-person suffix.
+accept	2.22:23.15	2.22:22.10	renders	Emphasis on hearing.
+accept	2.22:23.17,2.22:23.18	2.22:22.12	renders	Cry and its collectively rendered possessive suffix.
+accept	2.22:24.6	2.22:23.5	renders	Killing verb.
+accept	2.22:24.7	2.22:23.6	renders	Second-person plural object suffix.
+accept	2.22:24.8	2.22:23.7	renders	Instrumental ending renders the prefix.
+accept	2.22:24.15	2.22:23.15	renders	Children.
+accept	2.22:25.4,2.22:25.5	2.22:24.5	renders	People and the first-person possessive suffix.
+accept	2.22:25.8,2.22:25.9	2.22:24.9	renders	Accompaniment preposition and suffix.
+accept	2.22:25.13	2.22:24.12	renders	Pronominal recipient.
+accept	2.22:25.14	2.22:24.13	renders	Comparison prefix.
+accept	2.22:25.19,2.22:25.20	2.22:24.17	renders	Preposition upon and its suffix.
+accept	2.22:26.2	2.22:25.2	renders	Infinitive absolute emphasis.
+accept	2.22:26.3,2.22:26.4	2.22:25.3	renders	Part of the phrase meaning take in pledge.
+accept	2.22:26.10,2.22:26.11	2.22:25.10	renders	Return verb and its object suffix.
+accept	2.22:26.12	2.22:25.11	renders	Pronominal recipient.
+accept	2.22:26.13	2.22:25.6	renders	Preposition marking the deadline.
+accept	2.22:27.2	2.22:26.2	renders	First independent pronoun.
+accept	2.22:27.3	2.22:26.4,2.22:26.5	renders	Expression meaning only.
+accept	2.22:27.6	2.22:26.6	renders	Second independent pronoun.
+accept	2.22:27.8	2.22:26.8	renders	Prefix introducing what the garment covers.
+accept	2.22:27.9	2.22:26.9	renders	Body rendered from skin.
+accept	2.22:27.11	2.22:26.10	renders	Preposition in the question.
+accept	2.22:27.12	2.22:26.11	renders	Interrogative pronoun.
+accept	2.22:27.13,2.22:27.14,2.22:27.15	2.22:26.12	renders	Lying-down verb with subject and auxiliary.
+accept	2.22:27.19,2.22:27.20	2.22:26.16	renders	Future auxiliary and subject of crying.
+accept	2.22:27.22	2.22:26.17	renders	Preposition of direction with the first-person suffix.
+accept	2.22:27.25	2.22:26.19	renders	Hearing verb.
+accept	2.22:28.3	2.22:27.3	renders	Auxiliary of the first prohibition.
+accept	2.22:28.11	2.22:27.9	renders	Auxiliary of the second prohibition.
+accept	2.22:29.1	2.22:28.4	renders	Written negation.
+accept	2.22:29.2,2.22:29.3	2.22:28.5	renders	Delay verb and its future auxiliary.
+accept	2.22:29.7,2.22:29.8	2.22:28.1	renders	Phrase rendering the fullness of the produce.
+accept	2.22:29.14	2.22:28.6	renders	Partitive relation of the construct firstborn.
+accept	2.22:29.18	2.22:28.9	renders	First-person recipient.
+accept	2.22:30.3	2.22:29.3	renders	Dative renders the prefix on ox.
+accept	2.22:30.7	2.22:29.5,2.22:29.6	renders	Dative head noun renders livestock and its prefix.
+accept	2.22:30.8	2.22:29.6	renders	Possessive suffix on livestock.
+accept	2.22:30.12	2.22:29.9	renders	Subject carried by the verb of being.
+accept	2.22:30.14	2.22:29.11	renders	Possessive suffix on mother.
+accept	2.22:30.18	2.22:29.12	renders	Temporal genitive renders the day prefix.
+accept	2.22:30.19,2.22:30.20	2.22:29.17	renders	Giving verb and its object suffix.
+accept	2.22:31.6	2.22:30.2	renders	People in the construct phrase.
+accept	2.22:31.15	2.22:30.14,2.22:30.16	renders	Dative dog renders the noun and its prefix.
+accept	2.22:31.17	2.22:30.18	renders	Suffixed object pronoun.

@@ -1,0 +1,177 @@
+kind	from	to	relation	reason
+ok	3.6:1			
+unsure	3.6:2			Corrected the verb and prepositions. The contribution of ‘hand’ to the pledge wording is uncertain.
+fixed	3.6:3			Added the lost item, denial, pronoun, and quantifier links.
+fixed	3.6:4			Added the subject, restitution forms, and missing clause links.
+fixed	3.6:5			Added repayment, surcharge, recipient, and time links.
+fixed	3.6:6			Added the subject, offering phrase, and preposition links.
+fixed	3.6:7			Corrected ‘перед’ and added the missing pronouns and auxiliary.
+ok	3.6:8			
+fixed	3.6:9			Added the explicit subject and two location links.
+unsure	3.6:10			Added the missing verbs and object suffix. The rendering of ‘на нього’ is uncertain.
+fixed	3.6:11			Added the subject carried by the verb.
+fixed	3.6:12			Added the location links and completed the recurring morning and peace-offering expressions.
+fixed	3.6:13			Added the verb for the fire going out.
+fixed	3.6:14			Corrected the first ‘face’ phrase and added the object pronoun.
+fixed	3.6:15			Corrected the source pronoun and added the taking, oil, altar, and scent links.
+fixed	3.6:16			Added the remainder phrase and passive verb forms.
+fixed	3.6:17			Added pronouns and completed the superlative and offering comparison.
+unsure	3.6:18			Added the quantifier, contact phrase, and final verb. The target for ‘нащадок’ is uncertain.
+ok	3.6:19			
+fixed	3.6:20			Added the dative prefix, anointing pronoun, permanence, and timing links.
+fixed	3.6:21			Added the passive forms, first bringing verb, preparation words, and scent.
+fixed	3.6:22			Added the repeated action, its object, and the final burning clause.
+fixed	3.6:23			Added the auxiliary for the second passive.
+ok	3.6:24			
+fixed	3.6:25			Corrected ‘перед’ and completed the sin-offering and holiness links.
+fixed	3.6:26			Completed the participial phrase and added the location prefix and passive forms.
+unsure	3.6:27			Added the missing relative, holiness, and preposition links. The recast pronouns ‘нею’ and ‘те’ are uncertain.
+fixed	3.6:28			Added the cooking forms, vessel, polishing phrase, and instrumental prefix.
+fixed	3.6:29			Added the quantifier, partitive, pronouns, and first word of the superlative.
+fixed	3.6:30			Completed the sin-offering term, purpose phrase, and passive forms.
+refuse	3.6:2.6	3.5:21.6		Renders the verb beside this noun.
+refuse	3.6:2.21	3.5:21.16		The prefix is rendered by ‘щодо’.
+refuse	3.6:7.5	3.5:26.7		The prefix supplies the relation.
+refuse	3.6:14.11	3.6:7.11		The prefix supplies the relation.
+refuse	3.6:14.12	3.6:7.14		Renders the first ‘face’ occurrence.
+refuse	3.6:15.5	3.6:8.5		Renders the suffix on ‘from’.
+refuse	3.6:25.25	3.6:18.23		The prefix supplies the relation.
+accept	3.6:2.2	3.5:21.1	renders	Indefinite human subject.
+accept	3.6:2.6	3.5:21.5	renders	Verb of acting unfaithfully.
+accept	3.6:2.10	3.5:21.10	renders	Verbal part of the denial.
+accept	3.6:2.12	3.5:21.11	renders	Preposition governing the fellow.
+accept	3.6:2.15	3.5:21.13	renders	Preposition introducing the deposit.
+accept	3.6:2.16,3.6:2.17	3.5:21.14	renders	Part of the safekeeping expression.
+accept	3.6:2.19	3.5:21.16	renders	Preposition introducing the pledge.
+accept	3.6:2.20,3.6:2.21	3.5:21.17	renders	Part of the pledge expression.
+accept	3.6:2.24	3.5:21.20	renders	Preposition introducing robbery.
+accept	3.6:2.27	3.5:21.23	renders	Verbal part of the extortion expression.
+accept	3.6:3.4	3.5:22.3	renders	The lost item.
+accept	3.6:3.7,3.6:3.8	3.5:22.5	renders	Two-word rendering of denial.
+accept	3.6:3.9,3.6:3.10	3.5:22.6	renders	Preposition and its pronoun suffix.
+accept	3.6:3.15	3.5:22.12	renders	Numeral ‘one’.
+accept	3.6:3.23	3.5:22.21,3.5:22.22	renders	Instrumental expresses preposition and pronoun.
+accept	3.6:4.3	3.5:23.3	renders	Introduces the conditional clause.
+accept	3.6:4.4	3.5:23.4	renders	Subject carried by the verb.
+accept	3.6:4.8,3.6:4.9	3.5:23.8	renders	Verb of restitution and its mood.
+accept	3.6:4.10	3.5:23.11	renders	The stolen property.
+accept	3.6:4.11	3.5:23.12	renders	Relative introducing the theft clause.
+accept	3.6:4.14	3.5:23.17	renders	The property obtained by extortion.
+accept	3.6:4.16,3.6:4.17	3.5:23.19	renders	Verb of extortion and its auxiliary.
+accept	3.6:4.19,3.6:4.20,3.6:4.21	3.5:23.23	renders	Multiword rendering of the deposit.
+accept	3.6:4.22	3.5:23.24	renders	Relative introducing the deposit clause.
+accept	3.6:4.23	3.5:23.25	renders	Passive auxiliary.
+accept	3.6:4.25,3.6:4.26	3.5:23.26	renders	Preposition and its pronoun suffix.
+accept	3.6:5.5,3.6:5.6	3.5:24.6	renders	Preposition and its pronoun suffix.
+accept	3.6:5.9	3.5:24.11	renders	Verb of repayment.
+accept	3.6:5.10	3.5:24.12	renders	Object pronoun carried by the marker.
+accept	3.6:5.11	3.5:24.13,3.5:24.14	renders	Adverbial rendering of the principal phrase.
+accept	3.6:5.14,3.6:5.15	3.5:24.18	renders	Preposition and its pronoun suffix.
+accept	3.6:5.16,3.6:5.17	3.5:24.16	renders	Two-word rendering of the fifth.
+accept	3.6:5.18	3.5:24.19	renders	Dative marks the recipient.
+accept	3.6:5.19	3.5:24.20,3.5:24.22	renders	Relative and pronominal possession.
+accept	3.6:5.20	3.5:24.21	renders	Explicit subject of the possession clause.
+accept	3.6:5.25	3.5:24.25	renders	Temporal relation expressed by the construct.
+accept	3.6:6.2	3.5:25.4	renders	Subject carried by the verb.
+accept	3.6:6.4	3.5:25.5	renders	Dative renders the directional prefix.
+accept	3.6:6.7,3.6:6.8,3.6:6.9,3.6:6.10	3.5:25.3	renders	Guilt-offering expression and possessive suffix.
+accept	3.6:6.16	3.5:25.12	renders	Prefix meaning ‘according to’.
+accept	3.6:6.19	3.5:25.14	renders	Prefix marking the ram's purpose.
+accept	3.6:6.21	3.5:25.15	renders	Part of the guilt-offering expression.
+accept	3.6:7.4	3.5:26.3	renders	Person carried by the prepositional suffix.
+accept	3.6:7.5	3.5:26.6	renders	Prefix in the presence expression.
+accept	3.6:7.7	3.5:26.7	renders	Noun ‘face’.
+accept	3.6:7.9	3.5:26.10	renders	Passive auxiliary.
+accept	3.6:7.10	3.5:26.11	renders	Suffixed dative preposition.
+accept	3.6:7.14	3.5:26.13	renders	Numeral ‘one’.
+accept	3.6:7.16	3.5:26.17	renders	Subject carried by the verb.
+accept	3.6:7.18	3.5:26.18	renders	Prefix in the guilt expression.
+accept	3.6:9.10	3.6:2.13	renders	Explicit pronoun for the burnt offering.
+accept	3.6:9.12	3.6:2.16	renders	Preposition governing the hearth.
+accept	3.6:9.26,3.6:9.27	3.6:2.32	renders	Preposition and its pronoun suffix.
+accept	3.6:10.15	3.6:3.14	renders	Verb for taking up the ashes.
+accept	3.6:10.21	3.6:3.19	renders	Verb for the fire consuming the offering.
+accept	3.6:10.27,3.6:10.28	3.6:3.29	renders	Verb of placing and its object suffix.
+accept	3.6:11.3	3.6:4.2	renders	Subject carried by the verb.
+accept	3.6:12.6,3.6:12.7	3.6:5.8	renders	Location of the fire and pronoun suffix.
+accept	3.6:12.13,3.6:12.14	3.6:5.13	renders	Location in the wood-burning clause.
+accept	3.6:12.16	3.6:5.17,3.6:5.20,3.6:5.22	renders	Both temporal prefixes and the repeated morning.
+accept	3.6:12.19,3.6:12.20	3.6:5.25	renders	Location in the arranging clause.
+accept	3.6:12.24	3.6:5.30	renders	Preposition in the fat-burning clause.
+accept	3.6:12.28	3.6:5.33	renders	Noun in the peace-offering expression.
+accept	3.6:13.7	3.6:6.8	renders	Verb for going out.
+accept	3.6:14.4	3.6:7.3	renders	Relation carried by the construct ‘law’.
+accept	3.6:14.10	3.6:7.7	renders	Object pronoun carried by the marker.
+accept	3.6:14.11	3.6:7.10	renders	Prefix in the presence expression.
+accept	3.6:14.12	3.6:7.11	renders	First ‘face’ occurrence.
+accept	3.6:15.2,3.6:15.3	3.6:8.2	renders	Verb of taking up and its subject.
+accept	3.6:15.4,3.6:15.5	3.6:8.3	renders	Source preposition and its suffix.
+accept	3.6:15.6	3.6:8.4	renders	Instrumental renders the prefix.
+accept	3.6:15.12	3.6:8.9	renders	Noun in the grain-offering expression.
+accept	3.6:15.15,3.6:15.16	3.6:8.12	renders	Oil and its possessive suffix.
+accept	3.6:15.27	3.6:8.25	renders	Makes the altar's locative role explicit.
+accept	3.6:15.30	3.6:8.26	renders	Noun ‘scent’.
+accept	3.6:16.2	3.6:9.3	renders	Substantive participle ‘what remains’.
+accept	3.6:16.3,3.6:16.4	3.6:9.4	renders	Preposition and its pronoun suffix.
+accept	3.6:16.11,3.6:16.12,3.6:16.13	3.6:9.10	renders	Passive verb, auxiliary, and subject.
+accept	3.6:17.4	3.6:10.2	renders	Subject carried by the passive verb.
+accept	3.6:17.10	3.6:10.6	renders	Object pronoun carried by the marker.
+accept	3.6:17.15	3.6:10.11	renders	Explicit subject of the holiness clause.
+accept	3.6:17.16	3.6:10.9	renders	First noun of the superlative.
+accept	3.6:17.17	3.6:10.16	renders	Shared ‘як’ also governs the second offering.
+accept	3.6:17.18,3.6:17.19	3.6:10.14	renders	Part of the sin-offering expression.
+accept	3.6:18.1	3.6:11.1	renders	Distributive quantifier.
+accept	3.6:18.23,3.6:18.24	3.6:11.17	renders	Contact preposition and its pronoun suffix.
+accept	3.6:18.25	3.6:11.18	renders	Verb for becoming holy.
+accept	3.6:20.9	3.6:13.8	renders	Dative renders the directional prefix.
+accept	3.6:20.13	3.6:13.13	renders	Pronoun carried by the object marker.
+accept	3.6:20.20	3.6:13.19	renders	Continuity rendered adjectivally.
+accept	3.6:20.25	3.6:13.21,3.6:13.23	renders	Morning expression rendered as one adverb.
+accept	3.6:20.27,3.6:20.28	3.6:13.25	renders	Second half and its possessive suffix.
+accept	3.6:20.29	3.6:13.26	renders	Adverb incorporates the evening prefix.
+accept	3.6:21.5,3.6:21.6,3.6:21.7	3.6:14.6	renders	Passive making verb, auxiliary, and subject.
+accept	3.6:21.8	3.6:14.8	renders	First bringing verb.
+accept	3.6:21.10	3.6:14.7	renders	Mixed preparation.
+accept	3.6:21.11	3.6:14.9	renders	Ohienko's rendering of the baking term.
+accept	3.6:21.14	3.6:14.10	renders	Construct relation specifying the offering's form.
+accept	3.6:21.18	3.6:14.13	renders	Noun ‘scent’.
+accept	3.6:22.4,3.6:22.8	3.6:15.9	renders	Both copies render the same action.
+accept	3.6:22.5,3.6:22.9	3.6:15.10	renders	Both copies render the same object suffix.
+accept	3.6:22.7	3.6:15.6	renders	Pronoun on ‘in his place’.
+accept	3.6:22.11	3.6:15.7	renders	Partitive ‘from among’.
+accept	3.6:22.17	3.6:15.11	renders	Noun ‘statute’.
+accept	3.6:22.18	3.6:15.15	renders	Wholly rendered adjectivally.
+accept	3.6:22.19,3.6:22.20,3.6:22.21	3.6:15.16	renders	Passive burning verb, auxiliary, and subject.
+accept	3.6:23.9	3.6:16.8	renders	Auxiliary of the eating passive.
+accept	3.6:25.11	3.6:18.10	renders	Relation carried by the construct ‘law’.
+accept	3.6:25.13	3.6:18.12	renders	Part of the first sin-offering expression.
+accept	3.6:25.20	3.6:18.19	renders	Auxiliary of the second slaughter verb.
+accept	3.6:25.23	3.6:18.21	renders	Part of the second sin-offering expression.
+accept	3.6:25.25	3.6:18.22	renders	Prefix in the presence expression.
+accept	3.6:25.28	3.6:18.25	renders	First noun of the superlative.
+accept	3.6:25.29	3.6:18.27	renders	Explicit subject pronoun.
+accept	3.6:26.2,3.6:26.3,3.6:26.5	3.6:19.4	renders	Part of the expanded offering participle.
+accept	3.6:26.12	3.6:19.7	renders	Prefix governing the holy place.
+accept	3.6:26.15,3.6:26.16	3.6:19.10	renders	Passive auxiliary and subject.
+accept	3.6:27.4	3.6:20.4	renders	Contact preposition.
+accept	3.6:27.8	3.6:20.6	renders	Holiness carried by the verb.
+accept	3.6:27.10	3.6:20.8	renders	Relative introducing the blood clause.
+accept	3.6:27.22	3.6:20.19	renders	Prefix governing the holy place.
+accept	3.6:28.5,3.6:28.6	3.6:21.6	renders	Preposition and its pronoun suffix.
+accept	3.6:28.7,3.6:28.8	3.6:21.5	renders	First cooking verb and its subject.
+accept	3.6:28.15	3.6:21.11	renders	Second vessel occurrence.
+accept	3.6:28.16,3.6:28.17,3.6:28.18	3.6:21.13	renders	Second cooking verb, auxiliary, and subject.
+accept	3.6:28.19	3.6:21.14	renders	Conjunction introducing the conditional result.
+accept	3.6:28.20	3.6:21.15,3.6:21.17	renders	Shared auxiliary for polishing and rinsing.
+accept	3.6:28.22,3.6:28.23	3.6:21.15	renders	The phrase conveys the polish.
+accept	3.6:28.26	3.6:21.18	renders	Instrumental renders the means prefix.
+accept	3.6:29.1	3.6:22.1	renders	Distributive quantifier.
+accept	3.6:29.4	3.6:22.3	renders	Partitive preposition.
+accept	3.6:29.8	3.6:22.7	renders	Object pronoun carried by the marker.
+accept	3.6:29.9	3.6:22.8	renders	First noun of the superlative.
+accept	3.6:29.10	3.6:22.10	renders	Explicit subject pronoun.
+accept	3.6:30.4	3.6:23.3	renders	Part of the sin-offering expression.
+accept	3.6:30.10	3.6:23.5	renders	Auxiliary of the bringing passive.
+accept	3.6:30.15	3.6:23.11	renders	Prefix of purpose.
+accept	3.6:30.16	3.6:23.12	renders	Atonement infinitive rendered nominally.
+accept	3.6:30.20	3.6:23.17	renders	Auxiliary of the eating passive.

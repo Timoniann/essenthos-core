@@ -1,0 +1,220 @@
+kind	from	to	relation	reason
+fixed	2.30:1			Missing purpose phrase and object pronoun links.
+fixed	2.30:2			Jussive particle linked to the adjective. Missing subject and origin predicate links.
+fixed	2.30:3			Missing object pronoun, walls, and their possessive.
+fixed	2.30:4			Missing recipients, first side phrase, and carrying complements.
+fixed	2.30:5			Missing object pronoun.
+fixed	2.30:6			Missing prepositional elements, object pronoun, and meeting clause links.
+fixed	2.30:7			Incomplete future, recurring time phrase, and lamp-tending clause.
+fixed	2.30:8			Before was linked to face. Missing lamp-lighting and incense links.
+fixed	2.30:9			Missing coordinated negatives, offering nouns, and locative prepositions.
+fixed	2.30:10			Incomplete atonement clauses and superlative. Day is supplied.
+fixed	2.30:11			Missing main speech verb.
+fixed	2.30:12			Missing census, ransom, recipient, and plague-clause links.
+fixed	2.30:13			Missing giving verb, relative element, and prepositions.
+fixed	2.30:14			Missing relative element, prepositions, and contribution relation.
+fixed	2.30:15			Missing decrease verb, comparison, and part of the atonement phrase.
+fixed	2.30:16			Before was linked to face. Missing ransom, allocation, and purpose links.
+ok	2.30:17			
+fixed	2.30:18			Missing base, possessive, washing purpose, object pronoun, and location links.
+fixed	2.30:19			Missing future wash form and source phrase.
+fixed	2.30:20			Missing washing, approach, purpose, and fire-offering links.
+fixed	2.30:21			Missing verb-form, recipient, and generational links.
+ok	2.30:22			
+fixed	2.30:23			Myrrh was linked to its modifier. Missing links for spices and the second numeral conjunction.
+fixed	2.30:24			Missing standard-of-measure preposition. The count supplies its unit.
+fixed	2.30:25			Ointment was linked to the neighboring mixture noun. Missing oil, anointing, and pronoun links.
+fixed	2.30:26			Missing instrumental pronoun.
+ok	2.30:27			
+fixed	2.30:28			Missing base and its possessive.
+fixed	2.30:29			Incomplete superlative and missing pronoun, relative, and final verb links.
+fixed	2.30:30			Missing anointing and consecration verbs, object, and purpose preposition.
+fixed	2.30:31			Missing oil and generational preposition.
+fixed	2.30:32			Missing passive forms, formula complements, pronouns, and recipient.
+fixed	2.30:33			Supplied emphasis was linked to the verb. Missing subject, comparison, and source links.
+fixed	2.30:34			Missing reflexive recipient and equal-parts idiom.
+fixed	2.30:35			Missing object referent, ointment, and perfumer.
+fixed	2.30:36			Before was linked to face. Missing source phrases, meeting details, and superlative component.
+fixed	2.30:37			Missing verb, formula, and recipient links. Hebrew negation is unrepresented.
+fixed	2.30:38			Missing generic subject, comparison, sensory complement, and resumptive subject.
+refuse	2.30:2.9	2.30:2.6		Jussive particle belongs to the copula.
+refuse	2.30:8.14	2.30:8.15		The next word renders face.
+refuse	2.30:16.23	2.30:16.26		The next noun renders face.
+refuse	2.30:23.8	2.30:23.8		Myrrh is the preceding noun.
+refuse	2.30:25.7	2.30:25.8		The preceding noun names the ointment.
+refuse	2.30:33.3	2.30:33.3		The emphatic self is supplied.
+refuse	2.30:36.10	2.30:36.9		The next noun renders face.
+accept	2.30:1.4	2.30:1.4	renders	Purpose expressed by the burning noun.
+accept	2.30:1.11	2.30:1.9	renders	Suffixed object pronoun.
+accept	2.30:2.9,2.30:2.11	2.30:2.7	renders	Mood marker and subject of the copula.
+accept	2.30:2.17,2.30:2.18,2.30:2.19	2.30:2.11	renders	The suffixed preposition predicates origin.
+accept	2.30:3.3	2.30:3.3	renders	Suffixed direct object.
+accept	2.30:3.9,2.30:3.10	2.30:3.10	renders	Walls and their possessive suffix.
+accept	2.30:4.6	2.30:4.6	renders	Dative recipient.
+accept	2.30:4.10	2.30:4.11	renders	First occurrence of the side preposition.
+accept	2.30:4.12,2.30:4.13	2.30:4.13	renders	Sides and their possessive suffix.
+accept	2.30:4.20	2.30:4.19	renders	Subject expressed by the verb form.
+accept	2.30:4.21	2.30:4.20	renders	Preposition marking the rings' function.
+accept	2.30:4.26	2.30:4.27,2.30:4.28	renders	Instrumental case and pronoun.
+accept	2.30:4.28	2.30:4.26	renders	Suffixed object of carrying.
+accept	2.30:5.9	2.30:5.10	renders	Suffixed object pronoun.
+accept	2.30:6.3	2.30:6.3	renders	Suffixed object of placing.
+accept	2.30:6.4	2.30:6.4	renders	Prefix in the first compound preposition.
+accept	2.30:6.10	2.30:6.13	renders	Prefix in the second compound preposition.
+accept	2.30:6.13	2.30:6.18	renders	Preposition over the testimony.
+accept	2.30:6.16,2.30:6.17,2.30:6.19	2.30:6.22	renders	Subject and future form of meeting.
+accept	2.30:6.18	2.30:6.23	renders	Suffixed dative pronoun.
+accept	2.30:6.20	2.30:6.24	renders	Locative adverb.
+accept	2.30:7.2	2.30:7.2	renders	Auxiliary of the first incense verb.
+accept	2.30:7.5	2.30:7.3	renders	Preposition upon with a suffix.
+accept	2.30:7.9	2.30:7.7,2.30:7.10,2.30:7.12	renders	Both morning phrases express daily recurrence.
+accept	2.30:7.10	2.30:7.13	renders	Temporal prefix on the infinitive.
+accept	2.30:7.11	2.30:7.14	renders	Subject suffix of the lamp-tending infinitive.
+accept	2.30:7.17	2.30:7.18	renders	Object suffix of the incense verb.
+accept	2.30:8.2	2.30:8.2	renders	Temporal prefix on the infinitive.
+accept	2.30:8.3	2.30:8.3	renders	Lighting the lamps.
+accept	2.30:8.4	2.30:8.7	renders	Lamps.
+accept	2.30:8.5	2.30:8.8	renders	Preposition in the evening expression.
+accept	2.30:8.7,2.30:8.9,2.30:8.10	2.30:8.11	renders	Incense verb with subject and object pronouns.
+accept	2.30:8.12	2.30:8.13	renders	Continuity rendered as an adjective.
+accept	2.30:8.14	2.30:8.14	renders	Prefix in before the Lord's face.
+accept	2.30:8.16	2.30:8.15	renders	Face in the presence phrase.
+accept	2.30:8.17	2.30:8.17	renders	Preposition governing generations.
+accept	2.30:9.3	2.30:9.3	renders	First preposition upon.
+accept	2.30:9.7	2.30:9.6	renders	First conjunction under the negation.
+accept	2.30:9.9	2.30:9.8	renders	Second conjunction under the negation.
+accept	2.30:9.10	2.30:9.9	renders	Part of the grain-offering expression.
+accept	2.30:9.13	2.30:9.11	renders	Part of the drink-offering expression.
+accept	2.30:9.18	2.30:9.14	renders	Second preposition upon.
+accept	2.30:10.4	2.30:10.2	renders	Part of the first atonement expression.
+accept	2.30:10.14	2.30:10.12	renders	Part of the sin-offering expression.
+accept	2.30:10.21,2.30:10.22,2.30:10.23	2.30:10.19	renders	Second atonement verb and its subject.
+accept	2.30:10.24,2.30:10.25	2.30:10.20	renders	Suffixed preposition upon.
+accept	2.30:10.26	2.30:10.21	renders	Preposition governing generations.
+accept	2.30:10.29	2.30:10.25	renders	Explicit subject pronoun.
+accept	2.30:10.30	2.30:10.23	renders	Head noun of the superlative idiom.
+accept	2.30:11.2	2.30:11.2	renders	Main verb of speaking.
+accept	2.30:12.3	2.30:12.2	renders	Main verb of the counting idiom.
+accept	2.30:12.4	2.30:12.4	renders	Nominal component of the counting idiom.
+accept	2.30:12.7	2.30:12.7	renders	Prefix meaning according to.
+accept	2.30:12.8,2.30:12.9,2.30:12.10,2.30:12.11	2.30:12.8	renders	Relative phrase for those to be counted.
+accept	2.30:12.14	2.30:12.10	renders	Plural subject of giving.
+accept	2.30:12.17	2.30:12.12	renders	Ransom construct expresses what it covers.
+accept	2.30:12.20	2.30:12.14	renders	Dative ending renders the recipient prefix.
+accept	2.30:12.21	2.30:12.16	renders	Temporal prefix of the first counting clause.
+accept	2.30:12.23	2.30:12.18	renders	First object pronoun of counting.
+accept	2.30:12.27,2.30:12.28	2.30:12.22	renders	Suffixed preposition meaning among them.
+accept	2.30:12.29	2.30:12.23	renders	Plague.
+accept	2.30:12.30	2.30:12.24	renders	Temporal prefix of the second counting clause.
+accept	2.30:12.32	2.30:12.26	renders	Second object pronoun of counting.
+accept	2.30:13.2	2.30:13.2	renders	Giving verb.
+accept	2.30:13.4	2.30:13.5	renders	Relative word expressing the participle.
+accept	2.30:13.6	2.30:13.6	renders	Preposition governing the enrollment phrase.
+accept	2.30:13.10	2.30:13.12	renders	Prefix marking the standard of measure.
+accept	2.30:14.2	2.30:14.3	renders	Relative word expressing the participle.
+accept	2.30:14.4	2.30:14.4	renders	Preposition governing the enrollment phrase.
+accept	2.30:14.6	2.30:14.7	renders	Prefix marking the starting age.
+accept	2.30:14.14	2.30:14.14	renders	The construct noun expresses the contribution's recipient.
+accept	2.30:15.7	2.30:15.9	renders	Verb of decreasing.
+accept	2.30:15.8	2.30:15.10	renders	Prefix marking the comparison.
+accept	2.30:15.15	2.30:15.20	renders	Part of the atonement expression.
+accept	2.30:16.4	2.30:16.6	renders	Atonement in the money phrase.
+accept	2.30:16.9	2.30:16.11	renders	Part of the compound Ukrainian conjunction.
+accept	2.30:16.11	2.30:16.13	renders	Object pronoun referring to the money.
+accept	2.30:16.12	2.30:16.14	renders	Preposition governing the work.
+accept	2.30:16.13	2.30:16.15	renders	Work of the tent.
+accept	2.30:16.18	2.30:16.19	renders	Subject expressed by the verb form.
+accept	2.30:16.20	2.30:16.20	renders	Dative ending renders the recipient prefix.
+accept	2.30:16.21	2.30:16.23	renders	Prefix marking the memorial's purpose.
+accept	2.30:16.23	2.30:16.25	renders	Prefix in the presence phrase.
+accept	2.30:16.25	2.30:16.26	renders	Face in the presence phrase.
+accept	2.30:16.27	2.30:16.29	renders	Atonement verb rendered as a noun.
+accept	2.30:18.7,2.30:18.8	2.30:18.6	renders	Base and its possessive suffix.
+accept	2.30:18.10	2.30:18.8	renders	Prefix marking the washing purpose.
+accept	2.30:18.14	2.30:18.12	renders	Suffixed object referring to the basin.
+accept	2.30:18.19	2.30:18.17	renders	Second occurrence of between.
+accept	2.30:18.23	2.30:18.22	renders	Directional adverb.
+accept	2.30:19.2,2.30:19.7	2.30:19.2	renders	Auxiliary and verb of washing.
+accept	2.30:19.8,2.30:19.9	2.30:19.6	renders	Suffixed source preposition.
+accept	2.30:20.9	2.30:20.6	renders	Main verb of the washing expression.
+accept	2.30:20.10	2.30:20.7	renders	Water functions as the means of washing.
+accept	2.30:20.12	2.30:20.8	renders	Conjunction introduces the consequence of washing.
+accept	2.30:20.13	2.30:20.10	renders	Dative subject of the Ukrainian infinitive.
+accept	2.30:20.18,2.30:20.19	2.30:20.13	renders	Future expression of approaching.
+accept	2.30:20.22	2.30:20.17	renders	Purpose prefix on serving.
+accept	2.30:20.27	2.30:20.21	renders	Noun component of fire offering.
+accept	2.30:21.2,2.30:21.3	2.30:21.2	renders	Auxiliary and plural subject of washing.
+accept	2.30:21.10	2.30:21.6	renders	Conjunction introduces the consequence of washing.
+accept	2.30:21.11	2.30:21.8	renders	Dative subject of the Ukrainian infinitive.
+accept	2.30:21.16	2.30:21.10	renders	Subject expressed by the verb form.
+accept	2.30:21.17,2.30:21.18	2.30:21.11	renders	Plural recipient and preposition.
+accept	2.30:21.21,2.30:21.22	2.30:21.14	renders	Singular recipient and preposition.
+accept	2.30:21.27	2.30:21.18	renders	Preposition governing generations.
+accept	2.30:23.4	2.30:23.4	renders	Suffixed recipient rendered reflexively.
+accept	2.30:23.5	2.30:23.6	renders	Head denotes finest quality.
+accept	2.30:23.7	2.30:23.8	renders	Modifier describes free-flowing myrrh.
+accept	2.30:23.8	2.30:23.7	renders	Myrrh noun.
+accept	2.30:23.14	2.30:23.12	renders	Cinnamon noun.
+accept	2.30:23.24	2.30:23.22	renders	Conjunction of the second two hundred fifty.
+accept	2.30:24.6	2.30:24.5	renders	Prefix marking the standard of measure.
+accept	2.30:25.3	2.30:25.3	renders	Suffixed object referring to the oil.
+accept	2.30:25.4	2.30:25.4	renders	First occurrence of oil.
+accept	2.30:25.6	2.30:25.5	renders	First occurrence of anointing.
+accept	2.30:25.7	2.30:25.7	renders	Ointment at the head of the mixture phrase.
+accept	2.30:25.12	2.30:25.14	renders	Subject expressed by the verb form.
+accept	2.30:25.14	2.30:25.11	renders	Second occurrence of oil.
+accept	2.30:26.3	2.30:26.3	renders	Instrumental pronoun renders the suffixed prefix.
+accept	2.30:28.11,2.30:28.12	2.30:28.16	renders	Base and its possessive suffix.
+accept	2.30:29.3	2.30:29.3	renders	Suffixed object pronoun.
+accept	2.30:29.6	2.30:29.5	renders	Plural subject expressed by the verb.
+accept	2.30:29.7	2.30:29.6	renders	Head noun of the superlative idiom.
+accept	2.30:29.9	2.30:29.10	renders	Relative word expressing the participle.
+accept	2.30:29.11,2.30:29.12	2.30:29.11	renders	Suffixed preposition governed by touch.
+accept	2.30:29.13	2.30:29.12	renders	Final verb of becoming holy.
+accept	2.30:30.2	2.30:30.7	renders	Anointing verb.
+accept	2.30:30.8	2.30:30.9	renders	Consecration verb.
+accept	2.30:30.9	2.30:30.10	renders	Suffixed object pronoun.
+accept	2.30:30.10	2.30:30.11	renders	Purpose prefix on priestly service.
+accept	2.30:31.11	2.30:31.8	renders	Oil of anointing.
+accept	2.30:31.14	2.30:31.14	renders	Preposition governing generations.
+accept	2.30:32.6,2.30:32.7	2.30:32.5	renders	Subject and main verb of the passive expression.
+accept	2.30:32.9	2.30:32.7	renders	Prefix meaning according to the formula.
+accept	2.30:32.11,2.30:32.12	2.30:32.8	renders	Prepositional phrase renders the formula's possessive suffix.
+accept	2.30:32.14,2.30:32.15	2.30:32.10	renders	Making verb rendered as a passive periphrasis.
+accept	2.30:32.17	2.30:32.11	renders	Pronoun in the comparison form.
+accept	2.30:32.19	2.30:32.13	renders	Written pronoun in the first holiness clause.
+accept	2.30:32.20	2.30:32.15	renders	Subject of the second holiness clause.
+accept	2.30:32.23,2.30:32.24	2.30:32.16	renders	Suffixed recipient preposition.
+accept	2.30:33.1	2.30:33.1	renders	Generic person rendered as whoever.
+accept	2.30:33.2	2.30:33.2	renders	First relative marker.
+accept	2.30:33.7	2.30:33.4	renders	Pronoun in the comparison form.
+accept	2.30:33.10	2.30:33.7	renders	Giving verb.
+accept	2.30:33.11,2.30:33.12	2.30:33.8	renders	Suffixed source preposition.
+accept	2.30:33.15	2.30:33.12	renders	Resumptive subject of being cut off.
+accept	2.30:34.7	2.30:34.7	renders	Suffixed recipient rendered reflexively.
+accept	2.30:34.18,2.30:34.21,2.30:34.22	2.30:34.18,2.30:34.20	renders	Repeated part nouns express equal shares for each ingredient.
+accept	2.30:34.20	2.30:34.19	renders	Preposition in the equal-parts idiom.
+accept	2.30:35.4	2.30:35.3	renders	Pronominal object recast as the material used.
+accept	2.30:35.6	2.30:35.5	renders	Ointment or compound.
+accept	2.30:35.8	2.30:35.7	renders	Worker component of perfumer.
+accept	2.30:36.3,2.30:36.4	2.30:36.3	renders	First suffixed source preposition.
+accept	2.30:36.9	2.30:36.7	renders	Pronoun in the second source phrase.
+accept	2.30:36.10	2.30:36.8	renders	Prefix in the presence phrase.
+accept	2.30:36.11	2.30:36.9	renders	Face in the presence phrase.
+accept	2.30:36.16	2.30:36.15	renders	Relative marker introducing the meeting.
+accept	2.30:36.17	2.30:36.16	renders	First-person subject of the meeting verb.
+accept	2.30:36.20	2.30:36.17	renders	Suffixed dative pronoun.
+accept	2.30:36.21	2.30:36.18	renders	Locative adverb.
+accept	2.30:36.22	2.30:36.21	renders	Subject expressed by the verb form.
+accept	2.30:36.24	2.30:36.19	renders	Head noun of the superlative idiom.
+accept	2.30:36.25,2.30:36.26	2.30:36.22	renders	Suffixed recipient preposition.
+accept	2.30:37.4	2.30:37.5	renders	First occurrence of making.
+accept	2.30:37.5	2.30:37.6	renders	Prefix meaning according to the formula.
+accept	2.30:37.8	2.30:37.7	renders	Pronoun expressing the formula's possessive suffix.
+accept	2.30:37.11	2.30:37.10	renders	Suffixed recipient rendered reflexively.
+accept	2.30:37.12	2.30:37.12	renders	Subject expressed by the verb form.
+accept	2.30:37.14	2.30:37.13	renders	Singular dative pronoun.
+accept	2.30:38.1	2.30:38.1	renders	Generic person rendered as whoever.
+accept	2.30:38.4,2.30:38.5	2.30:38.4	renders	Suffixed comparison form.
+accept	2.30:38.8,2.30:38.9	2.30:38.7	renders	Suffixed preposition governed by smelling.
+accept	2.30:38.10	2.30:38.9	renders	Resumptive subject of being cut off.

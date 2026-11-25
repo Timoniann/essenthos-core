@@ -1,0 +1,132 @@
+kind	from	to	relation	reason
+ok	2.20:1			
+fixed	2.20:2			Restored the first source preposition.
+fixed	2.20:3			Corrected the preposition and restored the mood and pronoun links.
+unsure	2.20:4			Restored clear links. The scope of the compound locatives remains uncertain.
+fixed	2.20:5			Restored pronouns, prepositions, and the shared generation noun.
+fixed	2.20:6			Restored the dative prefix and participial links. Generations is supplied.
+fixed	2.20:7			Restored the verbs, relative correlate, and adverbial prefixes.
+ok	2.20:8			
+fixed	2.20:9			Restored the second verb.
+ok	2.20:10			
+fixed	2.20:11			Restored verbs, the locative suffix, and parts of two expressions.
+fixed	2.20:12			Restored the purpose marker, verbal form, and recipient.
+ok	2.20:13			
+ok	2.20:14			
+ok	2.20:15			
+fixed	2.20:16			Restored the testimony expression.
+fixed	2.20:17			Restored list conjunctions, possessive links, and the ownership prefix.
+fixed	2.20:18			Moved a conjunction to its proper occurrence and restored predicates.
+fixed	2.20:19			Restored pronouns, the jussive auxiliary, and the negation in the lest clause.
+fixed	2.20:20			Restored purpose expressions, the object pronoun, and predicate links.
+fixed	2.20:21			Completed the distance expression and the locative clause.
+fixed	2.20:22			Restored the pronoun carried by the preposition.
+fixed	2.20:23			Restored verb forms, suffixed prepositions, and material relations.
+fixed	2.20:24			Corrected a possessive and a conjunction and restored missing links.
+fixed	2.20:25			Restored verbal and material links. The first singular object replaces a Hebrew plural.
+fixed	2.20:26			Restored the verb forms, purpose marker, and prepositional links.
+refuse	2.20:3.7	2.20:3.7		Preposition belongs on עַל.
+refuse	2.20:18.5	2.20:18.9		This conjunction joins the Ukrainian verbs.
+refuse	2.20:24.13	2.20:24.7		Wrong suffix carrier for the possessive.
+refuse	2.20:24.19	2.20:24.15		This conjunction introduces the smaller livestock.
+accept	2.20:2.8	2.20:2.6	renders	First source preposition.
+accept	2.20:3.1	2.20:3.2	renders	Auxiliary expressing the prohibitive verb form.
+accept	2.20:3.4	2.20:3.3	renders	Suffixed preposition means to you.
+accept	2.20:3.7	2.20:3.6	renders	Preposition in the before-me expression.
+accept	2.20:3.8	2.20:3.7	renders	First-person suffix on face.
+accept	2.20:4.2	2.20:4.2	renders	Prohibited act of making.
+accept	2.20:4.3	2.20:4.3	renders	Suffixed preposition means for yourself.
+accept	2.20:4.9	2.20:4.8	renders	Correlate in the expanded relative.
+accept	2.20:4.11	2.20:4.9	renders	Preposition for the sky.
+accept	2.20:4.13	2.20:4.13	renders	Meaning of above.
+accept	2.20:4.16	2.20:4.16	renders	Preposition for the land.
+accept	2.20:5.3	2.20:5.3	renders	Plural suffix on the preposition.
+accept	2.20:5.7	2.20:5.6	renders	Plural object suffix on serve.
+accept	2.20:5.13	2.20:5.11	renders	God in the jealous God phrase.
+accept	2.20:5.15,2.20:5.16	2.20:5.13	renders	Relative clause renders the participle.
+accept	2.20:5.22	2.20:5.18	renders	Preposition for the third generation.
+accept	2.20:5.25	2.20:5.21	renders	Preposition for the fourth generation.
+accept	2.20:5.27	2.20:5.19,2.20:5.22	renders	Generation noun shared by both ordinals.
+accept	2.20:5.28	2.20:5.23	renders	Genitive expresses the relationship to the generations.
+accept	2.20:5.29,2.20:5.31	2.20:5.24	renders	Relative subject and first-person object of the participle.
+accept	2.20:6.2,2.20:6.3	2.20:6.2	renders	Relative clause renders the participle.
+accept	2.20:6.5	2.20:6.4	renders	Dative ending renders the prefix.
+accept	2.20:6.8,2.20:6.10	2.20:6.7	renders	Relative subject and first-person object of the participle.
+accept	2.20:6.12	2.20:6.10	renders	Relative subject renders the participle.
+accept	2.20:7.7	2.20:7.7	renders	Prefix forms the first manner expression.
+accept	2.20:7.10	2.20:7.12	renders	Verb expressing acquittal.
+accept	2.20:7.12	2.20:7.15	renders	Correlate in the expanded relative.
+accept	2.20:7.14	2.20:7.16	renders	Second occurrence of the verb.
+accept	2.20:7.17	2.20:7.19	renders	Prefix forms the second manner expression.
+accept	2.20:9.5	2.20:9.5	renders	Second verb in the instruction.
+accept	2.20:11.4	2.20:11.4	renders	Verb of creation.
+accept	2.20:11.13,2.20:11.14	2.20:11.20	renders	Preposition and its plural suffix.
+accept	2.20:11.16	2.20:11.23	renders	Temporal genitive renders the prefix.
+accept	2.20:11.18	2.20:11.22	renders	Verb expressing rest.
+accept	2.20:11.19	2.20:11.28	renders	First part of the causal expression.
+accept	2.20:12.7	2.20:12.7	renders	Purpose marker.
+accept	2.20:12.9	2.20:12.8	renders	Copula in the expanded verb rendering.
+accept	2.20:12.19	2.20:12.17	renders	Suffixed preposition marks the recipient.
+accept	2.20:16.2	2.20:16.2,2.20:16.5	renders	Verb and witness noun together mean testify.
+accept	2.20:16.3	2.20:16.6	renders	Falsehood rendered as an adverb.
+accept	2.20:17.9	2.20:17.8	renders	Neighbor in the wife clause.
+accept	2.20:17.11	2.20:17.9	renders	Conjunction before the male servant.
+accept	2.20:17.14	2.20:17.11	renders	Conjunction before the female servant.
+accept	2.20:17.16	2.20:17.12	renders	Possessive suffix on the female servant.
+accept	2.20:17.17	2.20:17.13	renders	Conjunction before the ox.
+accept	2.20:17.20	2.20:17.15	renders	Conjunction before the donkey.
+accept	2.20:17.23	2.20:17.17	renders	Conjunction before the final item.
+accept	2.20:17.26	2.20:17.20	renders	Predicative genitive expresses ownership.
+accept	2.20:18.6	2.20:18.5	renders	Hearing renders perception of the sounds.
+accept	2.20:18.8	2.20:18.9	renders	Conjunction before the flames.
+accept	2.20:18.21	2.20:18.28	renders	Verb expressing trembling.
+accept	2.20:18.24	2.20:18.30	renders	Verb expressing standing.
+accept	2.20:18.25	2.20:18.32	renders	Distance component of the adverb.
+accept	2.20:19.3	2.20:19.2	renders	Subject expressed by the verb ending.
+accept	2.20:19.8	2.20:19.7	renders	First occurrence of the first-person plural suffix.
+accept	2.20:19.14	2.20:19.12	renders	Auxiliary expressing the jussive form.
+accept	2.20:19.17,2.20:19.18	2.20:19.13	renders	Second with-us preposition and suffix.
+accept	2.20:19.22	2.20:19.15	renders	Negative meaning of lest.
+accept	2.20:20.11	2.20:20.11,2.20:20.12	renders	Remaining parts of the first purpose expression.
+accept	2.20:20.13	2.20:20.14	renders	Suffixed object marker carries the pronoun.
+accept	2.20:20.15	2.20:20.19,2.20:20.20	renders	Second purpose expression.
+accept	2.20:20.18	2.20:20.21	renders	Written verb of being.
+accept	2.20:20.19	2.20:20.23	renders	Preposition before faces.
+accept	2.20:20.20,2.20:20.21	2.20:20.24	renders	Noun and its possessive suffix.
+accept	2.20:20.22	2.20:20.25	renders	Purpose prefix in the final clause.
+accept	2.20:20.23,2.20:20.25	2.20:20.27	renders	Verb and its plural subject.
+accept	2.20:21.4	2.20:21.6	renders	Distance component of the adverb.
+accept	2.20:21.10,2.20:21.11	2.20:21.14	renders	Location and copula render the locative predicate.
+accept	2.20:22.17	2.20:22.18	renders	Second-person plural suffix on with.
+accept	2.20:23.2,2.20:23.3	2.20:23.2	renders	First compound future.
+accept	2.20:23.4,2.20:23.5	2.20:23.3	renders	Preposition and first-person suffix.
+accept	2.20:23.7	2.20:23.4	renders	Material relation of the first construct.
+accept	2.20:23.11	2.20:23.7	renders	Material relation of the second construct.
+accept	2.20:23.15	2.20:23.10	renders	Main verb of the second compound future.
+accept	2.20:23.16	2.20:23.11	renders	Suffixed preposition means for yourselves.
+accept	2.20:24.1	2.20:24.3	renders	Subject expressed by the verb ending.
+accept	2.20:24.3	2.20:24.4	renders	Prepositional part of for me.
+accept	2.20:24.6	2.20:24.1	renders	Material relation of the altar construct.
+accept	2.20:24.11	2.20:24.7	renders	Prepositional part of on it.
+accept	2.20:24.13	2.20:24.9	renders	Possessive suffix on burnt offerings.
+accept	2.20:24.21,2.20:24.22	2.20:24.14	renders	Small livestock noun and possessive suffix.
+accept	2.20:24.23	2.20:24.15	renders	Conjunction before the larger livestock.
+accept	2.20:24.24,2.20:24.25,2.20:24.26	2.20:24.17	renders	Larger livestock and its possessive suffix.
+accept	2.20:24.31,2.20:24.32	2.20:24.23	renders	Verb and its first-person subject.
+accept	2.20:24.36,2.20:24.37	2.20:24.27	renders	Preposition and second-person suffix.
+accept	2.20:24.38	2.20:24.26	renders	Verb of coming.
+accept	2.20:24.39	2.20:24.28	renders	Conjunction before the blessing.
+accept	2.20:24.41	2.20:24.29	renders	Object suffix on bless.
+accept	2.20:25.6	2.20:25.3	renders	Material relation of the altar construct.
+accept	2.20:25.10,2.20:25.11	2.20:25.8	renders	Compound future renders the verb.
+accept	2.20:25.13,2.20:25.14	2.20:25.10	renders	Material complement means of hewn stone.
+accept	2.20:25.17,2.20:25.18	2.20:25.13	renders	Verb rendered with a conditional particle.
+accept	2.20:25.19,2.20:25.20	2.20:25.14	renders	Preposition and singular suffix.
+accept	2.20:25.21,2.20:25.22	2.20:25.12	renders	Tool noun and its possessive suffix.
+accept	2.20:25.24,2.20:25.25,2.20:25.26	2.20:25.16	renders	Defilement verb, conditional rendering, and object suffix.
+accept	2.20:26.3,2.20:26.4	2.20:26.3	renders	Compound future renders the verb.
+accept	2.20:26.5	2.20:26.6	renders	Preposition marking the altar as destination.
+accept	2.20:26.8	2.20:26.4,2.20:26.5	renders	Instrumental ending and noun render by steps.
+accept	2.20:26.9	2.20:26.8	renders	Relative marker rendered as purpose.
+accept	2.20:26.11,2.20:26.12	2.20:26.10	renders	Auxiliary and participle render the passive verb.
+accept	2.20:26.13	2.20:26.12	renders	Prepositional part of the suffixed form.

@@ -1,0 +1,145 @@
+kind	from	to	relation	reason
+fixed	2.33:1			Missing imperative, dative markers, and verb forms.
+fixed	2.33:2			Missing prefix in the expression for before you.
+fixed	2.33:3			Missing relative, pronouns, compound adjective, and negative purpose.
+fixed	2.33:4			Missing demonstrative, verbs, and suffixed preposition.
+fixed	2.33:5			Missing dative, clause links, verbs, and pronouns.
+ok	2.33:6			
+fixed	2.33:7			Missing verbs, relative, and pronoun for the tent being named.
+fixed	2.33:8			Missing temporal markers, locative relation, and infinitive subject.
+fixed	2.33:9			Missing temporal and locative links.
+fixed	2.33:10			First entrance linked to the second occurrence.
+fixed	2.33:11			Missing comparisons, prepositions, verbs, and youth.
+fixed	2.33:12			Missing demonstrative, causative wording, pronouns, and prepositions.
+unsure	2.33:13			The link for як is uncertain because the translation recasts purpose as manner.
+fixed	2.33:14			Missing pronouns, divine presence, and the expression for giving rest.
+fixed	2.33:15			Missing pronouns, negation, verbs, and source prefix.
+unsure	2.33:16			The link for що in тим, що is uncertain because the translation expands an infinitive into a clause.
+fixed	2.33:17			Missing demonstrative, naming prefix, and object suffix.
+fixed	2.33:18			Missing subject and causative verb with its object suffix.
+fixed	2.33:19			Missing verbs, pronouns, and relational prefixes.
+fixed	2.33:20			Missing subject and object pronouns and modal wording.
+fixed	2.33:21			Missing preposition and its pronominal suffix.
+fixed	2.33:22			Missing temporal markers, auxiliary, and pronouns.
+fixed	2.33:23			Missing seeing verb, expression for my back, and passive auxiliary.
+refuse	2.33:10.10	2.33:10.22		Entrance in the later clause.
+accept	2.33:1.6	2.33:1.6	renders	First imperative.
+accept	2.33:1.8	2.33:1.9	renders	Demonstrative within from here.
+accept	2.33:1.25,2.33:1.26	2.33:1.23	renders	Swearing verb and past auxiliary.
+accept	2.33:1.28	2.33:1.24	renders	Abraham's dative renders the prefix.
+accept	2.33:1.29	2.33:1.26	renders	Isaac's dative renders the prefix.
+accept	2.33:1.31	2.33:1.29	renders	Jacob's dative renders the prefix.
+accept	2.33:1.33	2.33:1.33	renders	Dative marks the recipient.
+accept	2.33:1.36	2.33:1.35	renders	Object suffix of give.
+accept	2.33:2.3	2.33:2.3	renders	Prefix in the expression before your face.
+accept	2.33:3.3	2.33:3.3	renders	Relative renders the participial form.
+accept	2.33:3.9	2.33:3.9	renders	First-person verb subject.
+accept	2.33:3.12	2.33:3.10,2.33:3.11	renders	Renders the expression in the midst.
+accept	2.33:3.13	2.33:3.11	renders	Suffix on midst.
+accept	2.33:3.17	2.33:3.14,2.33:3.15	renders	Compound adjective renders stiff neck.
+accept	2.33:3.19,2.33:3.21,2.33:3.22	2.33:3.18	renders	Verb with subject and object pronouns.
+accept	2.33:3.20	2.33:3.17	renders	Negation inherent in lest.
+accept	2.33:4.4	2.33:4.11	renders	Demonstrative modifying the report.
+accept	2.33:4.8	2.33:4.12	renders	Part of the compound conjunction та й.
+accept	2.33:4.9	2.33:4.13	renders	Mourning verb.
+accept	2.33:4.13	2.33:4.16	renders	Putting verb.
+accept	2.33:4.14,2.33:4.15	2.33:4.19	renders	Preposition and its reflexively rendered suffix.
+accept	2.33:5.8	2.33:5.7	renders	Dative renders the addressee relation.
+accept	2.33:5.11	2.33:5.12,2.33:5.13	renders	Compound adjective renders stiff neck.
+accept	2.33:5.15	2.33:5.16	renders	Verb of going up.
+accept	2.33:5.16	2.33:5.17	renders	Prefix in the expression in your midst.
+accept	2.33:5.17	2.33:5.18	renders	Suffix on midst.
+accept	2.33:5.18	2.33:5.19	renders	Connector introducing the consequence.
+accept	2.33:5.19,2.33:5.20	2.33:5.20	renders	Destruction verb and object suffix.
+accept	2.33:5.21	2.33:5.21	renders	Connector in the transition to the command.
+accept	2.33:5.23	2.33:5.23	renders	Imperative to take down.
+accept	2.33:5.27	2.33:5.26	renders	Suffix meaning yourself.
+accept	2.33:5.31	2.33:5.30	renders	Doing verb.
+accept	2.33:5.32	2.33:5.31	renders	Suffixed preposition meaning to you.
+accept	2.33:7.6	2.33:7.7	renders	Part of the compound conjunction та й.
+accept	2.33:7.7	2.33:7.8	renders	Pitching the tent.
+accept	2.33:7.16	2.33:7.21	renders	Suffix for the tent being named.
+accept	2.33:7.20	2.33:7.25	renders	Written verb of occurrence.
+accept	2.33:7.22	2.33:7.27	renders	Relative renders the seeking participle.
+accept	2.33:7.25	2.33:7.29	renders	Motion verb in the final clause.
+accept	2.33:8.2	2.33:8.2	renders	Written verb of occurrence.
+accept	2.33:8.3	2.33:8.3	renders	Prefix introduces the temporal clause.
+accept	2.33:8.15	2.33:8.16	renders	Opening used adverbially for location.
+accept	2.33:8.25,2.33:8.27	2.33:8.23	renders	Entering verb and its subject suffix.
+accept	2.33:8.28	2.33:8.25	renders	Directional ending on tent.
+accept	2.33:9.2	2.33:9.2	renders	Written verb of occurrence.
+accept	2.33:9.3	2.33:9.3	renders	Prefix introduces the temporal clause.
+accept	2.33:9.6	2.33:9.7	renders	Directional ending on tent.
+accept	2.33:9.14	2.33:9.14	renders	Opening used adverbially for location.
+accept	2.33:9.18	2.33:9.17	renders	Part of the compound conjunction та й.
+accept	2.33:10.7	2.33:10.10	renders	Relative renders the standing participle.
+accept	2.33:10.9,2.33:10.10	2.33:10.11	renders	Entrance and its locative sense in the first clause.
+accept	2.33:10.17	2.33:10.19	renders	Part of the compound conjunction та й.
+accept	2.33:10.20	2.33:10.22	renders	Locative sense of the later entrance.
+accept	2.33:11.7	2.33:11.7	renders	Preposition in face to face.
+accept	2.33:11.9	2.33:11.9,2.33:11.10	renders	Comparative conjunction as.
+accept	2.33:11.11	2.33:11.12	renders	Indefinite subject of speaking.
+accept	2.33:11.16,2.33:11.17	2.33:11.16	renders	Returning verb and its subject.
+accept	2.33:11.23	2.33:11.25	renders	Youth in apposition to Joshua.
+accept	2.33:11.28	2.33:11.27	renders	Departing verb.
+accept	2.33:11.29	2.33:11.28	renders	Source prefix.
+accept	2.33:12.10	2.33:12.10	renders	Causative imperative to lead out.
+accept	2.33:12.11	2.33:12.15	renders	Demonstrative modifying people.
+accept	2.33:12.16,2.33:12.18	2.33:12.19	renders	Together render the causative make known.
+accept	2.33:12.20,2.33:12.21	2.33:12.23	renders	Preposition with its first-person suffix.
+accept	2.33:12.26	2.33:12.26	renders	Past auxiliary of said.
+accept	2.33:12.27,2.33:12.29	2.33:12.27	renders	Subject and object of know.
+accept	2.33:12.30	2.33:12.28	renders	Prefix in the expression by name.
+accept	2.33:12.35	2.33:12.32	renders	Second-person subject of found.
+accept	2.33:13.1	2.33:13.1	renders	Connector in the transition to the request.
+accept	2.33:13.11	2.33:13.10	renders	Request particle after make known.
+accept	2.33:13.12	2.33:13.9	renders	First-person object suffix.
+accept	2.33:13.19	2.33:13.16	renders	Second occurrence of find.
+accept	2.33:13.25	2.33:13.21	renders	Imperative to see.
+accept	2.33:13.29	2.33:13.23	renders	Copular marker with the nominal predicate.
+accept	2.33:14.2	2.33:14.2	renders	Subject of the reply.
+accept	2.33:14.4,2.33:14.5	2.33:14.3	renders	I myself renders my presence.
+accept	2.33:14.6	2.33:14.4	renders	Verb of going.
+accept	2.33:14.8,2.33:14.10,2.33:14.11	2.33:14.6	renders	Together render bringing to rest.
+accept	2.33:14.9	2.33:14.7	renders	Second-person suffix marks the recipient of rest.
+accept	2.33:15.3	2.33:15.2	renders	Subject of said.
+accept	2.33:15.5	2.33:15.3	renders	Third-person suffix on to.
+accept	2.33:15.7,2.33:15.8	2.33:15.6	renders	You yourself renders your presence.
+accept	2.33:15.10	2.33:15.7	renders	Verb of going.
+accept	2.33:15.12	2.33:15.8	renders	Negation of the command.
+accept	2.33:15.13	2.33:15.9	renders	Causative verb to lead out.
+accept	2.33:15.15	2.33:15.10	renders	Source prefix within from here.
+accept	2.33:16.2	2.33:16.2	renders	Instrumental case renders the prefix.
+accept	2.33:16.3	2.33:16.5	renders	Adverb meaning then.
+accept	2.33:16.15	2.33:16.14	renders	Interrogative marker.
+accept	2.33:16.22,2.33:16.23	2.33:16.18	renders	Preposition with its first-person plural suffix.
+accept	2.33:17.7	2.33:17.11	renders	Demonstrative modifying thing.
+accept	2.33:17.24	2.33:17.22	renders	Prefix in the expression by name.
+accept	2.33:17.26	2.33:17.21	renders	Second-person object suffix.
+accept	2.33:18.2	2.33:18.2	renders	Subject of the reply.
+accept	2.33:18.4,2.33:18.5	2.33:18.3	renders	Causative show and its first-person suffix.
+accept	2.33:19.2	2.33:19.2	renders	Subject of said.
+accept	2.33:19.5	2.33:19.4	renders	Causative verb to make pass.
+accept	2.33:19.9	2.33:19.7	renders	Preposition in the first expression for before you.
+accept	2.33:19.10	2.33:19.8	renders	Suffix in the first expression for before you.
+accept	2.33:19.14	2.33:19.11	renders	Instrumental case renders the naming prefix.
+accept	2.33:19.15	2.33:19.14,2.33:19.15	renders	Prefix and front meaning in the second expression.
+accept	2.33:19.16	2.33:19.15	renders	Suffix in the second expression for before you.
+accept	2.33:19.18	2.33:19.17	renders	First-person subject of the main favour verb.
+accept	2.33:19.22	2.33:19.20	renders	Favour in the relative clause.
+accept	2.33:19.24	2.33:19.22	renders	Compassion in the main clause.
+accept	2.33:19.27	2.33:19.25	renders	Compassion in the relative clause.
+accept	2.33:20.2	2.33:20.2	renders	Subject of said.
+accept	2.33:20.4	2.33:20.4	renders	Second-person subject of be able.
+accept	2.33:20.13	2.33:20.11	renders	Modal wording of the second seeing clause.
+accept	2.33:20.15	2.33:20.11	renders	First-person object suffix of see.
+accept	2.33:21.6,2.33:21.7	2.33:21.6	renders	Preposition with its first-person suffix.
+accept	2.33:22.3	2.33:22.3	renders	Prefix introduces the temporal clause.
+accept	2.33:22.4	2.33:22.4	renders	Future auxiliary of passing.
+accept	2.33:22.11	2.33:22.7	renders	Object suffix of put.
+accept	2.33:22.17	2.33:22.15	renders	Suffix on over, recast as object of cover.
+accept	2.33:22.20	2.33:22.16	renders	Part of the temporal expression аж поки.
+accept	2.33:22.22	2.33:22.17	renders	First-person subject suffix of passing.
+accept	2.33:23.7	2.33:23.6	renders	Second-person seeing verb.
+accept	2.33:23.8,2.33:23.9	2.33:23.8	renders	Me from behind renders my back.
+accept	2.33:23.14	2.33:23.12	renders	Auxiliary of the passive verb.

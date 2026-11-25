@@ -1,0 +1,162 @@
+kind	from	to	relation	reason
+fixed	2.26:1			Corrected the linen modifier and linked the linen, scarlet compound, and object pronoun.
+fixed	2.26:2			Linked the dative phrase for all the curtains.
+fixed	2.26:3			Linked both future forms and the first member of each reciprocal phrase.
+fixed	2.26:4			Completed the links for «так само» and the second edge phrase.
+fixed	2.26:5			Linked the edge, the second set, and both members of the reciprocal phrase.
+fixed	2.26:6			Completed the reciprocal phrase and linked the instrumental case to the Hebrew prefix.
+fixed	2.26:7			Removed a link from the supplied adjective to the article and linked the tent phrase, pronoun, and numeral.
+fixed	2.26:8			Linked the compound numeral and the dative relation.
+fixed	2.26:9			Completed both separation phrases and the position at the front of the tent.
+ok	2.26:10			
+fixed	2.26:11			Linked the subject pronoun to the verb ending.
+fixed	2.26:12			Corrected the rear location and completed the links for the overhang and surplus.
+fixed	2.26:13			Linked the repeated side phrases, tent modifier, and purpose phrase.
+fixed	2.26:14			Corrected the ram and hide links and completed the dyeing and upper-covering phrases.
+fixed	2.26:15			Linked the participle for the upright boards.
+fixed	2.26:16			Linked the half-cubit and the numeral modifying the second board occurrence.
+fixed	2.26:17			Linked the board phrase, joined tenons, reciprocal expression, and final dative relation.
+fixed	2.26:18			Linked the side preposition and the southward direction.
+fixed	2.26:19			Moved the first possessive to its own occurrence and linked the second board qualifier.
+fixed	2.26:20			Linked the preposition in the northward phrase.
+fixed	2.26:21			Linked the possessive paraphrase and the second board qualifier.
+fixed	2.26:22			Completed the rear-side and westward expressions.
+ok	2.26:23			
+fixed	2.26:24			Linked the jussive particles, lower and upper locations, second predicate, and pronouns.
+fixed	2.26:25			Linked the opening verb, compound numeral, and second board qualifier.
+fixed	2.26:26			Linked the noun for the side.
+fixed	2.26:27			Linked the rear-side description and the westward preposition.
+fixed	2.26:28			Linked the middle modifier, the locative prefix, and both words of the future verb.
+fixed	2.26:29			Completed the phrase expressing the rings’ function.
+fixed	2.26:30			Completed the accordance phrase and linked the relative, the recipient, and the location.
+unsure	2.26:31			Corrected the linen, scarlet, and pronoun links. The status of «з» in «з херувимами» is uncertain.
+fixed	2.26:32			Linked the object pronoun to the suffixed form.
+fixed	2.26:33			Linked the position inside the veil, the separation verb, the beneficiary, and the final sacred phrase.
+fixed	2.26:34			Linked the second noun in the Holy of Holies.
+fixed	2.26:35			Completed the outside relation and linked the last placement verb.
+fixed	2.26:36			Corrected the linen links and completed the scarlet and entrance phrases.
+fixed	2.26:37			Linked the object pronoun and the suffixed beneficiary phrase.
+refuse	2.26:1.8	2.26:1.8		The modifier renders the twisting.
+refuse	2.26:7.10	2.26:7.8		Supplied adjective on a definite article.
+refuse	2.26:12.14	2.26:12.14		The adverb gives the rear location.
+refuse	2.26:14.6	2.26:14.7		The adjective renders the rams.
+refuse	2.26:14.9	2.26:14.9		The noun renders the hides.
+refuse	2.26:19.18	2.26:19.30		Possessive from the second pair of tenons.
+refuse	2.26:31.12	2.26:31.11		The modifier renders the twisting.
+refuse	2.26:36.14	2.26:36.15		The modifier renders the twisting.
+accept	2.26:1.8	2.26:1.9	renders	Twisted modifier.
+accept	2.26:1.9	2.26:1.8	renders	Fine linen.
+accept	2.26:1.16	2.26:1.15	renders	Other member of the scarlet dye expression.
+accept	2.26:1.22	2.26:1.21	renders	Suffixed object pronoun.
+accept	2.26:2.14	2.26:2.25	renders	All the curtains.
+accept	2.26:2.15	2.26:2.24,2.26:2.27	renders	Curtains with the dative relation.
+accept	2.26:3.3	2.26:3.4	renders	Written verb of being.
+accept	2.26:3.5	2.26:3.6	renders	First member of the first reciprocal phrase.
+accept	2.26:3.12	2.26:3.12	renders	Future auxiliary for the second participle.
+accept	2.26:3.14	2.26:3.13	renders	First member of the second reciprocal phrase.
+accept	2.26:4.15	2.26:4.17	renders	Part of the expression for the same manner.
+accept	2.26:4.17	2.26:4.19	renders	Preposition at the second edge.
+accept	2.26:4.18	2.26:4.20	renders	Second occurrence of the edge.
+accept	2.26:5.12	2.26:5.14	renders	End of the curtain.
+accept	2.26:5.16	2.26:5.22	renders	Second set of curtains.
+accept	2.26:5.21	2.26:5.26	renders	First member of the reciprocal phrase.
+accept	2.26:5.23	2.26:5.28	renders	Second member of the reciprocal phrase.
+accept	2.26:6.10	2.26:6.11	renders	First member of the reciprocal phrase.
+accept	2.26:6.12	2.26:6.13	renders	Second member of the reciprocal phrase.
+accept	2.26:6.14	2.26:6.14	renders	Instrumental ending renders the prefix.
+accept	2.26:7.4	2.26:7.3	renders	Material relation expressed by the construct.
+accept	2.26:7.7	2.26:7.5	renders	Purpose preposition for the tent.
+accept	2.26:7.8	2.26:7.6	renders	Tent.
+accept	2.26:7.13	2.26:7.14	renders	Suffixed object pronoun.
+accept	2.26:7.14	2.26:7.10,2.26:7.11	renders	Compound numeral eleven.
+accept	2.26:8.12	2.26:8.23,2.26:8.24	renders	Compound numeral eleven.
+accept	2.26:8.13	2.26:8.22	renders	Dative ending renders the prefix.
+accept	2.26:9.5	2.26:9.7,2.26:9.8	renders	First expression for separately.
+accept	2.26:9.9	2.26:9.14	renders	Prefix in the second expression for separately.
+accept	2.26:9.15	2.26:9.23,2.26:9.24,2.26:9.25	renders	Full expression for the front position.
+accept	2.26:11.17	2.26:11.20	renders	Subject pronoun from the verb ending.
+accept	2.26:12.2,2.26:12.3	2.26:12.2	renders	Relative paraphrase of the overhang noun.
+accept	2.26:12.5	2.26:12.4	renders	First expression for the surplus.
+accept	2.26:12.7	2.26:12.8	renders	Tent noun rendered as an adjective.
+accept	2.26:12.10	2.26:12.13	renders	Second expression for the surplus.
+accept	2.26:12.12,2.26:12.13	2.26:12.14	renders	Both words of the future verb.
+accept	2.26:12.14	2.26:12.15,2.26:12.16	renders	Position over the back.
+accept	2.26:13.3	2.26:13.4	renders	From the first side.
+accept	2.26:13.4	2.26:13.5	renders	First demonstrative.
+accept	2.26:13.7	2.26:13.9	renders	From the second side.
+accept	2.26:13.8	2.26:13.10	renders	Second demonstrative.
+accept	2.26:13.14	2.26:13.18	renders	Tent noun rendered as an adjective.
+accept	2.26:13.18	2.26:13.21	renders	Preposition over the sides.
+accept	2.26:13.21	2.26:13.25	renders	From the first side in the latter phrase.
+accept	2.26:13.24	2.26:13.28	renders	From the second side in the latter phrase.
+accept	2.26:13.25,2.26:13.26	2.26:13.29	renders	Demonstrative expanded as that side.
+accept	2.26:13.27	2.26:13.30	renders	Purpose prefix.
+accept	2.26:13.28,2.26:13.29	2.26:13.31	renders	Covering action and its object suffix.
+accept	2.26:14.6	2.26:14.8	renders	Ram noun rendered as an adjective.
+accept	2.26:14.7	2.26:14.9	renders	Red color expressed by the participle.
+accept	2.26:14.9	2.26:14.7	renders	First occurrence of skins.
+accept	2.26:14.12	2.26:14.14,2.26:14.15,2.26:14.16	renders	Full expression for above.
+accept	2.26:14.13	2.26:14.11	renders	Material relation expressed by the construct.
+accept	2.26:14.15	2.26:14.12	renders	Second occurrence of skins.
+accept	2.26:15.5	2.26:15.11	renders	Standing participle.
+accept	2.26:16.8	2.26:16.9,2.26:16.11	renders	Half and cubit in one word.
+accept	2.26:16.10	2.26:16.16	renders	Numeral modifying the second board occurrence.
+accept	2.26:17.1	2.26:17.3	renders	The allotment to a board rendered as location.
+accept	2.26:17.3	2.26:17.5	renders	First board occurrence.
+accept	2.26:17.6	2.26:17.8	renders	Joined participle.
+accept	2.26:17.7	2.26:17.9	renders	First member of the reciprocal phrase.
+accept	2.26:17.8	2.26:17.10	renders	Preposition within the reciprocal phrase.
+accept	2.26:17.9	2.26:17.11	renders	Second member of the reciprocal phrase.
+accept	2.26:17.13	2.26:17.14	renders	Dative ending renders the prefix.
+accept	2.26:18.8	2.26:18.11	renders	Preposition assigning the boards to the side.
+accept	2.26:18.11	2.26:18.14	renders	Direction expressed by the ending.
+accept	2.26:19.18	2.26:19.19	renders	Possessive suffix on the first tenon pair.
+accept	2.26:19.24	2.26:19.27	renders	Second board in the distributive pair.
+accept	2.26:20.6	2.26:20.8	renders	Preposition introducing the northward direction.
+accept	2.26:21.2,2.26:21.3	2.26:21.3	renders	Possessive suffix rendered as «для них».
+accept	2.26:21.17	2.26:21.19	renders	Second board in the distributive pair.
+accept	2.26:22.3	2.26:22.3	renders	Rear meaning of the backside noun.
+accept	2.26:22.6	2.26:22.6	renders	Direction expressed by the westward ending.
+accept	2.26:24.2	2.26:24.2	renders	First jussive rendered with a particle.
+accept	2.26:24.6	2.26:24.4,2.26:24.5,2.26:24.6	renders	Full expression for from below.
+accept	2.26:24.8	2.26:24.9	renders	Second jussive rendered with a particle.
+accept	2.26:24.11	2.26:24.10	renders	Second predicate of joining.
+accept	2.26:24.12	2.26:24.11	renders	Preposition at the top.
+accept	2.26:24.13,2.26:24.14	2.26:24.12	renders	Top and its possessive suffix.
+accept	2.26:24.19	2.26:24.19	renders	Third jussive rendered with a particle.
+accept	2.26:24.23	2.26:24.21	renders	Pronoun from the suffix on both.
+accept	2.26:24.24,2.26:24.25	2.26:24.26	renders	Final jussive particle and subject pronoun.
+accept	2.26:25.2	2.26:25.2	renders	Written verb of being.
+accept	2.26:25.10	2.26:25.8,2.26:25.9	renders	Compound numeral sixteen.
+accept	2.26:25.21	2.26:25.25	renders	Second board in the distributive pair.
+accept	2.26:26.11	2.26:26.9	renders	Side of the dwelling.
+accept	2.26:27.14	2.26:27.21	renders	Rear location rendered as an adjective.
+accept	2.26:27.15	2.26:27.16	renders	Side noun in the second phrase.
+accept	2.26:27.16	2.26:27.22	renders	Direction expressed by the westward ending.
+accept	2.26:28.2	2.26:28.5	renders	Middle modifier of the bar.
+accept	2.26:28.4	2.26:28.6	renders	Locative prefix within the expression for amid.
+accept	2.26:28.6,2.26:28.7	2.26:28.10	renders	Participle rendered as a two-word future.
+accept	2.26:29.9	2.26:29.12	renders	Part of the phrase expressing the receptacles’ function.
+accept	2.26:30.5	2.26:30.6	renders	Part of the compound preposition for accordance.
+accept	2.26:30.7	2.26:30.8	renders	Introduces the relative clause.
+accept	2.26:30.8	2.26:30.9	renders	Second-person recipient expressed by the passive verb.
+accept	2.26:30.10	2.26:30.10	renders	Locative prefix on the mountain phrase.
+accept	2.26:31.9	2.26:31.8	renders	Other member of the scarlet dye expression.
+accept	2.26:31.12	2.26:31.12	renders	Twisted modifier.
+accept	2.26:31.13	2.26:31.11	renders	Fine linen.
+accept	2.26:31.17	2.26:31.16	renders	Suffixed object pronoun.
+accept	2.26:32.3	2.26:32.3	renders	Suffixed object pronoun.
+accept	2.26:33.10	2.26:33.12,2.26:33.13,2.26:33.14	renders	Full expression for the inner side of the veil.
+accept	2.26:33.18	2.26:33.22	renders	Main verb of separation.
+accept	2.26:33.19	2.26:33.25	renders	Preposition with a second-person plural suffix.
+accept	2.26:33.23	2.26:33.30	renders	Second occurrence of between.
+accept	2.26:33.25	2.26:33.33	renders	Plural noun in Holy of Holies.
+accept	2.26:34.10	2.26:34.13	renders	Plural noun in Holy of Holies.
+accept	2.26:35.4	2.26:35.6,2.26:35.8	renders	Prefixes in the expression for outside the veil.
+accept	2.26:35.17	2.26:35.26	renders	Placement verb in the final clause.
+accept	2.26:36.4	2.26:36.4	renders	Inflected entrance noun conveys the purpose prefix.
+accept	2.26:36.11	2.26:36.13	renders	Other member of the scarlet dye expression.
+accept	2.26:36.14	2.26:36.16	renders	Twisted modifier.
+accept	2.26:36.15	2.26:36.15	renders	Fine linen.
+accept	2.26:37.10	2.26:37.11	renders	Suffixed object pronoun.
+accept	2.26:37.17,2.26:37.18	2.26:37.17	renders	Preposition and beneficiary suffix in one word.

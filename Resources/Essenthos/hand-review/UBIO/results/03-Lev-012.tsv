@@ -1,0 +1,61 @@
+kind	from	to	relation	reason
+ok	3.12:1			
+fixed	3.12:2			Missing links for verbs, the male child, and the menstrual comparison.
+fixed	3.12:3			The temporal genitive also renders the Hebrew preposition.
+fixed	3.12:4			Missing links for verb forms, a preposition, and time expressions.
+fixed	3.12:5			Missing links for the birth, the dual, and the purification period.
+fixed	3.12:6			Missing links for prepositions, offerings, and age.
+fixed	3.12:7			Mislinked preposition and missing pronoun, noun, and construct links.
+fixed	3.12:8			Missing links for sufficiency, offerings, pronouns, and verbs.
+refuse	3.12:7.5	3.12:7.4		The noun is rendered by «лице».
+accept	3.12:2.8	3.12:2.9	renders	Conception verb.
+accept	3.12:2.10	3.12:2.11	renders	Birth verb.
+accept	3.12:2.11	3.12:2.12	renders	The substantive denotes a male child.
+accept	3.12:2.15	3.12:2.14	renders	Auxiliary of the first uncleanness verb.
+accept	3.12:2.19	3.12:2.17	renders	Comparative prefix.
+accept	3.12:2.22	3.12:2.19	renders	Menstrual impurity.
+accept	3.12:2.23	3.12:2.20	renders	Menstruation.
+accept	3.12:2.25,3.12:2.27	3.12:2.21	renders	Auxiliary and subject of the second uncleanness verb.
+accept	3.12:3.3	3.12:3.2	renders	Temporal genitive renders the preposition.
+accept	3.12:4.2,3.12:4.4	3.12:4.7	renders	Auxiliary and infinitive render the finite verb.
+accept	3.12:4.12	3.12:4.6	renders	Days following the second numeral.
+accept	3.12:4.13	3.12:4.11	renders	Preposition governed by the verb of touching.
+accept	3.12:4.17,3.12:4.18	3.12:4.15	renders	Auxiliary and subject of the touching verb.
+accept	3.12:4.24	3.12:4.21	renders	Verb of entering.
+accept	3.12:4.27	3.12:4.23	renders	Completion of the period.
+accept	3.12:4.28	3.12:4.24	renders	Days of purification.
+accept	3.12:5.3	3.12:5.4	renders	Birth verb.
+accept	3.12:5.4,3.12:5.5,3.12:5.6	3.12:5.3	renders	The substantive denotes a female child.
+accept	3.12:5.8	3.12:5.6	renders	Auxiliary of the uncleanness verb.
+accept	3.12:5.11	3.12:5.7	renders	The dual form expresses two.
+accept	3.12:5.15,3.12:5.17	3.12:5.9	renders	Together they render menstrual impurity.
+accept	3.12:5.20	3.12:5.16	renders	Infinitive renders the action of the finite verb.
+accept	3.12:5.26	3.12:5.12	renders	Days following sixty.
+accept	3.12:5.29	3.12:5.15	renders	Days following six.
+accept	3.12:6.2	3.12:6.2	renders	Temporal prefix on the completion expression.
+accept	3.12:6.14	3.12:6.14	renders	The year supplies the age in the idiom.
+accept	3.12:6.15	3.12:6.12	renders	Young ram.
+accept	3.12:6.16	3.12:6.15	renders	Purpose prefix for the burnt offering.
+accept	3.12:6.19	3.12:6.18	renders	The offspring term supplies the sense of a young dove.
+accept	3.12:6.22	3.12:6.22	renders	Purpose prefix for the sin offering.
+accept	3.12:6.24	3.12:6.23	renders	Expresses the offering’s relation to sin.
+accept	3.12:7.2,3.12:7.4	3.12:7.2	renders	Verbal subject and suffixed object.
+accept	3.12:7.5	3.12:7.3	renders	Prefix in the expression for being before someone.
+accept	3.12:7.7	3.12:7.4	renders	Face in the expression of presence.
+accept	3.12:7.10	3.12:7.8	renders	The preposition carries the feminine suffix.
+accept	3.12:7.15	3.12:7.12	renders	Source of the blood.
+accept	3.12:7.20	3.12:7.15	renders	Expresses the instruction’s construct relation.
+accept	3.12:7.21	3.12:7.17	renders	Noun renders the birth participle.
+accept	3.12:7.22	3.12:7.18,3.12:7.20,3.12:7.22,3.12:7.24	renders	The shared genitive expresses both child complements of the birth participle.
+accept	3.12:7.25	3.12:7.24	renders	Female designation.
+accept	3.12:7.26	3.12:7.20,3.12:7.24	renders	The shared noun completes both sex designations.
+accept	3.12:8.3,3.12:8.4	3.12:8.5	renders	Hand with its possessive suffix.
+accept	3.12:8.6,3.12:8.7	3.12:8.6	renders	Affordability and its complement express sufficiency for the lamb.
+accept	3.12:8.10	3.12:8.9	renders	Verb of taking.
+accept	3.12:8.16	3.12:8.14	renders	The offspring term supplies the sense of young doves.
+accept	3.12:8.18	3.12:8.17	renders	Purpose prefix for the burnt offering.
+accept	3.12:8.21	3.12:8.20	renders	Second occurrence of «one».
+accept	3.12:8.22	3.12:8.21	renders	Purpose prefix for the sin offering.
+accept	3.12:8.24	3.12:8.22	renders	Expresses the offering’s relation to sin.
+accept	3.12:8.28	3.12:8.25	renders	The preposition carries the feminine suffix.
+accept	3.12:8.32	3.12:8.29	renders	Expresses becoming clean.

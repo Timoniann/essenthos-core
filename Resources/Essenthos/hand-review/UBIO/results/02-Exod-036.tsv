@@ -1,0 +1,193 @@
+kind	from	to	relation	reason
+fixed	2.36:1			Completed the compound adjective and added missing relative, verb, work, and preposition links.
+fixed	2.36:2			Removed an article link and restored the missing adjective, relative, verb, and object links.
+fixed	2.36:3			Restored the verb, pronouns, source preposition, repeated time expression, and gift phrase.
+fixed	2.36:4			Restored both work clauses and completed the distributive expression.
+fixed	2.36:5			Restored the comparison, work phrase, resumptive object, and past auxiliary.
+fixed	2.36:6			Completed the proclamation idiom and restored links for the prohibition and passive auxiliary.
+fixed	2.36:7			Linked the adverb expressing the surplus.
+fixed	2.36:8			Corrected the twisted-linen phrase and restored missing verb, relative, pronoun, and material links.
+fixed	2.36:9			Linked the final curtain noun and its dative relation.
+fixed	2.36:10			Restored the subject pronoun and two reciprocal numerals.
+fixed	2.36:11			Restored the subject, the full manner phrase, and the second edge phrase.
+fixed	2.36:12			Restored both subjects, the edge phrase, the ordinal, and the final reciprocal numeral.
+fixed	2.36:13			Restored the subject pronoun and the instrumental relation.
+fixed	2.36:14			Removed the article link and restored the subject, purpose preposition, compound numeral, and object.
+fixed	2.36:15			Linked the compound numeral and the dative relation.
+fixed	2.36:16			Linked the subject and both occurrences of the adverb meaning separately.
+fixed	2.36:17			Restored the subject pronoun and the first edge noun.
+fixed	2.36:18			Restored the subject and the purpose and result links.
+fixed	2.36:19			Corrected the ram-skin links and completed the dye, position, and outer-skin phrases.
+fixed	2.36:20			Restored the subject pronoun and the standing participle.
+fixed	2.36:21			Restored the unit of length, the half-cubit compound, and the numeral for the board.
+fixed	2.36:22			Restored the board phrase, final reciprocal numeral, and verb with its subject.
+fixed	2.36:23			Restored the subject pronoun and the preposition before the side.
+fixed	2.36:24			Corrected the first possessive occurrence and restored the subject and second board designator.
+fixed	2.36:25			Restored the northward side phrase and the subject pronoun.
+fixed	2.36:26			Linked the beneficiary phrase and the second board designator.
+fixed	2.36:27			Completed the rear and westward phrases and restored the subject pronoun.
+fixed	2.36:28			Corrected the tabernacle adjective and restored the subject pronoun.
+fixed	2.36:29			Restored the copula, subjects, spatial phrases, and suffix links.
+fixed	2.36:30			Restored the compound numeral, distributive repetition, and board numeral.
+fixed	2.36:31			Restored the subject pronoun and the side noun.
+fixed	2.36:32			Completed the rear and westward phrases.
+fixed	2.36:33			Restored the subject, middle-bar modifier, motion phrase, and second endpoint.
+fixed	2.36:34			Restored the two subjects and completed the housing phrase.
+fixed	2.36:35			Corrected the twisted-linen phrase and restored subject, object, and design links.
+fixed	2.36:36			Restored the subject, casting verb, and both suffixed prepositional phrases.
+fixed	2.36:37			Corrected the twisted-linen phrase and restored the subject and scarlet compound links.
+fixed	2.36:38			Restored the curtain possessive and the subject of the coating verb.
+refuse	2.36:2.23	2.36:2.28		Supplied demonstrative on a Hebrew article
+refuse	2.36:8.14	2.36:8.15		Twisting modifier linked to linen
+refuse	2.36:14.11	2.36:14.8		Contextual adjective linked to an article
+refuse	2.36:19.7	2.36:19.7		Ram adjective linked to skins
+refuse	2.36:19.10	2.36:19.9		Skins linked to the dye participle
+refuse	2.36:24.18	2.36:24.30		Possessive linked to the second occurrence
+refuse	2.36:28.7	2.36:28.6		Tabernacle adjective linked to corners
+refuse	2.36:35.13	2.36:35.13		Twisting modifier linked to linen
+refuse	2.36:37.16	2.36:37.15		Twisting modifier linked to linen
+accept	2.36:1.8	2.36:1.9	renders	Wise component of the compound
+accept	2.36:1.10	2.36:1.11,2.36:1.17,2.36:1.18	renders	Relative and resumptive recipient
+accept	2.36:1.18	2.36:1.22	renders	Infinitive of making
+accept	2.36:1.21	2.36:1.26	renders	Service noun in the construct chain
+accept	2.36:1.24	2.36:1.29	renders	Preposition introducing the command’s scope
+accept	2.36:2.9	2.36:2.13	renders	Wise component of the compound
+accept	2.36:2.11	2.36:2.15,2.36:2.20	renders	Relative with resumptive heart possessive
+accept	2.36:2.13	2.36:2.16	renders	Verb of giving
+accept	2.36:2.18	2.36:2.22,2.36:2.23	renders	Relative with resumptive object suffix
+accept	2.36:2.27	2.36:2.32	renders	Suffixed object pronoun
+accept	2.36:3.2	2.36:3.2	renders	Verb of taking
+accept	2.36:3.4	2.36:3.3	renders	Source preposition
+accept	2.36:3.18	2.36:3.22	renders	Suffixed object pronoun
+accept	2.36:3.24	2.36:3.26	renders	Pronoun carried by the preposition
+accept	2.36:3.25	2.36:3.29,2.36:3.32,2.36:3.34	renders	Completes the repeated morning expression
+accept	2.36:3.26,2.36:3.27	2.36:3.28	renders	Freewill gift rendered as a phrase
+accept	2.36:4.5,2.36:4.6	2.36:4.7	renders	Relative clause renders the participle
+accept	2.36:4.10	2.36:4.14	renders	Completes the distributive repetition
+accept	2.36:4.16	2.36:4.19	renders	Work verb in the final clause
+accept	2.36:5.7	2.36:5.11	renders	Verb of bringing
+accept	2.36:5.8	2.36:5.7	renders	Comparative quantity
+accept	2.36:5.9	2.36:5.12	renders	Comparative preposition
+accept	2.36:5.10,2.36:5.11	2.36:5.13	renders	Sufficiency predicate and supplied copula
+accept	2.36:5.12	2.36:5.16	renders	Purpose preposition before work
+accept	2.36:5.13	2.36:5.18	renders	Work specified by the relative clause
+accept	2.36:5.14	2.36:5.24	renders	Relative absorbs the resumptive object
+accept	2.36:5.17	2.36:5.20	renders	Past auxiliary with the command verb
+accept	2.36:6.4	2.36:6.5	renders	Verb component of the proclamation idiom
+accept	2.36:6.8,2.36:6.13	2.36:6.15	renders	Negative scope of the prohibition
+accept	2.36:6.10	2.36:6.13	renders	Second correlative coordinates the subjects
+accept	2.36:6.12,2.36:6.14	2.36:6.16	renders	Jussive verb and mood auxiliary
+accept	2.36:6.16	2.36:6.18	renders	Generalized object of making
+accept	2.36:6.17	2.36:6.19	renders	Purpose preposition before contribution
+accept	2.36:6.22	2.36:6.24	renders	Auxiliary of the passive verb
+accept	2.36:7.12	2.36:7.14	renders	Adverb expresses the remaining surplus
+accept	2.36:8.2	2.36:8.2	renders	First verb of making
+accept	2.36:8.4	2.36:8.4	renders	Wise component of the compound
+accept	2.36:8.5	2.36:8.6	renders	Partitive relation among the workers
+accept	2.36:8.6,2.36:8.7,2.36:8.8	2.36:8.7	renders	Relative phrase renders the participle
+accept	2.36:8.14	2.36:8.16	renders	Twisting participle
+accept	2.36:8.15	2.36:8.15	renders	Fine linen noun
+accept	2.36:8.22	2.36:8.22	renders	Completes the scarlet expression
+accept	2.36:8.26	2.36:8.27	renders	Subject of the second making verb
+accept	2.36:8.28	2.36:8.28	renders	Suffixed object pronoun
+accept	2.36:9.15	2.36:9.24,2.36:9.27	renders	Curtain noun with dative relation
+accept	2.36:10.3	2.36:10.2	renders	Subject of the first joining verb
+accept	2.36:10.8	2.36:10.9	renders	Second numeral of the first pair
+accept	2.36:10.14	2.36:10.14	renders	First numeral of the second pair
+accept	2.36:11.3	2.36:11.2	renders	Subject of the first making verb
+accept	2.36:11.15	2.36:11.16	renders	Completes the manner phrase
+accept	2.36:11.17	2.36:11.18	renders	Preposition before the second edge
+accept	2.36:11.18	2.36:11.19	renders	Second edge noun
+accept	2.36:12.4	2.36:12.3	renders	Subject of the first making verb
+accept	2.36:12.12	2.36:12.12	renders	Subject of the second making verb
+accept	2.36:12.13	2.36:12.13	renders	Preposition before the end
+accept	2.36:12.14	2.36:12.14	renders	End of the curtain
+accept	2.36:12.18	2.36:12.22	renders	Ordinal modifying the joined set
+accept	2.36:12.25	2.36:12.28	renders	Second reciprocal numeral
+accept	2.36:13.3	2.36:13.2	renders	Subject carried by the verb
+accept	2.36:13.15	2.36:13.14	renders	Instrumental case renders the prefix
+accept	2.36:14.3	2.36:14.2	renders	Subject of the first making verb
+accept	2.36:14.8	2.36:14.5	renders	Purpose preposition before tent
+accept	2.36:14.13	2.36:14.10,2.36:14.11	renders	Compound numeral eleven
+accept	2.36:14.16	2.36:14.14	renders	Demonstrative renders the anaphoric object
+accept	2.36:15.12	2.36:15.21,2.36:15.22	renders	Compound numeral eleven
+accept	2.36:15.13	2.36:15.20	renders	Dative case renders the prefix
+accept	2.36:16.3	2.36:16.2	renders	Subject carried by the verb
+accept	2.36:16.6	2.36:16.7,2.36:16.8	renders	First idiom meaning separately
+accept	2.36:16.11	2.36:16.14,2.36:16.15	renders	Second idiom meaning separately
+accept	2.36:17.3	2.36:17.2	renders	Subject of the first making verb
+accept	2.36:17.7	2.36:17.6	renders	First edge noun
+accept	2.36:18.3	2.36:18.2	renders	Subject carried by the making verb
+accept	2.36:18.7	2.36:18.6	renders	Purpose preposition before joining
+accept	2.36:18.10	2.36:18.11	renders	Purpose clause marker
+accept	2.36:18.11	2.36:18.12	renders	Verb of becoming
+accept	2.36:19.3	2.36:19.2	renders	Subject carried by the verb
+accept	2.36:19.7	2.36:19.8	renders	Ram adjective renders the genitive noun
+accept	2.36:19.8	2.36:19.9	renders	Red color carried by the dye participle
+accept	2.36:19.10	2.36:19.7	renders	First occurrence of skins
+accept	2.36:19.13	2.36:19.14,2.36:19.15,2.36:19.16	renders	Compound spatial expression from above
+accept	2.36:19.16	2.36:19.12	renders	Second occurrence of skins
+accept	2.36:20.3	2.36:20.2	renders	Subject carried by the verb
+accept	2.36:20.6	2.36:20.11	renders	Standing participle
+accept	2.36:21.2	2.36:21.2	renders	Cubits in the length measurement
+accept	2.36:21.8	2.36:21.9,2.36:21.11	renders	Half and cubit in one word
+accept	2.36:21.10	2.36:21.16	renders	Numeral modifying the second board noun
+accept	2.36:22.1	2.36:22.3	renders	Relation of the tenons to the board
+accept	2.36:22.3	2.36:22.5	renders	Board bearing the two tenons
+accept	2.36:22.9	2.36:22.11	renders	Second reciprocal numeral
+accept	2.36:22.11,2.36:22.12	2.36:22.13	renders	Making verb and its subject
+accept	2.36:23.3	2.36:23.2	renders	Subject carried by the verb
+accept	2.36:23.9	2.36:23.11	renders	Preposition before the south side
+accept	2.36:24.6	2.36:24.5	renders	Subject carried by the verb
+accept	2.36:24.18	2.36:24.19	renders	Possessive on the first tenon noun
+accept	2.36:24.24	2.36:24.27	renders	Second board in the distributive pair
+accept	2.36:25.6	2.36:25.8	renders	Directional preposition toward the north side
+accept	2.36:25.7	2.36:25.9	renders	Side noun in the northward phrase
+accept	2.36:25.10	2.36:25.11	renders	Subject carried by the verb
+accept	2.36:26.2,2.36:26.3	2.36:26.3	renders	Beneficiary phrase renders the possessive suffix
+accept	2.36:26.17	2.36:26.19	renders	Second board in the distributive pair
+accept	2.36:27.3	2.36:27.3	renders	Rear meaning of the side noun
+accept	2.36:27.6	2.36:27.6	renders	Directional ending in the westward expression
+accept	2.36:27.9	2.36:27.7	renders	Subject carried by the verb
+accept	2.36:28.5	2.36:28.4	renders	Subject carried by the verb
+accept	2.36:28.7	2.36:28.8	renders	Adjective renders the tabernacle noun
+accept	2.36:29.3	2.36:29.2	renders	Subject of the first copula
+accept	2.36:29.5	2.36:29.4,2.36:29.5,2.36:29.6	renders	Compound spatial expression from below
+accept	2.36:29.8,2.36:29.9	2.36:29.9	renders	Second copula and its subject
+accept	2.36:29.11	2.36:29.11	renders	Preposition before the top
+accept	2.36:29.12,2.36:29.13	2.36:29.12	renders	Top noun and its possessive suffix
+accept	2.36:29.19	2.36:29.19	renders	Subject of the making verb
+accept	2.36:29.21	2.36:29.21	renders	Pronoun carried by the numeral suffix
+accept	2.36:30.10	2.36:30.8,2.36:30.9	renders	Compound numeral sixteen
+accept	2.36:30.12,2.36:30.13	2.36:30.13	renders	Repeated numeral expresses distribution
+accept	2.36:30.14	2.36:30.14	renders	Repeated noun in the distributive phrase
+accept	2.36:30.16	2.36:30.19	renders	Numeral modifying the board
+accept	2.36:31.3	2.36:31.2	renders	Subject carried by the verb
+accept	2.36:31.12	2.36:31.9	renders	Side noun in the construct chain
+accept	2.36:32.14	2.36:32.20	renders	Rear meaning of the side noun
+accept	2.36:32.16	2.36:32.21	renders	Directional ending in the westward expression
+accept	2.36:33.3	2.36:33.2	renders	Subject carried by the making verb
+accept	2.36:33.4	2.36:33.7	renders	Middle modifier of the bar
+accept	2.36:33.7	2.36:33.9	renders	Verb of passing the bar through
+accept	2.36:33.8	2.36:33.10	renders	Preposition before the middle
+accept	2.36:33.9	2.36:33.11	renders	Middle of the boards
+accept	2.36:33.14	2.36:33.19	renders	Second endpoint
+accept	2.36:34.4	2.36:34.5	renders	Subject of the first coating verb
+accept	2.36:34.10	2.36:34.12	renders	Completes the phrase expressing housing function
+accept	2.36:34.20	2.36:34.17	renders	Subject of the second coating verb
+accept	2.36:35.3	2.36:35.2	renders	Subject of the first making verb
+accept	2.36:35.10	2.36:35.10	renders	Completes the scarlet expression
+accept	2.36:35.13	2.36:35.14	renders	Twisting participle
+accept	2.36:35.14	2.36:35.13	renders	Fine linen noun
+accept	2.36:35.18	2.36:35.18	renders	Suffixed object pronoun
+accept	2.36:35.19	2.36:35.19	renders	Preposition expresses the cherub design specification
+accept	2.36:36.2	2.36:36.2	renders	Subject of the making verb
+accept	2.36:36.4,2.36:36.5	2.36:36.3	renders	First preposition and its pronominal suffix
+accept	2.36:36.17	2.36:36.13	renders	Verb of casting
+accept	2.36:36.18,2.36:36.19	2.36:36.14	renders	Second preposition and its pronominal suffix
+accept	2.36:37.3	2.36:37.2	renders	Subject carried by the verb
+accept	2.36:37.13	2.36:37.12	renders	Completes the scarlet expression
+accept	2.36:37.16	2.36:37.16	renders	Twisting participle
+accept	2.36:37.17	2.36:37.15	renders	Fine linen noun
+accept	2.36:38.3	2.36:38.3	renders	Possessive suffix on the pillars
+accept	2.36:38.10	2.36:38.9	renders	Subject of the coating verb

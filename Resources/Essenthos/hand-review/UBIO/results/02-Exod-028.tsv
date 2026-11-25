@@ -1,0 +1,243 @@
+kind	from	to	relation	reason
+fixed	2.28:1			Restored prepositional phrases and the priesthood clause.
+fixed	2.28:2			Restored the shared purpose preposition.
+fixed	2.28:3			Restored missing verbs, pronouns, and purpose links.
+fixed	2.28:4			Removed an article link and restored garment and priesthood links.
+fixed	2.28:5			Completed the two-word scarlet dye expression.
+fixed	2.28:6			Corrected the linen link and completed the scarlet dye expression.
+fixed	2.28:7			Restored the copula, possessives, and passive auxiliary.
+fixed	2.28:8			Corrected the twist link and restored comparison and suffix links.
+fixed	2.28:9			Completed the conjunction and the suffixed preposition.
+fixed	2.28:10			Restored the word for those remaining.
+fixed	2.28:11			Restored the suffixed object pronoun.
+fixed	2.28:12			Restored the auxiliary and two prepositional phrases.
+fixed	2.28:13			Linked the preposition expressing the material construct.
+fixed	2.28:14			Restored the making, cordwork, and attachment links.
+fixed	2.28:15			Corrected the linen link and restored comparison and object links.
+fixed	2.28:16			Moved the mood particle to the copula and completed the folding expression.
+fixed	2.28:17			Corrected the stone adjective and restored the preposition and ordinal.
+ok	2.28:18			
+ok	2.28:19			
+fixed	2.28:20			Restored the final gem, copula, and setting preposition.
+fixed	2.28:21			Completed both compound numbers and restored the repeated clause links.
+fixed	2.28:22			Distinguished the twisted chains from the cordwork.
+ok	2.28:23			
+ok	2.28:24			
+fixed	2.28:25			Restored the attachment preposition and completed the front expression.
+fixed	2.28:26			Restored the object pronoun, edge phrase, and inward direction.
+fixed	2.28:27			Restored the object pronoun and compound location phrases.
+fixed	2.28:28			Restored the instrumental, purpose, and compound preposition links.
+fixed	2.28:29			Corrected the continuity and face links and restored clause forms.
+fixed	2.28:30			Corrected both face phrases and restored the entry and verb forms.
+fixed	2.28:31			Completed the robe expression and its construct relation.
+fixed	2.28:32			Restored the opening, rim, comparison, and grammatical forms.
+fixed	2.28:33			Restored the making, hem suffixes, and placement links.
+fixed	2.28:34			Completed the first pomegranate expression.
+fixed	2.28:35			Restored the verb forms and temporal phrases and corrected the face phrase.
+fixed	2.28:36			Restored the material, engraving surface, and manner links.
+fixed	2.28:37			Restored the pronouns, mood particles, and front preposition.
+fixed	2.28:38			Restored the verb forms and beneficiaries and corrected the face phrase.
+fixed	2.28:39			Linked the material preposition in the turban construct.
+fixed	2.28:40			Restored the beneficiaries, headgear expression, and shared purpose preposition.
+fixed	2.28:41			Restored pronouns, the ordination idiom, and priesthood forms.
+fixed	2.28:42			Restored the opening verb, flesh adjective, and grammatical forms.
+fixed	2.28:43			Restored temporal phrases, shared negation, and beneficiaries. The descendants form has an anomalous case ending.
+refuse	2.28:1.21	2.28:1.17		Recipient preposition belongs to suffixed lamed.
+refuse	2.28:3.23	2.28:3.20		Recipient preposition belongs to suffixed lamed.
+refuse	2.28:4.3	2.28:4.3		Hebrew article has no counterpart.
+refuse	2.28:6.13	2.28:6.14		Linen is the preceding noun.
+refuse	2.28:8.25	2.28:8.18		Twisting is the following participle.
+refuse	2.28:15.21	2.28:15.20		Linen is the preceding noun.
+refuse	2.28:16.2	2.28:16.1		Mood particle belongs to the copula.
+refuse	2.28:17.5	2.28:17.4		Stone adjective renders the dependent noun.
+refuse	2.28:22.7	2.28:22.7		Braiding modifies workmanship in the rope construct.
+refuse	2.28:29.20	2.28:29.20		Continuity renders the final adverb.
+refuse	2.28:29.22	2.28:29.22		The face noun is rendered separately.
+refuse	2.28:30.18	2.28:30.22		The first face noun is rendered separately.
+refuse	2.28:30.32	2.28:30.34		The second face noun is rendered separately.
+refuse	2.28:35.20	2.28:35.16		The face noun is rendered separately.
+refuse	2.28:38.37	2.28:38.30		The face noun is rendered separately.
+accept	2.28:1.4,2.28:1.5	2.28:1.4	renders	Preposition and reflexive render suffixed preposition.
+accept	2.28:1.12,2.28:1.13	2.28:1.11	renders	Preposition and pronoun render suffixed accompaniment.
+accept	2.28:1.14	2.28:1.12	renders	Compound preposition includes the source prefix.
+accept	2.28:1.17	2.28:1.16	renders	Purpose conjunction renders infinitival lamed.
+accept	2.28:1.18,2.28:1.19,2.28:1.20	2.28:1.17	renders	Subject, copula, and noun render priestly service.
+accept	2.28:1.21	2.28:1.18	renders	Recipient preposition in suffixed lamed.
+accept	2.28:2.9	2.28:2.8,2.28:2.11	renders	One purpose preposition governs both coordinated nouns.
+accept	2.28:3.3	2.28:3.3	renders	Verb of speaking.
+accept	2.28:3.4	2.28:3.4	renders	Dative expresses the addressee preposition.
+accept	2.28:3.5	2.28:3.6	renders	Compound adjective includes the wise component.
+accept	2.28:3.7,2.28:3.9	2.28:3.9	renders	Subject ending and collective object suffix.
+accept	2.28:3.13	2.28:3.13	renders	Subject pronoun renders the plural verb ending.
+accept	2.28:3.18,2.28:3.19	2.28:3.18	renders	Consecration infinitive and its object suffix.
+accept	2.28:3.20	2.28:3.19	renders	Purpose conjunction renders infinitival lamed.
+accept	2.28:3.21,2.28:3.22	2.28:3.20	renders	Copula and noun render priestly service.
+accept	2.28:3.23,2.28:3.24	2.28:3.21	renders	Recipient preposition and first-person suffix.
+accept	2.28:4.13	2.28:4.11	renders	Noun completes the phrase for the robe.
+accept	2.28:4.21	2.28:4.19	renders	Second making verb despite the person shift.
+accept	2.28:4.32	2.28:4.28	renders	Purpose conjunction renders infinitival lamed.
+accept	2.28:4.33,2.28:4.34,2.28:4.35	2.28:4.29	renders	Subject, copula, and noun render priestly service.
+accept	2.28:4.36,2.28:4.37	2.28:4.30	renders	Recipient preposition and first-person suffix.
+accept	2.28:5.10	2.28:5.19	renders	Second component of the scarlet dye name.
+accept	2.28:6.10	2.28:6.10	renders	First component of the scarlet dye name.
+accept	2.28:6.13	2.28:6.13	renders	Linen noun.
+accept	2.28:7.4	2.28:7.4	renders	Written copula.
+accept	2.28:7.5,2.28:7.6	2.28:7.5	renders	Possessive construction renders suffixed lamed.
+accept	2.28:7.9,2.28:7.10	2.28:7.8	renders	Ends and the possessive suffix.
+accept	2.28:7.12,2.28:7.13	2.28:7.10	renders	Passive auxiliary and subject of the verb.
+accept	2.28:8.4,2.28:8.5	2.28:8.3	renders	Ephod noun and its possessive suffix.
+accept	2.28:8.7,2.28:8.8	2.28:8.5	renders	Preposition and its pronominal suffix.
+accept	2.28:8.9,2.28:8.10	2.28:8.6	renders	The same-workmanship expression conveys comparison.
+accept	2.28:8.11	2.28:8.7	renders	Workmanship noun.
+accept	2.28:8.12	2.28:8.9	renders	Mood particle belongs to the copula.
+accept	2.28:8.15	2.28:8.8	renders	Pronoun renders the suffix on the source preposition.
+accept	2.28:8.22	2.28:8.15	renders	First component of the scarlet dye name.
+accept	2.28:8.25	2.28:8.19	renders	Twisted participle.
+accept	2.28:8.26	2.28:8.18	renders	Linen noun.
+accept	2.28:9.7	2.28:9.7	renders	Second part of the conjunction та й.
+accept	2.28:9.9,2.28:9.10	2.28:9.9	renders	Preposition and its plural suffix.
+accept	2.28:10.11	2.28:10.15	renders	Participle meaning remaining.
+accept	2.28:11.18	2.28:11.19	renders	Suffixed direct object pronoun.
+accept	2.28:12.14	2.28:12.17	renders	Future auxiliary of the carrying verb.
+accept	2.28:12.19	2.28:12.21	renders	Prepositional component of the face expression.
+accept	2.28:12.20	2.28:12.23	renders	Божим renders YHWH here.
+accept	2.28:12.21	2.28:12.22	renders	Face noun.
+accept	2.28:12.26	2.28:12.27	renders	Purpose preposition of remembrance.
+accept	2.28:13.4	2.28:13.3	renders	Preposition expresses the settings' material construct.
+accept	2.28:14.4	2.28:14.3	renders	Preposition expresses the chains' material construct.
+accept	2.28:14.8	2.28:14.7	renders	Making verb.
+accept	2.28:14.9	2.28:14.8	renders	Suffixed direct object pronoun.
+accept	2.28:14.11	2.28:14.10	renders	Cord noun in the workmanship construct.
+accept	2.28:14.13	2.28:14.12	renders	Verb of placing the chains.
+accept	2.28:14.15	2.28:14.16	renders	Adjective renders the cord noun in construct.
+accept	2.28:14.17	2.28:14.17	renders	Preposition marking attachment to the settings.
+accept	2.28:15.7	2.28:15.7	renders	Comparison prefix.
+accept	2.28:15.18	2.28:15.16	renders	First component of the scarlet dye name.
+accept	2.28:15.21	2.28:15.19	renders	Linen noun.
+accept	2.28:15.24	2.28:15.22	renders	Suffixed direct object pronoun.
+accept	2.28:16.2,2.28:16.4	2.28:16.2	renders	Mood particle and subject of the written copula.
+accept	2.28:16.5	2.28:16.3	renders	Participle completes the folded-double expression.
+accept	2.28:17.3,2.28:17.4	2.28:17.3	renders	Locative preposition and its suffix.
+accept	2.28:17.5	2.28:17.5	renders	Stone adjective renders the construct's dependent noun.
+accept	2.28:17.16	2.28:17.17	renders	Hebrew one designates the first row.
+accept	2.28:20.8	2.28:20.10	renders	Final gemstone of the fourth row.
+accept	2.28:20.9,2.28:20.10	2.28:20.13	renders	Subject pronoun and written copula.
+accept	2.28:20.12	2.28:20.12	renders	Preposition expresses where the stones are set.
+accept	2.28:21.3,2.28:21.4	2.28:21.4	renders	Mood particle and first copula.
+accept	2.28:21.5	2.28:21.5	renders	First occurrence of the name preposition.
+accept	2.28:21.7	2.28:21.10	renders	Completes the first compound twelve.
+accept	2.28:21.10	2.28:21.11	renders	Second occurrence of the name preposition.
+accept	2.28:21.16	2.28:21.16	renders	Third occurrence of the name preposition.
+accept	2.28:21.19	2.28:21.18	renders	Mood particle for the second copula.
+accept	2.28:21.22	2.28:21.20,2.28:21.21	renders	Second compound twelve.
+accept	2.28:21.23	2.28:21.22	renders	Tribe noun.
+accept	2.28:22.5	2.28:22.7	renders	Twisted describes the chains.
+accept	2.28:22.7	2.28:22.9	renders	Braided renders cordwork in the workmanship construct.
+accept	2.28:25.7	2.28:25.9	renders	Preposition marking attachment to the settings.
+accept	2.28:25.15	2.28:25.19,2.28:25.20	renders	Adverb also renders the compound front preposition.
+accept	2.28:26.8	2.28:26.8	renders	Suffixed direct object pronoun.
+accept	2.28:26.14,2.28:26.15	2.28:26.15	renders	Edge noun and possessive suffix.
+accept	2.28:26.20	2.28:26.21	renders	Directional form means inward.
+accept	2.28:27.7	2.28:27.6	renders	Second part of the conjunction та й.
+accept	2.28:27.9	2.28:27.8	renders	Suffixed direct object pronoun.
+accept	2.28:27.14	2.28:27.14,2.28:27.15,2.28:27.16	renders	Adverb renders the compound expression for below.
+accept	2.28:27.15	2.28:27.17,2.28:27.19	renders	Adverb also carries the prefix and face noun.
+accept	2.28:27.16	2.28:27.19	renders	Possessive renders the face noun suffix.
+accept	2.28:27.17	2.28:27.20,2.28:27.21	renders	Compound preposition locates the junction.
+accept	2.28:27.18,2.28:27.19	2.28:27.22	renders	Junction noun and its possessive suffix.
+accept	2.28:27.20	2.28:27.23,2.28:27.24,2.28:27.25	renders	Preposition renders the compound expression for above.
+accept	2.28:28.11	2.28:28.12	renders	Instrumental case renders the prefix on cord.
+accept	2.28:28.12	2.28:28.15	renders	Purpose conjunction renders infinitival lamed.
+accept	2.28:28.13	2.28:28.16	renders	Copula renders the Hebrew infinitive.
+accept	2.28:28.14	2.28:28.17	renders	Preposition locating the breastpiece on the girdle.
+accept	2.28:28.20	2.28:28.23	renders	Future auxiliary of the displacement verb.
+accept	2.28:28.23	2.28:28.26,2.28:28.27	renders	Compound preposition renders both Hebrew parts.
+accept	2.28:29.2	2.28:29.2	renders	Future auxiliary of the carrying verb.
+accept	2.28:29.9	2.28:29.11	renders	Adjective renders the dependent judgment noun.
+accept	2.28:29.14	2.28:29.14	renders	Temporal conjunction renders beth.
+accept	2.28:29.15	2.28:29.15	renders	Future auxiliary of the entry verb.
+accept	2.28:29.19	2.28:29.19	renders	Purpose preposition of remembrance.
+accept	2.28:29.20	2.28:29.24	renders	Continuity adverb rendered as an adjective.
+accept	2.28:29.22	2.28:29.21	renders	Prepositional component of the face expression.
+accept	2.28:29.24	2.28:29.22	renders	Face noun.
+accept	2.28:30.4	2.28:30.6	renders	Adjective renders the dependent judgment noun.
+accept	2.28:30.11	2.28:30.15	renders	Subject pronoun renders the plural copula ending.
+accept	2.28:30.15	2.28:30.19	renders	Temporal beth.
+accept	2.28:30.16,2.28:30.17	2.28:30.20	renders	Entry infinitive and its subject suffix.
+accept	2.28:30.18	2.28:30.21	renders	Prepositional component of the first face expression.
+accept	2.28:30.20	2.28:30.22	renders	First face noun.
+accept	2.28:30.22	2.28:30.25	renders	Future auxiliary of the carrying verb.
+accept	2.28:30.32	2.28:30.33	renders	Prepositional component of the second face expression.
+accept	2.28:30.34	2.28:30.34	renders	Second face noun.
+accept	2.28:31.4	2.28:31.4	renders	Noun completes the phrase for the robe.
+accept	2.28:31.5	2.28:31.4	renders	Preposition expresses the robe's relation to the ephod.
+accept	2.28:32.2	2.28:32.2	renders	Mood particle for the first copula.
+accept	2.28:32.6	2.28:32.6	renders	Possessive suffix on the middle noun.
+accept	2.28:32.7,2.28:32.8	2.28:32.3	renders	Opening noun and its construct relation to the head.
+accept	2.28:32.11	2.28:32.7	renders	Rim noun.
+accept	2.28:32.12	2.28:32.9,2.28:32.10	renders	Opening noun and lamed relation expressed by the genitive.
+accept	2.28:32.13	2.28:32.8	renders	Mood particle for the second copula.
+accept	2.28:32.18	2.28:32.14	renders	Comparison prefix.
+accept	2.28:32.19	2.28:32.16	renders	Adjective renders the armor noun.
+accept	2.28:32.22	2.28:32.18	renders	Dative pronoun renders suffixed lamed.
+accept	2.28:32.24	2.28:32.20	renders	Dative subject of the translated tearing infinitive.
+accept	2.28:33.2	2.28:33.2	renders	Making verb.
+accept	2.28:33.5	2.28:33.4	renders	Possessive suffix on the first hem noun.
+accept	2.28:33.8,2.28:33.13	2.28:33.5	renders	Prepositions express the pomegranates' material construct.
+accept	2.28:33.14	2.28:33.10	renders	First component of the scarlet dye name.
+accept	2.28:33.15	2.28:33.12	renders	Second hem preposition.
+accept	2.28:33.17	2.28:33.13	renders	Possessive suffix on the second hem noun.
+accept	2.28:33.22	2.28:33.18,2.28:33.19	renders	Among renders beth plus midst.
+accept	2.28:33.23	2.28:33.19	renders	Pronoun renders the plural suffix on midst.
+accept	2.28:34.5	2.28:34.4	renders	Completes the first pomegranate expression.
+accept	2.28:35.2,2.28:35.3	2.28:35.2	renders	Mood particle and subject of the written copula.
+accept	2.28:35.10,2.28:35.11	2.28:35.8	renders	Mood particle and passive auxiliary of hearing.
+accept	2.28:35.15	2.28:35.10	renders	Temporal beth for the entry.
+accept	2.28:35.16,2.28:35.17	2.28:35.11	renders	Entry infinitive and its subject suffix.
+accept	2.28:35.20	2.28:35.15	renders	Prepositional component of the face expression.
+accept	2.28:35.22	2.28:35.16	renders	Face noun.
+accept	2.28:35.24	2.28:35.19	renders	Temporal beth for the exit.
+accept	2.28:35.27	2.28:35.21	renders	Conjunction renders the intended result of the final clause.
+accept	2.28:35.28	2.28:35.23	renders	Dative subject of the translated dying infinitive.
+accept	2.28:36.4	2.28:36.3	renders	Preposition expresses the ornament's material construct.
+accept	2.28:36.9,2.28:36.10	2.28:36.8	renders	Preposition and surface-reference suffix.
+accept	2.28:36.11	2.28:36.9	renders	Comparison expresses manner carried by the engraving noun.
+accept	2.28:37.3	2.28:37.3	renders	Suffixed direct object pronoun.
+accept	2.28:37.6	2.28:37.5	renders	Preposition expresses the cord's material construct.
+accept	2.28:37.9,2.28:37.10	2.28:37.8	renders	Mood particle and subject of the first copula.
+accept	2.28:37.14	2.28:37.12,2.28:37.13	renders	Preposition renders the compound front relation.
+accept	2.28:37.17,2.28:37.19	2.28:37.17	renders	Mood particle and subject of the second copula.
+accept	2.28:38.2,2.28:38.4	2.28:38.2	renders	Mood particle and subject of the first copula.
+accept	2.28:38.9	2.28:38.7	renders	Mood particle belongs to the carrying verb.
+accept	2.28:38.26,2.28:38.27	2.28:38.22	renders	Mood particle and subject of the second copula.
+accept	2.28:38.33	2.28:38.26	renders	Purpose preposition for favor.
+accept	2.28:38.35,2.28:38.36	2.28:38.28	renders	Beneficiary preposition and plural suffix.
+accept	2.28:38.37	2.28:38.29	renders	Prepositional component of the face expression.
+accept	2.28:38.39	2.28:38.30	renders	Face noun.
+accept	2.28:39.9	2.28:39.8	renders	Preposition expresses the turban's material construct.
+accept	2.28:40.9	2.28:40.9	renders	Beneficiary of the belts.
+accept	2.28:40.13	2.28:40.14	renders	Beneficiary of the headgear.
+accept	2.28:40.14,2.28:40.15	2.28:40.12	renders	Head covering renders one Hebrew noun.
+accept	2.28:40.16	2.28:40.15,2.28:40.18	renders	One purpose preposition governs both coordinated nouns.
+accept	2.28:41.12,2.28:41.13	2.28:41.10	renders	Preposition and pronoun render suffixed accompaniment.
+accept	2.28:41.16	2.28:41.13	renders	Suffixed object of anointing.
+accept	2.28:41.18	2.28:41.17	renders	Hand noun completes the ordination idiom.
+accept	2.28:41.19	2.28:41.17	renders	Suffix identifies those ordained in the hand-filling idiom.
+accept	2.28:41.22	2.28:41.20	renders	Suffixed object of consecrating.
+accept	2.28:41.24,2.28:41.26	2.28:41.22	renders	Copula and noun render acting as priests.
+accept	2.28:41.27	2.28:41.23	renders	Dative renders first-person suffixed lamed.
+accept	2.28:42.2	2.28:42.2	renders	Making imperative.
+accept	2.28:42.3	2.28:42.3	renders	Dative renders the beneficiary preposition and suffix.
+accept	2.28:42.9	2.28:42.8	renders	Adjective renders the flesh noun.
+accept	2.28:42.10	2.28:42.9	renders	Nakedness noun.
+accept	2.28:42.13	2.28:42.13	renders	Particle helps express the endpoint of the range.
+accept	2.28:42.16,2.28:42.18	2.28:42.15	renders	Mood particle and plural subject of the copula.
+accept	2.28:43.2,2.28:43.4	2.28:43.2	renders	Mood particle and plural subject of the copula.
+accept	2.28:43.11	2.28:43.8	renders	First temporal beth.
+accept	2.28:43.12,2.28:43.13	2.28:43.9	renders	Entry infinitive and its plural subject suffix.
+accept	2.28:43.18	2.28:43.14	renders	Second temporal beth.
+accept	2.28:43.23	2.28:43.19	renders	Purpose preposition before serving.
+accept	2.28:43.33	2.28:43.25	renders	Hebrew negation also governs the coordinated consequence.
+accept	2.28:43.38	2.28:43.32	renders	Dative renders the first beneficiary.
+accept	2.28:43.40	2.28:43.34	renders	Descendants are the second beneficiary despite the case ending.
+accept	2.28:43.43	2.28:43.36	renders	Pronoun renders the suffix on after.

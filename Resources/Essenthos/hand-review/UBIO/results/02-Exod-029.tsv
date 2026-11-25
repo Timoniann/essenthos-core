@@ -1,0 +1,114 @@
+kind	from	to	relation	reason
+fixed	2.29:1			Restored pronouns and purpose-clause links.
+fixed	2.29:2			Corrected the wheat link and restored ingredient and preparation links.
+fixed	2.29:3			Restored both object pronouns and the first basket preposition.
+fixed	2.29:4			Restored the object pronoun and instrumental prefix.
+fixed	2.29:5			Corrected the ephod adjective and restored clothing and girding links.
+fixed	2.29:6			Restored the holiness link.
+fixed	2.29:7			Restored the possessive, object pronoun, and compound conjunction links.
+fixed	2.29:8			Restored the bringing verb and compound conjunction links.
+fixed	2.29:9			Restored pronouns, prepositions, and the ordination idiom.
+fixed	2.29:10			Restored the bringing verb and directional prefix.
+fixed	2.29:11			Corrected the preposition and restored the face and entrance links.
+fixed	2.29:12			Restored the application verb and the partitive and instrumental prefixes.
+fixed	2.29:13			Restored the relative, anatomical, and locative links.
+fixed	2.29:14			Completed the outside and sin-offering expressions and linked the subject pronoun.
+fixed	2.29:15			Corrected the possessive and restored the directive particle.
+fixed	2.29:16			Completed the compound conjunction link.
+fixed	2.29:17			Restored all three preposition links.
+fixed	2.29:18			Corrected the scent adjective and restored the offering-clause links.
+ok	2.29:19			
+fixed	2.29:20			Restored the partitive and the right-ear, thumb, and toe links.
+fixed	2.29:21			Restored the sons' possessive and both occurrences of ‘with him.’
+fixed	2.29:22			Restored the relative, prepositions, right-side adjective, and subject pronoun.
+fixed	2.29:23			Corrected the preposition before ‘face’ and restored the bread and basket links.
+refuse	2.29:2.17	2.29:2.18		Wheat has its own source noun.
+refuse	2.29:5.12	2.29:5.8		Unsuffixed object marker.
+refuse	2.29:11.5	2.29:11.7		The following noun renders ‘face.’
+refuse	2.29:15.12	2.29:15.12		The possessive belongs to ‘hands.’
+refuse	2.29:18.12	2.29:18.13		The adjective renders the scent qualifier.
+refuse	2.29:23.18	2.29:23.19		The following noun renders ‘face.’
+accept	2.29:1.8	2.29:1.7	renders	Suffixed dative.
+accept	2.29:1.10	2.29:1.9	renders	Consecration verb rendered as a noun.
+accept	2.29:1.11	2.29:1.10	renders	Suffixed object pronoun.
+accept	2.29:1.12	2.29:1.11	renders	Purpose prefix.
+accept	2.29:1.13,2.29:1.14	2.29:1.12	renders	Subject and copula in the rendering of priestly service.
+accept	2.29:2.7	2.29:2.7	renders	Mixing participle.
+accept	2.29:2.8	2.29:2.8	renders	Preposition with the first oil.
+accept	2.29:2.11	2.29:2.13	renders	Unleavened quality of the wafers.
+accept	2.29:2.12	2.29:2.12	renders	Wafer noun.
+accept	2.29:2.14	2.29:2.15	renders	Instrumental case renders the prefix.
+accept	2.29:2.15,2.29:2.16	2.29:2.18	renders	Material construction and fine-flour quality.
+accept	2.29:2.17	2.29:2.19	renders	Wheat noun rendered adjectivally.
+accept	2.29:2.20	2.29:2.21	renders	Suffixed object pronoun.
+accept	2.29:3.3	2.29:3.3	renders	Object of the first verb.
+accept	2.29:3.4	2.29:3.4	renders	Preposition for placement in the basket.
+accept	2.29:3.9	2.29:3.9	renders	Object of the second verb.
+accept	2.29:4.13	2.29:4.14	renders	Suffixed object pronoun.
+accept	2.29:4.14	2.29:4.15	renders	Instrumental case renders the prefix.
+accept	2.29:5.5	2.29:5.6	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:5.12	2.29:5.17	renders	Ephod noun rendered adjectivally.
+accept	2.29:5.13	2.29:5.15	renders	Robe noun.
+accept	2.29:5.16	2.29:5.21	renders	Ephod worn as a garment.
+accept	2.29:5.22	2.29:5.28	renders	Suffixed pronoun rendered as an object.
+accept	2.29:5.24	2.29:5.29	renders	Instrumental case renders the prefix.
+accept	2.29:6.12	2.29:6.12	renders	Holiness noun.
+accept	2.29:7.7	2.29:7.10	renders	External possessive renders the suffix on ‘head.’
+accept	2.29:7.11	2.29:7.11	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:7.13	2.29:7.13	renders	Object of anointing.
+accept	2.29:8.2	2.29:8.4	renders	Verb for bringing the sons.
+accept	2.29:8.6	2.29:8.5	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:9.3	2.29:9.3	renders	Object of girding.
+accept	2.29:9.11	2.29:9.10	renders	Dative for receiving the headgear.
+accept	2.29:9.16,2.29:9.17	2.29:9.14	renders	Preposition and pronoun render the suffixed dative.
+accept	2.29:9.19	2.29:9.16	renders	Prefix introducing the perpetual statute.
+accept	2.29:9.23	2.29:9.20,2.29:9.21,2.29:9.24	renders	Ordination idiom with both occurrences of ‘hand.’
+accept	2.29:10.2	2.29:10.2	renders	Verb for bringing the bull.
+accept	2.29:10.4	2.29:10.6	renders	Directional prefix.
+accept	2.29:11.5	2.29:11.6	renders	Prepositional component of לִפְנֵי.
+accept	2.29:11.7	2.29:11.7	renders	Face noun.
+accept	2.29:11.8	2.29:11.9	renders	Locative sense of ‘entrance.’
+accept	2.29:11.10	2.29:11.9	renders	Marks the entrance's construct relation to the tent.
+accept	2.29:12.3	2.29:12.3	renders	Partitive genitive renders the prefix.
+accept	2.29:12.6	2.29:12.8	renders	Application of blood to the horns.
+accept	2.29:12.10	2.29:12.13	renders	Instrumental case renders the prefix.
+accept	2.29:13.5	2.29:13.8	renders	Relative word expands the attributive participle.
+accept	2.29:13.7	2.29:13.11	renders	Interior noun.
+accept	2.29:13.10	2.29:13.16	renders	Preposition before ‘liver.’
+accept	2.29:13.18,2.29:13.19	2.29:13.29	renders	Preposition and pronoun render the suffixed preposition.
+accept	2.29:13.21	2.29:13.30	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:13.23	2.29:13.33	renders	Locative force of the altar noun's ending.
+accept	2.29:14.13	2.29:14.16,2.29:14.18	renders	Prefixes in the compound ‘outside of’ expression.
+accept	2.29:14.15	2.29:14.22	renders	Subject of the nominal clause.
+accept	2.29:14.17	2.29:14.21	renders	Part of the expression for a sin offering.
+accept	2.29:15.6	2.29:15.9	renders	Directive force of the laying verb.
+accept	2.29:15.12	2.29:15.14	renders	Possessive suffix on ‘hands.’
+accept	2.29:16.10	2.29:16.10	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:17.5	2.29:17.6	renders	Prefix for division into pieces.
+accept	2.29:17.17	2.29:17.15	renders	Preposition for placement on the pieces.
+accept	2.29:17.21	2.29:17.18	renders	Preposition for placement on the head.
+accept	2.29:18.3	2.29:18.4	renders	Totality of the ram.
+accept	2.29:18.5	2.29:18.8	renders	Locative force of the altar noun's ending.
+accept	2.29:18.7	2.29:18.10	renders	Pronoun in the burnt-offering clause.
+accept	2.29:18.11	2.29:18.13	renders	Scent noun.
+accept	2.29:18.12	2.29:18.14	renders	Pleasant quality of the scent.
+accept	2.29:18.14	2.29:18.15	renders	Noun in the two-word rendering of ‘fire offering.’
+accept	2.29:18.17	2.29:18.18	renders	Pronoun in the fire-offering clause.
+accept	2.29:20.7	2.29:20.8	renders	Partitive genitive renders the prefix.
+accept	2.29:20.10	2.29:20.10	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:20.19	2.29:20.22	renders	Right-side adjective for the ear.
+accept	2.29:20.26	2.29:20.25	renders	Part of the expression for the thumb.
+accept	2.29:20.33	2.29:20.31	renders	Part of the expression for the great toe.
+accept	2.29:20.34,2.29:20.36	2.29:20.32	renders	Foot noun and its possessive suffix.
+accept	2.29:21.13	2.29:21.15	renders	Part of the compound conjunction ‘та й.’
+accept	2.29:21.28,2.29:21.29	2.29:21.28	renders	Sons and possessive in the sprinkling clause.
+accept	2.29:21.30,2.29:21.31	2.29:21.29	renders	First suffixed ‘with him.’
+accept	2.29:21.44,2.29:21.45	2.29:21.40	renders	Second suffixed ‘with him.’
+accept	2.29:22.11	2.29:22.16	renders	Relative word expands the attributive participle.
+accept	2.29:22.16	2.29:22.22	renders	Renders the appendage's construct relation to the liver.
+accept	2.29:22.24	2.29:22.35	renders	Prepositional component of ‘on them.’
+accept	2.29:22.27	2.29:22.40	renders	Right-side qualifier of the thigh.
+accept	2.29:22.30	2.29:22.44	renders	Subject of the nominal clause.
+accept	2.29:23.7	2.29:23.7	renders	Bread noun rendered adjectivally.
+accept	2.29:23.15	2.29:23.14	renders	Marks the basket's construct relation to its contents.
+accept	2.29:23.18	2.29:23.18	renders	Prepositional component of לִפְנֵי.

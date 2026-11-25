@@ -1,0 +1,151 @@
+kind	from	to	relation	reason
+fixed	2.37:1			Missing material preposition.
+fixed	2.37:2			Missing verb, pronoun, and spatial links.
+fixed	2.37:3			Missing verb, pronouns, and prepositions.
+fixed	2.37:4			Missing subject, object, and material links.
+fixed	2.37:5			Missing subject and location preposition.
+fixed	2.37:6			Missing material and possessive links.
+fixed	2.37:7			Missing workmanship, object, and source links.
+fixed	2.37:8			Incomplete spatial expressions.
+unsure	2.37:9			Unclear whether the inclination requires a link.
+fixed	2.37:10			Missing subject and material links.
+fixed	2.37:11			Missing object and beneficiary links.
+fixed	2.37:12			Missing subject, beneficiary, and measure links.
+fixed	2.37:13			Missing casting, material, and location links.
+fixed	2.37:14			Missing proximity and housing links.
+fixed	2.37:15			Missing subject, object, and material links.
+fixed	2.37:16			Missing vessel and pouring links.
+fixed	2.37:17			Cup possessive linked to the knobs.
+fixed	2.37:18			Missing branch, source, and possessive links.
+fixed	2.37:19			Missing branch, preposition, and relative links.
+fixed	2.37:20			Missing shaft and flower possessive links.
+fixed	2.37:21			Missing source and relative links. Pair labels are supplied.
+fixed	2.37:22			Missing branch, verb, and pronoun links.
+fixed	2.37:23			Incomplete links for lamps, tools, and material.
+fixed	2.37:24			Missing material and pronoun links.
+fixed	2.37:25			Missing subject, material, and source pronoun.
+fixed	2.37:26			Missing subject, object, and wall links.
+unsure	2.37:27			Purpose preposition corrected. Hebrew repeats the side phrase.
+fixed	2.37:28			Missing material and object links.
+fixed	2.37:29			Missing subject and oil links.
+refuse	2.37:17.20	2.37:17.17		Possessive belongs to the cups.
+refuse	2.37:27.15	2.37:27.14		This preposition marks purpose.
+accept	2.37:1.5	2.37:1.7	renders	Wood specifies the material.
+accept	2.37:2.2,2.37:2.3,2.37:2.4	2.37:2.2	renders	Coating verb with subject and object.
+accept	2.37:2.7	2.37:2.5,2.37:2.6	renders	From the inside.
+accept	2.37:2.9	2.37:2.8	renders	Missing source prefix.
+accept	2.37:2.16	2.37:2.12	renders	Pronoun carried by the suffix.
+accept	2.37:3.2,2.37:3.3	2.37:3.2	renders	Casting verb and its subject.
+accept	2.37:3.4,2.37:3.5	2.37:3.3	renders	Preposition with pronominal suffix.
+accept	2.37:3.9	2.37:3.7	renders	Location of the rings.
+accept	2.37:4.2	2.37:4.2	renders	Subject carried by the verb.
+accept	2.37:4.5	2.37:4.4	renders	Wood specifies the material.
+accept	2.37:4.10	2.37:4.8	renders	Suffixed object pronoun.
+accept	2.37:5.2	2.37:5.2	renders	Subject carried by the verb.
+accept	2.37:5.8	2.37:5.9	renders	Location on the sides.
+accept	2.37:6.4	2.37:6.4	renders	Gold specifies the material.
+accept	2.37:6.12	2.37:6.9	renders	Possessive suffix on length.
+accept	2.37:6.18	2.37:6.14	renders	Possessive suffix on width.
+accept	2.37:7.6	2.37:7.6	renders	Part of hammered workmanship.
+accept	2.37:7.9	2.37:7.8	renders	Suffixed object pronoun.
+accept	2.37:7.10	2.37:7.9	renders	Source at the two ends.
+accept	2.37:8.5	2.37:8.3	renders	Source at the first end.
+accept	2.37:8.7	2.37:8.5,2.37:8.6	renders	First spatial demonstrative with prefix.
+accept	2.37:8.11	2.37:8.10	renders	Source at the second end.
+accept	2.37:8.13	2.37:8.13	renders	Second spatial demonstrative.
+accept	2.37:8.20	2.37:8.21	renders	Spatial relation at both ends.
+accept	2.37:9.2	2.37:9.2	renders	First written verb of being.
+accept	2.37:9.5	2.37:9.5	renders	Introduces the spread-wing state.
+accept	2.37:9.7	2.37:9.7,2.37:9.8	renders	Upward direction expressed together.
+accept	2.37:9.12	2.37:9.10	renders	Instrumental ending renders the prefix.
+accept	2.37:9.16,2.37:9.17	2.37:9.16	renders	Faces with possessive suffix.
+accept	2.37:9.18	2.37:9.17	renders	First member of reciprocal expression.
+accept	2.37:9.23	2.37:9.23	renders	Second written verb of being.
+accept	2.37:10.3	2.37:10.2	renders	Subject carried by the verb.
+accept	2.37:10.5	2.37:10.6	renders	Wood specifies the material.
+accept	2.37:11.3	2.37:11.3	renders	Suffixed object pronoun.
+accept	2.37:11.10,2.37:11.11	2.37:11.8	renders	Preposition with pronominal suffix.
+accept	2.37:12.4	2.37:12.2	renders	Subject of first making verb.
+accept	2.37:12.5,2.37:12.6	2.37:12.3	renders	Preposition with pronominal suffix.
+accept	2.37:12.7	2.37:12.5	renders	Introduces the stated measure.
+accept	2.37:13.2,2.37:13.3	2.37:13.2	renders	Casting verb and its subject.
+accept	2.37:13.4,2.37:13.5	2.37:13.3	renders	Preposition with pronominal suffix.
+accept	2.37:13.8	2.37:13.5	renders	Expresses material in the construct chain.
+accept	2.37:13.11	2.37:13.7	renders	Part of the conjunction та й.
+accept	2.37:13.17	2.37:13.15	renders	Corners at the legs.
+accept	2.37:13.19	2.37:13.17	renders	Relation to the four legs.
+accept	2.37:13.20	2.37:13.19	renders	Possessive suffix on legs.
+accept	2.37:14.1	2.37:14.1,2.37:14.2	renders	Compound preposition beside.
+accept	2.37:14.6	2.37:14.8	renders	Housing for the poles.
+accept	2.37:15.3	2.37:15.2	renders	Subject carried by the verb.
+accept	2.37:15.6	2.37:15.6	renders	Wood specifies the material.
+accept	2.37:15.11	2.37:15.10	renders	Suffixed object pronoun.
+accept	2.37:16.3	2.37:16.2	renders	Subject carried by the verb.
+accept	2.37:16.15	2.37:16.17	renders	Third type of vessel.
+accept	2.37:16.18	2.37:16.21	renders	Vessels used for pouring.
+accept	2.37:16.20	2.37:16.22	renders	Relative introducing the pouring clause.
+accept	2.37:16.21	2.37:16.24	renders	Instrumental renders the suffixed preposition.
+accept	2.37:16.22	2.37:16.23	renders	Passive pouring verb.
+accept	2.37:17.3	2.37:17.2	renders	Subject of first making verb.
+accept	2.37:17.5	2.37:17.6	renders	Gold specifies the material.
+accept	2.37:17.11	2.37:17.9	renders	Subject of second making verb.
+accept	2.37:17.15	2.37:17.13	renders	Possessive suffix on the base.
+accept	2.37:17.17,2.37:17.18	2.37:17.15	renders	Stem term with possessive suffix.
+accept	2.37:17.19,2.37:17.20	2.37:17.16	renders	Cups with possessive suffix.
+accept	2.37:17.22	2.37:17.17	renders	Possessive suffix on knobs.
+accept	2.37:17.25	2.37:17.19	renders	Possessive suffix on flowers.
+accept	2.37:17.26	2.37:17.21	renders	Renders the verb in the source expression.
+accept	2.37:17.28	2.37:17.20	renders	Pronoun carried by the source preposition.
+accept	2.37:18.3	2.37:18.3	renders	The first mention of branches.
+accept	2.37:18.5	2.37:18.5	renders	Source from its sides.
+accept	2.37:18.7	2.37:18.6	renders	Possessive suffix on plural sides.
+accept	2.37:18.11	2.37:18.10	renders	Source from the first side.
+accept	2.37:18.14	2.37:18.11	renders	Possessive suffix on first side.
+accept	2.37:18.22	2.37:18.19	renders	Possessive suffix on second side.
+accept	2.37:19.5	2.37:19.8	renders	One in the first branch phrase.
+accept	2.37:19.6	2.37:19.6	renders	The first branch.
+accept	2.37:19.14	2.37:19.16	renders	Location in the other branch.
+accept	2.37:19.15	2.37:19.17	renders	The other branch.
+accept	2.37:19.16	2.37:19.18	renders	The other one in the pair.
+accept	2.37:19.21	2.37:19.23	renders	Relation to all six branches.
+accept	2.37:19.24	2.37:19.28	renders	Relative renders the attributive participle.
+accept	2.37:20.3	2.37:20.4	renders	Lampstand specified as its central shaft.
+accept	2.37:20.12	2.37:20.10	renders	Possessive suffix on flowers.
+accept	2.37:21.7	2.37:21.7	renders	Pronoun in first source expression.
+accept	2.37:21.14,2.37:21.15	2.37:21.14	renders	Second suffixed source preposition.
+accept	2.37:21.23	2.37:21.21	renders	Pronoun in third source expression.
+accept	2.37:21.24	2.37:21.22	renders	Relation to all six branches.
+accept	2.37:21.26	2.37:21.25	renders	Branches in the concluding phrase.
+accept	2.37:21.27	2.37:21.27	renders	Relative renders the attributive participle.
+accept	2.37:21.30	2.37:21.28	renders	Explicit noun renders the pronoun.
+accept	2.37:22.5	2.37:22.3	renders	Branch noun.
+accept	2.37:22.6	2.37:22.5	renders	Renders the verb in the source expression.
+accept	2.37:22.8	2.37:22.4	renders	Pronoun in the source expression.
+accept	2.37:22.10	2.37:22.6	renders	Pronoun carried by the whole expression.
+accept	2.37:23.3	2.37:23.2	renders	Subject carried by the verb.
+accept	2.37:23.6,2.37:23.7	2.37:23.4	renders	Renders the lamps' possessive suffix.
+accept	2.37:23.10	2.37:23.7	renders	Snuffers.
+accept	2.37:23.12,2.37:23.13,2.37:23.14	2.37:23.9	renders	Coal-pan expression with its possessive.
+accept	2.37:23.16	2.37:23.10	renders	Gold specifies the material.
+accept	2.37:24.1	2.37:24.1	renders	Talent expresses the amount of material.
+accept	2.37:24.6	2.37:24.4	renders	Subject carried by the verb.
+accept	2.37:24.7	2.37:24.5	renders	Suffixed object pronoun.
+accept	2.37:24.10	2.37:24.9	renders	Possessive suffix on implements.
+accept	2.37:25.3	2.37:25.2	renders	Subject carried by the verb.
+accept	2.37:25.6	2.37:25.7	renders	Wood specifies the material.
+accept	2.37:25.23	2.37:25.18	renders	Pronoun carried by the source preposition.
+accept	2.37:26.3	2.37:26.2	renders	Subject carried by the verb.
+accept	2.37:26.4	2.37:26.3	renders	Suffixed object pronoun.
+accept	2.37:26.10,2.37:26.11	2.37:26.10	renders	Walls with possessive suffix.
+accept	2.37:27.6	2.37:27.6	renders	Dative renders the suffixed preposition.
+accept	2.37:27.7	2.37:27.7,2.37:27.9	renders	Additional elements of the preposition beneath.
+accept	2.37:27.10	2.37:27.5	renders	Restates the same making action.
+accept	2.37:27.11	2.37:27.11	renders	Location in the first side phrase.
+accept	2.37:27.13,2.37:27.14	2.37:27.13	renders	Sides and suffix in the first phrase.
+accept	2.37:27.15	2.37:27.17	renders	Purpose of the housings.
+accept	2.37:27.20	2.37:27.24	renders	Instrumental renders the suffixed preposition.
+accept	2.37:27.22	2.37:27.23	renders	Suffixed object pronoun.
+accept	2.37:28.4	2.37:28.6	renders	Wood specifies the material.
+accept	2.37:28.10	2.37:28.10	renders	Suffixed object pronoun.
+accept	2.37:29.3	2.37:29.2	renders	Subject carried by the verb.
+accept	2.37:29.4	2.37:29.4	renders	Anointing oil.

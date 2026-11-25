@@ -1,0 +1,266 @@
+kind	from	to	relation	reason
+fixed	2.17:1			Missing prepositions and existential verb.
+fixed	2.17:2			Missing pronouns and second question word.
+fixed	2.17:3			Missing verbs, pronouns, and thirst expression.
+fixed	2.17:4			Missing verb, demonstrative, dative, and pronoun links.
+fixed	2.17:5			Missing partitive, pronoun, and verb links.
+fixed	2.17:6			Missing pronouns, verbs, and prepositions.
+fixed	2.17:7			Missing causal, interrogative, and locative links.
+ok	2.17:8			
+fixed	2.17:9			Missing dative, preposition, verb, hill, and copula links.
+fixed	2.17:10			Missing comparison, recipient, and ascent links.
+fixed	2.17:11			Missing opening verb, temporal conjunctions, and lowering verb.
+fixed	2.17:12			Wrong side link and missing pronouns, verbs, and prepositions.
+fixed	2.17:13			Missing defeat verb and instrumental relation.
+fixed	2.17:14			Missing memorial, speech, emphasis, and preposition links.
+fixed	2.17:15			Missing possessive suffix and first half of altar name.
+unsure	2.17:16			Banner differs from the BHSA throne reading.
+fixed	2.18:1			Missing past auxiliary and source preposition.
+ok	2.18:2			
+fixed	2.18:3			Missing past auxiliary and verb of becoming.
+fixed	2.18:4			Missing second name formula, predicate, and object suffix links.
+fixed	2.18:5			Missing arrival, kinship, and locative links.
+fixed	2.18:6			Missing subject and suffixed preposition links.
+fixed	2.18:7			Missing reciprocal, directional, pronoun, and coordination links.
+fixed	2.18:8			Missing datives, auxiliaries, and deliverance links. The recast singular subject stays unlinked.
+fixed	2.18:9			Missing cause of rejoicing in the instrumental phrase.
+fixed	2.18:10			Missing object suffix and second half of compound preposition.
+fixed	2.18:11			Missing comparative, matter, and pronoun links.
+fixed	2.18:12			Misaligned presence phrase and missing purpose marker.
+fixed	2.18:13			Missing temporal, purpose, and standing links.
+fixed	2.18:14			Missing datives, demonstrative, and parts of multiword expressions.
+fixed	2.18:15			Missing dative, arrival, direction, and purpose links.
+fixed	2.18:16			Missing possession, reciprocal, and declaration links.
+fixed	2.18:17			Missing recipient suffix and adjective stem.
+fixed	2.18:18			Missing emphasis, comparison, pronouns, and action links.
+fixed	2.18:19			Missing advice recipient, verbs, and prepositional links.
+fixed	2.18:20			Missing verbs, recipient, and relative and subject pronouns.
+fixed	2.18:21			Wrong object pronoun and incomplete officer titles.
+fixed	2.18:22			Missing verb-form, pronoun, and burden-bearing links.
+fixed	2.18:23			Missing demonstrative, command, result, and destination links.
+fixed	2.18:24			Missing subject pronoun and past auxiliary.
+fixed	2.18:25			Missing appointment links and incomplete officer titles.
+fixed	2.18:26			Missing subjects and case-marked relations.
+fixed	2.18:27			Missing dismissal verb and pronoun links.
+refuse	2.17:12.29	2.17:12.25		Side is implied by the first demonstrative.
+refuse	2.18:12.23	2.18:12.25		Face is rendered separately by обличчям.
+refuse	2.18:21.17	2.18:21.18		Suffix renders ними in над ними.
+accept	2.17:1.10	2.17:1.10	renders	Journey preposition.
+accept	2.17:1.13	2.17:1.12	renders	Preposition in the command idiom.
+accept	2.17:1.22	2.17:1.20	renders	Negative existential verb.
+accept	2.17:1.24	2.17:1.22	renders	Infinitive conveys the water's purpose.
+accept	2.17:2.8	2.17:2.8	renders	Subject of saying.
+accept	2.17:2.18	2.17:2.16	renders	Suffixed recipient.
+accept	2.17:2.21	2.17:2.19	renders	Subject of quarreling.
+accept	2.17:2.24	2.17:2.20	renders	First-person suffix.
+accept	2.17:2.25	2.17:2.21	renders	Second interrogative.
+accept	2.17:3.3	2.17:3.2	renders	Verb form of the thirst predicate.
+accept	2.17:3.6	2.17:3.6	renders	Genitive marks the object of thirst.
+accept	2.17:3.13	2.17:3.16	renders	Speech verb.
+accept	2.17:3.16,2.17:3.17	2.17:3.19	renders	Subject and verb of bringing out.
+accept	2.17:3.22	2.17:3.23	renders	Causative killing verb.
+accept	2.17:3.23	2.17:3.33	renders	Thirst expressed as an adjective.
+accept	2.17:3.24	2.17:3.24	renders	First-person object suffix.
+accept	2.17:3.29,2.17:3.30	2.17:3.30	renders	Livestock and possessive suffix.
+accept	2.17:4.9	2.17:4.9	renders	Verb of doing.
+accept	2.17:4.10	2.17:4.14	renders	Demonstrative.
+accept	2.17:4.11	2.17:4.10	renders	Dative renders the prefix.
+accept	2.17:4.12	2.17:4.15	renders	Remaining duration.
+accept	2.17:4.15,2.17:4.17	2.17:4.18	renders	Subject and object of stoning.
+accept	2.17:5.7	2.17:5.7	renders	Prefix in the compound preposition.
+accept	2.17:5.12	2.17:5.13	renders	Suffixed companion pronoun.
+accept	2.17:5.13,2.17:5.14	2.17:5.14	renders	Partitive taking some of the elders.
+accept	2.17:5.20	2.17:5.21	renders	Suffixed instrumental preposition.
+accept	2.17:5.22,2.17:5.23	2.17:5.20	renders	Striking verb and past auxiliary.
+accept	2.17:5.30	2.17:5.28	renders	Part of the conjunction та й.
+accept	2.17:5.31	2.17:5.29	renders	Verb of going.
+accept	2.17:6.2	2.17:6.1	renders	First-person suffix on behold.
+accept	2.17:6.3	2.17:6.2	renders	Standing verb.
+accept	2.17:6.4	2.17:6.3	renders	Preposition before the face.
+accept	2.17:6.18	2.17:6.17	renders	Verb of coming out.
+accept	2.17:6.19,2.17:6.20	2.17:6.18	renders	Source preposition and suffix.
+accept	2.17:6.23,2.17:6.24	2.17:6.21	renders	Future drinking verb.
+accept	2.17:6.30	2.17:6.28	renders	Preposition in the sight idiom.
+accept	2.17:7.3	2.17:7.2	renders	Subject of naming.
+accept	2.17:7.10	2.17:7.9	renders	First causal preposition.
+accept	2.17:7.16,2.17:7.17	2.17:7.15	renders	Testing and its suffixed subject.
+accept	2.17:7.21	2.17:7.20	renders	Interrogative particle.
+accept	2.17:7.24	2.17:7.23,2.17:7.24	renders	Combined expression for in the midst.
+accept	2.17:7.25	2.17:7.24	renders	First-person plural suffix.
+accept	2.17:7.27	2.17:7.26	renders	Negative existential.
+accept	2.17:9.7	2.17:9.7	renders	Suffixed beneficiary.
+accept	2.17:9.12	2.17:9.12	renders	Preposition marking the opponent.
+accept	2.17:9.16	2.17:9.16	renders	Standing verb.
+accept	2.17:9.19	2.17:9.20	renders	Hill in the construct chain.
+accept	2.17:9.23	2.17:9.26	renders	Copula for the hand locative predicate.
+accept	2.17:10.4	2.17:10.4,2.17:10.5	renders	Compound comparison conjunction.
+accept	2.17:10.6	2.17:10.7	renders	Suffixed recipient.
+accept	2.17:10.10	2.17:10.11	renders	Preposition marking the opponent.
+accept	2.17:10.17	2.17:10.18	renders	Verb of ascent.
+accept	2.17:10.18	2.17:10.19	renders	Destination preposition supplied with the summit.
+accept	2.17:10.20	2.17:10.21	renders	Hill in the construct chain.
+accept	2.17:11.2	2.17:11.2	renders	Opening occurrence verb.
+accept	2.17:11.3	2.17:11.3,2.17:11.4	renders	First temporal conjunction.
+accept	2.17:11.12	2.17:11.12,2.17:11.13	renders	Second temporal conjunction.
+accept	2.17:11.15	2.17:11.14	renders	Lowering recast as intransitive.
+accept	2.17:12.4	2.17:12.4	renders	Copula for the heavy predicate.
+accept	2.17:12.12,2.17:12.13	2.17:12.10	renders	Under and its pronoun suffix.
+accept	2.17:12.16	2.17:12.12	renders	Subject of sitting.
+accept	2.17:12.17	2.17:12.13	renders	Preposition meaning upon.
+accept	2.17:12.23	2.17:12.18	renders	Supporting verb.
+accept	2.17:12.25	2.17:12.20	renders	Possessor suffix on hands.
+accept	2.17:12.27	2.17:12.21	renders	First side preposition.
+accept	2.17:12.28,2.17:12.29	2.17:12.22	renders	This and its implied side.
+accept	2.17:12.31	2.17:12.27	renders	Second occurrence of one.
+accept	2.17:12.32	2.17:12.25	renders	Second side preposition.
+accept	2.17:12.33	2.17:12.26	renders	Second side demonstrative.
+accept	2.17:12.35	2.17:12.29	renders	Explicit verb of being.
+accept	2.17:12.38	2.17:12.31	renders	Steadiness expressed adjectivally.
+accept	2.17:13.2	2.17:13.2	renders	Defeat verb.
+accept	2.17:13.8	2.17:13.9	renders	Instrumental renders the prefix in the idiom.
+accept	2.17:14.8	2.17:14.8	renders	Preposition expresses the memorial's purpose.
+accept	2.17:14.13	2.17:14.13	renders	Verb of putting.
+accept	2.17:14.14	2.17:14.14	renders	Preposition in the hearing idiom.
+accept	2.17:14.17	2.17:14.17	renders	Speech conjunction.
+accept	2.17:14.18	2.17:14.18	renders	Infinitive absolute emphasis.
+accept	2.17:14.23	2.17:14.24	renders	Under component of the compound preposition.
+accept	2.17:15.8	2.17:15.7	renders	Possessor suffix on name.
+accept	2.17:15.9	2.17:15.8	renders	First element of the compound altar name.
+accept	2.17:16.3	2.17:16.2	renders	Subject of speaking.
+accept	2.17:16.5	2.17:16.4	renders	Hand.
+accept	2.17:16.6	2.17:16.5	renders	Preposition meaning upon.
+accept	2.17:16.7	2.17:16.7	renders	Divine name in the first clause.
+accept	2.17:16.9	2.17:16.9,2.17:16.10	renders	Dative renders prefix and divine name.
+accept	2.17:16.11	2.17:16.11	renders	Preposition marking the opponent.
+accept	2.17:16.15	2.17:16.15	renders	Preposition expresses the second generation's temporal role.
+accept	2.18:1.11	2.18:1.11	renders	Past auxiliary with the doing verb.
+accept	2.18:1.24	2.18:1.24	renders	Source preposition.
+accept	2.18:3.11	2.18:3.11	renders	Past auxiliary with the speech verb.
+accept	2.18:3.13	2.18:3.13	renders	Verb of becoming.
+accept	2.18:4.3	2.18:4.4	renders	One in the second name formula.
+accept	2.18:4.9,2.18:4.10	2.18:4.10	renders	Supplied copula and first-person suffix.
+accept	2.18:4.11	2.18:4.9	renders	Predicative instrumental renders the prefix.
+accept	2.18:4.14	2.18:4.12	renders	Object suffix of deliverance.
+accept	2.18:5.2	2.18:5.2	renders	Arrival verb.
+accept	2.18:5.4	2.18:5.4	renders	Father-in-law.
+accept	2.18:5.14	2.18:5.12	renders	Direction toward the wilderness.
+accept	2.18:5.20	2.18:5.19	renders	Preposition expresses the mountain's locative role.
+accept	2.18:6.3	2.18:6.2	renders	Subject of saying.
+accept	2.18:6.11,2.18:6.12	2.18:6.9	renders	Direction and second-person suffix.
+accept	2.18:6.21	2.18:6.15	renders	Feminine companion suffix.
+accept	2.18:7.4	2.18:7.4	renders	Prefix in the meeting expression.
+accept	2.18:7.8	2.18:7.7	renders	Part of the conjunction та й.
+accept	2.18:7.10,2.18:7.11	2.18:7.8	renders	Phrase expresses the bowing down.
+accept	2.18:7.14	2.18:7.11	renders	Suffixed recipient of the kiss.
+accept	2.18:7.17	2.18:7.13	renders	Subject of asking.
+accept	2.18:7.18	2.18:7.14	renders	First half of the reciprocal.
+accept	2.18:7.19	2.18:7.16	renders	Second half of the reciprocal.
+accept	2.18:7.20	2.18:7.17	renders	Preposition marks the topic of inquiry.
+accept	2.18:7.24	2.18:7.22	renders	Renders the directional suffix on tent.
+accept	2.18:8.5	2.18:8.4	renders	Dative marks the addressee.
+accept	2.18:8.10	2.18:8.9	renders	Past auxiliary with the doing verb.
+accept	2.18:8.12	2.18:8.11	renders	Dative renders Pharaoh's prefix.
+accept	2.18:8.14	2.18:8.14	renders	Dative renders Egypt's prefix.
+accept	2.18:8.15	2.18:8.16,2.18:8.17	renders	Compound causal preposition.
+accept	2.18:8.20	2.18:8.22	renders	Hardship.
+accept	2.18:8.23,2.18:8.24	2.18:8.24	renders	Encounter verb and past auxiliary.
+accept	2.18:8.25	2.18:8.25	renders	Preposition of travel along the road.
+accept	2.18:8.29,2.18:8.30	2.18:8.29	renders	Deliverance verb and object suffix.
+accept	2.18:9.6	2.18:9.4	renders	Instrumental marks the cause of rejoicing.
+accept	2.18:10.8	2.18:10.8	renders	Second-person plural object suffix.
+accept	2.18:10.19	2.18:10.22	renders	Under component of the compound preposition.
+accept	2.18:11.7	2.18:11.6	renders	Comparative preposition.
+accept	2.18:11.14	2.18:11.13	renders	The matter expressed pronominally.
+accept	2.18:11.19	2.18:11.16	renders	Plural suffix on upon.
+accept	2.18:12.18	2.18:12.18	renders	Infinitive expresses purpose.
+accept	2.18:12.23	2.18:12.24	renders	Preposition before the face.
+accept	2.18:12.25	2.18:12.25	renders	Face in the presence expression.
+accept	2.18:13.3	2.18:13.3	renders	Prefix in the next-day expression.
+accept	2.18:13.7	2.18:13.8	renders	Infinitive expresses purpose.
+accept	2.18:13.11	2.18:13.14	renders	Standing verb.
+accept	2.18:13.12	2.18:13.17	renders	Preposition for standing around Moses.
+accept	2.18:13.16	2.18:13.22	renders	Part of the endpoint expression аж до.
+accept	2.18:14.9	2.18:14.10	renders	First dative renders the prefix.
+accept	2.18:14.11	2.18:14.13	renders	Part of the conjunction та й.
+accept	2.18:14.14	2.18:14.19	renders	Demonstrative in the question.
+accept	2.18:14.15	2.18:14.15	renders	Part of the interrogative construction що за.
+accept	2.18:14.20	2.18:14.23	renders	Second dative renders the prefix.
+accept	2.18:14.21	2.18:14.26	renders	Part of the question для чого.
+accept	2.18:14.26	2.18:14.30	renders	Part of the expression for alone.
+accept	2.18:14.31	2.18:14.36	renders	Preposition for standing around the addressee.
+accept	2.18:14.34	2.18:14.39	renders	Part of the endpoint expression аж до.
+accept	2.18:15.5	2.18:15.4	renders	Dative marks the addressee.
+accept	2.18:15.8	2.18:15.7	renders	Arrival verb.
+accept	2.18:15.9	2.18:15.8	renders	Preposition meaning to.
+accept	2.18:15.11	2.18:15.11	renders	Infinitive expresses the purpose of coming.
+accept	2.18:16.2	2.18:16.1	renders	Temporal force of the clause conjunction.
+accept	2.18:16.3	2.18:16.2,2.18:16.3	renders	Possessive verb renders be to them.
+accept	2.18:16.4	2.18:16.3	renders	Plural possessor expressed as subject.
+accept	2.18:16.8	2.18:16.6	renders	Preposition meaning to.
+accept	2.18:16.13	2.18:16.12	renders	Single between governs both parties.
+accept	2.18:16.14	2.18:16.10	renders	First party expressed pronominally.
+accept	2.18:16.16	2.18:16.13	renders	Second party expressed pronominally.
+accept	2.18:16.18	2.18:16.15	renders	Verb of making known.
+accept	2.18:17.6	2.18:17.5	renders	Recipient suffix.
+accept	2.18:17.7	2.18:17.7	renders	Adjective stem in the negated compound.
+accept	2.18:18.1	2.18:18.1	renders	Infinitive absolute emphasis.
+accept	2.18:18.3	2.18:18.3	renders	First correlative particle.
+accept	2.18:18.7	2.18:18.9	renders	People's demonstrative.
+accept	2.18:18.10	2.18:18.11	renders	Second-person companion suffix.
+accept	2.18:18.15,2.18:18.16	2.18:18.14	renders	Comparative preposition and personal suffix.
+accept	2.18:18.19	2.18:18.18	renders	Subject of being able.
+accept	2.18:18.20,2.18:18.21	2.18:18.19	renders	Doing verb and its object suffix.
+accept	2.18:18.23	2.18:18.21	renders	Part of the expression for alone.
+accept	2.18:19.4	2.18:19.4	renders	Voice rendered as word.
+accept	2.18:19.6	2.18:19.5	renders	Suffix marks the recipient of advice.
+accept	2.18:19.8	2.18:19.7	renders	Explicit verb of being.
+accept	2.18:19.10,2.18:19.11	2.18:19.9	renders	With and its companion suffix.
+accept	2.18:19.12	2.18:19.10	renders	Imperative of being rendered by stand.
+accept	2.18:19.15	2.18:19.15	renders	Preposition meaning before.
+accept	2.18:19.16	2.18:19.17	renders	God in the presence phrase.
+accept	2.18:19.18	2.18:19.19	renders	Causative verb of bringing.
+accept	2.18:19.19	2.18:19.23	renders	Cases brought before God.
+accept	2.18:20.3	2.18:20.2	renders	Warning verb.
+accept	2.18:20.12	2.18:20.13	renders	Suffixed recipient.
+accept	2.18:20.15	2.18:20.18	renders	Relative renders the resumptive preposition and suffix.
+accept	2.18:20.17	2.18:20.17	renders	Verb of going.
+accept	2.18:20.22	2.18:20.24	renders	Subject of doing.
+accept	2.18:21.9	2.18:21.11	renders	God element of the compound adjective.
+accept	2.18:21.11	2.18:21.13	renders	Trustworthiness expressed adjectivally.
+accept	2.18:21.12	2.18:21.14	renders	Relative expressing the participial construction.
+accept	2.18:21.19	2.18:21.18	renders	Plural suffix on over.
+accept	2.18:21.20	2.18:21.19,2.18:21.20	renders	Chiefs of thousands.
+accept	2.18:21.21	2.18:21.21	renders	Chief component of the hundreds title.
+accept	2.18:21.22	2.18:21.23	renders	Chief component of the fifties title.
+accept	2.18:21.24	2.18:21.26,2.18:21.27	renders	Chiefs of tens.
+accept	2.18:22.2,2.18:22.3	2.18:22.2	renders	Future auxiliary and subject of judging.
+accept	2.18:22.7	2.18:22.6	renders	Temporal genitive renders the time preposition.
+accept	2.18:22.15,2.18:22.16	2.18:22.17	renders	Direction and second-person suffix.
+accept	2.18:22.22	2.18:22.25	renders	Independent emphatic subject.
+accept	2.18:22.23	2.18:22.27	renders	Imperative of lightening.
+accept	2.18:22.24	2.18:22.29	renders	Reflexive renders the addressee suffix.
+accept	2.18:22.25	2.18:22.30	renders	Conjunction before carrying.
+accept	2.18:22.26,2.18:22.27,2.18:22.29	2.18:22.31	renders	Mood, subject, and implied load of bearing.
+accept	2.18:22.30,2.18:22.31	2.18:22.32	renders	With and its companion suffix.
+accept	2.18:23.2	2.18:23.7	renders	Subject of doing.
+accept	2.18:23.4	2.18:23.6	renders	First demonstrative.
+accept	2.18:23.8,2.18:23.9	2.18:23.9	renders	Command verb and its recipient suffix.
+accept	2.18:23.10	2.18:23.11	renders	Conjunction introducing the result.
+accept	2.18:23.12	2.18:23.12,2.18:23.13	renders	Single verb renders being able to stand.
+accept	2.18:23.18	2.18:23.23	renders	Arrival verb.
+accept	2.18:23.19	2.18:23.21	renders	Preposition marking the destination.
+accept	2.18:24.11,2.18:24.12	2.18:24.11	renders	Subject and past auxiliary of saying.
+accept	2.18:25.10	2.18:25.10	renders	Appointment verb.
+accept	2.18:25.11	2.18:25.11	renders	Third-person plural object suffix.
+accept	2.18:25.12	2.18:25.12	renders	Heads rendered as leaders.
+accept	2.18:25.15	2.18:25.16,2.18:25.17	renders	Chiefs of thousands.
+accept	2.18:25.16	2.18:25.18	renders	Chief component of the hundreds title.
+accept	2.18:25.17	2.18:25.20	renders	Chief component of the fifties title.
+accept	2.18:25.19	2.18:25.23,2.18:25.24	renders	Chiefs of tens.
+accept	2.18:26.3	2.18:26.2	renders	Subject of the first judging verb.
+accept	2.18:26.6	2.18:26.6	renders	Temporal genitive renders the time preposition.
+accept	2.18:26.10	2.18:26.15	renders	Dative marks the destination.
+accept	2.18:26.16	2.18:26.24	renders	Independent emphatic subject.
+accept	2.18:27.2	2.18:27.2	renders	Dismissal verb.
+accept	2.18:27.7	2.18:27.7	renders	Subject of going.
+accept	2.18:27.9	2.18:27.8	renders	Reflexive dative renders the suffixed prefix.

@@ -1,0 +1,113 @@
+kind	from	to	relation	reason
+fixed	2.27:1			Restored length and moved the mood particle to the verb.
+fixed	2.27:2			Restored the source phrase, mood particle, and object pronoun.
+fixed	2.27:3			Realigned repeated conjunctions and restored utensil and ash-removal links.
+fixed	2.27:4			Restored the beneficiary, net, and ends.
+fixed	2.27:5			Restored the placement verb, pronoun, and extent expressions.
+fixed	2.27:6			Restored the material relation and object pronoun.
+fixed	2.27:7			Restored the links for carrying the altar.
+unsure	2.27:8			The alignment of the material preposition з is uncertain.
+fixed	2.27:9			Restored the directional prefix, length, side, and unit.
+fixed	2.27:10			Restored the possessive phrase for the pillars.
+fixed	2.27:11			Restored directional, length, and possessive links.
+fixed	2.27:12			Restored the directional prefix and the pillars’ possessive phrase.
+fixed	2.27:13			Restored the links for the eastward expression.
+fixed	2.27:14			Restored the compound number and both possessive phrases.
+fixed	2.27:15			Restored the compound number and both possessive phrases.
+fixed	2.27:16			Corrected twisted linen and completed the scarlet and possessive links.
+ok	2.27:17			
+fixed	2.27:18			Restored uniform width, height, linen, and the base suffix.
+unsure	2.27:19			The pronouns are clear, but the service phrase recasts the prepositions.
+fixed	2.27:20			Restored the command, recipient, material relation, and purpose links.
+fixed	2.27:21			Restored verbal and relational links and corrected перед.
+refuse	2.27:1.15	2.27:1.15		Mood particle belongs to the verb.
+refuse	2.27:3.9	2.27:3.8		Conjunction introduces the shovels.
+refuse	2.27:3.11	2.27:3.9		Pronoun belongs to the shovels.
+refuse	2.27:3.12	2.27:3.10		Conjunction introduces the bowls.
+refuse	2.27:3.15	2.27:3.12		Conjunction introduces the forks.
+refuse	2.27:16.17	2.27:16.16		Twisted is the modifier.
+refuse	2.27:18.15	2.27:18.17		Twisted is the modifier.
+refuse	2.27:21.22	2.27:21.23		Лицем renders the face noun.
+accept	2.27:1.9	2.27:1.10	renders	Length noun.
+accept	2.27:1.15	2.27:1.16	renders	Mood of the verb.
+accept	2.27:2.9,2.27:2.10	2.27:2.7	renders	Suffixed source preposition.
+accept	2.27:2.11	2.27:2.8	renders	Mood of the verb.
+accept	2.27:2.17	2.27:2.12	renders	Suffixed object pronoun.
+accept	2.27:3.4	2.27:3.4	renders	Purpose prefix.
+accept	2.27:3.5,2.27:3.6,2.27:3.7,2.27:3.8	2.27:3.5	renders	Removing the altar’s ashes.
+accept	2.27:3.9	2.27:3.6	renders	Conjunction before the shovels.
+accept	2.27:3.10,2.27:3.11	2.27:3.7	renders	Shovels and their possessive suffix.
+accept	2.27:3.12	2.27:3.8	renders	Conjunction before the bowls.
+accept	2.27:3.13,2.27:3.14	2.27:3.9	renders	Bowls and their possessive suffix.
+accept	2.27:3.15	2.27:3.10	renders	Conjunction before the forks.
+accept	2.27:3.18	2.27:3.12	renders	Conjunction before the firepans.
+accept	2.27:3.19,2.27:3.20,2.27:3.21,2.27:3.22	2.27:3.13	renders	Its pans for holding coals.
+accept	2.27:3.25,2.27:3.26	2.27:3.16	renders	Utensils and their possessive suffix.
+accept	2.27:4.3,2.27:4.4	2.27:4.3	renders	Suffixed beneficiary preposition.
+accept	2.27:4.8	2.27:4.6	renders	Net in the workmanship phrase.
+accept	2.27:4.18,2.27:4.19	2.27:4.18	renders	Ends and their possessive suffix.
+accept	2.27:5.2	2.27:5.2	renders	Placement verb.
+accept	2.27:5.3	2.27:5.3	renders	Suffixed object pronoun.
+accept	2.27:5.4	2.27:5.8,2.27:5.9,2.27:5.10	renders	Compound expression for below.
+accept	2.27:5.9	2.27:5.12	renders	Written verb of being.
+accept	2.27:5.12	2.27:5.15	renders	Part of the extent phrase аж до.
+accept	2.27:5.14	2.27:5.16	renders	Halfway point.
+accept	2.27:6.7	2.27:6.7	renders	Material relation of the construct.
+accept	2.27:6.12	2.27:6.12	renders	Suffixed object pronoun.
+accept	2.27:7.16	2.27:7.17	renders	Temporal prefix on the infinitive.
+accept	2.27:7.17	2.27:7.18	renders	Carrying action.
+accept	2.27:7.18	2.27:7.19	renders	Suffixed object pronoun.
+accept	2.27:8.2	2.27:8.1	renders	Part of the expression for hollow.
+accept	2.27:8.4	2.27:8.4	renders	Suffixed object pronoun.
+accept	2.27:8.6	2.27:8.2	renders	Boards.
+accept	2.27:8.7	2.27:8.5,2.27:8.6	renders	Comparative relative expression.
+accept	2.27:8.10	2.27:8.8	renders	Pronoun for the person shown.
+accept	2.27:8.11	2.27:8.9	renders	Locative prefix.
+accept	2.27:8.14	2.27:8.13	renders	Mood of the verb.
+accept	2.27:9.5	2.27:9.7	renders	Directional prefix.
+accept	2.27:9.15	2.27:9.21	renders	Length noun.
+accept	2.27:9.16	2.27:9.26	renders	One side rendered as the first.
+accept	2.27:9.17	2.27:9.22,2.27:9.24	renders	Dative renders the prefix and side.
+accept	2.27:9.19	2.27:9.20	renders	Cubit unit.
+accept	2.27:10.3,2.27:10.4	2.27:10.2	renders	Possessive suffix rendered with для.
+accept	2.27:11.3	2.27:11.2	renders	Part of the expression так само.
+accept	2.27:11.4	2.27:11.3	renders	Directional prefix.
+accept	2.27:11.7	2.27:11.6	renders	Locative prefix absorbed in вдовжину.
+accept	2.27:11.9	2.27:11.11	renders	Second occurrence of length.
+accept	2.27:11.13	2.27:11.13	renders	First occurrence of pillars.
+accept	2.27:11.14,2.27:11.15	2.27:11.13	renders	Pillars’ possessive suffix.
+accept	2.27:11.19,2.27:11.20	2.27:11.16	renders	Bases’ possessive suffix.
+accept	2.27:12.4	2.27:12.5	renders	Directional prefix.
+accept	2.27:12.11,2.27:12.12	2.27:12.11	renders	Pillars’ possessive suffix.
+accept	2.27:13.4	2.27:13.5	renders	Directional prefix.
+accept	2.27:13.6	2.27:13.7	renders	Frontward direction.
+accept	2.27:13.7	2.27:13.8	renders	Sunrise direction.
+accept	2.27:14.3	2.27:14.2,2.27:14.3	renders	Compound number fifteen.
+accept	2.27:14.9,2.27:14.10	2.27:14.9	renders	Pillars’ possessive suffix.
+accept	2.27:14.14,2.27:14.15	2.27:14.12	renders	Bases’ possessive suffix.
+accept	2.27:15.5	2.27:15.7,2.27:15.8	renders	Compound number fifteen.
+accept	2.27:15.9,2.27:15.10	2.27:15.10	renders	Pillars’ possessive suffix.
+accept	2.27:15.14,2.27:15.15	2.27:15.13	renders	Bases’ possessive suffix.
+accept	2.27:16.14	2.27:16.13	renders	Part of the compound scarlet term.
+accept	2.27:16.17	2.27:16.17	renders	Twisted modifier.
+accept	2.27:16.18	2.27:16.16	renders	Linen noun.
+accept	2.27:16.21,2.27:16.22	2.27:16.20	renders	Pillars’ possessive suffix.
+accept	2.27:18.7	2.27:18.11,2.27:18.12	renders	Repeated measure conveys uniform width.
+accept	2.27:18.10	2.27:18.14	renders	Height noun.
+accept	2.27:18.15	2.27:18.18	renders	Twisted modifier.
+accept	2.27:18.16	2.27:18.17	renders	Linen noun.
+accept	2.27:18.19	2.27:18.20	renders	Pillars express the bases’ possessive suffix.
+accept	2.27:19.8	2.27:19.8	renders	Service suffix refers to the tabernacle.
+accept	2.27:19.11	2.27:19.11	renders	Pegs’ possessive suffix.
+accept	2.27:20.7,2.27:20.9	2.27:20.8	renders	Mood and action of bringing.
+accept	2.27:20.10	2.27:20.9	renders	Dative renders the suffixed preposition.
+accept	2.27:20.12	2.27:20.10	renders	Material relation of the construct.
+accept	2.27:20.18	2.27:20.17	renders	Purpose prefix on the infinitive.
+accept	2.27:21.4	2.27:21.4,2.27:21.6	renders	Prefixes in the compound outside expression.
+accept	2.27:21.7	2.27:21.10	renders	Preposition upon.
+accept	2.27:21.9	2.27:21.13	renders	Verb for preparing the lamp.
+accept	2.27:21.10	2.27:21.14	renders	Suffixed object pronoun.
+accept	2.27:21.19	2.27:21.20	renders	Part of the endpoint phrase аж до.
+accept	2.27:21.22	2.27:21.22	renders	Preposition in the before-the-face expression.
+accept	2.27:21.29	2.27:21.27	renders	Dative also renders the prefix.
+accept	2.27:21.30	2.27:21.29,2.27:21.30	renders	Compound preposition of personal source.

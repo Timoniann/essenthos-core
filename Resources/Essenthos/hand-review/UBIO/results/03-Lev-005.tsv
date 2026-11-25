@@ -1,0 +1,165 @@
+kind	from	to	relation	reason
+fixed	3.5:1			Missing indefinite subject, curse, copula, and verbs.
+fixed	3.5:2			Missing relative, contact complements, and clause links.
+unsure	3.5:3			The scope prefix in the genitive apposition is uncertain.
+fixed	3.5:4			Missing manner, relative, instrumental, and experiencer links.
+fixed	3.5:5			Missing clause markers, subject, and prepositional phrase.
+fixed	3.5:6			Missing prepositions, subject, object, and compound noun links.
+fixed	3.5:7			Missing hand and possessor, offering terms, and second numeral.
+unsure	3.5:8			Whether the nipping verb itself conveys use of a fingernail is uncertain.
+fixed	3.5:9			Missing demonstrative and parts of both offering phrases.
+fixed	3.5:10			Missing verb, statute, pronouns, and source preposition.
+unsure	3.5:11			The preposition introducing the offense may be supplied.
+fixed	3.5:12			Missing fullness, pronouns, and relations in the offering instructions.
+fixed	3.5:13			Missing pronouns, prepositional relations, and passive auxiliary.
+ok	3.5:14			
+fixed	3.5:15			The verb was linked to its cognate noun. Several relations were missing.
+fixed	3.5:16			Missing restitution verb, relative antecedent, and case links.
+fixed	3.5:17			The relative was linked to the wrong Ukrainian occurrence. Other links were missing.
+fixed	3.5:18			Missing offering relations, error phrase, and pronouns.
+fixed	3.5:19			Missing demonstrative, emphatic form, finite verb, subject, and dative prefix.
+refuse	3.5:8.18	3.5:8.16		The verb does not specify thumb size or identity.
+refuse	3.5:15.4	3.5:15.4		This Ukrainian verb renders the preceding Hebrew verb.
+refuse	3.5:17.8	3.5:17.13		This що is indefinite. Чого introduces the relative clause.
+accept	3.5:1.3	3.5:1.2	renders	Indefinite subject renders the person noun.
+accept	3.5:1.7	3.5:1.8	renders	Curse noun.
+accept	3.5:1.9	3.5:1.11	renders	Copula expresses the witness predicate.
+accept	3.5:1.14	3.5:1.15	renders	Second alternative verb, knew.
+accept	3.5:1.17	3.5:1.18	renders	Verb of reporting.
+accept	3.5:2.3	3.5:2.3	renders	Relative marker.
+accept	3.5:2.7	3.5:2.5	renders	Governed genitive expresses the contact relation.
+accept	3.5:2.9	3.5:2.10	renders	Governed genitive expresses the first carcass contact relation.
+accept	3.5:2.13	3.5:2.15	renders	Governed genitive expresses the second carcass contact relation.
+accept	3.5:2.17	3.5:2.20	renders	Governed genitive expresses the third carcass contact relation.
+accept	3.5:2.22,3.5:2.23	3.5:2.25	renders	Implicit subject and predicate of being hidden.
+accept	3.5:2.24	3.5:2.26	renders	Experiencer expressed by the suffixed preposition.
+accept	3.5:2.26	3.5:2.28	renders	Independent subject pronoun.
+accept	3.5:3.4	3.5:3.4	renders	Governed genitive expresses the contact relation.
+accept	3.5:3.7,3.5:3.8	3.5:3.9	renders	Uncleanness noun and its possessive suffix.
+accept	3.5:3.10	3.5:3.12	renders	Instrumental pronoun renders the suffixed preposition.
+accept	3.5:3.11	3.5:3.11	renders	Inchoative component of becoming unclean.
+accept	3.5:3.14,3.5:3.16	3.5:3.14	renders	Auxiliary and predicate render the hiddenness verb.
+accept	3.5:3.17	3.5:3.15	renders	Experiencer expressed by the suffixed preposition.
+accept	3.5:3.19	3.5:3.17	renders	Independent subject pronoun.
+accept	3.5:4.3	3.5:4.2	renders	Indefinite subject renders the person noun.
+accept	3.5:4.6	3.5:4.6	renders	Rashness is part of the first speech verb.
+accept	3.5:4.7	3.5:4.7	renders	Instrumental ending renders the means prefix.
+accept	3.5:4.14	3.5:4.14	renders	Preposition introducing the scope of the oath.
+accept	3.5:4.16	3.5:4.16	renders	Relative marker after все.
+accept	3.5:4.17	3.5:4.17	renders	Rashness is part of the second speech verb.
+accept	3.5:4.25	3.5:4.23	renders	Predicate of being hidden.
+accept	3.5:4.26	3.5:4.24	renders	Experiencer expressed by the suffixed preposition.
+accept	3.5:4.32	3.5:4.30	renders	Instrumental expresses the respect in which guilt applies.
+accept	3.5:5.3	3.5:5.3	renders	Clause marker after станеться.
+accept	3.5:5.5	3.5:5.5	renders	Instrumental expresses the respect in which guilt applies.
+accept	3.5:5.10	3.5:5.11	renders	Instrumental relative pronoun.
+accept	3.5:5.11	3.5:5.12	renders	Subject expressed by the sinning verb.
+accept	3.5:5.13,3.5:5.14	3.5:5.13	renders	Preposition and demonstrative render the suffixed preposition.
+accept	3.5:6.3	3.5:6.2	renders	Subject expressed by the bringing verb.
+accept	3.5:6.4	3.5:6.5	renders	Dative ending renders the recipient prefix.
+accept	3.5:6.8	3.5:6.7	renders	Preposition introducing the offense.
+accept	3.5:6.16	3.5:6.14	renders	Completes the term for small livestock.
+accept	3.5:6.19	3.5:6.18	renders	The single Ukrainian noun renders the full goat expression.
+accept	3.5:6.20	3.5:6.19	renders	Purpose prefix before the sin offering.
+accept	3.5:6.22	3.5:6.20	renders	Part of the Ukrainian term for sin offering.
+accept	3.5:6.27	3.5:6.23	renders	Person receiving atonement is expressed by the suffix.
+accept	3.5:6.28	3.5:6.26	renders	Source preposition before the sin noun.
+accept	3.5:7.3,3.5:7.4	3.5:7.5	renders	Hand noun and its possessive suffix.
+accept	3.5:7.6,3.5:7.7	3.5:7.6	renders	The sufficiency noun and its complement relation are rendered together.
+accept	3.5:7.11,3.5:7.12	3.5:7.11	renders	Together express the role as a guilt offering.
+accept	3.5:7.17,3.5:7.18	3.5:7.13	renders	Sinning verb and subject expressed by its form.
+accept	3.5:7.23	3.5:7.18	renders	The Ukrainian diminutive also expresses the young of the bird.
+accept	3.5:7.24	3.5:7.20	renders	Dative ending renders the recipient prefix.
+accept	3.5:7.26	3.5:7.23	renders	Purpose prefix for the first bird.
+accept	3.5:7.28	3.5:7.24	renders	Part of the Ukrainian term for sin offering.
+accept	3.5:7.31	3.5:7.26	renders	Second occurrence of one.
+accept	3.5:7.32	3.5:7.27	renders	Purpose prefix for the second bird.
+accept	3.5:8.3	3.5:8.3	renders	Suffixed direct object pronoun.
+accept	3.5:8.7	3.5:8.8	renders	Subject of the second bringing verb.
+accept	3.5:8.10	3.5:8.10	renders	Overt antecedent of the Hebrew headless relative.
+accept	3.5:8.12	3.5:8.11	renders	Purpose prefix before the sin offering.
+accept	3.5:8.14	3.5:8.13	renders	Part of the Ukrainian term for sin offering.
+accept	3.5:8.17	3.5:8.16	renders	Nipping action.
+accept	3.5:8.22	3.5:8.19	renders	Source prefix before the neck phrase.
+accept	3.5:8.23,3.5:8.24	3.5:8.21	renders	Neck noun and its possessive suffix.
+accept	3.5:8.27	3.5:8.24	renders	Verb of separation.
+accept	3.5:9.6	3.5:9.6	renders	Part of the first sin offering term.
+accept	3.5:9.19	3.5:9.23	renders	Demonstrative renders the independent pronoun.
+accept	3.5:9.21	3.5:9.22	renders	Part of the second sin offering term.
+accept	3.5:10.3	3.5:10.5	renders	Verb of making the offering.
+accept	3.5:10.6	3.5:10.9	renders	Statute noun.
+accept	3.5:10.9	3.5:10.12	renders	Person receiving atonement is expressed by the suffix.
+accept	3.5:10.11	3.5:10.15	renders	Source preposition before the sin noun.
+accept	3.5:10.16	3.5:10.18	renders	Subject expressed by the sinning verb.
+accept	3.5:10.20	3.5:10.21	renders	Suffixed recipient of forgiveness.
+accept	3.5:11.3	3.5:11.5	renders	In the ability idiom, він renders the possessor of the hand.
+accept	3.5:11.6	3.5:11.6	renders	Prefix before the turtledoves.
+accept	3.5:11.10	3.5:11.10	renders	Prefix before the young pigeons.
+accept	3.5:11.12	3.5:11.12	renders	The Ukrainian diminutive also expresses the young of the bird.
+accept	3.5:11.15	3.5:11.17	renders	Part of the expression identifying what is brought as an offering.
+accept	3.5:11.19,3.5:11.20	3.5:11.18	renders	Antecedent and relative render the Hebrew relative construction.
+accept	3.5:11.27	3.5:11.24	renders	Purpose prefix before the sin offering.
+accept	3.5:11.29	3.5:11.25	renders	Part of the first sin offering term.
+accept	3.5:11.33,3.5:11.34	3.5:11.28	renders	Preposition and pronoun in the oil clause.
+accept	3.5:11.39,3.5:11.40	3.5:11.33	renders	Preposition and pronoun in the incense clause.
+accept	3.5:11.43	3.5:11.37	renders	Independent subject pronoun.
+accept	3.5:11.45	3.5:11.36	renders	Part of the second sin offering term.
+accept	3.5:12.10	3.5:12.10	renders	Pronoun carried by the source preposition.
+accept	3.5:12.11	3.5:12.11	renders	Fullness of the handful.
+accept	3.5:12.14	3.5:12.14	renders	Expresses the appositional role as the memorial portion.
+accept	3.5:12.17	3.5:12.14	renders	Possessive suffix on the memorial portion.
+accept	3.5:12.19	3.5:12.15	renders	Part of the connective та й.
+accept	3.5:12.21	3.5:12.18	renders	Renders the directional ending of altar.
+accept	3.5:12.23	3.5:12.19	renders	Preposition before the fire offerings.
+accept	3.5:12.27	3.5:12.23	renders	Independent subject pronoun.
+accept	3.5:12.29	3.5:12.22	renders	Part of the Ukrainian term for sin offering.
+accept	3.5:13.3	3.5:13.3	renders	Person receiving atonement is expressed by the suffix.
+accept	3.5:13.5	3.5:13.6	renders	Preposition introducing the offense being atoned for.
+accept	3.5:13.10	3.5:13.9	renders	Subject expressed by the sinning verb.
+accept	3.5:13.11	3.5:13.10	renders	Instrumental renders the relation to the individual offense.
+accept	3.5:13.13	3.5:13.13	renders	Pronoun renders the demonstrative in the partitive phrase.
+accept	3.5:13.15	3.5:13.15	renders	Auxiliary of the forgiveness verb.
+accept	3.5:13.16	3.5:13.16	renders	Suffixed recipient of forgiveness.
+accept	3.5:13.20	3.5:13.18	renders	Subject expressed by the feminine verb form.
+accept	3.5:15.2	3.5:15.1	renders	Indefinite subject renders the person noun.
+accept	3.5:15.3	3.5:15.4	renders	Cognate noun expressing the breach.
+accept	3.5:15.4	3.5:15.3	renders	Finite verb of acting unfaithfully.
+accept	3.5:15.6	3.5:15.7	renders	The manner adverb also renders the manner prefix.
+accept	3.5:15.8	3.5:15.9	renders	Preposition relating the offense to the sacred things.
+accept	3.5:15.12	3.5:15.13	renders	Subject expressed by the bringing verb.
+accept	3.5:15.14	3.5:15.15	renders	Part of the term for the offender's guilt offering.
+accept	3.5:15.18	3.5:15.16	renders	Recipient preposition before the divine name.
+accept	3.5:15.25	3.5:15.23	renders	Prefix expressing the basis of valuation.
+accept	3.5:15.30	3.5:15.27	renders	Prefix introducing the standard of measure.
+accept	3.5:15.34	3.5:15.31	renders	Purpose prefix before the guilt offering.
+accept	3.5:15.36	3.5:15.32	renders	Part of the term for the final guilt offering.
+accept	3.5:16.2	3.5:16.3	renders	Overt antecedent of the Hebrew headless relative.
+accept	3.5:16.4	3.5:16.4	renders	Sinning verb.
+accept	3.5:16.5	3.5:16.5	renders	Preposition relating the offense to the sacred things.
+accept	3.5:16.7	3.5:16.8	renders	Verb of making restitution.
+accept	3.5:16.10	3.5:16.13	renders	Prepositional component of the suffixed form.
+accept	3.5:16.15	3.5:16.17	renders	Dative ending renders the recipient prefix.
+accept	3.5:16.19	3.5:16.24	renders	Person receiving atonement is expressed by the suffix.
+accept	3.5:16.20	3.5:16.25	renders	Instrumental ending renders the means prefix.
+accept	3.5:16.22,3.5:16.23	3.5:16.28	renders	Completes the phrase rendering the guilt offering.
+accept	3.5:16.27	3.5:16.31	renders	Suffixed recipient of forgiveness.
+accept	3.5:17.4	3.5:17.4	renders	Inner conditional marker.
+accept	3.5:17.5	3.5:17.3	renders	Indefinite subject renders the person noun.
+accept	3.5:17.7	3.5:17.7	renders	First doing verb.
+accept	3.5:17.10	3.5:17.8	renders	Indefinite selection of one commandment.
+accept	3.5:17.15	3.5:17.13	renders	Relative pronoun in the prohibition clause.
+accept	3.5:17.21	3.5:17.18	renders	Verb of knowing.
+accept	3.5:18.2	3.5:18.2	renders	Subject expressed by the bringing verb.
+accept	3.5:18.14	3.5:18.10	renders	Purpose prefix before the guilt offering.
+accept	3.5:18.16	3.5:18.11	renders	Part of the Ukrainian term for guilt offering.
+accept	3.5:18.20	3.5:18.17	renders	Person receiving atonement is expressed by the suffix.
+accept	3.5:18.22	3.5:18.20	renders	Preposition introducing the error.
+accept	3.5:18.23,3.5:18.24	3.5:18.21	renders	Error noun and its possessive suffix.
+accept	3.5:18.26	3.5:18.22	renders	Resumptive pronoun completes the relative construction.
+accept	3.5:18.28	3.5:18.24	renders	Renders the explanatory relation of the circumstantial clause.
+accept	3.5:18.35	3.5:18.30	renders	Suffixed recipient of forgiveness.
+accept	3.5:19.1	3.5:19.2	renders	Demonstrative renders the independent pronoun.
+accept	3.5:19.3,3.5:19.4	3.5:19.1	renders	Completes the Ukrainian term for guilt offering.
+accept	3.5:19.5,3.5:19.7	3.5:19.4	renders	Finite guilt verb and subject expressed by its form.
+accept	3.5:19.6	3.5:19.3	renders	Emphasis of the infinitive absolute.
+accept	3.5:19.8	3.5:19.5	renders	Dative ending renders the prefix before the divine name.

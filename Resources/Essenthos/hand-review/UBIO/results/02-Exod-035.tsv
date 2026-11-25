@@ -1,0 +1,157 @@
+kind	from	to	relation	reason
+fixed	2.35:1			Restored the compound connective, the demonstrative phrase, and two pronouns.
+fixed	2.35:2			Restored the auxiliary, temporal relation, pronouns, and rest phrase.
+fixed	2.35:3			Restored both prepositions and the noun for settlements.
+ok	2.35:4			
+fixed	2.35:5			Restored the reflexive, the adjective, and the verb’s object pronoun.
+fixed	2.35:6			Completed the two-word Hebrew term for scarlet.
+fixed	2.35:7			Corrected the links for rams, skins, and red dyeing.
+fixed	2.35:8			Restored three purpose prepositions.
+fixed	2.35:9			Restored the setting relation and both destination prepositions.
+fixed	2.35:10			Restored the addressee phrase, the wisdom component, and two verb links.
+fixed	2.35:11			Restored six possessives and the conjunction before the boards.
+ok	2.35:12			
+ok	2.35:13			
+ok	2.35:14			
+fixed	2.35:15			Restored the links for the second entrance phrase.
+fixed	2.35:16			Restored the grating’s possessive and the base with its possessive.
+fixed	2.35:17			Restored the possessive on the bases.
+ok	2.35:18			
+fixed	2.35:19			Restored the sacred garments and two purpose prepositions.
+fixed	2.35:20			Restored the verb of departure.
+fixed	2.35:21			Restored relative objects, the willingness phrase, and several work and garment links.
+fixed	2.35:22			Restored the men, accompaniment, generous hearts, ornaments, and offering links.
+fixed	2.35:23			Corrected the first skins phrase and restored the possession and bringing links.
+fixed	2.35:24			Restored the relative clauses, bringing verb, and work phrase.
+fixed	2.35:25			Restored the wisdom component, instrumental prefix, verbs, and scarlet component.
+fixed	2.35:26			Restored the relative clause and the goat-hair phrase.
+ok	2.35:27			
+fixed	2.35:28			Restored the lighting purpose preposition.
+fixed	2.35:29			Restored the relative object, four verbs, the instrumental prefix, and the gift noun.
+fixed	2.35:30			Restored the name preposition and the tribal affiliation.
+unsure	2.35:31			Restored the object, prepositions, and work noun. The target of здібністю is uncertain.
+fixed	2.35:32			Restored both purpose prepositions and the work verb rendered as a noun.
+fixed	2.35:33			Restored the verb of making.
+fixed	2.35:34			Restored the teaching purpose and the tribal affiliation.
+fixed	2.35:35			Restored subject and object pronouns, the making clauses, and the terms for scarlet and designs.
+refuse	2.35:7.2	2.35:7.2		The skins noun does not express dye color.
+refuse	2.35:7.5	2.35:7.4		The skins noun does not render the dyeing participle.
+refuse	2.35:23.19	2.35:23.18		The adjective names the rams.
+refuse	2.35:23.22	2.35:23.20		The skins noun does not render the dyeing participle.
+accept	2.35:1.9	2.35:1.9	renders	Second part of the compound connective та й.
+accept	2.35:1.11,2.35:1.12	2.35:1.11	renders	Preposition and its pronominal suffix.
+accept	2.35:1.13,2.35:1.14	2.35:1.12	renders	Together express the presentative demonstrative.
+accept	2.35:1.15	2.35:1.14	renders	Renders the noun for things.
+accept	2.35:1.19	2.35:1.20	renders	Renders the suffixed direct object.
+accept	2.35:2.3	2.35:2.3	renders	Future auxiliary of the passive verb.
+accept	2.35:2.7	2.35:2.6	renders	The temporal genitive expresses the prefixed time relation.
+accept	2.35:2.10	2.35:2.12	renders	Renders the suffixed recipient.
+accept	2.35:2.14,2.35:2.15	2.35:2.15	renders	Express cessation from work within the Sabbath-rest phrase.
+accept	2.35:2.19,2.35:2.20	2.35:2.20	renders	Relative clause renders the participle.
+accept	2.35:2.22,2.35:2.23	2.35:2.21	renders	Preposition and its pronominal suffix.
+accept	2.35:3.4	2.35:3.7	renders	Preposition of time before Sabbath day.
+accept	2.35:3.7	2.35:3.4	renders	Distributive preposition across the settlements.
+accept	2.35:3.10	2.35:3.6	renders	Renders the noun for settlements.
+accept	2.35:5.3	2.35:5.3	renders	Reflexive renders the second-person plural suffix.
+accept	2.35:5.9	2.35:5.8	renders	Renders the adjective for willingness.
+accept	2.35:5.13	2.35:5.10	renders	Renders the object suffix on bring.
+accept	2.35:6.6	2.35:6.6	renders	First component of the compound scarlet term.
+accept	2.35:7.2	2.35:7.4	renders	The dyeing participle specifies red.
+accept	2.35:7.4	2.35:7.3	renders	Adjective renders the noun for rams.
+accept	2.35:7.5	2.35:7.2	renders	Renders the first occurrence of skins.
+accept	2.35:8.3	2.35:8.3	renders	Purpose preposition before lighting.
+accept	2.35:8.7	2.35:8.8	renders	Purpose preposition before anointing oil.
+accept	2.35:8.12	2.35:8.13	renders	Purpose preposition before incense.
+accept	2.35:9.6	2.35:9.5	renders	Expresses the purpose relation carried by the construct noun for stones.
+accept	2.35:9.8	2.35:9.7	renders	Preposition before ephod.
+accept	2.35:9.11	2.35:9.11	renders	Preposition before breastpiece.
+accept	2.35:10.3,2.35:10.4	2.35:10.5	renders	Together render the preposition and its suffix.
+accept	2.35:10.5	2.35:10.3	renders	Wisdom component of the compound adjective.
+accept	2.35:10.6	2.35:10.6	renders	Renders the verb come.
+accept	2.35:10.11	2.35:10.12	renders	Auxiliary of the past command.
+accept	2.35:11.4	2.35:11.5	renders	Possessive suffix on tent.
+accept	2.35:11.9	2.35:11.8	renders	Possessive suffix on covering.
+accept	2.35:11.13	2.35:11.11	renders	Conjunction introducing the boards.
+accept	2.35:11.15	2.35:11.13	renders	Possessive suffix on boards.
+accept	2.35:11.17	2.35:11.15	renders	Possessive suffix on bars.
+accept	2.35:11.19	2.35:11.17	renders	Possessive suffix on pillars.
+accept	2.35:11.22	2.35:11.20	renders	Possessive suffix on bases.
+accept	2.35:15.16	2.35:15.24	renders	Preposition introducing the second entrance.
+accept	2.35:15.17	2.35:15.25	renders	Renders the second occurrence of entrance.
+accept	2.35:16.5	2.35:16.11	renders	Possessive renders the suffixed preposition of possession.
+accept	2.35:16.15,2.35:16.16	2.35:16.23	renders	Renders base and its possessive suffix.
+accept	2.35:17.7	2.35:17.9	renders	Possessive suffix on bases.
+accept	2.35:19.4	2.35:19.5	renders	Purpose preposition before serving.
+accept	2.35:19.8	2.35:19.13	renders	Adjective renders the genitive noun for holiness.
+accept	2.35:19.9	2.35:19.11	renders	Renders the second occurrence of garments.
+accept	2.35:19.17	2.35:19.22	renders	Purpose preposition before priestly service.
+accept	2.35:20.2	2.35:20.2	renders	Renders the verb go out.
+accept	2.35:21.4	2.35:21.4	renders	Renders the noun man.
+accept	2.35:21.5	2.35:21.5,2.35:21.6	renders	Relative object combines the relative marker and resumptive object suffix.
+accept	2.35:21.11	2.35:21.13	renders	The accusative relative also renders the resumptive object pronoun.
+accept	2.35:21.14,2.35:21.15	2.35:21.11	renders	The causative phrase renders incitement to give willingly.
+accept	2.35:21.21	2.35:21.19	renders	Renders the work on the tent.
+accept	2.35:21.25	2.35:21.23	renders	Purpose preposition before service.
+accept	2.35:21.30	2.35:21.27	renders	Purpose preposition before garments.
+accept	2.35:21.31	2.35:21.30	renders	Adjective renders the genitive noun for holiness.
+accept	2.35:22.4	2.35:22.4	renders	Renders the noun men.
+accept	2.35:22.5	2.35:22.5	renders	Renders the preposition of accompaniment.
+accept	2.35:22.7	2.35:22.8	renders	Renders the distributive quantifier.
+accept	2.35:22.8	2.35:22.9,2.35:22.10	renders	Compound adjective renders willing of heart.
+accept	2.35:22.11	2.35:22.12	renders	Renders the first ornament in the list.
+accept	2.35:22.18	2.35:22.18	renders	Renders the last ornament in the list.
+accept	2.35:22.25	2.35:22.24	renders	Renders the person offering the gold.
+accept	2.35:22.26	2.35:22.26	renders	Renders the verb of presenting the offering.
+accept	2.35:22.29	2.35:22.27	renders	Renders the offering noun.
+accept	2.35:23.4	2.35:23.24	renders	Renders the main verb bring.
+accept	2.35:23.6	2.35:23.6	renders	Subject of мав renders the possessor in the suffix.
+accept	2.35:23.7	2.35:23.5,2.35:23.6	renders	Possession renders the phrase was found with him.
+accept	2.35:23.12	2.35:23.11	renders	First component of the compound scarlet term.
+accept	2.35:23.19	2.35:23.19	renders	Adjective renders the noun for rams.
+accept	2.35:23.20,2.35:23.21	2.35:23.20	renders	Together render the participle dyed red.
+accept	2.35:23.22	2.35:23.18	renders	Renders the first occurrence of skins.
+accept	2.35:24.2	2.35:24.2	renders	Relative pronoun expands the participial clause.
+accept	2.35:24.13	2.35:24.13	renders	Renders the explicit relative marker.
+accept	2.35:24.14	2.35:24.14,2.35:24.15	renders	Possession renders the phrase was found with him.
+accept	2.35:24.15	2.35:24.23	renders	Renders bring in the second clause.
+accept	2.35:24.18	2.35:24.18	renders	Purpose preposition before the work phrase.
+accept	2.35:24.20,2.35:24.21	2.35:24.20	renders	Renders the work noun and the relation carried by its construct state.
+accept	2.35:24.23	2.35:24.22	renders	Renders the dependent noun for work.
+accept	2.35:25.3	2.35:25.4	renders	Wisdom component of the compound adjective.
+accept	2.35:25.5	2.35:25.8	renders	Renders the verb spin.
+accept	2.35:25.6	2.35:25.6	renders	Instrumental case renders the prefixed preposition.
+accept	2.35:25.9	2.35:25.10	renders	Renders the verb bring.
+accept	2.35:25.15	2.35:25.22	renders	Second component of the compound scarlet term.
+accept	2.35:26.4	2.35:26.5,2.35:26.8	renders	Relative object combines the relative marker and resumptive pronoun.
+accept	2.35:26.5	2.35:26.6	renders	Renders the verb of prompting.
+accept	2.35:26.6,2.35:26.7	2.35:26.7	renders	Renders heart and its possessive suffix.
+accept	2.35:26.9,2.35:26.10	2.35:26.14	renders	Makes explicit the goat hair being spun.
+accept	2.35:28.5	2.35:28.9	renders	Purpose preposition before lighting.
+accept	2.35:29.5	2.35:29.5,2.35:29.8	renders	Relative object combines the relative marker and resumptive pronoun.
+accept	2.35:29.8	2.35:29.6	renders	Renders the verb of inclining.
+accept	2.35:29.9	2.35:29.10	renders	Renders the infinitive bring.
+accept	2.35:29.16	2.35:29.19	renders	Renders the infinitive make.
+accept	2.35:29.17	2.35:29.20	renders	Instrumental case renders the prefixed preposition.
+accept	2.35:29.21	2.35:29.23	renders	Renders the main verb bring.
+accept	2.35:29.23	2.35:29.26	renders	The gift noun completes the freewill-offering phrase.
+accept	2.35:30.10	2.35:30.10	renders	Renders the preposition in the naming idiom.
+accept	2.35:30.18	2.35:30.17,2.35:30.18	renders	Renders the tribe noun and its prefixed affiliation relation.
+accept	2.35:31.3	2.35:31.3	renders	Renders the suffixed object pronoun.
+accept	2.35:31.6	2.35:31.6	renders	Instrumental case renders the prefix before wisdom.
+accept	2.35:31.7	2.35:31.8	renders	Instrumental case renders the prefix before understanding.
+accept	2.35:31.9	2.35:31.11	renders	Instrumental case renders the prefix before knowledge.
+accept	2.35:31.12	2.35:31.14	renders	Expresses the relation to every kind of work.
+accept	2.35:31.14	2.35:31.16	renders	Renders the noun for work.
+accept	2.35:32.1	2.35:32.2	renders	Purpose preposition before devising.
+accept	2.35:32.4	2.35:32.5	renders	Purpose preposition before working.
+accept	2.35:32.5	2.35:32.6	renders	The noun renders the action of working.
+accept	2.35:33.12	2.35:33.12	renders	Renders the infinitive make.
+accept	2.35:34.6	2.35:34.2	renders	Purpose marker before teaching.
+accept	2.35:34.7	2.35:34.3	renders	Renders the verb teach.
+accept	2.35:34.14	2.35:34.12	renders	Genitive phrase expresses the prefixed tribal affiliation.
+accept	2.35:35.1	2.35:35.1	renders	Renders the finite verb’s implicit subject.
+accept	2.35:35.3	2.35:35.2	renders	Renders the suffixed object pronoun.
+accept	2.35:35.7,2.35:35.8	2.35:35.6	renders	Renders the infinitive and makes its understood subject explicit.
+accept	2.35:35.23	2.35:35.24	renders	Second component of the compound scarlet term.
+accept	2.35:35.29,2.35:35.30	2.35:35.31	renders	Relative clause renders the participle for doing.
+accept	2.35:35.36	2.35:35.36	renders	Completes the noun phrase rendering designs.

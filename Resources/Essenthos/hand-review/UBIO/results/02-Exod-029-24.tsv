@@ -1,0 +1,172 @@
+kind	from	to	relation	reason
+fixed	2.29:24			Restored the object pronoun and the offering and presence phrases.
+fixed	2.29:25			Restored the object pronoun, prepositions, and offering language.
+fixed	2.29:26			Restored the possessive constructions and the wave-offering phrase.
+fixed	2.29:27			Restored the passive forms, ordination term, and possessive constructions.
+fixed	2.29:28			Restored dative prefixes, pronouns, and the peace-sacrifice phrase.
+fixed	2.29:29			Restored the garment description, pronouns, and ordination idiom.
+unsure	2.29:30			The links for «той» and the first «що» in the expanded priest clause are uncertain.
+fixed	2.29:31			Restored the link for the meat.
+fixed	2.29:32			Restored the future auxiliary and the entrance construction.
+fixed	2.29:33			Restored the object, instrument, and ordination links.
+fixed	2.29:34			Restored both remainder forms, the passive components, and the final pronoun.
+fixed	2.29:35			Restored dative prefixes, auxiliaries, and the ordination idiom.
+fixed	2.29:36			Moved the purpose preposition and restored the sacrifice and atonement phrases.
+fixed	2.29:37			Restored the superlative, contact construction, and final verb.
+fixed	2.29:38			Restored the free relative, age expression, and daily rate.
+fixed	2.29:39			Restored both temporal preposition links.
+fixed	2.29:40			Restored the libation purpose and per-lamb preposition.
+fixed	2.29:41			Restored both offering verbs, comparison prefixes, and the final offering phrase.
+fixed	2.29:42			Restored the entrance, presence, meeting, and speech constructions.
+fixed	2.29:43			Restored verb components, the dative, and the instrument and possessive.
+fixed	2.29:44			Restored the Ukrainian subject and verb of priestly service.
+fixed	2.29:45			Restored the dwelling verb components and prepositional relations.
+fixed	2.29:46			Restored the subject, first divine title, and purpose clause.
+refuse	2.29:24.18	2.29:24.17		The noun is rendered by «лицем».
+refuse	2.29:25.17	2.29:25.17		The noun is rendered by «лицем».
+refuse	2.29:26.14	2.29:26.18		The noun is rendered by «лицем».
+refuse	2.29:36.9	2.29:36.5		This prefix belongs to the daily expression.
+refuse	2.29:42.11	2.29:42.9		The noun is rendered by «лицем».
+accept	2.29:24.15	2.29:24.14	renders	Object pronoun on suffixed אֵת.
+accept	2.29:24.16	2.29:24.15	renders	Marks the manner of waving.
+accept	2.29:24.18	2.29:24.16	renders	Preposition introducing the face phrase.
+accept	2.29:24.20	2.29:24.17	renders	Renders the face noun.
+accept	2.29:25.3	2.29:25.3	renders	Object pronoun on suffixed אֵת.
+accept	2.29:25.8	2.29:25.6	renders	Completes the compound conjunction «та й».
+accept	2.29:25.10	2.29:25.9	renders	Renders the altar noun's directional ending.
+accept	2.29:25.12	2.29:25.10	renders	Preposition before the burnt offering.
+accept	2.29:25.14	2.29:25.13	renders	Purpose prefix before the aroma.
+accept	2.29:25.15	2.29:25.14	renders	Renders the aroma noun.
+accept	2.29:25.16	2.29:25.15	renders	Renders the pleasing quality of the aroma.
+accept	2.29:25.17	2.29:25.16	renders	Preposition introducing the face phrase.
+accept	2.29:25.19	2.29:25.17	renders	Renders the face noun.
+accept	2.29:25.20	2.29:25.20	renders	Renders the written subject pronoun.
+accept	2.29:25.22	2.29:25.19	renders	Renders the offering component.
+accept	2.29:26.6	2.29:26.9	renders	Renders the ordination noun.
+accept	2.29:26.7	2.29:26.10	renders	Renders the relative marker.
+accept	2.29:26.8	2.29:26.11	renders	Possessive adjective expresses the lamed relation.
+accept	2.29:26.11	2.29:26.15	renders	Object pronoun on suffixed אֵת.
+accept	2.29:26.12	2.29:26.16	renders	Marks the manner of waving.
+accept	2.29:26.14	2.29:26.17	renders	Preposition introducing the face phrase.
+accept	2.29:26.16	2.29:26.18	renders	Renders the face noun.
+accept	2.29:26.18	2.29:26.21	renders	Expresses the verb's implicit subject.
+accept	2.29:26.20	2.29:26.22	renders	Renders the suffixed possessive relation.
+accept	2.29:27.9	2.29:27.13	renders	Auxiliary of the first passive verb.
+accept	2.29:27.13,2.29:27.14	2.29:27.16	renders	Renders the second passive verb.
+accept	2.29:27.17	2.29:27.20	renders	Renders the ordination noun.
+accept	2.29:27.19	2.29:27.22	renders	Supplies the head of the first free relative.
+accept	2.29:27.21	2.29:27.23	renders	Possessive adjective expresses the lamed relation.
+accept	2.29:27.24	2.29:27.27	renders	Supplies the head of the second free relative.
+accept	2.29:27.26	2.29:27.28	renders	Possessive genitive expresses the lamed relation.
+accept	2.29:28.3	2.29:28.2	renders	Expresses the first verb's implicit subject.
+accept	2.29:28.4	2.29:28.3	renders	Dative renders the recipient prefix.
+accept	2.29:28.6	2.29:28.6	renders	Dative renders the second recipient prefix.
+accept	2.29:28.8	2.29:28.8	renders	Preposition introducing the standing allotment.
+accept	2.29:28.11	2.29:28.12	renders	Renders the first compound source preposition with מֵ.
+accept	2.29:28.15	2.29:28.17	renders	Renders the written subject pronoun.
+accept	2.29:28.19	2.29:28.20	renders	Expresses the second verb's implicit subject.
+accept	2.29:28.21	2.29:28.22	renders	Renders the second compound source preposition with מֵ.
+accept	2.29:28.25	2.29:28.27	renders	Renders the peace-offering element.
+accept	2.29:28.27	2.29:28.26	renders	Renders the sacrifice noun.
+accept	2.29:29.2	2.29:29.4	renders	Adjective renders the genitive of holiness.
+accept	2.29:29.4	2.29:29.5	renders	Renders the relative marker.
+accept	2.29:29.5	2.29:29.6	renders	Possessive adjective expresses the lamed relation.
+accept	2.29:29.8	2.29:29.11	renders	Renders the suffix of «after him».
+accept	2.29:29.9	2.29:29.9	renders	Dative renders the recipient prefix.
+accept	2.29:29.11	2.29:29.12	renders	Purpose prefix for anointing.
+accept	2.29:29.13,2.29:29.14	2.29:29.14	renders	Renders the suffixed preposition «in them».
+accept	2.29:29.16	2.29:29.16	renders	Purpose prefix for ordination.
+accept	2.29:29.17	2.29:29.20	renders	The hand noun completes the ordination idiom.
+accept	2.29:29.18	2.29:29.20	renders	Renders the possessive suffix of «their hands».
+accept	2.29:30.6	2.29:30.7	renders	Renders the partitive prefix.
+accept	2.29:30.10	2.29:30.5	renders	Expresses the priestly predicate.
+accept	2.29:30.13	2.29:30.6	renders	Renders the suffix of «in his place».
+accept	2.29:30.14	2.29:30.9	renders	Relative introducing entry into the tent.
+accept	2.29:30.19	2.29:30.14	renders	Renders the purpose prefix.
+accept	2.29:31.7	2.29:31.10	renders	Renders the flesh noun.
+accept	2.29:32.2	2.29:32.2	renders	Future auxiliary of the eating verb.
+accept	2.29:32.17	2.29:32.18	renders	Expresses the entrance noun's locative use.
+accept	2.29:32.19	2.29:32.18	renders	Expresses the entrance noun's construct relation.
+accept	2.29:33.4	2.29:33.3	renders	Renders the suffixed direct object.
+accept	2.29:33.5	2.29:33.6	renders	Instrumental relative expresses «with them».
+accept	2.29:33.8	2.29:33.7	renders	Purpose prefix for ordination.
+accept	2.29:33.9	2.29:33.8,2.29:33.10	renders	Renders the idiom «fill their hands».
+accept	2.29:33.10	2.29:33.10	renders	Renders the possessive suffix of «their hands».
+accept	2.29:33.11	2.29:33.11	renders	Purpose prefix for consecration.
+accept	2.29:33.12	2.29:33.12	renders	Renders the consecration verb.
+accept	2.29:33.13	2.29:33.13	renders	Object pronoun of the consecration verb.
+accept	2.29:33.17	2.29:33.17	renders	Future auxiliary of the second eating verb.
+accept	2.29:34.3	2.29:34.3	renders	Renders the finite verb of remaining.
+accept	2.29:34.15	2.29:34.19	renders	Renders the participle for what remains.
+accept	2.29:34.19,2.29:34.20	2.29:34.24	renders	Auxiliary and subject of the passive verb.
+accept	2.29:34.24	2.29:34.27	renders	Renders the written subject pronoun.
+accept	2.29:35.3	2.29:35.3	renders	Dative renders Aaron's recipient prefix.
+accept	2.29:35.5	2.29:35.6	renders	Dative renders the sons' recipient prefix.
+accept	2.29:35.8	2.29:35.9	renders	Renders the comparison prefix.
+accept	2.29:35.13	2.29:35.12	renders	Past auxiliary of the command verb.
+accept	2.29:35.14	2.29:35.13	renders	Dative renders the suffixed object pronoun.
+accept	2.29:35.17	2.29:35.16	renders	Future auxiliary of the ordination verb.
+accept	2.29:35.18	2.29:35.17	renders	The hand noun completes the ordination idiom.
+accept	2.29:35.19	2.29:35.17	renders	Renders the possessive suffix of «their hands».
+accept	2.29:36.3,2.29:36.4	2.29:36.3	renders	Completes the expression for a sin offering.
+accept	2.29:36.6,2.29:36.7	2.29:36.4	renders	Auxiliary and verb render the preparation verb.
+accept	2.29:36.8	2.29:36.5	renders	The daily adverb expresses the distributive prefix.
+accept	2.29:36.9	2.29:36.8	renders	Preposition introducing atonement.
+accept	2.29:36.10	2.29:36.10	renders	Renders the atonement noun.
+accept	2.29:36.12,2.29:36.13	2.29:36.12	renders	Renders the cleansing verb.
+accept	2.29:36.15	2.29:36.16	renders	Renders the temporal prefix.
+accept	2.29:36.16,2.29:36.17,2.29:36.18	2.29:36.17	renders	Renders the atonement infinitive.
+accept	2.29:36.19	2.29:36.18	renders	Renders the pronoun in the suffixed preposition.
+accept	2.29:36.22	2.29:36.21	renders	Renders the object of anointing.
+accept	2.29:36.23	2.29:36.22	renders	Renders the consecration purpose prefix.
+accept	2.29:36.24,2.29:36.25	2.29:36.23	renders	Renders the consecration verb and its object suffix.
+accept	2.29:37.6	2.29:37.4	renders	Preposition before the first altar occurrence.
+accept	2.29:37.10	2.29:37.9	renders	Renders the object of consecration.
+accept	2.29:37.15	2.29:37.14	renders	First noun of the Hebrew superlative.
+accept	2.29:37.17	2.29:37.18	renders	Relative word expands the participle.
+accept	2.29:37.19	2.29:37.19	renders	Renders the prefix governed by the touching verb.
+accept	2.29:37.21	2.29:37.22	renders	Renders the final verb of becoming holy.
+accept	2.29:38.3	2.29:38.3	renders	Supplies the head of the free relative.
+accept	2.29:38.10	2.29:38.10	renders	The adjective renders the one-year measure.
+accept	2.29:38.11	2.29:38.9	renders	Expresses the age relation in the construct.
+accept	2.29:38.13	2.29:38.12	renders	Renders the daily rate prefix.
+accept	2.29:39.4	2.29:39.7	renders	The morning adverb incorporates the temporal prefix.
+accept	2.29:39.9	2.29:39.17	renders	Renders the evening-time preposition.
+accept	2.29:40.13	2.29:40.12	renders	Expresses the wine's use as a libation.
+accept	2.29:40.18	2.29:40.17	renders	Renders the per-lamb prefix.
+accept	2.29:41.4	2.29:41.7	renders	Renders the first preparation verb.
+accept	2.29:41.5	2.29:41.8	renders	Renders the evening-time preposition.
+accept	2.29:41.7	2.29:41.11	renders	Comparison prefix for the grain offering.
+accept	2.29:41.12	2.29:41.16	renders	Comparison prefix for the libation.
+accept	2.29:41.16	2.29:41.18	renders	Renders the second preparation verb.
+accept	2.29:41.17	2.29:41.19	renders	Dative renders the suffixed recipient preposition.
+accept	2.29:41.18	2.29:41.20	renders	Purpose prefix before the aroma.
+accept	2.29:41.19	2.29:41.21	renders	Renders the aroma noun.
+accept	2.29:41.21,2.29:41.22	2.29:41.23	renders	Both words render the fire offering.
+accept	2.29:42.1	2.29:42.2	renders	Adjective renders the continuity noun.
+accept	2.29:42.6	2.29:42.5	renders	Expresses the entrance noun's locative use.
+accept	2.29:42.8	2.29:42.5	renders	Expresses the entrance noun's construct relation.
+accept	2.29:42.11	2.29:42.8	renders	Preposition introducing the face phrase.
+accept	2.29:42.13	2.29:42.9	renders	Renders the face noun.
+accept	2.29:42.14	2.29:42.11	renders	Renders the relative marker.
+accept	2.29:42.15,2.29:42.17	2.29:42.12	renders	Auxiliary and infinitive render the meeting verb.
+accept	2.29:42.16	2.29:42.14	renders	Renders the first occurrence of «there».
+accept	2.29:42.18	2.29:42.13	renders	Dative renders «to you» plural.
+accept	2.29:42.19	2.29:42.15	renders	Purpose prefix for speaking.
+accept	2.29:42.21,2.29:42.22	2.29:42.17	renders	Renders «to you» singular.
+accept	2.29:43.3	2.29:43.2	renders	Renders the main verb of the meeting phrase.
+accept	2.29:43.6	2.29:43.4	renders	Dative renders the recipient prefix.
+accept	2.29:43.10	2.29:43.8	renders	Future auxiliary of the passive verb.
+accept	2.29:43.12	2.29:43.10	renders	Renders the first-person possessive suffix.
+accept	2.29:43.13	2.29:43.9	renders	Instrumental case renders the prefix.
+accept	2.29:44.14,2.29:44.15	2.29:44.18	renders	Expresses the understood subject and action of priestly service.
+accept	2.29:45.2,2.29:45.3	2.29:45.2	renders	Future auxiliary and first-person subject.
+accept	2.29:45.5	2.29:45.3,2.29:45.4	renders	Renders the compound preposition «in the midst of».
+accept	2.29:45.10	2.29:45.9	renders	Dative renders «to them».
+accept	2.29:45.11	2.29:45.10	renders	Predicative instrumental renders the lamed relation.
+accept	2.29:46.3	2.29:46.2	renders	Expresses the plural subject of knowing.
+accept	2.29:46.8	2.29:46.6	renders	Renders God in the first declaration.
+accept	2.29:46.15	2.29:46.13	renders	Renders the purpose prefix.
+accept	2.29:46.17	2.29:46.14	renders	Renders the infinitive's first-person subject suffix.
+accept	2.29:46.18	2.29:46.15,2.29:46.16	renders	Renders «in the midst of».
+accept	2.29:46.19	2.29:46.16	renders	Renders the plural suffix on «midst».

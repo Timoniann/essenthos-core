@@ -1,0 +1,134 @@
+kind	from	to	relation	reason
+fixed	2.38:1			Missing subject pronoun.
+fixed	2.38:2			Missing subject, source phrase, and object pronoun.
+fixed	2.38:3			Missing subjects and the phrase for the fire holders.
+fixed	2.38:4			Missing grate, net, subject, and half-height links.
+fixed	2.38:5			Missing casting clause, locative prefix, and receptacle wording.
+fixed	2.38:6			Missing subject and object pronouns.
+fixed	2.38:7			Missing pronouns, boards, and part of the hollow description.
+fixed	2.38:8			Mirror preposition mislinked. Missing base, service, and location links.
+fixed	2.38:9			Missing subject and directional preposition.
+ok	2.38:10			
+fixed	2.38:11			Missing direction and possessives. Material preposition mislinked.
+fixed	2.38:12			Missing direction and possessives.
+fixed	2.38:13			Missing directional preposition and both eastward terms.
+fixed	2.38:14			Missing compound number and possessives.
+fixed	2.38:15			Missing side references, compound number, and possessives.
+ok	2.38:16			
+fixed	2.38:17			Missing link to the final occurrence of pillars.
+fixed	2.38:18			Missing height and parts of two Hebrew expressions.
+fixed	2.38:19			Missing possessives for pillars and bases.
+ok	2.38:20			
+fixed	2.38:21			Missing inventory, relative, auxiliary, and agency links.
+fixed	2.38:22			Missing past-tense auxiliary link.
+fixed	2.38:23			Missing companion phrase and parts of the embroidery materials.
+fixed	2.38:24			Twenty-five differs from Hebrew twenty-nine. Missing measurement preposition.
+unsure	2.38:25			Number and measure links restored. The link for у in the census phrase is uncertain.
+fixed	2.38:26			Beka linked to skull. Missing rate, census, and number links.
+fixed	2.38:27			Missing verb, bases, and rate prepositions.
+fixed	2.38:28			Missing subject, object, and hundreds component.
+unsure	2.38:29			Hundreds component restored. The supplied copula has a compound predicate.
+fixed	2.38:30			Missing subject and both suffixed prepositional phrases.
+fixed	2.38:31			All linked to the tabernacle pegs occurrence.
+refuse	2.38:8.12	2.38:8.12		Preposition belongs to the preceding בְ.
+refuse	2.38:11.16	2.38:11.14		Supplied preposition before the bare material noun.
+refuse	2.38:24.14	2.38:24.21		Part of the differing compound number.
+refuse	2.38:24.15	2.38:24.20		Internal conjunction of the differing compound number.
+refuse	2.38:26.3	2.38:26.4		Beka is the weight, not the head.
+refuse	2.38:31.13	2.38:31.15		Wrong occurrence of all.
+accept	2.38:1.3	2.38:1.2	renders	Subject expressed by the verb form.
+accept	2.38:2.3	2.38:2.2	renders	Subject of the first verb.
+accept	2.38:2.10,2.38:2.11	2.38:2.7	renders	Preposition and its pronominal suffix.
+accept	2.38:2.17	2.38:2.12	renders	Suffixed object pronoun.
+accept	2.38:3.2	2.38:3.2	renders	Subject of the first making verb.
+accept	2.38:3.14,2.38:3.15,2.38:3.16	2.38:3.25	renders	Whole phrase renders the fire holders.
+accept	2.38:3.21	2.38:3.28	renders	Subject of the second making verb.
+accept	2.38:4.2	2.38:4.6	renders	Grate noun.
+accept	2.38:4.4	2.38:4.2	renders	Subject expressed by the verb form.
+accept	2.38:4.10	2.38:4.8	renders	Net noun.
+accept	2.38:4.14	2.38:4.12,2.38:4.13	renders	Prefixes forming the expression from below.
+accept	2.38:4.16,2.38:4.17	2.38:4.16	renders	Half and its possessive suffix.
+accept	2.38:5.2,2.38:5.3	2.38:5.2	renders	Casting verb and its subject.
+accept	2.38:5.6	2.38:5.5	renders	Locative prefix at the four ends.
+accept	2.38:5.13	2.38:5.13	renders	Part of the phrase rendering sockets.
+accept	2.38:6.3	2.38:6.2	renders	Subject expressed by the making verb.
+accept	2.38:6.10	2.38:6.10	renders	Suffixed plural object pronoun.
+accept	2.38:7.3	2.38:7.2	renders	Subject of the insertion verb.
+accept	2.38:7.12	2.38:7.16	renders	Instrumental pronoun renders the suffixed preposition.
+accept	2.38:7.14	2.38:7.15	renders	Object of the carrying verb.
+accept	2.38:7.16	2.38:7.17	renders	Part of the phrase expressing hollowness.
+accept	2.38:7.18	2.38:7.20	renders	Object of the final making verb.
+accept	2.38:7.20	2.38:7.18	renders	Boards used in construction.
+accept	2.38:8.3	2.38:8.2	renders	Subject expressed by the verb form.
+accept	2.38:8.8,2.38:8.9	2.38:8.9	renders	Base and its possessive suffix.
+accept	2.38:8.12	2.38:8.11	renders	Preposition introducing the mirrors.
+accept	2.38:8.14	2.38:8.14	renders	Feminine participle denotes the women.
+accept	2.38:8.16,2.38:8.17	2.38:8.16	renders	Whole phrase renders serving.
+accept	2.38:8.18	2.38:8.17	renders	Entrance noun functions as a place expression.
+accept	2.38:9.3	2.38:9.2	renders	Subject expressed by the verb form.
+accept	2.38:9.5	2.38:9.6	renders	Directional prefix on side.
+accept	2.38:11.2	2.38:11.2	renders	Directional prefix on side.
+accept	2.38:11.8,2.38:11.9	2.38:11.9	renders	Phrase renders the pillars' possessive suffix.
+accept	2.38:11.13,2.38:11.14	2.38:11.12	renders	Phrase renders the bases' possessive suffix.
+accept	2.38:12.2	2.38:12.2	renders	Directional prefix on side.
+accept	2.38:12.9,2.38:12.10	2.38:12.10	renders	Phrase renders the pillars' possessive suffix.
+accept	2.38:12.14,2.38:12.15	2.38:12.13	renders	Phrase renders the bases' possessive suffix.
+accept	2.38:13.2	2.38:13.2	renders	Directional prefix on side.
+accept	2.38:13.4	2.38:13.4	renders	Frontward term.
+accept	2.38:13.5	2.38:13.5	renders	Sunrise denotes east.
+accept	2.38:14.4	2.38:14.2,2.38:14.3	renders	Both parts of fifteen.
+accept	2.38:14.7,2.38:14.8	2.38:14.8	renders	Phrase renders the pillars' possessive suffix.
+accept	2.38:14.12,2.38:14.13	2.38:14.11	renders	Phrase renders the bases' possessive suffix.
+accept	2.38:15.5	2.38:15.7	renders	First from prefix.
+accept	2.38:15.8	2.38:15.10	renders	Second from prefix.
+accept	2.38:15.9,2.38:15.10	2.38:15.11	renders	Second demonstrative denotes the other side.
+accept	2.38:15.15	2.38:15.17,2.38:15.18	renders	Both parts of fifteen.
+accept	2.38:15.18,2.38:15.19	2.38:15.20	renders	Phrase renders the pillars' possessive suffix.
+accept	2.38:15.23,2.38:15.24	2.38:15.23	renders	Phrase renders the bases' possessive suffix.
+accept	2.38:17.20	2.38:17.23	renders	Pillars in the final clause.
+accept	2.38:18.11	2.38:18.12	renders	First component of the scarlet dye term.
+accept	2.38:18.20	2.38:18.22	renders	Height noun.
+accept	2.38:18.25	2.38:18.27	renders	Prefix forming the compound preposition.
+accept	2.38:19.3,2.38:19.4	2.38:19.2	renders	Phrase renders the pillars' possessive suffix.
+accept	2.38:19.8,2.38:19.9	2.38:19.5	renders	Phrase renders the bases' possessive suffix.
+accept	2.38:21.2	2.38:21.2	renders	Inventory noun.
+accept	2.38:21.6	2.38:21.8	renders	Written relative word.
+accept	2.38:21.7	2.38:21.9	renders	Auxiliary of the passive verb.
+accept	2.38:21.9	2.38:21.10	renders	Preposition in the command expression.
+accept	2.38:21.12,2.38:21.13	2.38:21.13	renders	Phrase renders the Levites' service.
+accept	2.38:21.15	2.38:21.16	renders	Prefix in the expression for supervision.
+accept	2.38:22.14	2.38:22.14	renders	Auxiliary of the past command.
+accept	2.38:23.2,2.38:23.3	2.38:23.2	renders	With and its pronominal suffix.
+accept	2.38:23.14	2.38:23.16	renders	Blue material noun.
+accept	2.38:23.16	2.38:23.18	renders	Instrumental case renders the material prefix.
+accept	2.38:23.18	2.38:23.22,2.38:23.25	renders	Material prefix and remaining scarlet component.
+accept	2.38:23.20	2.38:23.27	renders	Instrumental case renders the material prefix.
+accept	2.38:24.24	2.38:24.29	renders	Prefix introducing the weight standard.
+accept	2.38:25.6	2.38:25.3	renders	Substantival participle denotes the men counted.
+accept	2.38:25.12	2.38:25.12	renders	Hundreds component of seven hundred.
+accept	2.38:25.16	2.38:25.14	renders	Five within seventy-five.
+accept	2.38:25.18	2.38:25.18	renders	Prefix introducing the weight standard.
+accept	2.38:26.1	2.38:26.2	renders	Per-head rate prefix.
+accept	2.38:26.2	2.38:26.4	renders	Head in the per-head rate.
+accept	2.38:26.3	2.38:26.1	renders	Beka weight unit.
+accept	2.38:26.7	2.38:26.8	renders	Prefix introducing the weight standard.
+accept	2.38:26.13,2.38:26.14	2.38:26.15	renders	Relative phrase renders the participle.
+accept	2.38:26.15	2.38:26.16	renders	Preposition introducing the census expression.
+accept	2.38:26.24	2.38:26.26,2.38:26.27	renders	Both parts of six hundred.
+accept	2.38:26.30	2.38:26.33,2.38:26.34	renders	Both parts of five hundred.
+accept	2.38:27.2	2.38:27.2	renders	Written verb of being.
+accept	2.38:27.6	2.38:27.7	renders	Purpose prefix on casting.
+accept	2.38:27.8	2.38:27.10	renders	Bases of the sanctuary.
+accept	2.38:27.9	2.38:27.12	renders	Sanctuary noun.
+accept	2.38:27.13	2.38:27.18	renders	Hundred counting the bases.
+accept	2.38:27.15	2.38:27.20	renders	Rate prefix on the hundred talents.
+accept	2.38:27.19	2.38:27.25	renders	Per-base rate prefix.
+accept	2.38:27.20	2.38:27.27	renders	Singular base in the rate.
+accept	2.38:28.5	2.38:28.8	renders	Hundreds component of seven hundred.
+accept	2.38:28.12	2.38:28.13	renders	Subject expressed by the making verb.
+accept	2.38:28.22	2.38:28.23	renders	Suffixed plural object pronoun.
+accept	2.38:29.11	2.38:29.10	renders	Four component of four hundred.
+accept	2.38:30.3	2.38:30.2	renders	Subject expressed by the making verb.
+accept	2.38:30.4,2.38:30.5	2.38:30.3	renders	Material preposition and its feminine suffix.
+accept	2.38:30.14	2.38:30.20	renders	Possessive renders the suffixed preposition.
+accept	2.38:31.13	2.38:31.21	renders	All modifying the courtyard pegs.

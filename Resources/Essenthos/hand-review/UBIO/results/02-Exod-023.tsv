@@ -1,0 +1,176 @@
+kind	from	to	relation	reason
+fixed	2.23:1			Missing auxiliary, negation, verb, and nouns.
+fixed	2.23:2			Missing verbs and prepositional phrases.
+ok	2.23:3			
+fixed	2.23:4			Missing possessor, relative word, and recipient.
+fixed	2.23:5			Missing possessor, relative word, and assistance links.
+ok	2.23:6			
+fixed	2.23:7			Missing adjective and first-person subject.
+ok	2.23:8			
+unsure	2.23:9			Auxiliary and copula restored. The contribution of самі is uncertain.
+fixed	2.23:10			Missing possessed noun and auxiliary.
+fixed	2.23:11			Missing verb, auxiliaries, remainder phrase, and manner phrase.
+fixed	2.23:12			Temporal case and donkey phrase restored. Repeated purpose marker redirected.
+fixed	2.23:13			Missing recipient, verbs, subject, and preposition.
+fixed	2.23:14			Missing frequency noun, preposition, and recipient.
+fixed	2.23:15			Missing verb forms, pronouns, and parts of idiomatic phrases.
+fixed	2.23:16			Missing work nouns, temporal preposition, and gathering verb.
+fixed	2.23:17			Preposition redirected. Missing auxiliary, collective noun, possessor, and title.
+fixed	2.23:18			Missing verb forms, preposition, and festival offering noun.
+fixed	2.23:19			Missing destination marker, auxiliary, and animal rendered as lamb.
+fixed	2.23:20			Missing prepositions, objects, motion verb, and first-person subject.
+unsure	2.23:21			Missing verbs and pronouns restored. The rendering of מִ before face is uncertain.
+unsure	2.23:22			Condition and hostile actions restored. The separate link for проти is uncertain.
+fixed	2.23:23			Missing front phrase and destruction links.
+fixed	2.23:24			Missing auxiliaries, negations, emphasis, and breaking verb.
+fixed	2.23:25			Missing pronouns and phrases. Hebrew addresses a plural subject in the first clause.
+fixed	2.23:26			Missing existential verb, miscarriage phrase, and negative coordinator.
+fixed	2.23:27			Missing front phrase, confusion phrase, and pronominal complements.
+unsure	2.23:28			Pronouns and second front relation restored. Separate prefix links in перед тобою are uncertain.
+fixed	2.23:29			Missing possessor, copula, shared negation, and prepositional phrase.
+fixed	2.23:30			Missing repetition, expulsion forms, time marker, and possession verb.
+fixed	2.23:31			Missing boundary phrase, endpoint markers, and reflexive pronoun.
+fixed	2.23:32			Possessive redirected and covenant partners restored.
+fixed	2.23:33			Missing verb forms, pronouns, and parts of the sin phrase.
+refuse	2.23:12.19	2.23:12.18		Purpose marker belongs to the shared subordinator.
+refuse	2.23:17.11	2.23:17.10		The explicit face noun is rendered by лицем.
+refuse	2.23:32.8	2.23:32.5		Possessive belongs to the suffix on gods.
+accept	2.23:1.2	2.23:1.2	renders	Future auxiliary.
+accept	2.23:1.5	2.23:1.3	renders	Hearsay noun.
+accept	2.23:1.6	2.23:1.5	renders	Second prohibition.
+accept	2.23:1.7	2.23:1.6	renders	Verb meaning put.
+accept	2.23:1.15	2.23:1.13	renders	Wrongdoing rendered as falsehood.
+accept	2.23:2.2	2.23:2.2	renders	Finite verb meaning be.
+accept	2.23:2.3	2.23:2.3	renders	Following the majority rendered as being with it.
+accept	2.23:2.4	2.23:2.4	renders	First majority occurrence.
+accept	2.23:2.6	2.23:2.6	renders	Verbal expansion of doing evil.
+accept	2.23:2.12	2.23:2.10	renders	Preposition introducing the lawsuit.
+accept	2.23:2.13	2.23:2.11	renders	Lawsuit noun.
+accept	2.23:2.14	2.23:2.13	renders	First bending verb.
+accept	2.23:2.15	2.23:2.14	renders	Second preposition governing majority.
+accept	2.23:4.4,2.23:4.5	2.23:4.4	renders	Enemy and second-person possessor.
+accept	2.23:4.9	2.23:4.7	renders	Relative word expands the participle.
+accept	2.23:4.15	2.23:4.10	renders	Suffixed recipient.
+accept	2.23:5.4,2.23:5.5	2.23:5.4	renders	Enemy and second-person possessor.
+accept	2.23:5.6	2.23:5.5	renders	Relative word expands the participle.
+accept	2.23:5.11	2.23:5.8	renders	Marks the result clause.
+accept	2.23:5.14	2.23:5.11	renders	First helping verb.
+accept	2.23:5.15	2.23:5.12	renders	Suffixed recipient.
+accept	2.23:5.16	2.23:5.13	renders	Infinitive absolute emphasis.
+accept	2.23:5.18,2.23:5.19,2.23:5.20	2.23:5.15	renders	Companionship and the pronominal suffix.
+accept	2.23:7.6	2.23:7.6	renders	Innocence adjective.
+accept	2.23:7.12	2.23:7.13	renders	First-person verbal subject.
+accept	2.23:9.4	2.23:9.4	renders	Future auxiliary.
+accept	2.23:9.13	2.23:9.14	renders	Written verb meaning were.
+accept	2.23:10.6,2.23:10.7	2.23:10.6	renders	Land and second-person possessor.
+accept	2.23:10.9	2.23:10.8	renders	Future auxiliary for gathering.
+accept	2.23:11.6,2.23:11.7	2.23:11.6	renders	Abandoning verb and object suffix.
+accept	2.23:11.9	2.23:11.8	renders	First eating auxiliary.
+accept	2.23:11.15,2.23:11.16,2.23:11.17	2.23:11.12	renders	What remains after them.
+accept	2.23:11.18	2.23:11.13	renders	Second eating auxiliary.
+accept	2.23:11.22,2.23:11.23	2.23:11.17	renders	Manner expressed as так само.
+accept	2.23:12.9	2.23:12.6	renders	Temporal genitive renders the day preposition.
+accept	2.23:12.16,2.23:12.17	2.23:12.16	renders	Donkey and second-person possessor.
+accept	2.23:12.19	2.23:12.12	renders	Shared purpose marker governs both verbs.
+accept	2.23:13.6	2.23:13.6	renders	Suffixed recipient.
+accept	2.23:13.8	2.23:13.7	renders	Verb of keeping the instructions.
+accept	2.23:13.16,2.23:13.18	2.23:13.15	renders	Passive future auxiliary and verbal subject.
+accept	2.23:13.19	2.23:13.16	renders	Preposition meaning upon.
+accept	2.23:14.2	2.23:14.2	renders	Occurrences counted as times.
+accept	2.23:14.3	2.23:14.5	renders	Annual frequency preposition.
+accept	2.23:14.7	2.23:14.4	renders	First-person recipient.
+accept	2.23:15.2	2.23:15.5	renders	Main verb of observance.
+accept	2.23:15.10	2.23:15.10,2.23:15.11	renders	Comparative subordinator.
+accept	2.23:15.12	2.23:15.12	renders	Addressee suffix on commanded.
+accept	2.23:15.14	2.23:15.13	renders	Temporal genitive renders the appointment preposition.
+accept	2.23:15.18,2.23:15.19	2.23:15.19	renders	Preposition and its pronominal suffix.
+accept	2.23:15.20,2.23:15.21	2.23:15.20	renders	Verbal subject and past auxiliary.
+accept	2.23:15.27	2.23:15.25	renders	Future auxiliary for appearing.
+accept	2.23:15.32,2.23:15.34	2.23:15.27	renders	Parts of the empty-handed expression.
+accept	2.23:16.5	2.23:16.6	renders	First occurrence of work.
+accept	2.23:16.14	2.23:16.16	renders	Preposition introducing the year's end.
+accept	2.23:16.18,2.23:16.19	2.23:16.21	renders	Gathering infinitive with subject suffix.
+accept	2.23:16.22,2.23:16.23	2.23:16.23	renders	Second work noun and its possessor.
+accept	2.23:17.5	2.23:17.6	renders	Future auxiliary for appearing.
+accept	2.23:17.9,2.23:17.10	2.23:17.8	renders	Collective male population and its possessor.
+accept	2.23:17.11	2.23:17.9	renders	Preposition governing the explicit face noun.
+accept	2.23:17.13	2.23:17.12	renders	Title meaning sovereign.
+accept	2.23:18.2,2.23:18.3	2.23:18.2	renders	Future form of the sacrificial verb.
+accept	2.23:18.7	2.23:18.3	renders	Preposition governing leaven.
+accept	2.23:18.13	2.23:18.11	renders	Festival offering whose fat is specified.
+accept	2.23:18.15,2.23:18.16	2.23:18.9	renders	Future form of staying overnight.
+accept	2.23:19.6	2.23:19.5	renders	Bare house noun functions as destination.
+accept	2.23:19.12	2.23:19.9	renders	Future auxiliary for boiling.
+accept	2.23:19.14	2.23:19.10	renders	Young animal rendered as lamb.
+accept	2.23:20.5	2.23:20.5	renders	Preposition governing the face noun.
+accept	2.23:20.8	2.23:20.7	renders	First purpose prefix.
+accept	2.23:20.13	2.23:20.8	renders	Object suffix on guard.
+accept	2.23:20.16,2.23:20.17	2.23:20.14	renders	Bringing verb and its object suffix.
+accept	2.23:20.22	2.23:20.19	renders	First-person verbal subject.
+accept	2.23:21.3,2.23:21.4	2.23:21.3	renders	Face and its possessor.
+accept	2.23:21.8	2.23:21.6	renders	Genitive complement renders the prepositional complement.
+accept	2.23:21.10	2.23:21.9	renders	Verb meaning rebel.
+accept	2.23:21.11	2.23:21.10	renders	Pronominal complement of rebel.
+accept	2.23:21.13,2.23:21.15	2.23:21.13	renders	Forgiving verb and its subject.
+accept	2.23:21.22	2.23:21.19	renders	Pronominal suffix on interior.
+accept	2.23:22.1	2.23:22.2	renders	Conditional marker.
+accept	2.23:22.2	2.23:22.1	renders	Adversative part of the conditional opening.
+accept	2.23:22.3	2.23:22.3	renders	Infinitive absolute emphasis.
+accept	2.23:22.7	2.23:22.5	renders	Genitive complement renders the prepositional complement.
+accept	2.23:22.14,2.23:22.15,2.23:22.16	2.23:22.13	renders	First-person future of acting as an enemy.
+accept	2.23:22.18	2.23:22.15	renders	Enemies noun.
+accept	2.23:22.21,2.23:22.22	2.23:22.17	renders	Future form of opposing.
+accept	2.23:22.23,2.23:22.24	2.23:22.19	renders	Oppressors and their second-person possessor.
+accept	2.23:23.5	2.23:23.4	renders	Preposition governing the face noun.
+accept	2.23:23.6,2.23:23.7	2.23:23.5	renders	Face and its possessor.
+accept	2.23:23.24,2.23:23.25	2.23:23.26	renders	Destruction verb and its object suffix.
+accept	2.23:24.2	2.23:24.2	renders	Future auxiliary for bowing.
+accept	2.23:24.5	2.23:24.3	renders	Dative renders the bowing complement prefix.
+accept	2.23:24.8,2.23:24.10	2.23:24.7	renders	Service verb's object and future auxiliary.
+accept	2.23:24.9	2.23:24.6	renders	Prohibition against serving.
+accept	2.23:24.12	2.23:24.9	renders	Prohibition against copying deeds.
+accept	2.23:24.13,2.23:24.14	2.23:24.10	renders	Future form of doing.
+accept	2.23:24.15	2.23:24.11	renders	Preposition of conformity.
+accept	2.23:24.19	2.23:24.14	renders	First infinitive absolute emphasis.
+accept	2.23:24.22	2.23:24.17	renders	Second infinitive absolute emphasis.
+accept	2.23:24.23	2.23:24.18	renders	Finite verb meaning break.
+accept	2.23:25.2,2.23:25.4	2.23:25.2	renders	Service auxiliary and second-person subject.
+accept	2.23:25.6,2.23:25.7	2.23:25.5	renders	God and the addressee possessor.
+accept	2.23:25.9	2.23:25.7	renders	Third-person subject of blessing.
+accept	2.23:25.17	2.23:25.16,2.23:25.17	renders	From and interior expressed together.
+accept	2.23:25.18	2.23:25.17	renders	Second-person suffix on interior.
+accept	2.23:26.5	2.23:26.2	renders	Written existential verb.
+accept	2.23:26.6,2.23:26.7,2.23:26.9	2.23:26.3	renders	Substantival participle expanded as a miscarriage clause.
+accept	2.23:26.10	2.23:26.4	renders	Coordinator within the negative clause.
+accept	2.23:27.4	2.23:27.4	renders	Preposition governing the face noun.
+accept	2.23:27.5,2.23:27.6	2.23:27.5	renders	Face and its possessor.
+accept	2.23:27.9,2.23:27.10	2.23:27.7	renders	Result phrase within the verb meaning confuse.
+accept	2.23:27.15	2.23:27.13	renders	Second-person verbal subject.
+accept	2.23:27.17,2.23:27.18	2.23:27.14	renders	Spatial preposition and collective referent.
+accept	2.23:27.24,2.23:27.25	2.23:27.20	renders	Directional preposition and pronominal suffix.
+accept	2.23:28.5	2.23:28.7	renders	Second-person suffix in the first front phrase.
+accept	2.23:28.7	2.23:28.9	renders	Subject of driving out.
+accept	2.23:28.9,2.23:28.10	2.23:28.22	renders	Front relation and suffix in the second occurrence.
+accept	2.23:29.5	2.23:29.4	renders	Second-person suffix on face.
+accept	2.23:29.11	2.23:29.9	renders	Written verb meaning become.
+accept	2.23:29.16	2.23:29.8	renders	Shared lest particle governs the second verb.
+accept	2.23:29.18,2.23:29.19	2.23:29.15	renders	Preposition and its pronominal suffix.
+accept	2.23:30.1	2.23:30.2	renders	Second half of the gradual repetition.
+accept	2.23:30.2,2.23:30.3,2.23:30.5	2.23:30.3	renders	Subject, auxiliary, and verb of expulsion.
+accept	2.23:30.7	2.23:30.5	renders	Second-person suffix on face.
+accept	2.23:30.8	2.23:30.6	renders	Temporal endpoint marker.
+accept	2.23:30.13	2.23:30.10	renders	Verb of taking possession.
+accept	2.23:31.2	2.23:31.2	renders	Verb meaning set.
+accept	2.23:31.3	2.23:31.4	renders	Boundary noun.
+accept	2.23:31.9,2.23:31.10	2.23:31.9	renders	First endpoint expression.
+accept	2.23:31.16	2.23:31.15	renders	Emphasis in the second endpoint expression.
+accept	2.23:31.32	2.23:31.29	renders	Reflexive renders the second-person suffix.
+accept	2.23:32.4,2.23:32.5	2.23:32.3	renders	First covenant partner and pronominal suffix.
+accept	2.23:32.7	2.23:32.5	renders	Preposition introducing the second covenant partner.
+accept	2.23:32.8	2.23:32.6	renders	Possessive suffix on gods.
+accept	2.23:33.2,2.23:33.4	2.23:33.2	renders	Future auxiliary and plural subject.
+accept	2.23:33.12,2.23:33.13	2.23:33.6	renders	Result phrase within the verb meaning cause to sin.
+accept	2.23:33.14,2.23:33.15	2.23:33.8	renders	Preposition and suffix marking the offended party.
+accept	2.23:33.16	2.23:33.9	renders	First clause marker rendered temporally.
+accept	2.23:33.22	2.23:33.14	renders	Explicit subject of the verb meaning be.
+accept	2.23:33.25	2.23:33.15	renders	Suffixed second-person beneficiary.

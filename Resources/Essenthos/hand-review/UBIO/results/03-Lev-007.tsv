@@ -1,0 +1,257 @@
+kind	from	to	relation	reason
+fixed	3.7:1			Completed the superlative and linked the subject pronoun.
+fixed	3.7:2			Corrected the possessive and completed the guilt-offering phrase.
+fixed	3.7:3			Linked the suffixes, subject pronoun and participial relative.
+fixed	3.7:4			Linked the prepositions, pronominal suffix and removal verb.
+fixed	3.7:5			Completed the connective, object, altar phrase and offering clause.
+fixed	3.7:6			Completed the eating clauses and the superlative.
+fixed	3.7:7			Completed the offering phrases, comparison and pronominal forms.
+fixed	3.7:8			Linked the participial relative, possessor, second verb and recipient.
+fixed	3.7:9			Unswapped the oven and baking links and completed the final clause.
+fixed	3.7:10			Completed the possession clause and the distributive comparison.
+fixed	3.7:11			Corrected the sacrifice noun and completed the construct and relative phrases.
+fixed	3.7:12			Corrected the first mixing participle and supplied missing ingredient and form links.
+fixed	3.7:13			Linked the accompanying prepositions, subject and possessive.
+unsure	3.7:14			The scope of the first «це буде» remains uncertain.
+fixed	3.7:15			Corrected the sacrifice noun and completed the possessive and prohibition.
+fixed	3.7:16			Corrected the conjunction occurrences and completed the remainder and time clauses.
+fixed	3.7:17			Linked the remainder, slaughter-sacrifice modifier and passive auxiliary.
+fixed	3.7:18			Corrected the sacrifice noun and completed the relative and penalty clauses.
+fixed	3.7:19			Completed the contact, burning and eating links.
+fixed	3.7:20			Corrected the sacrifice noun and linked the possession, impurity and penalty forms.
+fixed	3.7:21			Corrected the contact preposition and sacrifice noun and completed the conditional clauses.
+ok	3.7:22			
+fixed	3.7:23			Linked the command, negative coordination and goat term.
+fixed	3.7:24			Linked the construct relation, purpose noun, emphasis and auxiliary.
+fixed	3.7:25			Completed the two participial clauses and the fire-offering term.
+fixed	3.7:26			Linked the genitives to their respective source prefixes.
+fixed	3.7:27			Linked the demonstrative to its written counterpart.
+ok	3.7:28			
+fixed	3.7:29			Corrected the second sacrifice noun and completed the recipient and verb links.
+fixed	3.7:30			Separated the preposition from the face noun and completed the offering phrases.
+fixed	3.7:31			Linked the directional altar ending and both recipient prefixes.
+fixed	3.7:32			Corrected the sacrifice noun and completed the thigh and contribution phrases.
+fixed	3.7:33			Linked the relative, partitive, recipient and right-side terms.
+fixed	3.7:34			Completed the compound prepositions, offering, object and recipient links.
+fixed	3.7:35			Completed both anointing-share phrases and the priestly service clause.
+fixed	3.7:36			Linked the recipient, anointing, object and prepositions.
+fixed	3.7:37			Linked each topical preposition and completed the sin-offering phrase.
+fixed	3.7:38			Linked the pluperfect auxiliary, offerings and recipient prefix.
+refuse	3.7:2.12	3.7:2.15		The blood noun carries the possessive suffix.
+refuse	3.7:9.7	3.7:9.5		Oven noun linked to baking verb.
+refuse	3.7:9.9	3.7:9.8		Baking participle linked to oven noun.
+refuse	3.7:11.6	3.7:11.6		Sacrifice noun is separately written.
+refuse	3.7:12.14	3.7:12.28		Wrong occurrence of the mixing participle.
+refuse	3.7:15.4	3.7:15.5		Sacrifice noun is separately written.
+refuse	3.7:16.20	3.7:16.14		This connective introduces the remainder.
+refuse	3.7:16.24	3.7:16.17		This connective modifies the next-day phrase.
+refuse	3.7:18.9	3.7:18.8		Sacrifice noun is separately written.
+refuse	3.7:20.9	3.7:20.10		Sacrifice noun is separately written.
+refuse	3.7:21.5	3.7:21.4		Contact preposition is separately written.
+refuse	3.7:21.27	3.7:21.26		Sacrifice noun is separately written.
+refuse	3.7:29.21	3.7:29.21		Sacrifice noun is separately written.
+refuse	3.7:30.17	3.7:30.21		The face noun is rendered by «лицем».
+refuse	3.7:32.6	3.7:32.13		Sacrifice noun is separately written.
+accept	3.7:1.7	3.7:1.6	renders	First noun of the Hebrew superlative.
+accept	3.7:1.8	3.7:1.8	renders	Written subject pronoun.
+accept	3.7:2.8	3.7:2.11	renders	Part of the guilt-offering term.
+accept	3.7:2.12	3.7:2.14	renders	Possessive suffix on blood.
+accept	3.7:3.3	3.7:3.4	renders	Possessive suffix on fat.
+accept	3.7:3.5,3.7:3.6	3.7:3.6	renders	Preposition and its pronominal suffix.
+accept	3.7:3.7	3.7:3.5	renders	Subject expressed by the verb form.
+accept	3.7:3.12	3.7:3.15	renders	Relative construction renders the participle.
+accept	3.7:4.7,3.7:4.8	3.7:4.11	renders	Preposition and its pronominal suffix.
+accept	3.7:4.10	3.7:4.13	renders	Preposition governing the loins.
+accept	3.7:4.14	3.7:4.20	renders	Preposition governing the liver.
+accept	3.7:4.16	3.7:4.26	renders	Removal verb.
+accept	3.7:4.17	3.7:4.23	renders	Preposition of accompaniment.
+accept	3.7:5.2	3.7:5.1	renders	Part of the compound connective.
+accept	3.7:5.4	3.7:5.3	renders	Written object pronoun.
+accept	3.7:5.6	3.7:5.7	renders	Directional ending on the altar noun.
+accept	3.7:5.10	3.7:5.8	renders	Part of the fire-offering term.
+accept	3.7:5.16	3.7:5.12	renders	Written subject pronoun.
+accept	3.7:6.8	3.7:6.6	renders	Object suffix on the active verb.
+accept	3.7:6.9	3.7:6.7	renders	Locative prefix.
+accept	3.7:6.13,3.7:6.14	3.7:6.10	renders	Subject and participle express the passive verb.
+accept	3.7:6.15	3.7:6.11	renders	First noun of the Hebrew superlative.
+accept	3.7:6.16	3.7:6.13	renders	Written subject pronoun.
+accept	3.7:7.4	3.7:7.3	renders	Part of the sin-offering term.
+accept	3.7:7.6,3.7:7.7	3.7:7.4	renders	Second comparison prefix.
+accept	3.7:7.10	3.7:7.6	renders	Part of the guilt-offering term.
+accept	3.7:7.13	3.7:7.9	renders	Suffixed preposition referring to both offerings.
+accept	3.7:7.18	3.7:7.14	renders	Instrumental equivalent of the suffixed preposition.
+accept	3.7:7.19	3.7:7.15	renders	Suffixed preposition marking the recipient.
+accept	3.7:7.20	3.7:7.16	renders	Subject expressed by the verb form.
+accept	3.7:8.3	3.7:8.5	renders	Relative construction renders the participle.
+accept	3.7:8.5	3.7:8.8	renders	Indefinite possessor in the construct phrase.
+accept	3.7:8.10,3.7:8.11	3.7:8.13	renders	Finite verb and its subject.
+accept	3.7:8.12	3.7:8.14	renders	Dative ending renders the recipient prefix.
+accept	3.7:8.13	3.7:8.17	renders	Suffixed recipient preposition.
+accept	3.7:8.14	3.7:8.18	renders	Subject expressed by the verb form.
+accept	3.7:9.7	3.7:9.8	renders	Oven noun.
+accept	3.7:9.8,3.7:9.9	3.7:9.5	renders	Auxiliary and participle render the passive verb.
+accept	3.7:9.18	3.7:9.18	renders	Dative ending renders the recipient prefix.
+accept	3.7:9.19	3.7:9.22	renders	Relative construction renders the participle.
+accept	3.7:9.21	3.7:9.23	renders	Written object pronoun.
+accept	3.7:9.22	3.7:9.24	renders	Suffixed recipient preposition.
+accept	3.7:9.23	3.7:9.25	renders	Subject expressed by the verb form.
+accept	3.7:10.10,3.7:10.11	3.7:10.14	renders	Finite verb and its subject.
+accept	3.7:10.13	3.7:10.10	renders	Dative head renders the recipient prefix.
+accept	3.7:10.16	3.7:10.15	renders	Individual member of the distributive comparison.
+accept	3.7:10.17,3.7:10.18	3.7:10.16	renders	Correlative words express the equality comparison.
+accept	3.7:10.19	3.7:10.17	renders	The other member of the distributive comparison.
+accept	3.7:11.4	3.7:11.3	renders	Marks the topic expressed by the construct.
+accept	3.7:11.6	3.7:11.4	renders	Explicit sacrifice noun.
+accept	3.7:11.8	3.7:11.8	renders	Indefinite subject of the verb.
+accept	3.7:11.10	3.7:11.7	renders	Resumptive pronoun expresses the relative's object role.
+accept	3.7:11.11	3.7:11.9	renders	Dative ending renders the recipient prefix.
+accept	3.7:12.3	3.7:12.4	renders	Object suffix on the first offering verb.
+accept	3.7:12.4	3.7:12.2	renders	Preposition governing thanksgiving.
+accept	3.7:12.7	3.7:12.6	renders	Subject of the second offering verb.
+accept	3.7:12.9	3.7:12.7	renders	Preposition governing the thanksgiving sacrifice.
+accept	3.7:12.13	3.7:12.11	renders	First occurrence of cakes.
+accept	3.7:12.14	3.7:12.13	renders	Mixing participle modifying the first cakes.
+accept	3.7:12.18	3.7:12.19	renders	Unleavened modifier of the wafers.
+accept	3.7:12.19	3.7:12.18	renders	Wafer noun.
+accept	3.7:12.21	3.7:12.21	renders	Instrumental ending renders the prefix.
+accept	3.7:13.1,3.7:13.2	3.7:13.1	renders	Compound expression of accompaniment.
+accept	3.7:13.7	3.7:13.5	renders	Subject expressed by the verb form.
+accept	3.7:13.10	3.7:13.7	renders	Preposition accompanying the thanksgiving sacrifice.
+accept	3.7:13.14	3.7:13.10	renders	Possessive suffix on the peace-offering term.
+accept	3.7:14.3	3.7:14.2	renders	Subject expressed by the verb form.
+accept	3.7:14.4	3.7:14.4	renders	Expresses the unspecified item counted by one.
+accept	3.7:14.7	3.7:14.6	renders	Each offering.
+accept	3.7:14.8	3.7:14.7	renders	Offering noun in the partitive phrase.
+accept	3.7:14.14	3.7:14.11	renders	Dative ending renders the recipient prefix.
+accept	3.7:14.15	3.7:14.15	renders	Relative construction renders the participle.
+accept	3.7:14.21	3.7:14.20	renders	Suffixed recipient preposition.
+accept	3.7:15.3	3.7:15.5	renders	Modifier renders the peace-offering term.
+accept	3.7:15.4	3.7:15.3	renders	Explicit sacrifice noun.
+accept	3.7:15.6	3.7:15.5	renders	Possessive suffix on the peace-offering term.
+accept	3.7:15.14	3.7:15.11	renders	Verb prohibiting leftovers.
+accept	3.7:15.15,3.7:15.16	3.7:15.12	renders	Partitive preposition and its suffix.
+accept	3.7:15.17	3.7:15.10	renders	Negative concord expresses the prohibition's scope.
+accept	3.7:15.18	3.7:15.13	renders	Preposition marking the time limit.
+accept	3.7:16.11,3.7:16.13	3.7:16.13	renders	Subject and participle express the first passive verb.
+accept	3.7:16.16,3.7:16.17	3.7:16.10	renders	Infinitive construct and its subject suffix.
+accept	3.7:16.20	3.7:16.17	renders	Connective introducing what remains.
+accept	3.7:16.21	3.7:16.19	renders	Substantival participle meaning what remains.
+accept	3.7:16.22,3.7:16.23	3.7:16.20	renders	Partitive preposition and its suffix.
+accept	3.7:16.24	3.7:16.14	renders	Additive connective with the next-day phrase.
+accept	3.7:16.25	3.7:16.15	renders	Adverb incorporates the temporal prefix.
+accept	3.7:17.2	3.7:17.3	renders	Substantival participle meaning what remains.
+accept	3.7:17.5	3.7:17.7	renders	Expresses the slaughter sense of the sacrifice noun.
+accept	3.7:17.10	3.7:17.16	renders	Auxiliary of the passive burning verb.
+accept	3.7:18.6	3.7:18.5	renders	Partitive prefix on flesh.
+accept	3.7:18.9	3.7:18.7	renders	Explicit sacrifice noun.
+accept	3.7:18.18,3.7:18.19	3.7:18.17	renders	Personal relative construction renders the substantival participle.
+accept	3.7:18.21	3.7:18.18	renders	Written object pronoun.
+accept	3.7:18.22,3.7:18.25	3.7:18.20	renders	Subject and participle express the passive reckoning verb.
+accept	3.7:18.26	3.7:18.21	renders	Suffixed recipient preposition.
+accept	3.7:18.28	3.7:18.22	renders	Predicate noun for the rejected meat.
+accept	3.7:18.30	3.7:18.26	renders	Personal relative expresses the person who eats.
+accept	3.7:18.33	3.7:18.29	renders	Pronominal suffix on the partitive preposition.
+accept	3.7:18.34	3.7:18.31	renders	Verb for bearing guilt.
+accept	3.7:19.6	3.7:19.6	renders	Preposition governed by the contact verb.
+accept	3.7:19.7	3.7:19.7	renders	Any unclean thing.
+accept	3.7:19.11	3.7:19.10	renders	Participle of the passive eating verb.
+accept	3.7:19.12	3.7:19.11	renders	Preposition governing fire.
+accept	3.7:19.19	3.7:19.18	renders	Each clean person.
+accept	3.7:19.23	3.7:19.21	renders	Flesh as the object of eating.
+accept	3.7:20.4	3.7:20.5	renders	Auxiliary of the eating verb.
+accept	3.7:20.7	3.7:20.7	renders	Partitive prefix.
+accept	3.7:20.9	3.7:20.8	renders	Explicit sacrifice noun.
+accept	3.7:20.11	3.7:20.11	renders	Resumptive subject of the relative clause.
+accept	3.7:20.12	3.7:20.12	renders	Possessive adjective expresses the prefix's relation.
+accept	3.7:20.16,3.7:20.17	3.7:20.16	renders	Preposition and its pronominal suffix.
+accept	3.7:20.20	3.7:20.22	renders	Written pronoun identifying that person.
+accept	3.7:21.2	3.7:21.3	renders	Conditional particle.
+accept	3.7:21.3	3.7:21.2	renders	Indefinite pronoun renders the person noun.
+accept	3.7:21.5	3.7:21.5	renders	First contact preposition.
+accept	3.7:21.6	3.7:21.6	renders	Any unclean thing.
+accept	3.7:21.8	3.7:21.8	renders	Contact preposition before human uncleanness.
+accept	3.7:21.12	3.7:21.12	renders	Contact preposition before livestock.
+accept	3.7:21.16	3.7:21.16	renders	Contact preposition before the detestable creature.
+accept	3.7:21.19	3.7:21.18	renders	Interpretive rendering of the detestable creature.
+accept	3.7:21.21	3.7:21.20	renders	Part of the adversative connective.
+accept	3.7:21.22	3.7:21.21	renders	Auxiliary of the eating verb.
+accept	3.7:21.27	3.7:21.24	renders	Explicit sacrifice noun.
+accept	3.7:21.29	3.7:21.28	renders	Possessive adjective expresses the prefix's relation.
+accept	3.7:21.30	3.7:21.27	renders	Resumptive subject of the relative clause.
+accept	3.7:21.33	3.7:21.35	renders	Written demonstrative identifying that person.
+accept	3.7:21.34	3.7:21.31	renders	Participle of the penalty verb.
+accept	3.7:21.36,3.7:21.37	3.7:21.37	renders	People noun and its possessive suffix.
+accept	3.7:23.1	3.7:23.1	renders	Speech imperative.
+accept	3.7:23.9	3.7:23.10	renders	Conjunction before sheep in the negative list.
+accept	3.7:23.11	3.7:23.12	renders	Conjunction before goats in the negative list.
+accept	3.7:23.12	3.7:23.13	renders	Goat noun rendered adjectivally.
+accept	3.7:24.3	3.7:24.2	renders	Source relation expressed by the construct.
+accept	3.7:24.12	3.7:24.10	renders	Work or use for which the fat is permitted.
+accept	3.7:24.14	3.7:24.12	renders	Fronted infinitive renders the infinitive absolute.
+accept	3.7:24.16	3.7:24.14	renders	Auxiliary of the finite eating verb.
+accept	3.7:25.3	3.7:25.3	renders	Relative construction renders the first eating participle.
+accept	3.7:25.9,3.7:25.10	3.7:25.10	renders	Source preposition and its pronominal suffix.
+accept	3.7:25.11	3.7:25.9	renders	Offering verb.
+accept	3.7:25.13	3.7:25.11	renders	Part of the fire-offering term.
+accept	3.7:25.19,3.7:25.20	3.7:25.19	renders	Relative clause renders the second eating participle.
+accept	3.7:26.4	3.7:26.9	renders	Genitive renders the prefix specifying bird blood.
+accept	3.7:26.6	3.7:26.13	renders	Genitive renders the prefix specifying livestock blood.
+accept	3.7:27.11	3.7:27.12	renders	Written demonstrative identifying that person.
+accept	3.7:29.6	3.7:29.8	renders	Personal relative renders the substantival participle.
+accept	3.7:29.10	3.7:29.10	renders	First explicit sacrifice noun.
+accept	3.7:29.11	3.7:29.12	renders	First recipient prefix.
+accept	3.7:29.13,3.7:29.14	3.7:29.14	renders	Finite bringing verb and its subject.
+accept	3.7:29.17	3.7:29.17	renders	Dative ending renders the second recipient prefix.
+accept	3.7:29.18	3.7:29.19	renders	Source prefix.
+accept	3.7:29.21	3.7:29.20	renders	Second explicit sacrifice noun.
+accept	3.7:30.8	3.7:30.9	renders	Preposition of accompaniment.
+accept	3.7:30.12	3.7:30.16	renders	Purpose prefix on the infinitive.
+accept	3.7:30.14	3.7:30.18	renders	Written object pronoun.
+accept	3.7:30.15	3.7:30.19	renders	Marks the role expressed by the wave-offering noun.
+accept	3.7:30.17	3.7:30.20	renders	Prepositional component of the face expression.
+accept	3.7:30.19	3.7:30.21	renders	Face noun in the expression.
+accept	3.7:31.6	3.7:31.9	renders	Directional ending on the altar noun.
+accept	3.7:31.12	3.7:31.14	renders	Dative ending renders Aaron's recipient prefix.
+accept	3.7:31.14	3.7:31.17	renders	Dative ending renders the sons' recipient prefix.
+accept	3.7:32.2	3.7:32.5	renders	Right-side modifier.
+accept	3.7:32.4	3.7:32.11	renders	Source prefix.
+accept	3.7:32.5	3.7:32.13	renders	Modifier renders the peace-offering term.
+accept	3.7:32.6	3.7:32.12	renders	Explicit sacrifice noun.
+accept	3.7:32.9	3.7:32.8	renders	Dative ending renders the recipient prefix.
+accept	3.7:32.10	3.7:32.7	renders	Marks the role expressed by the contribution noun.
+accept	3.7:33.1	3.7:33.2	renders	Personal relative renders the substantival participle.
+accept	3.7:33.2	3.7:33.11	renders	Partitive prefix before Aaron's sons.
+accept	3.7:33.8	3.7:33.6	renders	Part of the peace-offering term.
+accept	3.7:33.11	3.7:33.14	renders	Suffixed recipient preposition.
+accept	3.7:33.13	3.7:33.19	renders	Prefix marking allocation as a portion.
+accept	3.7:33.15	3.7:33.18	renders	Right-side modifier.
+accept	3.7:34.4	3.7:34.13	renders	Second component of the first compound source preposition.
+accept	3.7:34.13	3.7:34.18	renders	Modifier renders the peace-offering term.
+accept	3.7:34.14	3.7:34.17	renders	Explicit sacrifice noun.
+accept	3.7:34.17	3.7:34.19	renders	Part of the compound connective.
+accept	3.7:34.19	3.7:34.21	renders	Written object pronoun.
+accept	3.7:34.21	3.7:34.22	renders	Dative ending renders Aaron's recipient prefix.
+accept	3.7:34.23	3.7:34.27	renders	Dative ending renders the sons' recipient prefix.
+accept	3.7:34.25	3.7:34.29	renders	Prefix governing the perpetual allotment.
+accept	3.7:34.28	3.7:34.33	renders	Second component of the final compound source preposition.
+accept	3.7:35.2,3.7:35.3	3.7:35.2	renders	Part of the first anointing-share expression.
+accept	3.7:35.7,3.7:35.8	3.7:35.5	renders	Part of the second anointing-share expression.
+accept	3.7:35.18	3.7:35.12	renders	Verbal noun renders the act of bringing forward.
+accept	3.7:35.19	3.7:35.13	renders	Written object pronoun.
+accept	3.7:35.20	3.7:35.14	renders	Purpose prefix before priestly service.
+accept	3.7:35.22	3.7:35.16	renders	Dative ending renders the service prefix.
+accept	3.7:36.5	3.7:36.6	renders	Suffixed recipient preposition.
+accept	3.7:36.8	3.7:36.10	renders	Those anointed are the written object.
+accept	3.7:36.9	3.7:36.9	renders	Verbal noun renders the act of anointing.
+accept	3.7:36.10	3.7:36.11,3.7:36.12	renders	Compound source preposition.
+accept	3.7:36.15	3.7:36.17	renders	Prefix governing generations.
+accept	3.7:37.3	3.7:37.4	renders	Topical prefix for the burnt offering.
+accept	3.7:37.5	3.7:37.7	renders	Topical prefix for the grain offering.
+accept	3.7:37.9	3.7:37.11	renders	Topical prefix for the sin offering.
+accept	3.7:37.11	3.7:37.13	renders	Part of the sin-offering term.
+accept	3.7:37.14	3.7:37.15	renders	Topical prefix for the guilt offering.
+accept	3.7:37.19	3.7:37.19	renders	Topical prefix for ordination.
+accept	3.7:37.22	3.7:37.23	renders	Topical prefix for the peace offering.
+accept	3.7:38.4	3.7:38.2	renders	Pluperfect auxiliary of the command verb.
+accept	3.7:38.16	3.7:38.18	renders	Offering noun carrying the possessive suffix.
+accept	3.7:38.18	3.7:38.19	renders	Dative ending renders the recipient prefix.

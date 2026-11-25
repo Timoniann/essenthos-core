@@ -1,0 +1,223 @@
+kind	from	to	relation	reason
+fixed	2.34:1			Missing reflexive, subject, and verb links.
+fixed	2.34:2			Missing predicates and morning and destination links.
+fixed	2.34:3			Missing suffix, prohibitive, and compound preposition links.
+fixed	2.34:4			Missing subjects, prepositions, and command forms.
+fixed	2.34:5			Missing companion phrase, verb, and instrumental prefix.
+fixed	2.34:6			Wrong preposition target and incomplete adjective compounds.
+fixed	2.34:7			Missing participial relatives, emphatic infinitive, and generation links.
+fixed	2.34:8			Missing directional suffix and final verb links.
+fixed	2.34:9			Missing jussive, suffix, compound adjective, and possession links.
+fixed	2.34:10			Missing subject, relative, and predicate links.
+fixed	2.34:11			Missing imperative, relative, and pronominal links.
+fixed	2.34:12			Missing negative-purpose, covenant partner, and predicate links.
+fixed	2.34:13			Stone modifier linked to a verb. The final possessive differs in number.
+fixed	2.34:14			Missing verbal subject and dative prefix.
+unsure	2.34:15			Corrected the sacrifice and verb forms. The first temporal connector has an uncertain counterpart.
+fixed	2.34:16			Wrong occurrence of the preposition after. Missing subject and causative links.
+fixed	2.34:17			Missing suffixed reflexive complement.
+fixed	2.34:18			Missing verb forms, relative, and appointed-time links.
+fixed	2.34:19			Missing relative, ownership, and male-livestock predicate links.
+fixed	2.34:20			Missing instrumental, partitive, auxiliary, and empty-handed phrase links.
+fixed	2.34:21			Missing temporal prefix and both cessation phrases.
+fixed	2.34:22			Missing reflexive, harvest, and year-end links.
+fixed	2.34:23			Auxiliary and preposition had wrong targets. Missing frequency and title links.
+unsure	2.34:24			Corrected the appearance phrase. The first перед has an uncertain counterpart in the source phrase.
+fixed	2.34:25			Missing auxiliary, prepositions, morning, and festival links. The possessive differs in person.
+fixed	2.34:26			Missing first-fruits head, destination, auxiliary, and animal links.
+fixed	2.34:27			Missing reflexive, accordance phrase, and covenant partner links.
+fixed	2.34:28			Missing subject and both words of the Ten Commandments.
+fixed	2.34:29			Missing temporal links, shining predicate, and speaking participants.
+fixed	2.34:30			Missing presentative connector, subject, and approach complement.
+fixed	2.34:31			Missing links to the three suffixed preposition occurrences.
+fixed	2.34:32			Incomplete temporal phrase and missing approach, subject, and preposition links.
+fixed	2.34:33			Missing completion verb and speaking complement.
+fixed	2.34:34			Wrong target for перед. Missing entry, purpose, and passive verb links.
+fixed	2.34:35			Missing shining, reapplication, and temporal and speaking complements.
+refuse	2.34:6.4	2.34:6.5		The preposition renders עַל.
+refuse	2.34:13.8	2.34:13.8		Stone describes the pillars.
+refuse	2.34:15.22	2.34:15.22		Offering renders the earlier sacrifice verb.
+refuse	2.34:16.15	2.34:16.16		Preposition belongs to the first clause.
+refuse	2.34:23.7	2.34:23.8		Auxiliary belongs to the appearance verb.
+refuse	2.34:23.9	2.34:23.10		The preposition renders אֶת in this phrase.
+refuse	2.34:24.5	2.34:24.5		Лицем renders the face noun.
+refuse	2.34:24.22	2.34:24.21		The preposition renders אֶת in this phrase.
+refuse	2.34:34.5	2.34:34.6		The preposition renders the lamed prefix.
+accept	2.34:1.7	2.34:1.7	renders	Suffixed reflexive beneficiary.
+accept	2.34:1.14	2.34:1.15	renders	First-person verb form.
+accept	2.34:1.27	2.34:1.30	renders	Verb meaning break.
+accept	2.34:2.2	2.34:2.2,2.34:2.3	renders	Single imperative for be ready.
+accept	2.34:2.3	2.34:2.4	renders	Prefix marks the appointed time.
+accept	2.34:2.4	2.34:2.6	renders	First morning occurrence.
+accept	2.34:2.6	2.34:2.8	renders	Verb of ascent.
+accept	2.34:2.7	2.34:2.11	renders	Part of the second morning expression.
+accept	2.34:2.8	2.34:2.9	renders	Temporal prefix expressed in вранці.
+accept	2.34:2.9	2.34:2.12	renders	Preposition marking the destination.
+accept	2.34:2.13	2.34:2.16	renders	Verb of standing.
+accept	2.34:3.3	2.34:3.5	renders	Second-person suffix on with.
+accept	2.34:3.8	2.34:3.11	renders	Locative prefix.
+accept	2.34:3.13	2.34:3.9	renders	First prohibitive negation.
+accept	2.34:3.11,2.34:3.14,2.34:3.15	2.34:3.10	renders	Jussive and passive rendering of be seen.
+accept	2.34:3.19	2.34:3.17	renders	Head of the small-livestock phrase.
+accept	2.34:3.20	2.34:3.18	renders	Conjunction between livestock classes.
+accept	2.34:3.24	2.34:3.21	renders	Second prohibitive negation.
+accept	2.34:3.23,2.34:3.25	2.34:3.22	renders	Jussive and verb of grazing.
+accept	2.34:3.26	2.34:3.23	renders	Prepositional component of opposite.
+accept	2.34:3.27	2.34:3.28	renders	Demonstrative specifying the mountain.
+accept	2.34:4.3	2.34:4.2	renders	Subject supplied by the verb form.
+accept	2.34:4.12	2.34:4.10	renders	Early component of rise early.
+accept	2.34:4.13	2.34:4.12	renders	Temporal prefix expressed in вранці.
+accept	2.34:4.17	2.34:4.17	renders	Preposition marking the destination.
+accept	2.34:4.20	2.34:4.20,2.34:4.21	renders	Compound conjunction meaning as.
+accept	2.34:4.23	2.34:4.22	renders	Auxiliary of the command verb.
+accept	2.34:4.24	2.34:4.24	renders	Suffixed object pronoun.
+accept	2.34:4.27	2.34:4.26	renders	Subject supplied by the take verb.
+accept	2.34:5.9,2.34:5.10	2.34:5.9	renders	Preposition with its pronominal suffix.
+accept	2.34:5.13	2.34:5.12	renders	Verb of calling.
+accept	2.34:5.14	2.34:5.13	renders	Instrumental case renders the prefix.
+accept	2.34:6.4	2.34:6.4	renders	Preposition in before his face.
+accept	2.34:6.16	2.34:6.14,2.34:6.15	renders	Compound idiom for slow to anger.
+accept	2.34:6.18	2.34:6.17	renders	Abundance component of the adjective.
+accept	2.34:7.1	2.34:7.1	renders	Relative renders the first participle.
+accept	2.34:7.6	2.34:7.6	renders	Relative renders the forgiveness participle.
+accept	2.34:7.14	2.34:7.13	renders	Emphasis of the infinitive absolute.
+accept	2.34:7.16,2.34:7.17	2.34:7.15	renders	Finite verb rendered as consider clean.
+accept	2.34:7.20	2.34:7.16	renders	Punitive sense of visiting iniquity.
+accept	2.34:7.30	2.34:7.25	renders	Preposition before the third generation.
+accept	2.34:7.33	2.34:7.28	renders	Preposition before the fourth generation.
+accept	2.34:7.35	2.34:7.26,2.34:7.29	renders	Shared noun for both generations.
+accept	2.34:8.5	2.34:8.6	renders	Directional ending on earth.
+accept	2.34:8.8	2.34:8.8	renders	Final verb of prostration.
+accept	2.34:9.13,2.34:9.16	2.34:9.10	renders	Jussive form of go.
+accept	2.34:9.17	2.34:9.13,2.34:9.14	renders	In the midst rendered by one preposition.
+accept	2.34:9.18	2.34:9.14	renders	First-person plural suffix.
+accept	2.34:9.21	2.34:9.19	renders	Demonstrative renders the independent pronoun.
+accept	2.34:9.22	2.34:9.17,2.34:9.18	renders	Compound adjective for stiff-necked.
+accept	2.34:9.24,2.34:9.25	2.34:9.21	renders	Forgiveness verb and its subject.
+accept	2.34:9.32	2.34:9.28	renders	Verb component of making an inheritance.
+accept	2.34:10.2	2.34:10.2	renders	Subject supplied by the speech verb.
+accept	2.34:10.14	2.34:10.11	renders	Wonders rendered as a noun.
+accept	2.34:10.30	2.34:10.31	renders	Locative prefix in the midst phrase.
+accept	2.34:10.33	2.34:10.32	renders	Verbal rendering of the locative predicate.
+accept	2.34:10.36	2.34:10.39	renders	Relative introducing what God does.
+accept	2.34:10.41	2.34:10.42	renders	Second-person suffix on with.
+accept	2.34:10.42	2.34:10.36	renders	Introduces the clause expressing how awesome.
+accept	2.34:11.1	2.34:11.1	renders	Imperative meaning observe.
+accept	2.34:11.2	2.34:11.4	renders	Correlative component of what.
+accept	2.34:11.6	2.34:11.6	renders	Second-person object suffix.
+accept	2.34:11.9	2.34:11.9	renders	First-person suffix in behold me.
+accept	2.34:11.12	2.34:11.12	renders	Second-person suffix in the presence phrase.
+accept	2.34:12.3	2.34:12.3	renders	Negative component of the first lest.
+accept	2.34:12.4	2.34:12.4	renders	Verb of making a covenant.
+accept	2.34:12.7	2.34:12.6	renders	Prefix marking the covenant partner.
+accept	2.34:12.11	2.34:12.10	renders	Relative introducing the destination clause.
+accept	2.34:12.14,2.34:12.15	2.34:12.13	renders	Preposition and its feminine suffix.
+accept	2.34:12.16,2.34:12.18	2.34:12.14	renders	Both words render the second lest.
+accept	2.34:12.17,2.34:12.19	2.34:12.15	renders	Verb of becoming and its subject.
+accept	2.34:12.20	2.34:12.16	renders	Predicate instrumental renders the lamed.
+accept	2.34:12.21	2.34:12.18,2.34:12.19	renders	In the midst rendered by one preposition.
+accept	2.34:12.22	2.34:12.19	renders	Second-person suffix on midst.
+accept	2.34:13.2,2.34:13.5	2.34:13.4	renders	Demolition verb and plural subject.
+accept	2.34:13.4	2.34:13.3	renders	Noun meaning altars.
+accept	2.34:13.8,2.34:13.9	2.34:13.7	renders	Standing stones rendered as stone pillars.
+accept	2.34:13.12	2.34:13.8	renders	Verb of smashing the pillars.
+accept	2.34:13.15,2.34:13.16	2.34:13.11	renders	Asherah rendered as sacred trees.
+accept	2.34:13.17	2.34:13.12	renders	Verb of cutting down.
+accept	2.34:14.4	2.34:14.3	renders	Second-person subject of bowing.
+accept	2.34:14.6	2.34:14.4	renders	Dative case renders the prefix.
+accept	2.34:15.3	2.34:15.2	renders	Verb of making a covenant.
+accept	2.34:15.6	2.34:15.4	renders	Prefix marking the covenant partner.
+accept	2.34:15.10,2.34:15.11	2.34:15.9	renders	Auxiliary and plural subject of apostasy.
+accept	2.34:15.18,2.34:15.21,2.34:15.22	2.34:15.13	renders	Sacrifice verb rendered as offer sacrifices.
+accept	2.34:15.19	2.34:15.14	renders	Dative case renders the offering recipient prefix.
+accept	2.34:15.23	2.34:15.16	renders	Connects the ensuing invitation.
+accept	2.34:15.25	2.34:15.17	renders	Subject supplied by the call verb.
+accept	2.34:15.27	2.34:15.18	renders	Suffixed recipient of the call.
+accept	2.34:15.29,2.34:15.31	2.34:15.20	renders	Subject and future auxiliary of eating.
+accept	2.34:16.4	2.34:16.3	renders	Partitive prefix before daughters.
+accept	2.34:16.11	2.34:16.8	renders	Future auxiliary of apostasy.
+accept	2.34:16.12	2.34:16.9	renders	Pronoun substitutes for the written subject daughters.
+accept	2.34:16.15	2.34:16.10	renders	Preposition belongs to the first clause.
+accept	2.34:16.19,2.34:16.20	2.34:16.13	renders	Causative rendered as make adulterers.
+accept	2.34:17.5	2.34:17.5	renders	Suffixed reflexive beneficiary.
+accept	2.34:18.2	2.34:18.5	renders	Main verb of keeping the feast.
+accept	2.34:18.10	2.34:18.10	renders	Relative introducing the command.
+accept	2.34:18.13,2.34:18.14	2.34:18.11	renders	Past auxiliary and object suffix.
+accept	2.34:18.15	2.34:18.12	renders	Prefix marking the appointed time.
+accept	2.34:18.16	2.34:18.13	renders	Appointment rendered as appointed time.
+accept	2.34:19.2	2.34:19.2	renders	Relative component of what opens.
+accept	2.34:19.6	2.34:19.4	renders	Suffixed preposition expresses ownership.
+accept	2.34:19.12,2.34:19.13,2.34:19.14	2.34:19.8	renders	Finite predicate rendered as which is male.
+accept	2.34:20.6	2.34:20.5	renders	Instrumental case renders the exchange prefix.
+accept	2.34:20.19	2.34:20.14	renders	Partitive relation of the construct noun.
+accept	2.34:20.25	2.34:20.19	renders	Future auxiliary of appearing.
+accept	2.34:20.28,2.34:20.29	2.34:20.20	renders	Face noun and first-person suffix.
+accept	2.34:20.30,2.34:20.32	2.34:20.21	renders	Other components of empty-handed.
+accept	2.34:21.6	2.34:21.5	renders	Temporal genitive expresses the prefix.
+accept	2.34:21.9,2.34:21.10	2.34:21.10	renders	First cessation verb includes stopping work.
+accept	2.34:21.17,2.34:21.18	2.34:21.18	renders	Second cessation verb includes stopping work.
+accept	2.34:22.5	2.34:22.5	renders	Suffixed reflexive beneficiary.
+accept	2.34:22.13	2.34:22.12	renders	Harvest component of ingathering.
+accept	2.34:22.14	2.34:22.13	renders	Temporal relation expressed by year-end.
+accept	2.34:22.16	2.34:22.15	renders	Year in the final construct chain.
+accept	2.34:23.1	2.34:23.1,2.34:23.2	renders	Three times expressed in one word.
+accept	2.34:23.7	2.34:23.6	renders	Future auxiliary of appearing.
+accept	2.34:23.9	2.34:23.9	renders	Preposition in the presence phrase.
+accept	2.34:23.11	2.34:23.12	renders	Title meaning Lord.
+accept	2.34:24.6,2.34:24.7	2.34:24.5	renders	Face noun and second-person suffix.
+accept	2.34:24.16,2.34:24.17	2.34:24.15	renders	Land noun and second-person suffix.
+accept	2.34:24.19,2.34:24.20	2.34:24.17	renders	Ascent infinitive and its subject suffix.
+accept	2.34:24.21	2.34:24.18,2.34:24.19	renders	Purpose infinitive of appearing.
+accept	2.34:24.22	2.34:24.20	renders	Preposition in the appearance phrase.
+accept	2.34:24.27	2.34:24.24,2.34:24.25	renders	Three times expressed in one word.
+accept	2.34:25.2	2.34:25.2	renders	Future auxiliary of the sacrifice verb.
+accept	2.34:25.4	2.34:25.3	renders	Preposition before leaven.
+accept	2.34:25.12	2.34:25.10	renders	Prefix marking the endpoint.
+accept	2.34:25.13	2.34:25.12	renders	Noun meaning morning.
+accept	2.34:25.14	2.34:25.14	renders	Adjective renders the festival noun.
+accept	2.34:26.1	2.34:26.1	renders	Head of the first-fruits phrase.
+accept	2.34:26.6	2.34:26.5	renders	Preposition expresses the bare destination noun.
+accept	2.34:26.12	2.34:26.9	renders	Future auxiliary of boiling.
+accept	2.34:26.14	2.34:26.10	renders	Animal rendered as lamb.
+accept	2.34:27.7	2.34:27.7	renders	Suffixed reflexive beneficiary.
+accept	2.34:27.10,2.34:27.11	2.34:27.14,2.34:27.15	renders	Both phrases mean according to.
+accept	2.34:27.17,2.34:27.18	2.34:27.21	renders	With and its second-person suffix.
+accept	2.34:27.20	2.34:27.24	renders	Preposition before Israel.
+accept	2.34:28.3	2.34:28.2	renders	Subject supplied by the verb be.
+accept	2.34:28.25	2.34:28.27	renders	Number ten.
+accept	2.34:28.26	2.34:28.29	renders	Words rendered as commandments.
+accept	2.34:29.3	2.34:29.3	renders	Temporal prefix introduces the first descent.
+accept	2.34:29.16	2.34:29.17	renders	Temporal prefix introduces the second descent.
+accept	2.34:29.21	2.34:29.22	renders	Introduces the resumed main clause.
+accept	2.34:29.26,2.34:29.27	2.34:29.29	renders	Face noun and third-person suffix.
+accept	2.34:29.28,2.34:29.29	2.34:29.27	renders	Verb of shining with its inchoative rendering.
+accept	2.34:29.30	2.34:29.30	renders	Causal rendering of the infinitival prefix.
+accept	2.34:29.31	2.34:29.31	renders	God renders the speaking subject suffix.
+accept	2.34:29.33,2.34:29.34	2.34:29.32	renders	With and its third-person suffix.
+accept	2.34:30.9	2.34:30.10	renders	Connector introducing the presentative.
+accept	2.34:30.15	2.34:30.16	renders	Plural subject of fearing.
+accept	2.34:30.18,2.34:30.19	2.34:30.19	renders	Preposition and suffix of the approach complement.
+accept	2.34:31.3,2.34:31.4	2.34:31.3	renders	Preposition and suffix of the call complement.
+accept	2.34:31.9	2.34:31.7	renders	Suffix on the return complement.
+accept	2.34:31.19,2.34:31.20	2.34:31.19	renders	Preposition and suffix of the speech complement.
+accept	2.34:32.2	2.34:32.3	renders	Second component of after that.
+accept	2.34:32.3	2.34:32.4	renders	Plural verb of approaching.
+accept	2.34:32.8	2.34:32.9	renders	Subject supplied by the command verb.
+accept	2.34:32.15,2.34:32.16	2.34:32.15	renders	With and its third-person suffix.
+accept	2.34:32.17	2.34:32.16	renders	Locative prefix before Mount Sinai.
+accept	2.34:33.2	2.34:33.2	renders	Verb of finishing.
+accept	2.34:33.5,2.34:33.6	2.34:33.6	renders	With and its plural suffix.
+accept	2.34:34.2	2.34:34.2	renders	Temporal prefix introducing entry.
+accept	2.34:34.4	2.34:34.3	renders	Infinitive of entering.
+accept	2.34:34.5	2.34:34.5	renders	Prepositional component of before the face.
+accept	2.34:34.7	2.34:34.6	renders	Noun meaning face.
+accept	2.34:34.8	2.34:34.8	renders	Purpose prefix before speaking.
+accept	2.34:34.9	2.34:34.9	renders	Speaking rendered as conversation.
+accept	2.34:34.10,2.34:34.11	2.34:34.10	renders	With and its third-person suffix.
+accept	2.34:34.20	2.34:34.18	renders	Subject supplied by the exit verb.
+accept	2.34:34.28,2.34:34.30	2.34:34.26	renders	Passive auxiliary and pronominal recipient.
+accept	2.34:35.8	2.34:35.9	renders	Verb of shining.
+accept	2.34:35.13,2.34:35.14	2.34:35.14	renders	Putting back rendered as putting on again.
+accept	2.34:35.19,2.34:35.20	2.34:35.21	renders	Both words render until.
+accept	2.34:35.21,2.34:35.22	2.34:35.22	renders	Movement to speak and its subject suffix.
+accept	2.34:35.25,2.34:35.26	2.34:35.25	renders	With and its third-person suffix.

@@ -1,0 +1,179 @@
+kind	from	to	relation	reason
+fixed	3.8:1			Missing quotative prefix link.
+fixed	3.8:2			Missing accompaniment phrase and basket contents relation.
+ok	3.8:3			
+fixed	3.8:4			Missing comparison, past auxiliary, and object pronoun.
+fixed	3.8:5			Missing infinitival prefix link.
+fixed	3.8:6			Incomplete conjunction and missing object and instrument links.
+fixed	3.8:7			Missing pronouns, prepositions, robe, and ephod links.
+fixed	3.8:8			Missing preposition and its pronoun.
+fixed	3.8:9			Missing placement, holiness, comparison, and auxiliary links.
+fixed	3.8:10			Missing locative phrase, conjunction component, and object pronoun.
+fixed	3.8:11			Missing subject, source phrase, and possessed nouns.
+fixed	3.8:12			Missing conjunction component, object pronoun, and purpose marker.
+fixed	3.8:13			Missing pronouns, placement relation, comparison, and auxiliary.
+fixed	3.8:14			Possessive on the wrong noun and missing subject pronoun.
+fixed	3.8:15			Missing instrument, purpose, and altar reference.
+fixed	3.8:16			Missing subject, liver relation, and altar location.
+fixed	3.8:17			Missing skin phrase and parts of the location and comparison.
+fixed	3.8:18			Missing subject pronoun.
+ok	3.8:19			
+fixed	3.8:20			Missing cutting verb.
+fixed	3.8:21			Missing instrument, location, pronouns, and offering phrase links.
+ok	3.8:22			
+fixed	3.8:23			Missing conjunction component, right-ear adjective, and thumb noun.
+fixed	3.8:24			Missing right-ear adjective and thumb noun.
+fixed	3.8:25			Missing subject pronoun and liver relation.
+unsure	3.8:26			The Hebrew numeral counts the cake, while «одну» appears to modify oil.
+fixed	3.8:27			Wrong target for «перед» and missing subject, object, and offering links.
+fixed	3.8:28			Missing object, location, and offering phrase links.
+fixed	3.8:29			Wrong target for «перед» and missing pronoun, portion, and comparison links.
+fixed	3.8:30			Missing partitives, possessive phrase, and accompaniment phrases.
+fixed	3.8:31			Missing location, auxiliary, pronoun, comparison, and quotative links.
+fixed	3.8:32			Missing remainder and preposition links.
+fixed	3.8:33			Missing source, time phrase, and ordination idiom links.
+fixed	3.8:34			Missing comparison, time, infinitive, and purpose links. «Я» is first person while Hebrew is third person.
+fixed	3.8:35			Missing location, charge, purpose clause, and passive recipient links.
+fixed	3.8:36			Missing noun substitute, relative, auxiliary, and agency links.
+refuse	3.8:14.14	3.8:14.11		Possessive belongs to hands.
+refuse	3.8:26.7	3.8:26.8		Preposition linked to face noun.
+refuse	3.8:26.28	3.8:26.29		Adjective renders right side.
+refuse	3.8:27.18	3.8:27.18		Preposition linked to face noun.
+refuse	3.8:29.11	3.8:29.11		Preposition linked to face noun.
+accept	3.8:1.6	3.8:1.6	renders	Gerund renders quotative construction.
+accept	3.8:2.6,3.8:2.7	3.8:2.7	renders	With him.
+accept	3.8:2.23	3.8:2.29	renders	Construct relation for basket contents.
+accept	3.8:4.4	3.8:4.4,3.8:4.5	renders	Compound comparative conjunction.
+accept	3.8:4.7	3.8:4.6	renders	Past auxiliary for commanded.
+accept	3.8:4.8	3.8:4.8	renders	Object pronoun suffix.
+accept	3.8:5.12	3.8:5.13	renders	Infinitival complement of commanded.
+accept	3.8:6.9	3.8:6.9	renders	Part of coordinating «та й».
+accept	3.8:6.11	3.8:6.11	renders	Object pronoun suffix.
+accept	3.8:6.12	3.8:6.12	renders	Instrumental renders with.
+accept	3.8:7.3	3.8:7.2	renders	Subject of first giving verb.
+accept	3.8:7.4,3.8:7.5	3.8:7.3	renders	First upon him phrase.
+accept	3.8:7.9	3.8:7.9	renders	Object of first girding verb.
+accept	3.8:7.10	3.8:7.10	renders	Instrumental renders with.
+accept	3.8:7.13	3.8:7.15	renders	Object of clothing verb.
+accept	3.8:7.14	3.8:7.18	renders	Robe.
+accept	3.8:7.17,3.8:7.18	3.8:7.21	renders	Second upon him phrase.
+accept	3.8:7.22	3.8:7.27	renders	Object of second girding verb.
+accept	3.8:7.23	3.8:7.28	renders	Instrumental renders with.
+accept	3.8:7.27	3.8:7.35	renders	Instrumental pronoun means with it.
+accept	3.8:7.28	3.8:7.33	renders	Ephod expressed by dressing verb.
+accept	3.8:7.29,3.8:7.30	3.8:7.34	renders	Recipient of the fastening.
+accept	3.8:8.3,3.8:8.4	3.8:8.3	renders	Upon him.
+accept	3.8:9.9	3.8:9.10	renders	Upon the turban.
+accept	3.8:9.11	3.8:9.13,3.8:9.14	renders	Placement at the front.
+accept	3.8:9.12	3.8:9.15	renders	Possessive suffix in front phrase.
+accept	3.8:9.16	3.8:9.22	renders	Holiness.
+accept	3.8:9.17	3.8:9.23,3.8:9.24	renders	Compound comparative conjunction.
+accept	3.8:9.20	3.8:9.25	renders	Past auxiliary for commanded.
+accept	3.8:10.12,3.8:10.13	3.8:10.17	renders	In it.
+accept	3.8:10.15	3.8:10.18	renders	Part of coordinating «та й».
+accept	3.8:10.17	3.8:10.20	renders	Object pronoun suffix.
+accept	3.8:11.3	3.8:11.2	renders	Subject of sprinkling verb.
+accept	3.8:11.4,3.8:11.5	3.8:11.3	renders	From it.
+accept	3.8:11.15,3.8:11.16	3.8:11.17	renders	Utensils and their possessor.
+accept	3.8:11.20,3.8:11.21	3.8:11.24	renders	Base and its possessor.
+accept	3.8:12.10	3.8:12.10	renders	Part of coordinating «та й».
+accept	3.8:12.12	3.8:12.12	renders	Object of anointing verb.
+accept	3.8:12.13	3.8:12.13	renders	Purpose prefix.
+accept	3.8:13.13	3.8:13.12	renders	Object of girding verb.
+accept	3.8:13.17,3.8:13.18	3.8:13.16	renders	Recipients of the headgear.
+accept	3.8:13.21	3.8:13.18,3.8:13.19	renders	Compound comparative conjunction.
+accept	3.8:13.24	3.8:13.20	renders	Past auxiliary for commanded.
+accept	3.8:14.3	3.8:14.2	renders	Subject of bringing verb.
+accept	3.8:14.14	3.8:14.13	renders	Possessive suffix on hands.
+accept	3.8:15.10	3.8:15.16	renders	Instrumental renders with.
+accept	3.8:15.27	3.8:15.34	renders	Purpose prefix.
+accept	3.8:15.29,3.8:15.30	3.8:15.36	renders	Upon it.
+accept	3.8:16.3	3.8:16.2	renders	Subject of taking verb.
+accept	3.8:16.11	3.8:16.13	renders	Construct relation to liver.
+accept	3.8:16.22	3.8:16.28	renders	Altar noun has directional ending.
+accept	3.8:17.4,3.8:17.5	3.8:17.7	renders	Skin and its possessor.
+accept	3.8:17.15	3.8:17.18,3.8:17.20	renders	Prefixes in outside-of construction.
+accept	3.8:17.17	3.8:17.23,3.8:17.24	renders	Compound comparative conjunction.
+accept	3.8:17.20	3.8:17.25	renders	Past auxiliary for commanded.
+accept	3.8:18.3	3.8:18.2	renders	Subject of bringing verb.
+accept	3.8:20.3	3.8:20.5	renders	Cut into pieces.
+accept	3.8:21.6	3.8:21.10	renders	Instrumental renders with.
+accept	3.8:21.12	3.8:21.21	renders	Altar noun has directional ending.
+accept	3.8:21.14	3.8:21.23	renders	Subject of burnt-offering clause.
+accept	3.8:21.16	3.8:21.24	renders	Purpose prefix before aroma.
+accept	3.8:21.17	3.8:21.25	renders	Aroma noun.
+accept	3.8:21.19	3.8:21.28	renders	Subject of fire-offering clause.
+accept	3.8:21.21	3.8:21.27	renders	Offering in fire offering.
+accept	3.8:21.24	3.8:21.31,3.8:21.32	renders	Compound comparative conjunction.
+accept	3.8:21.27	3.8:21.33	renders	Past auxiliary for commanded.
+accept	3.8:23.10	3.8:23.8	renders	Part of coordinating «та й».
+accept	3.8:23.14	3.8:23.15	renders	Right modifies ear.
+accept	3.8:23.20	3.8:23.18	renders	Finger in the thumb phrase.
+accept	3.8:24.13	3.8:24.16	renders	Right modifies ear.
+accept	3.8:24.19	3.8:24.19	renders	Finger in the thumb phrase.
+accept	3.8:25.3	3.8:25.2	renders	Subject of taking verb.
+accept	3.8:25.15	3.8:25.21	renders	Construct relation to liver.
+accept	3.8:26.4	3.8:26.3	renders	Construct relation for basket contents.
+accept	3.8:26.7	3.8:26.7	renders	Prefix in before the face.
+accept	3.8:26.16	3.8:26.16	renders	Bread noun rendered adjectivally.
+accept	3.8:26.28	3.8:26.31	renders	Right modifies thigh.
+accept	3.8:27.3	3.8:27.2	renders	Subject of giving verb.
+accept	3.8:27.15	3.8:27.15	renders	Demonstrative renders object pronoun.
+accept	3.8:27.16	3.8:27.16	renders	Marks offering as manner of waving.
+accept	3.8:27.18	3.8:27.17	renders	Prefix in before the face.
+accept	3.8:27.20	3.8:27.18	renders	Face noun.
+accept	3.8:28.3	3.8:28.4	renders	Demonstrative renders object pronoun.
+accept	3.8:28.9	3.8:28.8	renders	Part of coordinating «та й».
+accept	3.8:28.11	3.8:28.11	renders	Altar noun has directional ending.
+accept	3.8:28.16	3.8:28.15	renders	Offering in ordination offering.
+accept	3.8:28.18	3.8:28.17	renders	Purpose prefix before aroma.
+accept	3.8:28.19	3.8:28.18	renders	Aroma noun.
+accept	3.8:28.21	3.8:28.21	renders	Subject of fire-offering clause.
+accept	3.8:28.23	3.8:28.20	renders	Offering in fire offering.
+accept	3.8:29.6	3.8:29.7	renders	Part of coordinating «та й».
+accept	3.8:29.8	3.8:29.8	renders	Object suffix of waving verb.
+accept	3.8:29.9	3.8:29.9	renders	Marks offering as manner of waving.
+accept	3.8:29.11	3.8:29.10	renders	Prefix in before the face.
+accept	3.8:29.13	3.8:29.11	renders	Face noun.
+accept	3.8:29.17	3.8:29.19	renders	Subject of was.
+accept	3.8:29.21	3.8:29.20	renders	Prefix marking role as portion.
+accept	3.8:29.23	3.8:29.22,3.8:29.23	renders	Compound comparative conjunction.
+accept	3.8:29.26	3.8:29.24	renders	Past auxiliary for commanded.
+accept	3.8:30.4	3.8:30.4	renders	Partitive genitive renders from.
+accept	3.8:30.7	3.8:30.9	renders	Partitive genitive renders from.
+accept	3.8:30.25,3.8:30.26	3.8:30.28	renders	His sons in sprinkling clause.
+accept	3.8:30.27,3.8:30.28	3.8:30.29	renders	With him in sprinkling clause.
+accept	3.8:30.41,3.8:30.42	3.8:30.43	renders	With him in consecration clause.
+accept	3.8:31.12	3.8:31.13	renders	Entrance noun used locatively.
+accept	3.8:31.18	3.8:31.18	renders	Future auxiliary for eating verb.
+accept	3.8:31.20	3.8:31.19	renders	Object pronoun of first eating verb.
+accept	3.8:31.27	3.8:31.29,3.8:31.30	renders	Compound comparative conjunction.
+accept	3.8:31.30	3.8:31.31	renders	Past auxiliary for commanded.
+accept	3.8:31.31	3.8:31.32	renders	Gerund renders quotative construction.
+accept	3.8:32.2	3.8:32.3	renders	What remains.
+accept	3.8:32.3	3.8:32.4	renders	Partitive relation for meat.
+accept	3.8:32.6	3.8:32.8	renders	Partitive relation for bread.
+accept	3.8:32.9	3.8:32.11	renders	In the fire.
+accept	3.8:33.2	3.8:33.2	renders	From the entrance.
+accept	3.8:33.12	3.8:33.11	renders	Day of completion.
+accept	3.8:33.13	3.8:33.12	renders	Completion infinitive.
+accept	3.8:33.14	3.8:33.13	renders	Days of ordination.
+accept	3.8:33.18,3.8:33.19	3.8:33.18	renders	Subject and future of ordination verb.
+accept	3.8:33.21	3.8:33.17	renders	Days in second seven-day phrase.
+accept	3.8:33.22	3.8:33.20	renders	Hand noun completes ordination idiom.
+accept	3.8:33.23	3.8:33.20	renders	Second-person suffix in ordination idiom.
+accept	3.8:34.1	3.8:34.1,3.8:34.2	renders	Compound comparative conjunction.
+accept	3.8:34.4	3.8:34.4,3.8:34.8	renders	Today incorporates in and this.
+accept	3.8:34.8	3.8:34.11,3.8:34.12	renders	Infinitival complement of commanded.
+accept	3.8:34.9	3.8:34.13	renders	Purpose prefix.
+accept	3.8:34.11	3.8:34.15	renders	Second-person suffix of atonement complement.
+accept	3.8:35.2	3.8:35.2	renders	Entrance noun used locatively.
+accept	3.8:35.14,3.8:35.15	3.8:35.12	renders	Future form of keep.
+accept	3.8:35.16	3.8:35.14	renders	Charge to be kept.
+accept	3.8:35.18	3.8:35.16	renders	Conjunction introduces intended outcome.
+accept	3.8:35.19,3.8:35.21	3.8:35.18	renders	Subject and verb of dying.
+accept	3.8:35.24	3.8:35.21	renders	First person of passive command.
+accept	3.8:36.8	3.8:36.9	renders	Demonstrative stands for things commanded.
+accept	3.8:36.9	3.8:36.10	renders	Relative introduces what was commanded.
+accept	3.8:36.11	3.8:36.11	renders	Past auxiliary for commanded.
+accept	3.8:36.13	3.8:36.14	renders	Hand noun completes agency expression.

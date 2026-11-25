@@ -1,0 +1,228 @@
+kind	from	to	relation	reason
+fixed	2.16:1			Restored the subject, repeated preposition, compound numeral, and date and departure relations.
+fixed	2.16:2			Restored the verbal auxiliary and the preposition before Aaron.
+fixed	2.16:3			Restored the wish formula, pronoun, clause markers, demonstratives, and instrumental relations.
+fixed	2.16:4			Distinguished the two day occurrences and restored missing links throughout the speech.
+fixed	2.16:5			Restored the double portion, comparison, relative phrase, and second day occurrence.
+fixed	2.16:6			Restored the evening expression and the preposition of origin.
+fixed	2.16:7			Restored the morning expression, hearing clause, and suffixed preposition.
+fixed	2.16:8			Restored clause markers, predicates, temporal expressions, and suffixes. Довідаєтесь is supplied from context.
+fixed	2.16:9			Separated перед from лице and restored the recipient and subject links.
+fixed	2.16:10			Restored the temporal marker and the two missing verbs.
+fixed	2.16:11			Restored the main speech verb.
+fixed	2.16:12			Restored the addressee and the evening and morning expressions.
+fixed	2.16:13			Restored the ascent, the verb of existence, and the temporal and spatial relations.
+fixed	2.16:14			Restored the ascent, narrative conjunction, and descriptions of the substance.
+fixed	2.16:15			Restored the compound conjunction, pronouns, and food-purpose prefix.
+unsure	2.16:16			Restored the measure and distributive links. The alignment of про нього in the opening relative clause is uncertain.
+fixed	2.16:17			Restored the two expressions for those gathering more or less.
+fixed	2.16:18			Restored the measuring instrument, participial expressions, and final gathering clause.
+fixed	2.16:19			Restored the addressee, jussive, suffix, and time limit.
+fixed	2.16:20			Restored the subject, worm clause, verbal auxiliary, and suffixed prepositions.
+fixed	2.16:21			Restored the object, repeated morning expression, measure, and subject of melting.
+fixed	2.16:22			Restored the temporal relation, gathering verb, double amount, and recipient prefix.
+fixed	2.16:23			Distinguished the two boiling verbs and restored the baking, rest, and storage links.
+fixed	2.16:24			Restored the time limit, comparison, command, and suffixed preposition.
+fixed	2.16:25			Restored the preposition before the field.
+fixed	2.16:26			Restored the temporal relation, suffixed preposition, and understood subject.
+fixed	2.16:27			Restored the temporal relation, past auxiliary, and purpose prefix.
+fixed	2.16:28			Restored the time-limit particle, subject, and future auxiliary.
+fixed	2.16:29			Restored both recipients, the causal idiom, temporal relations, and the two directives.
+fixed	2.16:30			Restored the ordinal and the seventh-day temporal relation.
+fixed	2.16:31			Restored the pronouns, supplied copula, comparisons, and cake noun.
+fixed	2.16:32			Restored the opening predicate, purpose markers, prepositions, and pronouns.
+fixed	2.16:33			Separated перед from лицем and restored the placement and storage links.
+unsure	2.16:34			Restored the comparison, command, placement, and purpose links. The link for the explicit ковчегом remains uncertain.
+fixed	2.16:35			Corrected the first time limit and restored the second eating verb and border noun.
+fixed	2.16:36			Restored the written pronoun and the fraction noun.
+refuse	2.16:4.18	2.16:4.20		Daily recurrence belongs to the second day expression.
+refuse	2.16:9.12	2.16:9.14		Перед renders the prefix. Лице renders the noun.
+refuse	2.16:23.25	2.16:23.22		Варити belongs to the preceding future clause.
+refuse	2.16:33.18	2.16:33.20		Перед renders the prefix. Лицем renders the noun.
+refuse	2.16:35.10	2.16:35.19		First time-limit clause linked to the second occurrence.
+accept	2.16:1.3	2.16:1.2	renders	Subject in the verb ending.
+accept	2.16:1.19	2.16:1.18	renders	Second occurrence of between.
+accept	2.16:1.21	2.16:1.22	renders	Second component of fifteen.
+accept	2.16:1.22	2.16:1.20	renders	Temporal genitive renders the date prefix.
+accept	2.16:1.24	2.16:1.24	renders	Month genitive expresses the date relation.
+accept	2.16:1.25	2.16:1.29	renders	Temporal relation to their departure.
+accept	2.16:1.28	2.16:1.31	renders	Preposition of origin.
+accept	2.16:2.2	2.16:2.2	renders	Auxiliary in the murmuring predicate.
+accept	2.16:2.11	2.16:2.10	renders	Preposition before Aaron.
+accept	2.16:3.3	2.16:3.3	renders	Preposition with recipient suffix.
+accept	2.16:3.6,2.16:3.7	2.16:3.6,2.16:3.7	renders	The phrases express the same wish.
+accept	2.16:3.11	2.16:3.9	renders	Preposition expressing agency.
+accept	2.16:3.17	2.16:3.15	renders	Temporal marker for sitting.
+accept	2.16:3.23	2.16:3.21	renders	Temporal marker for eating.
+accept	2.16:3.27	2.16:3.24,2.16:3.25	renders	Renders the expression for eating to satiety.
+accept	2.16:3.33	2.16:3.33	renders	Demonstrative modifying wilderness.
+accept	2.16:3.37	2.16:3.42	renders	Instrumental ending renders the prefix.
+accept	2.16:3.39	2.16:3.41	renders	Demonstrative modifying assembly.
+accept	2.16:4.7	2.16:4.6	renders	First-person suffix on the presentative.
+accept	2.16:4.9	2.16:4.8	renders	Suffixed recipient preposition.
+accept	2.16:4.10	2.16:4.7	renders	Expresses the raining action.
+accept	2.16:4.16	2.16:4.14	renders	Verb of going out.
+accept	2.16:4.18	2.16:4.21,2.16:4.22	renders	Renders the recurring day expression.
+accept	2.16:4.19	2.16:4.18	renders	Verb of gathering.
+accept	2.16:4.20	2.16:4.19	renders	Part of the expression for the required portion.
+accept	2.16:4.22	2.16:4.19	renders	Expresses the portion's allocation in the construct phrase.
+accept	2.16:4.23	2.16:4.20	renders	Day qualifying the portion.
+accept	2.16:4.24	2.16:4.23	renders	Purpose conjunction.
+accept	2.16:4.25,2.16:4.26	2.16:4.24	renders	Testing verb and its object suffix.
+accept	2.16:4.27	2.16:4.25	renders	First marker of the alternatives.
+accept	2.16:4.28,2.16:4.29,2.16:4.30	2.16:4.26	renders	Future walking predicate and its subject.
+accept	2.16:4.35	2.16:4.30	renders	Negation in the second alternative.
+accept	2.16:5.11	2.16:5.15	renders	Double portion.
+accept	2.16:5.12	2.16:5.16	renders	Comparison preposition.
+accept	2.16:5.13,2.16:5.14	2.16:5.17	renders	Substantival relative expression.
+accept	2.16:5.16	2.16:5.20	renders	Second day in the repeated expression.
+accept	2.16:6.10	2.16:6.10	renders	Verbalizes the evening time setting.
+accept	2.16:6.19	2.16:6.17	renders	Preposition of origin.
+accept	2.16:7.2	2.16:7.2	renders	Verbalizes the morning time setting.
+accept	2.16:7.8	2.16:7.8	renders	Introduces the reason expressed by the hearing clause.
+accept	2.16:7.9,2.16:7.10	2.16:7.9	renders	Hearing verb and its subject suffix.
+accept	2.16:7.21,2.16:7.22	2.16:7.19	renders	Preposition and first-person plural suffix.
+accept	2.16:8.5	2.16:8.4	renders	Temporal marker for the giving clause.
+accept	2.16:8.6	2.16:8.8	renders	Fused evening adverb expresses the temporal prefix.
+accept	2.16:8.8	2.16:8.5	renders	Verb of giving.
+accept	2.16:8.9	2.16:8.7	renders	Suffixed recipient preposition.
+accept	2.16:8.11	2.16:8.12	renders	Eating-purpose prefix.
+accept	2.16:8.14	2.16:8.16,2.16:8.18	renders	Morning time expression.
+accept	2.16:8.16	2.16:8.19	renders	Purpose prefix before satiety.
+accept	2.16:8.18	2.16:8.21	renders	Introduces the reason expressed by the hearing clause.
+accept	2.16:8.19	2.16:8.22	renders	Verb of hearing.
+accept	2.16:8.25	2.16:8.28	renders	Verb of murmuring.
+accept	2.16:8.26,2.16:8.27	2.16:8.29	renders	Preposition and third-person suffix.
+accept	2.16:8.32,2.16:8.33	2.16:8.34	renders	Preposition and first-person plural suffix.
+accept	2.16:8.34,2.16:8.35	2.16:8.35	renders	Second murmuring noun and its possessive suffix.
+accept	2.16:8.36	2.16:8.36	renders	Contrast after the negation.
+accept	2.16:9.8	2.16:9.7	renders	Dative ending expresses the recipient.
+accept	2.16:9.12	2.16:9.13	renders	Preposition in the expression before the face.
+accept	2.16:9.16	2.16:9.17	renders	Subject expressed by the verb form.
+accept	2.16:10.3	2.16:10.3	renders	Temporal prefix before speaking.
+accept	2.16:10.12	2.16:10.12	renders	Verb of turning.
+accept	2.16:10.20	2.16:10.20	renders	Verb of appearing.
+accept	2.16:11.2	2.16:11.2	renders	Main speech verb.
+accept	2.16:12.7,2.16:12.8	2.16:12.7	renders	Preposition and recipient suffix.
+accept	2.16:12.10	2.16:12.10	renders	Preposition in the evening idiom.
+accept	2.16:12.16	2.16:12.16,2.16:12.18	renders	Morning time expression.
+accept	2.16:13.3	2.16:13.3	renders	Fused evening adverb expresses the temporal prefix.
+accept	2.16:13.5	2.16:13.7	renders	Verb of rising.
+accept	2.16:13.11	2.16:13.16,2.16:13.18	renders	Morning time expression.
+accept	2.16:13.12	2.16:13.19	renders	Written verb of existence.
+accept	2.16:13.15	2.16:13.24	renders	Prepositional навколо incorporates the relation to the camp.
+accept	2.16:14.2	2.16:14.2	renders	Verb of rising.
+accept	2.16:14.6	2.16:14.6	renders	Narrative conjunction introducing the sight.
+accept	2.16:14.11	2.16:14.12	renders	Expresses the substantival sense of the first adjective.
+accept	2.16:14.13	2.16:14.13	renders	Renders the distinctive second descriptor.
+accept	2.16:15.6	2.16:15.5	renders	Part of the compound conjunction та й.
+accept	2.16:15.17	2.16:15.16	renders	Pronoun in the second question.
+accept	2.16:15.21	2.16:15.20	renders	Suffixed recipient preposition.
+accept	2.16:15.27	2.16:15.27	renders	Suffixed recipient preposition.
+accept	2.16:15.29	2.16:15.28	renders	Food-purpose prefix.
+accept	2.16:16.2	2.16:16.3	renders	Expresses the thing commanded.
+accept	2.16:16.10	2.16:16.8	renders	Pronoun carried by the source preposition.
+accept	2.16:16.12	2.16:16.10	renders	Prefix in the measure expression.
+accept	2.16:16.13	2.16:16.11	renders	Renders the noun in the measure idiom.
+accept	2.16:16.17	2.16:16.14	renders	Distributive prefix for each head.
+accept	2.16:16.18	2.16:16.16	renders	Noun meaning head.
+accept	2.16:16.19	2.16:16.17	renders	Explicit marker of the adverbial numerical standard.
+accept	2.16:16.26,2.16:16.27	2.16:16.21	renders	Substantival relative expression.
+accept	2.16:17.8,2.16:17.9	2.16:17.9	renders	Substantivized participle for gathering more.
+accept	2.16:17.11	2.16:17.12	renders	Relative word expressing the person gathering less.
+accept	2.16:18.3	2.16:18.2	renders	Subject expressed by the verb ending.
+accept	2.16:18.4	2.16:18.3	renders	Instrumental ending renders the measuring prefix.
+accept	2.16:18.8	2.16:18.8	renders	Expresses the surplus in the predicate.
+accept	2.16:18.9,2.16:18.10,2.16:18.11,2.16:18.12	2.16:18.10	renders	Substantivized participle for the person gathering more.
+accept	2.16:18.14,2.16:18.16	2.16:18.13	renders	Relative word and amount for gathering less.
+accept	2.16:18.18	2.16:18.15	renders	Part of the predicate expressing a shortage.
+accept	2.16:18.20	2.16:18.20	renders	Final gathering verb.
+accept	2.16:18.22	2.16:18.17	renders	Prefix in the measure expression.
+accept	2.16:18.23	2.16:18.18	renders	Renders the noun in the measure idiom.
+accept	2.16:19.3,2.16:19.4	2.16:19.4	renders	Preposition and recipient suffix.
+accept	2.16:19.6	2.16:19.7	renders	Marks the jussive mood.
+accept	2.16:19.11	2.16:19.8	renders	Pronoun carried by the source preposition.
+accept	2.16:19.12	2.16:19.9	renders	Preposition marking the time limit.
+accept	2.16:20.4	2.16:20.3	renders	Subject expressed by the verb ending.
+accept	2.16:20.10	2.16:20.9	renders	Pronoun carried by the source preposition.
+accept	2.16:20.11	2.16:20.10	renders	Preposition marking the time limit.
+accept	2.16:20.14	2.16:20.13	renders	Subject expressed by the verb form.
+accept	2.16:20.15	2.16:20.13,2.16:20.14	renders	Single verb expresses the action and the worms.
+accept	2.16:20.17	2.16:20.16	renders	Auxiliary in the predicate of becoming foul.
+accept	2.16:20.21,2.16:20.22	2.16:20.19	renders	Preposition and third-person plural suffix.
+accept	2.16:21.3	2.16:21.3	renders	Object pronoun carried by the suffix.
+accept	2.16:21.4	2.16:21.4,2.16:21.7,2.16:21.9	renders	Distributive adverb renders the full repeated morning expression.
+accept	2.16:21.6	2.16:21.11	renders	Prefix in the measure expression.
+accept	2.16:21.7	2.16:21.12	renders	Renders the noun in the measure idiom.
+accept	2.16:21.14	2.16:21.19	renders	Subject expressed by the melting verb form.
+accept	2.16:22.4	2.16:22.3	renders	Temporal genitive renders the date prefix.
+accept	2.16:22.5,2.16:22.6	2.16:22.8	renders	Gathering verb and its subject.
+accept	2.16:22.8	2.16:22.10	renders	Double amount.
+accept	2.16:22.11	2.16:22.14	renders	Distributive prefix before one.
+accept	2.16:22.20	2.16:22.25	renders	Dative ending renders the recipient prefix.
+accept	2.16:23.2	2.16:23.2	renders	Subject expressed by the speech verb form.
+accept	2.16:23.4,2.16:23.5	2.16:23.3	renders	Preposition and recipient suffix.
+accept	2.16:23.7	2.16:23.5	renders	Correlative making the relative clause substantival.
+accept	2.16:23.11,2.16:23.12	2.16:23.8	renders	Both words express complete rest.
+accept	2.16:23.19,2.16:23.20	2.16:23.16	renders	Future baking verb in the relative clause.
+accept	2.16:23.24,2.16:23.25	2.16:23.21	renders	Future boiling verb in the relative clause.
+accept	2.16:23.29	2.16:23.27	renders	What remains.
+accept	2.16:23.31	2.16:23.29	renders	Reflexive dative renders the suffixed preposition.
+accept	2.16:23.32	2.16:23.30	renders	Storage-purpose prefix.
+accept	2.16:24.5	2.16:24.4	renders	Completes the time-limit expression аж до.
+accept	2.16:24.7	2.16:24.7,2.16:24.8	renders	Renders the comparative conjunction.
+accept	2.16:24.9	2.16:24.9	renders	Verb of commanding.
+accept	2.16:24.13	2.16:24.13	renders	Subject expressed by the verb form.
+accept	2.16:24.18,2.16:24.19	2.16:24.18	renders	Locative preposition and its suffix.
+accept	2.16:25.16	2.16:25.17	renders	Locative prefix before field.
+accept	2.16:26.7	2.16:26.5	renders	Temporal genitive renders the date prefix.
+accept	2.16:26.12,2.16:26.13	2.16:26.13	renders	Locative preposition and its suffix.
+accept	2.16:26.14	2.16:26.12	renders	Makes the existential verb's understood subject explicit.
+accept	2.16:27.4	2.16:27.3	renders	Temporal genitive renders the date prefix.
+accept	2.16:27.6	2.16:27.8	renders	Past auxiliary of the going-out verb.
+accept	2.16:27.9	2.16:27.12	renders	Purpose expressed by the Ukrainian infinitive.
+accept	2.16:28.6	2.16:28.6	renders	Endpoint marker in the question.
+accept	2.16:28.8,2.16:28.9	2.16:28.8	renders	Subject and future auxiliary of the refusal verb.
+accept	2.16:29.4	2.16:29.5	renders	First suffixed recipient preposition.
+accept	2.16:29.6	2.16:29.8	renders	First component of the causal idiom.
+accept	2.16:29.9	2.16:29.12	renders	Second suffixed recipient preposition.
+accept	2.16:29.11	2.16:29.13	renders	Temporal genitive for the sixth day.
+accept	2.16:29.15	2.16:29.20	renders	Imperative to stay.
+accept	2.16:29.17,2.16:29.18	2.16:29.22	renders	Locative expression and reflexive sense of the suffix.
+accept	2.16:29.19	2.16:29.24	renders	Marks the jussive mood.
+accept	2.16:29.21	2.16:29.28	renders	Temporal genitive for the seventh day.
+accept	2.16:29.25	2.16:29.26	renders	Preposition of departure.
+accept	2.16:30.2	2.16:30.9	renders	Ordinal seventh.
+accept	2.16:30.3	2.16:30.5	renders	Temporal genitive renders the date prefix.
+accept	2.16:31.6	2.16:31.6	renders	Pronominal suffix on the name noun.
+accept	2.16:31.8	2.16:31.9	renders	Written subject pronoun.
+accept	2.16:31.9	2.16:31.13	renders	Supplied copula for the descriptive predicate.
+accept	2.16:31.10	2.16:31.10	renders	First comparison prefix.
+accept	2.16:31.16	2.16:31.15	renders	Possessive suffix on taste.
+accept	2.16:31.17	2.16:31.16	renders	Second comparison prefix.
+accept	2.16:31.18	2.16:31.17	renders	Cake noun in the taste comparison.
+accept	2.16:32.5	2.16:32.6	renders	Expresses the thing commanded.
+accept	2.16:32.10	2.16:32.13	renders	Instrumental pronoun renders the suffixed source expression.
+accept	2.16:32.12	2.16:32.14	renders	Storage-purpose prefix.
+accept	2.16:32.17	2.16:32.18	renders	Purpose conjunction.
+accept	2.16:32.24	2.16:32.25	renders	Object pronoun of feeding.
+accept	2.16:32.25	2.16:32.26	renders	Locative prefix before wilderness.
+accept	2.16:32.28	2.16:32.30	renders	First-person suffix on the departure verb.
+accept	2.16:32.30	2.16:32.31	renders	Object pronoun of bringing out.
+accept	2.16:33.11	2.16:33.11	renders	Directional adverb.
+accept	2.16:33.16	2.16:33.17	renders	Imperative of placement.
+accept	2.16:33.18	2.16:33.19	renders	Preposition in the expression before the face.
+accept	2.16:33.20	2.16:33.20	renders	Face noun.
+accept	2.16:33.21	2.16:33.22	renders	Storage-purpose prefix.
+accept	2.16:34.2	2.16:34.1,2.16:34.2	renders	Renders the comparative conjunction.
+accept	2.16:34.4	2.16:34.4	renders	Бог renders the divine name here.
+accept	2.16:34.5	2.16:34.5	renders	Dative ending expresses the recipient.
+accept	2.16:34.6	2.16:34.7	renders	Marks the main clause after the comparison.
+accept	2.16:34.7	2.16:34.8	renders	Verb of placement.
+accept	2.16:34.10	2.16:34.10	renders	Перед incorporates the prefix of the compound preposition.
+accept	2.16:34.13	2.16:34.14	renders	Storage-purpose prefix.
+accept	2.16:35.10	2.16:35.10	renders	First occurrence of the time-limit preposition.
+accept	2.16:35.16	2.16:35.18	renders	Second eating verb.
+accept	2.16:35.23	2.16:35.22	renders	Border noun.
+accept	2.16:36.3	2.16:36.7	renders	Written pronoun in the nominal clause.
+accept	2.16:36.5	2.16:36.4	renders	Makes the fractional sense of the ordinal explicit.

@@ -1,0 +1,87 @@
+kind	from	to	relation	reason
+fixed	2.31:1			Missing main speech verb link.
+fixed	2.31:2			Missing verb, preposition, and tribal affiliation links.
+unsure	2.31:3			The expanded ability phrase is only partly settled.
+fixed	2.31:4			Missing purpose prefixes and work verb.
+fixed	2.31:5			Missing second purpose verb and final noun.
+fixed	2.31:6			Missing case, compound, pronoun, and auxiliary links.
+fixed	2.31:7			Missing suffixed preposition links.
+ok	2.31:8			
+fixed	2.31:9			Missing base noun and possessive links.
+fixed	2.31:10			Missing holiness modifier and purpose prefix.
+fixed	2.31:11			Missing comparison prefix, auxiliary, and object pronoun.
+fixed	2.31:12			Missing main speech verb link.
+unsure	2.31:13			The explicit subject of knowing has no clear target.
+unsure	2.31:14			The resumptive «той» has no clear target.
+unsure	2.31:15			The resumptive «той» has no clear target.
+fixed	2.31:16			Missing verb and future auxiliary links.
+fixed	2.31:17			Missing pronoun, time expression, and action links.
+fixed	2.31:18			Missing subject, case, time, and preposition links.
+accept	2.31:1.2	2.31:1.2	renders	Main speech verb.
+accept	2.31:2.3	2.31:2.2	renders	Verb meaning call.
+accept	2.31:2.4	2.31:2.3	renders	Preposition in the naming expression.
+accept	2.31:2.12	2.31:2.10	renders	Genitive expresses tribal affiliation.
+accept	2.31:3.3	2.31:3.3	renders	Object pronoun on suffixed marker.
+accept	2.31:3.6	2.31:3.6	renders	Instrumental renders the prefix.
+accept	2.31:3.8	2.31:3.9	renders	Instrumental renders the prefix.
+accept	2.31:3.10	2.31:3.12	renders	Instrumental renders the prefix.
+accept	2.31:3.12	2.31:3.15	renders	Instrumental renders the fourth parallel prefix.
+accept	2.31:3.15	2.31:3.17	renders	Noun meaning work.
+accept	2.31:4.1	2.31:4.1	renders	First purpose prefix.
+accept	2.31:4.4	2.31:4.4	renders	Second purpose prefix.
+accept	2.31:4.5	2.31:4.5	renders	Nominal rendering of making.
+accept	2.31:5.12	2.31:5.12	renders	Second purpose verb.
+accept	2.31:5.15	2.31:5.15	renders	Final noun meaning work.
+accept	2.31:6.5,2.31:6.6	2.31:6.5	renders	Preposition and its suffixed pronoun.
+accept	2.31:6.11	2.31:6.10	renders	Genitive expresses tribal affiliation.
+accept	2.31:6.16	2.31:6.17	renders	Wise element of the compound.
+accept	2.31:6.22	2.31:6.22	renders	Verb carries the plural subject.
+accept	2.31:6.27	2.31:6.26	renders	Auxiliary of the past command.
+accept	2.31:6.28	2.31:6.26	renders	Verb carries the addressee suffix.
+accept	2.31:7.10,2.31:7.11	2.31:7.16	renders	Preposition and its suffixed pronoun.
+accept	2.31:9.11,2.31:9.12	2.31:9.16	renders	Base noun and its possessive suffix.
+accept	2.31:10.6	2.31:10.10	renders	Adjective renders the genitive noun.
+accept	2.31:10.14	2.31:10.19	renders	Purpose preposition.
+accept	2.31:11.9	2.31:11.14	renders	Prefix meaning as.
+accept	2.31:11.14	2.31:11.17	renders	Auxiliary of the past command.
+accept	2.31:11.15	2.31:11.17	renders	Verb carries the addressee suffix.
+accept	2.31:12.2	2.31:12.2	renders	Main speech verb.
+accept	2.31:13.5	2.31:13.4	renders	Dative expresses the addressee.
+accept	2.31:13.7	2.31:13.9	renders	Restrictive particle.
+accept	2.31:13.11	2.31:13.12	renders	Main verb of the future construction.
+accept	2.31:13.13	2.31:13.15	renders	Pronoun identifying the sign.
+accept	2.31:13.16	2.31:13.16	renders	First-person suffix on between.
+accept	2.31:13.18,2.31:13.19	2.31:13.18	renders	Second between and its plural suffix.
+accept	2.31:13.23	2.31:13.21	renders	Purpose prefix.
+accept	2.31:13.29,2.31:13.31	2.31:13.26	renders	Relative construction and participle's object suffix.
+accept	2.31:14.3	2.31:14.2	renders	Main verb of the future construction.
+accept	2.31:14.6	2.31:14.8	renders	Explicit pronoun for the Sabbath.
+accept	2.31:14.8,2.31:14.9	2.31:14.9	renders	Preposition and its plural suffix.
+accept	2.31:14.10	2.31:14.10	renders	Relative pronoun renders the substantive participle.
+accept	2.31:14.19	2.31:14.16	renders	Relative pronoun renders the working participle.
+accept	2.31:14.21,2.31:14.22	2.31:14.17	renders	Locative preposition and its suffix.
+accept	2.31:14.28	2.31:14.24	renders	Demonstrative modifying soul.
+accept	2.31:14.29	2.31:14.26	renders	Compound preposition includes the sense of midst.
+accept	2.31:15.3	2.31:15.3	renders	Future auxiliary of the passive verb.
+accept	2.31:15.7	2.31:15.6,2.31:15.8	renders	Temporal genitive renders the prefix and day.
+accept	2.31:15.11,2.31:15.12	2.31:15.12	renders	Completes the expression for cessation from work.
+accept	2.31:15.17	2.31:15.18	renders	Relative pronoun renders the working participle.
+accept	2.31:15.20	2.31:15.20	renders	Temporal preposition.
+accept	2.31:15.22	2.31:15.21	renders	Day in the Sabbath-day expression.
+accept	2.31:16.2,2.31:16.5	2.31:16.2	renders	Future auxiliary and verb render keeping.
+accept	2.31:16.8	2.31:16.9	renders	Infinitive meaning make.
+accept	2.31:17.1	2.31:17.7	renders	Pronoun identifying the sign.
+accept	2.31:17.3	2.31:17.8,2.31:17.9	renders	Single adverb renders for ever.
+accept	2.31:17.5	2.31:17.1	renders	First-person suffix on between.
+accept	2.31:17.7	2.31:17.3	renders	Second occurrence of between.
+accept	2.31:17.13	2.31:17.13	renders	Creation verb.
+accept	2.31:17.19	2.31:17.23	renders	Temporal genitive renders the prefix.
+accept	2.31:17.22	2.31:17.28	renders	Completes the rendering of ceasing work.
+accept	2.31:17.24	2.31:17.30	renders	Final verb meaning rest.
+accept	2.31:18.3	2.31:18.2	renders	Verb carries the third-person subject.
+accept	2.31:18.4	2.31:18.3	renders	Dative expresses the recipient.
+accept	2.31:18.5	2.31:18.5	renders	Temporal conjunction renders the prefix.
+accept	2.31:18.6	2.31:18.6	renders	Verb meaning finish.
+accept	2.31:18.8,2.31:18.9	2.31:18.9	renders	Preposition and its suffixed pronoun.
+accept	2.31:18.10	2.31:18.10	renders	Locative preposition.
+accept	2.31:18.20	2.31:18.20	renders	Instrumental renders the prefix.

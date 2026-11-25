@@ -1,0 +1,191 @@
+kind	from	to	relation	reason
+fixed	3.1:1			Restored the object of the second preposition.
+fixed	3.1:2			Restored the connective, pronouns, and livestock wording.
+unsure	3.1:3			The referent of the pronoun in the acceptance clause is uncertain.
+fixed	3.1:4			Restored the subject, passive wording, and atonement phrase.
+unsure	3.1:5			The Ukrainian lamb differs from the Hebrew young bovine.
+fixed	3.1:6			Distinguished the object pronoun from the possessive and restored the missing phrases.
+fixed	3.1:7			Restored both verbs and the second preposition.
+fixed	3.1:8			Restored the verb, the pieces, and the second relative pronoun.
+fixed	3.1:9			Corrected the scent phrase and restored the missing relations.
+fixed	3.1:10			Restored livestock wording, purpose, and the command to bring the male.
+fixed	3.1:11			Restored the object pronoun and corrected the directional and presence phrases.
+fixed	3.1:12			Restored both object pronouns, the result preposition, and the relative pronoun.
+fixed	3.1:13			Restored the instrumental, connective, altar relation, and offering wording.
+fixed	3.1:14			Restored the offering noun, mood particle, and young-bird component.
+unsure	3.1:15			Corrected the two verbs. The thumbnail wording may be an expansion of the nipping verb.
+fixed	3.1:16			Restored the removal verb, pronouns, and directional prepositions.
+fixed	3.1:17			Restored the object pronouns, separation verb, and offering wording.
+fixed	3.2:1			Restored the offerer, verbs, and both occurrences of the suffixed preposition.
+fixed	3.2:2			Corrected the preposition before incense and restored the source and offering wording.
+fixed	3.2:3			Completed the two-word Hebrew superlative.
+fixed	3.2:4			Restored the oven relation, copula, bread terms, and instrumental prefix.
+fixed	3.2:5			Corrected the second offering noun and restored the verbal clause.
+fixed	3.2:6			Restored the object, result phrase, suffixed preposition, and final pronoun.
+fixed	3.2:7			Corrected the second offering noun and restored the passive and material phrases.
+fixed	3.2:8			Restored the first verb, the passive participle, and the priest’s subject pronoun.
+fixed	3.2:9			Restored the first verb, connective, altar relation, and offering wording.
+fixed	3.2:10			Completed the two-word Hebrew superlative.
+fixed	3.2:11			Restored the dative prefix, passive, suffixed preposition, and offering noun.
+fixed	3.2:12			Restored the offering and altar relations. The singular Ukrainian pronouns differ from the Hebrew plurals.
+fixed	3.2:13			Distinguished the offering terms and restored the instrumental and final preposition.
+fixed	3.2:14			Distinguished the crushed-grain wording from the fresh-grain noun.
+fixed	3.2:15			Restored both verbs, both suffixed prepositions, and the final pronoun.
+fixed	3.2:16			Restored the oil, its possessive, and the incense and offering wording.
+refuse	3.1:3.24	3.1:3.19		The following noun renders face.
+refuse	3.1:5.5	3.1:5.8		The separate face noun supplies the lexical content.
+refuse	3.1:6.10	3.1:6.10		Direct object confused with possessive suffix.
+refuse	3.1:9.21	3.1:9.20		The adjective renders pleasing, a separate word.
+refuse	3.1:11.9	3.1:11.10		The following noun renders face.
+refuse	3.1:15.8	3.1:15.17		This verb describes draining the blood.
+refuse	3.2:2.20	3.2:2.17		This source prefix introduces the oil.
+refuse	3.2:5.5	3.2:5.7		The second offering noun belongs with grain offering.
+refuse	3.2:7.5	3.2:7.5		The second offering noun belongs with grain offering.
+refuse	3.2:13.4	3.2:13.3		The second offering noun belongs with grain offering.
+refuse	3.2:14.16	3.2:14.13		The adjacent noun identifies the grain itself.
+accept	3.1:1.9	3.1:1.8	renders	Pronominal suffix on the preposition.
+accept	3.1:2.6	3.1:2.5	renders	Part of the single connective та й.
+accept	3.1:2.8,3.1:2.9	3.1:2.7	renders	Preposition with its plural suffix.
+accept	3.1:2.11	3.1:2.8	renders	Indefinite person in the condition.
+accept	3.1:2.12,3.1:2.13	3.1:2.11	renders	Source preposition with its second-person suffix.
+accept	3.1:2.25	3.1:2.24	renders	Noun in the expression for small livestock.
+accept	3.1:3.14,3.1:3.15	3.1:3.14	renders	Volitional rendering of the second presentation verb.
+accept	3.1:3.16	3.1:3.15	renders	Suffixed direct object of the second verb.
+accept	3.1:3.17	3.1:3.10	renders	Preposition of direction.
+accept	3.1:3.20	3.1:3.16	renders	Purpose expressed by the prefix.
+accept	3.1:3.22	3.1:3.17	renders	Auxiliary in the acceptance phrase.
+accept	3.1:3.24	3.1:3.18	renders	Prepositional component of the presence expression.
+accept	3.1:4.3	3.1:4.2	renders	Subject expressed by the verb form.
+accept	3.1:4.10,3.1:4.12	3.1:4.9	renders	Future passive wording of acceptance.
+accept	3.1:4.11	3.1:4.10	renders	Suffixed beneficiary preposition.
+accept	3.1:4.14	3.1:4.11	renders	Purpose prefix before the atonement verb.
+accept	3.1:4.16,3.1:4.17	3.1:4.12	renders	Part of the expression for expiation.
+accept	3.1:4.18	3.1:4.13	renders	Suffix identifies the person receiving atonement.
+accept	3.1:5.3	3.1:5.2	renders	Subject expressed by the slaughter verb.
+accept	3.1:5.5	3.1:5.7	renders	Prepositional component of the presence expression.
+accept	3.1:5.7	3.1:5.8	renders	Face noun in the presence expression.
+accept	3.1:5.22,3.1:5.24	3.1:5.29	renders	Locative and construct relations of the entrance noun.
+accept	3.1:6.3,3.1:6.4,3.1:6.5	3.1:6.2	renders	Subject, hide, and removal relation of the flaying verb.
+accept	3.1:6.6	3.1:6.5	renders	Noun in the burnt-offering expression.
+accept	3.1:6.10	3.1:6.8	renders	Suffixed direct object of cutting.
+accept	3.1:6.11	3.1:6.9	renders	Prefix marking the result of cutting.
+accept	3.1:6.12,3.1:6.13	3.1:6.10	renders	Pieces and their possessive suffix.
+accept	3.1:7.2	3.1:7.2	renders	Verb for placing the fire.
+accept	3.1:7.10	3.1:7.12	renders	Verb for arranging the wood.
+accept	3.1:7.12	3.1:7.14	renders	Preposition before the second fire noun.
+accept	3.1:8.2	3.1:8.2	renders	Verb for arranging the pieces.
+accept	3.1:8.7	3.1:8.9	renders	Pieces of the offering.
+accept	3.1:8.16	3.1:8.24	renders	Relative pronoun introducing the altar clause.
+accept	3.1:9.8	3.1:9.6	renders	Instrumental case renders the prefix.
+accept	3.1:9.14	3.1:9.17	renders	Altar noun carries the directional ending.
+accept	3.1:9.19	3.1:9.19	renders	Noun in the fire-offering expression.
+accept	3.1:9.20	3.1:9.20	renders	Noun meaning scent.
+accept	3.1:9.21	3.1:9.21	renders	Quality of the scent.
+accept	3.1:10.7	3.1:10.5	renders	Noun in the expression for small livestock.
+accept	3.1:10.13	3.1:10.14	renders	Prefix marking the sacrifice’s purpose.
+accept	3.1:10.16,3.1:10.17,3.1:10.18	3.1:10.18	renders	Volitional verb with its object suffix.
+accept	3.1:10.20	3.1:10.16	renders	Male animal.
+accept	3.1:11.3	3.1:11.3	renders	Suffixed direct object of slaughter.
+accept	3.1:11.7	3.1:11.8	renders	Directional ending on north.
+accept	3.1:11.9	3.1:11.9	renders	Prepositional component of the presence expression.
+accept	3.1:11.11	3.1:11.10	renders	Face noun in the presence expression.
+accept	3.1:12.3	3.1:12.3	renders	Suffixed direct object of cutting.
+accept	3.1:12.4	3.1:12.4	renders	Prefix marking the result of cutting.
+accept	3.1:12.15	3.1:12.16	renders	Plural object of arranging.
+accept	3.1:12.21	3.1:12.24	renders	Relative pronoun introducing the altar clause.
+accept	3.1:13.6	3.1:13.8	renders	Instrumental case renders the prefix.
+accept	3.1:13.13	3.1:13.18	renders	Part of the single connective та й.
+accept	3.1:13.15	3.1:13.21	renders	Altar noun carries the directional ending.
+accept	3.1:13.17	3.1:13.23	renders	Written pronoun in the nominal clause.
+accept	3.1:13.20	3.1:13.24	renders	Noun in the fire-offering expression.
+accept	3.1:13.21	3.1:13.25	renders	Noun meaning scent.
+accept	3.1:14.5	3.1:14.7	renders	First occurrence of the offering noun.
+accept	3.1:14.11	3.1:14.11	renders	Mood particle for the presentation verb.
+accept	3.1:14.16	3.1:14.17	renders	The Ukrainian noun includes the offspring component.
+accept	3.1:15.3	3.1:15.2	renders	Object suffix on the presentation verb.
+accept	3.1:15.8	3.1:15.9	renders	Verb for nipping the bird’s head.
+accept	3.1:15.9	3.1:15.11	renders	Possessive dative renders the suffix on head.
+accept	3.1:15.14	3.1:15.12	renders	Part of the single connective та й.
+accept	3.1:15.16	3.1:15.15	renders	Altar noun carries the directional ending.
+accept	3.1:15.21,3.1:15.22	3.1:15.17	renders	Future passive rendering of the draining verb.
+accept	3.1:16.2	3.1:16.2	renders	Verb for removing the crop.
+accept	3.1:16.7	3.1:16.6	renders	Possessive suffix on the feather term.
+accept	3.1:16.10	3.1:16.9	renders	Suffixed direct object of throwing.
+accept	3.1:16.13	3.1:16.13	renders	Directional ending on east.
+accept	3.1:16.15	3.1:16.14	renders	Preposition of motion toward the place.
+accept	3.1:17.3	3.1:17.3	renders	Suffixed object of splitting.
+accept	3.1:17.4	3.1:17.4	renders	Locative prefix on the wings phrase.
+accept	3.1:17.9	3.1:17.7	renders	Verb for separating.
+accept	3.1:17.14	3.1:17.10	renders	Suffixed object of burning.
+accept	3.1:17.15	3.1:17.14	renders	Altar noun carries the directional ending.
+accept	3.1:17.22	3.1:17.23	renders	Written pronoun in the nominal clause.
+accept	3.1:17.25	3.1:17.24	renders	Noun in the fire-offering expression.
+accept	3.1:17.26	3.1:17.25	renders	Noun meaning scent.
+accept	3.2:1.3	3.2:1.2	renders	Indefinite person making the offering.
+accept	3.2:1.4	3.2:1.4	renders	Verb for presenting the offering.
+accept	3.2:1.6	3.2:1.6	renders	Noun in the grain-offering expression.
+accept	3.2:1.11	3.2:1.10	renders	Mood particle with the written copula.
+accept	3.2:1.18	3.2:1.13	renders	Subject expressed by the pouring verb.
+accept	3.2:1.20,3.2:1.21	3.2:1.14	renders	First occurrence of the suffixed preposition.
+accept	3.2:1.24	3.2:1.17	renders	Verb for putting on the incense.
+accept	3.2:1.25,3.2:1.26	3.2:1.18	renders	Second occurrence of the suffixed preposition.
+accept	3.2:2.10	3.2:2.10,3.2:2.11	renders	Fused expression meaning from there.
+accept	3.2:2.11	3.2:2.12	renders	Fullness of the handful.
+accept	3.2:2.15	3.2:2.14	renders	Partitive genitive renders the flour source prefix.
+accept	3.2:2.18	3.2:2.17,3.2:2.18	renders	Oil noun with its partitive source relation.
+accept	3.2:2.19	3.2:2.18	renders	Possessive suffix on oil.
+accept	3.2:2.20	3.2:2.19	renders	Preposition introducing the accompanying incense.
+accept	3.2:2.25	3.2:2.22	renders	Part of the single connective та й.
+accept	3.2:2.28	3.2:2.29	renders	Altar noun carries the directional ending.
+accept	3.2:2.35	3.2:2.30	renders	Noun in the fire-offering expression.
+accept	3.2:2.36	3.2:2.31	renders	Noun meaning scent.
+accept	3.2:3.14	3.2:3.12	renders	Head noun of the Hebrew superlative.
+accept	3.2:4.5	3.2:4.5	renders	Noun in the grain-offering expression.
+accept	3.2:4.8	3.2:4.6	renders	Oven relation expressed by the construct baking noun.
+accept	3.2:4.13	3.2:4.8	renders	Supplied copula with the flour predicate.
+accept	3.2:4.16	3.2:4.10	renders	Unleavened quality of the cakes.
+accept	3.2:4.17	3.2:4.9	renders	Cakes in the first bread phrase.
+accept	3.2:4.22	3.2:4.17	renders	Unleavened quality of the wafers.
+accept	3.2:4.23	3.2:4.16	renders	Wafers in the second bread phrase.
+accept	3.2:4.25	3.2:4.19	renders	Instrumental case renders the oil prefix.
+accept	3.2:5.5	3.2:5.3	renders	Noun in the grain-offering expression.
+accept	3.2:5.10,3.2:5.11,3.2:5.12	3.2:5.14	renders	Mood, subject, and verb of the written copula.
+accept	3.2:6.2	3.2:6.2	renders	Suffixed object of breaking.
+accept	3.2:6.3,3.2:6.4	3.2:6.3	renders	Bare noun expresses the result of breaking.
+accept	3.2:6.7,3.2:6.8	3.2:6.6	renders	Preposition with its pronominal suffix.
+accept	3.2:6.10	3.2:6.9	renders	Written pronoun in the nominal clause.
+accept	3.2:7.5	3.2:7.3	renders	Noun in the grain-offering expression.
+accept	3.2:7.9,3.2:7.10,3.2:7.11	3.2:7.10	renders	Volitional passive rendering of the making verb.
+accept	3.2:7.14	3.2:7.6	renders	Bare flour noun expresses the material used.
+accept	3.2:8.2	3.2:8.2	renders	First verb, bringing the offering.
+accept	3.2:8.6	3.2:8.7	renders	Passive form of making.
+accept	3.2:8.18	3.2:8.18	renders	Subject expressed by the final presentation verb.
+accept	3.2:9.2	3.2:9.2	renders	Verb for lifting out the memorial portion.
+accept	3.2:9.12	3.2:9.10	renders	Part of the single connective та й.
+accept	3.2:9.14	3.2:9.13	renders	Altar noun carries the directional ending.
+accept	3.2:9.18	3.2:9.14	renders	Noun in the fire-offering expression.
+accept	3.2:9.20	3.2:9.15	renders	Noun meaning scent.
+accept	3.2:10.14	3.2:10.12	renders	Head noun of the Hebrew superlative.
+accept	3.2:11.6	3.2:11.6	renders	Dative ending renders the recipient prefix.
+accept	3.2:11.8,3.2:11.9	3.2:11.9	renders	Future passive rendering of the making verb.
+accept	3.2:11.19,3.2:11.20	3.2:11.19	renders	Source preposition with its pronominal suffix.
+accept	3.2:11.22	3.2:11.20	renders	Noun in the fire-offering expression.
+accept	3.2:12.1	3.2:12.1	renders	Fronted offering noun expresses the role of the gift.
+accept	3.2:12.9	3.2:12.8	renders	Preposition indicating direction to the altar.
+accept	3.2:12.13	3.2:12.12	renders	Going up onto the altar rendered as presentation.
+accept	3.2:12.14	3.2:12.13	renders	Prefix introducing the intended scent.
+accept	3.2:12.16	3.2:12.14	renders	Noun meaning scent.
+accept	3.2:13.4,3.2:13.5	3.2:13.4	renders	Grain-offering expression in the first clause.
+accept	3.2:13.7	3.2:13.5	renders	Instrumental case renders the salt prefix.
+accept	3.2:13.9,3.2:13.10,3.2:13.11	3.2:13.17	renders	Second grain offering and its possessive suffix.
+accept	3.2:13.18	3.2:13.18	renders	Preposition introducing every offering.
+accept	3.2:14.5	3.2:14.4	renders	Noun in the first grain-offering expression.
+accept	3.2:14.16	3.2:14.14	renders	Fresh-grain noun rendered as grain.
+accept	3.2:15.2	3.2:15.2	renders	Putting on oil rendered as pouring.
+accept	3.2:15.3,3.2:15.4	3.2:15.3	renders	First occurrence of the suffixed preposition.
+accept	3.2:15.7	3.2:15.6	renders	Verb for placing the incense.
+accept	3.2:15.8,3.2:15.9	3.2:15.7	renders	Second occurrence of the suffixed preposition.
+accept	3.2:15.11	3.2:15.10	renders	Written pronoun in the nominal clause.
+accept	3.2:16.12,3.2:16.13	3.2:16.11	renders	Oil noun and its possessive suffix.
+accept	3.2:16.14	3.2:16.12	renders	Preposition introducing the accompanying incense.
+accept	3.2:16.20	3.2:16.15	renders	Noun in the fire-offering expression.

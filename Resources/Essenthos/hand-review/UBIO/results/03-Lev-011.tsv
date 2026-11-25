@@ -1,0 +1,134 @@
+kind	from	to	relation	reason
+fixed	3.11:1			Restored the addressee pronoun.
+ok	3.11:2			
+fixed	3.11:3			Corrected hoof and participle links and restored the object pronoun.
+fixed	3.11:4			Restored demonstrative, verb phrase, pronoun, and dative links.
+fixed	3.11:5			Corrected the split-hoof phrase and restored the final dative.
+fixed	3.11:6			Corrected the split-hoof phrase and restored the final dative.
+fixed	3.11:7			Corrected the split-hoof phrases and restored pronoun and dative links.
+fixed	3.11:8			Restored future auxiliaries, the contact preposition, and final pronoun and dative links.
+fixed	3.11:9			Corrected the possession link and restored the first eating verb and resumptive pronoun.
+unsure	3.11:10			Restored possession and other missing links. The target of «пливає» is uncertain.
+fixed	3.11:11			Restored the subject pronoun, dative, and future auxiliary.
+fixed	3.11:12			Restored possession, subject pronoun, and dative links.
+fixed	3.11:13			Restored the source preposition, passive-clause links, and the second bird.
+fixed	3.11:14			Restored the kind preposition and possessive.
+fixed	3.11:15			Moved the kind preposition to its Hebrew prefix.
+fixed	3.11:16			Restored the ostrich compound and corrected the owl, hawk conjunction, and kind preposition.
+ok	3.11:17			
+fixed	3.11:18			Restored the third bird in the list.
+fixed	3.11:19			Restored the kind preposition.
+fixed	3.11:20			Restored the walking clause, subject pronoun, and dative.
+fixed	3.11:21			Restored the opening restriction, walking clause, possession, and prepositional links.
+fixed	3.11:22			Corrected repeated kind phrases and restored the partitive phrase.
+fixed	3.11:23			Restored links for the creature noun, possession, subject pronoun, and dative.
+fixed	3.11:24			Restored the causal phrase, first verb phrase, and contact links.
+refuse	3.11:3.6	3.11:3.3		Splitting is expressed by the participle.
+refuse	3.11:3.11	3.11:3.5		The noun renders the second hoof occurrence.
+refuse	3.11:3.14	3.11:3.7		Introduces the cud-chewing participle.
+refuse	3.11:5.10	3.11:5.10		Splitting is expressed by the verb.
+refuse	3.11:6.10	3.11:6.10		Splitting is expressed by the verb.
+refuse	3.11:7.6	3.11:7.7		Splitting is expressed by the participle.
+refuse	3.11:9.11	3.11:9.13		Possession is carried by the suffixed lamed.
+refuse	3.11:15.3	3.11:15.5		The preposition renders the lamed prefix.
+refuse	3.11:16.4	3.11:16.13		Renders the preceding owl entry.
+refuse	3.11:16.5	3.11:16.10		This conjunction introduces the hawk.
+refuse	3.11:16.7	3.11:16.19		The preposition renders the lamed prefix.
+refuse	3.11:22.7	3.11:22.9		The preposition renders the lamed prefix.
+refuse	3.11:22.12	3.11:22.15		The preposition renders the lamed prefix.
+refuse	3.11:22.13	3.11:22.21		Belongs to the sol'am kind phrase.
+refuse	3.11:22.14	3.11:22.21		Belongs to the sol'am kind phrase.
+refuse	3.11:22.18	3.11:22.27		Belongs to the hargol kind phrase.
+refuse	3.11:22.19	3.11:22.27		Belongs to the hargol kind phrase.
+refuse	3.11:22.22	3.11:22.27		The preposition renders the lamed prefix.
+accept	3.11:1.10	3.11:1.11	renders	Suffixed preposition names the addressees.
+accept	3.11:3.2	3.11:3.10	renders	Renders the relation of membership among the cattle.
+accept	3.11:3.3	3.11:3.12	renders	Renders cattle.
+accept	3.11:3.4,3.11:3.5,3.11:3.6	3.11:3.2	renders	Unpack the first hoof-splitting participle.
+accept	3.11:3.9,3.11:3.10,3.11:3.12	3.11:3.5	renders	Unpack the second hoof-cleaving participle.
+accept	3.11:3.11	3.11:3.7	renders	Renders the second hoof occurrence.
+accept	3.11:3.13	3.11:3.6	renders	Renders the cognate noun for a cleft.
+accept	3.11:3.14	3.11:3.8	renders	Introduces the cud-chewing participle.
+accept	3.11:3.17	3.11:3.13	renders	Renders the suffixed object pronoun.
+accept	3.11:4.2	3.11:4.3	renders	Renders the demonstrative.
+accept	3.11:4.4	3.11:4.5	renders	Renders the eating verb's future form.
+accept	3.11:4.8	3.11:4.7	renders	Introduces the cud-chewing participle.
+accept	3.11:4.14,3.11:4.15,3.11:4.16	3.11:4.12	renders	Unpack the hoof-splitting participle.
+accept	3.11:4.17	3.11:4.14	renders	Renders the first hoof occurrence.
+accept	3.11:4.20	3.11:4.21	renders	Renders the camel clause's subject pronoun.
+accept	3.11:4.24,3.11:4.27	3.11:4.25	renders	Render the second hoof-splitting participle.
+accept	3.11:4.25	3.11:4.23	renders	Renders the second hoof occurrence.
+accept	3.11:4.26	3.11:4.24	renders	Renders the negation.
+accept	3.11:4.30,3.11:4.31	3.11:4.28	renders	Render the preposition and its pronoun suffix.
+accept	3.11:5.9,3.11:5.10	3.11:5.12	renders	Render the hoof-splitting verb.
+accept	3.11:5.11	3.11:5.10	renders	Renders the hoof noun.
+accept	3.11:5.14,3.11:5.15	3.11:5.15	renders	Render the preposition and its pronoun suffix.
+accept	3.11:6.9,3.11:6.10	3.11:6.12	renders	Render the hoof-splitting verb.
+accept	3.11:6.11	3.11:6.10	renders	Renders the hoof noun.
+accept	3.11:6.14,3.11:6.15	3.11:6.15	renders	Render the preposition and its pronoun suffix.
+accept	3.11:7.4	3.11:7.8	renders	Renders the first subject pronoun.
+accept	3.11:7.5,3.11:7.6	3.11:7.6	renders	Render the first hoof-splitting participle.
+accept	3.11:7.7	3.11:7.7	renders	Renders the first hoof occurrence.
+accept	3.11:7.9	3.11:7.10	renders	Part of the second hoof-cleaving verb phrase.
+accept	3.11:7.10	3.11:7.12	renders	Renders the second hoof occurrence.
+accept	3.11:7.12	3.11:7.11	renders	Renders the cognate noun for a cleft.
+accept	3.11:7.18	3.11:7.19	renders	Renders the final subject pronoun.
+accept	3.11:7.19,3.11:7.20	3.11:7.20	renders	Render the preposition and its pronoun suffix.
+accept	3.11:8.4	3.11:8.4	renders	Renders the eating verb's future form.
+accept	3.11:8.7	3.11:8.6	renders	Renders the preposition governed by touching.
+accept	3.11:8.11	3.11:8.9	renders	Renders the touching verb's future form.
+accept	3.11:8.14	3.11:8.11	renders	Renders the final subject pronoun.
+accept	3.11:8.15,3.11:8.16	3.11:8.12	renders	Render the preposition and its pronoun suffix.
+accept	3.11:9.3	3.11:9.3	renders	Renders the first eating verb.
+accept	3.11:9.11	3.11:9.12	renders	Renders the suffixed possessive construction.
+accept	3.11:9.22	3.11:9.26	renders	Renders the suffixed object pronoun.
+accept	3.11:10.4	3.11:10.4	renders	Renders the negation.
+accept	3.11:10.5	3.11:10.5	renders	Renders the suffixed possessive construction.
+accept	3.11:10.16	3.11:10.18	renders	Introduces the clause rendering the swarm noun.
+accept	3.11:10.18	3.11:10.18	renders	Expresses the habitat relation in the swarm construct.
+accept	3.11:10.29,3.11:10.30	3.11:10.33	renders	Render the preposition and its pronoun suffix.
+accept	3.11:11.2	3.11:11.3	renders	Renders the subject encoded in the verb.
+accept	3.11:11.5,3.11:11.6	3.11:11.4	renders	Render the preposition and its pronoun suffix.
+accept	3.11:11.10	3.11:11.8	renders	Renders the eating verb's future form.
+accept	3.11:12.4	3.11:12.4	renders	Renders the suffixed possessive construction.
+accept	3.11:12.11	3.11:12.12	renders	Renders the subject pronoun.
+accept	3.11:12.12,3.11:12.13	3.11:12.13	renders	Render the preposition and its pronoun suffix.
+accept	3.11:13.2	3.11:13.5	renders	Renders the source preposition.
+accept	3.11:13.8	3.11:13.9	renders	Renders the eating verb's future form.
+accept	3.11:13.9	3.11:13.9	renders	Renders the passive verb's plural subject as an object.
+accept	3.11:13.14	3.11:13.18	renders	Renders the second bird in the list.
+accept	3.11:14.5	3.11:14.9	renders	Renders the preposition in the kind phrase.
+accept	3.11:14.7	3.11:14.10	renders	Renders the possessive suffix.
+accept	3.11:15.3	3.11:15.4	renders	Renders the preposition in the kind phrase.
+accept	3.11:16.2	3.11:16.3,3.11:16.5	renders	Renders the compound bird name.
+accept	3.11:16.4	3.11:16.9	renders	Renders the owl entry.
+accept	3.11:16.5	3.11:16.14	renders	Renders the conjunction introducing the hawk.
+accept	3.11:16.7	3.11:16.18	renders	Renders the preposition in the kind phrase.
+accept	3.11:18.6	3.11:18.12	renders	Renders the third bird following its conjunction.
+accept	3.11:19.4	3.11:19.7	renders	Renders the preposition in the kind phrase.
+accept	3.11:20.3,3.11:20.4	3.11:20.6	renders	Render the walking participle as a relative clause.
+accept	3.11:20.8	3.11:20.10	renders	Renders the subject pronoun.
+accept	3.11:20.9,3.11:20.10	3.11:20.11	renders	Render the preposition and its pronoun suffix.
+accept	3.11:21.1	3.11:21.1	renders	Renders the restrictive particle.
+accept	3.11:21.2	3.11:21.3	renders	Renders the demonstrative.
+accept	3.11:21.8,3.11:21.9	3.11:21.11	renders	Render the walking participle as a relative clause.
+accept	3.11:21.13	3.11:21.15	renders	Renders possession expressed by the reading לו.
+accept	3.11:21.15	3.11:21.17,3.11:21.18,3.11:21.19	renders	Renders the compound expression for above.
+accept	3.11:21.19	3.11:21.23	renders	Instrumental pronoun renders the suffixed preposition.
+accept	3.11:22.2,3.11:22.3	3.11:22.3	renders	Render the partitive preposition and its pronoun suffix.
+accept	3.11:22.7	3.11:22.8	renders	Renders the locust kind preposition.
+accept	3.11:22.9	3.11:22.9	renders	Renders the locust kind possessive.
+accept	3.11:22.12	3.11:22.14	renders	Renders the sol'am kind preposition.
+accept	3.11:22.13,3.11:22.14	3.11:22.15	renders	Render the sol'am kind noun and suffix.
+accept	3.11:22.17	3.11:22.20	renders	Renders the hargol kind preposition.
+accept	3.11:22.18,3.11:22.19	3.11:22.21	renders	Render the hargol kind noun and suffix.
+accept	3.11:22.22	3.11:22.26	renders	Renders the hagav kind preposition.
+accept	3.11:23.3	3.11:23.3	renders	Renders the swarming creature noun.
+accept	3.11:23.6	3.11:23.7	renders	Renders the suffixed possessive construction.
+accept	3.11:23.10	3.11:23.11	renders	Renders the subject pronoun.
+accept	3.11:23.11,3.11:23.12	3.11:23.12	renders	Render the preposition and its pronoun suffix.
+accept	3.11:24.2	3.11:24.2	renders	Renders the causal lamed.
+accept	3.11:24.3	3.11:24.3	renders	Renders the demonstrative referring to the animals.
+accept	3.11:24.4,3.11:24.5,3.11:24.6,3.11:24.7	3.11:24.4	renders	Render the verb's subject, future, and change of state.
+accept	3.11:24.9	3.11:24.7	renders	Introduces the relative clause rendering the touching participle.
+accept	3.11:24.11	3.11:24.8	renders	Renders the preposition governed by touching.

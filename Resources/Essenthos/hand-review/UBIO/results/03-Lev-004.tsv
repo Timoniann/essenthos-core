@@ -1,0 +1,232 @@
+kind	from	to	relation	reason
+ok	3.4:1			
+fixed	3.4:2			Missing subject, manner, verb-form, and pronoun links.
+fixed	3.4:3			Missing links for guilt, the sin, the young bull, and the offering.
+fixed	3.4:4			Split both occurrences of «перед … лицем» into their source components.
+fixed	3.4:5			The partitive genitive and object pronoun were unlinked.
+fixed	3.4:6			«Лицем» was linked to the second occurrence of “face.”
+fixed	3.4:7			Missing partitive and locative links. «Перед» needed the prefix.
+fixed	3.4:8			Missing links for both fat occurrences, the offering, and the relative clause.
+fixed	3.4:9			Missing prepositions and the pronouns carried by suffixes.
+fixed	3.4:10			«Жертви» renders the separate sacrifice noun. Several other links were missing.
+fixed	3.4:11			The accompaniment links were missing. «Їх» is plural, while the Hebrew suffix is singular.
+fixed	3.4:12			Missing links for the dump site, the object pronoun, and the final passive clause.
+fixed	3.4:13			«Діло» and «зроблять» were unlinked.
+fixed	3.4:14			Missing links for the passive auxiliary, pronouns, young bull, and offering.
+fixed	3.4:15			Corrected both phrases for standing before the Lord.
+fixed	3.4:16			Missing links for “anointed,” the bringing verb, and the partitive prefix.
+fixed	3.4:17			Removed the article link and corrected the two face occurrences. «В» stays unlinked where Hebrew uses a partitive.
+fixed	3.4:18			Removed the article link and corrected the phrase before the Lord.
+fixed	3.4:19			Missing links for the suffix pronoun and the locative altar phrase.
+fixed	3.4:20			Missing comparative, atonement, and recipient links.
+fixed	3.4:21			Missing comparison, object pronoun, and closing subject links.
+fixed	3.4:22			Missing conditional, manner, and prohibited-action links.
+unsure	3.4:23			The opening «і» has an uncertain correspondence to Hebrew “or.”
+fixed	3.4:24			Corrected the face phrase and linked the pronouns and offering expression.
+fixed	3.4:25			Missing links for the offering expression, instrumental prefix, and giving verb.
+fixed	3.4:26			«Жертви» renders the sacrifice noun. Several preposition and pronoun links were missing.
+fixed	3.4:27			Missing links for the indefinite subject, land, and circumstantial and prohibited actions.
+unsure	3.4:28			The opening «і» has an uncertain correspondence to Hebrew “or.”
+fixed	3.4:29			Missing slaughter verb and links within both sin-offering expressions.
+fixed	3.4:30			Missing links for the instrumental, the partitive, and the giving verb.
+fixed	3.4:31			Corrected the sacrifice noun and added the comparison, aroma, and pronoun links.
+fixed	3.4:32			Missing subject and offering-role links.
+fixed	3.4:33			Missing slaughter, object pronoun, and offering-expression links.
+fixed	3.4:34			Missing offering-expression, instrumental, and giving links.
+fixed	3.4:35			Corrected the sacrifice noun and filled missing links. «Його» is singular where the Hebrew object pronoun is plural.
+refuse	3.4:4.10	3.4:4.11		«Лице» renders this noun.
+refuse	3.4:4.25	3.4:4.27		«Лицем» renders this noun.
+refuse	3.4:6.16	3.4:6.18		«Лицем» renders this noun.
+refuse	3.4:6.18	3.4:6.21		Face belongs to the preceding phrase.
+refuse	3.4:7.12	3.4:7.15		«Лицем» renders this noun.
+refuse	3.4:10.6	3.4:10.8		The separate sacrifice noun renders «жертви».
+refuse	3.4:15.10	3.4:15.13		«Лицем» renders this noun.
+refuse	3.4:15.20	3.4:15.21		«Лицем» renders this noun.
+refuse	3.4:17.7	3.4:17.7		Supplied demonstrative on the article.
+refuse	3.4:17.14	3.4:17.14		«Лицем» renders this noun.
+refuse	3.4:17.16	3.4:17.17		Face belongs to the preceding phrase.
+refuse	3.4:18.11	3.4:18.12		«Лицем» renders this noun.
+refuse	3.4:18.21	3.4:18.21		Supplied demonstrative on the article.
+refuse	3.4:24.18	3.4:24.19		«Лицем» renders this noun.
+refuse	3.4:26.11	3.4:26.12		The separate sacrifice noun renders «жертви».
+refuse	3.4:31.13	3.4:31.14		The separate sacrifice noun renders «жертви».
+refuse	3.4:35.12	3.4:35.15		The separate sacrifice noun renders «жертви».
+accept	3.4:2.7	3.4:2.7	renders	Indefinite person.
+accept	3.4:2.8	3.4:2.10	renders	The adverb carries the manner relation.
+accept	3.4:2.18,3.4:2.19	3.4:2.18	renders	Prohibited action in an impersonal verb phrase.
+accept	3.4:2.21	3.4:2.20	renders	Subject expressed by the verb form.
+accept	3.4:2.24	3.4:2.22	renders	One of the commandments.
+accept	3.4:2.26	3.4:2.24	renders	The written plural pronoun.
+accept	3.4:3.5	3.4:3.7	renders	Result expressed by the lamed prefix.
+accept	3.4:3.6	3.4:3.8	renders	Guilt noun.
+accept	3.4:3.9	3.4:3.12	renders	Subject expressed by the verb form.
+accept	3.4:3.11	3.4:3.13	renders	The preposition introducing the sin.
+accept	3.4:3.12,3.4:3.13	3.4:3.14	renders	Sin noun and its possessive suffix.
+accept	3.4:3.18,3.4:3.19	3.4:3.18	renders	Young animal and its affiliation in the construct.
+accept	3.4:3.20,3.4:3.21	3.4:3.19	renders	Both words name cattle.
+accept	3.4:3.25	3.4:3.23	renders	Purpose prefix.
+accept	3.4:3.27	3.4:3.24	renders	Part of the sin-offering expression.
+accept	3.4:4.3	3.4:4.2	renders	Subject expressed by the verb form.
+accept	3.4:4.10	3.4:4.10	renders	Prefix in the first face phrase.
+accept	3.4:4.12	3.4:4.11	renders	First occurrence of “face.”
+accept	3.4:4.22	3.4:4.21	renders	Part of the conjunction «та й».
+accept	3.4:4.25	3.4:4.26	renders	Prefix in the second face phrase.
+accept	3.4:4.27	3.4:4.27	renders	Second occurrence of “face.”
+accept	3.4:5.5	3.4:5.7	renders	The genitive conveys the partitive prefix.
+accept	3.4:5.9	3.4:5.11	renders	Part of the conjunction «та й».
+accept	3.4:5.11	3.4:5.13	renders	Suffixed object pronoun.
+accept	3.4:6.10	3.4:6.10	renders	Part of the conjunction «та й».
+accept	3.4:6.16	3.4:6.17	renders	Prefix in the phrase before the Lord.
+accept	3.4:6.18	3.4:6.18	renders	Face in the phrase before the Lord.
+accept	3.4:6.19	3.4:6.20	renders	Prepositional component of “before the veil.”
+accept	3.4:7.4	3.4:7.5	renders	Partitive preposition.
+accept	3.4:7.12	3.4:7.14	renders	Prefix in the face phrase.
+accept	3.4:7.14	3.4:7.15	renders	Face before the Lord.
+accept	3.4:7.30	3.4:7.34	renders	The opening noun functions locatively.
+accept	3.4:8.3	3.4:8.4	renders	Fat in the opening clause.
+accept	3.4:8.5	3.4:8.7	renders	Offering sense of the noun.
+accept	3.4:8.8	3.4:8.8	renders	Verb for removing the fat.
+accept	3.4:8.10	3.4:8.9	renders	Pronoun suffixed to “from.”
+accept	3.4:8.11	3.4:8.12	renders	Fat that covers the entrails.
+accept	3.4:8.12	3.4:8.14	renders	Relative word rendering the participial clause.
+accept	3.4:9.7,3.4:9.8	3.4:9.11	renders	Preposition with its plural suffix.
+accept	3.4:9.10	3.4:9.13	renders	Preposition before the loins.
+accept	3.4:9.14	3.4:9.20	renders	Preposition before the liver.
+accept	3.4:9.16,3.4:9.17	3.4:9.26	renders	Removal verb and its object suffix.
+accept	3.4:9.18	3.4:9.23	renders	Accompaniment with the kidneys.
+accept	3.4:10.1	3.4:10.1,3.4:10.2	renders	Compound comparative connector.
+accept	3.4:10.2	3.4:10.3	renders	Passive verb for taking the fat.
+accept	3.4:10.4	3.4:10.5	renders	Bullock noun.
+accept	3.4:10.6	3.4:10.6	renders	The separate sacrifice noun.
+accept	3.4:10.10	3.4:10.10	renders	Object carried by the burning verb.
+accept	3.4:11.8	3.4:11.10	renders	Accompaniment with the head.
+accept	3.4:11.12	3.4:11.13	renders	Instrumental case carries the second accompaniment relation.
+accept	3.4:12.5	3.4:12.7	renders	Destination in the directional phrase «поза табір».
+accept	3.4:12.11	3.4:12.17	renders	The dump noun conveys a place for dumping.
+accept	3.4:12.16	3.4:12.22	renders	Suffixed object pronoun.
+accept	3.4:12.21	3.4:12.28	renders	Preposition before the second ash heap.
+accept	3.4:12.24,3.4:12.26	3.4:12.32	renders	Passive auxiliary and verb-form subject.
+accept	3.4:13.9	3.4:13.9	renders	The matter that was hidden.
+accept	3.4:13.16	3.4:13.15	renders	The verb for doing.
+accept	3.4:14.3	3.4:14.2	renders	Auxiliary of the passive verb.
+accept	3.4:14.6	3.4:14.6	renders	Plural subject expressed by the verb form.
+accept	3.4:14.8	3.4:14.7	renders	Pronoun carried by the suffixed preposition.
+accept	3.4:14.13,3.4:14.14	3.4:14.13	renders	Young animal and its affiliation in the construct.
+accept	3.4:14.15,3.4:14.16	3.4:14.14	renders	Both words name cattle.
+accept	3.4:14.17	3.4:14.15	renders	Purpose prefix.
+accept	3.4:14.18,3.4:14.19	3.4:14.16	renders	Components of the sin-offering expression.
+accept	3.4:14.22	3.4:14.18	renders	Plural subject expressed by the verb form.
+accept	3.4:14.24	3.4:14.19	renders	Suffixed object pronoun.
+accept	3.4:14.25	3.4:14.20	renders	Prefix in the compact expression for “before.”
+accept	3.4:15.10	3.4:15.12	renders	Prefix in the first face phrase.
+accept	3.4:15.12	3.4:15.13	renders	First occurrence of “face.”
+accept	3.4:15.14	3.4:15.15	renders	Part of the conjunction «та й».
+accept	3.4:15.20	3.4:15.20	renders	Prefix in the second face phrase.
+accept	3.4:16.2	3.4:16.6	renders	Anointed modifier.
+accept	3.4:16.4	3.4:16.2	renders	Verb for bringing in.
+accept	3.4:16.5	3.4:16.7	renders	The genitive conveys the partitive prefix.
+accept	3.4:17.10	3.4:17.9	renders	Part of the conjunction «та й».
+accept	3.4:17.14	3.4:17.13	renders	Prefix in the phrase before the Lord.
+accept	3.4:17.16	3.4:17.14	renders	Face in the phrase before the Lord.
+accept	3.4:17.17	3.4:17.16	renders	Prepositional component of “before the veil.”
+accept	3.4:18.3	3.4:18.5	renders	Subject expressed by the giving verb.
+accept	3.4:18.11	3.4:18.11	renders	Prefix in the face phrase.
+accept	3.4:18.13	3.4:18.12	renders	Face in the phrase before the Lord.
+accept	3.4:18.29	3.4:18.30	renders	The opening noun functions locatively.
+accept	3.4:19.7	3.4:19.6	renders	Pronoun suffixed to “from.”
+accept	3.4:19.9	3.4:19.7	renders	Part of the conjunction «та й».
+accept	3.4:19.11	3.4:19.10	renders	Locative relation carried by the altar form.
+accept	3.4:20.3	3.4:20.3	renders	Relation to the bull acted upon.
+accept	3.4:20.6,3.4:20.7	3.4:20.6	renders	Identity expressed by the comparative prefix.
+accept	3.4:20.8	3.4:20.7	renders	Relative element of the comparison.
+accept	3.4:20.10	3.4:20.9	renders	The dative carries the lamed relation.
+accept	3.4:20.15	3.4:20.13	renders	Part of the manner expression «так само».
+accept	3.4:20.17,3.4:20.18	3.4:20.15	renders	Prepositional relation and its singular suffix.
+accept	3.4:20.22	3.4:20.17	renders	Part of the verb phrase for making atonement.
+accept	3.4:20.24,3.4:20.25	3.4:20.18	renders	Prepositional relation and its plural suffix.
+accept	3.4:20.29	3.4:20.23	renders	Plural recipients of forgiveness.
+accept	3.4:21.4	3.4:21.6	renders	Destination in the directional phrase «поза табір».
+accept	3.4:21.7	3.4:21.12	renders	Part of the conjunction «та й».
+accept	3.4:21.9	3.4:21.14	renders	Suffixed object pronoun.
+accept	3.4:21.10	3.4:21.15,3.4:21.16	renders	Compound comparative connector.
+accept	3.4:21.14	3.4:21.26	renders	Written subject of the closing nominal clause.
+accept	3.4:21.16	3.4:21.23	renders	Part of the sin-offering expression.
+accept	3.4:22.1	3.4:22.1	renders	Introduces the condition.
+accept	3.4:22.7	3.4:22.15	renders	The adverb carries the manner relation.
+accept	3.4:22.17	3.4:22.14	renders	Action expressed by the prohibited verb.
+accept	3.4:22.21	3.4:22.17	renders	Part of the conjunction «та й».
+accept	3.4:23.2	3.4:23.2	renders	Auxiliary of the passive verb.
+accept	3.4:23.4	3.4:23.3	renders	The person to whom the sin becomes known.
+accept	3.4:23.7	3.4:23.5	renders	Relative connector.
+accept	3.4:23.9	3.4:23.7	renders	Pronoun suffixed to the preposition.
+accept	3.4:23.10	3.4:23.8	renders	Conjunction introducing the consequence.
+accept	3.4:23.12	3.4:23.9	renders	Subject expressed by the verb form.
+accept	3.4:23.16	3.4:23.12,3.4:23.13,3.4:23.14	renders	One Ukrainian noun expresses the male goat.
+accept	3.4:24.10	3.4:24.8	renders	Part of the conjunction «та й».
+accept	3.4:24.12	3.4:24.10	renders	Suffixed object pronoun.
+accept	3.4:24.18	3.4:24.18	renders	Prefix in the face phrase.
+accept	3.4:24.20	3.4:24.19	renders	Face in the phrase before the Lord.
+accept	3.4:24.21	3.4:24.22	renders	Written subject of the nominal clause.
+accept	3.4:24.23	3.4:24.21	renders	Part of the sin-offering expression.
+accept	3.4:25.7	3.4:25.8	renders	Part of the sin-offering expression.
+accept	3.4:25.10	3.4:25.9	renders	Instrumental case renders the instrumental prefix.
+accept	3.4:25.12	3.4:25.11	renders	Part of the conjunction «та й».
+accept	3.4:25.13	3.4:25.12	renders	Giving verb.
+accept	3.4:26.6	3.4:26.7	renders	Locative relation carried by the altar form.
+accept	3.4:26.11	3.4:26.10	renders	The separate sacrifice noun.
+accept	3.4:26.13	3.4:26.13	renders	Part of the conjunction «та й».
+accept	3.4:26.17	3.4:26.15	renders	Person carried by the suffixed preposition.
+accept	3.4:26.18	3.4:26.18	renders	Preposition “from.”
+accept	3.4:26.24	3.4:26.22	renders	Suffixed recipient of forgiveness.
+accept	3.4:27.3	3.4:27.4	renders	Indefinite singular “one.”
+accept	3.4:27.7	3.4:27.11	renders	Land noun.
+accept	3.4:27.8	3.4:27.6	renders	The adverb carries the manner relation.
+accept	3.4:27.10	3.4:27.12	renders	Circumstantial prefix rendered by “when.”
+accept	3.4:27.19	3.4:27.20	renders	Action expressed by the prohibited verb.
+accept	3.4:27.23	3.4:27.21	renders	Part of the conjunction «та й».
+accept	3.4:28.2	3.4:28.2	renders	Auxiliary of the passive verb.
+accept	3.4:28.4	3.4:28.3	renders	The person to whom the sin becomes known.
+accept	3.4:28.10	3.4:28.8	renders	Subject expressed by the bringing verb.
+accept	3.4:28.15	3.4:28.11	renders	Caprine species in the compound animal designation.
+accept	3.4:28.21,3.4:28.23	3.4:28.17	renders	Subject and past auxiliary of the second sinning verb.
+accept	3.4:29.8	3.4:29.8	renders	Part of the first sin-offering expression.
+accept	3.4:29.11	3.4:29.9	renders	Part of the conjunction «та й».
+accept	3.4:29.12	3.4:29.10	renders	Slaughter verb.
+accept	3.4:29.15	3.4:29.13	renders	Part of the second sin-offering expression.
+accept	3.4:30.5	3.4:30.7	renders	Instrumental case renders the instrumental prefix.
+accept	3.4:30.6	3.4:30.5	renders	Partitive preposition.
+accept	3.4:30.10	3.4:30.9	renders	Part of the conjunction «та й».
+accept	3.4:30.11	3.4:30.10	renders	Giving verb.
+accept	3.4:31.5	3.4:31.5	renders	Subject expressed by the removal verb.
+accept	3.4:31.7	3.4:31.6,3.4:31.7	renders	Compound comparative connector.
+accept	3.4:31.9	3.4:31.8	renders	Auxiliary of the passive verb.
+accept	3.4:31.13	3.4:31.12	renders	The separate sacrifice noun.
+accept	3.4:31.17	3.4:31.20	renders	Locative relation carried by the altar form.
+accept	3.4:31.19	3.4:31.21	renders	Prefix introducing the aroma.
+accept	3.4:31.20	3.4:31.22	renders	Aroma noun.
+accept	3.4:31.28	3.4:31.28	renders	Person carried by the suffixed preposition.
+accept	3.4:31.32	3.4:31.33	renders	Suffixed recipient of forgiveness.
+accept	3.4:32.3	3.4:32.4	renders	Subject expressed by the first bringing verb.
+accept	3.4:32.6	3.4:32.5	renders	Offering role expressed by the appositional noun.
+accept	3.4:33.8	3.4:33.8	renders	Part of the first sin-offering expression.
+accept	3.4:33.11	3.4:33.9	renders	Part of the conjunction «та й».
+accept	3.4:33.12	3.4:33.10	renders	Slaughter verb.
+accept	3.4:33.13	3.4:33.11	renders	Feminine object pronoun.
+accept	3.4:33.14	3.4:33.12	renders	Purpose prefix.
+accept	3.4:33.16	3.4:33.13	renders	Part of the second sin-offering expression.
+accept	3.4:33.22	3.4:33.17	renders	Subject expressed by the second slaughter verb.
+accept	3.4:33.23	3.4:33.20	renders	Offering sense of the burnt-offering noun.
+accept	3.4:34.7	3.4:34.8	renders	Part of the sin-offering expression.
+accept	3.4:34.10	3.4:34.9	renders	Instrumental case renders the instrumental prefix.
+accept	3.4:34.12	3.4:34.11	renders	Part of the conjunction «та й».
+accept	3.4:34.13	3.4:34.12	renders	Giving verb.
+accept	3.4:35.6	3.4:35.6,3.4:35.7	renders	Compound comparative connector.
+accept	3.4:35.7	3.4:35.8	renders	Passive removal verb.
+accept	3.4:35.12	3.4:35.13	renders	The separate sacrifice noun.
+accept	3.4:35.14	3.4:35.16	renders	Part of the conjunction «та й».
+accept	3.4:35.18	3.4:35.22	renders	Locative relation carried by the altar form.
+accept	3.4:35.20	3.4:35.23	renders	Preposition introducing the fire offerings.
+accept	3.4:35.27	3.4:35.28	renders	Person carried by the suffixed preposition.
+accept	3.4:35.29	3.4:35.31	renders	Preposition introducing the sin.
+accept	3.4:35.33,3.4:35.34	3.4:35.34	renders	Sinning verb and its past auxiliary.
+accept	3.4:35.38	3.4:35.37	renders	Suffixed recipient of forgiveness.
