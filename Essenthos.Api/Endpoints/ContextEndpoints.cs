@@ -278,17 +278,17 @@ internal static class ContextEndpoints
             }
         }
 
-        // A face for the people only: a place's or a thing's picture is its page's, and a row of the
+        // A face for the people and the beings only: a place's or a thing's picture is its page's, and a row of the
         // words for God carries the one picture God's record leads with, which is light and not a face.
         var person = EnumSpelling.Of(EntityKind.Person);
+        var being = EnumSpelling.Of(EntityKind.Being);
         var pictured = await ImageEndpoints.Leading(
             db,
-            [.. records.Where(r => r.Kind == person).Select(r => r.Slug)],
+            [.. records.Where(r => r.Kind == person || r.Kind == being).Select(r => r.Slug)],
             cancellationToken,
             generated);
 
         // The sort of each being, read here rather than stored with the chapter: few chapters name one, and those few slugs are one lookup.
-        var being = EnumSpelling.Of(EntityKind.Being);
         var beings = records.Where(r => r.Kind == being).Select(r => r.Slug).ToList();
         var sorts = beings.Count == 0
             ? new Dictionary<string, string?>()
@@ -492,7 +492,7 @@ internal record ContextEntityResponse(
     /// </summary>
     public string? ChapterName { get; init; }
 
-    /// <summary>The picture a person's page leads with, to show small beside the name; null for everything else.</summary>
+    /// <summary>The picture a person's or a being's page leads with, to show small beside the name; null for everything else.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
 
     /// <summary>

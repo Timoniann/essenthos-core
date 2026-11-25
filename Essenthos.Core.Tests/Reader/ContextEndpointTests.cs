@@ -103,20 +103,28 @@ public sealed class ContextEndpointTests : IDisposable
     }
 
     /// <summary>
-    /// A person's row carries the picture the person's page leads with, small, and nothing else's
+    /// A person's or a being's row carries the picture its page leads with, small, and nothing else's
     /// does; with the site's own portraits switched off, only a credited public picture is left.
     /// </summary>
     [Fact]
-    public async Task APersonCarriesThePictureTheirPageLeadsWith()
+    public async Task APersonOrABeingCarriesThePictureItsPageLeadsWith()
     {
         var noah = Record("noah", EntityKind.Person);
         var gomer = Record("gomer", EntityKind.Person);
         var ararat = Record("ararat", EntityKind.Place);
+        var tannin = Record("tannin", EntityKind.Being);
+        tannin.Subtype = "creature";
         await _db.SaveChangesAsync();
         Names(_db.WordAt(_english, 10, 1, 6), noah);
         Names(_db.WordAt(_hebrew, 10, 2, 3), gomer);
         NamedAt(ararat, 10, 1);
+        NamedAt(tannin, 10, 3);
         _db.EntityImages.AddRange(
+            new EntityImage
+            {
+                EntityId = tannin.Id, Kind = "generated", Role = "primary", File = "generated/tannin.webp",
+                Digest = "cccccccccccc", Width = 512, Height = 768, Credit = "Essenthos", Licence = "Ours", Source = "Essenthos",
+            },
             new EntityImage
             {
                 EntityId = noah.Id, Kind = "generated", Role = "primary", File = "generated/noah.webp",
@@ -144,11 +152,14 @@ public sealed class ContextEndpointTests : IDisposable
             .Should().Be("/v1/images/generated/noah.webp?v=0123456789ab");
         context.Entities.Single(e => e.Slug == "gomer").Thumbnail!.Kind.Should().Be("public");
         context.Entities.Single(e => e.Slug == "ararat").Thumbnail.Should().BeNull();
+        context.Entities.Single(e => e.Slug == "tannin").Thumbnail!.Url
+            .Should().Be("/v1/images/generated/tannin.webp?v=cccccccccccc");
 
         var withoutOurs = await ContextEndpoints.Context(
             _db, Genesis, 10, null, await ContextWeights.Count(_db, default), default, generated: false);
 
         withoutOurs.Entities.Single(e => e.Slug == "noah").Thumbnail.Should().BeNull();
+        withoutOurs.Entities.Single(e => e.Slug == "tannin").Thumbnail.Should().BeNull();
         withoutOurs.Entities.Single(e => e.Slug == "gomer").Thumbnail.Should().NotBeNull();
     }
 
