@@ -1,0 +1,217 @@
+kind	from	to	relation	reason
+fixed	40.27:1			added missing links
+accept	40.27:1.3	40.27:1.3	renders	nastav=genomenes
+accept	40.27:1.1	40.27:1.2	renders	A=de
+accept	40.27:1.10	40.27:1.5	renders	zibraly=elabon
+accept	40.27:1.14	40.27:1.17	renders	shchob=hoste
+fixed	40.27:2			Pontiu wrong; verbs added
+refuse	40.27:2.7	40.27:2.6		Pontiu not paredokan (TR only)
+accept	40.27:2.4	40.27:2.4	renders	povely=apegagon
+accept	40.27:2.10	40.27:2.6	renders	viddaly=paredokan
+ok	40.27:3			
+fixed	40.27:4			added Vony zh
+accept	40.27:4.9	40.27:4.6	renders	Vony=hoi (pronominal article)
+accept	40.27:4.10	40.27:4.7	renders	zh=de
+fixed	40.27:5			added a
+accept	40.27:5.7	40.27:5.9	renders	a=kai
+fixed	40.27:6			tserkovnoho wrong
+refuse	40.27:6.14	40.27:6.15		tserkovnoho not epei
+accept	40.27:6.14	40.27:6.14	renders	part of treasury phrase
+accept	40.27:6.17	40.27:6.15	renders	bo=epei
+accept	40.27:6.18	40.27:6.16	renders	zaplata=time
+accept	40.27:6.8	40.27:6.11	renders	Tsoho=auta
+fixed	40.27:7			shchob wrong target
+refuse	40.27:7.8	40.27:7.12		shchob renders eis not taphen
+accept	40.27:7.8	40.27:7.11	renders	shchob=eis purpose
+accept	40.27:7.2	40.27:7.3	renders	poradyvshys=symboulion labontes
+fixed	40.27:8			added
+accept	40.27:8.1	40.27:8.1	renders	chomu=dio
+accept	40.27:8.4	40.27:8.5	renders	te=ekeinos
+fixed	40.27:9			added
+accept	40.27:9.9	40.27:9.9	renders	promovliaiuchy=legontos
+accept	40.27:9.15	40.27:9.16	renders	zaplatu=timen
+accept	40.27:9.17,40.27:9.18	40.27:9.19	renders	shcho Yoho=hon
+accept	40.27:9.19	40.27:9.20	renders	otsinyly=etimesanto
+fixed	40.27:10			added
+accept	40.27:10.9,40.27:10.10	40.27:10.10	renders	nakazav buv=synetaxen
+fixed	40.27:11			added zhe
+accept	40.27:11.2	40.27:11.2	renders	zhe=de
+accept	40.27:11.17	40.27:11.21	renders	zhe=de
+ok	40.27:12			
+fixed	40.27:13			added
+accept	40.27:13.3	40.27:13.3	renders	do Nioho=auto dative
+accept	40.27:13.9,40.27:13.10	40.27:13.8	renders	yak bahato=posa
+fixed	40.27:14			added
+accept	40.27:14.3	40.27:14.6	renders	ni=oude
+accept	40.27:14.11	40.27:14.9	renders	tak shcho=hoste
+fixed	40.27:15			added
+accept	40.27:15.1,40.27:15.4	40.27:15.4	renders	mav zvychai=eiothei
+accept	40.27:15.5	40.27:15.7	renders	vidpuskaty=apoluein
+accept	40.27:15.10	40.27:15.8	renders	odnoho=hena
+accept	40.27:15.11	40.27:15.12	renders	kotroho=hon
+ok	40.27:16			
+fixed	40.27:17			added
+accept	40.27:17.4	40.27:17.3	renders	vony=auton
+accept	40.27:17.9	40.27:17.8	renders	Kotroho=Tina
+ok	40.27:18			
+fixed	40.27:19			yoho wrong target
+refuse	40.27:19.8	40.27:19.9		yoho is wife's husband: gyne autou
+accept	40.27:19.8	40.27:19.12	renders	yoho=autou (of him)
+accept	40.27:19.12	40.27:19.9	renders	yomu=pros auton
+accept	40.27:19.17	40.27:19.19	renders	otym=ekeino
+accept	40.27:19.2	40.27:19.2	renders	zh=de
+fixed	40.27:20			added
+accept	40.27:20.13,40.27:20.14	40.27:20.17	renders	smert zapodiiaty=apolesosin
+fixed	40.27:21			added
+accept	40.27:21.7	40.27:21.7	renders	Kotroho=Tina
+accept	40.27:21.17	40.27:21.14	renders	Vony=hoi
+accept	40.27:21.18	40.27:21.15	renders	zh=de
+fixed	40.27:22			added
+accept	40.27:22.3	40.27:22.2	renders	do nykh=autois
+accept	40.27:22.7	40.27:22.6	renders	zh=oun
+accept	40.27:22.8	40.27:22.7	renders	maiu zrobyty=poieso
+accept	40.27:22.16	40.27:22.12	renders	zakrychaly=legousin
+accept	40.27:22.17,40.27:22.19	40.27:22.14	renders	nekhai bude=imperative
+fixed	40.27:23			added
+accept	40.27:23.3	40.27:23.3	renders	spytav=ephe
+accept	40.27:23.4	40.27:23.4	renders	Iake=Ti
+accept	40.27:23.5	40.27:23.5	renders	zh=gar
+accept	40.27:23.9	40.27:23.8	renders	Vony=hoi
+accept	40.27:23.12,40.27:23.13	40.27:23.10	renders	shche sylnishe=perissos
+accept	40.27:23.17,40.27:23.19	40.27:23.13	renders	nekhai bude=imperative
+fixed	40.27:24			added
+accept	40.27:24.10	40.27:24.10	renders	nespokii=thorybos
+accept	40.27:24.11	40.27:24.9	renders	shche bilshyi=mallon
+accept	40.27:24.26	40.27:24.22	renders	Ya=eimi
+accept	40.27:24.30	40.27:24.26	renders	Yoho=toutou
+fixed	40.27:25			added
+accept	40.27:25.1	40.27:25.1	renders	A=kai
+ok	40.27:26			
+ok	40.27:27			
+fixed	40.27:28			na wrong target
+refuse	40.27:28.6	40.27:28.6		na not the verb
+accept	40.27:28.6	40.27:28.7	renders	na Nioho=auto
+accept	40.27:28.4	40.27:28.4,40.27:28.5	renders	bahrianytsia=scarlet robe
+accept	40.27:28.5	40.27:28.6	renders	nadily=perietheken
+fixed	40.27:29			added
+accept	40.27:29.3	40.27:29.4	renders	z=ex
+accept	40.27:29.4	40.27:29.5	renders	ternyny=akanthon
+accept	40.27:29.7	40.27:29.10	renders	Yomu=autou head
+accept	40.27:29.16	40.27:29.18	renders	navkolishky=gonupetesantes
+ok	40.27:30			
+fixed	40.27:31			added
+accept	40.27:31.2	40.27:31.2	renders	koly=hote
+accept	40.27:31.16	40.27:31.16	renders	povely=apegagon
+accept	40.27:31.18	40.27:31.18	renders	na=eis
+fixed	40.27:32			added
+accept	40.27:32.2	40.27:32.1	renders	vykhodiachy=exerchomenoi
+accept	40.27:32.3	40.27:32.3	renders	strily=heuron
+accept	40.27:32.7	40.27:32.6	renders	na ymennia=onomati
+accept	40.27:32.9	40.27:32.8	renders	yoho=touton
+accept	40.27:32.11	40.27:32.11	renders	nesty=are
+accept	40.27:32.13	40.27:32.14	renders	Nioho=autou cross
+fixed	40.27:33			added
+accept	40.27:33.8	40.27:33.7,40.27:33.8	renders	tsebto=ho estin
+accept	40.27:33.10	40.27:33.10	renders	cherepovyshche=kraniou topos
+ok	40.27:34			
+fixed	40.27:35			added
+accept	40.27:35.5	40.27:35.4	renders	podilyly=diemerisanto
+ok	40.27:36			
+fixed	40.27:37			Yoho swapped
+refuse	40.27:37.4	40.27:37.6		Yoho of accusation is word 9
+refuse	40.27:37.7	40.27:37.9		Yoho of head is word 6
+accept	40.27:37.4	40.27:37.9	renders	provyny Yoho=aitian autou
+accept	40.27:37.7	40.27:37.6	renders	holovoiu Yoho=kephales autou
+fixed	40.27:38			added
+accept	40.27:38.2	40.27:38.2	renders	rozpiato=staurountai
+fixed	40.27:39			added
+accept	40.27:39.3	40.27:39.3	renders	pobich=para-
+accept	40.27:39.6	40.27:39.4	renders	lykhoslovyly=eblasphemoun
+accept	40.27:39.10	40.27:39.6	renders	khytaly=kinountes
+fixed	40.27:40			added
+accept	40.27:40.16	40.27:40.16	renders	Ty=ei
+ok	40.27:41			
+fixed	40.27:42			added
+accept	40.27:42.12	40.27:42.9	renders	Vin=estin
+accept	40.27:42.14	40.27:42.10	renders	nekhai=katabato
+fixed	40.27:43			Yomu wrong; Vin is object
+refuse	40.27:43.14	40.27:43.9		auton is Jesus (Vin), not Yomu
+accept	40.27:43.12	40.27:43.9	renders	Vin=auton
+accept	40.27:43.3	40.27:43.1	renders	nadiiu=pepoithen
+accept	40.27:43.6	40.27:43.5	renders	nekhai=rhysastho
+accept	40.27:43.18	40.27:43.14	renders	Ya=eimi
+fixed	40.27:44			z and Nioho wrong
+refuse	40.27:44.3	40.27:44.8		z belongs to mocked phrase
+refuse	40.27:44.4	40.27:44.3		auto is part of likewise
+accept	40.27:44.4	40.27:44.12	renders	Nioho=auton
+accept	40.27:44.1	40.27:44.3	renders	Takozh=to auto
+accept	40.27:44.2	40.27:44.11	renders	nasmikhalysia=oneidizon
+ok	40.27:45			
+fixed	40.27:46			added
+accept	40.27:46.14	40.27:46.16,40.27:46.17	renders	tsebto=tout estin
+fixed	40.27:47			tse wrong target
+refuse	40.27:47.8	40.27:47.11		tse is not houtos
+accept	40.27:47.13	40.27:47.11	renders	Vin=houtos
+accept	40.27:47.2	40.27:47.2	renders	zh=de
+accept	40.27:47.12	40.27:47.8	renders	shcho=hoti
+fixed	40.27:48			added
+accept	40.27:48.10	40.27:48.11	renders	ta=te
+accept	40.27:48.17	40.27:48.13	renders	y=kai
+accept	40.27:48.20	40.27:48.16	renders	pyty=epotizen
+fixed	40.27:49			added
+accept	40.27:49.1	40.27:49.3	renders	Inshi=loipoi
+accept	40.27:49.3,40.27:49.4	40.27:49.5	renders	chekai no=aphes
+accept	40.27:49.9	40.27:49.10	renders	vyzvoliaty=soson
+fixed	40.27:50			iskryknuv wrong
+refuse	40.27:50.6	40.27:50.8		iskryknuv is kraxas
+accept	40.27:50.6	40.27:50.5	renders	iskryknuv=kraxas
+accept	40.27:50.9	40.27:50.8	renders	viddav=apheken
+accept	40.27:50.1	40.27:50.2	renders	A=de
+fixed	40.27:51			added
+accept	40.27:51.7	40.27:51.12,40.27:51.13	renders	nadvoie=eis duo
+accept	40.27:51.10	40.27:51.10	renders	azh=heos
+accept	40.27:51.11	40.27:51.11	renders	dodolu=kato
+ok	40.27:52			
+ok	40.27:53			
+fixed	40.27:54			added
+accept	40.27:54.14	40.27:54.15	renders	te=ta
+accept	40.27:54.18	40.27:54.17	renders	naliakalysia=ephobethesan
+accept	40.27:54.22	40.27:54.24	renders	Vin=houtos
+accept	40.27:54.23	40.27:54.23	renders	buv=en
+accept	40.27:54.24	40.27:54.20	renders	spravdi=alethos
+fixed	40.27:55			added
+accept	40.27:55.13	40.27:55.10	renders	pryishly (za)=ekolouthesan
+fixed	40.27:56			added
+accept	40.27:56.2	40.27:56.2	renders	nymy=hais
+fixed	40.27:57			added
+accept	40.27:57.1	40.27:57.2	renders	A=de
+accept	40.27:57.3	40.27:57.3	renders	nastav=genomenes
+accept	40.27:57.7	40.27:57.5	renders	muzh=anthropos
+accept	40.27:57.9	40.27:57.7	renders	iz=apo
+accept	40.27:57.11	40.27:57.9	renders	na imia=tounoma
+accept	40.27:57.17	40.27:57.14	renders	buv navchavsia=ematheuthe
+fixed	40.27:58			do wrong
+refuse	40.27:58.3	40.27:58.2		do is not proselthon
+accept	40.27:58.2	40.27:58.2	renders	pryishov=proselthon
+fixed	40.27:59			added
+accept	40.27:59.2	40.27:59.2	renders	vziav=labon
+accept	40.27:59.6	40.27:59.7	renders	obhornuv=enetulixen
+fixed	40.27:60			added
+accept	40.27:60.15	40.27:60.21	renders	hrobovykh=mnemeiou
+fixed	40.27:61			added
+accept	40.27:61.1	40.27:61.1	renders	Bula=en
+fixed	40.27:62			added
+accept	40.27:62.5	40.27:62.6	renders	za=meta
+fixed	40.27:63			added
+accept	40.27:63.9	40.27:63.5	renders	otoi=ekeinos
+fixed	40.27:64			added
+accept	40.27:64.2	40.27:64.2	renders	zh=oun
+accept	40.27:64.4	40.27:64.3	renders	sterehty=asphalisthenai
+accept	40.27:64.9	40.27:64.10,40.27:64.11	renders	shchob ne=me pote
+accept	40.27:64.12	40.27:64.10	renders	ne=me
+accept	40.27:64.28	40.27:64.26	renders	bude=estai
+fixed	40.27:65			added
+accept	40.27:65.9	40.27:65.9	renders	yak=hos
+unsure	40.27:66			postavyly/bilia render ephaslisanto loosely
+accept	40.27:66.1	40.27:66.2	renders	I=de
+accept	40.27:66.2	40.27:66.1	renders	vony=hoi

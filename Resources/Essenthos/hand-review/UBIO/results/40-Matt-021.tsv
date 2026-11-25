@@ -1,0 +1,162 @@
+kind	from	to	relation	reason
+ok	40.21:1			
+ok	40.21:2			
+fixed	40.21:3			added missing links
+accept	40.21:3.5	40.21:3.6	renders	that = ti
+accept	40.21:3.7	40.21:3.7	renders	answer = erete
+accept	40.21:3.8	40.21:3.8	renders	that = hoti
+accept	40.21:3.10	40.21:3.13	renders	needs = chreian echei
+accept	40.21:3.12	40.21:3.15	renders	and = de
+fixed	40.21:4			added A = de
+accept	40.21:4.1	40.21:4.2	renders	conjunction de
+fixed	40.21:5			swapped pronouns
+refuse	40.21:5.6	40.21:5.8		tebe is soi, not sou
+refuse	40.21:5.9	40.21:5.10		tviy is sou, not soi
+accept	40.21:5.5,40.21:5.6	40.21:5.10	renders	to you = soi
+accept	40.21:5.9	40.21:5.8	renders	your = sou
+ok	40.21:6			
+fixed	40.21:7			added na = epano
+accept	40.21:7.16	40.21:7.15	renders	on = epano
+fixed	40.21:8			added missing links
+accept	40.21:8.1	40.21:8.2	renders	conjunction de
+accept	40.21:8.6	40.21:8.6	renders	their = heauton
+accept	40.21:8.10	40.21:8.13	renders	zh = de
+accept	40.21:8.16	40.21:8.20	renders	spread = estronnyon
+fixed	40.21:9			added missing links
+accept	40.21:9.4	40.21:9.5	renders	going before = proagontes
+accept	40.21:9.8	40.21:9.9	renders	following = akolouthountes
+ok	40.21:10			
+ok	40.21:11			
+fixed	40.21:12			added overturned tables of money-changers
+accept	40.21:12.16	40.21:12.22	renders	overturned
+accept	40.21:12.17	40.21:12.21	renders	money changers
+accept	40.21:12.18	40.21:12.19	renders	tables
+ok	40.21:13			
+ok	40.21:14			
+fixed	40.21:15			added children crying
+accept	40.21:15.11	40.21:15.14	renders	children
+accept	40.21:15.15	40.21:15.16	renders	crying out
+fixed	40.21:16			added missing links
+accept	40.21:16.6,40.21:16.7	40.21:16.4	renders	hear you = akoueis
+accept	40.21:16.10	40.21:16.6	renders	these = houtoi
+accept	40.21:16.15	40.21:16.13	renders	yes = nai
+accept	40.21:16.19	40.21:16.14	renders	never = oudepote
+accept	40.21:16.29,40.21:16.30	40.21:16.22	renders	you prepared = katertiso
+fixed	40.21:17			added missing links
+accept	40.21:17.6	40.21:17.5	renders	out of = exo
+accept	40.21:17.12,40.21:17.13	40.21:17.11	renders	passed the night
+ok	40.21:18			
+fixed	40.21:19			added missing links
+accept	40.21:19.8	40.21:19.3	renders	fig tree = syken
+accept	40.21:19.15	40.21:19.17	renders	except = ei me
+accept	40.21:19.27,40.21:19.32	40.21:19.28	renders	let be = genetai
+accept	40.21:19.33	40.21:19.24	renders	no more = meketi
+accept	40.21:19.38	40.21:19.34	renders	immediately = parachrema
+fixed	40.21:20			added missing links
+accept	40.21:20.7	40.21:20.6	renders	saying = legontes
+accept	40.21:20.9	40.21:20.8	renders	quickly = parachrema
+fixed	40.21:21			added missing links
+accept	40.21:21.2	40.21:21.2	renders	zhe = de
+accept	40.21:21.17	40.21:21.15	renders	not have doubt = diakrithete
+accept	40.21:21.20	40.21:21.21	renders	do = poiesete
+accept	40.21:21.29,40.21:21.30	40.21:21.23	renders	even if = kan
+fixed	40.21:22			added chogo = hosa
+accept	40.21:22.3	40.21:22.3	renders	whatever = hosa
+fixed	40.21:23			added missing links
+accept	40.21:23.3	40.21:23.3	renders	He = autou
+accept	40.21:23.9	40.21:23.7	renders	came = proselthon
+accept	40.21:23.18	40.21:23.19	renders	what = poia
+fixed	40.21:24			added missing links
+accept	40.21:24.2	40.21:24.2	renders	zhe = de
+accept	40.21:24.8	40.21:24.9	renders	also I = kago
+accept	40.21:24.15	40.21:24.12	renders	which = hon
+accept	40.21:24.16,40.21:24.18	40.21:24.14	renders	tell = eipete
+accept	40.21:24.20	40.21:24.16	renders	also I = kago
+accept	40.21:24.24	40.21:24.20	renders	what = poia
+fixed	40.21:25			added missing links
+accept	40.21:25.10	40.21:25.12	renders	they = hoi
+accept	40.21:25.11	40.21:25.13	renders	zh = de
+accept	40.21:25.15	40.21:25.17	renders	saying = legontes
+accept	40.21:25.23	40.21:25.24	renders	why = dia ti
+accept	40.21:25.24	40.21:25.26	renders	then = oun
+fixed	40.21:26			added hold as
+accept	40.21:26.10	40.21:26.13	renders	hold = echousin
+accept	40.21:26.12	40.21:26.11	renders	as = hos
+fixed	40.21:27			added missing links
+accept	40.21:27.14,40.21:27.17	40.21:27.12	renders	neither = oude
+accept	40.21:27.19	40.21:27.17	renders	what = poia
+fixed	40.21:28			added yak = ti
+accept	40.21:28.2	40.21:28.1	renders	what = ti
+fixed	40.21:29			added A toy = ho de
+accept	40.21:29.1	40.21:29.2	renders	conjunction de
+accept	40.21:29.2	40.21:29.1	renders	article as pronoun he
+fixed	40.21:30			added missing links
+accept	40.21:30.1	40.21:30.2	renders	conjunction de
+accept	40.21:30.8	40.21:30.8	renders	conjunction de
+accept	40.21:30.9	40.21:30.7	renders	article as pronoun he
+accept	40.21:30.17	40.21:30.13	renders	afterward = hysteron
+fixed	40.21:31			added missing links
+accept	40.21:31.1	40.21:31.1	renders	which = tis
+accept	40.21:31.10	40.21:31.12	renders	the last = hysteros
+fixed	40.21:32			added missing links
+accept	40.21:32.18,40.21:32.20	40.21:32.19	renders	believed = episteusan
+accept	40.21:32.27	40.21:32.25	renders	repented
+accept	40.21:32.29	40.21:32.26	renders	afterward = hysteron
+fixed	40.21:33			swapped fence words, added verbs
+refuse	40.21:33.10	40.21:33.11		fenced is the verb, not the noun fence
+refuse	40.21:33.12	40.21:33.13		wall is the noun phragmon
+accept	40.21:33.10	40.21:33.13	renders	placed around = fenced
+accept	40.21:33.12	40.21:33.11	renders	fence = phragmon
+accept	40.21:33.7	40.21:33.8	renders	planted
+accept	40.21:33.9	40.21:33.7	renders	who = hostis
+accept	40.21:33.18	40.21:33.20	renders	built
+accept	40.21:33.20	40.21:33.23	renders	rented out
+fixed	40.21:34			added missing links
+accept	40.21:34.3	40.21:34.3	renders	drew near = engisen
+accept	40.21:34.15	40.21:34.18	renders	his = autou
+fixed	40.21:35			fixed killed, added one/another
+refuse	40.21:35.11	40.21:35.11		killed is apekteinan, not hon
+accept	40.21:35.11	40.21:35.13	renders	killed = apekteinan
+accept	40.21:35.2	40.21:35.1	renders	connective = kai
+accept	40.21:35.7	40.21:35.8	renders	one = hon
+accept	40.21:35.8	40.21:35.10	renders	beat = edeiran
+accept	40.21:35.10	40.21:35.11	renders	another = hon
+accept	40.21:35.13	40.21:35.14	renders	that one = hon
+fixed	40.21:36			added te = hosautos
+accept	40.21:36.13	40.21:36.11	renders	the same = hosautos
+fixed	40.21:37			added finally = hysteron
+accept	40.21:37.1	40.21:37.1	renders	finally = hysteron
+fixed	40.21:38			reason = eipon, added come
+refuse	40.21:38.6	40.21:38.8		reason renders eipon, not en
+accept	40.21:38.6,40.21:38.8	40.21:38.7	renders	began to reason = eipon
+accept	40.21:38.11	40.21:38.14	renders	come = deute
+fixed	40.21:39			added cast out
+accept	40.21:39.5	40.21:39.4	renders	cast out = exebalon
+accept	40.21:39.6	40.21:39.5	renders	out = exo
+ok	40.21:40			
+fixed	40.21:41			added missing links
+accept	40.21:41.4	40.21:41.3	renders	wretches = kakous
+accept	40.21:41.6	40.21:41.4	renders	grievously = kakos
+accept	40.21:41.8	40.21:41.7	renders	connective = kai
+accept	40.21:41.13,40.21:41.15	40.21:41.14	renders	will give = apodosousin
+accept	40.21:41.17	40.21:41.20	renders	in season = kairois
+fixed	40.21:42			added missing links
+accept	40.21:42.7	40.21:42.5	renders	never = oudepote
+accept	40.21:42.15	40.21:42.14	renders	builders
+accept	40.21:42.17	40.21:42.15	renders	this = houtos
+accept	40.21:42.20	40.21:42.18	renders	head (stone) = kephalen
+fixed	40.21:43			added missing links
+accept	40.21:43.1	40.21:43.1,40.21:43.2	renders	therefore = dia touto
+accept	40.21:43.4	40.21:43.5	renders	that = hoti
+accept	40.21:43.12	40.21:43.15	renders	people = ethnei
+accept	40.21:43.16,40.21:43.17	40.21:43.16	renders	producing = poiounti
+fixed	40.21:44			refused sam = likmesei
+refuse	40.21:44.12	40.21:44.14		sam (itself) is not grind
+accept	40.21:44.2	40.21:44.2	renders	he who = ho
+fixed	40.21:45			added understood
+accept	40.21:45.12	40.21:45.11	renders	knew = egnosan
+fixed	40.21:46			added missing links
+accept	40.21:46.2	40.21:46.2	renders	seeking
+accept	40.21:46.3	40.21:46.4	renders	to seize
+accept	40.21:46.7	40.21:46.7	renders	crowds
+accept	40.21:46.9	40.21:46.12	renders	held = eichon

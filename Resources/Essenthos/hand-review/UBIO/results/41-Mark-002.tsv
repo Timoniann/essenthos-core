@@ -1,0 +1,116 @@
+kind	from	to	relation	reason
+fixed	41.2:1			added missing verb/phrase links
+accept	41.2:1.7	41.2:1.2	renders	came = entered
+accept	41.2:1.12,41.2:1.13	41.2:1.8	renders	rumor went = it was heard
+accept	41.2:1.16	41.2:1.10	renders	at home = en oiko
+fixed	41.2:2			added missing links
+accept	41.2:2.4	41.2:2.4	renders	so that
+accept	41.2:2.7	41.2:2.6	renders	had room
+accept	41.2:2.8	41.2:2.7	renders	not even
+fixed	41.2:3			added participles
+accept	41.2:3.6	41.2:3.3	renders	bringing
+accept	41.2:3.9	41.2:3.7	renders	being carried
+fixed	41.2:4			do->verb refused; added roof, removed, on which
+refuse	41.2:4.5	41.2:4.4		preposition do is not the verb prosenegkai
+accept	41.2:4.7	41.2:4.4	renders	come near
+accept	41.2:4.11	41.2:4.11	renders	roof
+accept	41.2:4.12	41.2:4.9	renders	uncovered
+accept	41.2:4.20,41.2:4.21,41.2:4.22	41.2:4.19	renders	on which = hopou
+fixed	41.2:5			added and, are forgiven
+accept	41.2:5.1	41.2:5.1	renders	and
+accept	41.2:5.8	41.2:5.12	renders	are forgiven
+fixed	41.2:6			added their, reasoning
+accept	41.2:6.10	41.2:6.13	renders	their
+accept	41.2:6.11	41.2:6.9	renders	reasoning
+fixed	41.2:7			added missing links
+accept	41.2:7.2	41.2:7.2	renders	this one
+accept	41.2:7.5	41.2:7.5	renders	blasphemes
+accept	41.2:7.12	41.2:7.11	renders	except = ei me
+accept	41.2:7.14	41.2:7.12	renders	alone
+fixed	41.2:8			added why, your, reason
+accept	41.2:8.15	41.2:8.16	renders	why/what
+accept	41.2:8.20	41.2:8.22	renders	your
+accept	41.2:8.21	41.2:8.18	renders	reason
+fixed	41.2:9			added which
+accept	41.2:9.1	41.2:9.1	renders	which
+ok	41.2:10			
+fixed	41.2:11			added command verb, your
+accept	41.2:11.3	41.2:11.2	renders	I say/command
+accept	41.2:11.12	41.2:11.13	renders	your
+fixed	41.2:12			added so that, thus, never
+accept	41.2:12.13	41.2:12.11	renders	so that = hoste
+accept	41.2:12.22	41.2:12.20	renders	such = houtos
+accept	41.2:12.23	41.2:12.21	renders	not part of never
+ok	41.2:13			
+fixed	41.2:14			added follow links
+accept	41.2:14.16,41.2:14.17	41.2:14.15	renders	follow me
+accept	41.2:14.22	41.2:14.19	renders	went after = followed
+fixed	41.2:15			refused ikh->auto; added reclining, him, followed
+refuse	41.2:15.24	41.2:15.26		ikh is quantity genitive, auto is Him (Nym)
+accept	41.2:15.3	41.2:15.4	renders	he (auton)
+accept	41.2:15.4	41.2:15.3	renders	reclining
+accept	41.2:15.28	41.2:15.25	renders	were following
+fixed	41.2:16			added that, why, and
+accept	41.2:16.7	41.2:16.7	renders	that
+accept	41.2:16.20	41.2:16.18	renders	why = hoti
+accept	41.2:16.3	41.2:16.1	renders	and
+fixed	41.2:17			added physician clause links
+accept	41.2:17.1	41.2:17.1	renders	and
+accept	41.2:17.8	41.2:17.12	renders	physician
+accept	41.2:17.10	41.2:17.8,41.2:17.9	renders	have need
+accept	41.2:17.11	41.2:17.11	renders	the strong
+accept	41.2:17.13	41.2:17.15,41.2:17.16	renders	those being sick
+fixed	41.2:18			added were, say, dia
+accept	41.2:18.6	41.2:18.2	renders	periphrastic were fasting
+accept	41.2:18.12	41.2:18.13	renders	say
+accept	41.2:18.15	41.2:18.15	renders	dia ti = why
+fixed	41.2:19			added missing links
+accept	41.2:19.2	41.2:19.1	renders	and
+accept	41.2:19.6	41.2:19.6	renders	interrogative me
+accept	41.2:19.11	41.2:19.12,41.2:19.13	renders	while = en ho
+accept	41.2:19.16	41.2:19.15	renders	bridegroom
+accept	41.2:19.17	41.2:19.20,41.2:19.21	renders	as long as
+accept	41.2:19.22	41.2:19.26	renders	with them
+fixed	41.2:20			added bridegroom, then, will
+accept	41.2:20.7	41.2:20.9	renders	bridegroom
+accept	41.2:20.10	41.2:20.11	renders	then
+accept	41.2:20.13	41.2:20.12	renders	future auxiliary
+fixed	41.2:21			tears refused from patch; added missing links
+refuse	41.2:21.19	41.2:21.14		tears away renders airei, not pleroma
+accept	41.2:21.19	41.2:21.12	renders	tears away
+accept	41.2:21.17	41.2:21.14	renders	patch = pleroma
+accept	41.2:21.10	41.2:21.3	renders	cloth
+accept	41.2:21.11	41.2:21.4	renders	unshrunk
+accept	41.2:21.12	41.2:21.10	renders	de
+accept	41.2:21.13	41.2:21.9	renders	if
+accept	41.2:21.14	41.2:21.11	renders	not
+accept	41.2:21.21	41.2:21.15	renders	from
+accept	41.2:21.25	41.2:21.24	renders	becomes
+fixed	41.2:22			added missing links
+accept	41.2:22.6	41.2:22.5	renders	new
+accept	41.2:22.12	41.2:22.12	renders	will burst
+accept	41.2:22.10,41.2:22.11	41.2:22.9,41.2:22.10,41.2:22.11	renders	otherwise = ei de me
+accept	41.2:22.20	41.2:22.24	renders	but
+fixed	41.2:23			pluck refused from poiein; added missing links
+refuse	41.2:23.17	41.2:23.17		pluck renders tillontes, not poiein
+accept	41.2:23.17	41.2:23.18	renders	plucking
+accept	41.2:23.12	41.2:23.17	renders	were going = making way
+accept	41.2:23.15	41.2:23.15	renders	began
+accept	41.2:23.5	41.2:23.7	renders	passing
+accept	41.2:23.6	41.2:23.8,41.2:23.10	renders	through grainfields
+fixed	41.2:24			added and
+accept	41.2:24.2	41.2:24.1	renders	and
+fixed	41.2:25			added not, himself, those
+accept	41.2:25.8	41.2:25.4	renders	not part of never
+accept	41.2:25.20	41.2:25.14	renders	he himself
+accept	41.2:25.24	41.2:25.16	renders	those
+fixed	41.2:26			added missing links
+accept	41.2:26.8	41.2:26.8	renders	in the time of
+accept	41.2:26.15	41.2:26.17	renders	which
+accept	41.2:26.20	41.2:26.21,41.2:26.22	renders	except
+accept	41.2:26.26	41.2:26.28	renders	to those
+accept	41.2:26.28	41.2:26.31	renders	being
+fixed	41.2:27			added was made, and
+accept	41.2:27.7	41.2:27.9	renders	was made
+accept	41.2:27.10	41.2:27.10	renders	and
+ok	41.2:28			

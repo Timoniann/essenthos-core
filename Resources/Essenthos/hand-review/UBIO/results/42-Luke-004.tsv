@@ -1,0 +1,155 @@
+kind	from	to	relation	reason
+fixed	42.4:1			added verb
+fixed	42.4:2			added pronoun
+fixed	42.4:3			added conj, verb
+fixed	42.4:4			added aux
+fixed	42.4:5			added verb, prep
+fixed	42.4:6			added missing words
+ok	42.4:7			
+fixed	42.4:8			added missing words
+fixed	42.4:9			added missing words
+fixed	42.4:10			shchob to articular tou
+fixed	42.4:11			added pote
+ok	42.4:12			
+fixed	42.4:13			fixed verb/noun swap
+fixed	42.4:14			added noun
+fixed	42.4:15			fixed pronoun swaps
+fixed	42.4:16			added verb
+fixed	42.4:17			added verb, conj
+fixed	42.4:18			added missing words
+ok	42.4:19			
+fixed	42.4:20			added missing words
+fixed	42.4:21			added conj, verb
+fixed	42.4:22			added question words
+fixed	42.4:23			added missing words
+fixed	42.4:24			added conj, verb
+fixed	42.4:25			added missing words
+fixed	42.4:26			fixed negation
+fixed	42.4:27			fixed negation, added words
+ok	42.4:28			
+fixed	42.4:29			added missing words
+fixed	42.4:30			added pronoun
+ok	42.4:31			
+ok	42.4:32			
+ok	42.4:33			
+fixed	42.4:34			added missing words
+fixed	42.4:35			added missing words
+fixed	42.4:36			added missing words
+fixed	42.4:37			added verb
+fixed	42.4:38			fixed pronoun, added words
+fixed	42.4:39			added conj
+fixed	42.4:40			fixed pronoun, added words
+fixed	42.4:41			added missing words
+fixed	42.4:42			added conj
+fixed	42.4:43			added missing words
+ok	42.4:44			
+refuse	42.4:10.9	42.4:10.11		shchob is purpose tou, not the verb
+refuse	42.4:13.6	42.4:13.7		temptation noun, not departed
+refuse	42.4:15.3	42.4:15.2		autos is He, not them
+refuse	42.4:15.10	42.4:15.7		auton is their synagogues
+refuse	42.4:26.3	42.4:26.8		me belongs to ei me (only)
+refuse	42.4:27.14	42.4:27.17		me belongs to ei me (except)
+refuse	42.4:38.21	42.4:38.21		her is autes, not auton
+refuse	42.4:40.26	42.4:40.24		of them is auton 19
+accept	42.4:1.14	42.4:1.11	renders	was led
+accept	42.4:2.18	42.4:2.17	renders	they
+accept	42.4:3.1	42.4:3.2	renders	de
+accept	42.4:3.7	42.4:3.8	renders	You are
+accept	42.4:3.15,42.4:3.16	42.4:3.16	renders	it should become
+accept	42.4:4.9	42.4:4.13	renders	future aux
+accept	42.4:5.3	42.4:5.2	renders	led up
+accept	42.4:5.9	42.4:5.11	renders	in
+accept	42.4:6.8	42.4:6.11	renders	all
+accept	42.4:6.17	42.4:6.18	renders	delivered
+accept	42.4:6.21	42.4:6.20	renders	to whom
+accept	42.4:8.2	42.4:8.5	renders	said
+accept	42.4:8.6	42.4:8.2	renders	answering
+accept	42.4:8.14	42.4:8.15	renders	only
+accept	42.4:9.1	42.4:9.2	renders	de
+accept	42.4:9.4	42.4:9.4	renders	into
+accept	42.4:9.15	42.4:9.16	renders	if
+accept	42.4:9.16	42.4:9.18	renders	You are
+accept	42.4:10.9	42.4:10.10	renders	purpose tou
+accept	42.4:11.8	42.4:11.8	renders	pote in lest
+accept	42.4:13.6	42.4:13.4	renders	temptation
+accept	42.4:13.7	42.4:13.7	renders	departed
+accept	42.4:13.10	42.4:13.10	renders	until
+accept	42.4:14.10	42.4:14.14	renders	report
+accept	42.4:15.2	42.4:15.2	renders	He
+accept	42.4:15.6	42.4:15.7	renders	their
+accept	42.4:16.13	42.4:16.9	renders	entered
+accept	42.4:17.2	42.4:17.2	renders	was given
+accept	42.4:17.8	42.4:17.8	renders	kai
+accept	42.4:18.10,42.4:18.12	42.4:18.9	renders	preach good news
+accept	42.4:18.5	42.4:18.5,42.4:18.6	renders	because
+accept	42.4:18.19	42.4:18.15	renders	deliverance
+accept	42.4:18.23	42.4:18.19	renders	send
+accept	42.4:18.24	42.4:18.21	renders	in
+accept	42.4:18.25	42.4:18.22	renders	liberty
+accept	42.4:20.5	42.4:20.7	renders	attendant
+accept	42.4:20.13	42.4:20.16,42.4:20.17	renders	were fixed
+accept	42.4:21.1	42.4:21.2	renders	de
+accept	42.4:21.6	42.4:21.3	renders	to say
+accept	42.4:22.20	42.4:22.24	renders	this one
+accept	42.4:22.21	42.4:22.20	renders	not
+accept	42.4:23.2	42.4:23.1	renders	kai
+accept	42.4:23.16,42.4:23.22	42.4:23.14	renders	whatsoever
+accept	42.4:24.1	42.4:24.2	renders	de
+accept	42.4:24.10	42.4:24.10	renders	is
+accept	42.4:25.2	42.4:25.1	renders	epi aletheias
+accept	42.4:25.1	42.4:25.3	renders	de
+accept	42.4:25.7	42.4:25.8	renders	there were
+accept	42.4:25.11	42.4:25.13	renders	in
+accept	42.4:25.23,42.4:25.24	42.4:25.26	renders	when/so that
+accept	42.4:26.5	42.4:26.3	renders	none
+accept	42.4:26.9	42.4:26.5	renders	was sent
+accept	42.4:26.11	42.4:26.7,42.4:26.8	renders	ei me = only
+accept	42.4:27.3	42.4:27.4	renders	were
+accept	42.4:27.10	42.4:27.12	renders	kai
+accept	42.4:27.11	42.4:27.13	renders	none
+accept	42.4:27.16	42.4:27.16,42.4:27.17	renders	except
+accept	42.4:29.5	42.4:29.3	renders	cast out
+accept	42.4:29.6	42.4:29.5	renders	outside
+accept	42.4:29.9	42.4:29.9	renders	led
+accept	42.4:29.10	42.4:29.11	renders	unto
+accept	42.4:29.15	42.4:29.16	renders	which
+accept	42.4:29.20	42.4:29.21	renders	so as
+accept	42.4:29.21	42.4:29.22	renders	throw down
+accept	42.4:30.2	42.4:30.1	renders	He
+accept	42.4:34.4	42.4:34.4	renders	idiom kai
+accept	42.4:34.16	42.4:34.14	renders	are
+accept	42.4:35.12	42.4:35.13	renders	having thrown
+accept	42.4:35.14	42.4:35.14	renders	him
+accept	42.4:35.19	42.4:35.23	renders	nothing
+accept	42.4:36.2	42.4:36.5	renders	all
+accept	42.4:36.3	42.4:36.3	renders	astonishment
+accept	42.4:36.4	42.4:36.2	renders	came upon
+accept	42.4:36.6	42.4:36.7	renders	were speaking
+accept	42.4:36.8,42.4:36.9	42.4:36.9	renders	one another
+accept	42.4:36.12	42.4:36.14	renders	this
+accept	42.4:36.14	42.4:36.13	renders	word
+accept	42.4:36.15	42.4:36.15	renders	that
+accept	42.4:37.2	42.4:37.2	renders	was spreading
+accept	42.4:38.3	42.4:38.1	renders	having risen from
+accept	42.4:38.12	42.4:38.12	renders	de
+accept	42.4:38.17	42.4:38.15,42.4:38.16	renders	was oppressed
+accept	42.4:38.21	42.4:38.23	renders	her
+accept	42.4:39.13	42.4:39.12	renders	de
+accept	42.4:40.4	42.4:40.1	renders	setting
+accept	42.4:40.2	42.4:40.2	renders	de
+accept	42.4:40.7	42.4:40.6	renders	as many as
+accept	42.4:40.17	42.4:40.12	renders	them
+accept	42.4:40.18	42.4:40.15	renders	he
+accept	42.4:40.19	42.4:40.16	renders	de
+accept	42.4:40.20	42.4:40.22	renders	laying on
+accept	42.4:40.24	42.4:40.17	renders	one
+accept	42.4:40.26	42.4:40.19	renders	of them
+accept	42.4:40.28	42.4:40.24	renders	them
+accept	42.4:41.3	42.4:41.2	renders	de
+accept	42.4:41.15	42.4:41.21	renders	them
+accept	42.4:41.21	42.4:41.23	renders	because
+accept	42.4:42.2	42.4:42.2	renders	de
+accept	42.4:42.22	42.4:42.21	renders	purpose tou
+accept	42.4:43.1	42.4:43.1	renders	ho as pronoun
+accept	42.4:43.2	42.4:43.2	renders	de
+accept	42.4:43.12	42.4:43.11	renders	good news

@@ -1,0 +1,203 @@
+kind	from	to	relation	reason
+fixed	42.2:1			added missing links
+accept	42.2:1.1	42.2:1.2	renders	I renders de
+accept	42.2:1.3	42.2:1.6	renders	those
+accept	42.2:1.7	42.2:1.10	renders	Caesar
+accept	42.2:1.9	42.2:1.12	renders	register
+accept	42.2:1.10	42.2:1.13	renders	all
+accept	42.2:1.11	42.2:1.15	renders	world
+fixed	42.2:2			verb mav was linked to name
+refuse	42.2:2.10	42.2:2.8		verb linked to name Quirinius
+accept	42.2:2.7,42.2:2.10	42.2:2.5	renders	had rule = was governing
+accept	42.2:2.4	42.2:2.4	renders	took place
+ok	42.2:3			
+fixed	42.2:4			tezh is kai also
+refuse	42.2:4.2	42.2:4.2		tezh renders kai also, not de
+accept	42.2:4.2	42.2:4.3	renders	also
+accept	42.2:4.18	42.2:4.20	renders	because
+accept	42.2:4.19	42.2:4.22	renders	being of
+fixed	42.2:5			added links
+accept	42.2:5.8	42.2:5.5	renders	betrothed
+accept	42.2:5.10	42.2:5.7	renders	being
+fixed	42.2:6			added links
+accept	42.2:6.1	42.2:6.2	renders	de
+accept	42.2:6.3	42.2:6.3	renders	en to = when
+accept	42.2:6.8	42.2:6.8	renders	were fulfilled
+accept	42.2:6.9	42.2:6.13	renders	her
+accept	42.2:6.11	42.2:6.12	renders	give birth
+fixed	42.2:7			v was linked to wrong en
+refuse	42.2:7.16	42.2:7.14		wrong en; v zaizdi = en katalymati
+accept	42.2:7.16	42.2:7.21	renders	in the inn
+accept	42.2:7.11	42.2:7.14	renders	in manger
+accept	42.2:7.2	42.2:7.2	renders	brought forth
+accept	42.2:7.4	42.2:7.5	renders	her
+accept	42.2:7.5	42.2:7.7	renders	firstborn
+accept	42.2:7.13	42.2:7.12	renders	laid
+accept	42.2:7.17	42.2:7.23	renders	inn
+accept	42.2:7.20	42.2:7.18	renders	there was
+fixed	42.2:8			added links
+accept	42.2:8.3	42.2:8.8	renders	same
+accept	42.2:8.8	42.2:8.9	renders	lodging in fields
+accept	42.2:8.14	42.2:8.11,42.2:8.12	renders	keeping watch
+accept	42.2:8.12,42.2:8.13	42.2:8.14	renders	by night
+fixed	42.2:9			added links
+accept	42.2:9.5	42.2:9.4	renders	stood by
+accept	42.2:9.17	42.2:9.14	renders	great
+ok	42.2:10			
+fixed	42.2:11			added links
+accept	42.2:11.6	42.2:11.2	renders	born
+accept	42.2:11.10	42.2:11.6	renders	who
+fixed	42.2:12			added links
+accept	42.2:12.2	42.2:12.2	renders	this
+accept	42.2:12.6	42.2:12.7	renders	swaddled
+accept	42.2:12.7	42.2:12.5	renders	you in verb
+accept	42.2:12.12	42.2:12.9	renders	lying
+fixed	42.2:13			added links
+accept	42.2:13.4	42.2:13.3	renders	came
+accept	42.2:13.7,42.2:13.8	42.2:13.7	renders	multitude
+accept	42.2:13.13	42.2:13.10	renders	praising
+ok	42.2:14			
+fixed	42.2:15			added links
+accept	42.2:15.3	42.2:15.3	renders	as
+accept	42.2:15.11,42.2:15.12	42.2:15.14	renders	were saying
+accept	42.2:15.19	42.2:15.22	renders	let us see
+accept	42.2:15.25	42.2:15.31	renders	made known
+fixed	42.2:16			added links
+accept	42.2:16.11	42.2:16.14	renders	baby
+fixed	42.2:17			added links
+accept	42.2:17.3	42.2:17.3	renders	made known
+accept	42.2:17.11,42.2:17.13	42.2:17.8	renders	told
+fixed	42.2:18			added links
+accept	42.2:18.10	42.2:18.8	renders	spoken
+fixed	42.2:19			added links
+accept	42.2:19.3	42.2:19.8	renders	these
+accept	42.2:19.10	42.2:19.13	renders	her
+fixed	42.2:20			added links
+accept	42.2:20.17,42.2:20.18	42.2:20.17	renders	was said
+fixed	42.2:21			added links
+accept	42.2:21.9	42.2:21.9	renders	kai then
+accept	42.2:21.14,42.2:21.16	42.2:21.16	renders	had been called
+accept	42.2:21.17	42.2:21.20	renders	before
+fixed	42.2:22			added links
+accept	42.2:22.6	42.2:22.3	renders	were fulfilled
+fixed	42.2:23			added links
+accept	42.2:23.7	42.2:23.8	renders	male child
+accept	42.2:23.15	42.2:23.11	renders	holy
+accept	42.2:23.13,42.2:23.14	42.2:23.14	renders	shall be called
+fixed	42.2:24			offer was linked to kata
+refuse	42.2:24.4	42.2:24.5		offer linked to preposition
+accept	42.2:24.4	42.2:24.3	renders	to offer
+accept	42.2:24.5	42.2:24.5	renders	according to
+accept	42.2:24.14	42.2:24.17	renders	young pigeons
+fixed	42.2:25			added links
+accept	42.2:25.8	42.2:25.7	renders	whose
+fixed	42.2:26			added links
+accept	42.2:26.6	42.2:26.2	renders	it was
+accept	42.2:26.7	42.2:26.4	renders	revealed
+accept	42.2:26.11	42.2:26.13	renders	before
+accept	42.2:26.12	42.2:26.14	renders	than
+fixed	42.2:27			yoho was linked to parents pronoun
+refuse	42.2:27.6	42.2:27.20		autous is the parents
+accept	42.2:27.5,42.2:27.6	42.2:27.2	renders	he came (restructured)
+accept	42.2:27.8	42.2:27.10	renders	en to = when
+fixed	42.2:28			ta was linked to wrong kai
+refuse	42.2:28.10	42.2:28.8		ta goes with the kai before said
+accept	42.2:28.10	42.2:28.12	renders	ta y = kai
+accept	42.2:28.1	42.2:28.1	renders	kai then
+accept	42.2:28.2	42.2:28.3	renders	received
+accept	42.2:28.5	42.2:28.7	renders	arms
+accept	42.2:28.7,42.2:28.9	42.2:28.9	renders	blessed
+fixed	42.2:29			added link
+accept	42.2:29.9	42.2:29.11	renders	in peace
+ok	42.2:30			
+fixed	42.2:31			added link
+accept	42.2:31.4	42.2:31.3,42.2:31.4	renders	before the face
+fixed	42.2:32			added link
+accept	42.2:32.2	42.2:32.2	renders	for
+fixed	42.2:33			added links
+accept	42.2:33.2	42.2:33.2	renders	periphrastic were
+accept	42.2:33.11	42.2:33.12	renders	spoken
+fixed	42.2:34			added links
+accept	42.2:34.6	42.2:34.5	renders	ta y = kai
+accept	42.2:34.13	42.2:34.14	renders	is appointed
+accept	42.2:34.16	42.2:34.15	renders	for
+fixed	42.2:35			added links
+accept	42.2:35.4	42.2:35.7	renders	will go through
+accept	42.2:35.5	42.2:35.4	renders	her
+accept	42.2:35.6	42.2:35.3	renders	de
+accept	42.2:35.8	42.2:35.9	renders	so that
+fixed	42.2:36			added links
+accept	42.2:36.1	42.2:36.2	renders	there was
+accept	42.2:36.12	42.2:36.12	renders	in
+accept	42.2:36.13	42.2:36.14	renders	many
+accept	42.2:36.14	42.2:36.13	renders	days
+accept	42.2:36.15	42.2:36.15	renders	having lived
+accept	42.2:36.21	42.2:36.23	renders	her
+fixed	42.2:37			i linked to wrong kai
+refuse	42.2:37.14	42.2:37.14		kai between fastings and prayers, not day and night
+accept	42.2:37.14	42.2:37.18	renders	night and day
+accept	42.2:37.17	42.2:37.14	renders	fastings and prayers
+accept	42.2:37.1	42.2:37.3	renders	widow
+fixed	42.2:38			added links
+accept	42.2:38.3	42.2:38.3	renders	that hour
+accept	42.2:38.5	42.2:38.5	renders	came up
+accept	42.2:38.7	42.2:38.6	renders	giving praise
+accept	42.2:38.16	42.2:38.15	renders	waiting for
+fixed	42.2:39			added link
+accept	42.2:39.15	42.2:39.16	renders	their
+fixed	42.2:40			added links
+accept	42.2:40.13	42.2:40.14	renders	him
+accept	42.2:40.14	42.2:40.12	renders	was
+fixed	42.2:41			added link
+accept	42.2:41.4	42.2:41.6	renders	kat etos
+fixed	42.2:42			added links
+accept	42.2:42.3,42.2:42.4	42.2:42.3	renders	he was
+accept	42.2:42.12	42.2:42.6	renders	went up
+fixed	42.2:43			i was linked to verse-initial kai
+refuse	42.2:43.7	42.2:43.1		verse-initial kai; i joins the en to clause
+accept	42.2:43.5,42.2:43.6	42.2:43.2	renders	completed
+accept	42.2:43.10	42.2:43.12	renders	boy
+accept	42.2:43.14	42.2:43.9	renders	remained
+fixed	42.2:44			yde was linked to went
+refuse	42.2:44.7	42.2:44.8		yde renders einai, not elthon
+accept	42.2:44.7	42.2:44.4	renders	to be
+accept	42.2:44.8	42.2:44.8	renders	went
+accept	42.2:44.4	42.2:44.3	renders	him
+accept	42.2:44.5	42.2:44.5	renders	in
+accept	42.2:44.6	42.2:44.7	renders	company
+accept	42.2:44.12	42.2:44.11	renders	ta y = kai
+accept	42.2:44.13	42.2:44.12	renders	began seeking
+fixed	42.2:45			added link
+accept	42.2:45.1	42.2:45.1	renders	kai
+fixed	42.2:46			added links
+accept	42.2:46.4	42.2:46.5	renders	three
+accept	42.2:46.6	42.2:46.6	renders	found
+accept	42.2:46.9	42.2:46.7	renders	him
+accept	42.2:46.12	42.2:46.13	renders	midst
+fixed	42.2:47			added links
+accept	42.2:47.1	42.2:47.3	renders	all
+accept	42.2:47.2	42.2:47.2	renders	de
+accept	42.2:47.6	42.2:47.1	renders	amazed
+fixed	42.2:48			added links
+accept	42.2:48.5	42.2:48.2	renders	having seen
+accept	42.2:48.22	42.2:48.21	renders	and I
+fixed	42.2:49			Meni/Moyemu swapped; nalezhyt was linked to dei
+refuse	42.2:49.16	42.2:49.16		Meni is me 19; mou is Moyemu
+refuse	42.2:49.21	42.2:49.17		povynno renders dei
+accept	42.2:49.16	42.2:49.19	renders	me
+accept	42.2:49.22	42.2:49.16	renders	my
+accept	42.2:49.15	42.2:49.17	renders	must
+accept	42.2:49.17	42.2:49.18	renders	to be
+accept	42.2:49.18	42.2:49.12	renders	in
+accept	42.2:49.2	42.2:49.2	renders	he said
+accept	42.2:49.5	42.2:49.5	renders	why
+accept	42.2:49.12	42.2:49.9	renders	not
+fixed	42.2:50			added link
+accept	42.2:50.4	42.2:50.2	renders	they
+fixed	42.2:51			added links
+accept	42.2:51.2	42.2:51.2	renders	went down
+accept	42.2:51.13	42.2:51.11	renders	subject
+accept	42.2:51.22	42.2:51.24	renders	her
+fixed	42.2:52			added links
+accept	42.2:52.6	42.2:52.8	renders	stature
+accept	42.2:52.12	42.2:52.14	renders	men

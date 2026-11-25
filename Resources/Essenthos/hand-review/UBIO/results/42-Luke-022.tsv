@@ -1,0 +1,316 @@
+kind	from	to	relation	reason
+fixed	42.22:1			add ж
+accept	42.22:1.2	42.22:1.2	renders	ж renders δέ
+ok	42.22:2			
+fixed	42.22:3			add missing
+accept	42.22:3.2	42.22:3.2	renders	ж renders δέ
+accept	42.22:3.6	42.22:3.7	renders	called
+accept	42.22:3.9	42.22:3.10	renders	з renders ἐκ
+ok	42.22:4			
+ok	42.22:5			
+fixed	42.22:6			add missing
+accept	42.22:6.6	42.22:6.5	renders	part of phrase for opportunity
+accept	42.22:6.9	42.22:6.11	renders	to them
+fixed	42.22:7			add missing
+accept	42.22:7.1	42.22:7.2	renders	І renders δέ
+accept	42.22:7.2	42.22:7.1	renders	came
+accept	42.22:7.5	42.22:7.7	renders	when = which
+accept	42.22:7.7,42.22:7.8,42.22:7.9	42.22:7.9	renders	to be sacrificed
+accept	42.22:7.10	42.22:7.8	renders	it was necessary
+fixed	42.22:8			add ми
+accept	42.22:8.16	42.22:8.13	renders	subject of we-eat verb
+fixed	42.22:9			add pronouns
+accept	42.22:9.2	42.22:9.1	renders	article as pronoun they
+accept	42.22:9.6	42.22:9.6	renders	subject of θέλεις
+fixed	42.22:10			add missing
+accept	42.22:10.15	42.22:10.16	renders	carrying
+accept	42.22:10.18	42.22:10.17	renders	follow
+accept	42.22:10.24	42.22:10.22,42.22:10.23	renders	into which
+accept	42.22:10.25	42.22:10.24	renders	subject of enters
+fixed	42.22:11			add missing
+accept	42.22:11.11,42.22:11.12	42.22:11.15	renders	where
+accept	42.22:11.13	42.22:11.22	renders	I may eat
+accept	42.22:11.15	42.22:11.21	renders	my disciples
+fixed	42.22:12			add κἀκεῖνος
+accept	42.22:12.1,42.22:12.2	42.22:12.1	renders	and he = κἀκεῖνος
+fixed	42.22:13			add missing
+accept	42.22:13.7,42.22:13.9	42.22:13.5	renders	he had said
+fixed	42.22:14			add missing
+accept	42.22:14.4	42.22:14.5	renders	hour
+accept	42.22:14.6,42.22:14.7	42.22:14.6	renders	reclined = sat to table
+fixed	42.22:15			add missing
+accept	42.22:15.6	42.22:15.5	renders	with desire intensifier
+accept	42.22:15.7	42.22:15.6	renders	desired
+accept	42.22:15.8	42.22:15.10	renders	to eat
+accept	42.22:15.13	42.22:15.13	renders	перш ніж = before
+accept	42.22:15.15,42.22:15.16	42.22:15.16	renders	to suffer
+fixed	42.22:16			add missing
+accept	42.22:16.8	42.22:16.8	renders	future auxiliary
+accept	42.22:16.10	42.22:16.11	renders	ἕως ὅτου
+accept	42.22:16.15	42.22:16.12	renders	subject of πληρωθῇ
+fixed	42.22:17			add missing
+accept	42.22:17.1	42.22:17.2	renders	having received
+accept	42.22:17.5	42.22:17.4	renders	gave thanks
+accept	42.22:17.7	42.22:17.5	renders	subject of εἶπεν
+accept	42.22:17.10	42.22:17.7	renders	it = this
+accept	42.22:17.13	42.22:17.10	renders	among
+fixed	42.22:18			add missing
+accept	42.22:18.2	42.22:18.2	renders	ж renders γάρ
+accept	42.22:18.5	42.22:18.7,42.22:18.9	renders	from now
+accept	42.22:18.13	42.22:18.15,42.22:18.16	renders	until
+fixed	42.22:19			про mislinked; add missing
+refuse	42.22:19.23	42.22:19.24		preposition, not remembrance
+accept	42.22:19.5	42.22:19.4	renders	gave thanks
+accept	42.22:19.15	42.22:19.15	renders	which
+accept	42.22:19.24	42.22:19.23	renders	of Me
+fixed	42.22:20			add що
+accept	42.22:20.16	42.22:20.19	renders	which
+fixed	42.22:21			Мною/Мого swapped
+refuse	42.22:21.7	42.22:21.7		зо Мною = μετ ἐμοῦ
+refuse	42.22:21.9	42.22:21.9		Мого зрадника = παραδιδόντος με
+accept	42.22:21.7	42.22:21.9	renders	with Me
+accept	42.22:21.9	42.22:21.7	renders	betraying me
+accept	42.22:21.1,42.22:21.2	42.22:21.1	renders	πλήν
+accept	42.22:21.3	42.22:21.10	renders	at table
+fixed	42.22:22			add missing
+accept	42.22:22.1	42.22:22.1	renders	for
+accept	42.22:22.5	42.22:22.7	renders	according to
+accept	42.22:22.6	42.22:22.9	renders	determined
+accept	42.22:22.9	42.22:22.15	renders	that
+accept	42.22:22.11	42.22:22.17	renders	whom
+accept	42.22:22.12	42.22:22.18	renders	Him, passive subject
+fixed	42.22:23			add missing
+accept	42.22:23.6	42.22:23.4	renders	question
+accept	42.22:23.10	42.22:23.15	renders	about to
+accept	42.22:23.13	42.22:23.16	renders	to do
+fixed	42.22:24			І is δέ, й is καί
+refuse	42.22:24.1	42.22:24.3		καί is also = й
+accept	42.22:24.1	42.22:24.2	renders	І renders δέ
+accept	42.22:24.5	42.22:24.3	renders	also
+accept	42.22:24.10	42.22:24.10	renders	is thought
+accept	42.22:24.13	42.22:24.12	renders	greater
+fixed	42.22:25			володіють mislinked
+refuse	42.22:25.15	42.22:25.15		володіють = exercising authority
+accept	42.22:25.15	42.22:25.13	renders	exercising authority
+accept	42.22:25.17	42.22:25.16	renders	are called
+accept	42.22:25.1	42.22:25.1	renders	article as pronoun he
+accept	42.22:25.2	42.22:25.2	renders	же renders δέ
+accept	42.22:25.12	42.22:25.12	renders	those
+fixed	42.22:26			add нехай
+accept	42.22:26.9	42.22:26.10	renders	let him be
+fixed	42.22:27			add missing
+accept	42.22:27.2	42.22:27.1	renders	who
+accept	42.22:27.7,42.22:27.8	42.22:27.5	renders	reclining = sits at table
+accept	42.22:27.10	42.22:27.6	renders	or
+accept	42.22:27.13	42.22:27.9	renders	Чи не = οὐχί
+fixed	42.22:28			оті mislinked to ἐστε
+refuse	42.22:28.3	42.22:28.3		оті = those, not are
+accept	42.22:28.3,42.22:28.4	42.22:28.4	renders	those who
+accept	42.22:28.2	42.22:28.2	renders	ж renders δέ
+fixed	42.22:29			Мій mislinked
+refuse	42.22:29.8	42.22:29.6		Мій = μου of Father
+accept	42.22:29.8	42.22:29.9	renders	my Father
+accept	42.22:29.1	42.22:29.1	renders	and I
+accept	42.22:29.4	42.22:29.2	renders	appoint
+accept	42.22:29.10	42.22:29.5	renders	appointed
+fixed	42.22:30			two Моїм swapped
+refuse	42.22:30.5	42.22:30.8		Царстві Моїм = second μου
+refuse	42.22:30.11	42.22:30.12		столом Моїм = first μου
+accept	42.22:30.5	42.22:30.12	renders	my kingdom
+accept	42.22:30.11	42.22:30.8	renders	my table
+accept	42.22:30.2	42.22:30.2	renders	subject of eat
+accept	42.22:30.14	42.22:30.14	renders	subject of sit
+ok	42.22:31			
+fixed	42.22:32			add ж
+accept	42.22:32.12	42.22:32.12	renders	ж renders καί
+fixed	42.22:33			add missing
+accept	42.22:33.2	42.22:33.1	renders	article as pronoun he
+accept	42.22:33.6	42.22:33.9	renders	I am
+accept	42.22:33.10	42.22:33.16	renders	to go
+fixed	42.22:34			півень/заспіває swapped
+refuse	42.22:34.7	42.22:34.8		півень = rooster
+refuse	42.22:34.9	42.22:34.10		заспіває = will crow
+accept	42.22:34.7	42.22:34.10	renders	rooster
+accept	42.22:34.9	42.22:34.8	renders	will crow
+accept	42.22:34.1	42.22:34.1	renders	article as pronoun he
+accept	42.22:34.2	42.22:34.2	renders	же renders δέ
+accept	42.22:34.4	42.22:34.4	renders	I tell
+accept	42.22:34.11	42.22:34.11	renders	until
+accept	42.22:34.12,42.22:34.14	42.22:34.14	renders	you will deny
+fixed	42.22:35			add missing
+accept	42.22:35.15	42.22:35.7	renders	without, repeated
+accept	42.22:35.2	42.22:35.2	renders	subject of said
+accept	42.22:35.6	42.22:35.5	renders	subject of sent
+accept	42.22:35.17	42.22:35.13	renders	interrogative μή
+accept	42.22:35.20	42.22:35.14	renders	anything
+accept	42.22:35.21	42.22:35.16	renders	article as pronoun they
+accept	42.22:35.22	42.22:35.17	renders	ж renders δέ
+fixed	42.22:36			add missing
+accept	42.22:36.10	42.22:36.10	renders	likewise
+accept	42.22:36.20	42.22:36.20	renders	his
+accept	42.22:36.8	42.22:36.9	renders	let him take
+accept	42.22:36.17	42.22:36.17	renders	let him sell
+fixed	42.22:37			й is TR ἔτι, not quoted Καί
+refuse	42.22:37.10	42.22:37.13		Καί belongs to the quotation
+accept	42.22:37.1,42.22:37.3	42.22:37.1	renders	I say
+accept	42.22:37.6	42.22:37.9	renders	to be accomplished
+accept	42.22:37.9	42.22:37.8	renders	must
+accept	42.22:37.14	42.22:37.14	renders	with
+accept	42.22:37.15	42.22:37.15	renders	lawless
+accept	42.22:37.16,42.22:37.17	42.22:37.16	renders	He was reckoned
+accept	42.22:37.19	42.22:37.19	renders	the things
+accept	42.22:37.23	42.22:37.22,42.22:37.23	renders	has an end
+fixed	42.22:38			add missing
+accept	42.22:38.1	42.22:38.2	renders	І renders δέ
+accept	42.22:38.3	42.22:38.1	renders	article as pronoun they
+accept	42.22:38.10	42.22:38.9	renders	article as pronoun He
+fixed	42.22:39			Його has no Nestle counterpart
+refuse	42.22:39.16	42.22:39.14		αὐτῷ is за Ним; учні Його is TR αὐτοῦ
+accept	42.22:39.13	42.22:39.14	renders	Him
+accept	42.22:39.14	42.22:39.12	renders	followed
+accept	42.22:39.11	42.22:39.13	renders	А renders δέ
+accept	42.22:39.2	42.22:39.3	renders	subject of went
+fixed	42.22:40			add прийшовши
+accept	42.22:40.2	42.22:40.1	renders	having come
+fixed	42.22:41			add missing
+accept	42.22:41.2	42.22:41.2	renders	He
+accept	42.22:41.7	42.22:41.6	renders	about
+accept	42.22:41.8	42.22:41.8	renders	throw
+accept	42.22:41.11	42.22:41.12	renders	knees
+accept	42.22:41.12	42.22:41.10	renders	having fallen on
+accept	42.22:41.13	42.22:41.9	renders	and
+fixed	42.22:42			волієш mislinked to εἰ
+refuse	42.22:42.4	42.22:42.3		волієш = βούλει
+accept	42.22:42.4	42.22:42.4	renders	You are willing
+accept	42.22:42.3	42.22:42.3	renders	if
+accept	42.22:42.5	42.22:42.5	renders	take away
+accept	42.22:42.6	42.22:42.9	renders	from
+accept	42.22:42.10,42.22:42.11	42.22:42.11	renders	πλήν
+accept	42.22:42.15	42.22:42.18	renders	yours
+accept	42.22:42.16	42.22:42.19	renders	let be done
+fixed	42.22:43			add missing
+accept	42.22:43.1	42.22:43.2	renders	І renders δέ
+accept	42.22:43.11	42.22:43.7	renders	strengthening
+fixed	42.22:44			ще пильніш mislinked
+refuse	42.22:44.7	42.22:44.4		ще пильніш = more earnestly
+refuse	42.22:44.8	42.22:44.4		ще пильніш = more earnestly
+accept	42.22:44.7,42.22:44.8	42.22:44.5	renders	more earnestly
+accept	42.22:44.9	42.22:44.6	renders	subject of praying
+accept	42.22:44.15	42.22:44.12	renders	like
+fixed	42.22:45			add missing
+accept	42.22:45.13	42.22:45.11	renders	sleeping
+accept	42.22:45.14	42.22:45.13	renders	from
+fixed	42.22:46			add ви
+accept	42.22:46.6	42.22:46.5	renders	subject of sleeping
+fixed	42.22:47			їм is in TR addition
+refuse	42.22:47.30	42.22:47.20		αὐτόν is поцілувати Його
+accept	42.22:47.26	42.22:47.20	renders	Him
+accept	42.22:47.25	42.22:47.19	renders	to kiss
+accept	42.22:47.14	42.22:47.9	renders	Judas
+accept	42.22:47.16,42.22:47.17	42.22:47.13	renders	was going before
+accept	42.22:47.21	42.22:47.16	renders	drew near
+fixed	42.22:48			add видаєш
+accept	42.22:48.9,42.22:48.11	42.22:48.11	renders	you are betraying
+fixed	42.22:49			add missing
+accept	42.22:49.1	42.22:49.2	renders	А renders δέ
+accept	42.22:49.5	42.22:49.4	renders	with = around
+accept	42.22:49.10,42.22:49.11	42.22:49.7	renders	would be
+accept	42.22:49.15	42.22:49.10	renders	interrogative εἰ
+accept	42.22:49.17	42.22:49.11	renders	we will strike
+ok	42.22:50			
+fixed	42.22:51			add missing
+accept	42.22:51.1	42.22:51.2	renders	Та renders δέ
+accept	42.22:51.6	42.22:51.6	renders	allow
+accept	42.22:51.12	42.22:51.12	renders	ear
+fixed	42.22:52			add missing
+accept	42.22:52.1	42.22:52.2	renders	А renders δέ
+accept	42.22:52.5,42.22:52.6	42.22:52.11	renders	temple guard captains
+accept	42.22:52.11	42.22:52.6	renders	having come
+accept	42.22:52.12	42.22:52.7	renders	against
+fixed	42.22:53			add missing
+accept	42.22:53.2	42.22:53.1	renders	every day
+accept	42.22:53.8	42.22:53.3	renders	being
+accept	42.22:53.10,42.22:53.13	42.22:53.11	renders	you stretched out
+accept	42.22:53.15	42.22:53.16	renders	but
+fixed	42.22:54			add missing
+accept	42.22:54.1	42.22:54.2	renders	А renders δέ
+accept	42.22:54.4	42.22:54.4	renders	led away
+accept	42.22:54.8	42.22:54.9	renders	house
+accept	42.22:54.11	42.22:54.13	renders	ж renders δέ
+accept	42.22:54.13	42.22:54.15	renders	was following
+fixed	42.22:55			add missing
+accept	42.22:55.3	42.22:55.2	renders	ж renders δέ
+accept	42.22:55.5	42.22:55.4,42.22:55.5	renders	in the midst
+accept	42.22:55.9	42.22:55.9	renders	having sat together
+fixed	42.22:56			add missing
+accept	42.22:56.8	42.22:56.7	renders	by
+accept	42.22:56.17	42.22:56.18	renders	was
+fixed	42.22:57			add missing
+accept	42.22:57.1	42.22:57.2	renders	І renders δέ
+accept	42.22:57.5	42.22:57.1	renders	article as pronoun he
+accept	42.22:57.9	42.22:57.6	renders	I know
+fixed	42.22:58			add missing
+accept	42.22:58.1	42.22:58.2,42.22:58.3	renders	after a little
+accept	42.22:58.3	42.22:58.4	renders	another
+accept	42.22:58.12	42.22:58.11	renders	them
+fixed	42.22:59			часу is added; минуло = elapsed
+refuse	42.22:59.3	42.22:59.2		часу is added, минуло renders διαστάσης
+accept	42.22:59.4	42.22:59.2	renders	having elapsed
+accept	42.22:59.5	42.22:59.3	renders	about
+accept	42.22:59.12	42.22:59.10,42.22:59.11	renders	of a truth
+accept	42.22:59.15	42.22:59.16	renders	was
+accept	42.22:59.19	42.22:59.20	renders	he is
+fixed	42.22:60			півень/заспівав swapped
+refuse	42.22:60.17	42.22:60.15		півень = rooster
+refuse	42.22:60.18	42.22:60.16		заспівав = crowed
+accept	42.22:60.17	42.22:60.16	renders	rooster
+accept	42.22:60.18	42.22:60.15	renders	crowed
+accept	42.22:60.6	42.22:60.7	renders	I know
+accept	42.22:60.9	42.22:60.9	renders	subject of say
+accept	42.22:60.16	42.22:60.14	renders	of him
+fixed	42.22:61			заспіває/півень swapped
+refuse	42.22:61.19	42.22:61.21		заспіває = crows
+refuse	42.22:61.20	42.22:61.22		півень = rooster
+accept	42.22:61.19	42.22:61.22	renders	crows
+accept	42.22:61.20	42.22:61.21	renders	rooster
+accept	42.22:61.17	42.22:61.20	renders	перше ніж = before
+accept	42.22:61.21,42.22:61.22	42.22:61.24	renders	you will deny
+accept	42.22:61.15	42.22:61.17	renders	subject of said
+fixed	42.22:62			add missing
+accept	42.22:62.3	42.22:62.3	renders	outside
+accept	42.22:62.4	42.22:62.4	renders	subject of wept
+accept	42.22:62.5	42.22:62.5	renders	bitterly
+fixed	42.22:63			Нього mislinked
+refuse	42.22:63.8	42.22:63.6		знущалися з Нього = ἐνέπαιζον αὐτῷ
+accept	42.22:63.8	42.22:63.8	renders	mocking Him
+accept	42.22:63.5	42.22:63.6	renders	Jesus = αὐτόν held
+accept	42.22:63.2	42.22:63.3	renders	men
+accept	42.22:63.3	42.22:63.4	renders	who
+accept	42.22:63.4	42.22:63.5	renders	holding
+accept	42.22:63.10	42.22:63.9	renders	beating
+fixed	42.22:64			add missing
+accept	42.22:64.10	42.22:64.4	renders	were questioning
+accept	42.22:64.12	42.22:64.5	renders	saying
+fixed	42.22:65			add вони
+accept	42.22:65.8	42.22:65.5	renders	subject of saying
+fixed	42.22:66			add коли
+accept	42.22:66.2	42.22:66.2	renders	when
+fixed	42.22:67			add missing
+accept	42.22:67.3	42.22:67.2	renders	if
+accept	42.22:67.9,42.22:67.11	42.22:67.9	renders	He said
+accept	42.22:67.18	42.22:67.17	renders	subject of believe
+fixed	42.22:68			add missing
+accept	42.22:68.6	42.22:68.3	renders	I ask
+accept	42.22:68.8,42.22:68.10	42.22:68.6	renders	answer
+fixed	42.22:69			add missing
+accept	42.22:69.1	42.22:69.1,42.22:69.3	renders	from now on
+accept	42.22:69.4	42.22:69.5	renders	will be sitting
+fixed	42.22:70			add missing
+accept	42.22:70.4	42.22:70.5	renders	then = οὖν
+accept	42.22:70.9	42.22:70.11	renders	article as pronoun He
+accept	42.22:70.11	42.22:70.15	renders	answered
+fixed	42.22:71			add missing
+accept	42.22:71.2	42.22:71.1	renders	article as pronoun they
+accept	42.22:71.7	42.22:71.7	renders	witness
+accept	42.22:71.11	42.22:71.11	renders	subject of heard
+accept	42.22:71.13	42.22:71.9	renders	ourselves

@@ -1,0 +1,238 @@
+kind	from	to	relation	reason
+ok	41.6:1			
+fixed	41.6:2			v Nyoho/oce split, verbs added
+fixed	41.6:3			first ne to ouch
+fixed	41.6:4			missing links
+fixed	41.6:5			missing links
+ok	41.6:6			
+fixed	41.6:7			po dvokh
+fixed	41.6:8			missing links
+fixed	41.6:9			missing links
+fixed	41.6:10			missing links
+fixed	41.6:11			missing links
+ok	41.6:12			
+fixed	41.6:13			missing links
+fixed	41.6:14			missing links
+fixed	41.6:15			missing links
+ok	41.6:16			
+fixed	41.6:17			missing links
+fixed	41.6:18			added phrase
+fixed	41.6:19			missing links
+fixed	41.6:20			missing links
+fixed	41.6:21			missing links
+fixed	41.6:22			missing links
+fixed	41.6:23			missing links
+fixed	41.6:24			missing links
+fixed	41.6:25			missing links
+fixed	41.6:26			missing links
+fixed	41.6:27			prynesty misaligned
+fixed	41.6:28			missing links
+fixed	41.6:29			missing links
+fixed	41.6:30			missing links
+fixed	41.6:31			missing links
+fixed	41.6:32			okremo misaligned
+fixed	41.6:33			missing links
+ok	41.6:34			
+fixed	41.6:35			Yoho/Nyoho swapped, genitive absolute
+fixed	41.6:36			osady/blyzki
+fixed	41.6:37			missing links
+fixed	41.6:38			missing links
+fixed	41.6:39			missing links
+fixed	41.6:40			rozsilys misaligned
+fixed	41.6:41			missing links
+ok	41.6:42			
+fixed	41.6:43			added words on klasmata
+fixed	41.6:44			missing link
+fixed	41.6:45			missing links
+fixed	41.6:46			missing link
+fixed	41.6:47			missing links
+fixed	41.6:48			veslu/morduiutsia swapped
+fixed	41.6:49			missing links
+fixed	41.6:50			missing link
+fixed	41.6:51			zatykh misaligned
+ok	41.6:52			
+fixed	41.6:53			missing link
+fixed	41.6:54			missing link
+fixed	41.6:55			missing links
+fixed	41.6:56			last clause misaligned
+refuse	41.6:2.20	41.6:2.16		oce renders tauta not toutoi
+accept	41.6:2.20	41.6:2.17	renders	oce = tauta
+accept	41.6:2.18,41.6:2.19	41.6:2.16	renders	v Nyoho = toutoi
+accept	41.6:2.16	41.6:2.14	renders	pytaly = legontes
+accept	41.6:2.27	41.6:2.24	renders	Yomu = toutoi
+accept	41.6:2.33	41.6:2.33	renders	stayutsia = ginomenai
+refuse	41.6:3.4	41.6:3.20		wrong ou: first ne is ouch
+accept	41.6:3.4	41.6:3.1	renders	ne = ouch
+accept	41.6:3.22	41.6:3.20	renders	ne = ouk
+accept	41.6:3.3	41.6:3.2	renders	Vin = houtos
+accept	41.6:3.17	41.6:3.19	renders	A = kai
+accept	41.6:3.23	41.6:3.26	renders	mizh = pros
+accept	41.6:4.1	41.6:4.1	renders	A = kai
+accept	41.6:4.6	41.6:4.7,41.6:4.8	renders	nema = ouk estin
+accept	41.6:4.9,41.6:4.10	41.6:4.11,41.6:4.12	renders	khiba tilky = ei me
+accept	41.6:4.15	41.6:4.18	renders	v = en
+accept	41.6:4.16	41.6:4.20	renders	rodyni = syngeneusin
+accept	41.6:4.21	41.6:4.26	renders	svoim = autou
+accept	41.6:5.8	41.6:5.6	renders	zhadnoho = oudemian
+accept	41.6:5.9	41.6:5.8,41.6:5.9	renders	tilky = ei me
+accept	41.6:5.10	41.6:5.10	renders	deiakykh = oligois
+accept	41.6:7.6	41.6:7.10	renders	po dvokh = dyo dyo
+accept	41.6:8.8	41.6:8.6	renders	braty = airosin
+accept	41.6:8.9	41.6:8.10	renders	krim = ei me
+accept	41.6:8.13	41.6:8.15	renders	ni = me before peran
+accept	41.6:8.15	41.6:8.13	renders	ni = me before arton
+accept	41.6:8.17	41.6:8.17	renders	ani = me
+accept	41.6:9.2	41.6:9.2	renders	khodyty v sandaliakh = hypodedemenous
+accept	41.6:9.9	41.6:9.6	renders	nosyty = endysesthe
+accept	41.6:10.3	41.6:10.3	renders	do nykh = autois
+accept	41.6:10.7	41.6:10.4	renders	de = hopou
+accept	41.6:10.5	41.6:10.5	renders	koly = ean
+accept	41.6:10.17	41.6:10.14	renders	zvidty = ekeithen
+accept	41.6:11.3	41.6:11.4	renders	misto = topos
+accept	41.6:11.4	41.6:11.2	renders	yake = hos
+accept	41.6:11.24	41.6:11.23	renders	suprotiv nykh = autois dative
+accept	41.6:13.7	41.6:13.9	renders	khvorykh = arrostous
+accept	41.6:13.9	41.6:13.6	renders	namashchuvaly = eleiphon
+accept	41.6:14.10	41.6:14.8	renders	stalo = egeneto
+accept	41.6:14.12	41.6:14.6	renders	zahalno vidome = phaneron
+accept	41.6:14.23	41.6:14.22,41.6:14.23	renders	tomu = dia touto
+accept	41.6:14.24	41.6:14.24	renders	tvoriatsia = energousin
+accept	41.6:14.25	41.6:14.26	renders	chuda = dynameis
+accept	41.6:15.5	41.6:15.6	renders	Vin = estin
+accept	41.6:15.6	41.6:15.8	renders	a = de
+accept	41.6:17.1	41.6:17.1	renders	Toi = autos
+accept	41.6:17.17	41.6:17.21	renders	svoho = autou
+refuse	41.6:18.10	41.6:18.13		za druzhynu is added; zhinku renders gynaika
+accept	41.6:19.1	41.6:19.2	renders	A = de
+accept	41.6:19.9,41.6:19.10	41.6:19.9	renders	smert zapodiaty = apokteinai
+accept	41.6:20.19	41.6:20.19	renders	duzhe = polla
+accept	41.6:20.20	41.6:20.20	renders	bentezhyvsia = eporei
+accept	41.6:20.21	41.6:20.21	renders	ale = kai
+accept	41.6:21.6,41.6:21.7	41.6:21.8	renders	den narodzhennia = genesiois
+accept	41.6:21.9	41.6:21.11	renders	spravliav = epoiesen
+accept	41.6:21.11	41.6:21.10	renders	benketa = deipnon
+accept	41.6:21.18	41.6:21.20	renders	starshyni = protois
+accept	41.6:22.3	41.6:22.2	renders	pryishla = eiselthouses
+accept	41.6:22.5	41.6:22.5	renders	tiiei = autes
+accept	41.6:22.13	41.6:22.15	renders	prysutnim = synanakeimenois
+accept	41.6:22.18	41.6:22.17	renders	todi = de
+accept	41.6:22.26	41.6:22.24	renders	choho = ho
+accept	41.6:23.5	41.6:23.4	renders	choho = ho ti
+accept	41.6:23.6	41.6:23.5	renders	tilky = ean
+accept	41.6:23.17	41.6:23.13	renders	pivtsarstva includes basileias
+accept	41.6:23.18	41.6:23.14	renders	moho = mou
+accept	41.6:24.8	41.6:24.7	renders	choho = ti
+accept	41.6:24.11	41.6:24.10	renders	A = de
+accept	41.6:24.12	41.6:24.9	renders	ta = he pronoun
+accept	41.6:24.16	41.6:24.16	renders	Khrystytelia = Baptizontos
+accept	41.6:25.3	41.6:25.4,41.6:25.5	renders	kvaplyvo = meta spoudes
+accept	41.6:25.4	41.6:25.2	renders	vernulas = eiselthousa
+accept	41.6:25.16	41.6:25.13	renders	nehaino = exautes
+accept	41.6:25.11	41.6:25.11	renders	Ya = thelo
+accept	41.6:26.2	41.6:26.2,41.6:26.3	renders	zasmutyvsia = perilypos genomenos
+accept	41.6:26.9	41.6:26.10	renders	tykh = tous
+accept	41.6:26.13,41.6:26.15	41.6:26.11	renders	buly pry stoli = anakeimenous
+refuse	41.6:27.8	41.6:27.6		prynesty is enenkai not executioner
+accept	41.6:27.8	41.6:27.8	renders	prynesty = enenkai
+accept	41.6:27.5	41.6:27.6	renders	voiaka = spekoulatora
+accept	41.6:27.9	41.6:27.11	renders	Ivanovu = autou
+accept	41.6:28.2	41.6:28.2	renders	pishov = apelthon
+accept	41.6:28.5	41.6:28.3	renders	stiav = apekephalisen
+accept	41.6:28.8	41.6:28.4	renders	Ivana = auton
+accept	41.6:28.18	41.6:28.20	renders	a = kai
+accept	41.6:28.19	41.6:28.22	renders	divcha = korasion
+accept	41.6:28.21	41.6:28.24	renders	yii = auten
+accept	41.6:28.22	41.6:28.27	renders	svoii = autes
+accept	41.6:29.5	41.6:29.2	renders	zachuly = akousantes
+accept	41.6:29.13	41.6:29.15	renders	do = en
+accept	41.6:29.14	41.6:29.16	renders	hrobu = mnemeio
+accept	41.6:30.2	41.6:30.2	renders	poskhodylysia = synagontai
+accept	41.6:30.10,41.6:30.11	41.6:30.12	renders	yak bahato = hosa
+accept	41.6:30.15,41.6:30.16	41.6:30.15	renders	yak bahato = hosa
+accept	41.6:31.6	41.6:31.4	renders	Idit = deute
+accept	41.6:31.7	41.6:31.8	renders	osibno = kat idian
+accept	41.6:31.13	41.6:31.14	renders	trokhy = oligon
+accept	41.6:31.22	41.6:31.24	renders	navit ne = oude
+accept	41.6:31.24,41.6:31.25	41.6:31.26	renders	ne maly koly = eukairoun
+accept	41.6:31.27	41.6:31.25	renders	pozhyvytys = phagein
+refuse	41.6:32.5	41.6:32.5		okremo is kat idian not ploio
+accept	41.6:32.5	41.6:32.9,41.6:32.10	renders	okremo = kat idian
+accept	41.6:33.5	41.6:33.4	renders	plynuly = hypagontas
+accept	41.6:33.12	41.6:33.14	renders	pobihly = synedramon
+accept	41.6:33.19	41.6:33.18	renders	ikh = autous
+accept	41.6:33.20	41.6:33.17	renders	vyperedyly = proelthon
+refuse	41.6:35.8	41.6:35.7		Yoho is autou possessive
+refuse	41.6:35.11	41.6:35.10		Nyoho is auto
+refuse	41.6:35.15	41.6:35.14		tse is not the copula
+accept	41.6:35.8	41.6:35.10	renders	Yoho = autou
+accept	41.6:35.11	41.6:35.7	renders	do Nyoho = auto
+accept	41.6:35.10	41.6:35.7	renders	do = dative auto
+accept	41.6:35.3	41.6:35.5	renders	mynulo = genomenes
+accept	41.6:35.4	41.6:35.2	renders	vzhe = ede
+accept	41.6:35.5	41.6:35.3	renders	chasu = horas
+accept	41.6:35.6	41.6:35.4	renders	dovoli = polles
+accept	41.6:35.20	41.6:35.18	renders	vzhe = ede
+accept	41.6:35.21	41.6:35.20	renders	pizna = polle
+refuse	41.6:36.6	41.6:36.7		osady is agrous; kyklo is blyzki
+accept	41.6:36.6	41.6:36.8	renders	osady = agrous
+accept	41.6:36.9	41.6:36.7	renders	blyzki = kyklo
+accept	41.6:36.3	41.6:36.3	renders	nekhai = hina
+accept	41.6:36.13	41.6:36.13	renders	choho = ti
+accept	41.6:37.1	41.6:37.2	renders	A = de
+accept	41.6:37.13	41.6:37.11	renders	vidkazaly = legousin
+accept	41.6:38.1	41.6:38.2	renders	A = de
+accept	41.6:38.4	41.6:38.3	renders	zapytav = legei
+accept	41.6:39.6	41.6:39.10	renders	zelenii = chloro
+accept	41.6:39.8	41.6:39.4	renders	posadyty = anaklithenai
+refuse	41.6:40.2	41.6:40.3		rozsilys is anepesan
+accept	41.6:40.2	41.6:40.2	renders	rozsilys = anepesan
+accept	41.6:40.3	41.6:40.3,41.6:40.4	renders	riadamy = prasiai prasiai
+accept	41.6:40.8	41.6:40.8	renders	po = kata
+accept	41.6:41.3	41.6:41.2	renders	uziav = labon
+accept	41.6:41.21	41.6:41.24	renders	klaly pered = paratithosin
+refuse	41.6:43.2	41.6:43.3		z has no counterpart
+refuse	41.6:43.4	41.6:43.3		pozostalykh not in klasmata
+accept	41.6:43.8	41.6:43.2	renders	nazbyraly = eran
+accept	41.6:44.6	41.6:44.2	renders	bulo = esan
+accept	41.6:45.3	41.6:45.3	renders	zveliv = enankasen
+accept	41.6:45.8	41.6:45.7	renders	sidaty = embenai
+accept	41.6:45.16	41.6:45.12	renders	ranishe = proagein
+accept	41.6:45.19,41.6:45.20	41.6:45.19	renders	Sam Vin = autos
+accept	41.6:46.4	41.6:46.2	renders	vidpustyv = apotaxamenos
+accept	41.6:47.6	41.6:47.4	renders	buv = en
+accept	41.6:47.7	41.6:47.8	renders	sered = en meso
+accept	41.6:47.12	41.6:47.13	renders	odyn = monos
+refuse	41.6:48.7	41.6:48.4		veslu is elaunein
+refuse	41.6:48.8	41.6:48.7		morduiutsia is basanizomenous
+accept	41.6:48.7	41.6:48.7	renders	veslu = elaunein
+accept	41.6:48.8	41.6:48.4	renders	morduiutsia = basanizomenous
+accept	41.6:48.6	41.6:48.3	renders	vony = autous
+accept	41.6:48.12	41.6:48.8	renders	buv = en
+accept	41.6:48.18	41.6:48.19	renders	pidiishov = erchetai
+accept	41.6:48.24	41.6:48.22	renders	iduchy = peripaton
+accept	41.6:49.2	41.6:49.1	renders	vony = hoi pronoun
+accept	41.6:49.6	41.6:49.8	renders	ide = peripatounta
+accept	41.6:49.7	41.6:49.4	renders	Vin = auton
+accept	41.6:49.10	41.6:49.9	renders	podumaly = edoxan
+accept	41.6:49.11	41.6:49.10	renders	shcho = hoti
+accept	41.6:50.7	41.6:50.8	renders	A = de
+refuse	41.6:51.10	41.6:51.15		zatykh is ekopasen
+accept	41.6:51.10	41.6:51.9	renders	zatykh = ekopasen
+accept	41.6:51.2	41.6:51.2	renders	vviishov = anebe
+accept	41.6:53.1	41.6:53.2	renders	pereplyvshy = diaperasantes
+accept	41.6:54.3	41.6:54.3	renders	vony = auton
+accept	41.6:55.8	41.6:55.7	renders	staly = erxanto
+accept	41.6:55.12	41.6:55.14	renders	prynosyty = peripherein
+accept	41.6:55.11	41.6:55.13	renders	nedushykh = kakos echontas
+refuse	41.6:56.31	41.6:56.33		do is not hepsanto
+refuse	41.6:56.33	41.6:56.35		dotorkuvavsia is hepsanto
+accept	41.6:56.33	41.6:56.33	renders	dotorkuvavsia = hepsanto
+accept	41.6:56.35,41.6:56.36	41.6:56.35	renders	buv uzdorovlenyi = esozonto
+accept	41.6:56.3	41.6:56.3	renders	tilky = an
+accept	41.6:56.5	41.6:56.4	renders	prybuvav = eiseporeueto
+accept	41.6:56.12	41.6:56.11	renders	do = eis
+accept	41.6:56.13	41.6:56.12	renders	osel = agrous
+accept	41.6:56.24	41.6:56.23	renders	khoch = kan
+accept	41.6:56.25	41.6:56.25	renders	kraiu = kraspedou
+accept	41.6:56.29	41.6:56.31	renders	khto = hosoi
+accept	41.6:56.30	41.6:56.32	renders	tilky = an

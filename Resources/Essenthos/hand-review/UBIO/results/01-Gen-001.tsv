@@ -1,0 +1,162 @@
+kind	from	to	relation	reason
+ok	1.1:1			
+fixed	1.1:2			added tohu, bohu, pene
+fixed	1.1:3			added stanetsia
+fixed	1.1:4			added viddilyv
+fixed	1.1:5			added buv x2
+fixed	1.1:6			added verbs and prepositions
+fixed	1.1:7			added verbs
+fixed	1.1:8			added buv x2
+fixed	1.1:9			added jussive parts, mi
+fixed	1.1:10			added mistse, More
+fixed	1.1:11			rozsivaje and za corrected; added links
+fixed	1.1:12			za corrected; added links
+fixed	1.1:13			added buv x2
+fixed	1.1:14			added links
+fixed	1.1:15			added links
+fixed	1.1:16			added links
+fixed	1.1:17			added jikh, na
+fixed	1.1:18			added links
+fixed	1.1:19			added buv x2
+fixed	1.1:20			added links
+fixed	1.1:21			vyrojila and za corrected; added links
+fixed	1.1:22			added jikh, nekhai
+fixed	1.1:23			added buv x2
+fixed	1.1:24			first jiji corrected; added links
+fixed	1.1:25			first jiji corrected; added links
+fixed	1.1:26			added prepositions and khai
+fixed	1.1:27			added na, pronouns, cholovika
+fixed	1.1:28			added pronouns, verb, prepositions
+fixed	1.1:29			added links
+fixed	1.1:30			added links
+fixed	1.1:31			added buv x2
+accept	1.1:2.4	1.1:2.5	renders	pusta = tohu
+accept	1.1:2.6	1.1:2.7	renders	porozhnia = bohu
+accept	1.1:2.17	1.1:2.18	renders	poverkhneju = pene
+accept	1.1:3.5	1.1:3.4	renders	Khai stanetsia = yehi
+accept	1.1:4.10	1.1:4.10	renders	viddilyv = yavdel
+accept	1.1:5.11	1.1:5.15	renders	buv = wayehi
+accept	1.1:5.14	1.1:5.18	renders	buv = wayehi
+accept	1.1:6.5	1.1:6.4	renders	Nekhai stanetsia = yehi
+accept	1.1:6.7	1.1:6.6,1.1:6.7	renders	posered = betokh
+accept	1.1:6.11	1.1:6.12	renders	viddiliaje = mavdil
+accept	1.1:6.13	1.1:6.13	renders	mizh = ben
+accept	1.1:6.15	1.1:6.15	renders	j = le (between ... and)
+accept	1.1:7.4	1.1:7.2	renders	uchynyv = yaas
+accept	1.1:7.6	1.1:7.8	renders	viddilyv = yavdel
+accept	1.1:8.7	1.1:8.9	renders	buv = wayehi
+accept	1.1:8.10	1.1:8.12	renders	buv = wayehi
+accept	1.1:9.4	1.1:9.4	renders	Nekhai zberetsia = yiqqawu
+accept	1.1:9.7	1.1:9.7	renders	z-popid = mi-tahat
+accept	1.1:9.13,1.1:9.15	1.1:9.15	renders	nekhai stane vydnyj = teraeh
+accept	1.1:10.7	1.1:10.10	renders	mistse zibrannia = miqweh
+accept	1.1:10.11	1.1:10.14	renders	More = yammim
+refuse	1.1:11.12	1.1:11.13		rozsivaje renders mazria not oseh
+accept	1.1:11.12	1.1:11.9	renders	rozsivaje = mazria
+refuse	1.1:11.16	1.1:11.16		za renders le not mino
+accept	1.1:11.16	1.1:11.15	renders	za = le
+accept	1.1:11.6	1.1:11.4	renders	vrodyt = tadshe
+accept	1.1:11.7	1.1:11.7	renders	travu = deshe
+accept	1.1:11.20	1.1:11.13	renders	prynosyt = oseh
+accept	1.1:11.22,1.1:11.23	1.1:11.19	renders	v nomu = bo
+refuse	1.1:12.9	1.1:12.10		za renders le not minehu
+accept	1.1:12.9	1.1:12.9	renders	za = le
+refuse	1.1:12.22	1.1:12.19		za renders le not minehu
+accept	1.1:12.22	1.1:12.18	renders	za = le
+accept	1.1:12.3	1.1:12.5	renders	travu = deshe
+accept	1.1:12.4	1.1:12.2	renders	vydala = totse
+accept	1.1:12.5	1.1:12.6	renders	jarynu = esev
+accept	1.1:12.10,1.1:12.11	1.1:12.10	renders	rodom jiji = minehu
+accept	1.1:12.15	1.1:12.13	renders	prynosyt = oseh
+accept	1.1:12.20,1.1:12.21	1.1:12.17	renders	v nim = bo
+accept	1.1:13.2	1.1:13.2	renders	buv = wayehi
+accept	1.1:13.5	1.1:13.5	renders	buv = wayehi
+accept	1.1:14.5	1.1:14.4	renders	budut = yehi
+accept	1.1:14.6	1.1:14.5	renders	svityla = meorot
+accept	1.1:14.11	1.1:14.11	renders	viddilennia = havdil
+accept	1.1:14.16,1.1:14.17	1.1:14.20	renders	nekhai vony = wehayu
+accept	1.1:15.2,1.1:15.3	1.1:15.2	renders	nekhai vony = hayu
+accept	1.1:15.10	1.1:15.10	renders	svityty = haïr
+accept	1.1:16.5	1.1:16.7	renders	svityla = meorot
+accept	1.1:16.7	1.1:16.12	renders	svytylo = maor
+accept	1.1:16.8	1.1:16.14	renders	velyke = gadol
+accept	1.1:16.11	1.1:16.16	renders	keruvalo = memshelet
+accept	1.1:16.14	1.1:16.22	renders	svytylo = maor
+accept	1.1:16.15	1.1:16.24	renders	male = qaton
+accept	1.1:16.18	1.1:16.28	renders	nichchju = laylah
+accept	1.1:16.19	1.1:16.29	renders	takozh = we
+accept	1.1:17.4	1.1:17.3	renders	jikh = otam
+accept	1.1:17.5	1.1:17.5	renders	na = be
+accept	1.1:18.6	1.1:18.10	renders	nichchju = laylah
+accept	1.1:18.9	1.1:18.13	renders	viddiliuvaly = havdil
+accept	1.1:19.2	1.1:19.2	renders	buv = wayehi
+accept	1.1:19.5	1.1:19.5	renders	buv = wayehi
+accept	1.1:20.4	1.1:20.4	renders	Nekhai vyrojit = yishretsu
+accept	1.1:20.7,1.1:20.8	1.1:20.7	renders	dribni istoty = sherets
+accept	1.1:20.9	1.1:20.8	renders	dushu = nefesh
+accept	1.1:20.10	1.1:20.9	renders	zhyvu = hayyah
+refuse	1.1:21.14	1.1:21.22		vyrojila renders sharetsu not minehem
+accept	1.1:21.14	1.1:21.18	renders	vyrojila = sharetsu
+refuse	1.1:21.22	1.1:21.29		za renders le not minehu
+accept	1.1:21.22	1.1:21.28	renders	za = le
+accept	1.1:21.10	1.1:21.16	renders	plazujuchu = romeset
+accept	1.1:21.15	1.1:21.21	renders	za = le
+accept	1.1:21.16,1.1:21.17	1.1:21.22	renders	jikh rodom = minehem
+accept	1.1:21.24	1.1:21.29	renders	jiji = minehu suffix
+accept	1.1:22.3	1.1:22.3	renders	jikh = otam
+accept	1.1:22.16	1.1:22.21	renders	nekhai rozmnozhujetsia = yirev
+accept	1.1:23.2	1.1:23.2	renders	buv = wayehi
+accept	1.1:23.5	1.1:23.5	renders	buv = wayehi
+refuse	1.1:24.11	1.1:24.18		first jiji belongs to first minah
+accept	1.1:24.11	1.1:24.10	renders	jiji = minah suffix
+accept	1.1:24.4,1.1:24.5	1.1:24.4	renders	Nekhai vydast = totse
+accept	1.1:24.9	1.1:24.9	renders	za = le
+accept	1.1:24.18	1.1:24.17	renders	za = le
+refuse	1.1:25.8	1.1:25.15		first jiji belongs to first minah
+accept	1.1:25.8	1.1:25.9	renders	jiji = minah suffix
+refuse	1.1:25.18	1.1:25.23		za renders le not minehu
+accept	1.1:25.18	1.1:25.22	renders	za = le
+accept	1.1:25.6	1.1:25.8	renders	za = le
+accept	1.1:25.11	1.1:25.14	renders	za = le
+accept	1.1:25.12	1.1:25.15	renders	rodom = minah
+accept	1.1:25.16	1.1:25.21	renders	zemne = adamah
+accept	1.1:25.17	1.1:25.19	renders	plazujuche = remes
+accept	1.1:25.22	1.1:25.25	renders	bachyv = yar
+accept	1.1:26.9	1.1:26.8	renders	za = ki
+accept	1.1:26.13	1.1:26.11	renders	khai panujut = yirdu
+accept	1.1:26.15	1.1:26.12	renders	nad = bi
+accept	1.1:26.19	1.1:26.17	renders	nad = be
+accept	1.1:26.23	1.1:26.22	renders	nad = ba
+accept	1.1:26.26	1.1:26.26	renders	nad = be
+accept	1.1:26.30	1.1:26.31	renders	nad = be
+accept	1.1:26.35	1.1:26.37	renders	po = al
+accept	1.1:27.3	1.1:27.7	renders	na = be
+accept	1.1:27.8	1.1:27.9	renders	na = be
+accept	1.1:27.11	1.1:27.13	renders	jiji = oto
+accept	1.1:27.12	1.1:27.12	renders	Vin = subject of bara
+accept	1.1:27.15	1.1:27.14	renders	cholovika = zakhar
+accept	1.1:27.19	1.1:27.18	renders	jikh = otam
+accept	1.1:28.3	1.1:28.3	renders	jikh = otam
+accept	1.1:28.8,1.1:28.9	1.1:28.7	renders	do nykh = lahem
+accept	1.1:28.17	1.1:28.18	renders	neju = suffix of kivshuha
+accept	1.1:28.18	1.1:28.19	renders	i = u
+accept	1.1:28.19	1.1:28.20	renders	panujte = redu
+accept	1.1:28.20	1.1:28.21	renders	nad = bi
+accept	1.1:28.24	1.1:28.26	renders	nad = be
+accept	1.1:28.28	1.1:28.31	renders	nad = be
+accept	1.1:28.30	1.1:28.35	renders	plazujuchym = romeset
+accept	1.1:29.4	1.1:29.4	renders	Otse = hinneh
+accept	1.1:29.7	1.1:29.6	renders	vam = lakhem
+accept	1.1:29.11	1.1:29.10	renders	rozsivaje = zorea
+accept	1.1:29.21,1.1:29.22	1.1:29.24	renders	na nomu = bo
+accept	1.1:29.29	1.1:29.30	renders	nekhai bude = yihyeh
+accept	1.1:29.31	1.1:29.31	renders	na = le
+accept	1.1:29.34	1.1:29.29	renders	vam = lakhem
+accept	1.1:30.13	1.1:30.17	renders	po = al
+accept	1.1:30.15	1.1:30.20	renders	shcho = asher
+accept	1.1:30.16	1.1:30.22	renders	dusha = nefesh
+accept	1.1:30.17,1.1:30.18	1.1:30.21	renders	v nomu = bo
+accept	1.1:30.19	1.1:30.23	renders	zhyva = hayyah
+accept	1.1:30.23	1.1:30.28	renders	na = le
+accept	1.1:31.13	1.1:31.13	renders	buv = wayehi
+accept	1.1:31.16	1.1:31.16	renders	buv = wayehi

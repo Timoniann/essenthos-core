@@ -1,0 +1,276 @@
+kind	from	to	relation	reason
+fixed	41.14:1			added missing
+accept	41.14:1.21	41.14:1.23	renders	kill
+accept	41.14:1.3	41.14:1.2	renders	zh renders de
+fixed	41.14:2			added missing
+accept	41.14:2.7	41.14:2.7	renders	lest
+accept	41.14:2.8	41.14:2.8	renders	lest perhaps
+accept	41.14:2.9	41.14:2.10	renders	uproar
+accept	41.14:2.13	41.14:2.9	renders	will be
+fixed	41.14:3			added missing
+accept	41.14:3.4	41.14:3.2	renders	being
+accept	41.14:3.10,41.14:3.12	41.14:3.11	renders	leper
+accept	41.14:3.14,41.14:3.15,41.14:3.16	41.14:3.12	renders	reclining at table
+accept	41.14:3.20,41.14:3.21	41.14:3.17	renders	alabaster flask
+accept	41.14:3.23	41.14:3.20	renders	pure
+accept	41.14:3.24	41.14:3.19	renders	nard
+accept	41.14:3.32	41.14:3.24	renders	flask
+accept	41.14:3.34	41.14:3.25	renders	poured
+fixed	41.14:4			added missing
+accept	41.14:4.4	41.14:4.5	renders	among
+accept	41.14:4.8	41.14:4.7	renders	to what
+accept	41.14:4.9	41.14:4.11	renders	this
+fixed	41.14:5			added missing
+accept	41.14:5.2,41.14:5.3,41.14:5.4	41.14:5.1	renders	could
+accept	41.14:5.8,41.14:5.9	41.14:5.7	renders	above
+accept	41.14:5.18	41.14:5.15	renders	grumbled
+fixed	41.14:6			added missing
+accept	41.14:6.2	41.14:6.2	renders	de
+accept	41.14:6.9	41.14:6.10	renders	cause
+accept	41.14:6.13	41.14:6.13	renders	did
+fixed	41.14:7			added missing
+accept	41.14:7.10	41.14:7.10	renders	desire
+fixed	41.14:8			added missing
+accept	41.14:8.8	41.14:8.8	renders	my
+accept	41.14:8.10	41.14:8.9	renders	for
+fixed	41.14:9			added missing
+accept	41.14:9.5	41.14:9.6	renders	-ever
+accept	41.14:9.9	41.14:9.7	renders	shall be
+accept	41.14:9.13	41.14:9.19	renders	for
+accept	41.14:9.16	41.14:9.18	renders	will be
+fixed	41.14:10			pronoun swap
+refuse	41.14:10.11	41.14:10.13		im is them not him
+refuse	41.14:10.12	41.14:10.15		Yoho is him not them
+accept	41.14:10.11	41.14:10.15	renders	to them
+accept	41.14:10.12	41.14:10.13	renders	him
+accept	41.14:10.2	41.14:10.1	renders	zh renders kai
+fixed	41.14:11			added missing
+accept	41.14:11.15	41.14:11.11	renders	began seeking
+accept	41.14:11.19,41.14:11.20	41.14:11.14	renders	conveniently
+fixed	41.14:12			wrong hina link
+refuse	41.14:12.16	41.14:12.20		shchob is the subjunctive after theleis; hina is the Tobi spozhyty clause
+accept	41.14:12.8,41.14:12.9	41.14:12.10	renders	sacrifice
+accept	41.14:12.14	41.14:12.16	renders	where
+accept	41.14:12.17	41.14:12.18	renders	having gone
+fixed	41.14:13			added missing
+accept	41.14:13.25	41.14:13.21	renders	follow
+fixed	41.14:14			added missing
+accept	41.14:14.14	41.14:14.16	renders	my
+accept	41.14:14.15,41.14:14.16	41.14:14.17	renders	where
+accept	41.14:14.20	41.14:14.23	renders	my
+ok	41.14:15			
+fixed	41.14:16			added missing
+accept	41.14:16.18	41.14:16.16	renders	prepared
+ok	41.14:17			
+fixed	41.14:18			me/emou swapped
+refuse	41.14:18.21	41.14:18.17		Mnoyu is with-me emou
+refuse	41.14:18.23	41.14:18.21		Mene is object me
+accept	41.14:18.21	41.14:18.21	renders	with me
+accept	41.14:18.23	41.14:18.17	renders	me
+accept	41.14:18.3,41.14:18.5,41.14:18.6	41.14:18.2	renders	reclining
+accept	41.14:18.4	41.14:18.3	renders	they
+accept	41.14:18.14	41.14:18.12	renders	that
+accept	41.14:18.16	41.14:18.14	renders	of
+accept	41.14:18.18	41.14:18.18	renders	who
+fixed	41.14:19			added missing
+accept	41.14:19.8	41.14:19.4	renders	say
+accept	41.14:19.10,41.14:19.11	41.14:19.9	renders	surely not
+fixed	41.14:20			added missing
+accept	41.14:20.8	41.14:20.8	renders	who
+accept	41.14:20.12	41.14:20.10	renders	with
+fixed	41.14:21			dative recipient
+refuse	41.14:21.22	41.14:21.30		cholovikovi is the dative auto; anthropos is the subject of born
+accept	41.14:21.4	41.14:21.7	renders	goes
+accept	41.14:21.9	41.14:21.13	renders	but
+accept	41.14:21.11	41.14:21.16	renders	that
+accept	41.14:21.12	41.14:21.15	renders	man
+accept	41.14:21.20	41.14:21.24	renders	better
+accept	41.14:21.21,41.14:21.22	41.14:21.25	renders	to him
+accept	41.14:21.25	41.14:21.30,41.14:21.31	renders	that man
+fixed	41.14:22			added missing
+accept	41.14:22.2	41.14:22.3	renders	of them
+accept	41.14:22.3	41.14:22.1	renders	zh renders kai
+fixed	41.14:23			added missing
+accept	41.14:23.6	41.14:23.4	renders	gave thanks
+fixed	41.14:24			added missing
+accept	41.14:24.10	41.14:24.11	renders	which
+fixed	41.14:25			added missing
+accept	41.14:25.4	41.14:25.4	renders	that
+accept	41.14:25.5	41.14:25.5	renders	no more
+accept	41.14:25.15	41.14:25.18	renders	when
+accept	41.14:25.17	41.14:25.20	renders	drink
+fixed	41.14:26			added missing
+accept	41.14:26.8	41.14:26.3	renders	went out
+fixed	41.14:27			added missing
+accept	41.14:27.10	41.14:27.9	renders	for
+fixed	41.14:28			added missing
+accept	41.14:28.2	41.14:28.4	renders	rising
+accept	41.14:28.3	41.14:28.1	renders	but
+accept	41.14:28.4	41.14:28.5	renders	me as subject
+fixed	41.14:29			added missing
+accept	41.14:29.1	41.14:29.2	renders	de
+fixed	41.14:30			rooster/crow swapped
+refuse	41.14:30.15	41.14:30.18		zaspivaie is crows
+refuse	41.14:30.16	41.14:30.19		piven is rooster
+accept	41.14:30.15	41.14:30.19	renders	crows
+accept	41.14:30.16	41.14:30.18	renders	rooster
+accept	41.14:30.13	41.14:30.15	renders	before
+accept	41.14:30.14	41.14:30.16	renders	than
+accept	41.14:30.2	41.14:30.1	renders	zhe renders kai
+fixed	41.14:31			added missing
+accept	41.14:31.3	41.14:31.3	renders	more
+accept	41.14:31.10,41.14:31.11	41.14:31.8	renders	die with
+accept	41.14:31.17,41.14:31.19	41.14:31.14	renders	likewise
+accept	41.14:31.18	41.14:31.15	renders	de
+ok	41.14:32			
+fixed	41.14:33			added missing
+accept	41.14:33.4	41.14:33.12	renders	himself
+fixed	41.14:34			sumom not estin
+refuse	41.14:34.7	41.14:34.5		sumom is part of perilypos
+accept	41.14:34.7	41.14:34.4	renders	very sorrowful
+accept	41.14:34.11	41.14:34.11	renders	remain
+fixed	41.14:35			added missing
+accept	41.14:35.3	41.14:35.2	renders	gone forward
+accept	41.14:35.11	41.14:35.9	renders	praying
+accept	41.14:35.13	41.14:35.11	renders	if
+accept	41.14:35.15	41.14:35.14	renders	pass
+fixed	41.14:36			added missing
+accept	41.14:36.2	41.14:36.2	renders	was saying
+accept	41.14:36.4	41.14:36.5	renders	Father
+accept	41.14:36.5	41.14:36.8	renders	to you
+accept	41.14:36.14	41.14:36.15	renders	but
+accept	41.14:36.16	41.14:36.17	renders	what
+accept	41.14:36.20	41.14:36.21	renders	what
+fixed	41.14:37			added missing
+accept	41.14:37.2	41.14:37.2	renders	comes
+accept	41.14:37.7	41.14:37.6	renders	sleeping
+fixed	41.14:38			added missing
+accept	41.14:38.9	41.14:38.12	renders	willing
+fixed	41.14:39			added missing
+accept	41.14:39.6	41.14:39.6	renders	same
+accept	41.14:39.8	41.14:39.8	renders	having said
+fixed	41.14:40			added missing
+accept	41.14:40.7	41.14:40.6	renders	sleeping
+accept	41.14:40.9	41.14:40.12	renders	heavy
+accept	41.14:40.12	41.14:40.7	renders	were
+fixed	41.14:41			added missing
+accept	41.14:41.2	41.14:41.2	renders	comes
+accept	41.14:41.11,41.14:41.12	41.14:41.10	renders	still
+accept	41.14:41.17	41.14:41.14	renders	came
+fixed	41.14:42			added missing
+accept	41.14:42.1	41.14:42.1	renders	rise
+fixed	41.14:43			added missing
+accept	41.14:43.4	41.14:43.4	renders	him
+accept	41.14:43.15	41.14:43.15	renders	crowd
+fixed	41.14:44			veditj not asphalos
+refuse	41.14:44.18	41.14:44.18		veditj is lead away
+accept	41.14:44.18	41.14:44.17	renders	lead away
+accept	41.14:44.17	41.14:44.18	renders	securely
+accept	41.14:44.5	41.14:44.1	renders	pluperfect had given
+accept	41.14:44.13	41.14:44.12	renders	he
+fixed	41.14:45			added missing
+accept	41.14:45.2	41.14:45.2	renders	having come
+accept	41.14:45.3	41.14:45.4	renders	came up
+fixed	41.14:46			added missing
+accept	41.14:46.2	41.14:46.2	renders	de
+fixed	41.14:47			added missing
+accept	41.14:47.4	41.14:47.4	renders	of those
+accept	41.14:47.7	41.14:47.5	renders	standing by
+accept	41.14:47.9	41.14:47.6	renders	drawn
+fixed	41.14:48			added missing
+accept	41.14:48.5	41.14:48.2	renders	answering
+fixed	41.14:49			added missing
+accept	41.14:49.2	41.14:49.1	renders	every
+fixed	41.14:50			added missing
+accept	41.14:50.3	41.14:50.2	renders	left
+fixed	41.14:51			added missing
+accept	41.14:51.2	41.14:51.1	renders	zhe renders kai
+accept	41.14:51.4	41.14:51.8	renders	about
+accept	41.14:51.6	41.14:51.6	renders	cast about
+accept	41.14:51.8	41.14:51.7	renders	linen cloth
+accept	41.14:51.9,41.14:51.10,41.14:51.11	41.14:51.4	renders	following
+accept	41.14:51.12	41.14:51.5	renders	him
+accept	41.14:51.15	41.14:51.12	renders	him
+fixed	41.14:52			added missing
+accept	41.14:52.3	41.14:52.5	renders	linen cloth
+accept	41.14:52.4	41.14:52.3	renders	left behind
+ok	41.14:53			
+fixed	41.14:54			added missing
+accept	41.14:54.4,41.14:54.6	41.14:54.6	renders	followed
+accept	41.14:54.3	41.14:54.4	renders	from
+accept	41.14:54.8	41.14:54.8	renders	as far as
+accept	41.14:54.9	41.14:54.9	renders	within
+accept	41.14:54.16	41.14:54.20	renders	officers
+accept	41.14:54.20	41.14:54.25	renders	fire
+fixed	41.14:55			added missing
+accept	41.14:55.10	41.14:55.13	renders	eis to
+fixed	41.14:56			added missing
+accept	41.14:56.3	41.14:56.3	renders	bore false witness
+accept	41.14:56.9	41.14:56.11	renders	were
+ok	41.14:57			
+fixed	41.14:58			added missing
+accept	41.14:58.4	41.14:58.4	renders	him
+accept	41.14:58.5	41.14:58.5	renders	saying
+fixed	41.14:59			added missing
+accept	41.14:59.2,41.14:59.4	41.14:59.2	renders	not even
+accept	41.14:59.5	41.14:59.5	renders	was
+accept	41.14:59.8	41.14:59.4	renders	alike
+fixed	41.14:60			added missing
+accept	41.14:60.3	41.14:60.5	renders	in
+accept	41.14:60.17	41.14:60.15	renders	these
+accept	41.14:60.18	41.14:60.17	renders	testify against
+fixed	41.14:61			added missing
+accept	41.14:61.17	41.14:61.16	renders	you
+ok	41.14:62			
+fixed	41.14:63			added missing
+accept	41.14:63.9	41.14:63.9	renders	what
+accept	41.14:63.11	41.14:63.12	renders	we have
+accept	41.14:63.14	41.14:63.11,41.14:63.12	renders	need have
+fixed	41.14:64			added missing
+accept	41.14:64.5	41.14:64.4	renders	what
+accept	41.14:64.9	41.14:64.8	renders	de
+accept	41.14:64.11	41.14:64.10	renders	condemned
+accept	41.14:64.13	41.14:64.11	renders	him
+accept	41.14:64.14	41.14:64.14	renders	death
+accept	41.14:64.15	41.14:64.12	renders	deserving
+fixed	41.14:65			added missing
+accept	41.14:65.3	41.14:65.2	renders	began
+accept	41.14:65.19	41.14:65.18	renders	and also
+fixed	41.14:66			added missing
+accept	41.14:66.4	41.14:66.2	renders	being
+accept	41.14:66.6	41.14:66.8	renders	courtyard
+accept	41.14:66.7	41.14:66.5	renders	below
+fixed	41.14:67			added missing
+accept	41.14:67.5	41.14:67.2	renders	seen
+accept	41.14:67.16	41.14:67.14	renders	were
+fixed	41.14:68			added missing
+accept	41.14:68.6	41.14:68.6	renders	know
+accept	41.14:68.9	41.14:68.8	renders	understand
+accept	41.14:68.14	41.14:68.14	renders	out
+fixed	41.14:69			added missing
+accept	41.14:69.2	41.14:69.1	renders	zh renders kai
+accept	41.14:69.6	41.14:69.6	renders	began
+accept	41.14:69.8	41.14:69.8	renders	say
+accept	41.14:69.9	41.14:69.10	renders	standing by
+fixed	41.14:70			TR kai misattached
+refuse	41.14:70.18	41.14:70.18		Ta y is the TR kai before lalia; Nestle kai belongs to kai gar
+accept	41.14:70.1	41.14:70.2	renders	de
+accept	41.14:70.5	41.14:70.6	renders	after
+accept	41.14:70.6	41.14:70.5	renders	kai
+accept	41.14:70.9	41.14:70.10	renders	standing by
+accept	41.14:70.11	41.14:70.14	renders	truly
+fixed	41.14:71			added missing
+accept	41.14:71.6	41.14:71.6	renders	swear
+fixed	41.14:72			rooster/crow swapped
+refuse	41.14:72.2	41.14:72.5		zaspivav is crowed
+refuse	41.14:72.3	41.14:72.6		piven is rooster
+refuse	41.14:72.18	41.14:72.20		zaspivaie is crows
+accept	41.14:72.2	41.14:72.6	renders	crowed
+accept	41.14:72.3	41.14:72.5	renders	rooster
+accept	41.14:72.18	41.14:72.22	renders	crows
+accept	41.14:72.16	41.14:72.19	renders	before
+accept	41.14:72.6	41.14:72.3	renders	ek
+accept	41.14:72.8	41.14:72.8	renders	remembered
+accept	41.14:72.11	41.14:72.13	renders	that
+accept	41.14:72.27	41.14:72.27	renders	broke down
+accept	41.14:72.32	41.14:72.28	renders	began to weep

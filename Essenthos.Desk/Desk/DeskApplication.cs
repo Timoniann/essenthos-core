@@ -54,6 +54,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton<TextProblems>();
         builder.Services.AddSingleton<MappingBoard>();
         builder.Services.AddSingleton<PageReadings>();
+        builder.Services.AddSingleton<HandReviews>();
         builder.Services.AddSingleton<Visitors>();
         builder.Services.AddSingleton<EssxInspector>();
         builder.Services.AddSingleton<EssxConverter>();

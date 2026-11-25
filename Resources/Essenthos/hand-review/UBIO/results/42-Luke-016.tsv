@@ -1,0 +1,142 @@
+kind	from	to	relation	reason
+accept	42.16:1.17	42.16:1.17	renders	перед ним = αὐτῷ
+accept	42.16:1.20	42.16:1.15	renders	він = οὗτος
+accept	42.16:1.21	42.16:1.19	renders	переводить = διασκορπίζων
+fixed	42.16:1			added missing links
+accept	42.16:2.6	42.16:2.5	renders	до нього = αὐτῷ
+accept	42.16:2.20	42.16:2.20	renders	більше = ἔτι
+accept	42.16:2.23	42.16:2.21	renders	рядити = οἰκονομεῖν
+fixed	42.16:2			added missing links
+refuse	42.16:3.4	42.16:3.3		міркувати is not ἐν
+accept	42.16:3.4	42.16:3.1	renders	міркувати renders εἶπεν
+accept	42.16:3.5	42.16:3.3	renders	собі = ἐν ἑαυτῷ
+accept	42.16:3.1	42.16:3.2	renders	І = δὲ
+accept	42.16:3.2	42.16:3.6	renders	управитель = οἰκονόμος
+accept	42.16:3.8	42.16:3.8	renders	маю робити = ποιήσω
+accept	42.16:3.10	42.16:3.9	renders	коли = ὅτι
+fixed	42.16:3			міркувати moved to εἶπεν; missing links
+accept	42.16:4.1	42.16:4.1	renders	Знаю = ἔγνων
+accept	42.16:4.10	42.16:4.15	renders	своїх = ἑαυτῶν
+accept	42.16:4.12,42.16:4.14	42.16:4.6	renders	буду скинений = μετασταθῶ
+accept	42.16:4.15	42.16:4.7	renders	із = ἐκ
+fixed	42.16:4			added missing links
+accept	42.16:5.9	42.16:5.8	renders	пана = κυρίου
+accept	42.16:5.8	42.16:5.9	renders	свого = ἑαυτοῦ
+accept	42.16:5.17	42.16:5.16	renders	панові = κυρίῳ
+fixed	42.16:5			added missing links
+accept	42.16:6.2	42.16:6.1	renders	той = ὁ
+accept	42.16:6.7	42.16:6.8	renders	І = δὲ
+accept	42.16:6.9	42.16:6.7	renders	він = ὁ
+accept	42.16:6.11	42.16:6.11	renders	Візьми = Δέξαι
+accept	42.16:6.13	42.16:6.14	renders	розписку = γράμματα
+accept	42.16:6.14	42.16:6.12	renders	свою = σου
+accept	42.16:6.17,42.16:6.18	42.16:6.15	renders	та й = καὶ
+fixed	42.16:6			added missing links
+refuse	42.16:7.15	42.16:7.20		καὶ belongs to й напиши
+accept	42.16:7.23	42.16:7.20	renders	й = καὶ
+accept	42.16:7.4	42.16:7.2	renders	другого = ἑτέρῳ
+accept	42.16:7.9	42.16:7.9	renders	І = δὲ
+accept	42.16:7.10	42.16:7.8	renders	той = ὁ
+accept	42.16:7.19	42.16:7.16	renders	Візьми = Δέξαι
+accept	42.16:7.21	42.16:7.19	renders	розписку = γράμματα
+accept	42.16:7.22	42.16:7.17	renders	свою = σου
+fixed	42.16:7			καὶ moved from І to й; missing links
+accept	42.16:8.6	42.16:8.8	renders	невірного = ἀδικίας
+accept	42.16:8.14	42.16:8.16	renders	світу = αἰῶνος
+accept	42.16:8.16	42.16:8.28	renders	своїм = ἑαυτῶν
+accept	42.16:8.19	42.16:8.19	renders	аніж = ὑπὲρ
+fixed	42.16:8			added missing links
+accept	42.16:9.9	42.16:9.10	renders	багатства = μαμωνᾶ
+accept	42.16:9.10	42.16:9.12	renders	неправедного = ἀδικίας
+accept	42.16:9.13	42.16:9.15	renders	проминеться = ἐκλίπῃ
+fixed	42.16:9			added missing links
+accept	42.16:10.1	42.16:10.1	renders	Хто = substantival ὁ
+accept	42.16:10.10	42.16:10.11	renders	хто = substantival ὁ
+fixed	42.16:10			added Хто links
+ok	42.16:11			
+accept	42.16:12.5	42.16:12.5	renders	чужому = ἀλλοτρίῳ
+fixed	42.16:12			added чужому; ваше left (ἡμέτερον variant)
+accept	42.16:13.14	42.16:13.15	renders	буде любити = ἀγαπήσει
+fixed	42.16:13			added буде
+accept	42.16:14.7	42.16:14.8	renders	були = ὑπάρχοντες
+accept	42.16:14.11	42.16:14.10	renders	стали сміятися = ἐξεμυκτήριζον
+accept	42.16:14.10	42.16:14.9	renders	та й = καὶ
+fixed	42.16:14			added missing links
+accept	42.16:15.2	42.16:15.1	renders	же = καὶ
+accept	42.16:15.4	42.16:15.3	renders	до них = αὐτοῖς
+accept	42.16:15.7	42.16:15.8	renders	себе = ἑαυτοὺς
+accept	42.16:15.9,42.16:15.10	42.16:15.7	renders	видаєте за праведних = δικαιοῦντες
+accept	42.16:15.18	42.16:15.20	renders	Що = τὸ substantival
+fixed	42.16:15			added missing links
+accept	42.16:16.7	42.16:16.9	renders	відтоді = ἀπὸ τότε
+fixed	42.16:16			added τότε
+accept	42.16:17.11	42.16:17.15	renders	загине = πεσεῖν
+fixed	42.16:17			added загине
+refuse	42.16:18.16	42.16:18.14		з is not ἀπὸ (from husband)
+accept	42.16:18.2	42.16:18.2	renders	хто = ὁ
+accept	42.16:18.7	42.16:18.8	renders	бере = γαμῶν
+accept	42.16:18.14	42.16:18.12	renders	хто = ὁ
+accept	42.16:18.20	42.16:18.13	renders	відпустив = ἀπολελυμένην
+fixed	42.16:18			з refused; missing links
+refuse	42.16:19.14	42.16:19.14		бенкетував is not λαμπρῶς
+accept	42.16:19.14	42.16:19.11	renders	бенкетував = εὐφραινόμενος
+accept	42.16:19.3	42.16:19.4	renders	був = ἦν
+accept	42.16:19.9	42.16:19.9	renders	й = καὶ
+accept	42.16:19.12	42.16:19.12,42.16:19.13	renders	щоденно = καθ ἡμέραν
+fixed	42.16:19			бенкетував moved; missing links
+refuse	42.16:20.15	42.16:20.7		вкритий is not πρὸς
+accept	42.16:20.15	42.16:20.11	renders	струпами вкритий = εἱλκωμένος
+accept	42.16:20.10	42.16:20.6	renders	лежав = ἐβέβλητο
+accept	42.16:20.11	42.16:20.7	renders	у = πρὸς
+fixed	42.16:20			вкритий moved; missing links
+accept	42.16:21.6	42.16:21.7	renders	зо = ἀπὸ
+accept	42.16:21.9	42.16:21.6	renders	падали = πιπτόντων
+accept	42.16:21.11	42.16:21.12	renders	ж = ἀλλὰ
+accept	42.16:21.14	42.16:21.19	renders	рани = ἕλκη
+fixed	42.16:21			added missing links
+accept	42.16:22.1	42.16:22.2	renders	Та = δὲ
+accept	42.16:22.15	42.16:22.17	renders	же = δὲ
+fixed	42.16:22			added missing links
+accept	42.16:23.2	42.16:23.9	renders	терплячи = ὑπάρχων
+accept	42.16:23.13	42.16:23.14,42.16:23.15	renders	здаля = ἀπὸ μακρόθεν
+fixed	42.16:23			added missing links
+accept	42.16:24.9	42.16:24.8	renders	надо мною = με
+accept	42.16:24.15	42.16:24.12	renders	нехай = ἵνα
+accept	42.16:24.19	42.16:24.15	renders	кінця = ἄκρον
+fixed	42.16:24			added missing links
+refuse	42.16:25.12	42.16:25.10		свого is σου after ζωῇ
+refuse	42.16:25.14	42.16:25.14		своє is σου after ἀγαθά
+accept	42.16:25.12	42.16:25.14	renders	життя свого = ζωῇ σου
+accept	42.16:25.14	42.16:25.10	renders	добре своє = ἀγαθά σου
+accept	42.16:25.9	42.16:25.7	renders	прийняв = ἀπέλαβες
+accept	42.16:25.22	42.16:25.22	renders	тут = ὧδε
+accept	42.16:25.23	42.16:25.23	renders	тішиться = παρακαλεῖται
+fixed	42.16:25			swapped σου links; missing links
+accept	42.16:26.2	42.16:26.2	renders	крім = ἐν
+accept	42.16:26.3	42.16:26.4	renders	того = τούτοις
+accept	42.16:26.11	42.16:26.11	renders	поставлена = ἐστήρικται
+accept	42.16:26.12,42.16:26.13	42.16:26.12	renders	так що = ὅπως
+accept	42.16:26.14	42.16:26.13	renders	ті = οἱ
+accept	42.16:26.18	42.16:26.19	renders	не = μὴ
+accept	42.16:26.25	42.16:26.25	renders	переходять = διαπερῶσιν
+fixed	42.16:26			added missing links
+accept	42.16:27.1	42.16:27.2	renders	А = δέ
+fixed	42.16:27			added А
+accept	42.16:28.5	42.16:28.5	renders	хай = ὅπως
+accept	42.16:28.12	42.16:28.9	renders	не = μὴ
+accept	42.16:28.17	42.16:28.18	renders	страждання = βασάνου
+fixed	42.16:28			added missing links
+accept	42.16:29.2	42.16:29.2	renders	же = δὲ
+accept	42.16:29.9	42.16:29.9	renders	нехай слухають = ἀκουσάτωσαν
+fixed	42.16:29			added missing links
+accept	42.16:30.2	42.16:30.1	renders	він = ὁ
+accept	42.16:30.4	42.16:30.4	renders	Ні = Οὐχί
+accept	42.16:30.11	42.16:30.12	renders	прийде = πορευθῇ
+accept	42.16:30.12	42.16:30.9	renders	хто = τις
+fixed	42.16:30			added missing links
+accept	42.16:31.5	42.16:31.4	renders	Як = Εἰ
+accept	42.16:31.14,42.16:31.18	42.16:31.11	renders	й ... не = οὐδὲ
+accept	42.16:31.13	42.16:31.13	renders	хто = τις
+accept	42.16:31.17	42.16:31.16	renders	воскресне = ἀναστῇ
+accept	42.16:31.20	42.16:31.17	renders	йнятимуть віри = πεισθήσονται
+fixed	42.16:31			added missing links

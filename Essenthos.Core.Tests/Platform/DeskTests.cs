@@ -803,6 +803,53 @@ public sealed class DeskTests : IAsyncLifetime
         });
     }
 
+    /// <summary>
+    /// A hand review's status is read from its text's folder; one that says it runs while its process is gone (stopped
+    /// from avioniq, which ends it at once) is shown as stopped, and one caught mid-write is left out.
+    /// </summary>
+    [Fact]
+    public async Task AHandReviewShowsHowFarItHasGotAndARunThatIsGoneAsStopped()
+    {
+        var folder = Path.Combine(Repository, "Resources", "Essenthos", "hand-review");
+        foreach (var text in new[] { "RUSV", "UBIO", "HALF", "NONE" })
+        {
+            Directory.CreateDirectory(Path.Combine(folder, text, "run"));
+        }
+
+        // A process started after the run says it started is another process that took the same id.
+        var started = DateTimeOffset.UtcNow.ToString("o");
+        string Status(string text, string state, int pid) => $$"""
+            {"text": "{{text}}", "title": "{{text}} against BHSA and Nestle 1904", "service": "hand-review", "state": "{{state}}",
+             "pid": {{pid}}, "started": "{{started}}", "updated": "2026-11-26T10:00:00+00:00",
+             "model": "gpt-6.2-sol", "effort": "high", "lanes": 4,
+             "chunks": {"total": 897, "done": 120, "failed": 1, "running": 4, "doneHere": 29},
+             "verses": {"total": 31102, "reviewed": 5000, "ok": 3000, "fixed": 1800, "unsure": 200},
+             "rows": {"refuse": 900, "accept": 12000}, "converted": {"chunks": 91, "waiting": 29},
+             "last": {"chunk": "01-Gen-050", "at": "2026-11-26T09:59:00+00:00", "seconds": 300, "verses": 26, "ok": 20,
+                      "fixed": 5, "unsure": 1, "refuse": 3, "accept": 9, "pattern": ""},
+             "waiting": {"kind": "limit", "since": "2026-11-26T09:59:00+00:00", "until": "2026-11-26T12:00:00+00:00",
+                         "message": "usage limit"},
+             "errors": [{"at": "2026-11-26T09:59:00+00:00", "kind": "limit", "chunk": null, "message": "waiting 120 min"}],
+             "sheets": {"exported": "2026-11-26T09:00:30+00:00", "database": "28027653"}, "note": null}
+            """;
+        File.WriteAllText(Path.Combine(folder, "UBIO", "run", "status.json"), Status("UBIO", "waiting", Environment.ProcessId));
+        File.WriteAllText(Path.Combine(folder, "RUSV", "run", "status.json"), Status("RUSV", "running", int.MaxValue));
+        File.WriteAllText(Path.Combine(folder, "HALF", "run", "status.json"), """{"text": "HA""");
+
+        var reviews = await Json<List<HandReview>>(await _http.GetAsync("/desk-api/texts/reviews"));
+
+        reviews.Select(r => (r.Text, r.State)).Should().Equal(("RUSV", "stopped"), ("UBIO", "waiting"));
+        reviews[0].Waiting.Should().BeNull();
+        reviews[0].Chunks.Running.Should().Be(0);
+        reviews[1].Should().BeEquivalentTo(new
+        {
+            Service = "hand-review", Lanes = 4, Model = "gpt-6.2-sol",
+            Chunks = new ReviewChunks(897, 120, 1, 4, 29), Verses = new ReviewVerses(31102, 5000, 3000, 1800, 200),
+            Rows = new ReviewRows(900, 12000), Converted = new ReviewConverted(91, 29),
+            Waiting = new { Kind = "limit", Until = "2026-11-26T12:00:00+00:00" },
+        });
+    }
+
     [Fact]
     public void EveryOpenOccurrenceHasAKeyOfItsOwn()
     {

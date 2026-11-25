@@ -1,0 +1,162 @@
+kind	from	to	relation	reason
+ok	40.24:1			
+fixed	40.24:2			added missing links
+accept	40.24:2.1	40.24:2.1	renders	article as pronoun he
+accept	40.24:2.2	40.24:2.2	renders	particle de
+accept	40.24:2.4	40.24:2.3	renders	part of answering phrase
+accept	40.24:2.22	40.24:2.20	renders	relative which
+fixed	40.24:3			Його had no counterpart; added links
+refuse	40.24:3.9	40.24:3.10		wrong target
+accept	40.24:3.11,40.24:3.12	40.24:3.10	renders	to Him
+accept	40.24:3.13	40.24:3.13,40.24:3.14	renders	in private
+accept	40.24:3.15	40.24:3.15	renders	saying
+accept	40.24:3.19	40.24:3.20	renders	will be
+accept	40.24:3.26	40.24:3.26	renders	your
+accept	40.24:3.29	40.24:3.31	renders	age
+fixed	40.24:4			added links
+accept	40.24:4.4	40.24:4.2	renders	part of answering phrase
+accept	40.24:4.10	40.24:4.9	renders	anyone
+accept	40.24:4.12	40.24:4.11	renders	mislead
+fixed	40.24:5			added link
+accept	40.24:5.3	40.24:5.1	renders	part of bahato-khto many
+fixed	40.24:6			added links
+accept	40.24:6.2	40.24:6.2	renders	particle de
+accept	40.24:6.5	40.24:6.1	renders	will hear
+accept	40.24:6.13	40.24:6.12	renders	for
+accept	40.24:6.14	40.24:6.13	renders	to take place
+accept	40.24:6.19	40.24:6.15	renders	not yet
+fixed	40.24:7			nastanut is esontai not kata
+refuse	40.24:7.15	40.24:7.15		wrong target
+accept	40.24:7.15	40.24:7.11	renders	there will be
+accept	40.24:7.16	40.24:7.15	renders	in places
+fixed	40.24:8			added link
+accept	40.24:8.1	40.24:8.2	renders	particle de
+fixed	40.24:9			added links
+accept	40.24:9.1	40.24:9.4	renders	to
+accept	40.24:9.2	40.24:9.5	renders	tribulation
+fixed	40.24:10			added links
+accept	40.24:10.3,40.24:10.4,40.24:10.5	40.24:10.2	renders	then
+accept	40.24:10.10	40.24:10.6	renders	one another
+accept	40.24:10.8,40.24:10.11	40.24:10.7	renders	will betray
+fixed	40.24:11			Postane is egerthesontai not kai
+refuse	40.24:11.1	40.24:11.1		wrong target
+accept	40.24:11.1	40.24:11.4	renders	will arise
+ok	40.24:12			
+fixed	40.24:13			added links
+accept	40.24:13.4	40.24:13.4	renders	until
+accept	40.24:13.8	40.24:13.7	renders	will be saved
+fixed	40.24:14			added links
+accept	40.24:14.3	40.24:14.2	renders	will be proclaimed
+accept	40.24:14.9	40.24:14.11	renders	world
+fixed	40.24:15			added links
+accept	40.24:15.11,40.24:15.12	40.24:15.9	renders	having been spoken
+accept	40.24:15.20	40.24:15.20	renders	let him
+fixed	40.24:16			added links
+accept	40.24:16.2,40.24:16.3	40.24:16.2	renders	those
+accept	40.24:16.6	40.24:16.6	renders	let them
+fixed	40.24:17			added links
+accept	40.24:17.1	40.24:17.1	renders	the one
+accept	40.24:17.4	40.24:17.6	renders	let him
+fixed	40.24:18			added links
+accept	40.24:18.2	40.24:18.2	renders	the one
+accept	40.24:18.5	40.24:18.7	renders	let him
+fixed	40.24:19			added links
+accept	40.24:19.2	40.24:19.2	renders	particle de
+accept	40.24:19.3	40.24:19.4,40.24:19.6	renders	having in womb
+ok	40.24:20			
+fixed	40.24:21			added links
+accept	40.24:21.6	40.24:21.6	renders	such as
+accept	40.24:21.9	40.24:21.9	renders	from
+accept	40.24:21.12	40.24:21.12	renders	until
+accept	40.24:21.13	40.24:21.14	renders	now
+fixed	40.24:22			added links
+accept	40.24:22.10	40.24:22.9	renders	an
+accept	40.24:22.6	40.24:22.7	renders	those
+accept	40.24:22.17	40.24:22.20	renders	those
+accept	40.24:22.11	40.24:22.11	renders	any
+accept	40.24:22.12	40.24:22.12	renders	flesh
+fixed	40.24:23			added links
+accept	40.24:23.5	40.24:23.4	renders	to you
+accept	40.24:23.11	40.24:23.11	renders	here
+fixed	40.24:24			added links
+accept	40.24:24.8	40.24:24.6	renders	and
+accept	40.24:24.9,40.24:24.10	40.24:24.7	renders	will give
+accept	40.24:24.15	40.24:24.12	renders	so as
+accept	40.24:24.16	40.24:24.13	renders	to mislead
+fixed	40.24:25			added links
+accept	40.24:25.1	40.24:25.1	renders	behold
+accept	40.24:25.5	40.24:25.2	renders	foretold
+fixed	40.24:26			added link
+accept	40.24:26.6	40.24:26.9	renders	He is
+ok	40.24:27			
+ok	40.24:28			
+fixed	40.24:29			added links
+accept	40.24:29.1	40.24:29.2	renders	particle de
+accept	40.24:29.13	40.24:29.19	renders	its
+fixed	40.24:30			added link
+accept	40.24:30.2,40.24:30.3	40.24:30.2	renders	then
+fixed	40.24:31			golosnym is megales; hukom has no Nestle word
+refuse	40.24:31.7	40.24:31.6		wrong target
+refuse	40.24:31.9	40.24:31.8		wrong target
+accept	40.24:31.7	40.24:31.8	renders	great
+accept	40.24:31.20	40.24:31.21	renders	until
+fixed	40.24:32			added links
+accept	40.24:32.1	40.24:32.1	renders	from
+accept	40.24:32.2	40.24:32.4	renders	fig tree
+accept	40.24:32.3	40.24:32.2	renders	particle de
+accept	40.24:32.6	40.24:32.7	renders	parable
+accept	40.24:32.10	40.24:32.9	renders	already
+accept	40.24:32.11	40.24:32.13	renders	becomes tender
+ok	40.24:33			
+ok	40.24:34			
+ok	40.24:35			
+fixed	40.24:36			added links
+accept	40.24:36.4	40.24:36.5	renders	that
+accept	40.24:36.7,40.24:36.9	40.24:36.8	renders	no one
+accept	40.24:36.10	40.24:36.10	renders	not even
+accept	40.24:36.13	40.24:36.15	renders	nor
+accept	40.24:36.15	40.24:36.18,40.24:36.19	renders	except
+ok	40.24:37			
+fixed	40.24:38			added links
+accept	40.24:38.10	40.24:38.12	renders	eating
+accept	40.24:38.15,40.24:38.16	40.24:38.17	renders	giving in marriage
+accept	40.24:38.20	40.24:38.19	renders	which
+fixed	40.24:39			added link
+accept	40.24:39.11	40.24:39.10	renders	all
+fixed	40.24:40			added link
+accept	40.24:40.9	40.24:40.10	renders	the other one
+fixed	40.24:41			added links
+accept	40.24:41.2	40.24:41.2	renders	will be grinding
+accept	40.24:41.9	40.24:41.9	renders	the other one
+ok	40.24:42			
+fixed	40.24:43			added links
+accept	40.24:43.3	40.24:43.1	renders	this
+accept	40.24:43.7	40.24:43.6	renders	had known
+accept	40.24:43.16	40.24:43.14	renders	would have watched
+accept	40.24:43.17	40.24:43.15	renders	an
+accept	40.24:43.19	40.24:43.20	renders	to be broken into
+accept	40.24:43.20	40.24:43.23	renders	his
+accept	40.24:43.23	40.24:43.19	renders	allowed
+accept	40.24:43.24	40.24:43.18	renders	an
+fixed	40.24:44			added links
+accept	40.24:44.1	40.24:44.1,40.24:44.2	renders	therefore
+accept	40.24:44.12	40.24:44.8	renders	in which
+fixed	40.24:45			added links
+accept	40.24:45.2	40.24:45.2	renders	then
+accept	40.24:45.9	40.24:45.10	renders	has set
+accept	40.24:45.11	40.24:45.16	renders	his
+accept	40.24:45.13	40.24:45.18	renders	to give
+accept	40.24:45.14	40.24:45.22,40.24:45.23	renders	in season
+accept	40.24:45.16	40.24:45.19	renders	to them
+fixed	40.24:46			added link
+accept	40.24:46.2	40.24:46.4	renders	that
+fixed	40.24:47			added link
+accept	40.24:47.10	40.24:47.10	renders	will set
+fixed	40.24:48			added link
+accept	40.24:48.3	40.24:48.7	renders	that
+fixed	40.24:49			added links
+accept	40.24:49.3	40.24:49.3	renders	to beat
+accept	40.24:49.5	40.24:49.6	renders	his
+ok	40.24:50			
+fixed	40.24:51			added link
+accept	40.24:51.7	40.24:51.11	renders	will appoint

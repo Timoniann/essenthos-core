@@ -1,0 +1,137 @@
+kind	from	to	relation	reason
+fixed	40.14:1			pro is not akoen
+refuse	40.14:1.7	40.14:1.10		pro renders genitive relation, not the noun news
+fixed	40.14:2			added dia touto, energousin, en
+accept	40.14:2.13	40.14:2.17,40.14:2.18	renders	tomu = dia touto
+accept	40.14:2.15	40.14:2.21	renders	tvoriatsia = energousin
+accept	40.14:2.16	40.14:2.22	renders	nym renders en auto
+fixed	40.14:3			added posadyv, svoho
+accept	40.14:3.10	40.14:3.11	renders	posadyv = apetheto
+accept	40.14:3.17	40.14:3.19	renders	svoho = autou
+fixed	40.14:4			do with auto
+accept	40.14:4.2	40.14:4.5	renders	do niogo = auto
+fixed	40.14:5			added smert, toho, za
+accept	40.14:5.4	40.14:5.4	renders	smert zapodiiaty = apokteinai
+accept	40.14:5.11	40.14:5.11	renders	toho = auton
+accept	40.14:5.12	40.14:5.9	renders	za = hos
+fixed	40.14:6			posered = en meso
+accept	40.14:6.8	40.14:6.11,40.14:6.13	renders	posered = en to meso
+fixed	40.14:7			added hothen, ho, ean
+accept	40.14:7.1	40.14:7.1	renders	tomu = hothen
+accept	40.14:7.8	40.14:7.7	renders	choho = ho
+accept	40.14:7.9	40.14:7.8	renders	tilky = generalizing ean
+fixed	40.14:8			vona is he, namovoiu
+refuse	40.14:8.2	40.14:8.3		vona is the article-pronoun he, not the participle
+accept	40.14:8.2	40.14:8.1	renders	vona = he
+accept	40.14:8.4	40.14:8.3	renders	namovoiu = probibastheisa
+accept	40.14:8.3	40.14:8.4	renders	za = hypo agent
+accept	40.14:8.15	40.14:8.18	renders	Khrystytelia = Baptistou
+fixed	40.14:9			those reclining
+accept	40.14:9.8	40.14:9.9	renders	tykh = tous
+accept	40.14:9.10,40.14:9.11,40.14:9.12	40.14:9.10	renders	sydiv pry stoli = synanakeimenous
+ok	40.14:10			
+fixed	40.14:11			ta is pronoun not kai; svoii
+refuse	40.14:11.12	40.14:11.12		ta here is pronoun she, kai already held by a
+accept	40.14:11.15	40.14:11.16	renders	svoii = autes
+fixed	40.14:12			participles
+accept	40.14:12.4	40.14:12.2	renders	prybuly = proselthontes
+accept	40.14:12.11	40.14:12.13	renders	pryishly = elthontes
+fixed	40.14:13			kat idian, ekolouthesan
+accept	40.14:13.13	40.14:13.12,40.14:13.13	renders	samotnie = kat idian
+accept	40.14:13.19	40.14:13.18	renders	pishov za = ekolouthesan
+ok	40.14:14			
+fixed	40.14:15			Yoho is TR autou; do Nioho = auto
+refuse	40.14:15.6	40.14:15.5		Yoho is TR autou of disciples; auto is do Nioho
+accept	40.14:15.8,40.14:15.9	40.14:15.5	renders	do Nioho = auto
+accept	40.14:15.3	40.14:15.3	renders	nastav = genomenes
+accept	40.14:15.17	40.14:15.16	renders	vzhe = ede
+accept	40.14:15.18	40.14:15.17	renders	pizna = parelthen
+accept	40.14:15.21	40.14:15.22	renders	khai = hina
+accept	40.14:15.24	40.14:15.23	renders	rozidutsia = apelthontes
+fixed	40.14:16			added missing
+accept	40.14:16.5	40.14:16.6	renders	ne- = ou
+accept	40.14:16.6	40.14:16.9	renders	vidkhodyty = apelthein
+accept	40.14:16.8	40.14:16.10,40.14:16.13	renders	nahoduite = dote phagein
+accept	40.14:16.9	40.14:16.11	renders	ikh = autois
+fixed	40.14:17			added hoi de, ei me
+accept	40.14:17.1	40.14:17.1	renders	vony = hoi
+accept	40.14:17.2	40.14:17.2	renders	zh = de
+accept	40.14:17.9	40.14:17.8,40.14:17.9	renders	tilky = ei me
+fixed	40.14:18			ho de
+accept	40.14:18.1	40.14:18.2	renders	A = de
+accept	40.14:18.2	40.14:18.1	renders	Vin = ho
+fixed	40.14:19			narodovi
+accept	40.14:19.27	40.14:19.33	renders	narodovi = ochlois
+fixed	40.14:20			z not klasmaton; added
+refuse	40.14:20.7	40.14:20.11		z renders partitive, not the noun
+accept	40.14:20.9	40.14:20.9	renders	pozostalykh = perisseuon
+accept	40.14:20.10	40.14:20.7	renders	nazbyraly = eran
+fixed	40.14:21			added
+accept	40.14:21.1	40.14:21.3	renders	Iidtsiv = esthiontes
+accept	40.14:21.2	40.14:21.2	renders	zhe = de
+accept	40.14:21.6	40.14:21.6	renders	iz = hosei about
+accept	40.14:21.8	40.14:21.8	renders	krim = choris
+fixed	40.14:22			added
+accept	40.14:22.3	40.14:22.3	renders	zveliv = enankasen
+accept	40.14:22.8	40.14:22.6	renders	sidaty = embenai
+accept	40.14:22.14	40.14:22.11	renders	ranishe = pro-agein
+accept	40.14:22.16,40.14:22.17	40.14:22.16,40.14:22.17	renders	azh poky = heos hou
+fixed	40.14:23			kat idian, de
+accept	40.14:23.9	40.14:23.9,40.14:23.10	renders	nasamoti = kat idian
+accept	40.14:23.10	40.14:23.13	renders	i = de
+fixed	40.14:24			na seredyni moria is TR
+refuse	40.14:24.5	40.14:24.5		na seredyni moria follows TR meson tes thalasses
+refuse	40.14:24.6	40.14:24.5		seredyni is TR meson, not stadious
+accept	40.14:24.3	40.14:24.4	renders	vzhe = ede
+accept	40.14:24.9	40.14:24.11	renders	kydaly = basanizomenon
+ok	40.14:25			
+fixed	40.14:26			added
+accept	40.14:26.3	40.14:26.2	renders	zh = de
+accept	40.14:26.6	40.14:26.9	renders	ide = peripatounta
+accept	40.14:26.7	40.14:26.5	renders	Vin = auton
+accept	40.14:26.11	40.14:26.10	renders	nastrashylysia = etarachthesan
+accept	40.14:26.15	40.14:26.13	renders	Mara = phantasma
+fixed	40.14:27			added
+accept	40.14:27.3	40.14:27.6	renders	do nykh = autois
+accept	40.14:27.6	40.14:27.3	renders	ozvavsia = elalesen
+accept	40.14:27.10	40.14:27.10	renders	tse = eimi
+fixed	40.14:28			added
+accept	40.14:28.2	40.14:28.2	renders	zh = de
+accept	40.14:28.9	40.14:28.10	renders	tse = ei
+accept	40.14:28.11	40.14:28.11	renders	zvely = keleuson
+fixed	40.14:29			added
+accept	40.14:29.2	40.14:29.1	renders	Vin = ho
+accept	40.14:29.5	40.14:29.4	renders	Idy = elthe
+accept	40.14:29.11,40.14:29.12	40.14:29.11	renders	stav ity = periepatesen
+accept	40.14:29.16	40.14:29.16	renders	pishov = elthen
+fixed	40.14:30			added
+accept	40.14:30.2	40.14:30.1	renders	bachachy = blepon
+accept	40.14:30.7	40.14:30.7	renders	zachav = arxamenos
+accept	40.14:30.8	40.14:30.8	renders	potopaty = katapontizesthai
+accept	40.14:30.10	40.14:30.9	renders	skrychav = ekraxen
+fixed	40.14:31			added
+accept	40.14:31.1	40.14:31.2	renders	I = de
+accept	40.14:31.11	40.14:31.12	renders	do niogo = auto
+accept	40.14:31.14	40.14:31.14	renders	choho = eis ti
+fixed	40.14:32			vviishly
+accept	40.14:32.6	40.14:32.2	renders	vviishly = anabanton
+fixed	40.14:33			added
+accept	40.14:33.1	40.14:33.2	renders	A = de
+accept	40.14:33.2	40.14:33.1	renders	pryiavni = hoi those
+accept	40.14:33.9	40.14:33.12	renders	Ty = ei
+accept	40.14:33.10	40.14:33.9	renders	spravdi = alethos
+fixed	40.14:34			added
+accept	40.14:34.1	40.14:34.2	renders	pereplyvshy = diaperasantes
+accept	40.14:34.2	40.14:34.1	renders	zh = kai connective
+fixed	40.14:35			added
+accept	40.14:35.2	40.14:35.5	renders	liudy = andres
+accept	40.14:35.5	40.14:35.2	renders	piznavshy = epignontes
+accept	40.14:35.7	40.14:35.9	renders	spovistyly = apesteilan
+accept	40.14:35.13	40.14:35.17	renders	do Nioho = auto
+accept	40.14:35.17	40.14:35.20,40.14:35.21	renders	khvorykh = kakos echontas
+fixed	40.14:36			added
+accept	40.14:36.5	40.14:36.5	renders	bodai = monon
+accept	40.14:36.7	40.14:36.8	renders	kraiu = kraspedou
+accept	40.14:36.11	40.14:36.13	renders	khto = hosoi
+accept	40.14:36.12	40.14:36.14	renders	dotorkavs = hepsanto
+accept	40.14:36.13,40.14:36.14	40.14:36.15	renders	uzdorovlenyi buv = diesothesan

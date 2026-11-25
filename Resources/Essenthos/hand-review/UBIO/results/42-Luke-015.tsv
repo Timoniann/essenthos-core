@@ -1,0 +1,115 @@
+kind	from	to	relation	reason
+ok	42.15:1			
+fixed	42.15:2			added missing verb/subject links
+accept	42.15:2.8	42.15:2.13	renders	receives
+accept	42.15:2.9	42.15:2.11	renders	this man
+accept	42.15:2.12,42.15:2.14	42.15:2.15	renders	eats with
+fixed	42.15:3			added verb
+accept	42.15:3.4	42.15:3.1	renders	spoke
+ok	42.15:4			
+ok	42.15:5			
+fixed	42.15:6			added missing links
+accept	42.15:6.2	42.15:6.2	renders	having come
+accept	42.15:6.3	42.15:6.3,42.15:6.5	renders	to the house
+accept	42.15:6.21	42.15:6.20	renders	my
+fixed	42.15:7			added missing links
+accept	42.15:7.1	42.15:7.1	renders	I say
+accept	42.15:7.5	42.15:7.4	renders	so likewise
+accept	42.15:7.8	42.15:7.5,42.15:7.9	renders	joy will be
+accept	42.15:7.16	42.15:7.15	renders	over
+accept	42.15:7.23	42.15:7.21,42.15:7.22	renders	have need
+fixed	42.15:8			added missing links
+accept	42.15:8.14	42.15:8.13	renders	lamp
+accept	42.15:8.18	42.15:8.17	renders	house
+accept	42.15:8.24	42.15:8.21	renders	until
+fixed	42.15:9			added verb
+accept	42.15:9.3	42.15:9.3	renders	calls together
+fixed	42.15:10			added missing links
+accept	42.15:10.2	42.15:10.1	renders	thus
+accept	42.15:10.6	42.15:10.4	renders	there is
+fixed	42.15:11			added missing links
+accept	42.15:11.1	42.15:11.2	renders	and/then
+accept	42.15:11.6	42.15:11.4	renders	certain
+accept	42.15:11.7	42.15:11.5	renders	had
+fixed	42.15:12			той is the article-pronoun; added missing
+refuse	42.15:12.14	42.15:12.18		pronoun, not the verb
+accept	42.15:12.14	42.15:12.16	renders	ho as pronoun
+accept	42.15:12.13	42.15:12.17	renders	de
+accept	42.15:12.9	42.15:12.8	renders	Father vocative
+accept	42.15:12.10	42.15:12.12	renders	falling to me
+accept	42.15:12.18	42.15:12.21	renders	property
+fixed	42.15:13			added missing links
+accept	42.15:13.3	42.15:13.3	renders	not (many)
+accept	42.15:13.11	42.15:13.11	renders	went away
+accept	42.15:13.16	42.15:13.17	renders	wasted
+fixed	42.15:14			added missing links
+accept	42.15:14.5	42.15:14.1	renders	having spent
+accept	42.15:14.8	42.15:14.7	renders	severe
+fixed	42.15:15			added missing links
+accept	42.15:15.8	42.15:15.4	renders	one
+accept	42.15:15.10	42.15:15.6	renders	citizens
+accept	42.15:15.11	42.15:15.9	renders	that
+fixed	42.15:16			хоч is added
+refuse	42.15:16.7	42.15:16.9		added particle, not pods
+accept	42.15:16.5	42.15:16.5	renders	belly
+fixed	42.15:17			added missing links
+accept	42.15:17.3	42.15:17.1,42.15:17.2,42.15:17.4	renders	came to himself
+accept	42.15:17.10	42.15:17.7	renders	hired servants
+accept	42.15:17.11,42.15:17.13,42.15:17.14	42.15:17.11	renders	have abundance
+accept	42.15:17.15	42.15:17.14	renders	de
+fixed	42.15:18			added missing links
+accept	42.15:18.7	42.15:18.6	renders	my
+accept	42.15:18.15	42.15:18.12	renders	against
+accept	42.15:18.18	42.15:18.16	renders	before
+fixed	42.15:19			added missing links
+accept	42.15:19.2	42.15:19.2	renders	am
+accept	42.15:19.7	42.15:19.7	renders	make/take me
+fixed	42.15:20			added missing links
+accept	42.15:20.3	42.15:20.3	renders	went
+accept	42.15:20.7	42.15:20.7	renders	of himself
+accept	42.15:20.13	42.15:20.12	renders	being distant
+accept	42.15:20.19,42.15:20.20	42.15:20.19	renders	moved with compassion
+accept	42.15:20.25	42.15:20.22	renders	fell
+fixed	42.15:21			added missing links
+accept	42.15:21.1	42.15:21.2	renders	de
+accept	42.15:21.10	42.15:21.8	renders	against
+accept	42.15:21.13	42.15:21.12	renders	before
+fixed	42.15:22			added missing links
+accept	42.15:22.6	42.15:22.10	renders	bring out
+accept	42.15:22.7	42.15:22.9	renders	quickly
+accept	42.15:22.15	42.15:22.18	renders	give
+fixed	42.15:23			added verb
+accept	42.15:23.9	42.15:23.10	renders	let us be merry
+fixed	42.15:24			added was
+accept	42.15:24.5	42.15:24.7	renders	was
+fixed	42.15:25			added missing links
+accept	42.15:25.5	42.15:25.1	renders	was
+accept	42.15:25.9	42.15:25.11	renders	while
+accept	42.15:25.11	42.15:25.12	renders	coming
+ok	42.15:26			
+fixed	42.15:27			added missing links
+accept	42.15:27.2	42.15:27.1	renders	ho as pronoun
+accept	42.15:27.6	42.15:27.9	renders	is come
+accept	42.15:27.13	42.15:27.11	renders	killed
+accept	42.15:27.16	42.15:27.19	renders	because
+fixed	42.15:28			added missing links
+accept	42.15:28.1	42.15:28.2	renders	de
+accept	42.15:28.14	42.15:28.12	renders	was begging
+fixed	42.15:29			added missing links
+accept	42.15:29.2	42.15:29.1	renders	ho as pronoun
+accept	42.15:29.19	42.15:29.16	renders	disobeyed
+accept	42.15:29.31	42.15:29.26	renders	my
+accept	42.15:29.32	42.15:29.27	renders	make merry
+fixed	42.15:30			заколоти linked to fattened
+refuse	42.15:30.17	42.15:30.18		kill is not fattened
+accept	42.15:30.17	42.15:30.15	renders	you killed
+accept	42.15:30.19	42.15:30.18	renders	fattened
+accept	42.15:30.1	42.15:30.1	renders	when
+accept	42.15:30.5	42.15:30.14	renders	came
+accept	42.15:30.10	42.15:30.11	renders	living
+fixed	42.15:31			added missing links
+accept	42.15:31.1	42.15:31.2	renders	de
+accept	42.15:31.12	42.15:31.14	renders	mine
+fixed	42.15:32			added missing links
+accept	42.15:32.5	42.15:32.5	renders	it was fitting
+accept	42.15:32.10	42.15:32.12	renders	was

@@ -1,0 +1,155 @@
+kind	from	to	relation	reason
+ok	41.1:1			
+fixed	41.1:2			missing/wrong links corrected
+accept	41.1:2.11	41.1:2.12	renders	my = mou
+accept	41.1:2.13	41.1:2.16	renders	relative who
+accept	41.1:2.17	41.1:2.20	renders	your = sou
+fixed	41.1:3			missing/wrong links corrected
+accept	41.1:3.11	41.1:3.11	renders	make straight = eutheias poieite
+fixed	41.1:4			missing/wrong links corrected
+accept	41.1:4.1,41.1:4.2	41.1:4.1	renders	egeneto
+fixed	41.1:5			missing/wrong links corrected
+accept	41.1:5.4	41.1:5.2	renders	were going out
+fixed	41.1:6			missing/wrong links corrected
+accept	41.1:6.1	41.1:6.1	renders	kai
+accept	41.1:6.3	41.1:6.2,41.1:6.5	renders	was clothed
+accept	41.1:6.12	41.1:6.10	renders	leathern
+accept	41.1:6.16	41.1:6.15	renders	kai
+fixed	41.1:7			missing/wrong links corrected
+refuse	41.1:7.7	41.1:7.7		za mnoyu is opiso mou at 9
+accept	41.1:7.7	41.1:7.9	renders	after me
+refuse	41.1:7.12	41.1:7.9		vid mene is comparative mou at 7
+accept	41.1:7.12	41.1:7.7	renders	mightier than me
+accept	41.1:7.5	41.1:7.8	renders	uslid za = opiso
+accept	41.1:7.13	41.1:7.10	renders	whose
+accept	41.1:7.15	41.1:7.12	renders	I am
+accept	41.1:7.16	41.1:7.11,41.1:7.13	renders	not worthy
+fixed	41.1:8			missing/wrong links corrected
+accept	41.1:8.6	41.1:8.5	renders	He = autos
+fixed	41.1:9			missing/wrong links corrected
+accept	41.1:9.3	41.1:9.4	renders	those
+fixed	41.1:10			missing/wrong links corrected
+accept	41.1:10.5	41.1:10.3	renders	coming up
+fixed	41.1:11			missing/wrong links corrected
+accept	41.1:11.5	41.1:11.3	renders	egeneto came
+fixed	41.1:12			missing/wrong links corrected
+accept	41.1:12.3	41.1:12.6	renders	drives
+ok	41.1:13			
+fixed	41.1:14			missing/wrong links corrected
+accept	41.1:14.2	41.1:14.2	renders	meta temporal
+accept	41.1:14.5	41.1:14.4	renders	passive infinitive
+fixed	41.1:15			missing/wrong links corrected
+accept	41.1:15.2	41.1:15.2	renders	saying
+fixed	41.1:16			missing/wrong links corrected
+accept	41.1:16.1	41.1:16.1	renders	kai
+accept	41.1:16.4	41.1:16.2	renders	passing
+accept	41.1:16.19	41.1:16.15	renders	casting net
+accept	41.1:16.22	41.1:16.19	renders	they were
+fixed	41.1:17			missing/wrong links corrected
+accept	41.1:17.12	41.1:17.12	renders	to become
+fixed	41.1:18			missing/wrong links corrected
+accept	41.1:18.6	41.1:18.3	renders	having left
+accept	41.1:18.9	41.1:18.6	renders	followed
+fixed	41.1:19			missing/wrong links corrected
+accept	41.1:19.3	41.1:19.3	renders	a little
+accept	41.1:19.4	41.1:19.2	renders	having gone on
+accept	41.1:19.16	41.1:19.15	renders	them
+fixed	41.1:20			missing/wrong links corrected
+accept	41.1:20.10	41.1:20.9	renders	their
+accept	41.1:20.15	41.1:20.16	renders	hired servants
+fixed	41.1:21			missing/wrong links corrected
+accept	41.1:21.2	41.1:21.2	renders	they go
+accept	41.1:21.16	41.1:21.13	renders	began to teach = imperfect
+fixed	41.1:22			missing/wrong links corrected
+accept	41.1:22.6	41.1:22.7	renders	periphrastic en
+accept	41.1:22.10	41.1:22.13	renders	having authority
+fixed	41.1:23			missing/wrong links corrected
+accept	41.1:23.6	41.1:23.3	renders	there was
+accept	41.1:23.10	41.1:23.9	renders	with a spirit
+ok	41.1:24			
+fixed	41.1:25			missing/wrong links corrected
+accept	41.1:25.2	41.1:25.1	renders	kai
+fixed	41.1:26			missing/wrong links corrected
+accept	41.1:26.2	41.1:26.2	renders	convulsed
+accept	41.1:26.5	41.1:26.3	renders	him
+fixed	41.1:27			missing/wrong links corrected
+accept	41.1:27.2	41.1:27.2	renders	astonished
+accept	41.1:27.4	41.1:27.4	renders	so that
+accept	41.1:27.5	41.1:27.5	renders	question
+accept	41.1:27.6	41.1:27.6	renders	they
+accept	41.1:27.15	41.1:27.13	renders	with
+accept	41.1:27.16	41.1:27.14	renders	authority
+accept	41.1:27.25	41.1:27.22	renders	obey
+fixed	41.1:28			missing/wrong links corrected
+refuse	41.1:28.3	41.1:28.4		pro renders genitive autou, not akoe
+accept	41.1:28.5	41.1:28.2	renders	went out
+accept	41.1:28.7	41.1:28.6	renders	at that moment = euthys
+fixed	41.1:29			missing/wrong links corrected
+accept	41.1:29.2	41.1:29.6	renders	having gone out
+accept	41.1:29.6	41.1:29.2	renders	immediately
+accept	41.1:29.8	41.1:29.7	renders	they came
+fixed	41.1:30			missing/wrong links corrected
+refuse	41.1:30.11	41.1:30.10		nei is autes at 12
+refuse	41.1:30.12	41.1:30.12		Yomu is auto at 10
+accept	41.1:30.11	41.1:30.12	renders	her
+accept	41.1:30.12	41.1:30.10	renders	to Him
+fixed	41.1:31			missing/wrong links corrected
+accept	41.1:31.13	41.1:31.10	renders	her
+accept	41.1:31.16	41.1:31.14	renders	began to serve
+fixed	41.1:32			missing/wrong links corrected
+accept	41.1:32.4	41.1:32.3	renders	having come
+accept	41.1:32.5	41.1:32.4	renders	when
+accept	41.1:32.9	41.1:32.8	renders	began bringing
+accept	41.1:32.13	41.1:32.13,41.1:32.14	renders	sick
+fixed	41.1:33			missing/wrong links corrected
+accept	41.1:33.2	41.1:33.3	renders	whole
+accept	41.1:33.4	41.1:33.2	renders	periphrastic en
+fixed	41.1:34			missing/wrong links corrected
+accept	41.1:34.8	41.1:34.5	renders	kakos echontas
+accept	41.1:34.18	41.1:34.15	renders	to speak
+fixed	41.1:35			missing/wrong links corrected
+accept	41.1:35.2	41.1:35.2	renders	early
+accept	41.1:35.7	41.1:35.3	renders	in night
+accept	41.1:35.9	41.1:35.5	renders	having risen
+accept	41.1:35.17	41.1:35.12	renders	kakei and
+fixed	41.1:36			missing/wrong links corrected
+refuse	41.1:36.10	41.1:36.7		za belongs to the verb, not meta
+accept	41.1:36.10	41.1:36.2	renders	went after
+accept	41.1:36.8	41.1:36.8	renders	him
+accept	41.1:36.4	41.1:36.6	renders	those
+ok	41.1:37			
+fixed	41.1:38			missing/wrong links corrected
+refuse	41.1:38.7	41.1:38.6		v inshe mistse renders allachou
+accept	41.1:38.7,41.1:38.8,41.1:38.9	41.1:38.5	renders	elsewhere
+accept	41.1:38.10	41.1:38.6	renders	into
+accept	41.1:38.11	41.1:38.9	renders	village-towns
+accept	41.1:38.20	41.1:38.14	renders	for
+accept	41.1:38.23	41.1:38.17	renders	came forth
+fixed	41.1:39			missing/wrong links corrected
+accept	41.1:39.2	41.1:39.2	renders	went
+fixed	41.1:40			missing/wrong links corrected
+accept	41.1:40.9,41.1:40.11	41.1:40.9	renders	kneeling
+fixed	41.1:41			missing/wrong links corrected
+refuse	41.1:41.10	41.1:41.6		autou 6 is his hand
+accept	41.1:41.6	41.1:41.6	renders	His
+fixed	41.1:42			missing/wrong links corrected
+accept	41.1:42.7	41.1:42.2	renders	at that moment
+accept	41.1:42.9,41.1:42.11	41.1:42.9	renders	was cleansed
+ok	41.1:43			
+fixed	41.1:44			missing/wrong links corrected
+accept	41.1:44.3	41.1:44.2	renders	says
+accept	41.1:44.8	41.1:44.5	renders	to no one
+accept	41.1:44.6	41.1:44.7	renders	speak
+accept	41.1:44.11	41.1:44.10	renders	yourself
+fixed	41.1:45			missing/wrong links corrected
+accept	41.1:45.2	41.1:45.1	renders	ho de he
+accept	41.1:45.6	41.1:45.5	renders	proclaim
+accept	41.1:45.8	41.1:45.8	renders	spread abroad
+accept	41.1:45.10	41.1:45.10	renders	matter
+accept	41.1:45.12	41.1:45.11	renders	so that
+accept	41.1:45.13	41.1:45.13	renders	he
+accept	41.1:45.18	41.1:45.12	renders	no longer
+accept	41.1:45.17	41.1:45.18	renders	enter
+accept	41.1:45.22	41.1:45.24	renders	was
+accept	41.1:45.23	41.1:45.20	renders	outside
+accept	41.1:45.28	41.1:45.26	renders	were coming

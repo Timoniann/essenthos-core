@@ -1,0 +1,163 @@
+kind	from	to	relation	reason
+accept	42.21:1.1	42.21:1.2	renders	І = δὲ
+accept	42.21:1.2,42.21:1.4	42.21:1.1	renders	поглянув угору = Ἀναβλέψας
+fixed	42.21:1			added missing links
+accept	42.21:2.5	42.21:2.3	renders	одну = τινα
+fixed	42.21:2			added missing link
+accept	42.21:3.4	42.21:3.3	renders	Поправді = Ἀληθῶς
+accept	42.21:3.11	42.21:3.14	renders	вкинула = ἔβαλεν
+accept	42.21:3.3	42.21:3.2	renders	Він = subject of εἶπεν
+fixed	42.21:3			added missing links
+accept	42.21:4.3	42.21:4.8	renders	клали = ἔβαλον
+accept	42.21:4.4	42.21:4.4	renders	від = ἐκ
+accept	42.21:4.6	42.21:4.7	renders	свого = αὐτοῖς
+accept	42.21:4.8	42.21:4.11	renders	дар = δῶρα
+accept	42.21:4.12	42.21:4.23	renders	поклала = ἔβαλεν
+accept	42.21:4.14	42.21:4.16	renders	убозтва = ὑστερήματος
+accept	42.21:4.15	42.21:4.17	renders	свого = αὐτῆς
+accept	42.21:4.16	42.21:4.18	renders	ввесь = πάντα
+fixed	42.21:4			added missing links
+accept	42.21:5.8	42.21:5.12	renders	прикрашений = κεκόσμηται
+accept	42.21:5.9	42.21:5.9	renders	дорогоцінним = καλοῖς
+accept	42.21:5.12	42.21:5.11	renders	дарами = ἀναθήμασιν
+fixed	42.21:5			added missing links
+accept	42.21:6.1	42.21:6.4	renders	Надійдуть = ἐλεύσονται
+accept	42.21:6.4	42.21:6.6,42.21:6.7	renders	коли = ἐν αἷς
+accept	42.21:6.6	42.21:6.1	renders	того = Ταῦτα
+accept	42.21:6.7	42.21:6.2	renders	що = ἃ
+accept	42.21:6.8	42.21:6.3	renders	бачите = θεωρεῖτε
+accept	42.21:6.15	42.21:6.13	renders	який = ὃς
+fixed	42.21:6			added missing links
+accept	42.21:7.1	42.21:7.2	renders	І = δὲ
+accept	42.21:7.16	42.21:7.15	renders	має = μέλλῃ
+accept	42.21:7.17	42.21:7.17	renders	початися = γίνεσθαι
+fixed	42.21:7			added missing links
+accept	42.21:8.1	42.21:8.1	renders	Він = ὁ
+accept	42.21:8.2	42.21:8.2	renders	же = δὲ
+accept	42.21:8.9	42.21:8.6	renders	звів = πλανηθῆτε
+fixed	42.21:8			added missing links
+refuse	42.21:9.7	42.21:9.6		почуєте is not ἀκαταστασίας
+accept	42.21:9.7	42.21:9.3	renders	почуєте = ἀκούσητε
+accept	42.21:9.1	42.21:9.2	renders	І = δὲ
+accept	42.21:9.13	42.21:9.12	renders	статись = γενέσθαι
+accept	42.21:9.15	42.21:9.11	renders	тому = ταῦτα
+accept	42.21:9.20	42.21:9.16	renders	ще = εὐθέως
+fixed	42.21:9			wrong verb link replaced, links added
+accept	42.21:10.2	42.21:10.2	renders	промовляв = ἔλεγεν
+accept	42.21:10.4	42.21:10.3	renders	до них = αὐτοῖς
+fixed	42.21:10			added missing links
+refuse	42.21:11.8	42.21:11.11		помір is λοιμοὶ, not φόβητρά
+accept	42.21:11.8	42.21:11.7	renders	помір = λοιμοὶ (pestilence)
+accept	42.21:11.11	42.21:11.11	renders	страшні = φόβητρά
+accept	42.21:11.2	42.21:11.10	renders	будуть = ἔσονται
+accept	42.21:11.10	42.21:11.12	renders	і = τε
+fixed	42.21:11			помір relinked, links added
+refuse	42.21:12.20	42.21:12.22		that καὶ is rendered by та before правителів
+accept	42.21:12.25	42.21:12.22	renders	та = καὶ
+accept	42.21:12.4	42.21:12.3	renders	тим = τούτων
+accept	42.21:12.12	42.21:12.12	renders	переслідувати будуть = διώξουσιν
+accept	42.21:12.21	42.21:12.19	renders	поведуть = ἀπαγομένους
+fixed	42.21:12			καὶ relinked, links added
+ok	42.21:13			
+accept	42.21:14.2	42.21:14.1	renders	покладіть = θέτε
+accept	42.21:14.5	42.21:14.6	renders	свої = ὑμῶν
+accept	42.21:14.6	42.21:14.8	renders	наперед гадати = προμελετᾶν
+accept	42.21:14.10	42.21:14.9	renders	будете відповідати = ἀπολογηθῆναι
+fixed	42.21:14			added missing links
+accept	42.21:15.5	42.21:15.5	renders	мову = στόμα
+accept	42.21:15.12	42.21:15.12	renders	чи = ἢ
+fixed	42.21:15			added missing links
+refuse	42.21:16.1	42.21:16.3		initial І renders δὲ; καὶ 3 is і before батьки
+accept	42.21:16.1	42.21:16.2	renders	І = δὲ
+accept	42.21:16.5	42.21:16.3	renders	і (even) = καὶ
+accept	42.21:16.2,42.21:16.3,42.21:16.4	42.21:16.1	renders	будуть вас видавати = παραδοθήσεσθε
+accept	42.21:16.19	42.21:16.13	renders	заподіють смерть = θανατώσουσιν
+fixed	42.21:16			conjunctions relinked, links added
+accept	42.21:17.5,42.21:17.7	42.21:17.2	renders	будуть вас = ἔσεσθε
+fixed	42.21:17			added missing link
+accept	42.21:18.4	42.21:18.6	renders	вам = ὑμῶν
+accept	42.21:18.7	42.21:18.8	renders	не = οὐ μὴ
+fixed	42.21:18			added missing links
+refuse	42.21:19.5	42.21:19.8		ви is the subject of κτήσεσθε
+accept	42.21:19.5	42.21:19.5	renders	ви = subject of κτήσεσθε
+accept	42.21:19.4	42.21:19.8	renders	свої = ὑμῶν
+fixed	42.21:19			pronoun relinked
+accept	42.21:20.7	42.21:20.4	renders	оточений = κυκλουμένην
+fixed	42.21:20			added missing link
+accept	42.21:21.2,42.21:21.3	42.21:21.2	renders	ті хто = οἱ
+accept	42.21:21.6	42.21:21.6	renders	нехай = imperative φευγέτωσαν
+accept	42.21:21.10	42.21:21.11	renders	хто = οἱ
+accept	42.21:21.11	42.21:21.10	renders	ж = καὶ
+accept	42.21:21.14	42.21:21.14	renders	міста = αὐτῆς
+accept	42.21:21.15	42.21:21.15	renders	нехай = imperative
+accept	42.21:21.17	42.21:21.17	renders	хто = οἱ
+accept	42.21:21.18	42.21:21.16	renders	ж = καὶ
+accept	42.21:21.21	42.21:21.22	renders	хай = imperative
+fixed	42.21:21			added missing links
+accept	42.21:22.2	42.21:22.4	renders	то = αὗταί
+accept	42.21:22.3	42.21:22.5	renders	будуть = εἰσιν
+accept	42.21:22.6	42.21:22.6	renders	щоб = purpose τοῦ
+fixed	42.21:22			added missing links
+accept	42.21:23.3	42.21:23.3,42.21:23.4,42.21:23.5	renders	вагітним = ἐν γαστρὶ ἐχούσαις
+accept	42.21:23.7	42.21:23.8	renders	годує грудьми = θηλαζούσαις
+accept	42.21:23.13	42.21:23.13	renders	буде = ἔσται
+fixed	42.21:23			added missing links
+refuse	42.21:24.8	42.21:24.7		εἰς governs ἔθνη, rendered by поміж
+accept	42.21:24.10	42.21:24.7	renders	поміж = εἰς
+accept	42.21:24.9	42.21:24.6	renders	заберуть до неволі = αἰχμαλωτισθήσονται
+accept	42.21:24.4	42.21:24.3	renders	гострим = στόματι (edge)
+accept	42.21:24.15	42.21:24.13,42.21:24.14	renders	топтатимуть = ἔσται πατουμένη
+accept	42.21:24.18	42.21:24.18	renders	поки = οὗ
+accept	42.21:24.20	42.21:24.19	renders	скінчиться = πληρωθῶσιν
+fixed	42.21:24			preposition relinked, links added
+accept	42.21:25.11	42.21:25.14	renders	тривога = συνοχὴ
+accept	42.21:25.12	42.21:25.15	renders	людей = ἐθνῶν
+fixed	42.21:25			added missing links
+accept	42.21:26.3,42.21:26.4	42.21:26.1	renders	будуть мертвіти = ἀποψυχόντων
+accept	42.21:26.2	42.21:26.2	renders	люди = ἀνθρώπων
+accept	42.21:26.8	42.21:26.6	renders	чекання = προσδοκίας
+accept	42.21:26.11	42.21:26.8	renders	йде = ἐπερχομένων
+accept	42.21:26.13,42.21:26.14	42.21:26.10	renders	ввесь світ = οἰκουμένῃ
+fixed	42.21:26			added missing links
+ok	42.21:27			
+accept	42.21:28.2	42.21:28.2	renders	ж = δὲ
+accept	42.21:28.3	42.21:28.1	renders	стане = ἀρχομένων
+accept	42.21:28.4	42.21:28.4	renders	збуватися = γίνεσθαι
+accept	42.21:28.10	42.21:28.10	renders	свої = ὑμῶν
+fixed	42.21:28			added missing links
+accept	42.21:29.2	42.21:29.2	renders	розповів = εἶπεν
+fixed	42.21:29			added missing link
+accept	42.21:30.2,42.21:30.4	42.21:30.2	renders	вони розпукуються = προβάλωσιν
+accept	42.21:30.3	42.21:30.3	renders	вже = ἤδη
+accept	42.21:30.12	42.21:30.9	renders	вже = ἤδη
+fixed	42.21:30			added missing links
+accept	42.21:31.7	42.21:31.7	renders	діється = γινόμενα
+fixed	42.21:31			added missing link
+ok	42.21:32			
+ok	42.21:33			
+accept	42.21:34.2	42.21:34.2	renders	ж = δὲ
+accept	42.21:34.9	42.21:34.6	renders	обтяжувалися = βαρηθῶσιν
+accept	42.21:34.14	42.21:34.16	renders	життєвими = βιωτικαῖς
+accept	42.21:34.19	42.21:34.24	renders	той = ἐκείνη
+accept	42.21:34.23	42.21:34.18	renders	прийшов = ἐπιστῇ
+accept	42.21:34.24	42.21:34.21	renders	несподівано = αἰφνίδιος
+fixed	42.21:34			added missing links
+accept	42.21:35.4,42.21:35.5	42.21:35.3	renders	він прийде = ἐπεισελεύσεται
+fixed	42.21:35			added missing link
+refuse	42.21:36.15	42.21:36.16		відбутись is γίνεσθαι; σταθῆναι is стати
+accept	42.21:36.15	42.21:36.14	renders	відбутись = γίνεσθαι
+accept	42.21:36.17	42.21:36.16	renders	стати = σταθῆναι
+accept	42.21:36.1	42.21:36.2	renders	Тож = δὲ
+accept	42.21:36.4	42.21:36.4	renders	кожного = παντὶ
+accept	42.21:36.6	42.21:36.6	renders	моліться = δεόμενοι
+accept	42.21:36.8,42.21:36.9	42.21:36.8	renders	змогли ви = κατισχύσητε
+accept	42.21:36.10	42.21:36.9	renders	уникнути = ἐκφυγεῖν
+accept	42.21:36.11	42.21:36.11	renders	всього = πάντα
+accept	42.21:36.12	42.21:36.10	renders	того = ταῦτα
+accept	42.21:36.14	42.21:36.13	renders	має = μέλλοντα
+fixed	42.21:36			verbs relinked, links added
+accept	42.21:37.3	42.21:37.2	renders	ж = δὲ
+accept	42.21:37.4,42.21:37.7	42.21:37.1	renders	Він навчав = periphrastic Ἦν
+fixed	42.21:37			added missing links
+accept	42.21:38.7	42.21:38.5	renders	приходили (зранку) = ὤρθριζεν
+fixed	42.21:38			added missing link

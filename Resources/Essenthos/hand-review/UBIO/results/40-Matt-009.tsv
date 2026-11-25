@@ -1,0 +1,125 @@
+kind	from	to	relation	reason
+accept	40.9:1.2	40.9:1.2	renders	participle entered
+accept	40.9:1.3	40.9:1.3	renders	into
+fixed	40.9:1			added missing links
+refuse	40.9:2.23	40.9:2.22		tobi renders TR soi; Nestle sou = tvoi
+accept	40.9:2.25	40.9:2.22	renders	your
+accept	40.9:2.4	40.9:2.4	renders	do Nyoho = dative auto
+fixed	40.9:2			moved sou to tvoi, added do
+accept	40.9:3.10	40.9:3.9	renders	this man
+fixed	40.9:3			added Vin
+refuse	40.9:4.6	40.9:4.1		initial kai rendered by zhe, not i
+accept	40.9:4.2	40.9:4.1	renders	sentence connective
+accept	40.9:4.10	40.9:4.11	renders	verb person
+accept	40.9:4.14	40.9:4.16	renders	your
+fixed	40.9:4			kai to zhe, added links
+accept	40.9:5.1	40.9:5.1	renders	which
+fixed	40.9:5			added Shcho
+accept	40.9:6.14	40.9:6.16	renders	then
+accept	40.9:6.26	40.9:6.30	renders	your
+fixed	40.9:6			added links
+ok	40.9:7			
+ok	40.9:8			
+accept	40.9:9.8,40.9:9.9	40.9:9.13	renders	named
+accept	40.9:9.19,40.9:9.20	40.9:9.17	renders	follow
+accept	40.9:9.25	40.9:9.21	renders	followed
+refuse	40.9:9.16	40.9:9.19		wrong kai occurrence
+accept	40.9:9.16	40.9:9.14	renders	ta y = kai
+fixed	40.9:9			kai occurrence and missing links
+accept	40.9:10.11	40.9:10.14	renders	having come
+accept	40.9:10.18	40.9:10.15	renders	reclined with
+fixed	40.9:10			added links
+accept	40.9:11.11	40.9:11.9	renders	dia ti = why
+fixed	40.9:11			added Dia
+accept	40.9:12.2	40.9:12.1	renders	article as pronoun he
+accept	40.9:12.8	40.9:12.10	renders	physician
+accept	40.9:12.10	40.9:12.6,40.9:12.7	renders	have need
+accept	40.9:12.11	40.9:12.9	renders	the strong
+accept	40.9:12.13	40.9:12.13,40.9:12.14	renders	the sick
+fixed	40.9:12			added missing links
+ok	40.9:13			
+accept	40.9:14.10	40.9:14.8	renders	dia ti = why
+fixed	40.9:14			added Dia
+accept	40.9:15.6	40.9:15.6	renders	question particle
+accept	40.9:15.11	40.9:15.13,40.9:15.14	renders	as long as
+accept	40.9:15.23	40.9:15.28	renders	bridegroom
+accept	40.9:15.29,40.9:15.30	40.9:15.31	renders	future they will fast
+fixed	40.9:15			added links
+refuse	40.9:16.13	40.9:16.13		zbizhytsia is not patch
+accept	40.9:16.3	40.9:16.2	renders	de
+accept	40.9:16.7	40.9:16.3	renders	puts
+accept	40.9:16.10	40.9:16.5	renders	cloth
+accept	40.9:16.11	40.9:16.6	renders	unshrunk
+accept	40.9:16.17	40.9:16.21	renders	becomes
+fixed	40.9:16			refused wrong link, added links
+accept	40.9:17.1	40.9:17.1	renders	oude = and not
+accept	40.9:17.5	40.9:17.4	renders	new
+accept	40.9:17.9,40.9:17.10	40.9:17.8,40.9:17.9,40.9:17.10	renders	otherwise
+accept	40.9:17.27,40.9:17.28,40.9:17.29	40.9:17.30	renders	both
+accept	40.9:17.31	40.9:17.31	renders	future passive
+fixed	40.9:17			added links
+accept	40.9:18.7	40.9:18.8	renders	came up
+accept	40.9:18.9	40.9:18.7	renders	one
+accept	40.9:18.18	40.9:18.15	renders	my
+accept	40.9:18.19,40.9:18.20	40.9:18.16	renders	just now
+accept	40.9:18.21	40.9:18.17	renders	died
+accept	40.9:18.22	40.9:18.18	renders	but
+accept	40.9:18.25	40.9:18.23	renders	your
+accept	40.9:18.30,40.9:18.31	40.9:18.27	renders	she will live
+fixed	40.9:18			added links
+accept	40.9:19.2	40.9:19.2	renders	arose
+accept	40.9:19.5	40.9:19.5	renders	followed
+accept	40.9:19.9	40.9:19.7	renders	kai also
+fixed	40.9:19			added links
+accept	40.9:20.9,40.9:20.11	40.9:20.4	renders	part of having flux of blood
+fixed	40.9:20			added links
+accept	40.9:21.7	40.9:21.6	renders	only
+fixed	40.9:21			added khoch
+ok	40.9:22			
+accept	40.9:23.6	40.9:23.7	renders	house
+fixed	40.9:23			added hospody
+accept	40.9:24.3	40.9:24.2	renders	go away
+accept	40.9:24.7	40.9:24.7	renders	girl
+fixed	40.9:24			added links
+ok	40.9:25			
+accept	40.9:26.2	40.9:26.4	renders	report
+fixed	40.9:26			added vistka
+accept	40.9:27.5	40.9:27.2	renders	passing
+fixed	40.9:27			added vertavsia
+accept	40.9:28.4	40.9:28.3,40.9:28.5	renders	into the house
+accept	40.9:28.22	40.9:28.19	renders	to do
+accept	40.9:28.28	40.9:28.22	renders	yes
+fixed	40.9:28			added links
+refuse	40.9:29.11	40.9:29.10		vam is dative hymin
+refuse	40.9:29.14	40.9:29.12		vashoiu is genitive hymon
+accept	40.9:29.11	40.9:29.12	renders	to you
+accept	40.9:29.14	40.9:29.10	renders	your
+accept	40.9:29.9	40.9:29.11	renders	let it be
+accept	40.9:29.13	40.9:29.7	renders	zghidno z = kata
+fixed	40.9:29			swapped pronouns, added links
+accept	40.9:30.7,40.9:30.9	40.9:30.7	renders	strictly charged
+fixed	40.9:30			added links
+accept	40.9:31.2	40.9:31.1	renders	article as pronoun they
+accept	40.9:31.3	40.9:31.3	renders	went out
+accept	40.9:31.12	40.9:31.9	renders	land
+fixed	40.9:31			added links
+accept	40.9:32.2	40.9:32.2	renders	de
+accept	40.9:32.3	40.9:32.1	renders	they
+fixed	40.9:32			added links
+accept	40.9:33.4	40.9:33.2	renders	passive cast out
+accept	40.9:33.13,40.9:33.15	40.9:33.13	renders	never
+accept	40.9:33.14	40.9:33.15	renders	thus
+accept	40.9:33.16	40.9:33.14	renders	appeared
+accept	40.9:33.17	40.9:33.16	renders	in
+fixed	40.9:33			added links
+accept	40.9:34.6	40.9:34.12	renders	demons object
+accept	40.9:34.7	40.9:34.5	renders	en = by
+fixed	40.9:34			added links
+ok	40.9:35			
+accept	40.9:36.4	40.9:36.4	renders	crowds
+fixed	40.9:36			added liudei
+accept	40.9:37.7	40.9:37.7	renders	men
+accept	40.9:37.9	40.9:37.11	renders	de
+fixed	40.9:37			added links
+accept	40.9:38.3	40.9:38.4	renders	Lord
+fixed	40.9:38			added Hospodaria

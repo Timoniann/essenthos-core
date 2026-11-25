@@ -1,0 +1,120 @@
+kind	from	to	relation	reason
+fixed	40.19:1			corrections below
+fixed	40.19:2			corrections below
+fixed	40.19:3			corrections below
+fixed	40.19:4			corrections below
+fixed	40.19:5			corrections below
+fixed	40.19:6			corrections below
+fixed	40.19:7			corrections below
+fixed	40.19:8			corrections below
+fixed	40.19:9			corrections below
+fixed	40.19:10			corrections below
+fixed	40.19:11			corrections below
+fixed	40.19:12			corrections below
+fixed	40.19:13			corrections below
+ok	40.19:14			
+ok	40.19:15			
+fixed	40.19:16			corrections below
+fixed	40.19:17			corrections below
+fixed	40.19:18			corrections below
+fixed	40.19:19			corrections below
+fixed	40.19:20			corrections below
+fixed	40.19:21			corrections below
+fixed	40.19:22			corrections below
+ok	40.19:23			
+fixed	40.19:24			corrections below
+fixed	40.19:25			corrections below
+fixed	40.19:26			corrections below
+fixed	40.19:27			corrections below
+fixed	40.19:28			corrections below
+fixed	40.19:29			corrections below
+fixed	40.19:30			corrections below
+accept	40.19:1.6	40.19:1.9	renders	these
+accept	40.19:1.18,40.19:1.19	40.19:1.21	renders	на той бік = beyond
+accept	40.19:2.2	40.19:2.2	renders	за ішла = followed
+accept	40.19:2.5	40.19:2.5	renders	безліч = many
+accept	40.19:3.4	40.19:3.3	renders	до Нього = dative
+accept	40.19:3.8	40.19:3.8	renders	asked = saying
+accept	40.19:3.11	40.19:3.10	renders	lawful
+accept	40.19:4.2	40.19:4.1	renders	ὁ δέ he
+accept	40.19:4.7	40.19:4.6	renders	ye in verb
+accept	40.19:4.11,40.19:4.12	40.19:4.8	renders	the one who
+accept	40.19:4.13	40.19:4.9	renders	created
+accept	40.19:4.14	40.19:4.10	renders	ἀπ᾽ ἀρχῆς
+accept	40.19:5.4	40.19:5.3,40.19:5.4	renders	for this cause
+accept	40.19:5.16	40.19:5.20	renders	two
+accept	40.19:6.2	40.19:6.1	renders	тому то = ὥστε
+accept	40.19:6.3	40.19:6.2,40.19:6.3	renders	немає вже = are no longer
+accept	40.19:6.14	40.19:6.15	renders	imperative
+accept	40.19:7.1	40.19:7.1	renders	they in verb
+accept	40.19:7.6	40.19:7.4	renders	then
+accept	40.19:7.10	40.19:7.8	renders	writ/book
+accept	40.19:7.13	40.19:7.10	renders	та й = and
+refuse	40.19:8.3	40.19:8.5		до renders dative them, not πρός
+accept	40.19:8.3	40.19:8.2	renders	до них = to them
+accept	40.19:8.1	40.19:8.1	renders	he in verb
+accept	40.19:8.14	40.19:8.15	renders	ἀπ᾽ ἀρχῆς
+refuse	40.19:9.24	40.19:9.4		divorced woman is not ὅτι (TR-only clause)
+accept	40.19:9.5	40.19:9.5,40.19:9.6	renders	whoever
+accept	40.19:9.10,40.19:9.11	40.19:9.12	renders	for (cause of)
+accept	40.19:10.2	40.19:10.1	renders	say
+accept	40.19:10.5	40.19:10.9	renders	case
+accept	40.19:10.12	40.19:10.16	renders	не добре = not expedient
+accept	40.19:11.2	40.19:11.1	renders	ὁ δέ he
+accept	40.19:11.10	40.19:11.11	renders	but
+accept	40.19:12.24	40.19:12.23	renders	themselves
+accept	40.19:12.28	40.19:12.29	renders	the one
+accept	40.19:12.31	40.19:12.32	renders	imperative
+refuse	40.19:13.12	40.19:13.16		них of prayer is not object of rebuked
+accept	40.19:13.15	40.19:13.13	renders	δέ
+accept	40.19:16.6	40.19:16.5	renders	до Нього = to him
+accept	40.19:16.12	40.19:16.10	renders	маю зробити = shall I do
+refuse	40.19:17.6	40.19:17.7		звеш (call, TR λέγεις) is not ask
+refuse	40.19:17.13	40.19:17.15		that εἰ is the later If
+accept	40.19:17.16	40.19:17.15	renders	if
+accept	40.19:17.17	40.19:17.16	renders	δέ
+accept	40.19:17.1	40.19:17.1	renders	ὁ δέ he
+accept	40.19:17.2	40.19:17.2	renders	δέ
+accept	40.19:17.23	40.19:17.22	renders	keep
+accept	40.19:18.4	40.19:18.3	renders	which
+accept	40.19:18.6	40.19:18.5	renders	δέ
+accept	40.19:19.7	40.19:19.11	renders	your
+accept	40.19:20.2	40.19:20.2	renders	до Нього = to him
+accept	40.19:20.6,40.19:20.7	40.19:20.7	renders	I have kept
+accept	40.19:20.9	40.19:20.8	renders	what
+accept	40.19:20.12	40.19:20.10	renders	I lack
+accept	40.19:21.2	40.19:21.1	renders	said
+accept	40.19:21.6	40.19:21.8	renders	to be
+accept	40.19:21.10	40.19:21.13	renders	possessions
+accept	40.19:21.11	40.19:21.11	renders	your
+accept	40.19:21.13	40.19:21.14	renders	та й = and
+accept	40.19:21.26	40.19:21.24	renders	іди вслід = follow
+accept	40.19:22.10	40.19:22.12	renders	possessions
+accept	40.19:22.12	40.19:22.9	renders	ἦν ἔχων periphrastic
+refuse	40.19:24.6	40.19:24.7		пройти is not camel
+accept	40.19:24.6	40.19:24.11	renders	go through
+accept	40.19:24.4	40.19:24.7	renders	camel
+refuse	40.19:24.9	40.19:24.10		вушко is eye, not needle
+accept	40.19:24.9	40.19:24.9	renders	eye
+accept	40.19:24.8	40.19:24.10	renders	of needle
+accept	40.19:24.1	40.19:24.1	renders	again
+accept	40.19:24.10	40.19:24.12	renders	than
+accept	40.19:25.6	40.19:25.1	renders	having heard
+accept	40.19:25.3	40.19:25.2	renders	δέ
+accept	40.19:26.10	40.19:26.13	renders	δέ
+accept	40.19:27.5	40.19:27.6	renders	до Нього = to him
+accept	40.19:27.13	40.19:27.11	renders	та й = and
+accept	40.19:27.14,40.19:27.15	40.19:27.12	renders	пішли за = followed
+accept	40.19:27.19	40.19:27.15	renders	then
+accept	40.19:28.10	40.19:28.14	renders	in
+accept	40.19:28.24	40.19:28.11	renders	οἱ who
+accept	40.19:28.27	40.19:28.12	renders	followed
+accept	40.19:28.23	40.19:28.29	renders	καὶ αὐτοί = й ви
+accept	40.19:29.3	40.19:29.3	renders	who
+accept	40.19:29.6	40.19:29.20	renders	my
+accept	40.19:29.7	40.19:29.4	renders	left
+accept	40.19:29.17	40.19:29.14	renders	or
+accept	40.19:29.19	40.19:29.16	renders	or
+accept	40.19:29.20	40.19:29.17	renders	lands
+accept	40.19:29.22	40.19:29.22	renders	manifold
+accept	40.19:30.1	40.19:30.2	renders	δέ

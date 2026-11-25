@@ -1,0 +1,172 @@
+kind	from	to	relation	reason
+fixed	42.18:1			missing links
+fixed	42.18:2			missing links
+fixed	42.18:3			missing links
+fixed	42.18:4			missing links
+fixed	42.18:5			missing links
+fixed	42.18:6			missing link
+fixed	42.18:7			missing links
+fixed	42.18:8			missing links
+fixed	42.18:9			missing links
+fixed	42.18:10			missing link
+fixed	42.18:11			missing links
+fixed	42.18:12			missing links
+fixed	42.18:13			missing links
+fixed	42.18:14			missing links
+fixed	42.18:15			missing link
+ok	42.18:16			
+fixed	42.18:17			missing links
+ok	42.18:18			
+fixed	42.18:19			missing links
+fixed	42.18:20			missing link
+fixed	42.18:21			missing link
+fixed	42.18:22			deuro on wrong word, missing links
+fixed	42.18:23			missing links
+fixed	42.18:24			missing links
+fixed	42.18:25			camel/eye mislinked
+fixed	42.18:26			missing links
+fixed	42.18:27			missing links
+fixed	42.18:28			missing links
+fixed	42.18:29			missing links
+fixed	42.18:30			missing links
+fixed	42.18:31			missing links
+fixed	42.18:32			missing links
+fixed	42.18:33			missing link
+fixed	42.18:34			missing links
+fixed	42.18:35			missing links
+fixed	42.18:36			missing link
+fixed	42.18:37			missing link
+fixed	42.18:38			missing link
+fixed	42.18:39			missing links
+fixed	42.18:40			autou mislinked, missing links
+fixed	42.18:41			soi and hina mislinked
+fixed	42.18:42			missing links
+fixed	42.18:43			missing links
+accept	42.18:1.3	42.18:1.1	renders	told = elegen
+accept	42.18:1.7	42.18:1.5	renders	about = pros
+accept	42.18:1.1	42.18:1.2	renders	conj = de
+accept	42.18:1.16	42.18:1.13	renders	lose heart phrase
+accept	42.18:2.4	42.18:2.6	renders	certain = tini
+accept	42.18:2.7	42.18:2.3	renders	one = tis
+accept	42.18:2.13	42.18:2.13	renders	people = anthropon
+accept	42.18:2.15	42.18:2.15	renders	respecting
+accept	42.18:3.2	42.18:3.7	renders	that = ekeine
+accept	42.18:3.3	42.18:3.2	renders	zh = de
+accept	42.18:3.10	42.18:3.9	renders	came = erxeto
+accept	42.18:4.1	42.18:4.1	renders	conj = kai
+accept	42.18:4.3,42.18:4.4	42.18:4.5	renders	long time = xronon
+accept	42.18:4.8	42.18:4.7	renders	afterwards = meta tauta
+accept	42.18:4.18	42.18:4.17	renders	fear
+accept	42.18:4.19,42.18:4.21	42.18:4.18	renders	nor = oude
+accept	42.18:4.20	42.18:4.19	renders	man
+accept	42.18:4.22	42.18:4.20	renders	respect
+accept	42.18:5.7	42.18:5.4,42.18:5.6	renders	bothers = parexein kopon
+accept	42.18:5.10,42.18:5.11	42.18:5.10	renders	avenge phrase
+accept	42.18:5.18,42.18:5.21	42.18:5.13	renders	not = me
+accept	42.18:5.19	42.18:5.16	renders	coming = erxomene
+accept	42.18:6.1	42.18:6.2	renders	conj = de
+accept	42.18:7.7	42.18:7.5	renders	ou me double negative
+accept	42.18:7.5,42.18:7.8	42.18:7.8,42.18:7.6	renders	avenge phrase
+accept	42.18:7.12	42.18:7.13	renders	crying = boonton
+accept	42.18:7.20	42.18:7.19	renders	delays = makrothymei
+accept	42.18:7.22	42.18:7.20	renders	regarding = ep
+accept	42.18:8.6	42.18:8.8,42.18:8.9	renders	soon = en taxei
+accept	42.18:8.14	42.18:8.16	renders	chi = ara
+accept	42.18:9.7	42.18:9.7	renders	sure = pepoithotas
+accept	42.18:9.13,42.18:9.14,42.18:9.15	42.18:9.14	renders	despising
+accept	42.18:9.20	42.18:9.1	renders	told = eipen
+accept	42.18:10.5	42.18:10.3	renders	went = anebesan
+accept	42.18:11.3	42.18:11.4	renders	thus = tauta
+accept	42.18:11.11	42.18:11.14	renders	I = eimi
+accept	42.18:12.3,42.18:12.4	42.18:12.2	renders	twice = dis
+accept	42.18:12.11	42.18:12.7	renders	what = hosa
+accept	42.18:13.8	42.18:13.8	renders	not even = oude
+accept	42.18:13.9	42.18:13.11	renders	lift = eparai
+accept	42.18:13.16	42.18:13.19	renders	himself = autou
+accept	42.18:14.1	42.18:14.1	renders	say = lego
+accept	42.18:14.5	42.18:14.3	renders	went down
+accept	42.18:14.9,42.18:14.11	42.18:14.10	renders	rather than = par
+accept	42.18:14.12	42.18:14.11	renders	that one
+accept	42.18:14.17,42.18:14.18	42.18:14.17	renders	will be humbled
+accept	42.18:14.16	42.18:14.16	renders	reflexive heauton
+accept	42.18:14.20	42.18:14.19	renders	zh = de
+accept	42.18:14.21	42.18:14.20,42.18:14.21	renders	humbling himself
+accept	42.18:15.6	42.18:15.6	renders	infants = brephe
+accept	42.18:17.4	42.18:17.4	renders	who = hos
+accept	42.18:17.14	42.18:17.15	renders	ou me double negative
+accept	42.18:19.2	42.18:19.2	renders	zhe = de
+accept	42.18:19.13	42.18:19.12,42.18:19.13	renders	only = ei me
+accept	42.18:19.14	42.18:19.14	renders	alone = heis
+accept	42.18:20.14	42.18:20.15	renders	your = sou
+accept	42.18:21.7	42.18:21.6	renders	kept = ephylaxa
+refuse	42.18:22.31	42.18:22.25		go-follow is akolouthei
+accept	42.18:22.27	42.18:22.25	renders	come = deuro
+accept	42.18:22.31	42.18:22.26	renders	go after = follow
+accept	42.18:22.13	42.18:22.14	renders	sell = poleson
+accept	42.18:23.7	42.18:23.6	renders	became sorrowful
+accept	42.18:23.9	42.18:23.7	renders	was = en
+accept	42.18:24.5	42.18:24.3	renders	that one = auton
+accept	42.18:24.11	42.18:24.11,42.18:24.12	renders	rich = having riches
+accept	42.18:24.12	42.18:24.18	renders	enter
+refuse	42.18:25.4	42.18:25.4		camel is verblyudovi
+refuse	42.18:25.7	42.18:25.7		eye is trematos
+accept	42.18:25.2	42.18:25.4	renders	camel
+accept	42.18:25.4	42.18:25.8	renders	go through = eiselthein
+accept	42.18:25.7	42.18:25.6	renders	eye = trematos
+accept	42.18:25.6	42.18:25.7	renders	needle
+accept	42.18:25.8	42.18:25.9	renders	than = e
+accept	42.18:26.1	42.18:26.3	renders	those = hoi
+accept	42.18:26.2	42.18:26.2	renders	zh = de
+accept	42.18:26.5	42.18:26.1	renders	asked = eipan
+accept	42.18:26.8	42.18:26.5	renders	then = kai
+accept	42.18:27.3	42.18:27.3	renders	answered = eipen
+accept	42.18:27.4	42.18:27.5	renders	impossible
+accept	42.18:28.1	42.18:28.2	renders	conj = de
+accept	42.18:28.4	42.18:28.5	renders	behold
+accept	42.18:28.10,42.18:28.11	42.18:28.10	renders	followed
+accept	42.18:29.8,42.18:29.9	42.18:29.9,42.18:29.10	renders	no one is
+accept	42.18:29.10	42.18:29.11	renders	who = hos
+accept	42.18:30.2	42.18:30.2	renders	ouchi me
+accept	42.18:30.5	42.18:30.5	renders	manifold
+accept	42.18:30.7	42.18:30.9	renders	this = touto
+accept	42.18:31.1	42.18:31.2	renders	conj = de
+accept	42.18:31.7	42.18:31.8	renders	behold
+accept	42.18:31.8	42.18:31.10	renders	to = eis
+accept	42.18:31.14	42.18:31.13	renders	accomplished
+accept	42.18:32.4	42.18:32.1	renders	future passive aux
+accept	42.18:32.7	42.18:32.6	renders	future passive aux
+accept	42.18:33.5	42.18:33.5	renders	conj = kai
+accept	42.18:34.5	42.18:34.2	renders	they = autoi
+accept	42.18:34.4,42.18:34.6	42.18:34.3	renders	nothing = ouden
+accept	42.18:34.3	42.18:34.4	renders	of these
+accept	42.18:34.7	42.18:34.5	renders	understood
+accept	42.18:34.10	42.18:34.9	renders	thing = rema
+accept	42.18:34.14	42.18:34.7	renders	was = en
+accept	42.18:34.16	42.18:34.18	renders	spoken
+accept	42.18:35.1	42.18:35.2	renders	conj = de
+accept	42.18:35.3	42.18:35.3	renders	as = en to
+accept	42.18:35.4	42.18:35.6	renders	he = auton
+accept	42.18:36.9	42.18:36.5	renders	asked
+accept	42.18:37.3	42.18:37.1	renders	told
+accept	42.18:38.4	42.18:38.2	renders	cried out
+accept	42.18:39.2	42.18:39.2	renders	those = hoi
+accept	42.18:39.5	42.18:39.3	renders	going before
+accept	42.18:39.13	42.18:39.8	renders	he = autos
+accept	42.18:39.14	42.18:39.10	renders	much = pollo
+refuse	42.18:40.15	42.18:40.12		autou is the blind man (toi)
+accept	42.18:40.12	42.18:40.12	renders	he = autou
+accept	42.18:40.1	42.18:40.2	renders	conj = de
+accept	42.18:40.5	42.18:40.7	renders	be brought
+accept	42.18:40.8	42.18:40.9	renders	Him = auton
+accept	42.18:40.9	42.18:40.5	renders	commanded
+refuse	42.18:41.2	42.18:41.2		soi is tobi
+refuse	42.18:41.4	42.18:41.9		hina belongs to nekhai stanu
+accept	42.18:41.7	42.18:41.2	renders	to you = soi
+accept	42.18:41.12	42.18:41.9	renders	that = hina
+accept	42.18:41.9	42.18:41.5	renders	he = ho
+accept	42.18:41.10	42.18:41.7	renders	said
+accept	42.18:41.13	42.18:41.10	renders	receive sight
+accept	42.18:42.2	42.18:42.1	renders	zhe = kai
+accept	42.18:42.6	42.18:42.6	renders	receive sight
+accept	42.18:43.5	42.18:43.3	renders	became seeing
+accept	42.18:43.7,42.18:43.9	42.18:43.5	renders	followed

@@ -1,0 +1,166 @@
+kind	from	to	relation	reason
+fixed	1.5:1			object pronoun and preposition linked
+accept	1.5:1.12	1.5:1.14	renders	her = object marker with suffix
+accept	1.5:1.14	1.5:1.10	renders	na = be-
+fixed	1.5:2			object, passive clause, name linked
+accept	1.5:2.9	1.5:2.7	renders	them = otam
+accept	1.5:2.11	1.5:2.13	renders	tovo dnia = be-yom
+accept	1.5:2.14,1.5:2.15,1.5:2.16	1.5:2.15	renders	were they created = hibbaream
+accept	1.5:2.21	1.5:2.12	renders	Ludyna = adam
+fixed	1.5:3			za to the prepositions, suffixes
+refuse	1.5:3.12	1.5:3.11		za renders be-, not noun
+accept	1.5:3.12	1.5:3.10	renders	za = be-
+accept	1.5:3.14	1.5:3.11	renders	svoieiu = suffix
+accept	1.5:3.16	1.5:3.12	renders	za = ke-
+accept	1.5:3.22	1.5:3.17	renders	yomu = suffix of shemo
+fixed	1.5:4			bulo, he begot linked
+accept	1.5:4.2	1.5:4.2	renders	bulo = wayyihyu
+accept	1.5:4.8,1.5:4.10	1.5:4.6	renders	he begot = holido
+fixed	1.5:5			bulo and years linked
+accept	1.5:5.5	1.5:5.2	renders	bulo
+accept	1.5:5.10	1.5:5.10	renders	lit
+accept	1.5:5.13	1.5:5.13	renders	lit
+fixed	1.5:6			years linked
+accept	1.5:6.5	1.5:6.8	renders	lit
+accept	1.5:6.8	1.5:6.5	renders	lit
+fixed	1.5:7			years linked
+accept	1.5:7.11	1.5:7.13	renders	lit
+accept	1.5:7.14	1.5:7.9	renders	lit
+fixed	1.5:8			and corrected, numbers and years linked
+refuse	1.5:8.9	1.5:8.13		wrong vav, that one is before died
+accept	1.5:8.9	1.5:8.9	renders	i = u-
+accept	1.5:8.2	1.5:8.2	renders	buly
+accept	1.5:8.8	1.5:8.12	renders	lit
+accept	1.5:8.10	1.5:8.6,1.5:8.7	renders	twelve
+accept	1.5:8.11	1.5:8.8	renders	lit
+ok	1.5:9			
+fixed	1.5:10			fifteen completed, years linked
+accept	1.5:10.13	1.5:10.8	renders	fifteen includes five
+accept	1.5:10.11	1.5:10.14	renders	lit
+accept	1.5:10.14	1.5:10.10	renders	lit
+fixed	1.5:11			buly and years linked
+accept	1.5:11.2	1.5:11.2	renders	buly
+accept	1.5:11.8	1.5:11.11	renders	lit
+accept	1.5:11.11	1.5:11.7	renders	lit
+ok	1.5:12			
+fixed	1.5:13			years linked
+accept	1.5:13.11	1.5:13.13	renders	lit
+accept	1.5:13.14	1.5:13.9	renders	lit
+unsure	1.5:14			UA devyat (9) vs Hebrew eser (10); left unlinked
+accept	1.5:14.5	1.5:14.2	renders	bulo
+accept	1.5:14.8	1.5:14.11	renders	lit
+accept	1.5:14.11	1.5:14.7	renders	lit
+fixed	1.5:15			years linked
+accept	1.5:15.5	1.5:15.8	renders	lit
+accept	1.5:15.8	1.5:15.5	renders	lit
+fixed	1.5:16			years linked
+accept	1.5:16.11	1.5:16.13	renders	lit
+accept	1.5:16.14	1.5:16.9	renders	lit
+fixed	1.5:17			swapped vavs, five, buly, years
+refuse	1.5:17.9	1.5:17.7		wrong vav (swapped)
+refuse	1.5:17.11	1.5:17.10		wrong vav (swapped)
+accept	1.5:17.9	1.5:17.10	renders	vav joining the groups
+accept	1.5:17.11	1.5:17.7	renders	vav inside the tens-units group
+accept	1.5:17.2	1.5:17.2	renders	buly
+accept	1.5:17.8	1.5:17.13	renders	lit
+accept	1.5:17.12	1.5:17.6	renders	five
+accept	1.5:17.13	1.5:17.9	renders	lit
+fixed	1.5:18			swapped vavs, years
+refuse	1.5:18.6	1.5:18.5		wrong vav (swapped)
+refuse	1.5:18.8	1.5:18.8		wrong vav (swapped)
+accept	1.5:18.6	1.5:18.8	renders	vav joining the groups
+accept	1.5:18.8	1.5:18.5	renders	vav inside the tens-units group
+accept	1.5:18.5	1.5:18.10	renders	lit
+accept	1.5:18.10	1.5:18.7	renders	roky
+fixed	1.5:19			he = suffix of holido
+accept	1.5:19.8	1.5:19.5	renders	he = suffix
+fixed	1.5:20			swapped vavs, buly, years
+refuse	1.5:20.9	1.5:20.7		wrong vav (swapped)
+refuse	1.5:20.11	1.5:20.10		wrong vav (swapped)
+accept	1.5:20.9	1.5:20.10	renders	vav joining the groups
+accept	1.5:20.11	1.5:20.7	renders	vav inside the tens-units group
+accept	1.5:20.2	1.5:20.2	renders	buly
+accept	1.5:20.8	1.5:20.13	renders	lit
+accept	1.5:20.13	1.5:20.9	renders	roky
+ok	1.5:21			
+fixed	1.5:22			z and he linked
+accept	1.5:22.4	1.5:22.4	renders	z = et (with)
+accept	1.5:22.10	1.5:22.8	renders	he = suffix
+fixed	1.5:23			swapped vavs, years
+refuse	1.5:23.9	1.5:23.7		wrong vav (swapped)
+refuse	1.5:23.11	1.5:23.10		wrong vav (swapped)
+accept	1.5:23.9	1.5:23.10	renders	vav joining the groups
+accept	1.5:23.11	1.5:23.7	renders	vav inside the tens-units group
+accept	1.5:23.8	1.5:23.13	renders	lit
+accept	1.5:23.13	1.5:23.9	renders	lit
+fixed	1.5:24			iz, ne stalo yoho, object linked
+accept	1.5:24.3	1.5:24.4	renders	iz = et (with)
+accept	1.5:24.7,1.5:24.8,1.5:24.9	1.5:24.8	renders	ne stalo yoho = enennu
+accept	1.5:24.12	1.5:24.11	renders	yoho = oto
+unsure	1.5:25			UA simdesiat (70) vs Hebrew shemonim (80); left unlinked
+refuse	1.5:25.6	1.5:25.5		wrong vav (swapped)
+refuse	1.5:25.8	1.5:25.8		wrong vav (swapped)
+accept	1.5:25.6	1.5:25.8	renders	vav joining the groups
+accept	1.5:25.8	1.5:25.5	renders	vav inside the tens-units group
+accept	1.5:25.5	1.5:25.10	renders	lit
+accept	1.5:25.10	1.5:25.7	renders	lit
+fixed	1.5:26			swapped vavs, two, years, he
+refuse	1.5:26.13	1.5:26.9		wrong vav (swapped)
+refuse	1.5:26.15	1.5:26.12		wrong vav (swapped)
+accept	1.5:26.13	1.5:26.12	renders	vav joining the groups
+accept	1.5:26.15	1.5:26.9	renders	vav inside the tens-units group
+accept	1.5:26.12	1.5:26.15	renders	lit
+accept	1.5:26.16	1.5:26.8	renders	two
+accept	1.5:26.17	1.5:26.11	renders	roky
+accept	1.5:26.8	1.5:26.5	renders	he = suffix
+fixed	1.5:27			swapped nines and vavs, bulo, years
+refuse	1.5:27.6	1.5:27.6		wrong nine: this is the hundreds
+refuse	1.5:27.12	1.5:27.11		wrong nine: this is the units
+accept	1.5:27.6	1.5:27.11	renders	nine (hundred)
+accept	1.5:27.12	1.5:27.6	renders	nine (units)
+refuse	1.5:27.9	1.5:27.7		wrong vav (swapped)
+refuse	1.5:27.11	1.5:27.10		wrong vav (swapped)
+accept	1.5:27.9	1.5:27.10	renders	vav joining the groups
+accept	1.5:27.11	1.5:27.7	renders	vav inside the tens-units group
+accept	1.5:27.5	1.5:27.2	renders	bulo
+accept	1.5:27.8	1.5:27.13	renders	lit
+accept	1.5:27.13	1.5:27.9	renders	lit
+fixed	1.5:28			swapped vavs, years
+refuse	1.5:28.6	1.5:28.5		wrong vav (swapped)
+refuse	1.5:28.8	1.5:28.8		wrong vav (swapped)
+accept	1.5:28.6	1.5:28.8	renders	vav joining the groups
+accept	1.5:28.8	1.5:28.5	renders	vav inside the tens-units group
+accept	1.5:28.5	1.5:28.10	renders	lit
+accept	1.5:28.10	1.5:28.7	renders	roky
+fixed	1.5:29			suffixes, prepositions, curse linked
+accept	1.5:29.7	1.5:29.9	renders	nas = suffix
+accept	1.5:29.9	1.5:29.10	renders	u = min
+accept	1.5:29.13	1.5:29.13	renders	v = me-
+accept	1.5:29.14	1.5:29.14	renders	trud = itsavon
+accept	1.5:29.17	1.5:29.16	renders	kolo = min
+accept	1.5:29.21,1.5:29.22	1.5:29.20	renders	cursed it = ererah
+fixed	1.5:30			swapped fives and vavs, begot, years
+refuse	1.5:30.9	1.5:30.8		wrong five: this is the hundreds
+refuse	1.5:30.15	1.5:30.13		wrong five: this is the units
+accept	1.5:30.9	1.5:30.13	renders	five (hundred)
+accept	1.5:30.15	1.5:30.8	renders	five (units)
+refuse	1.5:30.12	1.5:30.9		wrong vav (swapped)
+refuse	1.5:30.14	1.5:30.12		wrong vav (swapped)
+accept	1.5:30.12	1.5:30.12	renders	vav joining the groups
+accept	1.5:30.14	1.5:30.9	renders	vav inside the tens-units group
+accept	1.5:30.8	1.5:30.5	renders	begot = holido
+accept	1.5:30.11	1.5:30.15	renders	lit
+accept	1.5:30.16	1.5:30.11	renders	lit
+fixed	1.5:31			swapped sevens and vavs, years
+refuse	1.5:31.6	1.5:31.6		wrong seven: this is the hundreds
+refuse	1.5:31.12	1.5:31.11		wrong seven: this is the units
+accept	1.5:31.6	1.5:31.11	renders	seven (hundred)
+accept	1.5:31.12	1.5:31.6	renders	seven (units)
+refuse	1.5:31.9	1.5:31.7		wrong vav (swapped)
+refuse	1.5:31.11	1.5:31.10		wrong vav (swapped)
+accept	1.5:31.9	1.5:31.10	renders	vav joining the groups
+accept	1.5:31.11	1.5:31.7	renders	vav inside the tens-units group
+accept	1.5:31.8	1.5:31.13	renders	lit
+accept	1.5:31.13	1.5:31.9	renders	lit
+fixed	1.5:32			buv linked
+accept	1.5:32.2	1.5:32.2	renders	buv = wayhi

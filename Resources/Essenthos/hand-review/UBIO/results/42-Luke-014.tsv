@@ -1,0 +1,176 @@
+kind	from	to	relation	reason
+fixed	42.14:1			added missing links
+accept	42.14:1.4	42.14:1.6	renders	pronoun
+accept	42.14:1.7	42.14:1.5	renders	entered
+accept	42.14:1.18	42.14:1.17	renders	and
+fixed	42.14:2			added missing links
+accept	42.14:2.8	42.14:2.6	renders	sick with dropsy
+accept	42.14:2.5	42.14:2.5	renders	was
+fixed	42.14:3			added or-not
+accept	42.14:3.15	42.14:3.16	renders	or
+accept	42.14:3.16	42.14:3.17	renders	not
+fixed	42.14:4			added missing links
+accept	42.14:4.1	42.14:4.1	renders	article as pronoun
+accept	42.14:4.2	42.14:4.2	renders	de
+accept	42.14:4.6	42.14:4.5	renders	took hold
+fixed	42.14:5			added well
+accept	42.14:5.15	42.14:5.11	renders	pit/well
+fixed	42.14:6			added preposition
+accept	42.14:6.6	42.14:6.5	renders	pros
+fixed	42.14:7			said/to belong to Elegen pros
+refuse	42.14:7.12	42.14:7.12		legon untranslated; said renders Elegen
+refuse	42.14:7.13	42.14:7.13		to renders first pros
+accept	42.14:7.12	42.14:7.1	renders	was speaking
+accept	42.14:7.13	42.14:7.3	renders	to
+accept	42.14:7.4	42.14:7.7	renders	remarking
+accept	42.14:7.8	42.14:7.10	renders	first places
+fixed	42.14:8			added missing links
+accept	42.14:8.3	42.14:8.2	renders	invited
+accept	42.14:8.4	42.14:8.2	renders	passive object
+accept	42.14:8.2	42.14:8.4	renders	by anyone
+accept	42.14:8.10	42.14:8.11	renders	first place
+accept	42.14:8.14	42.14:8.16	renders	might be
+accept	42.14:8.17	42.14:8.15	renders	genitive of comparison
+fixed	42.14:9			added verbs
+accept	42.14:9.5	42.14:9.7	renders	invited
+accept	42.14:9.14	42.14:9.8	renders	will say
+accept	42.14:9.23	42.14:9.15	renders	begin
+accept	42.14:9.24	42.14:9.21	renders	to take
+fixed	42.14:10			added missing links
+accept	42.14:10.7	42.14:10.4	renders	having gone
+accept	42.14:10.14	42.14:10.13	renders	the one
+accept	42.14:10.16	42.14:10.14	renders	having invited
+accept	42.14:10.17	42.14:10.15	renders	you
+accept	42.14:10.18	42.14:10.12	renders	might come
+accept	42.14:10.20	42.14:10.16	renders	will say
+accept	42.14:10.23	42.14:10.19	renders	come up
+accept	42.14:10.26	42.14:10.22	renders	will be
+accept	42.14:10.27	42.14:10.24	renders	glory/honour
+accept	42.14:10.30	42.14:10.28	renders	reclining
+fixed	42.14:11			added passive and reflexives
+accept	42.14:11.5	42.14:11.6	renders	humbled
+accept	42.14:11.7	42.14:11.8	renders	the one
+accept	42.14:11.3	42.14:11.5	renders	reflexive
+accept	42.14:11.8	42.14:11.10	renders	reflexive
+fixed	42.14:12			added missing links
+accept	42.14:12.1	42.14:12.2	renders	de
+accept	42.14:12.2	42.14:12.4	renders	to the one
+accept	42.14:12.6	42.14:12.5	renders	having invited
+accept	42.14:12.28	42.14:12.28	renders	lest
+accept	42.14:12.33	42.14:12.29	renders	ever
+accept	42.14:12.35	42.14:12.32	renders	invite in return
+accept	42.14:12.38	42.14:12.35	renders	be made
+accept	42.14:12.39	42.14:12.36	renders	recompense
+ok	42.14:13			
+fixed	42.14:14			added missing links
+accept	42.14:14.2	42.14:14.3	renders	will be
+accept	42.14:14.9	42.14:14.7	renders	to repay
+accept	42.14:14.11	42.14:14.9	renders	will be repaid
+accept	42.14:14.12	42.14:14.10	renders	gar
+fixed	42.14:15			added missing links
+accept	42.14:15.3	42.14:15.6	renders	these things
+accept	42.14:15.6	42.14:15.4	renders	of those
+accept	42.14:15.18	42.14:15.10	renders	who
+fixed	42.14:16			added missing links
+accept	42.14:16.1	42.14:16.1	renders	article as pronoun
+accept	42.14:16.8	42.14:16.7	renders	was preparing
+fixed	42.14:17			added missing links
+accept	42.14:17.6	42.14:17.7	renders	hour
+accept	42.14:17.10	42.14:17.13	renders	come
+accept	42.14:17.12	42.14:17.15	renders	already
+accept	42.14:17.14	42.14:17.16,42.14:17.17	renders	ready is
+fixed	42.14:18			added missing links
+accept	42.14:18.5	42.14:18.6	renders	excuse themselves
+accept	42.14:18.21	42.14:18.21,42.14:18.23	renders	hold me excused
+fixed	42.14:19			added missing links
+accept	42.14:19.2	42.14:19.2	renders	another
+accept	42.14:19.12	42.14:19.10	renders	to prove
+accept	42.14:19.16	42.14:19.14	renders	hold excused
+fixed	42.14:20			added married
+accept	42.14:20.5	42.14:20.4,42.14:20.5	renders	married a wife
+fixed	42.14:21			added missing links
+accept	42.14:21.2	42.14:21.2	renders	having come
+accept	42.14:21.6	42.14:21.7	renders	master
+accept	42.14:21.9	42.14:21.9	renders	these things
+accept	42.14:21.10	42.14:21.5	renders	reported
+accept	42.14:21.25	42.14:21.20	renders	repeated eis
+fixed	42.14:22			added said
+accept	42.14:22.4	42.14:22.2	renders	said
+fixed	42.14:23			added missing links
+accept	42.14:23.9	42.14:23.9	renders	repeated eis
+accept	42.14:23.13	42.14:23.15	renders	compel
+accept	42.14:23.14	42.14:23.16	renders	to come in
+fixed	42.14:24			added missing links
+accept	42.14:24.6	42.14:24.5	renders	not one
+accept	42.14:24.11	42.14:24.5	renders	negation of oudeis
+accept	42.14:24.8	42.14:24.10	renders	invited
+fixed	42.14:25			added missing links
+accept	42.14:25.2	42.14:25.2	renders	de
+accept	42.14:25.3	42.14:25.1	renders	syn- prefix
+accept	42.14:25.6	42.14:25.4	renders	crowds
+fixed	42.14:26			added missing links
+accept	42.14:26.9	42.14:26.11	renders	his
+accept	42.14:26.21	42.14:26.28	renders	te
+accept	42.14:26.22,42.14:26.23	42.14:26.27	renders	moreover
+accept	42.14:26.24	42.14:26.29	renders	even
+accept	42.14:26.25	42.14:26.32	renders	his own
+accept	42.14:26.30	42.14:26.35	renders	to be
+fixed	42.14:27			added his
+accept	42.14:27.3	42.14:27.6	renders	his own
+fixed	42.14:28			reckon/costs swapped
+refuse	42.14:28.15	42.14:28.13		vyrakhuie is counts not cost
+refuse	42.14:28.18	42.14:28.15		added word, not echei
+accept	42.14:28.1	42.14:28.1	renders	which
+accept	42.14:28.7	42.14:28.7	renders	to build
+accept	42.14:28.8	42.14:28.5	renders	desiring
+accept	42.14:28.13	42.14:28.13	renders	cost
+accept	42.14:28.15	42.14:28.11	renders	counts
+accept	42.14:28.19	42.14:28.16	renders	for
+fixed	42.14:29			negation moved
+refuse	42.14:29.8	42.14:29.2		ne of zmozhe is second me
+accept	42.14:29.8	42.14:29.8	renders	not able
+accept	42.14:29.13	42.14:29.2	renders	lest
+accept	42.14:29.3	42.14:29.4	renders	having laid
+accept	42.14:29.6	42.14:29.7	renders	kai
+accept	42.14:29.9	42.14:29.9	renders	being able
+accept	42.14:29.11	42.14:29.12	renders	the ones
+accept	42.14:29.12	42.14:29.13	renders	seeing
+accept	42.14:29.14	42.14:29.14	renders	begin
+fixed	42.14:30			added but
+accept	42.14:30.6	42.14:30.8	renders	kai
+fixed	42.14:31			going is poreuomenos
+refuse	42.14:31.4	42.14:31.7		iduchy renders poreuomenos
+accept	42.14:31.4	42.14:31.4	renders	proceeding
+accept	42.14:31.2	42.14:31.2	renders	what
+accept	42.14:31.11	42.14:31.10	renders	not
+accept	42.14:31.13	42.14:31.13	renders	take counsel
+accept	42.14:31.15	42.14:31.15	renders	able
+accept	42.14:31.16	42.14:31.16	renders	he is
+accept	42.14:31.21	42.14:31.21	renders	the one
+accept	42.14:31.22	42.14:31.21	renders	the one
+fixed	42.14:32			send/embassy fixed
+refuse	42.14:32.9	42.14:32.8		shle renders aposteilas
+refuse	42.14:32.11	42.14:32.12		do has no counterpart; pros is pro
+accept	42.14:32.9	42.14:32.9	renders	having sent
+accept	42.14:32.1	42.14:32.1	renders	if
+accept	42.14:32.2	42.14:32.2	renders	de
+accept	42.14:32.3	42.14:32.3	renders	not
+accept	42.14:32.6	42.14:32.5	renders	him
+fixed	42.14:33			added missing links
+accept	42.14:33.2	42.14:33.2	renders	therefore
+accept	42.14:33.7	42.14:33.6	renders	who
+accept	42.14:33.11	42.14:33.10	renders	that
+accept	42.14:33.12	42.14:33.12	renders	possesses
+fixed	42.14:34			added missing links
+accept	42.14:34.5	42.14:34.6	renders	de
+accept	42.14:34.8	42.14:34.10	renders	becomes tasteless
+accept	42.14:34.9	42.14:34.11,42.14:34.12	renders	with what
+accept	42.14:34.10	42.14:34.13	renders	will be seasoned
+fixed	42.14:35			added missing links
+accept	42.14:35.5	42.14:35.5	renders	eis
+accept	42.14:35.8	42.14:35.7	renders	fit
+accept	42.14:35.10	42.14:35.11	renders	it
+accept	42.14:35.11	42.14:35.9	renders	out
+accept	42.14:35.12	42.14:35.10	renders	cast
+accept	42.14:35.13	42.14:35.12	renders	the one
+accept	42.14:35.18	42.14:35.16	renders	let hear

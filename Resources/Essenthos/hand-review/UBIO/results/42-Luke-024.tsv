@@ -1,0 +1,202 @@
+kind	from	to	relation	reason
+refuse	42.24:1.8	42.24:1.6		рано renders βαθέως, not ὄρθρου
+accept	42.24:1.8	42.24:1.7	renders	рано = βαθέως
+accept	42.24:1.10	42.24:1.8	renders	до = ἐπὶ
+accept	42.24:1.13	42.24:1.14	renders	наготовані = ἡτοίμασαν
+fixed	42.24:1			рано retargeted; added до, наготовані
+accept	42.24:2.1	42.24:2.2	renders	та = δὲ
+fixed	42.24:2			added та
+ok	42.24:3			
+accept	42.24:4.3	42.24:4.3	renders	як = ἐν (temporal)
+accept	42.24:4.4	42.24:4.5	renders	безрадні = ἀπορεῖσθαι
+accept	42.24:4.14	42.24:4.17	renders	блискучих = ἀστραπτούσῃ
+accept	42.24:4.15	42.24:4.13	renders	з'явились = ἐπέστησαν
+fixed	42.24:4			added missing links
+accept	42.24:5.3	42.24:5.1,42.24:5.3	renders	налякались = ἐμφόβων γενομένων
+accept	42.24:5.4	42.24:5.4	renders	вони = αὐτῶν
+fixed	42.24:5			added налякались, вони
+accept	42.24:6.1	42.24:6.1,42.24:6.2	renders	Нема = οὐκ ἔστιν
+accept	42.24:6.2	42.24:6.2	renders	Його = subject of ἔστιν
+fixed	42.24:6			added Нема Його
+accept	42.24:7.6	42.24:7.8	renders	бути виданому = παραδοθῆναι
+accept	42.24:7.14	42.24:7.14	renders	розп'ятому бути = σταυρωθῆναι
+fixed	42.24:7			added бути x2
+accept	42.24:8.3	42.24:8.2	renders	вони = subject of ἐμνήσθησαν
+fixed	42.24:8			added вони
+accept	42.24:9.12	42.24:9.14	renders	інших = λοιποῖς
+fixed	42.24:9			added інших
+ok	42.24:10			
+accept	42.24:11.4	42.24:11.2	renders	здалися = ἐφάνησαν
+accept	42.24:11.6	42.24:11.6	renders	вигадкою = λῆρος
+fixed	42.24:11			added здалися, вигадкою
+refuse	42.24:12.11	42.24:12.13		лежать renders TR κείμενα, not ὀθόνια
+accept	42.24:12.2	42.24:12.2	renders	ж = δὲ
+accept	42.24:12.5	42.24:12.6	renders	до = ἐπὶ
+accept	42.24:12.14	42.24:12.13	renders	покривала = ὀθόνια
+accept	42.24:12.13	42.24:12.14	renders	самі тільки = μόνα
+accept	42.24:12.16	42.24:12.16	renders	вернувсь = ἀπῆλθεν
+accept	42.24:12.19	42.24:12.18	renders	себе = αὑτὸν
+fixed	42.24:12			лежать refused; покривала etc added
+refuse	42.24:13.6	42.24:13.6		того renders αὐτῇ, not ἐν
+refuse	42.24:13.21	42.24:13.15		із is approximative, not stadia
+accept	42.24:13.6,42.24:13.7	42.24:13.7	renders	того ж = αὐτῇ (same)
+accept	42.24:13.18	42.24:13.14	renders	лежало = ἀπέχουσαν
+fixed	42.24:13			того retargeted; із refused; лежало added
+accept	42.24:14.3	42.24:14.2	renders	вони = αὐτοὶ
+accept	42.24:14.4	42.24:14.4	renders	між = πρὸς
+accept	42.24:14.5	42.24:14.5	renders	собою = ἀλλήλους
+accept	42.24:14.10	42.24:14.9	renders	сталося = συμβεβηκότων
+fixed	42.24:14			added missing links
+accept	42.24:15.3	42.24:15.3	renders	як = ἐν (temporal)
+accept	42.24:15.4	42.24:15.6	renders	вони = αὐτοὺς
+accept	42.24:15.7,42.24:15.8,42.24:15.9	42.24:15.8	renders	розпитували один одного = συνζητεῖν
+accept	42.24:15.10	42.24:15.12	renders	підійшов = ἐγγίσας
+accept	42.24:15.14,42.24:15.15,42.24:15.16	42.24:15.13	renders	пішов разом із = συνεπορεύετο
+fixed	42.24:15			added missing links
+ok	42.24:16			
+refuse	42.24:17.10	42.24:17.3		про belongs to relative οὓς; πρὸς is їх
+accept	42.24:17.1	42.24:17.2	renders	І = δὲ
+accept	42.24:17.6	42.24:17.5	renders	Що за = Τίνες
+accept	42.24:17.7	42.24:17.7	renders	речі = λόγοι
+accept	42.24:17.8	42.24:17.8	renders	такі = οὗτοι
+accept	42.24:17.9,42.24:17.10,42.24:17.11	42.24:17.9	renders	що про них = οὓς
+accept	42.24:17.12	42.24:17.11	renders	між = πρὸς
+accept	42.24:17.13	42.24:17.12	renders	собою = ἀλλήλους
+accept	42.24:17.14,42.24:17.15	42.24:17.13	renders	в дорозі = περιπατοῦντες
+accept	42.24:17.16	42.24:17.10	renders	міркуєте = ἀντιβάλλετε
+fixed	42.24:17			про refused; relative clause linked
+accept	42.24:18.1	42.24:18.2	renders	І = δὲ
+accept	42.24:18.21	42.24:18.15	renders	знає = ἔγνως
+fixed	42.24:18			added І, знає
+accept	42.24:19.5,42.24:19.6	42.24:19.4	renders	Що таке = Ποῖα
+accept	42.24:19.8	42.24:19.5	renders	вони = article as pronoun οἱ
+accept	42.24:19.9	42.24:19.7	renders	розповіли = εἶπαν
+accept	42.24:19.16	42.24:19.15	renders	був = ἐγένετο
+fixed	42.24:19			added missing links
+accept	42.24:20.1	42.24:20.1	renders	Як = ὅπως
+accept	42.24:20.9	42.24:20.12	renders	суд = κρίμα
+fixed	42.24:20			added Як, суд
+refuse	42.24:21.15	42.24:21.17		оце renders ταύτην with третій день
+accept	42.24:21.15	42.24:21.19	renders	оце = ταύτην
+accept	42.24:21.9	42.24:21.8	renders	має = μέλλων
+accept	42.24:21.20	42.24:21.22,42.24:21.23	renders	як = ἀφ οὗ (since)
+accept	42.24:21.22	42.24:21.24	renders	оте = ταῦτα
+unsure	42.24:21			усе = πᾶσιν (from σὺν πᾶσιν τούτοις) vs до того unclear
+accept	42.24:22.1	42.24:22.1	renders	А = ἀλλὰ
+accept	42.24:22.8	42.24:22.9	renders	були = γενόμεναι
+accept	42.24:22.9	42.24:22.11	renders	коло = ἐπὶ
+fixed	42.24:22			added А, були, коло
+accept	42.24:23.8	42.24:23.7	renders	вернулися = ἦλθον
+accept	42.24:23.10	42.24:23.8	renders	оповідали = λέγουσαι
+accept	42.24:23.14	42.24:23.10	renders	з'явлення = ὀπτασίαν
+accept	42.24:23.20	42.24:23.15	renders	Він = αὐτὸν
+fixed	42.24:23			added missing links
+accept	42.24:24.6	42.24:24.7	renders	до = ἐπὶ
+accept	42.24:24.15	42.24:24.19	renders	та = δὲ
+fixed	42.24:24			added до, та
+ok	42.24:25			
+accept	42.24:26.4	42.24:26.1	renders	не = οὐχὶ
+accept	42.24:26.8	42.24:26.3	renders	було = ἔδει (past)
+fixed	42.24:26			added не, було
+accept	42.24:27.11	42.24:27.10	renders	виясняв = διερμήνευσεν
+accept	42.24:27.14	42.24:27.13	renders	всього = πάσαις
+accept	42.24:27.18	42.24:27.18	renders	Нього = ἑαυτοῦ
+fixed	42.24:27			added missing links
+accept	42.24:28.13	42.24:28.12	renders	йти = πορεύεσθαι
+accept	42.24:28.14	42.24:28.11	renders	далі = πορρώτερον
+fixed	42.24:28			added йти, далі
+accept	42.24:29.3	42.24:29.2	renders	не пускали = παρεβιάσαντο
+accept	42.24:29.7	42.24:29.4	renders	намовляли = λέγοντες
+accept	42.24:29.12	42.24:29.14	renders	вже = ἤδη
+accept	42.24:29.15	42.24:29.13	renders	кінчається = κέκλικεν
+accept	42.24:29.23	42.24:29.20	renders	побути = μεῖναι
+fixed	42.24:29			added missing links
+refuse	42.24:30.6	42.24:30.3		із renders μετ, not ἐν
+accept	42.24:30.6	42.24:30.7	renders	із = μετ
+accept	42.24:30.3	42.24:30.3	renders	коли = ἐν (temporal)
+fixed	42.24:30			із retargeted; коли added
+accept	42.24:31.1	42.24:31.2	renders	Тоді = δὲ
+accept	42.24:31.8	42.24:31.9	renders	Але = καὶ
+accept	42.24:31.10	42.24:31.12	renders	став = ἐγένετο
+accept	42.24:31.13	42.24:31.11	renders	невидимий = ἄφαντος
+accept	42.24:31.12	42.24:31.14	renders	них = αὐτῶν
+fixed	42.24:31			added missing links
+accept	42.24:32.4	42.24:32.4	renders	один одному = ἀλλήλους
+accept	42.24:32.8	42.24:32.9,42.24:32.10	renders	палало = καιομένη ἦν
+accept	42.24:32.12	42.24:32.13	renders	коли = ὡς
+accept	42.24:32.13	42.24:32.14	renders	промовляв = ἐλάλει
+accept	42.24:32.15	42.24:32.15	renders	до нас = ἡμῖν
+accept	42.24:32.20	42.24:32.19	renders	коли = ὡς
+accept	42.24:32.21	42.24:32.20	renders	виясняв = διήνοιγεν
+fixed	42.24:32			added missing links
+accept	42.24:33.2	42.24:33.3,42.24:33.5	renders	зараз = αὐτῇ τῇ ὥρᾳ
+accept	42.24:33.16	42.24:33.15	renders	тих = τοὺς (pronominal)
+fixed	42.24:33			added зараз, тих
+accept	42.24:34.1,42.24:34.2	42.24:34.1	renders	які розповідали = λέγοντας
+accept	42.24:34.3	42.24:34.2	renders	що = ὅτι
+accept	42.24:34.5	42.24:34.3	renders	дійсно = ὄντως
+fixed	42.24:34			added missing links
+refuse	42.24:35.12	42.24:35.11		Його is the one known (ἐγνώσθη), αὐτοῖς is them
+accept	42.24:35.12	42.24:35.10	renders	Його = subject of ἐγνώσθη
+accept	42.24:35.3	42.24:35.3	renders	розповіли = ἐξηγοῦντο
+accept	42.24:35.4	42.24:35.4	renders	що = τὰ (the things)
+fixed	42.24:35			Його retargeted; розповіли added
+accept	42.24:36.1	42.24:36.2	renders	І = δὲ
+accept	42.24:36.9	42.24:36.7,42.24:36.8	renders	між = ἐν μέσῳ
+fixed	42.24:36			added І, між
+accept	42.24:37.5	42.24:37.5	renders	перестрашились = ἔμφοβοι γενόμενοι
+fixed	42.24:37			added γενόμενοι
+accept	42.24:38.2	42.24:38.1	renders	же = καὶ
+accept	42.24:38.7	42.24:38.6	renders	ви = ἐστέ
+accept	42.24:38.10	42.24:38.8	renders	пощо = διὰ τί
+accept	42.24:38.13	42.24:38.12	renders	до = ἐν
+accept	42.24:38.16	42.24:38.11	renders	входять = ἀναβαίνουσιν
+fixed	42.24:38			added missing links
+accept	42.24:39.14	42.24:39.14	renders	до Мене = με
+accept	42.24:39.17	42.24:39.16	renders	дізнайтесь = ἴδετε
+fixed	42.24:39			added до, дізнайтесь
+ok	42.24:40			
+accept	42.24:41.1	42.24:41.2	renders	І = δὲ
+accept	42.24:41.5,42.24:41.7	42.24:41.3	renders	не йняли віри = ἀπιστούντων
+accept	42.24:41.19	42.24:41.13	renders	чогось = τι
+accept	42.24:41.20	42.24:41.14	renders	їсти = βρώσιμον
+fixed	42.24:41			added missing links
+accept	42.24:42.1	42.24:42.1	renders	Вони = οἱ (pronominal)
+accept	42.24:42.2	42.24:42.2	renders	ж = δὲ
+accept	42.24:42.5	42.24:42.7	renders	кусника = μέρος
+fixed	42.24:42			added Вони ж, кусника
+ok	42.24:43			
+refuse	42.24:44.9	42.24:44.8		Я is subject of ἐλάλησα, not μου
+accept	42.24:44.9	42.24:44.10	renders	Я = subject of ἐλάλησα
+accept	42.24:44.8	42.24:44.10	renders	казав = ἐλάλησα
+accept	42.24:44.1	42.24:44.2	renders	І = δὲ
+accept	42.24:44.12,42.24:44.13	42.24:44.14	renders	коли був = ὢν
+accept	42.24:44.17	42.24:44.18	renders	Потрібно = δεῖ
+fixed	42.24:44			Я retargeted; added missing links
+ok	42.24:45			
+accept	42.24:46.1	42.24:45.10	renders	І = καὶ (Nestle verse 45)
+accept	42.24:46.2	42.24:45.11	renders	сказав = εἶπεν
+accept	42.24:46.4,42.24:46.5	42.24:45.12	renders	до них = αὐτοῖς
+fixed	42.24:46			opening clause linked to 45 end
+accept	42.24:47.16	42.24:47.15	renders	почавши = ἀρξάμενοι
+fixed	42.24:47			added почавши
+accept	42.24:48.4	42.24:48.3	renders	того = τούτων
+fixed	42.24:48			added того
+accept	42.24:49.4	42.24:49.4	renders	посилаю = ἐξαποστέλλω
+accept	42.24:49.16	42.24:49.19	renders	поки = οὗ (ἕως οὗ)
+fixed	42.24:49			added посилаю, поки
+accept	42.24:50.1	42.24:50.2	renders	І = δὲ
+accept	42.24:50.3	42.24:50.1	renders	вивів = Ἐξήγαγεν
+accept	42.24:50.7	42.24:50.4	renders	аж = ἕως
+accept	42.24:50.11	42.24:50.8	renders	знявши = ἐπάρας
+fixed	42.24:50			added missing links
+refuse	42.24:51.6	42.24:51.6		їх renders αὐτοὺς; αὐτὸν is Він
+accept	42.24:51.6	42.24:51.7	renders	їх = αὐτοὺς
+accept	42.24:51.4	42.24:51.6	renders	Він = αὐτὸν
+accept	42.24:51.3	42.24:51.3	renders	як = ἐν (temporal)
+fixed	42.24:51			їх retargeted; Він, як added
+ok	42.24:52			
+refuse	42.24:53.7	42.24:53.4		переславляючи is a participle, not παντὸς
+accept	42.24:53.2	42.24:53.3,42.24:53.4	renders	постійно = διὰ παντὸς
+accept	42.24:53.4	42.24:53.2	renders	перебували = ἦσαν
+unsure	42.24:53			TR αἰνοῦντες καὶ εὐλογοῦντες: which UA participle = εὐλογοῦντες unclear

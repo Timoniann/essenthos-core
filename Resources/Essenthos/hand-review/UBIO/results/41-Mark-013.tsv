@@ -1,0 +1,128 @@
+kind	from	to	relation	reason
+fixed	41.13:1			added pronoun, ποταπός
+accept	41.13:1.3	41.13:1.3	renders	pronoun of gen. absolute
+accept	41.13:1.15	41.13:1.15	renders	what (stones)
+accept	41.13:1.19,41.13:1.20	41.13:1.18	renders	what (buildings)
+fixed	41.13:2			added relative
+accept	41.13:2.19	41.13:2.17	renders	relative which
+fixed	41.13:3			added pronoun, opposite, privately
+accept	41.13:3.3	41.13:3.3	renders	pronoun of gen. absolute
+accept	41.13:3.8	41.13:3.9	renders	opposite
+accept	41.13:3.12	41.13:3.14,41.13:3.15	renders	privately
+fixed	41.13:4			added verbs
+accept	41.13:4.4	41.13:4.5	renders	will be
+accept	41.13:4.14	41.13:4.11	renders	is about to
+fixed	41.13:5			added missing words
+accept	41.13:5.2	41.13:5.2	renders	de
+accept	41.13:5.4	41.13:5.5	renders	to say
+accept	41.13:5.8,41.13:5.11	41.13:5.8	renders	lest
+accept	41.13:5.12	41.13:5.11	renders	mislead
+ok	41.13:6			
+fixed	41.13:7			added missing words
+accept	41.13:7.1	41.13:7.2	renders	de
+accept	41.13:7.6	41.13:7.3	renders	subject of verb
+accept	41.13:7.12	41.13:7.9	renders	be disturbed
+accept	41.13:7.14	41.13:7.11	renders	come to pass
+accept	41.13:7.17	41.13:7.12	renders	but
+accept	41.13:7.20	41.13:7.13	renders	not yet
+fixed	41.13:8			added word
+accept	41.13:8.18	41.13:8.17	renders	birth pains
+fixed	41.13:9			added missing words
+accept	41.13:9.2	41.13:9.2	renders	de
+accept	41.13:9.6	41.13:9.7	renders	to
+accept	41.13:9.7	41.13:9.8	renders	councils
+accept	41.13:9.8	41.13:9.5	renders	will deliver
+ok	41.13:10			
+fixed	41.13:11			wrong kai; added verbs
+refuse	41.13:11.5	41.13:11.1		wrong target
+accept	41.13:11.3	41.13:11.5	renders	delivering up
+accept	41.13:11.6	41.13:11.3	renders	lead away
+accept	41.13:11.17	41.13:11.13	renders	be given (with дане)
+fixed	41.13:12			brother subject/object swapped; added words
+refuse	41.13:12.5	41.13:12.3		wrong target
+refuse	41.13:12.6	41.13:12.4		wrong target
+accept	41.13:12.5	41.13:12.4	renders	object brother
+accept	41.13:12.6	41.13:12.3	renders	subject brother
+accept	41.13:12.7	41.13:12.7	renders	and
+accept	41.13:12.9	41.13:12.9	renders	child
+accept	41.13:12.13	41.13:12.13	renders	against
+fixed	41.13:13			added verbs
+accept	41.13:13.5	41.13:13.2	renders	you will be
+accept	41.13:13.16	41.13:13.16	renders	will be (saved)
+fixed	41.13:14			added words
+accept	41.13:14.16	41.13:14.8	renders	standing
+accept	41.13:14.19	41.13:14.11	renders	it should
+fixed	41.13:15			added words
+accept	41.13:15.9	41.13:15.7	renders	nor
+accept	41.13:15.14	41.13:15.9	renders	anything
+fixed	41.13:16			added negation
+accept	41.13:16.7	41.13:16.6	renders	not
+fixed	41.13:17			added words
+accept	41.13:17.3	41.13:17.4,41.13:17.5,41.13:17.6	renders	having in womb
+accept	41.13:17.7	41.13:17.9	renders	nursing
+fixed	41.13:18			added words
+accept	41.13:18.2	41.13:18.2	renders	de
+accept	41.13:18.5	41.13:18.5	renders	happen
+fixed	41.13:19			added words
+accept	41.13:19.1	41.13:19.1	renders	will be
+accept	41.13:19.13	41.13:19.13	renders	creation
+accept	41.13:19.18	41.13:19.18	renders	until
+accept	41.13:19.19	41.13:19.20	renders	now
+fixed	41.13:20			added words
+accept	41.13:20.12	41.13:20.9	renders	an
+accept	41.13:20.13	41.13:20.11	renders	(no) all
+accept	41.13:20.14	41.13:20.12	renders	flesh
+accept	41.13:20.16	41.13:20.14	renders	on account of
+accept	41.13:20.21	41.13:20.19	renders	subject of verb
+ok	41.13:21			
+fixed	41.13:22			added words
+accept	41.13:22.1	41.13:22.2	renders	for
+accept	41.13:22.2	41.13:22.1	renders	will arise
+accept	41.13:22.4	41.13:22.3	renders	false (christs)
+accept	41.13:22.14	41.13:22.11	renders	so as
+accept	41.13:22.15	41.13:22.13	renders	deceive
+accept	41.13:22.16	41.13:22.14	renders	if
+accept	41.13:22.17	41.13:22.15	renders	possible
+fixed	41.13:23			added verb
+accept	41.13:23.5	41.13:23.4	renders	foretold
+fixed	41.13:24			added possessive
+accept	41.13:24.14	41.13:24.20	renders	its
+fixed	41.13:25			added verb
+accept	41.13:25.3	41.13:25.4,41.13:25.8	renders	will be falling
+ok	41.13:26			
+fixed	41.13:27			added words
+accept	41.13:27.3	41.13:27.3	renders	subject of verb
+accept	41.13:27.17	41.13:27.20	renders	of heaven
+fixed	41.13:28			added words
+accept	41.13:28.1	41.13:28.1	renders	from
+accept	41.13:28.2	41.13:28.4	renders	fig tree
+accept	41.13:28.3	41.13:28.2	renders	de
+accept	41.13:28.6	41.13:28.7	renders	parable
+accept	41.13:28.10	41.13:28.9	renders	already
+accept	41.13:28.11	41.13:28.14	renders	has become
+fixed	41.13:29			added verb
+accept	41.13:29.8	41.13:29.7	renders	coming to pass
+ok	41.13:30			
+ok	41.13:31			
+fixed	41.13:32			added words
+accept	41.13:32.3	41.13:32.2	renders	de
+accept	41.13:32.4	41.13:32.5	renders	that
+accept	41.13:32.5	41.13:32.6	renders	or
+accept	41.13:32.17	41.13:32.19,41.13:32.20	renders	except
+fixed	41.13:33			added verb
+accept	41.13:33.11	41.13:33.9	renders	is
+fixed	41.13:34			added words
+accept	41.13:34.3	41.13:34.2	renders	man
+accept	41.13:34.19	41.13:34.19	renders	and
+accept	41.13:34.22	41.13:34.24	renders	keep watch
+fixed	41.13:35			wrong occurrences of e; added
+refuse	41.13:35.11	41.13:35.12		wrong target
+refuse	41.13:35.13	41.13:35.14		wrong target
+accept	41.13:35.11	41.13:35.14	renders	or
+accept	41.13:35.13	41.13:35.16	renders	or
+accept	41.13:35.17	41.13:35.18	renders	or
+accept	41.13:35.15	41.13:35.17	renders	rooster crowing
+fixed	41.13:36			added words
+accept	41.13:36.1	41.13:36.1	renders	lest
+accept	41.13:36.8	41.13:36.2	renders	having come
+ok	41.13:37			

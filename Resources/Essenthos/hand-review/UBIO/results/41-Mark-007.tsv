@@ -1,0 +1,136 @@
+kind	from	to	relation	reason
+ok	41.7:1			
+accept	41.7:2.3	41.7:2.7	renders	shcho = hoti
+accept	41.7:2.12	41.7:2.10,41.7:2.11	renders	tsebto = tout estin
+fixed	41.7:2			added hoti, tout estin
+accept	41.7:3.11	41.7:3.8	renders	yak = ean
+accept	41.7:3.12	41.7:3.10	renders	staranno = pygme
+fixed	41.7:3			added ean, pygme
+refuse	41.7:4.9	41.7:4.7		ne of poky ne = me
+accept	41.7:4.9	41.7:4.5	renders	ne = me
+accept	41.7:4.6	41.7:4.7	renders	ni = ouk
+accept	41.7:4.8	41.7:4.4	renders	poky = ean
+accept	41.7:4.19	41.7:4.15	renders	doderzhuvaty = kratein
+fixed	41.7:4			negations swapped, added ean, kratein
+accept	41.7:5.7	41.7:5.9	renders	chomu = dia ti
+accept	41.7:5.19	41.7:5.22	renders	nechystymy = koinais
+fixed	41.7:5			added dia, koinais
+accept	41.7:6.2	41.7:6.1	renders	Vin = ho (pronominal article)
+accept	41.7:6.16	41.7:6.21	renders	shanuiut = tima
+fixed	41.7:6			added ho, tima
+accept	41.7:7.1,41.7:7.2	41.7:7.2	renders	ta odnak = de
+accept	41.7:7.4	41.7:7.3	renders	shanuiut = sebontai
+fixed	41.7:7			added de, sebontai
+ok	41.7:8			
+accept	41.7:9.7	41.7:9.5	renders	vidkydaiete = athetete
+accept	41.7:9.8	41.7:9.5	renders	vy = verb person
+accept	41.7:9.11	41.7:9.10	renders	aby = hina
+accept	41.7:9.13	41.7:9.13	renders	svoie = hymon
+fixed	41.7:9			added athetete, hina, hymon
+accept	41.7:10.3	41.7:10.3	renders	nakazav = eipen
+accept	41.7:10.11	41.7:10.13	renders	khto = ho substantival
+accept	41.7:10.17	41.7:10.19	renders	nekhai = imperative
+fixed	41.7:10			added eipen, ho, imperative
+accept	41.7:11.6	41.7:11.6	renders	khto = anthropos
+accept	41.7:11.11	41.7:11.13,41.7:11.14	renders	chy = ho estin
+accept	41.7:11.14,41.7:11.15	41.7:11.16	renders	te chym = ho
+accept	41.7:11.17	41.7:11.20	renders	ty = verb person
+fixed	41.7:11			added anthropos, ho estin, ho, ty
+accept	41.7:12.5	41.7:12.1	renders	vzhe ne = ouketi
+accept	41.7:12.3	41.7:12.2	renders	vilno = aphiete
+fixed	41.7:12			added ouketi negation, aphiete
+accept	41.7:13.7	41.7:13.9	renders	shcho yoho = he
+accept	41.7:13.8,41.7:13.10	41.7:13.10	renders	vstanovyly = paredokate
+accept	41.7:13.14	41.7:13.15	renders	vy = poieite
+fixed	41.7:13			added he, paredokate, poieite
+ok	41.7:14			
+accept	41.7:15.5	41.7:15.9	renders	shcho = ho
+accept	41.7:15.9	41.7:15.10	renders	mohlo = dynatai
+accept	41.7:15.13	41.7:15.14	renders	shcho = ta
+accept	41.7:15.14	41.7:15.13	renders	zh = alla
+accept	41.7:15.15	41.7:15.15	renders	iz = ek
+accept	41.7:15.16	41.7:15.17	renders	nei = anthropou
+accept	41.7:15.18	41.7:15.20	renders	te = ta
+accept	41.7:15.20	41.7:15.21	renders	opohaniuie = koinounta
+fixed	41.7:15			added second half links
+ok	41.7:16			
+refuse	41.7:17.11	41.7:17.10		Yoho (disciples of Him) = autou
+refuse	41.7:17.14	41.7:17.13		Nyoho (asked Him) = auton
+accept	41.7:17.11	41.7:17.13	renders	Yoho = autou
+accept	41.7:17.14	41.7:17.10	renders	Nyoho = auton
+fixed	41.7:17			swapped autou/auton
+refuse	41.7:18.10	41.7:18.9		ne belongs to rozuminnia ne maiete = asynetoi
+accept	41.7:18.10	41.7:18.7	renders	rozuminnia ne = asynetoi
+accept	41.7:18.11	41.7:18.8	renders	maiete = este
+accept	41.7:18.14	41.7:18.9	renders	ne = ou
+accept	41.7:18.15,41.7:18.16	41.7:18.10	renders	rozumiete vy = noeite
+fixed	41.7:18			fixed negation, added noeite, este
+refuse	41.7:19.13	41.7:19.15		ochyshchuiuchy = katharizon
+accept	41.7:19.13	41.7:19.17	renders	ochyshchuiuchy = katharizon
+fixed	41.7:19			ochyshchuiuchy to katharizon
+accept	41.7:20.5	41.7:20.4	renders	shcho = to substantival
+accept	41.7:20.9	41.7:20.9	renders	te = ekeino
+fixed	41.7:20			added to, ekeino
+ok	41.7:21			
+accept	41.7:22.2	41.7:22.2	renders	zdyrstva = pleonexiai
+accept	41.7:22.4	41.7:22.4	renders	pidstup = dolos
+fixed	41.7:22			added pleonexiai, dolos
+accept	41.7:23.2	41.7:23.4	renders	zle = ponera
+fixed	41.7:23			added ponera
+refuse	41.7:24.9	41.7:24.7		tyrsku = Tyrou
+accept	41.7:24.8	41.7:24.7	renders	zemliu = horia
+accept	41.7:24.9	41.7:24.8	renders	tyrsku = Tyrou
+fixed	41.7:24			horia/Tyrou split
+accept	41.7:25.5	41.7:25.7,41.7:25.11	renders	yakoi = hes ... autes
+accept	41.7:25.6	41.7:25.10	renders	dochka = thygatrion
+accept	41.7:25.10	41.7:25.3	renders	prochula = akousasa
+fixed	41.7:25			added hes, thygatrion, akousasa
+refuse	41.7:26.5	41.7:26.6		bula = en
+refuse	41.7:26.6	41.7:26.6		rodom = genei
+accept	41.7:26.5	41.7:26.4	renders	bula = en
+accept	41.7:26.6	41.7:26.8	renders	rodom = to genei
+accept	41.7:26.1	41.7:26.2	renders	A = de
+fixed	41.7:26			bula, rodom retargeted; added de
+accept	41.7:27.5	41.7:27.4	renders	dai = aphes
+accept	41.7:27.11	41.7:27.11,41.7:27.12	renders	hodytsia = estin kalon
+fixed	41.7:27			added aphes, kalon estin
+refuse	41.7:28.16	41.7:28.18		dytiachykh = paidion
+accept	41.7:28.16	41.7:28.20	renders	dytiachykh = paidion
+accept	41.7:28.2	41.7:28.1	renders	vona = he pronominal
+accept	41.7:28.4	41.7:28.3	renders	v vidpovid = apekrithe
+accept	41.7:28.10	41.7:28.9	renders	navit = kai
+fixed	41.7:28			dytiachykh to paidion; added he, kai
+ok	41.7:29			
+accept	41.7:30.7	41.7:30.2	renders	vernulas = apelthousa
+accept	41.7:30.6	41.7:30.6	renders	sviy = autes
+accept	41.7:30.14	41.7:30.10	renders	lezhala = beblemenon
+fixed	41.7:30			added apelthousa, autes, beblemenon
+accept	41.7:31.6	41.7:31.6	renders	kraiv = horion
+accept	41.7:31.11	41.7:31.8	renders	podavsia = elthen
+accept	41.7:31.12	41.7:31.9	renders	shliakhom na = dia
+accept	41.7:31.18	41.7:31.16,41.7:31.17	renders	cherez = ana meson
+accept	41.7:31.19	41.7:31.19	renders	okolytsi = horion
+fixed	41.7:31			added horion x2, elthen, ana meson
+ok	41.7:32			
+refuse	41.7:33.12	41.7:33.12		yomu (his ears) = autou 16
+accept	41.7:33.12	41.7:33.16	renders	yomu = autou of ears
+accept	41.7:33.11	41.7:33.12	renders	Svoi = autou
+accept	41.7:33.2	41.7:33.2	renders	vziav = apolabomenos
+accept	41.7:33.7	41.7:33.7,41.7:33.8	renders	samoho = kat idian
+fixed	41.7:33			autou occurrences fixed; added apolabomenos, kat idian
+accept	41.7:34.12	41.7:34.11,41.7:34.12	renders	tsebto = ho estin
+fixed	41.7:34			added ho estin
+accept	41.7:35.3	41.7:35.5	renders	vukha = akoai
+accept	41.7:35.12,41.7:35.13	41.7:35.15	renders	vin stav = elalei
+fixed	41.7:35			added akoai, elalei
+refuse	41.7:36.14	41.7:36.11		im = autois 9
+accept	41.7:36.14	41.7:36.9	renders	im = autois
+accept	41.7:36.4	41.7:36.2	renders	zveliv = diesteilato
+accept	41.7:36.8	41.7:36.5	renders	ne with nikomu = medeni
+accept	41.7:36.10	41.7:36.8	renders	ta = de
+accept	41.7:36.11,41.7:36.12	41.7:36.7	renders	shcho bilshe = hoson
+fixed	41.7:36			im retargeted; added diesteilato, de, hoson
+accept	41.7:37.2	41.7:37.2	renders	duzhe = hyperperissos
+accept	41.7:37.6	41.7:37.4	renders	hovoryly = legontes
+accept	41.7:37.12	41.7:37.11	renders	daie = poiei
+fixed	41.7:37			added hyperperissos, legontes, poiei

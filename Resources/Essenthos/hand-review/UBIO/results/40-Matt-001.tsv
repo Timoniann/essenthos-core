@@ -1,0 +1,94 @@
+kind	from	to	relation	reason
+fixed	40.1:1			added genealogy
+accept	40.1:1.2	40.1:1.2	renders	rodovodu = geneseos
+ok	40.1:2			
+fixed	40.1:3			added particles/preposition
+accept	40.1:3.2	40.1:3.2	renders	zh = de
+accept	40.1:3.7	40.1:3.9	renders	vid = ek
+accept	40.1:3.10	40.1:3.13	renders	zhe = de
+fixed	40.1:4			added zhe
+accept	40.1:4.6	40.1:4.7	renders	zhe = de
+fixed	40.1:5			added particles/preposition
+accept	40.1:5.2	40.1:5.2	renders	zhe = de
+accept	40.1:5.5	40.1:5.6	renders	vid = ek
+accept	40.1:5.14	40.1:5.18	renders	zhe = de
+fixed	40.1:6			added zhe
+accept	40.1:6.7	40.1:6.9	renders	zhe = de
+fixed	40.1:7			added zhe
+accept	40.1:7.2	40.1:7.2	renders	zhe = de
+fixed	40.1:8			added zhe
+accept	40.1:8.2	40.1:8.2	renders	zhe = de
+accept	40.1:8.10	40.1:8.12	renders	zhe = de
+fixed	40.1:9			added zhe
+accept	40.1:9.2	40.1:9.2	renders	zh = de
+accept	40.1:9.10	40.1:9.12	renders	zhe = de
+fixed	40.1:10			added zh
+accept	40.1:10.6	40.1:10.7	renders	zh = de
+fixed	40.1:11			second begat has no Nestle counterpart; Babylon/deportation swapped
+refuse	40.1:11.6	40.1:11.5		begat (Jehoiakim->Jechoniah) is not Jechoniah
+refuse	40.1:11.12	40.1:11.12		Babylonian is Babylonos
+refuse	40.1:11.13	40.1:11.13		deportation is metoikesias
+accept	40.1:11.12	40.1:11.13	renders	Babylonian = Babylonos
+accept	40.1:11.13	40.1:11.12	renders	deportation = metoikesias
+fixed	40.1:12			Babylon/deportation swapped
+refuse	40.1:12.3	40.1:12.4		Babylonian is Babylonos
+refuse	40.1:12.4	40.1:12.5		deportation is metoikesian
+accept	40.1:12.3	40.1:12.5	renders	Babylonian = Babylonos
+accept	40.1:12.4	40.1:12.4	renders	deportation = metoikesian
+fixed	40.1:13			added zhe
+accept	40.1:13.2	40.1:13.2	renders	zhe = de
+fixed	40.1:14			added zhe
+accept	40.1:14.2	40.1:14.2	renders	zhe = de
+fixed	40.1:15			added zhe
+accept	40.1:15.2	40.1:15.2	renders	zhe = de
+fixed	40.1:16			added from whom
+accept	40.1:16.8	40.1:16.9	renders	z = ex
+accept	40.1:16.9	40.1:16.10	renders	nei = hes
+fixed	40.1:17			Babylon/deportation swapped; azh do added
+refuse	40.1:17.16	40.1:17.16		Babylonian is Babylonos
+refuse	40.1:17.17	40.1:17.17		deportation is metoikesias
+refuse	40.1:17.22	40.1:17.23		Babylonian is Babylonos
+refuse	40.1:17.23	40.1:17.24		deportation is metoikesias
+accept	40.1:17.16	40.1:17.17	renders	Babylonian = Babylonos
+accept	40.1:17.17	40.1:17.16	renders	deportation = metoikesias
+accept	40.1:17.22	40.1:17.24	renders	Babylonian = Babylonos
+accept	40.1:17.23	40.1:17.23	renders	deportation = metoikesias
+accept	40.1:17.6,40.1:17.7	40.1:17.7	renders	azh do = heos
+accept	40.1:17.14,40.1:17.15	40.1:17.14	renders	azh do = heos
+fixed	40.1:18			added missing words
+accept	40.1:18.2	40.1:18.2	renders	zh = de
+accept	40.1:18.5	40.1:18.8	renders	stalosia = en
+accept	40.1:18.15	40.1:18.16	renders	persh = prin
+accept	40.1:18.16	40.1:18.17	renders	nizh = e
+accept	40.1:18.19	40.1:18.20	renders	vyiavylosia = heurethe
+accept	40.1:18.24	40.1:18.22	renders	utrobi = gastri
+fixed	40.1:19			added missing words
+accept	40.1:19.1	40.1:19.2	renders	A = de
+accept	40.1:19.5	40.1:19.7	renders	buvshy = on
+accept	40.1:19.9	40.1:19.10	renders	bazhavshy = thelon
+accept	40.1:19.12	40.1:19.13	renders	khotiv = eboulethe
+fixed	40.1:20			added he, receive
+accept	40.1:20.3	40.1:20.3	renders	vin = autou
+accept	40.1:20.19	40.1:20.18	renders	pryiniaty = paralabein
+fixed	40.1:21			added bear, He, His
+accept	40.1:21.3	40.1:21.1	renders	vrodyt = texetai
+accept	40.1:21.13	40.1:21.10	renders	Vin = autos
+accept	40.1:21.15	40.1:21.15	renders	Svoikh = autou
+fixed	40.1:22			added all, saying
+accept	40.1:22.2	40.1:22.3	renders	vse = holon
+accept	40.1:22.12	40.1:22.14	renders	provishchaie = legontos
+fixed	40.1:23			added missing words
+accept	40.1:23.4	40.1:23.5	renders	utrobi = gastri
+accept	40.1:23.5	40.1:23.6	renders	zachne = hexei
+accept	40.1:23.8	40.1:23.8	renders	porodyt = texetai
+accept	40.1:23.17	40.1:23.17	renders	ie = estin
+fixed	40.1:24			added missing words
+accept	40.1:24.2	40.1:24.1	renders	prokynuvsia = egertheis
+accept	40.1:24.3	40.1:24.2	renders	zh = de
+accept	40.1:24.5	40.1:24.5	renders	zo = apo
+accept	40.1:24.10	40.1:24.10	renders	zveliv = prosetaxen
+accept	40.1:24.15	40.1:24.16	renders	pryiniav = parelaben
+fixed	40.1:25			firstborn is TR-only; bore, gave added
+refuse	40.1:25.9	40.1:25.10		firstborn is not ekalesen (TR-only word)
+accept	40.1:25.11	40.1:25.7	renders	porodyla = eteken
+accept	40.1:25.14	40.1:25.10	renders	dav = ekalesen

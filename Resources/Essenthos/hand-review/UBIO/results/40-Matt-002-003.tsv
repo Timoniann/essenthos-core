@@ -1,0 +1,152 @@
+kind	from	to	relation	reason
+fixed	40.2:1			add ж=δέ
+accept	40.2:1.2	40.2:1.2	renders	ж renders δέ
+fixed	40.2:2			add питали
+accept	40.2:2.2	40.2:2.1	renders	питали renders λέγοντες
+fixed	40.2:3			add І=δέ
+accept	40.2:3.1	40.2:3.2	renders	І renders δέ
+fixed	40.2:4			add missing words
+accept	40.2:4.7	40.2:4.9	renders	людських renders λαοῦ
+accept	40.2:4.9	40.2:4.10	renders	випитував renders ἐπυνθάνετο
+accept	40.2:4.13,40.2:4.15	40.2:4.16	renders	має народитись renders γεννᾶται
+fixed	40.2:5			add οἱ δέ
+accept	40.2:5.1	40.2:5.1	renders	Вони renders pronominal οἱ
+accept	40.2:5.2	40.2:5.2	renders	ж renders δέ
+fixed	40.2:6			add missing words
+accept	40.2:6.7	40.2:6.7	renders	менший renders ἐλαχίστη
+accept	40.2:6.8	40.2:6.6	renders	не нічим renders οὐδαμῶς
+accept	40.2:6.9	40.2:6.9	renders	між renders ἐν
+accept	40.2:6.10	40.2:6.11	renders	осадами renders ἡγεμόσιν
+accept	40.2:6.15	40.2:6.16	renders	зявиться renders ἐξελεύσεται
+accept	40.2:6.16	40.2:6.17	renders	Вождь renders ἡγούμενος
+accept	40.2:6.18	40.2:6.19	renders	буде пасти renders ποιμανεῖ
+fixed	40.2:7			refuse про=παρά, add випитував
+refuse	40.2:7.11	40.2:7.8		про renders the accusative, not παρά
+accept	40.2:7.9	40.2:7.7	renders	докладно випитував renders ἠκρίβωσεν
+fixed	40.2:8			add missing words
+accept	40.2:8.15	40.2:8.13	renders	як renders ἐπάν
+accept	40.2:8.17	40.2:8.16	renders	сповістіть renders ἀπαγγείλατε
+accept	40.2:8.20	40.2:8.19	renders	і renders the καί of κἀγώ
+accept	40.2:8.23	40.2:8.20	renders	піти renders ἐλθών
+fixed	40.2:9			add missing words
+accept	40.2:9.1	40.2:9.1	renders	Вони renders pronominal οἱ
+accept	40.2:9.2	40.2:9.2	renders	ж renders δέ
+accept	40.2:9.22	40.2:9.20	renders	стала renders ἐστάθη
+accept	40.2:9.23	40.2:9.21	renders	зверху renders ἐπάνω
+accept	40.2:9.26	40.2:9.23	renders	було renders ἦν
+fixed	40.2:10			add А, надзвичайно
+accept	40.2:10.1	40.2:10.2	renders	А renders δέ
+accept	40.2:10.5	40.2:10.8	renders	надзвичайно renders σφόδρα
+fixed	40.2:11			fix та, add verbs
+refuse	40.2:11.29	40.2:11.27		та stands before смирну, renders the second καί
+accept	40.2:11.29	40.2:11.29	renders	та renders καί before σμύρναν
+accept	40.2:11.2	40.2:11.2	renders	ввійшовши renders ἐλθόντες
+accept	40.2:11.5	40.2:11.6	renders	знайшли renders εἶδον
+accept	40.2:11.23	40.2:11.23	renders	піднесли renders προσήνεγκαν
+fixed	40.2:12			add остережені
+accept	40.2:12.4	40.2:12.2	renders	остережені renders χρηματισθέντες
+fixed	40.2:13			add missing words
+accept	40.2:13.2	40.2:13.3	renders	вони renders αὐτῶν
+accept	40.2:13.3	40.2:13.2	renders	ж renders δέ
+accept	40.2:13.27	40.2:13.26	renders	зоставайся renders ἴσθι
+accept	40.2:13.30	40.2:13.30	renders	скажу renders εἴπω
+accept	40.2:13.34	40.2:13.32,40.2:13.35	renders	шукатиме renders μέλλει ζητεῖν
+fixed	40.2:14			add ὁ δέ
+accept	40.2:14.1	40.2:14.2	renders	І renders δέ
+accept	40.2:14.2	40.2:14.1	renders	він renders pronominal ὁ
+fixed	40.2:15			add missing words
+accept	40.2:15.4	40.2:15.2	renders	зоставався renders ἦν
+accept	40.2:15.16	40.2:15.17	renders	провіщає renders λέγοντος
+accept	40.2:15.22	40.2:15.23	renders	Свого renders μου
+fixed	40.2:16			swap всій/всіх, add missing
+refuse	40.2:16.21	40.2:16.14		всій belongs to πᾶσι (vicinity)
+refuse	40.2:16.24	40.2:16.22		всіх belongs to πάντας (boys)
+accept	40.2:16.21	40.2:16.22	renders	всій renders πᾶσι
+accept	40.2:16.24	40.2:16.14	renders	всіх renders πάντας
+accept	40.2:16.6	40.2:16.8	renders	мудреці renders μάγων
+accept	40.2:16.7	40.2:16.5	renders	насміялися renders ἐνεπαίχθη
+accept	40.2:16.23	40.2:16.24	renders	околиці renders ὁρίοις
+accept	40.2:16.25	40.2:16.16	renders	дітей renders παῖδας
+accept	40.2:16.30	40.2:16.29	renders	менше renders κατωτέρω
+accept	40.2:16.35	40.2:16.35	renders	в renders παρά
+accept	40.2:16.39	40.2:16.34	renders	випитав renders ἠκρίβωσεν
+fixed	40.2:17			add те
+accept	40.2:17.3	40.2:17.3	renders	те renders substantival τό
+unsure	40.2:18			three nouns (TR) vs two in Nestle; плач/ридання/голосіння and і/та mapping unclear
+accept	40.2:18.1	40.2:18.4	renders	Чути renders ἠκούσθη
+accept	40.2:18.15	40.2:18.13	renders	своїми renders αὐτῆς
+accept	40.2:18.22	40.2:18.19,40.2:18.20	renders	нема renders οὐκ εἰσίν
+fixed	40.2:19			add в, промовив
+accept	40.2:19.9	40.2:19.13	renders	в renders ἐν
+accept	40.2:19.16	40.2:20.1	renders	промовив renders λέγων at start of next verse
+fixed	40.2:20			add ті
+accept	40.2:20.14	40.2:20.17	renders	ті renders substantival οἱ
+fixed	40.2:21			add ὁ δέ, прийшов
+accept	40.2:21.1	40.2:21.2	renders	І renders δέ
+accept	40.2:21.2	40.2:21.1	renders	він renders pronominal ὁ
+accept	40.2:21.10	40.2:21.12	renders	прийшов renders εἰσῆλθεν
+fixed	40.2:22			add missing words
+accept	40.2:22.1	40.2:22.2	renders	Та renders δέ
+accept	40.2:22.4	40.2:22.5	renders	царює renders βασιλεύει
+accept	40.2:22.20	40.2:22.20	renders	відійшов renders ἀνεχώρησεν
+accept	40.2:22.22	40.2:22.23	renders	країв renders μέρη
+fixed	40.2:23			add missing words
+accept	40.2:23.2	40.2:23.2	renders	прибувши renders ἐλθών
+accept	40.2:23.6,40.2:23.7	40.2:23.6	renders	на імя renders λεγομένην
+accept	40.2:23.13	40.2:23.15	renders	що renders ὅτι
+accept	40.2:23.16	40.2:23.17	renders	буде званий renders κληθήσεται
+fixed	40.3:1			add Тими, ж, приходить
+accept	40.3:1.1	40.3:1.5	renders	Тими renders ἐκείναις
+accept	40.3:1.2	40.3:1.2	renders	ж renders δέ
+accept	40.3:1.4	40.3:1.6	renders	приходить renders παραγίνεται
+ok	40.3:2			
+fixed	40.3:3			add він той, рівняйте
+accept	40.3:3.2	40.3:3.1	renders	він renders οὗτος
+accept	40.3:3.3	40.3:3.4	renders	той renders substantival ὁ
+accept	40.3:3.22	40.3:3.21	renders	рівняйте renders εὐθείας ποιεῖτε
+fixed	40.3:4			add же, була
+accept	40.3:4.2	40.3:4.2	renders	же renders δέ
+accept	40.3:4.20	40.3:4.22	renders	була renders ἦν
+ok	40.3:5			
+ok	40.3:6			
+ok	40.3:7			
+fixed	40.3:8			add гідний
+accept	40.3:8.3	40.3:8.4	renders	гідний renders ἄξιον
+fixed	40.3:9			add говорити
+accept	40.3:9.4	40.3:9.4	renders	говорити renders λέγειν
+fixed	40.3:10			add missing words
+accept	40.3:10.2	40.3:10.1	renders	вже renders ἤδη
+accept	40.3:10.8	40.3:10.10	renders	прикладена renders κεῖται
+accept	40.3:10.10	40.3:10.12	renders	ж renders οὖν
+accept	40.3:10.17	40.3:10.18	renders	буде зрубане renders ἐκκόπτεται
+accept	40.3:10.23	40.3:10.22	renders	буде вкинене renders βάλλεται
+fixed	40.3:11			fix Йому=οὗ, add missing
+refuse	40.3:11.20	40.3:11.24		Йому (взуття Йому) renders οὗ, not αὐτός
+accept	40.3:11.20	40.3:11.17	renders	Йому renders οὗ
+accept	40.3:11.21	40.3:11.24	renders	Він renders αὐτός
+accept	40.3:11.10	40.3:11.13	renders	йде renders ἐρχόμενος
+accept	40.3:11.11	40.3:11.11	renders	по renders ὀπίσω
+accept	40.3:11.16	40.3:11.19	renders	я renders εἰμί
+accept	40.3:11.17	40.3:11.18,40.3:11.20	renders	недостойний renders οὐκ ἱκανός
+fixed	40.3:12			збере to συνάξει
+refuse	40.3:12.14	40.3:12.18		збере is the verb συνάξει, not εἰς
+accept	40.3:12.14	40.3:12.14	renders	збере renders συνάξει
+fixed	40.3:13			add понад
+accept	40.3:13.6	40.3:13.8	renders	понад renders ἐπί
+fixed	40.3:14			add missing words
+accept	40.3:14.2	40.3:14.3	renders	перешкоджав renders διεκώλυεν
+accept	40.3:14.3	40.3:14.1	renders	він renders pronominal ὁ
+accept	40.3:14.6	40.3:14.5	renders	говорив renders λέγων
+accept	40.3:14.8	40.3:14.7,40.3:14.8	renders	повинен renders χρείαν ἔχω
+accept	40.3:14.15	40.3:14.14	renders	йти renders ἔρχῃ
+fixed	40.3:15			add missing words
+accept	40.3:15.12	40.3:15.11	renders	годиться renders πρέπον
+accept	40.3:15.13	40.3:15.13	renders	нам renders ἡμῖν
+accept	40.3:15.14	40.3:15.14	renders	виповнити renders πληρῶσαι
+accept	40.3:15.15	40.3:15.15	renders	усю renders πᾶσαν
+fixed	40.3:16			add missing words
+accept	40.3:16.1	40.3:16.2	renders	І renders δέ
+accept	40.3:16.5	40.3:16.6	renders	вийшов renders ἀνέβη
+accept	40.3:16.19	40.3:16.20	renders	як renders ὡσεί
+accept	40.3:16.22	40.3:16.22	renders	сходив renders ἐρχόμενον
+ok	40.3:17			

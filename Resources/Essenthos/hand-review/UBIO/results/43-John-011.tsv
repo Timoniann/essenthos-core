@@ -1,0 +1,208 @@
+kind	from	to	relation	reason
+fixed	43.11:1			add Був
+accept	43.11:1.1	43.11:1.1	renders	was
+fixed	43.11:2			swap hair/wipe; pronouns
+refuse	43.11:2.16	43.11:2.10		волоссям is hair, not wiped
+accept	43.11:2.16	43.11:2.15	renders	hair
+refuse	43.11:2.20	43.11:2.15		обтерла is wiped, not hair
+accept	43.11:2.20	43.11:2.10	renders	wiped
+accept	43.11:2.1	43.11:2.2	renders	de
+accept	43.11:2.3,43.11:2.5	43.11:2.17	renders	whose
+accept	43.11:2.7	43.11:2.21	renders	was sick
+accept	43.11:2.9	43.11:2.1	renders	was
+accept	43.11:2.10	43.11:2.4	renders	the one
+accept	43.11:2.17	43.11:2.16	renders	her
+accept	43.11:2.18	43.11:2.13	renders	his
+fixed	43.11:3			add Тоді
+accept	43.11:3.1	43.11:3.2	renders	oun
+fixed	43.11:4			add же, нею
+accept	43.11:4.3	43.11:4.2	renders	de
+accept	43.11:4.20	43.11:4.25,43.11:4.26	renders	by it
+ok	43.11:5			
+fixed	43.11:6			add missing words
+accept	43.11:6.2	43.11:6.1	renders	when
+accept	43.11:6.8	43.11:6.6	renders	then
+accept	43.11:6.9	43.11:6.8	renders	remained
+accept	43.11:6.15	43.11:6.10	renders	which/where
+accept	43.11:6.16	43.11:6.11	renders	was
+ok	43.11:7			
+fixed	43.11:8			add хотіли, побити
+accept	43.11:8.8	43.11:8.7	renders	were seeking
+accept	43.11:8.10	43.11:8.9	renders	to stone
+fixed	43.11:9			add Хіба не, цьогосвітнє
+accept	43.11:9.3,43.11:9.5	43.11:9.3	renders	ouchi
+accept	43.11:9.15	43.11:9.21,43.11:9.22	renders	of this world
+fixed	43.11:10			add хто, пори, немає
+accept	43.11:10.2	43.11:10.3	renders	anyone
+accept	43.11:10.5	43.11:10.7	renders	night
+accept	43.11:10.9	43.11:10.12,43.11:10.13	renders	is not
+fixed	43.11:11			add тому, та
+accept	43.11:11.6	43.11:11.5	renders	this
+accept	43.11:11.14	43.11:11.13	renders	but
+fixed	43.11:12			add Як, видужає
+accept	43.11:12.5	43.11:12.7	renders	if
+accept	43.11:12.10	43.11:12.9	renders	will get well
+fixed	43.11:13			add Та, мовив, вони
+accept	43.11:13.1	43.11:13.2	renders	de
+accept	43.11:13.5	43.11:13.1	renders	had spoken
+accept	43.11:13.7	43.11:13.9	renders	they
+fixed	43.11:14			add просто
+accept	43.11:14.2	43.11:14.7	renders	plainly
+fixed	43.11:15			add що
+accept	43.11:15.6	43.11:15.7	renders	that
+fixed	43.11:16			add же, Ходімо
+accept	43.11:16.2	43.11:16.2	renders	oun
+accept	43.11:16.8	43.11:16.9	renders	let us go
+fixed	43.11:17			add же, той
+accept	43.11:17.3	43.11:17.2	renders	oun
+accept	43.11:17.11	43.11:17.6	renders	him
+fixed	43.11:18			add була, яких
+accept	43.11:18.5	43.11:18.1	renders	was
+accept	43.11:18.6	43.11:18.7	renders	about
+fixed	43.11:19			add І
+accept	43.11:19.1	43.11:19.2	renders	de
+fixed	43.11:20			refuse побігла=hos; add удома
+refuse	43.11:20.7	43.11:20.4		ran is added; hos rendered by participle
+accept	43.11:20.12	43.11:20.13,43.11:20.15	renders	in the house
+fixed	43.11:21			add був Ти, би
+accept	43.11:21.8,43.11:21.9	43.11:21.9	renders	you had been
+accept	43.11:21.14	43.11:21.12	renders	an
+fixed	43.11:22			add чого
+accept	43.11:22.7	43.11:22.5	renders	whatever
+ok	43.11:23			
+fixed	43.11:24			add Відказує
+accept	43.11:24.1	43.11:24.1	renders	says
+fixed	43.11:25			add Хто, і, буде
+accept	43.11:25.9	43.11:25.12	renders	the one
+accept	43.11:25.14	43.11:25.16	renders	kan
+accept	43.11:25.16	43.11:25.18	renders	will live
+fixed	43.11:26			add хто, не, повіки
+accept	43.11:26.3	43.11:26.3	renders	the one
+accept	43.11:26.11	43.11:26.10	renders	ou me
+accept	43.11:26.10	43.11:26.12,43.11:26.14	renders	forever
+fixed	43.11:27			add Так, має
+accept	43.11:27.4	43.11:27.3	renders	yes
+accept	43.11:27.14	43.11:27.20	renders	coming
+fixed	43.11:28			add відійшла, свою, тут
+accept	43.11:28.4	43.11:28.4	renders	went away
+accept	43.11:28.11	43.11:28.10	renders	her
+accept	43.11:28.14	43.11:28.15	renders	is present
+fixed	43.11:29			add А, та, квапливо, пішла
+accept	43.11:29.1	43.11:29.2	renders	de
+accept	43.11:29.2	43.11:29.1	renders	she
+accept	43.11:29.5	43.11:29.6	renders	quickly
+accept	43.11:29.10	43.11:29.8	renders	was coming
+fixed	43.11:30			add ввійшов був іще
+accept	43.11:30.4,43.11:30.5	43.11:30.3	renders	had come
+accept	43.11:30.6	43.11:30.1	renders	not yet
+fixed	43.11:31			add missing words
+accept	43.11:31.3	43.11:31.4	renders	the ones
+accept	43.11:31.14	43.11:31.17	renders	that
+accept	43.11:31.16	43.11:31.18	renders	quickly
+accept	43.11:31.19	43.11:31.21	renders	went out
+accept	43.11:31.20	43.11:31.22	renders	followed
+accept	43.11:31.23	43.11:31.24	renders	supposing
+accept	43.11:31.24	43.11:31.25	renders	that
+accept	43.11:31.27	43.11:31.26	renders	is going
+fixed	43.11:32			add ж, був, Йому, говорила, був Ти, би
+accept	43.11:32.3	43.11:32.2	renders	oun
+accept	43.11:32.7	43.11:32.7	renders	was
+accept	43.11:32.16	43.11:32.12	renders	his
+accept	43.11:32.19	43.11:32.16	renders	saying
+accept	43.11:32.25,43.11:32.26	43.11:32.20	renders	you had been
+accept	43.11:32.31	43.11:32.23	renders	an
+fixed	43.11:33			плачуть to klaiontas; add missing
+refuse	43.11:33.9	43.11:33.9		weep is not came-with
+accept	43.11:33.9	43.11:33.12	renders	weeping
+accept	43.11:33.12,43.11:33.14	43.11:33.9	renders	came with
+accept	43.11:33.1	43.11:33.2	renders	oun
+accept	43.11:33.3	43.11:33.3	renders	when
+accept	43.11:33.7	43.11:33.5	renders	her
+accept	43.11:33.22	43.11:33.18	renders	himself
+fixed	43.11:34			add Іди
+accept	43.11:34.9	43.11:34.9	renders	come
+fixed	43.11:35			add сльози
+accept	43.11:35.3	43.11:35.1	renders	wept
+fixed	43.11:36			add А
+accept	43.11:36.1	43.11:36.2	renders	oun
+fixed	43.11:37			add Хто
+accept	43.11:37.12	43.11:37.9	renders	the one
+fixed	43.11:38			add же, ж, ній
+accept	43.11:38.2	43.11:38.2	renders	oun
+accept	43.11:38.12	43.11:38.12	renders	de
+accept	43.11:38.18	43.11:38.18	renders	it
+fixed	43.11:39			add Уже, чути, чотири дні
+accept	43.11:39.12	43.11:39.15	renders	already
+accept	43.11:39.14	43.11:39.16	renders	stinks
+accept	43.11:39.16,43.11:39.18	43.11:39.17	renders	four days
+ok	43.11:40			
+fixed	43.11:41			приношу not ano; add missing
+refuse	43.11:41.15	43.11:41.11		bring is not upwards
+accept	43.11:41.14,43.11:41.15	43.11:41.15	renders	I thank
+accept	43.11:41.2	43.11:41.1	renders	took away
+accept	43.11:41.3	43.11:41.2	renders	oun
+accept	43.11:41.9,43.11:41.10	43.11:41.11	renders	upwards
+fixed	43.11:42			add Та, ради, довкола
+accept	43.11:42.1	43.11:42.2	renders	de
+accept	43.11:42.10	43.11:42.9	renders	on account of
+accept	43.11:42.13	43.11:42.13	renders	standing around
+fixed	43.11:43			add вийди сюди
+accept	43.11:43.9,43.11:43.10	43.11:43.8,43.11:43.9	renders	come out
+fixed	43.11:44			bound to dedemenos; add
+refuse	43.11:44.8	43.11:44.10		bound is not linen strips
+accept	43.11:44.8	43.11:44.4	renders	being bound
+accept	43.11:44.10	43.11:44.11	renders	and
+accept	43.11:44.27	43.11:44.26	renders	to go
+fixed	43.11:45			add І, що, те
+accept	43.11:45.1	43.11:45.2	renders	oun
+accept	43.11:45.5	43.11:45.6	renders	the ones
+accept	43.11:45.11	43.11:45.13	renders	what
+ok	43.11:46			
+fixed	43.11:47			add раду, маємо, чинить
+accept	43.11:47.6	43.11:47.8	renders	council
+accept	43.11:47.10	43.11:47.12	renders	are we to do
+accept	43.11:47.17	43.11:47.18	renders	does
+fixed	43.11:48			і to right kai; add Край
+refuse	43.11:48.17	43.11:48.19		wrong kai
+accept	43.11:48.17	43.11:48.16	renders	both
+accept	43.11:48.18	43.11:48.18	renders	place
+fixed	43.11:49			add один, був, нічого
+accept	43.11:49.2	43.11:49.1	renders	one
+accept	43.11:49.7	43.11:49.8	renders	being
+accept	43.11:49.15	43.11:49.17	renders	nothing
+fixed	43.11:50			add missing words
+accept	43.11:50.1	43.11:50.1	renders	oude
+accept	43.11:50.3	43.11:50.2	renders	consider
+accept	43.11:50.11,43.11:50.12	43.11:50.9	renders	should die
+accept	43.11:50.15	43.11:50.13,43.11:50.14	renders	and not
+accept	43.11:50.17	43.11:50.15	renders	whole
+fixed	43.11:51			add того, мав умерти
+accept	43.11:51.2	43.11:51.1	renders	this
+accept	43.11:51.19	43.11:51.15	renders	was about
+accept	43.11:51.20	43.11:51.17	renders	to die
+fixed	43.11:52			add лише
+accept	43.11:52.3	43.11:52.6	renders	only
+fixed	43.11:53			add змовилися, убити
+accept	43.11:53.6	43.11:53.6	renders	took counsel
+accept	43.11:53.8	43.11:53.8	renders	kill
+fixed	43.11:54			add тому, не, околиць, тут
+accept	43.11:54.2	43.11:54.2	renders	oun
+accept	43.11:54.3	43.11:54.4	renders	no longer
+accept	43.11:54.14	43.11:54.15	renders	region
+accept	43.11:54.23	43.11:54.23	renders	there
+fixed	43.11:55			add ж, Наближалася
+accept	43.11:55.2	43.11:55.2	renders	de
+accept	43.11:55.1	43.11:55.1	renders	was near
+fixed	43.11:56			add missing words
+accept	43.11:56.1	43.11:56.2	renders	oun
+accept	43.11:56.9	43.11:56.6	renders	were saying
+accept	43.11:56.10,43.11:56.11,43.11:56.12	43.11:56.7,43.11:56.8	renders	among one another
+accept	43.11:56.14	43.11:56.13	renders	what
+accept	43.11:56.19	43.11:56.18	renders	ou me
+fixed	43.11:57			донесе to menuse; add
+refuse	43.11:57.14	43.11:57.16		report is not hopos
+accept	43.11:57.14	43.11:57.15	renders	should report
+accept	43.11:57.15	43.11:57.16	renders	so that
+accept	43.11:57.5	43.11:57.8	renders	command
+accept	43.11:57.9	43.11:57.11	renders	anyone
+accept	43.11:57.12	43.11:57.14	renders	is

@@ -1,0 +1,181 @@
+kind	from	to	relation	reason
+ok	42.19:1			
+fixed	42.19:2			add pronoun and chief
+accept	42.19:2.7	42.19:2.8	renders	he = autos
+accept	42.19:2.9	42.19:2.10	renders	starshyi renders archi-telones
+fixed	42.19:3			add sought, He is, but
+accept	42.19:3.1	42.19:3.2	renders	wished renders ezetei
+accept	42.19:3.5	42.19:3.7	renders	He is = estin
+accept	42.19:3.6	42.19:3.8	renders	but renders kai
+fixed	42.19:4			add ahead, climbed, fig, was about
+accept	42.19:4.3	42.19:4.3,42.19:4.5	renders	vpered = eis to emprosthen
+accept	42.19:4.5	42.19:4.6	renders	climbed = anebe
+accept	42.19:4.7	42.19:4.8	renders	fig tree = sykomorean
+accept	42.19:4.14	42.19:4.14	renders	was about = emellen
+fixed	42.19:5			add missing verbs
+accept	42.19:5.2	42.19:5.2	renders	when = hos
+accept	42.19:5.9,42.19:5.10	42.19:5.7	renders	looked up = anablepsas
+accept	42.19:5.16,42.19:5.18	42.19:5.15	renders	come down = katabethi
+accept	42.19:5.17	42.19:5.14	renders	at once renders speusas
+accept	42.19:5.21	42.19:5.22	renders	must = dei
+accept	42.19:5.23	42.19:5.24	renders	to be = meinai
+fixed	42.19:6			pronoun is not speusas
+refuse	42.19:6.2	42.19:6.2		pronoun is not hurried
+accept	42.19:6.3	42.19:6.2	renders	at once renders speusas
+accept	42.19:6.4,42.19:6.5	42.19:6.3	renders	came down = katebe
+accept	42.19:6.9,42.19:6.10	42.19:6.7	renders	with joy = chairon
+fixed	42.19:7			add entered, to lodge
+accept	42.19:7.16	42.19:7.10	renders	entered = eiselthen
+accept	42.19:7.14,42.19:7.15	42.19:7.11	renders	as guest = katalysai
+fixed	42.19:8			add missing words
+accept	42.19:8.12	42.19:8.11	renders	his own = mou
+accept	42.19:8.19	42.19:8.20	renders	anyone = tinos
+accept	42.19:8.20	42.19:8.22	renders	defrauded = esykophantesa
+accept	42.19:8.22	42.19:8.21	renders	anything = ti
+accept	42.19:8.24	42.19:8.24	renders	fourfold
+fixed	42.19:9			add de, came, because
+accept	42.19:9.2	42.19:9.2	renders	zhe = de
+accept	42.19:9.11	42.19:9.13	renders	came = egeneto
+accept	42.19:9.12	42.19:9.14	renders	because = kathoti
+fixed	42.19:10			add seek, what
+accept	42.19:10.6	42.19:10.7	renders	renders zetesai
+accept	42.19:10.9	42.19:10.10	renders	that which = to
+fixed	42.19:11			add many missing words
+accept	42.19:11.4	42.19:11.1	renders	hearing = akouonton
+accept	42.19:11.2	42.19:11.2	renders	zh = de
+accept	42.19:11.6	42.19:11.6	renders	spoke = eipen
+accept	42.19:11.8	42.19:11.5	renders	one more renders prostheis
+accept	42.19:11.11	42.19:11.8	renders	because = dia
+accept	42.19:11.12	42.19:11.13	renders	He = auton
+accept	42.19:11.17	42.19:11.16	renders	they = autous
+accept	42.19:11.21	42.19:11.24	renders	appear = anaphainesthai
+accept	42.19:11.24	42.19:11.18	renders	now = parachrema
+fixed	42.19:12			add man, birth
+accept	42.19:12.5	42.19:12.3	renders	man = anthropos
+accept	42.19:12.6	42.19:12.5	renders	of noble birth = eugenes
+fixed	42.19:13			add de, own, until, come
+accept	42.19:13.1	42.19:13.2	renders	i renders de
+accept	42.19:13.5	42.19:13.5	renders	own = heautou
+accept	42.19:13.15,42.19:13.16	42.19:13.15,42.19:13.16	renders	until = en ho
+accept	42.19:13.17	42.19:13.17	renders	return = erchomai
+fixed	42.19:14			add but, this, reign
+accept	42.19:14.1	42.19:14.2	renders	but = de
+accept	42.19:14.16	42.19:14.15	renders	he = touton
+accept	42.19:14.17,42.19:14.20	42.19:14.16	renders	be king = basileusai
+fixed	42.19:15			add missing words
+accept	42.19:15.3	42.19:15.3	renders	when = en
+accept	42.19:15.4	42.19:15.6	renders	he = auton
+accept	42.19:15.9	42.19:15.10	renders	then = kai
+accept	42.19:15.11	42.19:15.12	renders	summon = phonethenai
+accept	42.19:15.18	42.19:15.23	renders	who = tis
+fixed	42.19:16			add de, produced
+accept	42.19:16.1	42.19:16.2	renders	i renders de
+accept	42.19:16.9	42.19:16.11	renders	brought = prosergasato
+fixed	42.19:17			add have authority
+accept	42.19:17.13	42.19:17.12,42.19:17.13,42.19:17.14	renders	rule = isthi exousian echon
+fixed	42.19:18			add made
+accept	42.19:18.11	42.19:18.10	renders	brought = epoiesen
+fixed	42.19:19			add de, this one
+accept	42.19:19.2	42.19:19.2	renders	zhe = de
+accept	42.19:19.5	42.19:19.4	renders	that one = touto
+ok	42.19:20			
+fixed	42.19:21			add missing words
+accept	42.19:21.5	42.19:21.7	renders	you are = ei
+accept	42.19:21.10	42.19:21.8	renders	take = aireis
+accept	42.19:21.11	42.19:21.9	renders	what = ho
+accept	42.19:21.13	42.19:21.11	renders	laid = ethekas
+accept	42.19:21.16	42.19:21.14	renders	what = ho
+fixed	42.19:22			add relatives
+accept	42.19:22.19	42.19:22.18	renders	what = ho
+accept	42.19:22.24	42.19:22.23	renders	what = ho
+fixed	42.19:23			add missing words
+accept	42.19:23.1	42.19:23.2,42.19:23.3	renders	why = dia ti
+accept	42.19:23.6	42.19:23.9,42.19:23.10	renders	moneychangers = epi trapezan
+accept	42.19:23.9,42.19:23.10	42.19:23.11	renders	and I = kago
+accept	42.19:23.11	42.19:23.12	renders	returning = elthon
+accept	42.19:23.12	42.19:23.17	renders	collected = epraxa
+accept	42.19:23.13	42.19:23.15	renders	would = an
+fixed	42.19:24			add bystanders, the one
+accept	42.19:24.4	42.19:24.3	renders	present = parestosin
+accept	42.19:24.11	42.19:24.12	renders	to the one = to
+ok	42.19:25			
+fixed	42.19:26			add say, de, from
+accept	42.19:26.1	42.19:26.1	renders	say = lego
+accept	42.19:26.12	42.19:26.9	renders	zh = de
+accept	42.19:26.16	42.19:26.8	renders	from = apo
+fixed	42.19:27			add missing words
+accept	42.19:27.1	42.19:27.1	renders	but = plen
+accept	42.19:27.2	42.19:27.5	renders	those = toutous
+accept	42.19:27.5	42.19:27.6	renders	who = tous
+accept	42.19:27.20	42.19:27.16	renders	slay = katasphaxate
+accept	42.19:27.16,42.19:27.17	42.19:27.18	renders	before = emprosthen
+accept	42.19:27.18	42.19:27.19	renders	my = mou
+fixed	42.19:28			add ahead
+accept	42.19:28.6	42.19:28.5	renders	further = emprosthen
+fixed	42.19:29			add to
+accept	42.19:29.5	42.19:29.5	renders	to = eis
+fixed	42.19:30			add missing words
+accept	42.19:30.6,42.19:30.7	42.19:30.5	renders	opposite you = katenanti
+accept	42.19:30.8	42.19:30.9	renders	entering = eisporeuomenoi
+accept	42.19:30.9	42.19:30.7	renders	into = en
+accept	42.19:30.10	42.19:30.8	renders	it = he
+accept	42.19:30.14,42.19:30.16	42.19:30.14	renders	on which = hon
+accept	42.19:30.17	42.19:30.16	renders	ever = popote
+accept	42.19:30.18	42.19:30.15	renders	no one = oudeis
+accept	42.19:30.19,42.19:30.20	42.19:30.17	renders	of men = anthropon
+accept	42.19:30.25	42.19:30.19	renders	and = kai
+fixed	42.19:31			add missing words
+accept	42.19:31.2	42.19:31.1	renders	zh renders kai
+accept	42.19:31.6	42.19:31.6	renders	why = dia ti
+accept	42.19:31.8	42.19:31.10	renders	say = ereite
+accept	42.19:31.12	42.19:31.16	renders	need has = chreian echei
+fixed	42.19:32			add de, departed
+accept	42.19:32.2	42.19:32.2	renders	zh = de
+accept	42.19:32.3	42.19:32.1	renders	departed = apelthontes
+fixed	42.19:33			untie is not said
+refuse	42.19:33.5	42.19:33.6		untie is not eipan
+accept	42.19:33.5	42.19:33.1	renders	untying = lyonton
+accept	42.19:33.6	42.19:33.8	renders	owners = kyrioi
+accept	42.19:33.9	42.19:33.6	renders	asked = eipan
+fixed	42.19:34			add they, de
+accept	42.19:34.1	42.19:34.1	renders	they = hoi
+accept	42.19:34.2	42.19:34.2	renders	zh = de
+fixed	42.19:35			it is the colt
+refuse	42.19:35.6	42.19:35.9		it = colt, not their
+accept	42.19:35.6	42.19:35.3	renders	it = auton (colt)
+accept	42.19:35.8	42.19:35.8	renders	cast = epirispantes
+accept	42.19:35.10	42.19:35.9	renders	their = auton
+fixed	42.19:36			add missing words
+accept	42.19:36.2	42.19:36.2	renders	zh = de
+accept	42.19:36.3	42.19:36.3	renders	He = autou
+accept	42.19:36.4	42.19:36.1	renders	riding = poreuomenou
+accept	42.19:36.8	42.19:36.7	renders	their = heauton
+fixed	42.19:37			add already, all
+accept	42.19:37.5	42.19:37.4	renders	already = ede
+accept	42.19:37.12	42.19:37.13	renders	all = hapan
+ok	42.19:38			
+ok	42.19:39			
+fixed	42.19:40			add in answer
+accept	42.19:40.5	42.19:40.2	renders	u vidpovid = apokritheis
+fixed	42.19:41			add when
+accept	42.19:41.2	42.19:41.2	renders	when = hos
+fixed	42.19:42			add de, your, things
+accept	42.19:42.16	42.19:42.15	renders	but = de
+accept	42.19:42.20	42.19:42.19	renders	your = sou
+accept	42.19:42.11	42.19:42.11	renders	what = ta
+fixed	42.19:43			surround is not soi
+refuse	42.19:43.12	42.19:43.12		verb is not pronoun
+accept	42.19:43.12	42.19:43.7	renders	surround = paremballousin
+accept	42.19:43.10	42.19:43.12	renders	you = soi
+fixed	42.19:44			add children, dash
+accept	42.19:44.9	42.19:44.6	renders	children = tekna
+accept	42.19:44.7	42.19:44.2	renders	dash down = edaphiousin
+accept	42.19:44.20	42.19:44.19	renders	anth hon = because
+ok	42.19:45			
+fixed	42.19:46			add to them
+accept	42.19:46.1	42.19:46.2	renders	do nykh = autois
+fixed	42.19:47			add every
+accept	42.19:47.3	42.19:47.5	renders	every = kath
+fixed	42.19:48			add but, Him
+accept	42.19:48.1	42.19:48.1	renders	but renders kai
+accept	42.19:48.15	42.19:48.12	renders	Him = autou

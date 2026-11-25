@@ -1,0 +1,113 @@
+kind	from	to	relation	reason
+fixed	40.11:1			added missing links
+accept	40.11:1.5	40.11:1.4	renders	перестав = etelesen
+accept	40.11:1.6	40.11:1.7	renders	навчати renders diatasson
+accept	40.11:1.8	40.11:1.11	renders	Своїх = autou
+fixed	40.11:2			added missing links
+accept	40.11:2.2	40.11:2.2	renders	ж = de
+accept	40.11:2.7	40.11:2.9	renders	дії = erga
+fixed	40.11:3			added pronoun
+accept	40.11:3.12	40.11:3.9	renders	нам = 1pl of prosdokomen
+fixed	40.11:4			added missing links
+accept	40.11:4.4	40.11:4.2	renders	у відповідь = apokritheis
+accept	40.11:4.12	40.11:4.11	renders	ви = 2pl of akouete
+fixed	40.11:5			added missing links
+accept	40.11:5.6,40.11:5.7	40.11:5.7	renders	стають чистими = katharizontai
+accept	40.11:5.15	40.11:5.14	renders	а = kai
+accept	40.11:5.17,40.11:5.18	40.11:5.16	renders	звіщається Добра Новина = euangelizontai
+ok	40.11:6			
+fixed	40.11:7			added missing links
+accept	40.11:7.3	40.11:7.2	renders	ж = de
+accept	40.11:7.9	40.11:7.7	renders	говорити = legein
+accept	40.11:7.10	40.11:7.9	renders	народові = ochlois
+accept	40.11:7.13	40.11:7.13	renders	ви = 2pl of exelthate
+fixed	40.11:8			added missing links
+accept	40.11:8.1	40.11:8.1	renders	Та = alla
+accept	40.11:8.4	40.11:8.3	renders	ви = 2pl of exelthate
+accept	40.11:8.13	40.11:8.8	renders	одягненого = emphiesmenon
+accept	40.11:8.15	40.11:8.10	renders	ті = hoi
+accept	40.11:8.19	40.11:8.14	renders	по = en
+accept	40.11:8.20	40.11:8.16	renders	палатах = oikois
+fixed	40.11:9			added missing links
+accept	40.11:9.4	40.11:9.3	renders	ви = 2pl of exelthate
+accept	40.11:9.9	40.11:9.6	renders	Так = nai
+accept	40.11:9.12	40.11:9.9	renders	навіть = kai (even)
+fixed	40.11:10			added missing links
+accept	40.11:10.7	40.11:10.4	renders	нього = hou
+accept	40.11:10.14	40.11:10.11	renders	Свого = mou
+accept	40.11:10.16	40.11:10.15	renders	який = hos
+accept	40.11:10.20	40.11:10.19	renders	Твою = sou
+fixed	40.11:11			added missing links
+accept	40.11:11.9	40.11:11.5	renders	не було = ouk egegertai
+accept	40.11:11.14	40.11:11.14	renders	Та = de
+fixed	40.11:12			added missing links
+accept	40.11:12.3	40.11:12.2	renders	же = de
+accept	40.11:12.11	40.11:12.14	renders	здобувається силою = biazetai
+accept	40.11:12.15	40.11:12.16	renders	вживає зусилля = biastai
+accept	40.11:12.17	40.11:12.17	renders	хапають = harpazousin
+ok	40.11:13			
+fixed	40.11:14			added missing links
+accept	40.11:14.7	40.11:14.5	renders	він = autos
+accept	40.11:14.9	40.11:14.9	renders	має = mellon
+fixed	40.11:15			added missing links
+accept	40.11:15.1	40.11:15.1	renders	Хто = ho (the one)
+accept	40.11:15.4	40.11:15.4	renders	нехай = imperative akoueto
+fixed	40.11:16			added missing links
+accept	40.11:16.2	40.11:16.1	renders	кого = tini
+accept	40.11:16.17	40.11:16.17	renders	іншим = heterois
+fixed	40.11:17			added missing links
+accept	40.11:17.6	40.11:17.4	renders	а = kai
+accept	40.11:17.7	40.11:17.6	renders	ви = 2pl of orchesasthe
+accept	40.11:17.10,40.11:17.11	40.11:17.7	renders	ми співали = ethrenesamen
+accept	40.11:17.16,40.11:17.17	40.11:17.10	renders	не плакали ви = ekopsasthe
+fixed	40.11:18			і belongs to mete pair; ж is the kai
+refuse	40.11:18.8	40.11:18.8		і joins не їв/не пив, not kai legousin
+accept	40.11:18.12	40.11:18.8	renders	ж = kai before legousin
+accept	40.11:18.3	40.11:18.1	renders	прийшов був = elthen
+fixed	40.11:19			added missing links
+accept	40.11:19.10	40.11:19.9	renders	ж = kai before legousin
+accept	40.11:19.25	40.11:19.27	renders	своїми = autes
+fixed	40.11:20			added missing links
+accept	40.11:20.6	40.11:20.6,40.11:20.7	renders	де = en hais
+accept	40.11:20.7	40.11:20.8	renders	відбулося = egenonto
+accept	40.11:20.8	40.11:20.10	renders	найбільш = pleistai
+accept	40.11:20.12	40.11:20.15	renders	вони = 3pl of metenoesan
+fixed	40.11:21			були відбулися = egenonto, not genomenai
+refuse	40.11:21.16	40.11:21.17		відбулися renders egenonto; сталися is genomenai
+accept	40.11:21.15,40.11:21.16	40.11:21.13	renders	були відбулися = egenonto
+accept	40.11:21.24	40.11:21.20	renders	давно = palai
+accept	40.11:21.26	40.11:21.26	renders	вони = 3pl of metenoesan
+fixed	40.11:22			added missing link
+accept	40.11:22.4	40.11:22.7	renders	Легше = anektoteron
+fixed	40.11:23			added missing links
+accept	40.11:23.11	40.11:23.10	renders	ти = 2sg of katabese
+accept	40.11:23.16	40.11:23.13	renders	у = en
+accept	40.11:23.18,40.11:23.19	40.11:23.15	renders	були відбулися = egenethesan
+accept	40.11:23.30,40.11:23.31	40.11:23.22	renders	він був with лишився = emeinen
+accept	40.11:23.32	40.11:23.24	renders	по = mechri
+accept	40.11:23.33,40.11:23.34	40.11:23.26	renders	сьогоднішній день = semeron
+fixed	40.11:24			added missing links
+accept	40.11:24.7	40.11:24.8	renders	буде = estai
+accept	40.11:24.8	40.11:24.7	renders	легше = anektoteron
+fixed	40.11:25			added missing links
+accept	40.11:25.4	40.11:25.8	renders	промовив = eipen
+accept	40.11:25.14,40.11:25.15	40.11:25.19	renders	втаїв Ти = ekrypsas
+fixed	40.11:26			added missing links
+accept	40.11:26.6	40.11:26.7	renders	було = egeneto
+accept	40.11:26.7,40.11:26.8	40.11:26.6	renders	до вподоби = eudokia
+fixed	40.11:27			added missing links
+accept	40.11:27.1	40.11:27.3	renders	Передав = paredothe
+accept	40.11:27.9	40.11:27.10	renders	знає = epiginoskei
+accept	40.11:27.11	40.11:27.14	renders	крім = ei me
+accept	40.11:27.16	40.11:27.21	renders	знає = epiginoskei
+accept	40.11:27.18	40.11:27.23	renders	окрім = ei me
+accept	40.11:27.23	40.11:27.29	renders	захоче = bouletai
+fixed	40.11:28			added missing link
+accept	40.11:28.8	40.11:28.9	renders	і = kai of kago
+fixed	40.11:29			added missing links
+accept	40.11:29.3	40.11:29.6	renders	себе = hymas
+accept	40.11:29.11	40.11:29.13	renders	Я = eimi
+accept	40.11:29.12	40.11:29.12	renders	тихий = praus
+accept	40.11:29.20	40.11:29.23	renders	своїм = hymon
+fixed	40.11:30			added missing link
+accept	40.11:30.1	40.11:30.2	renders	Бож = gar

@@ -1,0 +1,184 @@
+kind	from	to	relation	reason
+fixed	41.9:1			added missing links
+accept	41.9:1.12	41.9:1.10	renders	here
+accept	41.9:1.13	41.9:1.12	renders	standing
+accept	41.9:1.26	41.9:1.26	renders	in
+fixed	41.9:2			added apart/alone
+accept	41.9:2.16	41.9:2.21,41.9:2.22	renders	kat idian = apart
+accept	41.9:2.20	41.9:2.23	renders	alone
+fixed	41.9:3			relative pronoun retargeted
+refuse	41.9:3.10	41.9:3.10		wrong target
+accept	41.9:3.10	41.9:3.9	renders	such as
+fixed	41.9:4			added syn and esan
+accept	41.9:4.5	41.9:4.5	renders	with = and
+accept	41.9:4.8	41.9:4.8	renders	periphrastic were talking
+fixed	41.9:5			added einai and dative fors
+accept	41.9:5.11	41.9:5.13	renders	to be
+accept	41.9:5.19	41.9:5.18	renders	for You
+accept	41.9:5.24	41.9:5.21	renders	for Moses
+fixed	41.9:6			added verbs
+accept	41.9:6.5	41.9:6.5	renders	say/answer
+accept	41.9:6.7	41.9:6.8	renders	were
+fixed	41.9:7			added came
+accept	41.9:7.8	41.9:7.7	renders	voice came
+fixed	41.9:8			added missing links
+accept	41.9:8.2	41.9:8.2	renders	suddenly
+accept	41.9:8.3,41.9:8.4	41.9:8.3	renders	looked around
+accept	41.9:8.13	41.9:8.7	renders	except
+fixed	41.9:9			neg retargeted, added links
+refuse	41.9:9.12	41.9:9.15		wrong target
+accept	41.9:9.5	41.9:9.2	renders	descending
+accept	41.9:9.13	41.9:9.13	renders	tell
+accept	41.9:9.16,41.9:9.17	41.9:9.14,41.9:9.15,41.9:9.16	renders	ei me hotan = until
+accept	41.9:9.20	41.9:9.21	renders	out of
+accept	41.9:9.22	41.9:9.23	renders	rise
+fixed	41.9:10			added kept/that
+accept	41.9:10.3	41.9:10.4	renders	kept
+accept	41.9:10.4	41.9:10.2	renders	that saying
+fixed	41.9:11			added hoti links
+accept	41.9:11.7	41.9:11.5	renders	why
+accept	41.9:11.11	41.9:11.9	renders	that
+fixed	41.9:12			added missing links
+accept	41.9:12.2	41.9:12.1	renders	he
+accept	41.9:12.9	41.9:12.8	renders	first
+accept	41.9:12.11	41.9:12.9	renders	restores
+accept	41.9:12.15	41.9:12.14	renders	about
+accept	41.9:12.19	41.9:12.19	renders	that
+fixed	41.9:13			added links
+accept	41.9:13.7	41.9:13.7	renders	pluperfect aux
+accept	41.9:13.12,41.9:13.13	41.9:13.11	renders	whatever
+fixed	41.9:14			added links
+accept	41.9:14.3	41.9:14.2	renders	having come
+accept	41.9:14.10	41.9:14.8	renders	great crowd
+accept	41.9:14.15	41.9:14.13	renders	arguing
+fixed	41.9:15			added ran
+accept	41.9:15.13	41.9:15.10	renders	running to
+fixed	41.9:16			added them
+accept	41.9:16.9	41.9:16.7	renders	them
+fixed	41.9:17			pronoun I wrongly on my
+refuse	41.9:17.9	41.9:17.12		wrong target
+accept	41.9:17.8	41.9:17.9	renders	brought
+accept	41.9:17.14	41.9:17.12	renders	my son
+fixed	41.9:18			gnash and kai retargeted
+refuse	41.9:18.18	41.9:18.15		wrong target
+refuse	41.9:18.19	41.9:18.16		wrong target
+accept	41.9:18.18	41.9:18.11	renders	gnashes
+accept	41.9:18.19	41.9:18.14	renders	and
+accept	41.9:18.20	41.9:18.15	renders	withers
+accept	41.9:18.5	41.9:18.5	renders	seizes
+accept	41.9:18.10	41.9:18.6	renders	throws down
+fixed	41.9:19			added links
+accept	41.9:19.1	41.9:19.2	renders	de
+accept	41.9:19.2	41.9:19.1	renders	he
+accept	41.9:19.4	41.9:19.3	renders	in answer
+accept	41.9:19.10	41.9:19.10	renders	pote
+accept	41.9:19.15	41.9:19.15	renders	pote
+accept	41.9:19.11	41.9:19.13	renders	will be
+fixed	41.9:20			Him/him swapped
+refuse	41.9:20.3	41.9:20.3		wrong target
+accept	41.9:20.3	41.9:20.5	renders	to Him = Jesus
+accept	41.9:20.4	41.9:20.3	renders	him = the boy
+accept	41.9:20.24	41.9:20.20	renders	foaming
+fixed	41.9:21			added how long, he
+accept	41.9:21.6,41.9:21.7	41.9:21.6,41.9:21.7	renders	how long a time
+accept	41.9:21.11	41.9:21.13	renders	he
+fixed	41.9:22			added compassion, anything
+accept	41.9:22.21	41.9:22.20	renders	have compassion
+accept	41.9:22.18	41.9:22.16	renders	anything
+fixed	41.9:23			added links
+accept	41.9:23.2	41.9:23.2	renders	de
+accept	41.9:23.5,41.9:23.6	41.9:23.6	renders	the 'if you can'
+accept	41.9:23.11,41.9:23.12	41.9:23.11	renders	to the one
+ok	41.9:24			
+fixed	41.9:25			added links
+accept	41.9:25.1	41.9:25.2	renders	de
+accept	41.9:25.15	41.9:25.19	renders	spirit
+accept	41.9:25.19	41.9:25.22	renders	to you
+accept	41.9:25.23	41.9:25.24	renders	out of
+accept	41.9:25.29	41.9:25.27	renders	no more
+fixed	41.9:26			added links
+accept	41.9:26.4	41.9:26.4	renders	much
+accept	41.9:26.13	41.9:26.11	renders	so that
+accept	41.9:26.17	41.9:26.15	renders	that
+ok	41.9:27			
+fixed	41.9:28			added links
+accept	41.9:28.6	41.9:28.2	renders	entered
+accept	41.9:28.12	41.9:28.13	renders	why
+accept	41.9:28.11	41.9:28.9	renders	kat idian
+fixed	41.9:29			added links
+accept	41.9:29.6	41.9:29.6	renders	kind
+accept	41.9:29.7,41.9:29.9	41.9:29.7,41.9:29.8	renders	by nothing = not otherwise
+accept	41.9:29.10,41.9:29.11	41.9:29.11,41.9:29.12	renders	except
+fixed	41.9:30			added kai links
+accept	41.9:30.1	41.9:30.1	renders	crasis kai
+accept	41.9:30.9	41.9:30.7	renders	and
+fixed	41.9:31			added links
+accept	41.9:31.11	41.9:31.14	renders	is delivered
+accept	41.9:31.20	41.9:31.21	renders	and
+fixed	41.9:32			added links
+accept	41.9:32.1	41.9:32.1	renders	they
+accept	41.9:32.5	41.9:32.4	renders	the saying
+fixed	41.9:33			added discussing
+accept	41.9:33.17	41.9:33.16	renders	discussing
+fixed	41.9:34			pros retargeted
+refuse	41.9:34.6	41.9:34.7		wrong target
+accept	41.9:34.6	41.9:34.4	renders	among
+accept	41.9:34.7	41.9:34.5	renders	one another
+accept	41.9:34.4	41.9:34.7	renders	discussed
+accept	41.9:34.1	41.9:34.2	renders	de
+fixed	41.9:35			added links
+accept	41.9:35.14	41.9:35.13	renders	to be
+accept	41.9:35.19	41.9:35.16	renders	last
+fixed	41.9:36			added links
+accept	41.9:36.11	41.9:36.10	renders	took in arms
+accept	41.9:36.8	41.9:36.7	renders	midst
+fixed	41.9:37			added links
+accept	41.9:37.14	41.9:37.15	renders	whoever
+accept	41.9:37.23	41.9:37.23	renders	the One
+fixed	41.9:38			added second relative clause links
+accept	41.9:38.10	41.9:38.14	renders	who
+accept	41.9:38.12	41.9:38.17	renders	us
+accept	41.9:38.14	41.9:38.16	renders	follows
+accept	41.9:38.22	41.9:38.19	renders	forbade
+accept	41.9:38.24	41.9:38.21	renders	because
+accept	41.9:38.29	41.9:38.23	renders	was following
+fixed	41.9:39			added no one
+accept	41.9:39.8	41.9:39.8	renders	no one
+ok	41.9:40			
+fixed	41.9:41			added links
+accept	41.9:41.3	41.9:41.1	renders	whoever
+accept	41.9:41.11,41.9:41.12,41.9:41.13	41.9:41.10	renders	because
+accept	41.9:41.14	41.9:41.12	renders	you are
+fixed	41.9:42			added links
+accept	41.9:42.1	41.9:42.2	renders	whoever
+accept	41.9:42.11	41.9:42.11	renders	better
+accept	41.9:42.13	41.9:42.13	renders	for him
+accept	41.9:42.14	41.9:42.12	renders	is
+accept	41.9:42.15	41.9:42.15	renders	if
+accept	41.9:42.17	41.9:42.17	renders	millstone
+accept	41.9:42.18	41.9:42.18	renders	mill/heavy
+accept	41.9:42.22	41.9:42.16	renders	is put
+fixed	41.9:43			added links
+accept	41.9:43.4	41.9:43.7	renders	your
+accept	41.9:43.15	41.9:43.18	renders	than
+accept	41.9:43.19	41.9:43.23	renders	go away
+ok	41.9:44			TR-only verse, no Nestle
+fixed	41.9:45			added be
+accept	41.9:45.19	41.9:45.23	renders	to be cast
+ok	41.9:46			TR-only verse, no Nestle
+fixed	41.9:47			added links
+accept	41.9:47.5	41.9:47.7	renders	you
+accept	41.9:47.7	41.9:47.8	renders	cast out
+accept	41.9:47.20	41.9:47.24	renders	to be cast
+ok	41.9:48			
+fixed	41.9:49			added salted
+accept	41.9:49.2	41.9:49.4	renders	will be salted
+fixed	41.9:50			added links
+accept	41.9:50.5	41.9:50.5	renders	de
+accept	41.9:50.8	41.9:50.9	renders	becomes
+accept	41.9:50.9	41.9:50.10,41.9:50.11	renders	with what
+accept	41.9:50.10	41.9:50.13	renders	season
+accept	41.9:50.11	41.9:50.12	renders	it
+accept	41.9:50.16	41.9:50.19	renders	be at peace
+accept	41.9:50.19	41.9:50.20	renders	among
+accept	41.9:50.20	41.9:50.21	renders	one another

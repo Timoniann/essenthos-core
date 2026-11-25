@@ -1,0 +1,221 @@
+kind	from	to	relation	reason
+fixed	42.11:1			swapped pronoun links; added missing
+fixed	42.11:2			added же
+fixed	42.11:3			added нам
+fixed	42.11:4			added й, самі
+fixed	42.11:5			added Хто, друже
+fixed	42.11:6			swapped мене/мій; added що/дати
+fixed	42.11:7			added missing words
+unsure	42.11:8			йому may be dative of дасть (autō 7) or дружби йому (autou 13)
+fixed	42.11:9			added І, буде
+ok	42.11:10			
+fixed	42.11:11			йому belongs to second clause; added words
+fixed	42.11:12			added verbs
+fixed	42.11:13			ж not posō; added words
+ok	42.11:14			
+fixed	42.11:15			added демонів
+fixed	42.11:16			added хотіли
+fixed	42.11:17			added їхні
+fixed	42.11:18			added А, поділився
+fixed	42.11:19			added missing
+fixed	42.11:20			added missing
+fixed	42.11:21			added свій двір
+fixed	42.11:22			роздасть to verb; added missing
+ok	42.11:23			
+fixed	42.11:24			added missing
+fixed	42.11:25			added вернеться
+fixed	42.11:26			added verbs
+fixed	42.11:27			added missing
+fixed	42.11:28			added Він, Так
+fixed	42.11:29			added missing
+ok	42.11:30			
+fixed	42.11:31			added missing
+fixed	42.11:32			Йонину to Iōna; added missing
+fixed	42.11:33			added missing
+fixed	42.11:34			eye/your links shifted; second eye not in Greek
+fixed	42.11:35			added сталося
+fixed	42.11:36			осяяв to phōtizē; added missing
+fixed	42.11:37			added missing
+ok	42.11:38			
+fixed	42.11:39			added же, кривди
+fixed	42.11:40			added не, створив
+fixed	42.11:41			added missing
+fixed	42.11:42			added missing
+fixed	42.11:43			added що
+fixed	42.11:44			kai rendered by ж, not і; added missing
+fixed	42.11:45			added ж
+fixed	42.11:46			накладаєте to phortizete; added missing
+fixed	42.11:47			надгробки to mnēmeia; added missing
+fixed	42.11:48			pronouns fixed; TR-only words unlinked
+fixed	42.11:49			added виженуть
+fixed	42.11:50			added оцім, створення
+fixed	42.11:51			added аж, Так
+fixed	42.11:52			added взяли, розуміння
+fixed	42.11:53			added opening clause
+fixed	42.11:54			щоб is not thēreusai
+refuse	42.11:1.14	42.11:1.17		до Нього = pros auton, not mathetwn autou
+refuse	42.11:1.17	42.11:1.19		Його учнів = autou after mathetwn
+accept	42.11:1.14	42.11:1.19	renders	Нього = auton after pros
+accept	42.11:1.17	42.11:1.17	renders	Його = autou of disciples
+accept	42.11:1.5	42.11:1.6	renders	Він = auton subject of einai
+accept	42.11:1.8	42.11:1.9	renders	одному = tini
+accept	42.11:1.10	42.11:1.11	renders	коли = hos
+accept	42.11:2.2	42.11:2.2	renders	же = de
+accept	42.11:3.5	42.11:3.7	renders	нам = hemin
+accept	42.11:4.7	42.11:4.7	renders	й = kai
+accept	42.11:4.8	42.11:4.9	renders	самі = autoi
+accept	42.11:5.6	42.11:5.5	renders	Хто = tis
+accept	42.11:5.21	42.11:5.18	renders	друже = phile
+refuse	42.11:6.6	42.11:6.3		мене = me after pros
+refuse	42.11:6.7	42.11:6.8		мій = mou
+accept	42.11:6.6	42.11:6.8	renders	до мене = pros me
+accept	42.11:6.7	42.11:6.3	renders	мій = mou
+accept	42.11:6.13	42.11:6.12	renders	що = ho
+accept	42.11:6.14	42.11:6.13	renders	дати = parathēsō
+accept	42.11:7.1,42.11:7.2	42.11:7.1	renders	А той = kakeinos
+accept	42.11:7.3,42.11:7.4	42.11:7.2	renders	із середини = esōthen
+accept	42.11:7.9	42.11:7.8	renders	роби = parexe
+accept	42.11:7.11	42.11:7.7	renders	клопоту = kopous
+accept	42.11:7.12	42.11:7.9	renders	уже = ēdē
+refuse	42.11:8.7	42.11:8.4		і joins verbs; kai (even) of ei kai not rendered
+accept	42.11:8.8	42.11:8.5	renders	second не repeats ou
+accept	42.11:8.10	42.11:8.9	renders	ради = dia
+accept	42.11:8.11	42.11:8.12	renders	дружби = philon
+accept	42.11:8.14	42.11:8.14	renders	за = dia
+accept	42.11:8.23	42.11:8.22	renders	скільки = hosōn
+accept	42.11:9.1	42.11:9.1	renders	І Я = kagō
+accept	42.11:9.7	42.11:9.6	renders	буде дано = dothēsetai
+refuse	42.11:11.11	42.11:11.15		first йому is TR stone clause; autō goes with ophin epidōsei
+accept	42.11:11.20	42.11:11.15	renders	йому = autō
+accept	42.11:11.19	42.11:11.16	renders	подасть = epidōsei
+accept	42.11:11.17	42.11:11.12	renders	замість = anti
+accept	42.11:11.2	42.11:11.1	renders	котрий = tina
+accept	42.11:11.1	42.11:11.2	renders	І = de
+accept	42.11:12.5	42.11:12.3	renders	проситиме = aitēsei
+accept	42.11:12.6	42.11:12.5	renders	дасть = epidōsei
+refuse	42.11:13.13	42.11:13.13		ж emphatic particle, not posō
+accept	42.11:13.9	42.11:13.12	renders	своїм = hymōn
+accept	42.11:13.11	42.11:13.9	renders	давати = didonai
+accept	42.11:13.17	42.11:13.20	renders	подасть = dōsei
+accept	42.11:15.8	42.11:15.14	renders	демонів = daimonia
+accept	42.11:16.4	42.11:16.7	renders	хотіли = ezētoun
+accept	42.11:17.5	42.11:17.4	renders	їхні = autōn
+accept	42.11:18.1	42.11:18.2	renders	А = de
+accept	42.11:18.5	42.11:18.8	renders	поділився = diemeristhē
+accept	42.11:19.2	42.11:19.2	renders	ж = de
+accept	42.11:19.8	42.11:19.12,42.11:19.13	renders	чим = en tini
+accept	42.11:19.13	42.11:19.15,42.11:19.16	renders	Тому = dia touto
+accept	42.11:19.15	42.11:19.20	renders	стануть = esontai
+accept	42.11:20.9	42.11:20.10	renders	справді = ara
+accept	42.11:20.10	42.11:20.11	renders	прийшло = ephthasen
+accept	42.11:21.4	42.11:21.7	renders	свій = heautou
+accept	42.11:21.5	42.11:21.8	renders	двір = aulēn
+refuse	42.11:22.21	42.11:22.17		роздасть = diadidōsin, not skyla
+accept	42.11:22.21	42.11:22.19	renders	роздасть = diadidōsin
+accept	42.11:22.1	42.11:22.1	renders	Коли = epan
+accept	42.11:22.6	42.11:22.7	renders	його = auton
+accept	42.11:22.11	42.11:22.9	renders	всю зброю = panoplian
+accept	42.11:24.11	42.11:24.14	renders	відпочинку = anapausin
+accept	42.11:24.13	42.11:24.15	renders	але = kai
+accept	42.11:24.15	42.11:24.17	renders	знаходячи = heuriskon
+accept	42.11:24.20	42.11:24.23	renders	своєї = mou
+accept	42.11:25.3	42.11:25.2	renders	вернеться = elthon
+accept	42.11:26.6	42.11:26.4	renders	приводить = paralambanei
+accept	42.11:26.21	42.11:26.15	renders	буде = ginetai
+accept	42.11:27.1	42.11:27.2	renders	І = de
+accept	42.11:27.5	42.11:27.7	renders	це = tauta
+accept	42.11:27.10	42.11:27.14	renders	народу = ochlou
+accept	42.11:28.2	42.11:28.1	renders	Він = autos
+accept	42.11:28.4	42.11:28.4	renders	Так = menoun
+accept	42.11:29.7	42.11:29.6	renders	промовляти = legein
+accept	42.11:29.8	42.11:29.8	renders	Рід = genea
+accept	42.11:29.10	42.11:29.10	renders	рід = genea
+accept	42.11:29.14	42.11:29.14	renders	шукає = zētei
+accept	42.11:29.19	42.11:29.18	renders	дадуть = dothēsetai
+accept	42.11:29.20	42.11:29.20,42.11:29.21	renders	крім = ei mē
+accept	42.11:31.5	42.11:31.3	renders	стане = egerthēsetai
+accept	42.11:31.16	42.11:31.20	renders	кінця = peratōn
+accept	42.11:31.17	42.11:31.22	renders	світу = gēs
+refuse	42.11:32.15	42.11:32.16		Йонину = Iōna, not eis
+accept	42.11:32.15	42.11:32.19	renders	Йонину = Iōna
+accept	42.11:32.1	42.11:32.1,42.11:32.2	renders	Ніневітяни = andres Nineuitai
+accept	42.11:32.2	42.11:32.3	renders	стануть = anastēsontai
+accept	42.11:33.6	42.11:33.1	renders	ніхто не = oudeis
+accept	42.11:33.7	42.11:33.6	renders	ставить = tithēsin
+accept	42.11:33.18	42.11:33.17	renders	входить = eisporeuomenoi
+refuse	42.11:34.9	42.11:34.7		second око = ophthalmos 11
+refuse	42.11:34.10	42.11:34.8		second твоє = sou 12
+refuse	42.11:34.17	42.11:34.12		тіло твоє = sou 19
+refuse	42.11:34.23	42.11:34.19		no counterpart: epan de ponēros ē
+refuse	42.11:34.24	42.11:34.11		no ophthalmos in final clause
+accept	42.11:34.1	42.11:34.7	renders	Око = ophthalmos
+accept	42.11:34.2	42.11:34.8	renders	твоє = sou
+accept	42.11:34.9	42.11:34.11	renders	око = ophthalmos
+accept	42.11:34.10	42.11:34.12	renders	твоє = sou
+accept	42.11:34.17	42.11:34.19	renders	твоє = sou
+accept	42.11:34.11	42.11:34.14	renders	буде = ē
+accept	42.11:34.15	42.11:34.16	renders	усе = holon
+accept	42.11:34.18	42.11:34.21	renders	буде = estin
+accept	42.11:34.25	42.11:34.24	renders	нездатне = ponēros
+accept	42.11:34.26	42.11:34.25	renders	було = ē
+accept	42.11:35.10	42.11:35.10	renders	сталося = estin
+refuse	42.11:36.20	42.11:36.21		осяяв = phōtizē
+accept	42.11:36.20	42.11:36.22	renders	осяяв = phōtizē
+accept	42.11:36.21	42.11:36.21	renders	блиском = astrapē
+accept	42.11:36.5	42.11:36.6	renders	все = holon
+accept	42.11:36.10	42.11:36.11	renders	жадної = ti
+accept	42.11:36.12	42.11:36.10	renders	частини = meros
+accept	42.11:36.14	42.11:36.15	renders	все = holon
+accept	42.11:36.17	42.11:36.16	renders	неначе = hōs
+accept	42.11:37.1	42.11:37.1	renders	Коли = en (tō lalēsai)
+accept	42.11:37.14	42.11:37.13	renders	же = de
+accept	42.11:37.15	42.11:37.12	renders	прийшов = eiselthōn
+accept	42.11:39.2	42.11:39.2	renders	же = de
+accept	42.11:39.21	42.11:39.26	renders	кривди = ponērias
+accept	42.11:40.9	42.11:40.2	renders	не = ouch
+accept	42.11:40.10	42.11:40.10	renders	створив = epoiēsen
+accept	42.11:41.1	42.11:41.1	renders	Тож = plēn
+accept	42.11:41.3	42.11:41.4	renders	подавайте = dote
+accept	42.11:41.9	42.11:41.11	renders	буде = estin
+accept	42.11:42.7	42.11:42.7	renders	даєте with десятину = apodekatoute
+accept	42.11:42.15	42.11:42.16	renders	але = kai
+accept	42.11:42.24,42.11:42.25	42.11:42.29	renders	і того = kakeina
+accept	42.11:42.27	42.11:42.31	renders	лишати = pareinai
+accept	42.11:43.4	42.11:43.5	renders	що = hoti
+refuse	42.11:44.13	42.11:44.10		single kai is before anthrōpoi, rendered by ж
+accept	42.11:44.9	42.11:44.10	renders	ж = kai
+accept	42.11:44.4	42.11:44.4	renders	ви = este
+accept	42.11:44.7	42.11:44.9	renders	непомітні = adēla
+accept	42.11:44.11,42.11:44.12	42.11:44.15	renders	по них = epanō
+accept	42.11:45.2	42.11:45.2	renders	ж = de
+refuse	42.11:46.13	42.11:46.14		накладаєте = phortizete
+accept	42.11:46.13	42.11:46.10	renders	накладаєте = phortizete
+accept	42.11:46.15,42.11:46.16	42.11:46.14	renders	важко носити = dysbastakta
+accept	42.11:46.22	42.11:46.20	renders	своїм = hymōn
+accept	42.11:46.2	42.11:46.1	renders	Він = ho (de)
+refuse	42.11:47.4	42.11:47.4		надгробки = mnēmeia
+accept	42.11:47.4	42.11:47.6	renders	надгробки = mnēmeia
+accept	42.11:47.7	42.11:47.4	renders	ставите = oikodomeite
+accept	42.11:47.9	42.11:47.10	renders	ж = de
+refuse	42.11:48.11	42.11:48.12		їх = autous (object)
+refuse	42.11:48.15	42.11:48.15		їм = TR autōn, absent in Nestle
+refuse	42.11:48.16	42.11:48.18		надгробки = TR mnēmeia, absent in Nestle
+accept	42.11:48.10	42.11:48.12	renders	вони = autoi
+accept	42.11:48.11	42.11:48.15	renders	їх = autous
+accept	42.11:48.1	42.11:48.1	renders	Так = ara
+accept	42.11:48.2	42.11:48.2,42.11:48.3	renders	визнаєте = martyres este
+accept	42.11:48.8	42.11:48.10	renders	своїх = hymōn
+accept	42.11:49.21	42.11:49.20	renders	виженуть = diōxousin
+accept	42.11:50.4	42.11:50.16	renders	оцім = tautēs
+accept	42.11:50.12	42.11:50.11	renders	створення = katabolēs
+accept	42.11:51.4	42.11:51.4	renders	аж до = heōs
+accept	42.11:51.14	42.11:51.15	renders	Так = nai
+accept	42.11:52.5	42.11:52.6	renders	взяли = ērate
+accept	42.11:52.8	42.11:52.10	renders	розуміння = gnōseōs
+accept	42.11:53.1,42.11:53.5	42.11:53.1	renders	А ... ізвідти = kakeithen
+accept	42.11:53.4	42.11:53.2	renders	виходив = exelthontos
+accept	42.11:53.3	42.11:53.3	renders	Він = autou
+accept	42.11:53.6	42.11:53.4	renders	стали = ērxanto
+refuse	42.11:54.5	42.11:54.3		щоб is not thēreusai
+accept	42.11:54.6	42.11:54.3	renders	зловити = thēreusai
+accept	42.11:54.7	42.11:54.4	renders	що = ti

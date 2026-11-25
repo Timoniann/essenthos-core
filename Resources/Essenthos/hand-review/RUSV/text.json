@@ -1,0 +1,14 @@
+{
+ "name": "the Russian Synodal Bible",
+ "title": "Synodal (RUSV) against BHSA and Nestle 1904",
+ "language": "Russian",
+ "targets": {"ot": "BHSA", "nt": "NESTLE1904"},
+ "pass": "Synodal pass",
+ "notes": [
+  "Russian «и», «а», «но» link to וְ/καί when they render it.",
+  "A Russian possessive or pronoun («его», «Свой») links to the original word that carries that suffix or pronoun.",
+  "The Synodal translation follows the Septuagint in places: words or clauses it has from the Greek Old Testament have no Hebrew counterpart and stay unlinked; a Hebrew word it renders after the Septuagint's reading is still its counterpart when the meaning corresponds.",
+  "The Synodal New Testament follows the Received Text, so a Russian word with no Nestle 1904 counterpart is not an error: leave it unlinked.",
+  "The corpus numbers this text's chapters as the English Bibles do, but psalm titles are part of verse 1 here while the Hebrew numbers the title as a verse of its own; the frame line shows which Hebrew verses each verse maps to, and a link into the next Hebrew verse there is not a link to the wrong verse."
+ ]
+}

@@ -1,0 +1,201 @@
+kind	from	to	relation	reason
+fixed	43.5:1			added того, було
+accept	43.5:1.2	43.5:1.2	renders	Μετὰ ταῦτα
+accept	43.5:1.5	43.5:1.3	renders	was
+fixed	43.5:2			зветься retargeted; added name, prep, is
+refuse	43.5:2.11	43.5:2.13		зветься is not the name
+accept	43.5:2.11	43.5:2.11	renders	called
+accept	43.5:2.9	43.5:2.13	renders	Bethesda
+accept	43.5:2.4	43.5:2.6	renders	by
+accept	43.5:2.5	43.5:2.8	renders	Sheep Gate
+accept	43.5:2.7	43.5:2.1	renders	there is
+fixed	43.5:3			added them, multitude, ailing
+accept	43.5:3.2	43.5:3.2	renders	these
+accept	43.5:3.4	43.5:3.4	renders	multitude
+accept	43.5:3.5	43.5:3.6	renders	ailing
+fixed	43.5:4			added missing renderings
+accept	43.5:4.4	43.5:4.3,43.5:4.4	renders	at a season
+accept	43.5:4.5	43.5:4.5	renders	descended
+accept	43.5:4.6	43.5:4.6	renders	into
+accept	43.5:4.12	43.5:4.13	renders	he who
+accept	43.5:4.15	43.5:4.17	renders	after
+accept	43.5:4.17	43.5:4.19	renders	stirring
+accept	43.5:4.20	43.5:4.23	renders	became
+accept	43.5:4.21,43.5:4.22	43.5:4.25	renders	whatever
+accept	43.5:4.24	43.5:4.26	renders	was held by
+fixed	43.5:5			added was, infirmity
+accept	43.5:5.2	43.5:5.1	renders	was
+accept	43.5:5.11	43.5:5.10	renders	having
+accept	43.5:5.12	43.5:5.13	renders	infirmity
+fixed	43.5:6			added missing renderings
+accept	43.5:6.3	43.5:6.1	renders	him
+accept	43.5:6.4	43.5:6.2	renders	seen
+accept	43.5:6.8	43.5:6.7	renders	knowing
+accept	43.5:6.9	43.5:6.8	renders	that
+accept	43.5:6.13	43.5:6.12	renders	has been
+accept	43.5:6.18	43.5:6.17	renders	to become
+fixed	43.5:7			added stirred, into, when
+accept	43.5:7.12	43.5:7.11	renders	stirred
+accept	43.5:7.14	43.5:7.16	renders	into
+accept	43.5:7.19	43.5:7.19,43.5:7.20	renders	while
+fixed	43.5:8			added arise
+accept	43.5:8.5	43.5:8.5	renders	arise
+fixed	43.5:9			added became well, was
+accept	43.5:9.3	43.5:9.3,43.5:9.4	renders	became well
+accept	43.5:9.17	43.5:9.14	renders	was
+fixed	43.5:10			added therefore, take
+accept	43.5:10.1,43.5:10.2	43.5:10.2	renders	therefore
+accept	43.5:10.12	43.5:10.13	renders	to take up
+fixed	43.5:11			added who, healed
+accept	43.5:11.1	43.5:11.2	renders	δὲ
+accept	43.5:11.2	43.5:11.1	renders	who
+accept	43.5:11.5	43.5:11.5	renders	the one
+accept	43.5:11.7	43.5:11.6,43.5:11.8	renders	made well
+fixed	43.5:12			added who
+accept	43.5:12.5	43.5:12.3	renders	who
+fixed	43.5:13			added δὲ
+accept	43.5:13.1	43.5:13.2	renders	δὲ
+fixed	43.5:14			added missing renderings
+accept	43.5:14.2	43.5:14.2	renders	ταῦτα
+accept	43.5:14.4	43.5:14.3	renders	finds
+accept	43.5:14.14	43.5:14.14,43.5:14.15	renders	have become well
+accept	43.5:14.15	43.5:14.15	renders	you, verb person
+accept	43.5:14.19	43.5:14.16	renders	no more
+accept	43.5:14.25	43.5:14.22	renders	something
+fixed	43.5:15			added healed
+accept	43.5:15.9	43.5:15.11	renders	the one
+accept	43.5:15.10	43.5:15.12,43.5:15.14	renders	made well
+fixed	43.5:16			added this, these things, He
+accept	43.5:16.2	43.5:16.3	renders	διὰ τοῦτο
+accept	43.5:16.8	43.5:16.10	renders	these things
+accept	43.5:16.9	43.5:16.11	renders	He, verb person
+fixed	43.5:17			added until, and
+accept	43.5:17.8	43.5:17.8	renders	until
+accept	43.5:17.11	43.5:17.11	renders	and I
+fixed	43.5:18			звав retargeted; added missing
+refuse	43.5:18.21	43.5:18.19		звав is ἔλεγεν, not ἴδιον
+accept	43.5:18.21	43.5:18.20	renders	was calling
+accept	43.5:18.20	43.5:18.19	renders	His own
+accept	43.5:18.2	43.5:18.1,43.5:18.2	renders	because of this
+accept	43.5:18.3	43.5:18.3	renders	therefore
+accept	43.5:18.5	43.5:18.4	renders	the more
+accept	43.5:18.7	43.5:18.5	renders	were seeking
+accept	43.5:18.15	43.5:18.13	renders	He, verb person
+accept	43.5:18.23	43.5:18.24	renders	reflexive -сь
+fixed	43.5:19			added missing renderings
+accept	43.5:19.2	43.5:19.2	renders	therefore
+accept	43.5:19.19	43.5:19.20	renders	ἂν μή
+accept	43.5:19.20	43.5:19.22	renders	anything
+accept	43.5:19.22	43.5:19.23	renders	He, verb person
+accept	43.5:19.28	43.5:19.27	renders	whatever
+accept	43.5:19.29	43.5:19.31	renders	does
+accept	43.5:19.30	43.5:19.30	renders	He
+fixed	43.5:20			Сам/Йому targets swapped
+refuse	43.5:20.9	43.5:20.10		Сам is αὐτὸς
+refuse	43.5:20.11	43.5:20.12		Йому is αὐτῷ
+accept	43.5:20.9	43.5:20.12	renders	He himself
+accept	43.5:20.11	43.5:20.10	renders	to Him
+ok	43.5:21			
+fixed	43.5:22			added not even, given
+accept	43.5:22.3,43.5:22.4	43.5:22.1	renders	not even
+accept	43.5:22.10	43.5:22.11	renders	has given
+fixed	43.5:23			added he who
+accept	43.5:23.9	43.5:23.10	renders	he who
+fixed	43.5:24			added who, Him who, he
+accept	43.5:24.5	43.5:24.6	renders	the one
+accept	43.5:24.12,43.5:24.13	43.5:24.13	renders	the One
+accept	43.5:24.27	43.5:24.25	renders	he, verb person
+fixed	43.5:25			added is coming, those
+accept	43.5:25.5	43.5:25.6	renders	is coming
+accept	43.5:25.18	43.5:25.22	renders	those
+ok	43.5:26			
+fixed	43.5:27			added authority, He
+accept	43.5:27.5	43.5:27.2	renders	authority
+accept	43.5:27.2	43.5:27.3	renders	He, verb person
+accept	43.5:27.10	43.5:27.10	renders	He is
+fixed	43.5:28			added in which, those
+accept	43.5:28.7	43.5:28.7,43.5:28.8	renders	in which
+accept	43.5:28.9	43.5:28.10	renders	those
+fixed	43.5:29			added done, those
+accept	43.5:29.5	43.5:29.6	renders	having done
+accept	43.5:29.11	43.5:29.10	renders	those
+accept	43.5:29.13	43.5:29.13	renders	having done
+fixed	43.5:30			added missing renderings
+accept	43.5:30.2	43.5:30.7	renders	nothing
+accept	43.5:30.7	43.5:30.5	renders	from
+accept	43.5:30.8	43.5:30.6	renders	Myself
+accept	43.5:30.10	43.5:30.9	renders	I, verb person
+accept	43.5:30.14	43.5:30.15	renders	my
+accept	43.5:30.21	43.5:30.24	renders	my own
+fixed	43.5:31			Сам not ἐμαυτοῦ; added not true
+refuse	43.5:31.6	43.5:31.5		Сам is added emphasis, not the reflexive
+accept	43.5:31.10	43.5:31.9,43.5:31.11	renders	not true
+fixed	43.5:32			added who, I, which
+accept	43.5:32.3	43.5:32.3	renders	the one
+accept	43.5:32.8	43.5:32.8	renders	I, verb person
+accept	43.5:32.13	43.5:32.14	renders	which
+fixed	43.5:33			added були
+accept	43.5:33.3	43.5:33.2	renders	past auxiliary
+fixed	43.5:34			added δὲ, say, були
+accept	43.5:34.1	43.5:34.2	renders	δὲ
+accept	43.5:34.10	43.5:34.11	renders	I say
+accept	43.5:34.12	43.5:34.14	renders	periphrastic passive
+fixed	43.5:35			added missing renderings
+accept	43.5:35.1	43.5:35.1	renders	He
+accept	43.5:35.3	43.5:35.2	renders	was
+accept	43.5:35.8	43.5:35.10	renders	δὲ
+accept	43.5:35.11	43.5:35.13,43.5:35.14	renders	for a season
+accept	43.5:35.12	43.5:35.11	renders	were willing
+accept	43.5:35.13	43.5:35.12	renders	to rejoice
+fixed	43.5:36			їх retargeted; added missing
+refuse	43.5:36.18	43.5:36.20		їх is αὐτά 19
+accept	43.5:36.18	43.5:36.19	renders	them
+accept	43.5:36.10	43.5:36.11	renders	works
+accept	43.5:36.16,43.5:36.17	43.5:36.18	renders	I complete
+accept	43.5:36.20	43.5:36.22	renders	works
+accept	43.5:36.22	43.5:36.24	renders	I, verb person
+accept	43.5:36.25	43.5:36.20	renders	the very
+fixed	43.5:37			added missing renderings
+accept	43.5:37.4	43.5:37.2	renders	the one
+accept	43.5:37.7	43.5:37.6	renders	Himself
+accept	43.5:37.12	43.5:37.14	renders	you, verb person
+accept	43.5:37.16	43.5:37.10	renders	neither
+accept	43.5:37.19,43.5:37.22	43.5:37.15	renders	nor
+fixed	43.5:38			added even, you, He
+accept	43.5:38.1	43.5:38.1	renders	καὶ ... not
+accept	43.5:38.4	43.5:38.6	renders	you, verb person
+accept	43.5:38.17	43.5:38.13	renders	He
+fixed	43.5:39			added they
+accept	43.5:39.13	43.5:39.13	renders	these
+fixed	43.5:40			added willing
+accept	43.5:40.5,43.5:40.7	43.5:40.3	renders	you are willing
+fixed	43.5:41			added I
+accept	43.5:41.5	43.5:41.5	renders	I, verb person
+ok	43.5:42			
+fixed	43.5:43			Мене retargeted; added
+refuse	43.5:43.8	43.5:43.8		Мене is με 12, not μου
+accept	43.5:43.8	43.5:43.12	renders	Me
+accept	43.5:43.5	43.5:43.8	renders	my
+accept	43.5:43.11	43.5:43.11	renders	you, verb person
+accept	43.5:43.21	43.5:43.22	renders	you, verb person
+fixed	43.5:44			added one another, you
+accept	43.5:44.7	43.5:44.7	renders	one another
+accept	43.5:44.8	43.5:44.6	renders	from
+accept	43.5:44.20	43.5:44.18	renders	you, verb person
+fixed	43.5:45			added missing renderings
+accept	43.5:45.7	43.5:45.5	renders	future accuse
+accept	43.5:45.11	43.5:45.11	renders	the one
+accept	43.5:45.16,43.5:45.18	43.5:45.16	renders	whom
+fixed	43.5:46			added missing renderings
+accept	43.5:46.1	43.5:46.1	renders	if
+accept	43.5:46.5	43.5:46.3	renders	were believing
+accept	43.5:46.9	43.5:46.6	renders	ἂν
+accept	43.5:46.11	43.5:46.5	renders	would believe
+accept	43.5:46.16	43.5:46.11	renders	he
+fixed	43.5:47			поймете retargeted; added
+refuse	43.5:47.10	43.5:47.5		віри поймете is will believe
+accept	43.5:47.10	43.5:47.12	renders	will believe
+accept	43.5:47.2	43.5:47.5	renders	writings
+accept	43.5:47.3	43.5:47.4	renders	his
+accept	43.5:47.4	43.5:47.7	renders	you, verb person
+accept	43.5:47.12	43.5:47.10	renders	My

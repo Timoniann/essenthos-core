@@ -1,0 +1,147 @@
+kind	from	to	relation	reason
+fixed	41.8:1			missing links added
+fixed	41.8:2			zo relinked, missing added
+fixed	41.8:3			refused verb=apo, added links
+fixed	41.8:4			missing links added
+fixed	41.8:5			missing links added
+fixed	41.8:6			missing links added
+fixed	41.8:7			also relinked, missing added
+fixed	41.8:8			missing links added
+fixed	41.8:9			about added
+fixed	41.8:10			zemli relinked
+fixed	41.8:11			pronouns swapped
+fixed	41.8:12			missing links added
+fixed	41.8:13			missing links added
+fixed	41.8:14			missing links added
+fixed	41.8:15			saying added
+fixed	41.8:16			missing links added
+fixed	41.8:17			missing links added
+ok	41.8:18			
+fixed	41.8:19			missing links added
+fixed	41.8:20			missing links added
+fixed	41.8:21			not yet added
+ok	41.8:22			
+fixed	41.8:23			missing links added
+fixed	41.8:24			missing links added
+fixed	41.8:25			missing links added
+fixed	41.8:26			iogo relinked, missing added
+ok	41.8:27			
+fixed	41.8:28			missing links added
+fixed	41.8:29			missing links added
+fixed	41.8:30			warned added
+ok	41.8:31			
+fixed	41.8:32			missing links added
+fixed	41.8:33			missing links added
+fixed	41.8:34			missing links added
+fixed	41.8:35			whoever added
+fixed	41.8:36			missing links added
+fixed	41.8:37			za refused
+fixed	41.8:38			missing links added
+accept	41.8:1.1	41.8:1.2	renders	those
+accept	41.8:1.4	41.8:1.8	renders	being
+accept	41.8:1.12	41.8:1.12	renders	what
+accept	41.8:2.4	41.8:2.4	renders	crowd
+accept	41.8:2.6	41.8:2.6	renders	already
+accept	41.8:2.11	41.8:2.9	renders	remain with
+accept	41.8:2.16	41.8:2.14	renders	what
+refuse	41.8:2.9	41.8:2.9		preposition, not the verb
+accept	41.8:2.9	41.8:2.10	renders	with me (dative)
+accept	41.8:3.5	41.8:3.5	renders	hungry
+refuse	41.8:3.17	41.8:3.16		verb is not the preposition
+accept	41.8:3.18	41.8:3.16	renders	from afar
+accept	41.8:4.2	41.8:4.2	renders	answered
+accept	41.8:4.8	41.8:4.11	renders	anyone
+accept	41.8:4.9	41.8:4.13	renders	to feed
+accept	41.8:4.10	41.8:4.9	renders	these/them
+accept	41.8:5.8	41.8:5.7	renders	hoi = they
+accept	41.8:5.9	41.8:5.8	renders	de
+accept	41.8:6.4	41.8:6.2	renders	commanded
+accept	41.8:6.12	41.8:6.14	renders	giving thanks
+refuse	41.8:7.10	41.8:7.9		kai here is also = takozh
+accept	41.8:7.13	41.8:7.9	renders	also
+accept	41.8:7.4	41.8:7.4	renders	a few
+accept	41.8:7.8	41.8:7.7	renders	them
+accept	41.8:7.14	41.8:7.10	renders	these
+accept	41.8:8.6	41.8:8.5	renders	kai
+accept	41.8:8.8	41.8:8.7	renders	leftover
+accept	41.8:8.9	41.8:8.8	renders	fragments
+accept	41.8:8.12	41.8:8.6	renders	took up
+accept	41.8:9.5	41.8:9.3	renders	about
+refuse	41.8:10.14	41.8:10.15		land renders mere
+accept	41.8:10.14	41.8:10.14	renders	district
+accept	41.8:10.2	41.8:10.3	renders	embarked
+refuse	41.8:11.10	41.8:11.11		object of testing
+refuse	41.8:11.14	41.8:11.17		after vid = par autou
+accept	41.8:11.10	41.8:11.17	renders	him (testing)
+accept	41.8:11.14	41.8:11.11	renders	from him
+accept	41.8:11.6	41.8:11.7	renders	dispute
+accept	41.8:11.12	41.8:11.9	renders	seeking
+accept	41.8:12.3	41.8:12.2	renders	sighed deeply
+accept	41.8:12.6	41.8:12.5	renders	his
+accept	41.8:12.10	41.8:12.7	renders	what
+accept	41.8:12.14	41.8:12.11	renders	seeks
+accept	41.8:12.23	41.8:12.17	renders	future passive
+accept	41.8:13.2	41.8:13.2	renders	having left
+accept	41.8:13.5	41.8:13.5	renders	embarked
+accept	41.8:14.4	41.8:14.3	renders	to take
+accept	41.8:14.7	41.8:14.6,41.8:14.7	renders	except
+accept	41.8:14.8	41.8:14.8	renders	one
+accept	41.8:14.10	41.8:14.14	renders	in
+accept	41.8:14.14	41.8:14.12	renders	with
+accept	41.8:14.15	41.8:14.13	renders	themselves
+accept	41.8:15.6	41.8:15.4	renders	saying
+accept	41.8:16.6,41.8:16.8	41.8:16.4	renders	one another
+accept	41.8:16.7	41.8:16.3	renders	pros
+accept	41.8:17.19	41.8:17.12	renders	perceive
+accept	41.8:17.20	41.8:17.13	renders	oude
+accept	41.8:17.22	41.8:17.14	renders	understand
+accept	41.8:17.27	41.8:17.19	renders	your
+accept	41.8:19.10	41.8:19.12	renders	full
+accept	41.8:19.15	41.8:19.13	renders	took up
+accept	41.8:20.4	41.8:20.4	renders	eis
+accept	41.8:20.13	41.8:20.11	renders	took up
+accept	41.8:21.7,41.8:21.8	41.8:21.4	renders	not yet
+accept	41.8:23.9	41.8:23.7	renders	led out
+accept	41.8:23.11	41.8:23.9	renders	outside
+accept	41.8:23.24	41.8:23.24	renders	if
+accept	41.8:23.25	41.8:23.25	renders	anything
+accept	41.8:24.9	41.8:24.11	renders	walking
+accept	41.8:24.11	41.8:24.8	renders	as
+accept	41.8:24.12	41.8:24.9	renders	trees
+accept	41.8:25.11	41.8:25.11	renders	saw clearly
+accept	41.8:25.14	41.8:25.13	renders	restored
+accept	41.8:25.16	41.8:25.16	renders	clearly
+accept	41.8:25.17,41.8:25.18	41.8:25.15	renders	began to see
+accept	41.8:25.19	41.8:25.17	renders	everything
+refuse	41.8:26.5	41.8:26.6		object pronoun = auton
+accept	41.8:26.5	41.8:26.3	renders	him
+accept	41.8:26.4	41.8:26.4,41.8:26.5	renders	home
+accept	41.8:26.12	41.8:26.12	renders	enter
+accept	41.8:26.10	41.8:26.8	renders	mede
+accept	41.8:28.1	41.8:28.1	renders	hoi = they
+accept	41.8:28.2	41.8:28.2	renders	de
+accept	41.8:28.9	41.8:28.11	renders	others
+accept	41.8:29.3	41.8:29.3	renders	asked
+accept	41.8:29.10	41.8:29.9	renders	say/hold
+accept	41.8:29.13	41.8:29.11	renders	answering
+accept	41.8:30.3	41.8:30.2	renders	warned
+accept	41.8:32.4	41.8:32.5	renders	spoke
+accept	41.8:32.6	41.8:32.2	renders	openly
+accept	41.8:32.9,41.8:32.10	41.8:32.7	renders	took aside
+accept	41.8:32.14	41.8:32.11	renders	began
+accept	41.8:32.15	41.8:32.12	renders	rebuke
+accept	41.8:33.15	41.8:33.13	renders	get
+accept	41.8:33.17	41.8:33.14	renders	behind
+accept	41.8:33.20	41.8:33.19	renders	mind
+accept	41.8:34.13	41.8:34.11	renders	if
+accept	41.8:34.15	41.8:34.12	renders	anyone
+accept	41.8:34.16	41.8:34.16	renders	to come
+accept	41.8:34.25	41.8:34.20	renders	imperative
+accept	41.8:34.33	41.8:34.25	renders	follow
+accept	41.8:35.11	41.8:35.11	renders	whoever
+accept	41.8:36.2	41.8:36.2	renders	gar
+accept	41.8:36.9	41.8:36.9	renders	kai
+refuse	41.8:37.6	41.8:37.5		za renders genitive, not exchange
+accept	41.8:38.3	41.8:38.4	renders	periphrastic
+accept	41.8:38.7	41.8:38.9	renders	words
+accept	41.8:38.15	41.8:38.24	renders	him

@@ -1,0 +1,199 @@
+kind	from	to	relation	reason
+fixed	43.12:1			missing links added
+fixed	43.12:2			missing links added
+fixed	43.12:3			wrong links refused, missing added
+fixed	43.12:4			missing links added
+fixed	43.12:5			missing links added
+fixed	43.12:6			missing links added
+fixed	43.12:7			missing links added
+fixed	43.12:8			missing links added
+fixed	43.12:9			missing links added
+fixed	43.12:10			missing links added
+fixed	43.12:11			missing links added
+fixed	43.12:12			missing links added
+fixed	43.12:13			wrong links refused, missing added
+fixed	43.12:14			missing links added
+fixed	43.12:15			wrong links refused, missing added
+fixed	43.12:16			missing links added
+fixed	43.12:17			missing links added
+fixed	43.12:18			missing links added
+fixed	43.12:19			missing links added
+fixed	43.12:20			missing links added
+fixed	43.12:21			missing links added
+fixed	43.12:22			missing links added
+fixed	43.12:23			missing links added
+fixed	43.12:24			missing links added
+fixed	43.12:25			missing links added
+fixed	43.12:26			missing links added
+fixed	43.12:27			missing links added
+fixed	43.12:28			missing links added
+fixed	43.12:29			missing links added
+fixed	43.12:30			missing links added
+fixed	43.12:31			missing links added
+fixed	43.12:32			missing links added
+fixed	43.12:33			missing links added
+fixed	43.12:34			wrong links refused, missing added
+fixed	43.12:35			missing links added
+fixed	43.12:36			missing links added
+fixed	43.12:37			wrong links refused, missing added
+fixed	43.12:38			missing links added
+fixed	43.12:39			missing links added
+fixed	43.12:40			missing links added
+fixed	43.12:41			missing links added
+fixed	43.12:42			missing links added
+ok	43.12:43			
+fixed	43.12:44			missing links added
+fixed	43.12:45			missing links added
+fixed	43.12:46			missing links added
+fixed	43.12:47			wrong links refused, missing added
+fixed	43.12:48			missing links added
+fixed	43.12:49			missing links added
+fixed	43.12:50			missing links added
+refuse	43.12:3.7	43.12:3.7		costliest is not nard
+refuse	43.12:3.8	43.12:3.8		nard is not pistikes
+refuse	43.12:3.15	43.12:3.16		hair is not wiped
+refuse	43.12:3.19	43.12:3.18		wiped is not hair
+refuse	43.12:13.3	43.12:13.3		they is not branches
+refuse	43.12:15.11	43.12:15.12		donkey is onou
+refuse	43.12:15.12	43.12:15.13		young is colt
+refuse	43.12:34.15	43.12:34.18		emphatic zhe, not kai
+refuse	43.12:37.11	43.12:37.6		v is eis not emprosthen
+refuse	43.12:47.10	43.12:47.10		TR pisteuse; Nestle keeps
+accept	43.12:1.2	43.12:1.2	renders	zhe renders oun
+accept	43.12:1.12	43.12:1.13	renders	lived = was
+accept	43.12:1.14	43.12:1.15	renders	relative pronoun
+accept	43.12:2.6	43.12:2.1	renders	made supper
+accept	43.12:2.10	43.12:2.14	renders	was
+accept	43.12:2.18,43.12:2.19,43.12:2.22	43.12:2.17	renders	sat at table = reclining
+accept	43.12:3.7	43.12:3.9	renders	of great price
+accept	43.12:3.8	43.12:3.7	renders	nard
+accept	43.12:3.15	43.12:3.18	renders	hair
+accept	43.12:3.19	43.12:3.16	renders	wiped
+accept	43.12:3.16	43.12:3.19	renders	her
+accept	43.12:3.17	43.12:3.22	renders	his
+accept	43.12:3.20	43.12:3.24	renders	de
+accept	43.12:3.1	43.12:3.2	renders	oun
+accept	43.12:4.1	43.12:4.2	renders	de
+accept	43.12:4.10	43.12:4.11	renders	was about to
+accept	43.12:5.1	43.12:5.1	renders	dia ti = why
+accept	43.12:6.1	43.12:6.2	renders	de
+accept	43.12:6.13	43.12:6.12	renders	hoti
+accept	43.12:6.14	43.12:6.14	renders	was
+accept	43.12:6.18,43.12:6.19,43.12:6.20	43.12:6.17	renders	money box
+accept	43.12:6.21	43.12:6.15	renders	kai
+accept	43.12:6.22	43.12:6.21	renders	pilfered
+accept	43.12:6.23	43.12:6.19	renders	the things
+accept	43.12:7.4	43.12:7.5	renders	leave
+accept	43.12:7.7	43.12:7.15	renders	it
+accept	43.12:7.8,43.12:7.12	43.12:7.14	renders	she kept
+accept	43.12:8.4	43.12:8.5	renders	have
+accept	43.12:9.7	43.12:9.11	renders	He is
+accept	43.12:9.24	43.12:9.26	renders	subject of raised
+accept	43.12:10.3	43.12:10.1	renders	took counsel
+accept	43.12:10.7,43.12:10.8	43.12:10.9	renders	kill
+accept	43.12:11.7	43.12:11.5	renders	were going away
+accept	43.12:12.5	43.12:12.5	renders	great (crowd)
+accept	43.12:12.8	43.12:12.7	renders	having come
+accept	43.12:13.4	43.12:13.5	renders	palm
+accept	43.12:13.5	43.12:13.3	renders	branches
+accept	43.12:13.8	43.12:13.8,43.12:13.9	renders	to meet
+accept	43.12:13.15	43.12:13.15	renders	the one coming
+accept	43.12:14.2	43.12:14.2	renders	de
+accept	43.12:15.11	43.12:15.13	renders	donkey
+accept	43.12:15.12	43.12:15.12	renders	colt
+accept	43.12:16.4	43.12:16.8	renders	at first
+accept	43.12:16.5	43.12:16.1	renders	these things
+accept	43.12:16.24	43.12:16.22	renders	these things
+accept	43.12:17.9,43.12:17.10	43.12:17.12	renders	called
+accept	43.12:18.12	43.12:18.10	renders	this (sign)
+accept	43.12:19.6	43.12:19.7	renders	you see
+accept	43.12:19.9	43.12:19.11	renders	nothing
+accept	43.12:20.2	43.12:20.5	renders	among
+accept	43.12:20.3	43.12:20.6	renders	those
+accept	43.12:20.7	43.12:20.7	renders	coming up
+accept	43.12:20.9	43.12:20.1	renders	were
+accept	43.12:21.2	43.12:21.1	renders	these
+accept	43.12:22.6	43.12:22.8	renders	comes
+accept	43.12:23.2	43.12:23.2	renders	de
+accept	43.12:23.6	43.12:23.7	renders	has come
+accept	43.12:24.15	43.12:24.17	renders	alone
+accept	43.12:25.1	43.12:25.1	renders	the one
+accept	43.12:25.8	43.12:25.9	renders	the one
+accept	43.12:25.9	43.12:25.8	renders	kai
+accept	43.12:26.5,43.12:26.6,43.12:26.7,43.12:26.8	43.12:26.6	renders	let him follow
+accept	43.12:26.14	43.12:26.17	renders	will be
+accept	43.12:26.22	43.12:26.23	renders	him
+accept	43.12:27.1	43.12:27.5	renders	troubled
+accept	43.12:27.2	43.12:27.1	renders	now
+accept	43.12:27.7	43.12:27.8	renders	I say
+accept	43.12:27.9	43.12:27.10	renders	save
+accept	43.12:27.15	43.12:27.16	renders	but
+accept	43.12:27.16	43.12:27.17	renders	dia
+accept	43.12:27.18	43.12:27.19	renders	I came
+accept	43.12:28.4	43.12:28.3	renders	your
+accept	43.12:29.8	43.12:29.10	renders	thunder happened
+accept	43.12:30.10	43.12:30.11	renders	has come
+accept	43.12:31.8	43.12:31.13	renders	future
+accept	43.12:31.10	43.12:31.14	renders	out
+accept	43.12:32.1,43.12:32.10	43.12:32.1	renders	and I
+accept	43.12:32.9	43.12:32.10	renders	myself
+accept	43.12:33.1	43.12:33.2	renders	de
+accept	43.12:33.2	43.12:33.3	renders	He was saying
+accept	43.12:33.7	43.12:33.5	renders	what kind
+accept	43.12:33.11	43.12:33.7	renders	was about
+accept	43.12:34.14	43.12:34.19	renders	how/why
+accept	43.12:34.18	43.12:34.22	renders	hoti
+accept	43.12:34.21	43.12:34.23	renders	must
+accept	43.12:34.23	43.12:34.24	renders	to be lifted
+accept	43.12:35.5	43.12:35.7	renders	little
+accept	43.12:35.7	43.12:35.8	renders	time
+accept	43.12:35.12	43.12:35.15	renders	while
+accept	43.12:35.20	43.12:35.24	renders	kai
+accept	43.12:35.21	43.12:35.25	renders	the one
+accept	43.12:35.28	43.12:35.33	renders	he goes
+accept	43.12:36.1,43.12:36.2	43.12:36.1	renders	while
+accept	43.12:36.13	43.12:36.12	renders	you become
+accept	43.12:37.11	43.12:37.10	renders	in
+accept	43.12:37.3	43.12:37.3	renders	He (gen abs)
+accept	43.12:37.13	43.12:37.9	renders	they believed
+accept	43.12:38.6	43.12:38.8	renders	which
+accept	43.12:38.7	43.12:38.9	renders	said
+accept	43.12:38.14	43.12:38.14	renders	report
+accept	43.12:38.19	43.12:38.21	renders	revealed
+accept	43.12:39.1	43.12:39.1,43.12:39.2	renders	therefore
+accept	43.12:39.4	43.12:39.4	renders	they could
+accept	43.12:40.12	43.12:40.15	renders	nor
+accept	43.12:40.16	43.12:40.16	renders	understand
+accept	43.12:40.21	43.12:40.22	renders	I heal
+accept	43.12:41.11	43.12:41.10	renders	spoke
+accept	43.12:42.1	43.12:42.1	renders	nevertheless
+accept	43.12:42.2	43.12:42.7	renders	many
+accept	43.12:42.3	43.12:42.3	renders	even
+accept	43.12:42.4	43.12:42.4	renders	of
+accept	43.12:42.9	43.12:42.11	renders	but
+accept	43.12:42.16	43.12:42.19,43.12:42.20	renders	put out
+accept	43.12:42.17	43.12:42.20	renders	they
+accept	43.12:44.1	43.12:44.2	renders	de
+accept	43.12:44.3,43.12:44.4	43.12:44.3	renders	cried out
+accept	43.12:44.7	43.12:44.5	renders	said
+accept	43.12:44.8	43.12:44.6	renders	the one
+accept	43.12:44.18	43.12:44.15	renders	eis
+accept	43.12:44.19	43.12:44.16	renders	the one
+accept	43.12:45.2	43.12:45.2	renders	the one
+accept	43.12:45.7	43.12:45.6	renders	the one
+accept	43.12:46.8	43.12:46.9	renders	the one
+accept	43.12:47.3	43.12:47.1	renders	kai
+accept	43.12:47.12	43.12:47.14	renders	him
+accept	43.12:47.16	43.12:47.17	renders	I came
+accept	43.12:48.1	43.12:48.1	renders	the one
+accept	43.12:48.2	43.12:48.2	renders	rejecting
+accept	43.12:48.12	43.12:48.13	renders	him
+accept	43.12:48.13	43.12:48.12	renders	judge
+accept	43.12:48.21	43.12:48.18	renders	that one
+accept	43.12:48.22	43.12:48.19	renders	future
+accept	43.12:49.2	43.12:49.3	renders	from
+accept	43.12:49.18	43.12:49.17	renders	I say
+accept	43.12:50.2,43.12:50.3	43.12:50.2	renders	I know
+accept	43.12:50.14	43.12:50.13	renders	speak
+accept	43.12:50.17	43.12:50.20	renders	speak
+accept	43.12:50.21	43.12:50.15	renders	has said

@@ -1,0 +1,78 @@
+kind	from	to	relation	reason
+fixed	40.4:1			added Потому
+accept	40.4:1.1	40.4:1.1	renders	Then
+ok	40.4:2			
+fixed	40.4:3			added Ти
+accept	40.4:3.10	40.4:3.9	renders	You are
+fixed	40.4:4			added Він, буде, походить
+accept	40.4:4.2	40.4:4.1	renders	pronominal article
+accept	40.4:4.10	40.4:4.10	renders	shall live
+accept	40.4:4.17	40.4:4.17	renders	coming out
+fixed	40.4:5			added ставить
+accept	40.4:5.9	40.4:5.11	renders	sets
+fixed	40.4:6			Ти moved to verb; added Ти, бож, коли
+refuse	40.4:6.32	40.4:6.33		Ти is subject, not the possessive
+accept	40.4:6.32	40.4:6.28	renders	subject of strike
+accept	40.4:6.6	40.4:6.6	renders	You are
+accept	40.4:6.12	40.4:6.13	renders	for
+accept	40.4:6.29	40.4:6.27	renders	mepote ever
+ok	40.4:7			
+fixed	40.4:8			added бере, височезную
+accept	40.4:8.3	40.4:8.2	renders	takes
+accept	40.4:8.6	40.4:8.8,40.4:8.9	renders	exceedingly high
+ok	40.4:9			
+fixed	40.4:10			added Бож, Одному
+accept	40.4:10.8	40.4:10.9	renders	for
+accept	40.4:10.16	40.4:10.17	renders	alone
+fixed	40.4:11			added Його
+accept	40.4:11.4	40.4:11.3	renders	Him
+fixed	40.4:12			added verbs
+accept	40.4:12.2	40.4:12.1	renders	having heard
+accept	40.4:12.6	40.4:12.5	renders	delivered up
+accept	40.4:12.7	40.4:12.6	renders	withdrew
+fixed	40.4:13			на to en
+refuse	40.4:13.11	40.4:13.10		на renders en
+accept	40.4:13.11	40.4:13.11	renders	in
+fixed	40.4:14			added те
+accept	40.4:14.3	40.4:14.3	renders	that
+fixed	40.4:15			added за, поганська
+accept	40.4:15.6	40.4:15.8	renders	beyond
+accept	40.4:15.12	40.4:15.13	renders	Gentiles
+fixed	40.4:16			added засяяло
+accept	40.4:16.17	40.4:16.19	renders	has dawned
+fixed	40.4:17			added того часу, розпочав, промовляти
+accept	40.4:17.2,40.4:17.3	40.4:17.2	renders	that time
+accept	40.4:17.5	40.4:17.3	renders	began
+accept	40.4:17.8	40.4:17.8	renders	to say
+fixed	40.4:18			added verbs and поблизу
+accept	40.4:18.2	40.4:18.1	renders	walking
+accept	40.4:18.5	40.4:18.3	renders	beside
+accept	40.4:18.24	40.4:18.20	renders	casting
+accept	40.4:18.27	40.4:18.25	renders	were
+fixed	40.4:19			Я not Me; added Ідіть за
+refuse	40.4:19.9	40.4:19.6		Я is not the object Me
+accept	40.4:19.6	40.4:19.4	renders	come
+accept	40.4:19.7	40.4:19.5	renders	after
+fixed	40.4:20			added І вони, пішли
+accept	40.4:20.1	40.4:20.2	renders	de
+accept	40.4:20.2	40.4:20.1	renders	pronominal article
+accept	40.4:20.8	40.4:20.7	renders	followed
+fixed	40.4:21			added далі, сина, possessives
+accept	40.4:21.2	40.4:21.2	renders	went on
+accept	40.4:21.11	40.4:21.9	renders	article = son
+accept	40.4:21.19	40.4:21.24	renders	of them
+accept	40.4:21.23	40.4:21.28	renders	of them
+fixed	40.4:22			added Вони, свого, пішли
+accept	40.4:22.1	40.4:22.1	renders	pronominal article
+accept	40.4:22.7	40.4:22.10	renders	of them
+accept	40.4:22.10	40.4:22.11	renders	followed
+fixed	40.4:23			added між людьми
+accept	40.4:23.22	40.4:23.25	renders	among
+accept	40.4:23.23	40.4:23.27	renders	people
+fixed	40.4:24			про refused; added водили, терпів
+refuse	40.4:24.3	40.4:24.4		про is not news
+accept	40.4:24.10	40.4:24.11	renders	brought
+accept	40.4:24.16	40.4:24.21	renders	oppressed
+fixed	40.4:25			added людей, Зайордання beyond
+accept	40.4:25.3	40.4:25.4	renders	crowds
+accept	40.4:25.21	40.4:25.16	renders	beyond Jordan

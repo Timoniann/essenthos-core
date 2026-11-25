@@ -1,0 +1,130 @@
+kind	from	to	relation	reason
+accept	43.14:1.1	43.14:1.2	renders	3rd-person imperative
+fixed	43.14:1			added Нехай
+accept	43.14:2.7	43.14:2.11	renders	а = δέ
+accept	43.14:2.15	43.14:2.14	renders	би = ἄν
+accept	43.14:2.18	43.14:2.16	renders	що = ὅτι
+fixed	43.14:2			added missing links
+accept	43.14:3.19	43.14:3.21	renders	були = ἦτε
+fixed	43.14:3			added були
+ok	43.14:4			
+accept	43.14:5.5	43.14:5.6	renders	subject in verb
+fixed	43.14:5			added Ми
+accept	43.14:6.16	43.14:6.19	renders	якщо = εἰ
+fixed	43.14:6			added якщо
+refuse	43.14:7.8	43.14:7.12		ви belongs to the would-have-known clause
+refuse	43.14:7.18	43.14:7.9		ви is subject of γινώσκετε
+accept	43.14:7.8	43.14:7.9	renders	subject of ᾔδειτε
+accept	43.14:7.18	43.14:7.12	renders	subject of γινώσκετε
+accept	43.14:7.9	43.14:7.9	renders	пізнали були б = ᾔδειτε
+accept	43.14:7.11	43.14:7.8	renders	б = ἄν
+accept	43.14:7.15	43.14:7.11	renders	Відтепер = ἀπ ἄρτι
+fixed	43.14:7			swapped ви links, added ᾔδειτε, ἄν, ἄρτι
+ok	43.14:8			
+accept	43.14:9.7	43.14:9.9	renders	Я = εἰμι
+accept	43.14:9.13	43.14:9.12	renders	знаєш = ἔγνωκάς
+accept	43.14:9.10	43.14:9.12	renders	subject in verb
+accept	43.14:9.16	43.14:9.15	renders	Хто = substantival ὁ
+fixed	43.14:9			added missing links
+accept	43.14:10.4	43.14:10.2	renders	subject in verb
+accept	43.14:10.17	43.14:10.18	renders	говорю = λέγω
+accept	43.14:10.18	43.14:10.23	renders	говорю = λαλῶ
+fixed	43.14:10			added missing links
+accept	43.14:11.11	43.14:11.13	renders	Коли = εἰ
+accept	43.14:11.12	43.14:11.14	renders	ж = δέ
+accept	43.14:11.13	43.14:11.15	renders	ні = μή
+accept	43.14:11.18	43.14:11.19	renders	самі = αὐτά
+fixed	43.14:11			added εἰ δὲ μή, αὐτά
+refuse	43.14:12.10	43.14:12.13		учинить is future ποιήσει
+refuse	43.14:12.13	43.14:12.15		чиню is present ποιῶ
+accept	43.14:12.10	43.14:12.15	renders	учинить = ποιήσει
+accept	43.14:12.13	43.14:12.13	renders	чиню = ποιῶ
+accept	43.14:12.5	43.14:12.5	renders	Хто = substantival ὁ
+accept	43.14:12.9	43.14:12.14	renders	той = κἀκεῖνος
+accept	43.14:12.18,43.14:12.19	43.14:12.18	renders	від них = τούτων (comparison)
+fixed	43.14:12			swapped ποιῶ/ποιήσει, added links
+accept	43.14:13.3	43.14:13.2,43.14:13.3	renders	що = ὅ τι
+accept	43.14:13.2	43.14:13.4	renders	коли = indefinite ἄν
+accept	43.14:13.5	43.14:13.5	renders	subject in verb
+accept	43.14:13.6	43.14:13.5	renders	будете просити = αἰτήσητε
+fixed	43.14:13			added missing links
+accept	43.14:14.2	43.14:14.3	renders	будете просити = αἰτήσητέ
+accept	43.14:14.6	43.14:14.2	renders	чого = τι
+fixed	43.14:14			added missing links
+accept	43.14:15.5	43.14:15.7	renders	Мої = ἐμάς
+fixed	43.14:15			added Мої
+accept	43.14:16.1,43.14:16.4	43.14:16.1	renders	І Я = κἀγώ
+accept	43.14:16.13	43.14:16.14	renders	повік = εἰς τὸν αἰῶνα
+fixed	43.14:16			added κἀγώ, εἰς
+accept	43.14:17.4	43.14:17.5	renders	що Його = ὅ
+accept	43.14:17.13	43.14:17.15	renders	та не = οὐδέ
+accept	43.14:17.28	43.14:17.27	renders	subject in verb
+fixed	43.14:17			added missing links
+accept	43.14:18.3	43.14:18.2	renders	кину = ἀφήσω
+accept	43.14:18.1	43.14:18.2	renders	subject in verb
+accept	43.14:18.6	43.14:18.5	renders	subject in verb
+fixed	43.14:18			added missing links
+accept	43.14:19.2	43.14:19.2	renders	недовго = μικρόν
+accept	43.14:19.4,43.14:19.7	43.14:19.7	renders	вже не = οὐκέτι
+accept	43.14:19.13	43.14:19.11	renders	бачити будете = θεωρεῖτέ
+accept	43.14:19.20	43.14:19.18	renders	жити будете = ζήσετε
+fixed	43.14:19			added missing links
+refuse	43.14:20.13	43.14:20.12		Мені is ἐμοί, not μου
+refuse	43.14:20.15	43.14:20.16		Я is κἀγώ, not ἐμοί
+accept	43.14:20.13	43.14:20.16	renders	Мені = ἐμοί
+accept	43.14:20.14,43.14:20.15	43.14:20.17	renders	і Я = κἀγώ
+accept	43.14:20.1	43.14:20.2	renders	Того = ἐκείνῃ
+accept	43.14:20.7	43.14:20.12	renders	Своїм = μου
+accept	43.14:20.8	43.14:20.8	renders	Я = ἐγώ
+fixed	43.14:20			fixed Мені/Я targets, added links
+refuse	43.14:21.21	43.14:21.22		Я is κἀγώ, not μου
+accept	43.14:21.20,43.14:21.21	43.14:21.23	renders	і Я = κἀγώ
+accept	43.14:21.22	43.14:21.24	renders	полюблю = ἀγαπήσω
+accept	43.14:21.1	43.14:21.1	renders	Хто = substantival ὁ
+accept	43.14:21.12	43.14:21.14	renders	хто = substantival ὁ
+fixed	43.14:21			fixed Я, added links
+accept	43.14:22.5	43.14:22.2	renders	Його = αὐτῷ
+accept	43.14:22.6	43.14:22.9	renders	Що = τί
+accept	43.14:22.12	43.14:22.14	renders	об'явитися = ἐμφανίζειν
+accept	43.14:22.13	43.14:22.13	renders	маєш = μέλλεις
+accept	43.14:22.14	43.14:22.16	renders	а = καί
+fixed	43.14:22			added missing links
+accept	43.14:23.8	43.14:23.7	renders	хто = τις
+accept	43.14:23.21	43.14:23.23	renders	subject in verb
+accept	43.14:23.26	43.14:23.25	renders	оселю = μονήν
+accept	43.14:23.27	43.14:23.28	renders	закладемо = ποιησόμεθα
+fixed	43.14:23			added missing links
+accept	43.14:24.1	43.14:24.1	renders	Хто = substantival ὁ
+fixed	43.14:24			added Хто
+accept	43.14:25.5	43.14:25.6	renders	бувши = μένων
+fixed	43.14:25			added бувши
+accept	43.14:26.2	43.14:26.2	renders	же = δέ
+accept	43.14:26.6	43.14:26.8	renders	що Його = ὅ
+fixed	43.14:26			added же, Його
+refuse	43.14:27.3	43.14:27.4		first мир is Εἰρήνην 1
+refuse	43.14:27.9	43.14:27.13		даю is δίδωμι 15
+refuse	43.14:27.14	43.14:27.15		дає is δίδωσιν 13
+accept	43.14:27.3	43.14:27.1	renders	мир = Εἰρήνην
+accept	43.14:27.9	43.14:27.15	renders	даю = δίδωμι
+accept	43.14:27.14	43.14:27.13	renders	дає = δίδωσιν
+accept	43.14:27.5	43.14:27.6	renders	Свій = ἐμήν
+accept	43.14:27.18	43.14:27.18	renders	3rd-person imperative
+fixed	43.14:27			fixed мир, даю, дає targets, added links
+accept	43.14:28.2	43.14:28.1	renders	subject in verb
+accept	43.14:28.7	43.14:28.6	renders	subject in verb
+accept	43.14:28.10	43.14:28.8	renders	вернуся = ἔρχομαι
+accept	43.14:28.14	43.14:28.12	renders	subject in verb
+accept	43.14:28.18	43.14:28.14	renders	subject in verb
+accept	43.14:28.19	43.14:28.15	renders	б = ἄν
+accept	43.14:28.22	43.14:28.17	renders	subject in verb
+accept	43.14:28.28	43.14:28.25	renders	за Мене = μού (comparison)
+fixed	43.14:28			added missing links
+accept	43.14:29.6	43.14:29.5	renders	передніше ніж = πρίν
+fixed	43.14:29			added передніше
+accept	43.14:30.1,43.14:30.2	43.14:30.1,43.14:30.2	renders	Небагато вже = οὐκέτι πολλά
+accept	43.14:30.4	43.14:30.3	renders	говоритиму = λαλήσω
+accept	43.14:30.15	43.14:30.16	renders	subject in verb
+fixed	43.14:30			added missing links
+accept	43.14:31.1	43.14:31.1	renders	та = ἀλλ
+accept	43.14:31.7	43.14:31.7	renders	subject in verb
+fixed	43.14:31			added та, Я

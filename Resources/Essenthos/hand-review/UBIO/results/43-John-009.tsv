@@ -1,0 +1,146 @@
+kind	from	to	relation	reason
+ok	43.9:1			
+fixed	43.9:2			added missing links
+accept	43.9:2.11	43.9:2.11	renders	he = houtos
+accept	43.9:2.13	43.9:2.12	renders	second chi = e
+accept	43.9:2.16	43.9:2.16	renders	shcho = hina
+fixed	43.9:3			added missing links
+accept	43.9:3.5	43.9:3.3	renders	ani = oute
+accept	43.9:3.6	43.9:3.4	renders	vin = houtos
+accept	43.9:3.7	43.9:3.6	renders	ni = oute
+fixed	43.9:4			added missing links
+accept	43.9:4.3	43.9:4.3	renders	vykonuvaty = ergazesthai
+accept	43.9:4.21	43.9:4.17	renders	vykonuvaty = ergazesthai
+accept	43.9:4.5	43.9:4.6	renders	Toho = substantival article
+accept	43.9:4.9	43.9:4.9	renders	azh poky = heos
+accept	43.9:4.17,43.9:4.19	43.9:4.15	renders	zhaden ne = oudeis
+fixed	43.9:5			added missing links
+accept	43.9:5.1	43.9:5.1	renders	Doky = hotan
+accept	43.9:5.2	43.9:5.5	renders	Ya = subject of o
+accept	43.9:5.5	43.9:5.7	renders	Ya = eimi
+fixed	43.9:6			added missing links
+accept	43.9:6.5	43.9:6.4	renders	na zemlyu = chamai
+fixed	43.9:7			added missing links
+accept	43.9:7.10	43.9:7.12	renders	vyznachaie = hermeneuetai
+accept	43.9:7.11	43.9:7.11	renders	tse = ho
+accept	43.9:7.19	43.9:7.19	renders	vernuvsia = elthen
+fixed	43.9:8			refused blind=beggar, added missing
+refuse	43.9:8.12	43.9:8.11		slipyi follows TR typhlos, not prosaites
+accept	43.9:8.1	43.9:8.2	renders	A = oun
+accept	43.9:8.7	43.9:8.9	renders	pershe = proteron
+accept	43.9:8.9	43.9:8.10	renders	yak = hoti
+accept	43.9:8.17	43.9:8.17	renders	toi = substantival article
+accept	43.9:8.22	43.9:8.20	renders	prosyv = prosaiton
+fixed	43.9:9			added missing links
+accept	43.9:9.2	43.9:9.1	renders	odni = alloi
+accept	43.9:9.3	43.9:9.3	renders	shcho = hoti
+accept	43.9:9.9	43.9:9.8	renders	Ni = ouchi
+accept	43.9:9.14	43.9:9.13	renders	vin = ekeinos
+fixed	43.9:10			added missing links
+accept	43.9:10.5	43.9:10.5	renders	zhe = oun
+fixed	43.9:11			added missing links
+accept	43.9:11.2	43.9:11.2	renders	toi = ekeinos
+accept	43.9:11.20	43.9:11.20	renders	v = eis
+accept	43.9:11.26	43.9:11.26	renders	zh = oun
+accept	43.9:11.28	43.9:11.27	renders	ta = kai
+accept	43.9:11.32,43.9:11.33	43.9:11.29	renders	stav bachyty = aneblepsa
+fixed	43.9:12			added missing links
+accept	43.9:12.6	43.9:12.6	renders	Vin = ekeinos
+fixed	43.9:13			added missing links
+accept	43.9:13.5	43.9:13.2	renders	toho = auton
+accept	43.9:13.8	43.9:13.7	renders	pershe = pote
+fixed	43.9:14			added missing links
+accept	43.9:14.2	43.9:14.1	renders	bula = en
+fixed	43.9:15			added missing links
+accept	43.9:15.10	43.9:15.9	renders	stav = aneblepsen
+accept	43.9:15.11	43.9:15.11	renders	A = de
+accept	43.9:15.12	43.9:15.10	renders	vin = ho (ho de)
+accept	43.9:15.13	43.9:15.12	renders	rozpoviv = eipen
+fixed	43.9:16			added missing links
+accept	43.9:16.27	43.9:16.29	renders	nezhoda = schisma
+accept	43.9:16.30	43.9:16.30	renders	bula = en
+fixed	43.9:17			added missing links
+accept	43.9:17.1	43.9:17.2	renders	Tomu = oun
+accept	43.9:17.3	43.9:17.1	renders	hovoriat = legousin
+accept	43.9:17.10	43.9:17.11	renders	koly = hoti
+accept	43.9:17.15	43.9:17.17	renders	A = de
+accept	43.9:17.16	43.9:17.16	renders	toi = ho
+fixed	43.9:18			added missing links
+accept	43.9:18.2	43.9:18.3	renders	prote = oun
+accept	43.9:18.13	43.9:18.14	renders	poky = hotou
+accept	43.9:18.17	43.9:18.18	renders	toho = autou
+fixed	43.9:19			added missing links
+accept	43.9:19.13	43.9:19.13	renders	nibi = hoti
+accept	43.9:19.17	43.9:19.17	renders	zhe = oun
+fixed	43.9:20			added missing links
+accept	43.9:20.1	43.9:20.2	renders	A = oun
+fixed	43.9:21			added missing links
+accept	43.9:21.14	43.9:21.15	renders	vidaiemo = oidamen
+accept	43.9:21.15	43.9:21.17	renders	Pospytaite = erotesate
+accept	43.9:21.18	43.9:21.18,43.9:21.19	renders	doroslyi = helikian echei
+accept	43.9:21.21	43.9:21.23	renders	skazhe = lalesei
+accept	43.9:21.23	43.9:21.22	renders	sebe = heautou
+fixed	43.9:22			added missing links
+accept	43.9:22.1	43.9:22.1	renders	Take = tauta
+accept	43.9:22.8	43.9:22.14	renders	yudei = Ioudaioi
+accept	43.9:22.14	43.9:22.17	renders	khto = tis
+accept	43.9:22.21	43.9:22.22	renders	buv = genetai
+accept	43.9:22.22,43.9:22.23,43.9:22.24	43.9:22.21	renders	vidluchenyi vid synahohy = aposynagogos
+fixed	43.9:23			added missing links
+accept	43.9:23.2	43.9:23.1,43.9:23.2	renders	tomu = dia touto
+accept	43.9:23.7	43.9:23.8,43.9:23.9	renders	doroslyi = helikian echei
+fixed	43.9:24			added missing links
+accept	43.9:24.3	43.9:24.5,43.9:24.6	renders	vdruhe = ek deuterou
+fixed	43.9:25			added missing links
+accept	43.9:25.2	43.9:25.3	renders	vin = ekeinos
+accept	43.9:25.14	43.9:25.13	renders	buv = on
+ok	43.9:26			
+fixed	43.9:27			added missing links
+accept	43.9:27.8	43.9:27.3	renders	hovoryv = eipon
+accept	43.9:27.13	43.9:27.9	renders	Shcho = ti
+accept	43.9:27.17	43.9:27.13	renders	Mozhe = me (question)
+accept	43.9:27.23	43.9:27.19	renders	staty = genesthai
+fixed	43.9:28			added missing links
+accept	43.9:28.1	43.9:28.1	renders	A = kai
+accept	43.9:28.10	43.9:28.9	renders	Yoho = ekeinou
+fixed	43.9:29			added missing links
+accept	43.9:29.9	43.9:29.9	renders	zh = de
+accept	43.9:29.12	43.9:29.11	renders	my = oidamen (subject)
+accept	43.9:29.14	43.9:29.11	renders	vidaiemo = oidamen
+ok	43.9:30			
+fixed	43.9:31			added missing links
+accept	43.9:31.11	43.9:31.11	renders	bohobiinyi = theosebes
+fixed	43.9:32			added missing links
+accept	43.9:32.1	43.9:32.1,43.9:32.3	renders	Vidviku = ek aionos
+accept	43.9:32.4	43.9:32.6	renders	shchob = hoti
+accept	43.9:32.10	43.9:32.11	renders	z narodzhennia = gegennemenou
+fixed	43.9:33			added missing links
+accept	43.9:33.6	43.9:33.3	renders	buv = en
+accept	43.9:33.9	43.9:33.10	renders	nichoho = ouden
+fixed	43.9:34			added missing links
+accept	43.9:34.8	43.9:34.9	renders	vves = holos
+accept	43.9:34.18	43.9:34.17	renders	het = exo
+accept	43.9:34.20	43.9:34.15	renders	vyhnaly = exebalon
+fixed	43.9:35			added missing links
+accept	43.9:35.5	43.9:35.5	renders	toho = auton
+accept	43.9:35.6	43.9:35.4	renders	vyhnaly = exebalon
+accept	43.9:35.7	43.9:35.6	renders	het = exo
+accept	43.9:35.14	43.9:35.11	renders	ty = sy
+fixed	43.9:36			added missing links
+accept	43.9:36.2	43.9:36.2	renders	toi = ekeinos
+fixed	43.9:37			Toi relinked to ho, Vin to ekeinos
+refuse	43.9:37.10	43.9:37.13		Toi renders ho, ekeinos is Vin
+accept	43.9:37.10,43.9:37.11	43.9:37.9	renders	Toi Khto = ho (lalon)
+accept	43.9:37.16	43.9:37.13	renders	Vin = ekeinos
+fixed	43.9:38			added missing links
+accept	43.9:38.2	43.9:38.1	renders	vin = ho (ho de)
+accept	43.9:38.4	43.9:38.4	renders	Ya = subject of pisteuo
+fixed	43.9:39			bachyly relinked to blepōsin
+refuse	43.9:39.12	43.9:39.16		bachyly = blepōsin, not participle
+accept	43.9:39.12	43.9:39.17	renders	bachyly = blepōsin
+accept	43.9:39.13	43.9:39.16	renders	temni = me blepontes
+fixed	43.9:40			added missing links
+accept	43.9:40.8	43.9:40.6	renders	shcho = hoi (who)
+accept	43.9:40.16	43.9:40.13	renders	Chy = me (question)
+fixed	43.9:41			added missing links
+accept	43.9:41.11	43.9:41.9	renders	b = an

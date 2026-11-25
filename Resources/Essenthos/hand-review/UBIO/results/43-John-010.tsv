@@ -1,0 +1,165 @@
+kind	from	to	relation	reason
+fixed	43.10:1			added missing verbs
+accept	43.10:1.12	43.10:1.17	renders	climbs up
+accept	43.10:1.13	43.10:1.18	renders	another way
+ok	43.10:2			
+fixed	43.10:3			added pronouns
+accept	43.10:3.3	43.10:3.1	renders	to him = touto
+accept	43.10:3.12	43.10:3.16	renders	subject of verb
+fixed	43.10:4			added missing
+accept	43.10:4.3	43.10:4.5	renders	brings out
+accept	43.10:4.7	43.10:4.8	renders	subject of verb
+accept	43.10:4.16	43.10:4.13	renders	part of follow phrase
+fixed	43.10:5			added missing
+accept	43.10:5.1,43.10:5.5	43.10:5.5	renders	follow = za + pidut
+accept	43.10:5.3	43.10:5.2	renders	de
+accept	43.10:5.6	43.10:5.5	renders	subject of verb
+accept	43.10:5.8	43.10:5.7	renders	future auxiliary
+accept	43.10:5.15	43.10:5.12	renders	subject of verb
+fixed	43.10:6			added missing
+accept	43.10:6.3	43.10:6.4	renders	spoke
+accept	43.10:6.9	43.10:6.8	renders	ekeinoi
+fixed	43.10:7			added hoti
+accept	43.10:7.9	43.10:7.10	renders	hoti
+fixed	43.10:8			added missing
+accept	43.10:8.2	43.10:8.2	renders	hosoi
+accept	43.10:8.4	43.10:8.4	renders	pro
+fixed	43.10:9			added missing
+accept	43.10:9.13	43.10:9.14	renders	go out
+fixed	43.10:10			added missing
+accept	43.10:10.2	43.10:10.6	renders	ei me = only
+accept	43.10:10.5	43.10:10.4	renders	comes
+accept	43.10:10.15	43.10:10.17	renders	subject of verb
+fixed	43.10:11			added missing
+accept	43.10:11.2	43.10:11.4	renders	shepherd
+accept	43.10:11.4	43.10:11.8	renders	shepherd
+accept	43.10:11.6	43.10:11.14	renders	lays down
+accept	43.10:11.8	43.10:11.13	renders	own = autou
+fixed	43.10:12			added missing
+accept	43.10:12.8	43.10:12.7	renders	whose
+accept	43.10:12.11	43.10:12.12	renders	own
+accept	43.10:12.18	43.10:12.18	renders	leaves
+fixed	43.10:13			first naimyt is TR-only
+refuse	43.10:13.2	43.10:13.2		Nestle misthotos is the second naimyt (TR adds first clause)
+accept	43.10:13.7	43.10:13.2	renders	he is a hireling
+accept	43.10:13.6	43.10:13.3	renders	subject of estin
+accept	43.10:13.4	43.10:13.1	renders	tomu shcho = hoti
+fixed	43.10:14			added missing
+accept	43.10:14.6	43.10:14.10	renders	my own
+accept	43.10:14.8	43.10:14.15	renders	mine
+accept	43.10:14.10	43.10:14.12	renders	know
+fixed	43.10:15			pronoun fixes
+refuse	43.10:15.13	43.10:15.13		Ya is subject, mou is vlasne
+accept	43.10:15.13	43.10:15.14	renders	subject of verb
+accept	43.10:15.6,43.10:15.7	43.10:15.6	renders	kago
+accept	43.10:15.11	43.10:15.13	renders	own = mou
+fixed	43.10:16			added missing
+accept	43.10:16.1	43.10:16.1	renders	kai
+accept	43.10:16.13,43.10:16.14	43.10:16.12	renders	kakeina
+accept	43.10:16.20	43.10:16.20	renders	subject of verb
+fixed	43.10:17			added missing
+accept	43.10:17.8	43.10:17.12	renders	own = mou
+accept	43.10:17.10	43.10:17.9	renders	lay down
+accept	43.10:17.13	43.10:17.15	renders	take
+fixed	43.10:18			added missing
+accept	43.10:18.10	43.10:18.10	renders	apo
+accept	43.10:18.13	43.10:18.9	renders	auten
+accept	43.10:18.16	43.10:18.14	renders	to lay down
+accept	43.10:18.21	43.10:18.20	renders	to take
+accept	43.10:18.24	43.10:18.25	renders	subject of verb
+accept	43.10:18.27	43.10:18.25	renders	received
+accept	43.10:18.29	43.10:18.29	renders	mou
+fixed	43.10:19			added missing
+accept	43.10:19.7	43.10:19.1	renders	schisma
+accept	43.10:19.8	43.10:19.3	renders	egeneto
+fixed	43.10:20			added missing
+accept	43.10:20.1	43.10:20.2	renders	de
+accept	43.10:20.6	43.10:20.7	renders	subject of verb
+accept	43.10:20.13	43.10:20.12	renders	subject of verb
+fixed	43.10:21			added missing
+accept	43.10:21.8,43.10:21.9	43.10:21.8	renders	demon-possessed
+accept	43.10:21.10	43.10:21.9	renders	me interrogative
+fixed	43.10:22			added missing
+accept	43.10:22.4	43.10:22.4	renders	Dedication
+fixed	43.10:23			Solomon
+refuse	43.10:23.7	43.10:23.10		Solomonovim is Solomonos not stoa
+accept	43.10:23.7	43.10:23.12	renders	of Solomon
+fixed	43.10:24			added idiom and missing
+accept	43.10:24.10,43.10:24.11,43.10:24.12,43.10:24.13	43.10:24.12,43.10:24.14	renders	hold in suspense idiom
+accept	43.10:24.9	43.10:24.10	renders	heos pote
+accept	43.10:24.19	43.10:24.22	renders	plainly
+fixed	43.10:25			added missing
+accept	43.10:25.4,43.10:25.6	43.10:25.5	renders	I told
+accept	43.10:25.11	43.10:25.9	renders	subject of verb
+accept	43.10:25.19	43.10:25.20	renders	mou
+fixed	43.10:26			vy positions
+refuse	43.10:26.10	43.10:26.2		second vy is 'you are', first vy is hymeis
+accept	43.10:26.4	43.10:26.2	renders	hymeis
+accept	43.10:26.10	43.10:26.7	renders	you are
+accept	43.10:26.1	43.10:26.1	renders	alla
+accept	43.10:26.7	43.10:26.12	renders	emon
+fixed	43.10:27			possessives
+refuse	43.10:27.5	43.10:27.7		Moi is ema (sheep), mou is Moho
+accept	43.10:27.5	43.10:27.4	renders	ema
+accept	43.10:27.1	43.10:27.7	renders	mou
+accept	43.10:27.3	43.10:27.8	renders	hear
+accept	43.10:27.6,43.10:27.8	43.10:27.9	renders	kago
+accept	43.10:27.11,43.10:27.14,43.10:27.15	43.10:27.13	renders	follow phrase
+fixed	43.10:28			added missing
+accept	43.10:28.1	43.10:28.1	renders	kago
+accept	43.10:28.8	43.10:28.9	renders	subject of verb
+accept	43.10:28.11	43.10:28.10,43.10:28.12	renders	eis ton aiona
+accept	43.10:28.13	43.10:28.16	renders	tis
+fixed	43.10:29			added missing
+accept	43.10:29.13	43.10:29.11	renders	oudeis
+fixed	43.10:30			added missing
+accept	43.10:30.4	43.10:30.6	renders	esmen
+fixed	43.10:31			added missing
+accept	43.10:31.3	43.10:31.1	renders	took up
+fixed	43.10:32			partitive
+refuse	43.10:32.15	43.10:32.13		z is partitive, not dia
+accept	43.10:32.15,43.10:32.16	43.10:32.15	renders	of them
+accept	43.10:32.18	43.10:32.18	renders	conative present
+fixed	43.10:33			added missing
+accept	43.10:33.3	43.10:33.1	renders	answered
+accept	43.10:33.4	43.10:33.8	renders	ou
+accept	43.10:33.8	43.10:33.9	renders	conative present
+accept	43.10:33.16	43.10:33.18	renders	being
+fixed	43.10:34			vy
+refuse	43.10:34.12	43.10:34.11		vy is 'you are', hymon is vashim
+accept	43.10:34.12	43.10:34.16	renders	you are
+accept	43.10:34.8	43.10:34.11	renders	hymon
+fixed	43.10:35			added missing
+accept	43.10:35.3	43.10:35.3	renders	subject of verb
+accept	43.10:35.6,43.10:35.8	43.10:35.6	renders	hous
+accept	43.10:35.11	43.10:35.11	renders	egeneto
+accept	43.10:35.17	43.10:35.15	renders	passive infinitive
+fixed	43.10:36			added missing
+accept	43.10:36.11	43.10:36.11	renders	say
+accept	43.10:36.13,43.10:36.14	43.10:36.13	renders	you blaspheme
+accept	43.10:36.16,43.10:36.17	43.10:36.14	renders	because
+accept	43.10:36.20	43.10:36.15	renders	subject of verb
+accept	43.10:36.21	43.10:36.19	renders	subject of verb
+fixed	43.10:37			added missing
+accept	43.10:37.2	43.10:37.3	renders	subject of verb
+accept	43.10:37.6	43.10:37.8	renders	mou
+fixed	43.10:38			added missing
+accept	43.10:38.3	43.10:38.3	renders	subject of verb
+accept	43.10:38.7,43.10:38.12	43.10:38.7	renders	believe
+accept	43.10:38.10	43.10:38.4	renders	kai in kan
+accept	43.10:38.24	43.10:38.20	renders	kai in kago
+fixed	43.10:39			added missing
+accept	43.10:39.1	43.10:39.2	renders	oun
+accept	43.10:39.4	43.10:39.1	renders	subject of verb
+accept	43.10:39.7	43.10:39.3	renders	auton
+accept	43.10:39.13	43.10:39.7	renders	subject of verb
+fixed	43.10:40			added missing
+accept	43.10:40.2	43.10:40.2	renders	subject of verb
+accept	43.10:40.4,43.10:40.5	43.10:40.4	renders	na toi bik = peran
+fixed	43.10:41			added missing
+accept	43.10:41.8	43.10:41.8	renders	hoti
+accept	43.10:41.9	43.10:41.10	renders	men
+accept	43.10:41.16	43.10:41.14	renders	panta
+accept	43.10:41.19	43.10:41.20	renders	toutou
+accept	43.10:41.23	43.10:41.22	renders	en
+ok	43.10:42			

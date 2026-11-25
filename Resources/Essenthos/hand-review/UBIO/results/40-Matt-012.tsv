@@ -1,0 +1,165 @@
+kind	from	to	relation	reason
+fixed	40.12:1			added verb, field, began
+ok	40.12:2			
+fixed	40.12:3			added He, answered
+fixed	40.12:4			added which, was, those
+fixed	40.12:5			wrong Sabbath occurrence; added guiltless are
+fixed	40.12:6			added here
+fixed	40.12:7			added known, condemned, an
+ok	40.12:8			
+fixed	40.12:9			added participle and verb
+fixed	40.12:10			added Jesus=him, interrogative
+unsure	40.12:11			loose rendering of take hold / raise up and the two negations
+fixed	40.12:12			sheep linked to hoste
+ok	40.12:13			
+fixed	40.12:14			added de, took, how
+fixed	40.12:15			added withdrew, followed
+fixed	40.12:16			added sternly, Him, make known
+fixed	40.12:17			added that
+fixed	40.12:18			added delight, My
+ok	40.12:19			
+fixed	40.12:20			lead linked to an
+fixed	40.12:21			added will
+fixed	40.12:22			added so that
+ok	40.12:23			
+fixed	40.12:24			added This, except
+ok	40.12:25			
+fixed	40.12:26			added divided, then
+fixed	40.12:27			added therefore, you
+fixed	40.12:28			added de
+fixed	40.12:29			added anyone, strong, plunder, goods, house
+fixed	40.12:30			added the one
+fixed	40.12:31			added therefore, and
+fixed	40.12:32			added speaks, if
+fixed	40.12:33			added bad, is known
+fixed	40.12:34			added speak, being, abundance
+fixed	40.12:35			added puts forth
+fixed	40.12:36			added which, speak, account
+fixed	40.12:37			added by, your, condemned
+ok	40.12:38			
+fixed	40.12:39			added given
+fixed	40.12:40			added belly
+fixed	40.12:41			Jonah linked to eis
+fixed	40.12:42			added rise, earth
+fixed	40.12:43			added de, goes out, rest
+fixed	40.12:44			added return, my, coming
+fixed	40.12:45			added takes, becomes
+fixed	40.12:46			added genitive absolute, standing, seeking
+fixed	40.12:47			added de, seeking
+fixed	40.12:48			said linked to telling
+fixed	40.12:49			added stretched, His
+fixed	40.12:50			added whoever, do, who, he
+accept	40.12:1.4	40.12:1.5	renders	went
+accept	40.12:1.5	40.12:1.12	renders	grainfields
+accept	40.12:1.14	40.12:1.19	renders	began
+accept	40.12:3.2	40.12:3.1	renders	pronominal article
+accept	40.12:3.3	40.12:3.3	renders	said
+accept	40.12:4.11	40.12:4.14	renders	which
+accept	40.12:4.15	40.12:4.17	renders	was
+accept	40.12:4.19	40.12:4.21	renders	those (article)
+refuse	40.12:5.9	40.12:5.16		other Sabbath; this is on the Sabbath
+accept	40.12:5.9	40.12:5.9	renders	on the Sabbath
+accept	40.12:5.16	40.12:5.19	renders	guiltless
+accept	40.12:5.17	40.12:5.20	renders	they are
+accept	40.12:6.6	40.12:6.9	renders	here
+accept	40.12:7.3,40.12:7.4	40.12:7.3	renders	you had known
+accept	40.12:7.14,40.12:7.16	40.12:7.13	renders	you would condemn
+accept	40.12:7.17	40.12:7.12	renders	conditional particle
+accept	40.12:9.2	40.12:9.2	renders	having departed
+accept	40.12:9.4	40.12:9.4	renders	went
+accept	40.12:10.13	40.12:10.18	renders	object of accuse
+accept	40.12:10.16	40.12:10.11	renders	interrogative ei
+accept	40.12:11.2	40.12:11.1	renders	pronominal article
+accept	40.12:11.6	40.12:11.6	renders	will there be
+accept	40.12:11.10	40.12:11.10	renders	who
+accept	40.12:11.22	40.12:11.15	renders	if
+accept	40.12:11.23	40.12:11.17	renders	it
+accept	40.12:11.24	40.12:11.16	renders	falls
+refuse	40.12:12.8	40.12:12.6		sheep is not therefore
+accept	40.12:12.8	40.12:12.5	renders	sheep
+accept	40.12:14.2	40.12:14.2	renders	de
+accept	40.12:14.5	40.12:14.6	renders	took counsel
+accept	40.12:14.9	40.12:14.9	renders	how/that
+accept	40.12:15.4	40.12:15.5	renders	withdrew
+accept	40.12:15.9	40.12:15.8	renders	followed
+accept	40.12:16.5	40.12:16.2	renders	warned sternly
+accept	40.12:16.6	40.12:16.7	renders	Him
+accept	40.12:16.8	40.12:16.6,40.12:16.8	renders	make known
+accept	40.12:17.3	40.12:17.3	renders	that which (article)
+accept	40.12:18.12	40.12:18.11	renders	well pleased
+accept	40.12:18.16	40.12:18.18	renders	My Spirit
+refuse	40.12:20.13	40.12:20.11		particle, not the verb
+accept	40.12:20.13	40.12:20.12	renders	leads
+accept	40.12:20.3	40.12:20.2	renders	bruised
+accept	40.12:20.14	40.12:20.16	renders	justice
+accept	40.12:21.4	40.12:21.6	renders	future auxiliary
+accept	40.12:22.15	40.12:22.11	renders	so that
+accept	40.12:24.5	40.12:24.6	renders	this man
+accept	40.12:24.10,40.12:24.11	40.12:24.11,40.12:24.12	renders	except
+accept	40.12:26.7	40.12:26.10	renders	divided
+accept	40.12:26.11	40.12:26.12	renders	then
+accept	40.12:27.12	40.12:27.15,40.12:27.16	renders	therefore
+accept	40.12:27.15	40.12:27.20	renders	your
+accept	40.12:28.1	40.12:28.2	renders	de
+accept	40.12:29.4	40.12:29.4	renders	anyone
+accept	40.12:29.9	40.12:29.10	renders	strong man
+accept	40.12:29.11	40.12:29.15	renders	plunder
+accept	40.12:29.12	40.12:29.13	renders	goods
+accept	40.12:29.18	40.12:29.21	renders	strong man
+accept	40.12:29.23	40.12:29.25	renders	house
+accept	40.12:30.1	40.12:30.1	renders	the one
+accept	40.12:30.9	40.12:30.10	renders	the one
+accept	40.12:31.1,40.12:31.2	40.12:31.1,40.12:31.2	renders	therefore
+accept	40.12:31.7	40.12:31.7	renders	kai
+accept	40.12:32.2	40.12:32.3	renders	ean
+accept	40.12:32.3	40.12:32.4	renders	speaks
+accept	40.12:32.15	40.12:32.16	renders	speaks
+accept	40.12:33.13	40.12:33.15	renders	bad
+accept	40.12:33.19	40.12:33.27	renders	is known
+accept	40.12:34.6	40.12:34.6	renders	to speak
+accept	40.12:34.8	40.12:34.8	renders	being
+accept	40.12:34.13	40.12:34.12	renders	abundance
+accept	40.12:35.14	40.12:35.18	renders	puts forth
+accept	40.12:36.9	40.12:36.8	renders	which
+accept	40.12:36.10	40.12:36.9	renders	will speak
+accept	40.12:36.14	40.12:36.15	renders	account
+accept	40.12:37.2	40.12:37.1	renders	by
+accept	40.12:37.4	40.12:37.5	renders	your
+accept	40.12:37.5	40.12:37.6	renders	future
+accept	40.12:37.8	40.12:37.8	renders	by
+accept	40.12:37.10	40.12:37.11	renders	your
+accept	40.12:37.11,40.12:37.12	40.12:37.12	renders	will be condemned
+accept	40.12:39.15	40.12:39.15	renders	will be given
+accept	40.12:40.5	40.12:40.7	renders	belly
+refuse	40.12:41.15	40.12:41.16		name, not preposition
+accept	40.12:41.15	40.12:41.19	renders	of Jonah
+accept	40.12:41.1	40.12:41.1,40.12:41.2	renders	men of Nineveh
+accept	40.12:41.2	40.12:41.3	renders	will stand up
+accept	40.12:42.6	40.12:42.3	renders	will rise up
+accept	40.12:42.17	40.12:42.20	renders	earth
+accept	40.12:43.1	40.12:43.2	renders	de
+accept	40.12:43.5	40.12:43.6	renders	goes out
+accept	40.12:43.12	40.12:43.15	renders	rest
+accept	40.12:44.4	40.12:44.7	renders	I will return
+accept	40.12:44.7	40.12:44.6	renders	my
+accept	40.12:44.12	40.12:44.11	renders	having come
+accept	40.12:45.6	40.12:45.4	renders	takes
+accept	40.12:45.21	40.12:45.17	renders	becomes
+accept	40.12:46.2	40.12:46.2	renders	he
+accept	40.12:46.4	40.12:46.3	renders	speaking
+accept	40.12:46.14	40.12:46.13	renders	were standing
+accept	40.12:46.15	40.12:46.15	renders	seeking
+accept	40.12:47.1	40.12:47.2	renders	de
+accept	40.12:47.18	40.12:47.15	renders	seeking
+refuse	40.12:48.9	40.12:48.6		said is eipen, not legonti
+accept	40.12:48.9	40.12:48.4	renders	he said
+accept	40.12:48.2	40.12:48.1	renders	pronominal article
+accept	40.12:48.4	40.12:48.5	renders	to the one
+accept	40.12:48.7	40.12:48.6	renders	telling
+accept	40.12:49.2	40.12:49.2	renders	stretched out
+accept	40.12:49.4	40.12:49.5	renders	His
+accept	40.12:49.7	40.12:49.9	renders	His
+accept	40.12:50.2	40.12:50.1	renders	whoever
+accept	40.12:50.9	40.12:50.4	renders	shall do
+accept	40.12:50.6	40.12:50.10	renders	who is
+accept	40.12:50.10	40.12:50.13	renders	he

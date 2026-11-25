@@ -1,0 +1,120 @@
+kind	from	to	relation	reason
+fixed	1.4:1			added Набула, від
+accept	1.4:1.15	1.4:1.16	renders	acquired
+accept	1.4:1.17	1.4:1.18	renders	with/from YHWH
+fixed	1.4:2			added далі, йому, пастух, рільник
+accept	1.4:2.2	1.4:2.2	renders	added = further
+accept	1.4:2.6	1.4:2.6	renders	suffix of brother
+accept	1.4:2.11	1.4:2.12	renders	shepherd
+accept	1.4:2.16	1.4:2.17,1.4:2.18	renders	worker of soil
+fixed	1.4:3			по to מִ, Богові, від
+accept	1.4:3.3	1.4:3.3	renders	from-end = after
+accept	1.4:3.9	1.4:3.14,1.4:3.15	renders	to YHWH
+accept	1.4:3.11	1.4:3.9	renders	from
+fixed	1.4:4			added він, приніс, своїх, на x2
+accept	1.4:4.3	1.4:4.5	renders	he
+accept	1.4:4.5	1.4:4.3	renders	brought
+accept	1.4:4.7	1.4:4.8	renders	suffix of flock
+accept	1.4:4.18	1.4:4.15	renders	to
+accept	1.4:4.21	1.4:4.18	renders	to
+fixed	1.4:5			added на x2, сильно, розгнівався, похилилось
+accept	1.4:5.2	1.4:5.2	renders	to
+accept	1.4:5.5	1.4:5.5	renders	to
+accept	1.4:5.11	1.4:5.13	renders	very
+accept	1.4:5.12	1.4:5.10	renders	be hot/angry
+accept	1.4:5.17	1.4:5.15	renders	fell
+fixed	1.4:6			added ти, розгнівався, похилилось
+accept	1.4:6.6	1.4:6.8	renders	to you
+accept	1.4:6.7	1.4:6.7	renders	be hot
+accept	1.4:6.10	1.4:6.11	renders	fell
+fixed	1.4:7			added добре робитимеш, підіймеш, недобре, в дверях, до тебе, над ним
+accept	1.4:7.4,1.4:7.5	1.4:7.4	renders	do well
+accept	1.4:7.7	1.4:7.5	renders	lifting up
+accept	1.4:7.12	1.4:7.9	renders	not do well
+accept	1.4:7.14	1.4:7.10	renders	at
+accept	1.4:7.15	1.4:7.12	renders	door
+accept	1.4:7.19,1.4:7.20	1.4:7.16	renders	to you
+accept	1.4:7.26,1.4:7.27	1.4:7.21	renders	over him
+fixed	1.4:8			added говорив, як, на
+accept	1.4:8.2	1.4:8.2	renders	said
+accept	1.4:8.10	1.4:8.9	renders	when
+accept	1.4:8.17	1.4:8.17	renders	against
+fixed	1.4:9			added Чи
+accept	1.4:9.14	1.4:9.13	renders	interrogative
+fixed	1.4:10			added до; Господь has no counterpart
+accept	1.4:10.12	1.4:10.9	renders	to me
+ok	1.4:11			
+fixed	1.4:12			added будеш ти порати, вона, дасть, тобі, сили своєї, ти
+accept	1.4:12.2,1.4:12.3,1.4:12.4	1.4:12.2	renders	you work
+accept	1.4:12.6	1.4:12.7	renders	subject of add
+accept	1.4:12.9	1.4:12.8	renders	give
+accept	1.4:12.10	1.4:12.10	renders	to you
+accept	1.4:12.11,1.4:12.12	1.4:12.9	renders	its strength
+accept	1.4:12.17	1.4:12.14	renders	you will be
+fixed	1.4:13			added мій гріх, аніж, знести
+accept	1.4:13.7,1.4:13.8	1.4:13.7	renders	my iniquity
+accept	1.4:13.9	1.4:13.8	renders	than
+accept	1.4:13.10,1.4:13.11	1.4:13.9	renders	to bear
+fixed	1.4:14			мене moved to מֹצְאִי; added мене, з, я буду, хто, уб'є мене
+refuse	1.4:14.29	1.4:14.27		me of finds-me, not kill-me
+accept	1.4:14.29	1.4:14.26	renders	suffix of finds-me
+accept	1.4:14.5	1.4:14.3	renders	object me
+accept	1.4:14.6	1.4:14.6,1.4:14.7	renders	from upon
+accept	1.4:14.10,1.4:14.11	1.4:14.14	renders	I will hide
+accept	1.4:14.27	1.4:14.26	renders	whoever finds
+accept	1.4:14.31,1.4:14.32	1.4:14.27	renders	will kill me
+fixed	1.4:15			added many unlinked words
+accept	1.4:15.3,1.4:15.4	1.4:15.3	renders	to him
+accept	1.4:15.6,1.4:15.7	1.4:15.5	renders	therefore
+accept	1.4:15.9,1.4:15.10	1.4:15.7	renders	whoever kills
+accept	1.4:15.12	1.4:15.9	renders	sevenfold
+accept	1.4:15.13,1.4:15.14	1.4:15.10	renders	be avenged
+accept	1.4:15.16	1.4:15.12	renders	put
+accept	1.4:15.18	1.4:15.16	renders	sign
+accept	1.4:15.19	1.4:15.14	renders	on
+accept	1.4:15.21	1.4:15.17	renders	so that
+accept	1.4:15.23	1.4:15.19	renders	strike
+accept	1.4:15.24	1.4:15.20	renders	object him
+accept	1.4:15.25	1.4:15.21	renders	every
+accept	1.4:15.26	1.4:15.22	renders	who finds
+fixed	1.4:16			added з-перед to לִּ, на схід від
+accept	1.4:16.4	1.4:16.5	renders	from before
+accept	1.4:16.12,1.4:16.14	1.4:16.13	renders	east of
+fixed	1.4:17			added стала, як
+accept	1.4:17.7	1.4:17.7	renders	became pregnant
+accept	1.4:17.22	1.4:17.21	renders	as
+fixed	1.4:18			added народився, в
+accept	1.4:18.2	1.4:18.2	renders	was born
+accept	1.4:18.3	1.4:18.3	renders	to
+fixed	1.4:19			added собі
+accept	1.4:19.3	1.4:19.3	renders	to him
+fixed	1.4:20			added тих що
+accept	1.4:20.8,1.4:20.9	1.4:20.9	renders	those dwelling
+fixed	1.4:21			added держить
+accept	1.4:21.11	1.4:21.9	renders	handles
+ok	1.4:22			
+fixed	1.4:23			added most unlinked words
+accept	1.4:23.4	1.4:23.4	renders	to
+accept	1.4:23.10,1.4:23.11	1.4:23.9	renders	hear
+accept	1.4:23.14	1.4:23.11	renders	wives
+accept	1.4:23.16,1.4:23.17	1.4:23.13	renders	listen
+accept	1.4:23.18,1.4:23.19	1.4:23.14	renders	my word
+accept	1.4:23.22	1.4:23.17	renders	I killed
+accept	1.4:23.25	1.4:23.18	renders	for
+accept	1.4:23.26,1.4:23.27	1.4:23.19	renders	my wound
+accept	1.4:23.29	1.4:23.21	renders	child
+accept	1.4:23.30	1.4:23.22	renders	for
+accept	1.4:23.31	1.4:23.23	renders	bruise
+fixed	1.4:24			added як, буде пімщений, семеро
+accept	1.4:24.2	1.4:24.1	renders	if
+accept	1.4:24.3,1.4:24.5	1.4:24.3	renders	be avenged
+accept	1.4:24.12	1.4:24.9	renders	seven
+fixed	1.4:25			added йому, дав, за
+accept	1.4:25.14	1.4:25.13	renders	suffix of name
+accept	1.4:25.18	1.4:25.16	renders	appointed
+accept	1.4:25.22	1.4:25.21	renders	instead of
+fixed	1.4:26			added до Сифові, був, були, призивати
+accept	1.4:26.2	1.4:26.2	renders	to Seth
+accept	1.4:26.5	1.4:26.6	renders	was born
+accept	1.4:26.15	1.4:26.14	renders	began
+accept	1.4:26.16	1.4:26.15,1.4:26.16	renders	to call

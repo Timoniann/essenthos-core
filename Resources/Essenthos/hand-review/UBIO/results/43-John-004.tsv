@@ -1,0 +1,233 @@
+kind	from	to	relation	reason
+accept	43.4:1.3	43.4:1.2	renders	же = οὖν
+accept	43.4:1.12	43.4:1.14	renders	збирає = ποιεῖ
+accept	43.4:1.15	43.4:1.17	renders	як = ἢ
+fixed	43.4:1			added missing links
+accept	43.4:2.5	43.4:2.3	renders	Сам = αὐτὸς
+fixed	43.4:2			added missing link
+accept	43.4:3.2	43.4:3.1	renders	покинув = ἀφῆκεν
+accept	43.4:3.1	43.4:3.1	renders	Він = subject of ἀφῆκεν
+fixed	43.4:3			added missing links
+accept	43.4:4.1	43.4:4.2	renders	І = δὲ
+accept	43.4:4.3	43.4:4.1	renders	потрібно було = Ἔδει
+accept	43.4:4.6	43.4:4.4	renders	переходити = διέρχεσθαι
+fixed	43.4:4			added missing links
+refuse	43.4:5.10	43.4:5.8		недалеко is πλησίον not Sychar
+refuse	43.4:5.11	43.4:5.8		від is part of недалеко від
+accept	43.4:5.10,43.4:5.11	43.4:5.9	renders	недалеко від = πλησίον
+accept	43.4:5.15	43.4:5.13	renders	був дав = ἔδωκεν
+accept	43.4:5.3	43.4:5.1	renders	Він = subject of ἔρχεται
+accept	43.4:5.7	43.4:5.7	renders	що зветься = λεγομένην
+fixed	43.4:5			недалеко від moved to πλησίον; missing links
+accept	43.4:6.3	43.4:6.1	renders	була = ἦν
+accept	43.4:6.6	43.4:6.8	renders	І = οὖν
+accept	43.4:6.9	43.4:6.10	renders	зморений = κεκοπιακὼς
+accept	43.4:6.10	43.4:6.14	renders	сів = ἐκαθέζετο
+accept	43.4:6.12	43.4:6.16	renders	край = ἐπὶ
+accept	43.4:6.14	43.4:6.20	renders	Було = ἦν
+accept	43.4:6.15,43.4:6.17	43.4:6.21	renders	коло ... десь = ὡς
+fixed	43.4:6			added missing links
+accept	43.4:7.11	43.4:7.9	renders	до неї = αὐτῇ
+fixed	43.4:7			added missing link
+accept	43.4:8.5	43.4:8.5	renders	відійшли були = ἀπεληλύθεισαν
+fixed	43.4:8			added missing link
+accept	43.4:9.4	43.4:9.5,43.4:9.7	renders	самарянка = ἡ γυνὴ ἡ Σαμαρεῖτις
+accept	43.4:9.15	43.4:9.16,43.4:9.17	renders	самарянки = γυναικὸς Σαμαρείτιδος
+accept	43.4:9.19	43.4:9.21	renders	сходяться = συνχρῶνται
+accept	43.4:9.20,43.4:9.21	43.4:9.23	renders	із самарянами = Σαμαρείταις
+fixed	43.4:9			added missing links
+accept	43.4:10.5	43.4:10.5	renders	до неї = αὐτῇ
+accept	43.4:10.10	43.4:10.7	renders	ти = subject of ᾔδεις
+accept	43.4:10.23	43.4:10.22	renders	б = ἂν
+accept	43.4:10.31	43.4:10.27	renders	би = ἄν
+accept	43.4:10.24	43.4:10.24	renders	у Нього = αὐτὸν
+accept	43.4:10.28	43.4:10.26	renders	Він = subject of ἔδωκεν
+fixed	43.4:10			added missing links
+refuse	43.4:11.6	43.4:11.6		черпака is ἄντλημα not ἔχεις
+accept	43.4:11.6	43.4:11.5	renders	черпака = ἄντλημα
+accept	43.4:11.3	43.4:11.2	renders	до Нього = αὐτῷ
+accept	43.4:11.7,43.4:11.8	43.4:11.6	renders	в Тебе = ἔχεις
+accept	43.4:11.10	43.4:11.4	renders	нема = οὔτε
+accept	43.4:11.15	43.4:11.13	renders	ж = οὖν
+accept	43.4:11.17	43.4:11.14	renders	Ти = subject of ἔχεις
+fixed	43.4:11			черпака moved to ἄντλημα; missing links
+accept	43.4:12.1	43.4:12.1	renders	Чи = μὴ
+accept	43.4:12.14	43.4:12.15	renders	він сам = αὐτὸς
+fixed	43.4:12			added missing links
+accept	43.4:13.7	43.4:13.7	renders	хто = ὁ (πίνων)
+fixed	43.4:13			added missing link
+accept	43.4:14.2	43.4:14.1	renders	хто = ὃς
+accept	43.4:14.12	43.4:14.15,43.4:14.17	renders	повік = εἰς τὸν αἰῶνα
+accept	43.4:14.26	43.4:14.29	renders	тече = ἁλλομένου
+accept	43.4:14.10	43.4:14.13	renders	не = οὐ μὴ
+fixed	43.4:14			added missing links
+accept	43.4:15.11,43.4:15.12,43.4:15.14	43.4:15.14	renders	я пити не хотіла = διψῶ
+accept	43.4:15.15,43.4:15.17	43.4:15.15	renders	і не = μηδὲ
+accept	43.4:15.19	43.4:15.18	renders	брати = ἀντλεῖν
+fixed	43.4:15			added missing links
+accept	43.4:16.2	43.4:16.2	renders	до неї = αὐτῇ
+accept	43.4:16.10	43.4:16.8	renders	та й = καὶ
+accept	43.4:16.11	43.4:16.9	renders	вертайся = ἐλθὲ
+fixed	43.4:16			added missing links
+accept	43.4:17.4	43.4:17.4	renders	та й = καὶ
+fixed	43.4:17			added missing link
+accept	43.4:18.7	43.4:18.7	renders	той кого = ὃν
+accept	43.4:18.13	43.4:18.10	renders	він = subject of ἔστιν
+accept	43.4:18.16	43.4:18.15	renders	ти = subject of εἴρηκας
+fixed	43.4:18			added missing links
+accept	43.4:19.3	43.4:19.2	renders	до Нього = αὐτῷ
+fixed	43.4:19			added missing link
+accept	43.4:20.18	43.4:20.20	renders	потрібно = δεῖ
+fixed	43.4:20			added missing link
+accept	43.4:21.3	43.4:21.2	renders	до неї = αὐτῇ
+accept	43.4:21.8	43.4:21.8	renders	що = ὅτι
+accept	43.4:21.22,43.4:21.23	43.4:21.20	renders	будете ви = προσκυνήσετε
+fixed	43.4:21			added missing links
+accept	43.4:22.3,43.4:22.4	43.4:22.3	renders	тому чого = ὃ
+accept	43.4:22.10	43.4:22.8	renders	тому що = ὃ
+fixed	43.4:22			added missing links
+accept	43.4:23.12	43.4:23.11	renders	вклонятися будуть = προσκυνήσουσιν
+fixed	43.4:23			added missing link
+accept	43.4:24.5	43.4:24.5	renders	ті = τοὺς
+fixed	43.4:24			added missing link
+accept	43.4:25.1	43.4:25.1	renders	Відказує = λέγει
+accept	43.4:25.9	43.4:25.9	renders	що зветься = ὁ λεγόμενος
+accept	43.4:25.13	43.4:25.14	renders	Він = ἐκεῖνος
+accept	43.4:25.17	43.4:25.15	renders	розповість = ἀναγγελεῖ
+fixed	43.4:25			added missing links
+accept	43.4:26.2	43.4:26.2	renders	до неї = αὐτῇ
+accept	43.4:26.5	43.4:26.6	renders	Це Я = Ἐγώ εἰμι
+accept	43.4:26.7	43.4:26.7	renders	що = ὁ (λαλῶν)
+accept	43.4:26.9	43.4:26.9	renders	з тобою = σοι
+fixed	43.4:26			added missing links
+refuse	43.4:27.16	43.4:27.23		них is not αὐτῆς (her)
+accept	43.4:27.25	43.4:27.23	renders	нею = αὐτῆς
+accept	43.4:27.2	43.4:27.2,43.4:27.3	renders	тоді = ἐπὶ τούτῳ
+accept	43.4:27.3	43.4:27.4	renders	надійшли = ἦλθαν
+accept	43.4:27.17	43.4:27.14	renders	жаден не = οὐδεὶς
+accept	43.4:27.19	43.4:27.17	renders	Чого = Τί
+accept	43.4:27.20	43.4:27.18	renders	хочеш = ζητεῖς
+accept	43.4:27.22,43.4:27.23	43.4:27.20	renders	Про що = τί
+fixed	43.4:27			них refused; нею and missing links added
+accept	43.4:28.5	43.4:28.5	renders	свого = αὐτῆς
+accept	43.4:28.7	43.4:28.9	renders	побігла = ἀπῆλθεν
+accept	43.4:28.11	43.4:28.13	renders	та й = καὶ
+fixed	43.4:28			added missing links
+accept	43.4:29.10	43.4:29.8	renders	що = ἃ
+accept	43.4:29.13,43.4:29.15	43.4:29.10	renders	Чи не = μήτι
+accept	43.4:29.14	43.4:29.11	renders	Він = οὗτός
+fixed	43.4:29			added missing links
+ok	43.4:30			
+accept	43.4:31.2	43.4:31.3	renders	Тим часом = Ἐν τῷ μεταξὺ
+accept	43.4:31.5	43.4:31.4	renders	просили = ἠρώτων
+fixed	43.4:31			added missing links
+accept	43.4:32.2	43.4:32.1	renders	Він = ὁ (δὲ)
+accept	43.4:32.8,43.4:32.9	43.4:32.8	renders	на їдження = φαγεῖν
+accept	43.4:32.10	43.4:32.9	renders	якої = ἣν
+fixed	43.4:32			added missing links
+accept	43.4:33.2	43.4:33.2	renders	тоді = οὖν
+accept	43.4:33.6	43.4:33.7	renders	Хіба = Μή
+fixed	43.4:33			added missing links
+accept	43.4:34.3	43.4:34.2	renders	до них = αὐτοῖς
+accept	43.4:34.9,43.4:34.10	43.4:34.12	renders	Того Хто = τοῦ (πέμψαντός)
+accept	43.4:34.14	43.4:34.19	renders	справу = ἔργον
+accept	43.4:34.16	43.4:34.16	renders	довершити = τελειώσω
+fixed	43.4:34			added missing links
+accept	43.4:35.1	43.4:35.1	renders	Чи не = οὐχ
+accept	43.4:35.17	43.4:35.18	renders	свої = ὑμῶν
+accept	43.4:35.23	43.4:35.23	renders	як = ὅτι
+accept	43.4:35.24	43.4:35.26	renders	для = πρὸς
+accept	43.4:35.27	43.4:35.24	renders	пополовіли = λευκαί
+accept	43.4:35.28	43.4:35.25	renders	вони = εἰσιν
+fixed	43.4:35			added missing links
+accept	43.4:36.2	43.4:36.1	renders	хто = ὁ (θερίζων)
+accept	43.4:36.6	43.4:36.4	renders	бере = λαμβάνει
+accept	43.4:36.14	43.4:36.12	renders	хто = ὁ (σπείρων)
+accept	43.4:36.17	43.4:36.17	renders	хто = ὁ (θερίζων)
+fixed	43.4:36			added missing links
+accept	43.4:37.2	43.4:37.1	renders	про це = ἐν τούτῳ
+accept	43.4:37.4	43.4:37.5	renders	поговірка = λόγος
+accept	43.4:37.5	43.4:37.7	renders	правдива = ἀληθινὸς
+accept	43.4:37.6	43.4:37.11	renders	Хто = ὁ (σπείρων)
+accept	43.4:37.9	43.4:37.13	renders	а = καὶ
+accept	43.4:37.10	43.4:37.15	renders	хто = ὁ (θερίζων)
+accept	43.4:37.12	43.4:37.16	renders	жне = θερίζων
+fixed	43.4:37			added missing links
+accept	43.4:38.5	43.4:38.5	renders	де = ὃ
+accept	43.4:38.8	43.4:38.8	renders	працювали = κεκοπιάκατε
+accept	43.4:38.9	43.4:38.10	renders	працювали = κεκοπιάκασιν
+accept	43.4:38.12	43.4:38.11	renders	ж = καὶ
+fixed	43.4:38			added missing links
+accept	43.4:39.3	43.4:39.2	renders	ж = δὲ
+accept	43.4:39.6,43.4:39.7	43.4:39.11	renders	із самарян = Σαμαρειτῶν
+accept	43.4:39.14	43.4:39.18	renders	що = ὅτι
+accept	43.4:39.20	43.4:39.22	renders	що = ἃ
+accept	43.4:39.23	43.4:39.23	renders	вчинила була = ἐποίησα
+fixed	43.4:39			added missing links
+accept	43.4:40.1	43.4:40.2	renders	А = οὖν
+accept	43.4:40.2	43.4:40.1	renders	коли = ὡς
+accept	43.4:40.11	43.4:40.11	renders	у = παρ
+accept	43.4:40.13	43.4:40.10	renders	позостався = μεῖναι
+fixed	43.4:40			added missing links
+ok	43.4:41			
+accept	43.4:42.2	43.4:42.3	renders	до жінки = γυναικὶ
+accept	43.4:42.7	43.4:42.7	renders	за = διὰ
+accept	43.4:42.8	43.4:42.10	renders	слово = λαλιὰν
+accept	43.4:42.11	43.4:42.6	renders	Не ... вже = Οὐκέτι
+accept	43.4:42.13	43.4:42.12	renders	самі = αὐτοὶ
+accept	43.4:42.18	43.4:42.16	renders	пізнали = οἴδαμεν
+accept	43.4:42.22	43.4:42.18	renders	Він = οὗτός
+fixed	43.4:42			added missing links
+accept	43.4:43.1,43.4:43.2	43.4:43.1	renders	Як минуло = Μετὰ
+accept	43.4:43.3	43.4:43.2	renders	ж = δὲ
+accept	43.4:43.8	43.4:43.6	renders	пішов = ἐξῆλθεν
+fixed	43.4:43			added missing links
+ok	43.4:44			
+accept	43.4:45.1	43.4:45.2	renders	А = οὖν
+accept	43.4:45.11	43.4:45.11	renders	все = πάντα
+accept	43.4:45.17	43.4:45.17	renders	на = ἐν
+accept	43.4:45.20	43.4:45.23	renders	ходили = ἦλθον
+fixed	43.4:45			added missing links
+accept	43.4:46.1	43.4:46.2	renders	Тоді = οὖν
+accept	43.4:46.10	43.4:46.10	renders	перемінив був = ἐποίησεν
+accept	43.4:46.22	43.4:46.18	renders	що син його = οὗ ὁ υἱὸς
+fixed	43.4:46			added missing links
+accept	43.4:47.7	43.4:47.5	renders	прибув = ἥκει
+accept	43.4:47.12	43.4:47.12	renders	прийшов = ἀπῆλθεν
+accept	43.4:47.17	43.4:47.18	renders	пішов = καταβῇ
+accept	43.4:47.23	43.4:47.24	renders	мав = ἤμελλεν
+accept	43.4:47.25	43.4:47.26	renders	умерти = ἀποθνήσκειν
+fixed	43.4:47			added missing links
+accept	43.4:48.2	43.4:48.2	renders	же = οὖν
+accept	43.4:48.6	43.4:48.7	renders	Як = Ἐὰν
+fixed	43.4:48			added missing links
+accept	43.4:49.5	43.4:49.7	renders	Піди = κατάβηθι
+accept	43.4:49.7,43.4:49.8	43.4:49.8	renders	поки не = πρὶν
+fixed	43.4:49			added missing links
+accept	43.4:50.11	43.4:50.12	renders	той = ἄνθρωπος
+accept	43.4:50.2	43.4:50.2	renders	до нього = αὐτῷ
+accept	43.4:50.14	43.4:50.17	renders	до нього = αὐτῷ
+fixed	43.4:50			added missing links
+refuse	43.4:51.10	43.4:51.8		раби його (TR αὐτοῦ) is not αὐτῷ
+accept	43.4:51.5,43.4:51.7	43.4:51.4	renders	в дорозі був = καταβαίνοντος
+accept	43.4:51.16	43.4:51.12	renders	Син = παῖς
+fixed	43.4:51			його refused; missing links
+refuse	43.4:52.9	43.4:52.9		стало is ἔσχεν; легше is κομψότερον
+accept	43.4:52.9	43.4:52.10	renders	стало = ἔσχεν
+accept	43.4:52.10	43.4:52.9	renders	легше = κομψότερον
+accept	43.4:52.1	43.4:52.2	renders	А = οὖν
+accept	43.4:52.4	43.4:52.1	renders	запитав = ἐπύθετο
+accept	43.4:52.7	43.4:52.7	renders	о = ἐν
+accept	43.4:52.8	43.4:52.8	renders	котрій = ᾗ
+accept	43.4:52.13	43.4:52.12	renders	ж = οὖν
+accept	43.4:52.15	43.4:52.13	renders	до нього = αὐτῷ
+fixed	43.4:52			стало/легше corrected; missing links
+accept	43.4:53.2	43.4:53.2	renders	тоді = οὖν
+accept	43.4:53.6	43.4:53.6	renders	то = ἐκείνῃ
+accept	43.4:53.8	43.4:53.9	renders	о = ἐν
+accept	43.4:53.9	43.4:53.10	renders	котрій = ᾗ
+accept	43.4:53.10,43.4:53.11	43.4:53.12	renders	до нього = αὐτῷ
+fixed	43.4:53			added missing links
+accept	43.4:54.4	43.4:54.5	renders	знамено = σημεῖον
+accept	43.4:54.8	43.4:54.9	renders	вернувся = ἐλθὼν
+fixed	43.4:54			added missing links
