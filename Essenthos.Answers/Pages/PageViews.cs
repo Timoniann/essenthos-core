@@ -1036,13 +1036,23 @@ internal static partial class PageViews
         var body = Open(language)
             .Element("h1", PageContent.SiteName)
             .Element("p", description);
-        foreach (var section in t.Keys("home.about"))
+        body.Open("section").Element("h2", t.Text("home.about.heading")).Element("p", t.Text("home.about.intro")).Close("section");
+        // The reader's home page shows the same groups as cards, each point's first line under its
+        // title and the rest when asked; here every point is written whole.
+        foreach (var group in t.Keys("home.about.groups"))
         {
-            body.Open("section").Element("h2", t.Text($"home.about.{section}.heading"));
-            foreach (var point in t.Keys($"home.about.{section}.points"))
+            var at = $"home.about.groups.{group}";
+            body.Open("section").Element("h2", t.Text($"{at}.heading"));
+            if (t.Optional($"{at}.summary") is { } summary)
             {
-                body.Element("h3", t.Text($"home.about.{section}.points.{point}.title"))
-                    .Element("p", t.Text($"home.about.{section}.points.{point}.text"));
+                body.Element("p", summary);
+            }
+
+            foreach (var point in t.Keys($"{at}.points"))
+            {
+                var text = t.Text($"{at}.points.{point}.text");
+                body.Element("h3", t.Text($"{at}.points.{point}.title"))
+                    .Element("p", t.Optional($"{at}.points.{point}.more") is { } more ? $"{text} {more}" : text);
             }
 
             body.Close("section");
