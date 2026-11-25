@@ -584,6 +584,7 @@ internal static class ChapterReading
         var subjects = new Dictionary<long, Agreement?>();
         var languages = new Dictionary<long, string>();
         var agreements = new Dictionary<long, Agreement>();
+        var objects = new HashSet<long>();
         foreach (var parsing in parsings)
         {
             var root = parsing.Morphology.RootElement;
@@ -605,6 +606,12 @@ internal static class ChapterReading
             if (root.TryGetProperty(Suffix, out var suffix) && suffix.GetString() is { } agreement)
             {
                 suffixes[parsing.WordId] = (agreement, parsing.Lemma);
+                // A verb's suffix is its object, but an infinitive construct's may be its subject (בְּבֹאוֹ, when he came).
+                if (classes.GetValueOrDefault(parsing.WordId) == Verb
+                    && !(root.TryGetProperty(VerbType, out var type) && type.GetString() == InfinitiveConstruct))
+                {
+                    objects.Add(parsing.WordId);
+                }
             }
 
             if (root.TryGetProperty("refers", out var refers) && refers.GetString() == Suffix)
@@ -665,8 +672,10 @@ internal static class ChapterReading
             }
         }
 
-        var pronouns = answers.Count == 0 ? [] : await Pronouns(db, forms, cancellationToken);
-        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes, subjects, pronouns))
+        var onlySubject = new HashSet<long>();
+        var pronouns = answers.Count == 0 ? [] : await Pronouns(db, forms, onlySubject, cancellationToken);
+        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes, subjects, pronouns,
+                     objects, onlySubject))
         {
             answers.Remove(word);
         }
@@ -682,9 +691,11 @@ internal static class ChapterReading
     private static readonly string PersonKind = EnumSpelling.Of(EntityKind.Person);
 
     /// <summary>What each word of the reading that is one of its language's pronouns says of whom it stands for (<see cref="PronounForms"/>).</summary>
+    /// <param name="onlySubject">Filled with the words whose form can only be a subject (<see cref="PronounForms.OnlySubject"/>).</param>
     private static async Task<Dictionary<long, Agreement>> Pronouns(
         AppDbContext db,
         IReadOnlyDictionary<long, string> forms,
+        HashSet<long> onlySubject,
         CancellationToken cancellationToken)
     {
         var listed = forms.Where(pair => PronounForms.Listed(pair.Value)).Select(pair => pair.Key).ToList();
@@ -702,6 +713,11 @@ internal static class ChapterReading
             if (PronounForms.Of(row.Language, forms[row.Id]) is { } agreement)
             {
                 said[row.Id] = agreement;
+            }
+
+            if (PronounForms.OnlySubject(row.Language, forms[row.Id]))
+            {
+                onlySubject.Add(row.Id);
             }
         }
 
@@ -782,6 +798,12 @@ internal static class ChapterReading
     /// <summary>The source's class of a pronoun, by which a run of any pronoun is judged; any other kind of word by its lemma.</summary>
     private const string Pronoun = "pron";
 
+    private const string Verb = "verb";
+
+    private const string VerbType = "type";
+
+    private const string InfinitiveConstruct = "infinitive construct";
+
     /// <summary>How often a word of a run must stand alone for the referring word's kind to keep the referent beside a word not judged.</summary>
     private const double PlainlyAlone = 0.5;
 
@@ -812,7 +834,9 @@ internal static class ChapterReading
         HashSet<long> bySuffix,
         Dictionary<long, (string Agreement, string? Lemma)> suffixes,
         Dictionary<long, Agreement?> subjects,
-        Dictionary<long, Agreement> pronouns)
+        Dictionary<long, Agreement> pronouns,
+        HashSet<long> objects,
+        HashSet<long> onlySubject)
     {
         var dropped = new HashSet<long>();
 
@@ -903,7 +927,10 @@ internal static class ChapterReading
 
             if (referring.Any(bySuffix.Contains))
             {
-                if (!SuffixWord(word, referring, witnesses, renderers, classes, forms, heads, suffixes, pronouns))
+                // "he" of "he brought him" is not the one the verb's object suffix names; of "he was buried" it is.
+                if ((onlySubject.Contains(word) && referring.Any(objects.Contains)
+                     && !referring.SelectMany(w => renderers.GetValueOrDefault(w) ?? []).Any(w => forms.TryGetValue(w, out var form) && PronounForms.Be(form)))
+                    || !SuffixWord(word, referring, witnesses, renderers, classes, forms, heads, suffixes, pronouns))
                 {
                     dropped.Add(word);
                 }

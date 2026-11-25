@@ -84,4 +84,44 @@ public class GreekWitnessTests
             .BeEquivalentTo([(1L, 101L), (3L, 104L), (2L, 102L)]);
         drafts.Should().ContainSingle(d => d.Relation == LinkRelation.Omits).Which.To.Should().Equal(103);
     }
+
+    [Fact]
+    public void ARepeatedWordIsTheOccurrenceAmongTheSameNeighbours()
+    {
+        // Luke 13:4: Scrivener prints δέκα καὶ ὀκτώ where Westcott-Hort prints δεκαοκτώ, so by order Westcott-Hort's only
+        // καί took the καί of the numeral.
+        var drafts = new List<GreekWitnessLinks.GreekDraft>();
+        GreekWitnessLinks.Pair(
+            Words(0, "ἢ G2228", "ἐκεῖνοι G1565", "οἱ G3588", "δεκαοκτὼ G1176", "ἐφ G1909", "οὓς G3739", "ἔπεσεν G4098",
+                "ὁ G3588", "πύργος G4444", "ἐν G1722", "τῷ G3588", "Σιλωὰμ G4611", "καὶ G2532", "ἀπέκτεινεν G615",
+                "αὐτούς G846"),
+            Words(100, "η G2228", "εκεινοι G1565", "οι G3588", "δεκα G1176", "και G2532", "οκτω G3638", "εφ G1909",
+                "ους G3739", "επεσεν G4098", "ο G3588", "πυργος G4444", "εν G1722", "τω G3588", "σιλωαμ G4611", "και G2532",
+                "απεκτεινεν G615", "αυτους G846"),
+            drafts, ShippedStrongNumbers.Lists);
+
+        drafts.Should().ContainSingle(d => d.From.Contains(13)).Which.To.Should().Equal(115);
+        drafts.Should().ContainSingle(d => d.To.Contains(105)).Which.Relation.Should().Be(LinkRelation.Omits);
+    }
+
+    [Fact]
+    public void LeftoversOfDifferentPartsOfSpeechAreNotOneReading()
+    {
+        // 2 Pet 2:17: Westcott-Hort's καὶ ὁμίχλαι where Scrivener has νεφέλαι; δέ against γάρ is one reading.
+        var drafts = new List<GreekWitnessLinks.GreekDraft>();
+        GreekWitnessLinks.Pair(
+            [new(1, 1, "δὲ", "G1161", """{"robinson": "CONJ"}"""), new(2, 5, "καὶ", "G2532", """{"robinson": "CONJ"}""")],
+            [new(101, 1, "γαρ", "G1063", """{"robinson": "CONJ"}"""), new(102, 5, "νεφελαι", "G3507", """{"robinson": "N-NPF"}""")],
+            drafts, ShippedStrongNumbers.Lists);
+
+        drafts.Should().ContainSingle(d => d.Method == LinkMethod.Lexical)
+            .Which.Should().Match<GreekWitnessLinks.GreekDraft>(d => d.From.Single() == 1 && d.To.Single() == 101);
+        drafts.Should().Contain(d => d.Relation == LinkRelation.Expands && d.From.Single() == 2);
+        drafts.Should().Contain(d => d.Relation == LinkRelation.Omits && d.To.Single() == 102);
+    }
+
+    private static List<GreekWitnessLinks.GreekWord> Words(long first, params string[] words) =>
+        [.. words.Select((word, at) => word.Split(' ') is [var surface, var strong]
+            ? new GreekWitnessLinks.GreekWord(first + at + 1, at + 1, surface, strong)
+            : throw new ArgumentException(word))];
 }

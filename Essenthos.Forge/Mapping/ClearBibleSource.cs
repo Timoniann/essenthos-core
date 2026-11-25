@@ -61,7 +61,7 @@ internal sealed class ClearBibleSource : IPairSource
         [
             .. new[] { set.Alignment, set.Target, set.Source }.Where(path => path.Length > 0).Select(Relative),
             ClearBibleSet.File,
-            .. set.Shift is not null || set.Early is not null ? [SourceWords.Source] : Array.Empty<string>(),
+            .. set.Shift is not null || set.Early is not null || set.Function is not null ? [SourceWords.Source] : Array.Empty<string>(),
             .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(),
             StrongNumberLists.Source,
             .. set.Edited ? ProductText.Products(Sources.ScrivenerSlug).Select(store.Find).OfType<string>() : [],
@@ -105,7 +105,7 @@ internal sealed class ClearBibleSource : IPairSource
             + $"{joined.Stray} possessives taken off a word they do not render ({joined.StrayRecords} records left with no word), "
             + $"{joined.Misnumbered} misnumbered, {joined.Renumbered} renumbered and {joined.Unplaced} placed on nothing over "
             + $"{joined.Edited} verses numbered over an edited source ({joined.Crossed} identifiers crossed), "
-            + $"{joined.Overruled} overruled ({joined.Trimmed} trimmed); {joined.Placed}");
+            + $"{joined.Overruled} overruled ({joined.Trimmed} trimmed), {joined.Scrambled} refused in verses numbered off as a block; {joined.Placed}");
 
         var rows = new Dictionary<string, MappingRow>(StringComparer.Ordinal);
         foreach (var draft in joined.Drafts)

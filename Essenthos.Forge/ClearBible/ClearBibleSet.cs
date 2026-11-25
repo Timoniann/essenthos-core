@@ -102,6 +102,10 @@ internal enum ClearBibleNumbering
 /// The translation's possessive determiners, where the set puts one on another word of the verse than the one whose
 /// suffix or genitive it renders; null where it does not. See <see cref="Loading.Links.ClearBibleLinks.Stray"/>.
 /// </param>
+/// <param name="Function">
+/// The translation's function words, where the set's records are numbered off as a block in some verses, a noun or verb
+/// named on such a word; null where they are not. See <see cref="Loading.Links.ClearBibleLinks.Scrambled"/>.
+/// </param>
 /// <summary>
 /// One of Clear Bible's alignments, and everything about it that differs from the others, as <c>sources/clear-bible.tsv</c>
 /// declares it (the reasons for each set are in that file).
@@ -124,7 +128,8 @@ internal sealed record ClearBibleSet(
     ClearBibleNumbering Numbering = ClearBibleNumbering.TokenFile,
     IReadOnlySet<string>? Early = null,
     bool Edited = false,
-    IReadOnlySet<string>? Possessive = null)
+    IReadOnlySet<string>? Possessive = null,
+    IReadOnlySet<string>? Function = null)
 {
     public const string Product = "sources/clear-bible";
 
@@ -164,7 +169,8 @@ internal sealed record ClearBibleSet(
                 : new ClearBibleShift(Words(row.And)!, Words(row.Also)!.Select(number => int.Parse(number.AsSpan(1), CultureInfo.InvariantCulture)).ToHashSet());
             var set = new ClearBibleSet(
                 row.From, row.To, row.Alignment, row.Target ?? string.Empty, row.Source, Parse<ClearBibleJoin>(row.Join, row), row.Statement, shift,
-                Parse<ClearBibleNumbering>(row.Numbering, row), Words(row.Early), row.Edited, Words(row.Possessive));
+                Parse<ClearBibleNumbering>(row.Numbering, row), Words(row.Early), row.Edited, Words(row.Possessive),
+                Words(row.Function));
             if (sets.Any(other => other.Pair == set.Pair))
             {
                 throw new InvalidDataException($"{File}: {set.Pair} is declared twice.");
@@ -197,6 +203,7 @@ internal sealed record ClearBibleSetRow(
     string? Also,
     string? Early,
     string? Possessive,
+    string? Function,
     string Statement,
     string Reason)
 {
@@ -213,10 +220,11 @@ internal sealed record ClearBibleSetRow(
         .OptionalText("also", r => r.Also)
         .OptionalText("early", r => r.Early)
         .OptionalText("possessive", r => r.Possessive)
+        .OptionalText("function", r => r.Function)
         .Text("statement", r => r.Statement)
         .Text("reason", r => r.Reason)
         .Reads(row => new ClearBibleSetRow(row.Text(0), row.Text(1), row.Text(2), row.TextOrNull(3), row.Text(4), row.Text(5), row.Text(6),
-            row.Boolean(7), row.TextOrNull(8), row.TextOrNull(9), row.TextOrNull(10), row.TextOrNull(11), row.Text(12), row.Text(13)));
+            row.Boolean(7), row.TextOrNull(8), row.TextOrNull(9), row.TextOrNull(10), row.TextOrNull(11), row.TextOrNull(12), row.Text(13), row.Text(14)));
 }
 
 /// <param name="And">The translation's word for <em>and</em>, in lower case.</param>

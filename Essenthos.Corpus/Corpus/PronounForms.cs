@@ -107,6 +107,21 @@ internal static class PronounForms
         return Forms.TryGetValue((language, Letters(form)), out var agreement) ? agreement : null;
     }
 
+    /// <summary>
+    /// Whether the form can only be a verb's subject in the first or third person (<em>he</em>, <em>they</em>), so it renders
+    /// no verb's object suffix: the King James "he" of "he brought him" is not the one the suffix names. The second person is
+    /// left out: <em>thou</em> is the one spoken to, whom the suffix names as often (Hos 13:9 "thou hast destroyed thyself").
+    /// Only English is told here.
+    /// </summary>
+    public static bool OnlySubject(string language, string form) =>
+        language == English && Letters(form) is "i" or "he" or "she" or "we" or "they";
+
+    /// <summary>A form of English <em>be</em>: a verb rendered by it is turned to the passive, whose subject is the active's object.</summary>
+    public static bool Be(string form) =>
+        Letters(form) is "be" or "am" or "is" or "are" or "art" or "was" or "wast" or "were" or "wert" or "been" or "being";
+
+    private const string English = "eng";
+
     private static string Letters(string form) => string.Concat(form.Where(char.IsLetter)).ToLowerInvariant();
 
     private static Dictionary<(string, string), Agreement> Build()
