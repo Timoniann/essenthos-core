@@ -229,7 +229,8 @@
   },
   "chapter": {
     "description": "{{reference}}, {{text}}: {{opening}} {{beside}}",
-    "plain": "{{reference}}. {{beside}}"
+    "plain": "{{reference}}. {{beside}}",
+    "psalm": "Псалом {{number}}"
   },
   "verse": {
     "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
@@ -542,6 +543,19 @@
     "together": "Разом",
     "alignedTo": "Вирівняно за текстом «{{name}}»",
     "base": "основа",
-    "notPresentAt": "У тексті «{{corpus}}» немає вірша {{verse}}"
+    "notPresentAt": "У тексті «{{corpus}}» немає вірша {{verse}}",
+    "otherNumbering": {
+      "this_greek": "У церковній нумерації (Септуагінта, Вульгата, слов'янська) це {{reference}}.",
+      "this_hebrewPsalms": "У єврейській нумерації, за якою йде більшість сучасних перекладів, це {{reference}}.",
+      "this_english": "В англійській нумерації це {{reference}}.",
+      "this_hebrew": "У єврейській нумерації це {{reference}}.",
+      "sought_greek": "Шукаєте церковний {{reference}}?",
+      "sought_hebrewPsalms": "Шукаєте {{reference}} за єврейською нумерацією?",
+      "sought_english": "Шукаєте {{reference}} за англійською нумерацією?",
+      "sought_hebrew": "Шукаєте {{reference}} за єврейською нумерацією?",
+      "psalm": "псалом {{number}}",
+      "psalms": "псалми {{number}}",
+      "psalmTitle": "Псалом {{number}}"
+    }
   }
 }

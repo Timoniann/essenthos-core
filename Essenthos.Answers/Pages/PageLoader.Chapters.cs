@@ -48,10 +48,12 @@ internal sealed partial class PageLoader
         return books;
     }
 
-    private async Task<PageContent?> Chapter(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    private async Task<PageContent?> Chapter(PageAddress asked, PageWording wording, CancellationToken cancellationToken)
     {
+        var numbered = await InFrame(asked, cancellationToken);
+        var address = numbered.Address;
         var chapterCount = await canon.ChapterCount(address.Book, cancellationToken);
-        if (address.Chapter > chapterCount)
+        if (address.Chapter < 1 || address.Chapter > chapterCount)
         {
             return null;
         }
@@ -60,7 +62,7 @@ internal sealed partial class PageLoader
         var named = await NamedTexts(address, cancellationToken);
         if (await SideBySide(address, named, wording, cancellationToken) is { } sides)
         {
-            return PageViews.Chapter(language, wording, new ChapterView(
+            return PageViews.Chapter(language, wording, await Numbered(new ChapterView(
                 address.Book,
                 await BookName(language, wording, address.Book, cancellationToken),
                 address.Chapter,
@@ -70,9 +72,9 @@ internal sealed partial class PageLoader
             {
                 TextLanguage = sides[0].Column.Language,
                 Columns = [.. sides.Select(side => side.Column)],
-            }) with
+            }, numbered, wording, cancellationToken)) with
             {
-                Data = Carried(address, sides),
+                Data = PageData.Of(CarriedAnswers(address, sides).Concat(numbered.Carried)),
             };
         }
 
@@ -86,17 +88,19 @@ internal sealed partial class PageLoader
             var verses = taken?.Plain ?? await WordTableVerses(text.Id, address.Book, address.Chapter, cancellationToken);
             if (verses.Count > 0)
             {
-                return PageViews.Chapter(language, wording, new ChapterView(
+                IEnumerable<(string, string)> carried = pane is null
+                    ? []
+                    : [(PageData.PaneAddress(text.Slug, BookReferences.Slug(address.Book), address.Chapter), PageData.Written(pane))];
+                return PageViews.Chapter(language, wording, await Numbered(new ChapterView(
                     address.Book,
                     await BookName(language, wording, address.Book, cancellationToken),
                     address.Chapter,
                     chapterCount,
                     verses,
-                    TextName(wording, text)) { TextLanguage = StructuredData.LanguageTag(text.Language) }) with
+                    TextName(wording, text)) { TextLanguage = StructuredData.LanguageTag(text.Language) },
+                    numbered, wording, cancellationToken)) with
                 {
-                    Data = pane is null
-                        ? null
-                        : PageData.Of([(PageData.PaneAddress(text.Slug, BookReferences.Slug(address.Book), address.Chapter), PageData.Written(pane))]),
+                    Data = PageData.Of(carried.Concat(numbered.Carried)),
                 };
             }
         }
@@ -104,10 +108,12 @@ internal sealed partial class PageLoader
         return null;
     }
 
-    private async Task<PageContent?> Verse(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    private async Task<PageContent?> Verse(PageAddress asked, PageWording wording, CancellationToken cancellationToken)
     {
+        var numbered = await InFrame(asked, cancellationToken);
+        var address = numbered.Address;
         var chapterCount = await canon.ChapterCount(address.Book, cancellationToken);
-        if (address.Chapter > chapterCount)
+        if (address.Chapter < 1 || address.Chapter > chapterCount)
         {
             return null;
         }
@@ -130,9 +136,14 @@ internal sealed partial class PageLoader
                 TextLanguage = sides[0].Column.Language,
                 Original = await OriginalVerse(address, wording, cancellationToken),
                 Columns = [.. sides.Select(side => side.Column)],
+                AddressPath = numbered.AddressPath,
+                Heading = numbered.Heading(address.Chapter),
+                Asked = numbered.InTextNumbering && (asked.Chapter, asked.Verse) != (address.Chapter, address.Verse)
+                    ? (asked.Chapter, asked.Verse)
+                    : null,
             }) with
             {
-                Data = Carried(address, sides),
+                Data = PageData.Of(CarriedAnswers(address, sides).Concat(numbered.Carried)),
             };
         }
 
@@ -161,6 +172,11 @@ internal sealed partial class PageLoader
                 ChapterCount = chapterCount,
                 TextLanguage = StructuredData.LanguageTag(text.Language),
                 Original = await OriginalVerse(address, wording, cancellationToken),
+                AddressPath = numbered.AddressPath,
+                Heading = numbered.Heading(address.Chapter),
+                Asked = numbered.InTextNumbering && (asked.Chapter, asked.Verse) != (address.Chapter, address.Verse)
+                    ? (asked.Chapter, asked.Verse)
+                    : null,
             });
         }
 
@@ -489,9 +505,126 @@ internal sealed partial class PageLoader
     }
 
     /// <summary>Every named text's pane, as the reader's script asks for each, so none is downloaded again.</summary>
-    private static byte[]? Carried(PageAddress address, IReadOnlyList<Side> sides) =>
-        PageData.Of(sides.Select(side =>
-            (PageData.PaneAddress(side.Text.Slug, BookReferences.Slug(address.Book), address.Chapter), PageData.Written(side.Pane))));
+    private static IEnumerable<(string, string)> CarriedAnswers(PageAddress address, IReadOnlyList<Side> sides) =>
+        sides.Select(side =>
+            (PageData.PaneAddress(side.Text.Slug, BookReferences.Slug(address.Book), address.Chapter), PageData.Written(side.Pane)));
+
+    /// <summary>
+    /// An address in the frame, and how the first text it names numbers the book: an address names its chapter and
+    /// verse in that text's numbering, and one that names no text in the frame's.
+    /// </summary>
+    /// <param name="Address">The address in the frame.</param>
+    /// <param name="Addresses">The first text's numbering of the book; empty where the address names no text the corpus holds.</param>
+    /// <param name="AddressPath">The chapter's address as asked, where it names the chapter in the first text's numbering.</param>
+    /// <param name="Carried">The numbering as the reader's script asks for it, which the page carries.</param>
+    private sealed record NumberedAddress(
+        PageAddress Address,
+        IReadOnlyList<NumberedAddressResponse> Addresses,
+        bool InTextNumbering,
+        string? AddressPath,
+        IReadOnlyList<(string, string)> Carried)
+    {
+        /// <summary>The chapter as the first text numbers it, where that is not the frame's number.</summary>
+        public string? Heading(int frameChapter)
+        {
+            if (!InTextNumbering)
+            {
+                return null;
+            }
+
+            var label = ChapterNumbering.Label(ChapterNumbering.OwnChapters(Addresses, frameChapter));
+            return label == frameChapter.ToString(System.Globalization.CultureInfo.InvariantCulture) ? null : label;
+        }
+    }
+
+    private async Task<NumberedAddress> InFrame(PageAddress address, CancellationToken cancellationToken)
+    {
+        if (address.Texts.Count == 0 || await canon.Text(address.Texts[0], cancellationToken) is not { } first)
+        {
+            return new NumberedAddress(address, [], false, null, []);
+        }
+
+        var addresses = await TextNumbering.Of(db, first.Id, address.Book, cancellationToken);
+        var (chapter, verse) = ChapterNumbering.InFrame(addresses, address.Chapter, address.Verse > 0 ? address.Verse : null);
+        var framed = address with { Chapter = chapter, Verse = address.Verse > 0 ? verse ?? address.Verse : address.Verse };
+        var book = BookReferences.Slug(address.Book);
+        var answer = new TextNumberingResponse(first.Slug, ReadEndpoints.BookReference(address.Book), addresses);
+        return new NumberedAddress(
+            framed,
+            addresses,
+            true,
+            chapter == address.Chapter ? null : PageAddress.ChapterPath(address.Book, address.Chapter),
+            [(PageData.NumberingAddress(address.Texts[0], book), PageData.Json(answer))]);
+    }
+
+    /// <summary>
+    /// The chapter headed as its first text numbers it, and named in the other numbering tradition where that numbers
+    /// it otherwise: a psalm's title carries both its numbers, and the line under its heading leads to the chapter the
+    /// other tradition gives this number, as the reader's own line does.
+    /// </summary>
+    private async Task<ChapterView> Numbered(
+        ChapterView view, NumberedAddress numbered, PageWording t, CancellationToken cancellationToken)
+    {
+        var slug = BookReferences.Slug(view.Book);
+        var lead = numbered.InTextNumbering
+            ? ChapterNumbering.OwnChapters(numbered.Addresses, view.Chapter)
+            : [view.Chapter];
+        var heading = ChapterNumbering.Label(lead);
+        var renumbered = heading != view.Chapter.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        var reference = renumbered ? null : await TraditionNumbering(slug, view.Book, cancellationToken);
+        var other = ChapterNumbering.OtherOf(slug, view.Chapter, view.ChapterCount, lead, reference);
+        var psalms = slug == "psalms";
+        string Named(string label) => psalms
+            ? t.Text(label.Contains('–') ? "reading.otherNumbering.psalms" : "reading.otherNumbering.psalm", ("number", label))
+            : $"{view.BookName} {label}";
+
+        OtherNumberingLine? line = null;
+        if (other is not null)
+        {
+            var sentence = other.Label is { } said
+                ? t.Text($"reading.otherNumbering.this_{other.Tradition}", ("reference", Named(said)))
+                : null;
+            (string, string, string)? sought = null;
+            if (other.Sought is { } wanted)
+            {
+                var (chapter, verse) = ChapterNumbering.Own(numbered.Addresses, wanted.FrameChapter, wanted.FrameVerse);
+                var number = verse is { } v
+                    ? t.Text("chapterVerse", ("chapter", chapter.ToString()), ("verse", v.ToString()))
+                    : chapter.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                var path = PageAddress.ChapterPath(view.Book, chapter) + (verse is { } at ? $"/{at}" : "")
+                           + (numbered.InTextNumbering ? $"?c={string.Join(',', numbered.Address.Texts.Select(Uri.EscapeDataString))}" : "");
+                sought = (
+                    t.Text($"reading.otherNumbering.sought_{other.Tradition}", ("reference", Named(wanted.Chapter.ToString()))),
+                    psalms ? t.Text("reading.otherNumbering.psalmTitle", ("number", number)) : $"{view.BookName} {number}",
+                    path);
+            }
+
+            line = new OtherNumberingLine(sentence, sought);
+        }
+
+        return view with
+        {
+            AddressPath = numbered.AddressPath,
+            Heading = renumbered ? heading : null,
+            OtherNumber = psalms ? other?.Label : null,
+            Other = line,
+        };
+    }
+
+    /// <summary>How the text the book's other numbering tradition is read from numbers it; null where the corpus holds none.</summary>
+    private async Task<IReadOnlyList<NumberedAddressResponse>?> TraditionNumbering(
+        string slug, int book, CancellationToken cancellationToken)
+    {
+        foreach (var name in NumberingTraditions.Texts(slug))
+        {
+            if (await canon.Text(name, cancellationToken) is { } entry)
+            {
+                return await TextNumbering.Of(db, entry.Id, book, cancellationToken);
+            }
+        }
+
+        return null;
+    }
 
     /// <summary>One named text's side of a chapter: its pane as stored, the column it draws, and its verses as plain text.</summary>
     private sealed record Side(ReaderText Text, byte[] Pane, ReadingColumn Column, IReadOnlyList<(int Number, string Text)> Verses);

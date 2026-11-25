@@ -229,7 +229,8 @@
   },
   "chapter": {
     "description": "{{reference}}, {{text}}: {{opening}} {{beside}}",
-    "plain": "{{reference}}. {{beside}}"
+    "plain": "{{reference}}. {{beside}}",
+    "psalm": "Psalm {{number}}"
   },
   "verse": {
     "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
@@ -536,6 +537,19 @@
     "together": "Together",
     "alignedTo": "Aligned to {{name}}",
     "base": "base",
-    "notPresentAt": "Not present in {{corpus}} at verse {{verse}}"
+    "notPresentAt": "Not present in {{corpus}} at verse {{verse}}",
+    "otherNumbering": {
+      "this_greek": "In the church's numbering (Septuagint, Vulgate, Slavonic) this is {{reference}}.",
+      "this_hebrewPsalms": "In the Hebrew numbering, which most modern translations follow, this is {{reference}}.",
+      "this_english": "In the English numbering this is {{reference}}.",
+      "this_hebrew": "In the Hebrew numbering this is {{reference}}.",
+      "sought_greek": "Looking for {{reference}} as the church numbers it?",
+      "sought_hebrewPsalms": "Looking for {{reference}} as the Hebrew numbers it?",
+      "sought_english": "Looking for {{reference}} as English Bibles number it?",
+      "sought_hebrew": "Looking for {{reference}} as the Hebrew numbers it?",
+      "psalm": "Psalm {{number}}",
+      "psalms": "Psalms {{number}}",
+      "psalmTitle": "Psalm {{number}}"
+    }
   }
 }

@@ -437,6 +437,6 @@ internal static class ReadEndpoints
         [.. canon.Sections.Select(section =>
             new CanonSectionResponse(section.Slug, section.Name, section.Ordinals.Count))]);
 
-    private static BookRefResponse BookReference(int ordinal) =>
+    internal static BookRefResponse BookReference(int ordinal) =>
         new(ordinal, BookReferences.Name(ordinal), BookReferences.Slug(ordinal));
 }

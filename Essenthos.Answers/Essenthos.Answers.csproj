@@ -29,6 +29,7 @@
         <!-- The passages that tell what happened where, which decide a record's story places (TSK-1235). -->
         <EmbeddedResource Include="Endpoints\NarrativePassages.tsv" LogicalName="NarrativePassages.tsv" />
         <EmbeddedResource Include="Pages\MovedChapters.tsv" LogicalName="MovedChapters.tsv" />
+        <EmbeddedResource Include="Pages\NumberingTraditions.tsv" LogicalName="NumberingTraditions.tsv" />
     </ItemGroup>
 
     <ItemGroup>
