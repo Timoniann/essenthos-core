@@ -1,0 +1,5 @@
+# product    Essenthos/mapping/LUTH1912-NESTLE1904/floors.tsv
+# producer   by hand
+# Floors this pair is held to by hand (PRB-1607, PRB-1957, NOT-0228). compose takes a combination's floor before anything it measures or borrows; the merge refuses the composed rows under it, and the aligner rows under the line "aligner" (the pair's own model), before the competition (status refused-by floor). readings: the combination as a composed source names it after "aligned", or aligner. from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right (for a refused line, all of them read), bands weighted by rows. "every other combination": refused, or "as measured" to leave the combinations no line names to the composition's own floors until the pair is read.
+readings	from	right	scored	basis
+every other combination	as measured			not read by hand yet: a combination no line names stands on the floor the composition measures on statements or borrows from proxies, except what only the middle texts found (refused); kept so until the owner answers PRB-1957 question 1 or the pair is read (PRB-2039)
