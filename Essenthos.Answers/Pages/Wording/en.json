@@ -5,19 +5,106 @@
     "title": "Essenthos — the Bible beside its Hebrew and Greek, word by word",
     "description": "Read the Bible beside the Hebrew and Greek it was translated from, word by word, with Strong's Dictionary, an encyclopedia of people and places, a timeline and a map.",
     "about": {
-      "what": {
+      "site": {
         "heading": "What Essenthos is",
-        "text": "Essenthos is a free, non-commercial place to study the Bible. Each word of a translation is linked to the Hebrew or Greek word it renders, so a reader can see which word stands behind which, what it means and how other translations render it. The site is in English, Ukrainian, German and Spanish, and reading needs no account."
+        "points": {
+          "resource": {
+            "title": "A resource for studying the Bible",
+            "text": "Essenthos is a free, non-commercial project for studying and researching the Bible. It sets translations beside the Hebrew and Greek texts they were made from, links their words, and describes the people, places and things the text names."
+          },
+          "languages": {
+            "title": "Four interface languages",
+            "text": "The interface is available in four languages: English, Ukrainian, German and Spanish. The texts are a separate matter: more than 60 texts in more than 30 languages, ancient and modern."
+          },
+          "account": {
+            "title": "No account needed",
+            "text": "Reading, the dictionaries, the encyclopedia, the timeline, the map and the API work without signing in. An account, through Google or GitHub, adds bookmarks on verses, your reading place across devices, favourite texts, saved column sets and suggestions to the project."
+          }
+        }
       },
-      "here": {
-        "heading": "What is here",
-        "text": "The reader shows any chapter in one or more texts side by side. More than 60 texts stand in one model: the Hebrew Bible, the Septuagint and the Greek New Testament in several editions, beside translations such as the King James Version, Ohienko's Ukrainian Bible, Luther 1912 and Reina-Valera 1909. Point at a word and its original lights up.",
-        "more": "Strong's Dictionary gives every Hebrew and Greek word with its senses and the ways the translations render it. The encyclopedia has a page for each person, place, people and thing the text names: family, roles, where a place lies, and every verse that names them. A timeline, a map, a family tree and a concordance go with them, and all the data is open through a free API."
+      "reading": {
+        "heading": "Reading the text",
+        "points": {
+          "parallel": {
+            "title": "Texts in parallel columns",
+            "text": "A chapter opens in one text or in several at once. Each text is a column and the verses stand row by row, so one verse can be read across, say, the King James Version, the Hebrew of the BHSA and Ohienko's Ukrainian translation. Two texts can also be compared word by word."
+          },
+          "links": {
+            "title": "Words linked to the original",
+            "text": "In the word-mapped translations, most words are linked to the Hebrew or Greek words they render, directly or through another text, and to the words of other translations. Point at a word and its counterparts light up in every column; click it for the original word, its form, its meaning and every verse where it stands. For each text, the reader shows how many of a chapter's words are linked."
+          },
+          "names": {
+            "title": "Names that open a record",
+            "text": "When the text names a person, place, people, object, feast or other notable thing that has a record, the word is underlined. Pointing at it shows a short card; clicking it opens the record."
+          },
+          "context": {
+            "title": "Chapter Context",
+            "text": "Beside each chapter, the Chapter Context gathers its people, places and peoples, its events with their years, and a map of its places; where they apply, also measures and money, commandments, topics from Nave's Topical Bible, and 3D models."
+          }
+        }
       },
-      "links": {
+      "reference": {
+        "heading": "Reference works",
+        "points": {
+          "dictionaries": {
+            "title": "Dictionaries",
+            "text": "Strong's Dictionary covers every Hebrew and Greek Strong's number, with how the translations render each word and every verse that uses it. Beside it stand Brown-Driver-Briggs (BDB) for Hebrew and Thayer, Abbott-Smith and Liddell-Scott-Jones (LSJ) for Greek, wherever they have an article on the number."
+          },
+          "encyclopedia": {
+            "title": "Encyclopedia",
+            "text": "The encyclopedia has a record for each person, place, people, object, feast, title, god or creature, and word for God that the text names: more than 3,000 people, 1,400 places and 240 peoples. A record gives the name in the originals, what the text says, relatives and roles, events, where a place lies, and every verse that names it."
+          },
+          "family": {
+            "title": "Family tree",
+            "text": "From any person, the family tree shows the recorded relatives: parents, grandparents, brothers and sisters, spouses and children, and further out great-grandparents, grandchildren, uncles, aunts and cousins. Where the text gives another father, or kinship by law, the tree says so."
+          },
+          "timeline": {
+            "title": "Events and timeline",
+            "text": "Every dated event is listed in order, with its verses, people and places and the arithmetic behind its year. The timeline draws them with eras, reigns and lives on one axis, Scripture beside world history, in the reckoning you choose: Ussher's, the rabbinic Seder Olam or three others. The kings of Israel and Judah, with their prophets, have a page of their own."
+          },
+          "map": {
+            "title": "Map",
+            "text": "Every place the text names whose site can be located is on the map, with how sure that location is and the verses that name it. The map can be narrowed by testament, period and book, and each place opens its record."
+          },
+          "concordance": {
+            "title": "Concordance",
+            "text": "The concordance starts from a word of a translation and shows which Hebrew and Greek words it stands for, how often each, and where. It is built from the word links, so it covers only the words that are linked."
+          }
+        }
+      },
+      "method": {
         "heading": "How the links are made and checked",
-        "text": "Every link between two words records what established it: a source that states it, a check by hand, or a method that worked it out, such as a shared Strong's number or an aligner. A link that was worked out carries an estimate of how sure it is, and it is never shown as one a source states. Where a second source linked the same word, the reader shows how often the two agree.",
-        "more": "Every claim on a page can be checked against the verses it comes from, and where something is not known, the page says so. Where each text and dataset comes from, and under which licence, is on Sources and licences."
+        "points": {
+          "basis": {
+            "title": "Every link says what made it",
+            "text": "Each link between two words records what established it: a source that states it, a person who checked it by hand, or a method that worked it out, such as a shared Strong's number, an automatic aligner or explicit rules."
+          },
+          "estimates": {
+            "title": "Worked out is never shown as stated",
+            "text": "A link that was worked out carries an estimate of how sure it is and is never shown as one a source states. Under each word the reader says what linked it and how sure an estimate is; where two links reach one word, the stated one is shown."
+          },
+          "agreement": {
+            "title": "Sources checked against each other",
+            "text": "Where a second source linked the same word, the reader shows how often the two agree. For each text it also gives how many of its links to the original were checked by hand."
+          },
+          "verses": {
+            "title": "Every claim can be checked",
+            "text": "What a record or an event page says points to the verses it comes from, and where something is not known, the page says so."
+          }
+        }
+      },
+      "open": {
+        "heading": "Open data",
+        "points": {
+          "api": {
+            "title": "Open API",
+            "text": "Everything the site shows comes from a public API: JSON over HTTP, free, with no key and no account. Only account data such as bookmarks is private, and requests are limited per address to keep the service fair."
+          },
+          "sources": {
+            "title": "Sources and licences",
+            "text": "Where each text and dataset comes from, who made it and its licence are listed on Sources and licences; what may be reused is on the Licence page."
+          }
+        }
       }
     }
   },

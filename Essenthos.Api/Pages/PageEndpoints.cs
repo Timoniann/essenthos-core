@@ -176,11 +176,12 @@ internal static class PageEndpoints
     /// <summary>
     /// Everything public is open; a reader's own pages and a search somebody typed are not. The API
     /// itself stays open, because a search engine that runs the page's script fetches the page's
-    /// data from it — all but <c>/v1/me</c>, which is somebody's account.
+    /// data from it — all but <c>/v1/me</c>, which is somebody's account. Its content signals allow
+    /// search and use as input to an answer, and say nothing about training.
     /// </summary>
     public static string Robots(string origin)
     {
-        var robots = new StringBuilder("User-agent: *\nAllow: /\nDisallow: /v1/me\nDisallow: /count\n");
+        var robots = new StringBuilder("User-agent: *\nContent-Signal: search=yes, ai-input=yes\nAllow: /\nDisallow: /v1/me\nDisallow: /count\n");
         foreach (var language in SiteLanguage.All)
         {
             foreach (var page in Private)

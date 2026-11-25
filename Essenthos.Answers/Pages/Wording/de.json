@@ -5,19 +5,106 @@
     "title": "Essenthos — die Bibel neben dem hebräischen und griechischen Urtext, Wort für Wort",
     "description": "Lesen Sie die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort — mit dem Strong-Wörterbuch, einer Enzyklopädie der Personen und Orte, Zeitleiste und Karte.",
     "about": {
-      "what": {
+      "site": {
         "heading": "Was Essenthos ist",
-        "text": "Essenthos ist ein kostenloses, nichtkommerzielles Projekt zum Studium der Bibel. Jedes Wort einer Übersetzung ist mit dem hebräischen oder griechischen Wort verknüpft, das es wiedergibt. So ist zu sehen, welches Wort hinter welchem steht, was es bedeutet und wie andere Übersetzungen es wiedergeben. Die Seite gibt es auf Deutsch, Englisch, Ukrainisch und Spanisch, und zum Lesen braucht man kein Konto."
+        "points": {
+          "resource": {
+            "title": "Eine Ressource zum Studium der Bibel",
+            "text": "Essenthos ist ein kostenloses, nichtkommerzielles Projekt zum Studium und zur Erforschung der Bibel. Es stellt Übersetzungen neben die hebräischen und griechischen Texte, aus denen sie übersetzt wurden, verknüpft ihre Wörter und beschreibt die Personen, Orte und Dinge, die der Text nennt."
+          },
+          "languages": {
+            "title": "Vier Sprachen der Oberfläche",
+            "text": "Die Oberfläche gibt es in vier Sprachen: Deutsch, Englisch, Ukrainisch und Spanisch. Die Texte sind etwas anderes: mehr als 60 Texte in mehr als 30 Sprachen, alten und heutigen."
+          },
+          "account": {
+            "title": "Kein Konto nötig",
+            "text": "Lesen, die Wörterbücher, die Enzyklopädie, die Zeitleiste, die Karte und die API funktionieren ohne Anmeldung. Ein Konto über Google oder GitHub fügt Vers-Lesezeichen, Ihre Lesestelle auf allen Geräten, bevorzugte Texte, gespeicherte Spaltensätze und Vorschläge an das Projekt hinzu."
+          }
+        }
       },
-      "here": {
-        "heading": "Was es hier gibt",
-        "text": "Die Leseansicht zeigt jedes Kapitel in einem oder mehreren Texten nebeneinander. Mehr als 60 Texte stehen in einem Modell: die hebräische Bibel, die Septuaginta und das griechische Neue Testament in mehreren Ausgaben, neben Übersetzungen wie Luther 1912, der King-James-Bibel, der ukrainischen Bibel von Ohijenko und Reina-Valera 1909. Zeigen Sie auf ein Wort, und sein Original leuchtet auf.",
-        "more": "Das Strong-Wörterbuch führt jedes hebräische und griechische Wort mit seinen Bedeutungen auf und zeigt, wie die Übersetzungen es wiedergeben. Die Enzyklopädie hat eine Seite für jede Person, jeden Ort, jedes Volk und jede Sache, die der Text nennt: Familie, Rollen, wo ein Ort liegt, und jeder Vers, der sie nennt. Dazu kommen Zeitleiste, Karte, Stammbaum und Konkordanz, und alle Daten sind über eine kostenlose API offen zugänglich."
+      "reading": {
+        "heading": "Den Text lesen",
+        "points": {
+          "parallel": {
+            "title": "Texte in parallelen Spalten",
+            "text": "Ein Kapitel öffnet sich in einem Text oder in mehreren zugleich. Jeder Text ist eine Spalte, und die Verse stehen Zeile für Zeile, sodass ein Vers etwa in Luther 1912, im Hebräischen der BHSA und in der King-James-Bibel nebeneinander zu lesen ist. Zwei Texte lassen sich auch Wort für Wort vergleichen."
+          },
+          "links": {
+            "title": "Wörter mit dem Urtext verknüpft",
+            "text": "In den wortverknüpften Übersetzungen sind die meisten Wörter mit den hebräischen oder griechischen Wörtern verknüpft, die sie wiedergeben, direkt oder über einen anderen Text, und mit den Wörtern anderer Übersetzungen. Zeigen Sie auf ein Wort, und seine Entsprechungen leuchten in jeder Spalte auf; ein Klick zeigt das Wort des Urtexts, seine Form, seine Bedeutung und jeden Vers, in dem es steht. Für jeden Text zeigt die Leseansicht, wie viele Wörter eines Kapitels verknüpft sind."
+          },
+          "names": {
+            "title": "Namen, die einen Eintrag öffnen",
+            "text": "Nennt der Text eine Person, einen Ort, ein Volk, einen Gegenstand, ein Fest oder etwas anderes Bemerkenswertes, zu dem es einen Eintrag gibt, ist das Wort unterstrichen. Wer darauf zeigt, sieht eine kurze Karte; ein Klick öffnet den Eintrag."
+          },
+          "context": {
+            "title": "Kapitelkontext",
+            "text": "Neben jedem Kapitel sammelt der Kapitelkontext seine Personen, Orte und Völker, seine Ereignisse mit ihren Jahren und eine Karte seiner Orte; wo es zutrifft, auch Maße und Geld, Gebote, Themen aus Naves Topical Bible und 3D-Modelle."
+          }
+        }
       },
-      "links": {
+      "reference": {
+        "heading": "Nachschlagewerke",
+        "points": {
+          "dictionaries": {
+            "title": "Wörterbücher",
+            "text": "Das Strong-Wörterbuch umfasst jede hebräische und griechische Strong-Nummer, mit den Wiedergaben in den Übersetzungen und jedem Vers, der das Wort verwendet. Daneben stehen Brown-Driver-Briggs (BDB) für das Hebräische und Thayer, Abbott-Smith und Liddell-Scott-Jones (LSJ) für das Griechische, wo sie einen Artikel zu der Nummer haben."
+          },
+          "encyclopedia": {
+            "title": "Enzyklopädie",
+            "text": "Die Enzyklopädie hat einen Eintrag für jede Person, jeden Ort, jedes Volk, jeden Gegenstand, jedes Fest, jeden Titel, jeden Gott und jedes Wesen und jedes Wort für Gott, das der Text nennt: mehr als 3.000 Personen, 1.400 Orte und 240 Völker. Ein Eintrag gibt den Namen in den Urtexten, was der Text sagt, Verwandte und Rollen, Ereignisse, wo ein Ort liegt, und jeden Vers, der ihn nennt."
+          },
+          "family": {
+            "title": "Stammbaum",
+            "text": "Von jeder Person aus zeigt der Stammbaum die verzeichneten Verwandten: Eltern, Großeltern, Geschwister, Ehepartner und Kinder und weiter Urgroßeltern, Enkel, Onkel, Tanten und Cousins. Wo der Text einen anderen Vater nennt oder eine Verwandtschaft nach dem Gesetz, sagt der Stammbaum es."
+          },
+          "timeline": {
+            "title": "Ereignisse und Zeitleiste",
+            "text": "Jedes datierte Ereignis steht in der Reihenfolge, mit seinen Versen, Personen und Orten und der Rechnung hinter seinem Jahr. Die Zeitleiste zeichnet sie mit Epochen, Regierungszeiten und Lebenszeiten auf einer Achse, die Schrift neben der Weltgeschichte, in der Zeitrechnung Ihrer Wahl: der Ussher’schen, dem rabbinischen Seder Olam oder einer von drei weiteren. Die Könige Israels und Judas haben mit ihren Propheten eine eigene Seite."
+          },
+          "map": {
+            "title": "Karte",
+            "text": "Jeder Ort, den der Text nennt und dessen Lage sich bestimmen lässt, steht auf der Karte, mit der Angabe, wie sicher diese Lage ist, und den Versen, die ihn nennen. Die Karte lässt sich nach Testament, Zeitraum und Buch eingrenzen, und jeder Ort öffnet seinen Eintrag."
+          },
+          "concordance": {
+            "title": "Konkordanz",
+            "text": "Die Konkordanz geht von einem Wort einer Übersetzung aus und zeigt, für welche hebräischen und griechischen Wörter es steht, wie oft jedes und wo. Sie beruht auf den Wortverknüpfungen und erfasst daher nur die verknüpften Wörter."
+          }
+        }
+      },
+      "method": {
         "heading": "Wie die Verknüpfungen entstehen und geprüft werden",
-        "text": "Jede Verknüpfung zwischen zwei Wörtern hält fest, worauf sie beruht: auf einer Quelle, die sie angibt, auf einer Prüfung von Hand oder auf einem Verfahren, das sie erschlossen hat, etwa einer gemeinsamen Strong-Nummer oder einem automatischen Abgleich. Eine erschlossene Verknüpfung trägt eine Schätzung, wie sicher sie ist, und wird nie als eine ausgegeben, die eine Quelle angibt. Wo eine zweite Quelle dasselbe Wort verknüpft hat, zeigt die Leseansicht, wie oft beide übereinstimmen.",
-        "more": "Jede Aussage auf einer Seite lässt sich an den Versen prüfen, aus denen sie stammt, und wo etwas nicht bekannt ist, sagt die Seite es. Woher jeder Text und jeder Datensatz stammt und unter welcher Lizenz, steht unter „Quellen und Lizenzen“."
+        "points": {
+          "basis": {
+            "title": "Jede Verknüpfung sagt, woher sie kommt",
+            "text": "Jede Verknüpfung zwischen zwei Wörtern hält fest, worauf sie beruht: auf einer Quelle, die sie angibt, auf einer Prüfung von Hand oder auf einem Verfahren, das sie erschlossen hat, etwa einer gemeinsamen Strong-Nummer, einem automatischen Abgleich oder ausdrücklichen Regeln."
+          },
+          "estimates": {
+            "title": "Erschlossenes gilt nie als angegeben",
+            "text": "Eine erschlossene Verknüpfung trägt eine Schätzung, wie sicher sie ist, und wird nie als von einer Quelle angegeben gezeigt. Unter jedem Wort steht, wodurch es verknüpft ist und wie sicher eine Schätzung ist; führen zwei Verknüpfungen zu einem Wort, wird die angegebene gezeigt."
+          },
+          "agreement": {
+            "title": "Quellen gegeneinander geprüft",
+            "text": "Wo eine zweite Quelle dasselbe Wort verknüpft hat, zeigt die Leseansicht, wie oft beide übereinstimmen. Für jeden Text gibt sie außerdem an, wie viele seiner Verknüpfungen zum Urtext von Hand geprüft wurden."
+          },
+          "verses": {
+            "title": "Jede Aussage ist prüfbar",
+            "text": "Was ein Eintrag oder eine Ereignisseite sagt, verweist auf die Verse, aus denen es stammt, und wo etwas nicht bekannt ist, sagt die Seite es."
+          }
+        }
+      },
+      "open": {
+        "heading": "Offene Daten",
+        "points": {
+          "api": {
+            "title": "Offene API",
+            "text": "Alles, was die Seite zeigt, kommt aus einer öffentlichen API: JSON über HTTP, kostenlos, ohne Schlüssel und ohne Konto. Privat sind nur Kontodaten wie Lesezeichen, und die Anfragen sind je Adresse begrenzt, damit der Dienst fair bleibt."
+          },
+          "sources": {
+            "title": "Quellen und Lizenzen",
+            "text": "Woher jeder Text und jeder Datensatz stammt, wer ihn erstellt hat und unter welcher Lizenz er steht, steht unter „Quellen und Lizenzen“; was weiterverwendet werden darf, auf der Seite „Lizenz“."
+          }
+        }
       }
     }
   },

@@ -1039,9 +1039,10 @@ internal static partial class PageViews
         foreach (var section in t.Keys("home.about"))
         {
             body.Open("section").Element("h2", t.Text($"home.about.{section}.heading"));
-            foreach (var paragraph in t.Keys($"home.about.{section}").Where(key => key != "heading"))
+            foreach (var point in t.Keys($"home.about.{section}.points"))
             {
-                body.Element("p", t.Text($"home.about.{section}.{paragraph}"));
+                body.Element("h3", t.Text($"home.about.{section}.points.{point}.title"))
+                    .Element("p", t.Text($"home.about.{section}.points.{point}.text"));
             }
 
             body.Close("section");

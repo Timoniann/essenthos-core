@@ -34,32 +34,54 @@ public sealed class HomePageTests(WitnessDatabase database) : IDisposable
     public void Dispose() => Directory.Delete(_folder, recursive: true);
 
     [Theory]
-    [InlineData("en", "What Essenthos is", "What is here", "How the links are made and checked")]
-    [InlineData("uk", "Що таке Essenthos", "Що тут є", "Як створюють і перевіряють зв’язки між словами")]
-    [InlineData("de", "Was Essenthos ist", "Was es hier gibt", "Wie die Verknüpfungen entstehen und geprüft werden")]
-    [InlineData("es", "Qué es Essenthos", "Qué hay aquí", "Cómo se hacen y se comprueban los enlaces")]
-    public void TheHomePageSaysWhatTheSiteIsUnderThreeHeadingsInItsLanguage(string code, string what, string here, string links)
+    [InlineData("en", "What Essenthos is", "Reading the text", "Reference works", "How the links are made and checked", "Open data")]
+    [InlineData("uk", "Що таке Essenthos", "Читання тексту", "Довідкові праці", "Як створюють і перевіряють зв’язки між словами", "Відкриті дані")]
+    [InlineData("de", "Was Essenthos ist", "Den Text lesen", "Nachschlagewerke", "Wie die Verknüpfungen entstehen und geprüft werden", "Offene Daten")]
+    [InlineData("es", "Qué es Essenthos", "Leer el texto", "Obras de consulta", "Cómo se hacen y se comprueban los enlaces", "Datos abiertos")]
+    public void TheHomePageSaysWhatTheSiteIsUnderItsHeadingsInItsLanguage(
+        string code, string site, string reading, string reference, string method, string open)
     {
         var language = SiteLanguage.All.Single(l => l.Code == code);
         var page = PageViews.Home(language, PageWording.Compiled(code), [new BookLink(1, "Genesis")]);
         var html = PageHtml.Render(Shell, page, language, Origin);
 
         Regex.Matches(page.Body, "<section><h2>([^<]*)</h2>").Select(m => WebUtility.HtmlDecode(m.Groups[1].Value))
-            .Should().Equal(what, here, links);
-        var words = Regex.Matches(page.Body, "<section>.*?</section>").Sum(section =>
-            Regex.Replace(section.Value, "<[^>]+>", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries).Length);
-        words.Should().BeInRange(250, 360, "the sections are about three hundred words of plain text");
+            .Should().Equal(site, reading, reference, method, open);
+        var sections = Regex.Matches(page.Body, "<section>.*?</section>").Select(m => m.Value).ToList();
+        sections.Should().AllSatisfy(section => section.Should().MatchRegex("^<section><h2>[^<]+</h2>(<h3>[^<]+</h3><p>[^<]+</p>)+</section>$"));
+        var words = sections.Sum(section =>
+            Regex.Replace(section, "<[^>]+>", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries).Length);
+        words.Should().BeInRange(650, 1000, "the sections describe the site in some detail, as plain text");
         page.Body.Should().NotContain("home.about", "every key has its text");
         html.Should().MatchRegex("<div id=\"root\"><main><article class=\"prerendered\" lang=\"" + code + "\"><h1>Essenthos</h1>.*</article></main></div>");
     }
 
+    /// <summary>The same points in every language, so a panel built from them shows each language alike.</summary>
     [Fact]
-    public void TheHomePageSaysThatAWorkedOutLinkIsNeverShownAsStated()
+    public void EveryLanguageHasTheSamePoints()
+    {
+        string[] Points(PageWording t) =>
+            [.. t.Keys("home.about").SelectMany(section => t.Keys($"home.about.{section}.points").Select(point => $"{section}.{point}"))];
+
+        var english = Points(PageWording.Compiled("en"));
+        english.Should().HaveCountGreaterThan(15);
+        foreach (var code in new[] { "uk", "de", "es" })
+        {
+            Points(PageWording.Compiled(code)).Should().Equal(english, code);
+        }
+    }
+
+    [Fact]
+    public void TheHomePageSaysWhatItCanStandBehind()
     {
         var english = PageViews.Home(SiteLanguage.English, PageWording.Compiled("en"), []).Body;
-        english.Should().Contain("never shown as one a source states").And.Contain("checked against the verses it comes from");
+        english.Should().Contain("The interface is available in four languages: English, Ukrainian, German and Spanish.")
+            .And.Contain("most words are linked")
+            .And.Contain("never shown as one a source states")
+            .And.Contain("points to the verses it comes from")
+            .And.NotContain("every word of", "not every word is linked");
         PageViews.Home(SiteLanguage.Ukrainian, PageWording.Compiled("uk"), []).Body
-            .Should().Contain("гебрейськ").And.Contain("проект").And.NotContain("єврейськ");
+            .Should().Contain("гебрейськ").And.Contain("проект").And.NotContain("єврейськ").And.NotContain("проєкт");
     }
 
     [Fact]

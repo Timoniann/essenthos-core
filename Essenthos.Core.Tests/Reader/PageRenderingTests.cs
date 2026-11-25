@@ -615,6 +615,15 @@ public sealed class PageRenderingTests
         robots.Should().NotContain("Disallow: /v1/\n", "a search engine that runs the page's script reads its data from the API");
     }
 
+    [Fact]
+    public void RobotsSignalSearchAndAnswerInputButNothingAboutTraining()
+    {
+        var robots = PageEndpoints.Robots(Origin);
+
+        robots.Should().StartWith("User-agent: *\nContent-Signal: search=yes, ai-input=yes\n");
+        robots.Should().NotContain("ai-train");
+    }
+
     private static string Title(string html) =>
         System.Net.WebUtility.HtmlDecode(Regex.Match(html, "<title>(.*?)</title>").Groups[1].Value);
 

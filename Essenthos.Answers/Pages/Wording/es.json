@@ -5,19 +5,106 @@
     "title": "Essenthos — la Biblia junto a su hebreo y su griego, palabra por palabra",
     "description": "Lea la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra, con el Diccionario Strong, una enciclopedia de personas y lugares, una cronología y un mapa.",
     "about": {
-      "what": {
+      "site": {
         "heading": "Qué es Essenthos",
-        "text": "Essenthos es un proyecto gratuito y sin fines comerciales para estudiar la Biblia. Cada palabra de una traducción está enlazada con la palabra hebrea o griega que traduce, de modo que se puede ver qué palabra hay detrás de cuál, qué significa y cómo la traducen otras versiones. El sitio está en español, inglés, ucraniano y alemán, y para leer no hace falta una cuenta."
+        "points": {
+          "resource": {
+            "title": "Un recurso para estudiar la Biblia",
+            "text": "Essenthos es un proyecto gratuito y sin fines comerciales para estudiar e investigar la Biblia. Pone las traducciones junto a los textos hebreos y griegos de los que se hicieron, enlaza sus palabras y describe las personas, los lugares y las cosas que nombra el texto."
+          },
+          "languages": {
+            "title": "Cuatro idiomas de interfaz",
+            "text": "La interfaz está disponible en cuatro idiomas: español, inglés, ucraniano y alemán. Los textos son otra cosa: más de 60 textos en más de 30 lenguas, antiguas y modernas."
+          },
+          "account": {
+            "title": "Sin cuenta",
+            "text": "La lectura, los diccionarios, la enciclopedia, la línea de tiempo, el mapa y la API funcionan sin iniciar sesión. Una cuenta, con Google o GitHub, añade marcadores en versículos, el punto de lectura en todos sus dispositivos, textos favoritos, conjuntos de columnas guardados y sugerencias al proyecto."
+          }
+        }
       },
-      "here": {
-        "heading": "Qué hay aquí",
-        "text": "El lector muestra cualquier capítulo en uno o varios textos, uno al lado de otro. Más de 60 textos conviven en un mismo modelo: la Biblia hebrea, la Septuaginta y el Nuevo Testamento griego en varias ediciones, junto a traducciones como la Reina-Valera 1909, la King James, la Biblia ucraniana de Ohienko y la de Lutero de 1912. Al señalar una palabra, se ilumina su original.",
-        "more": "El Diccionario Strong recoge cada palabra hebrea y griega con sus sentidos y las formas en que la traducen las versiones. La enciclopedia tiene una página para cada persona, lugar, pueblo y cosa que nombra el texto: familia, funciones, dónde está un lugar y cada versículo que los nombra. Los acompañan una cronología, un mapa, un árbol genealógico y una concordancia, y todos los datos están abiertos mediante una API gratuita."
+      "reading": {
+        "heading": "Leer el texto",
+        "points": {
+          "parallel": {
+            "title": "Textos en columnas paralelas",
+            "text": "Un capítulo se abre en un texto o en varios a la vez. Cada texto es una columna y los versículos van fila por fila, de modo que un versículo se lee de una vez en, por ejemplo, la Reina-Valera 1909, el hebreo de la BHSA y la King James. También se pueden comparar dos textos palabra por palabra."
+          },
+          "links": {
+            "title": "Palabras enlazadas con el original",
+            "text": "En las traducciones con enlaces por palabra, la mayoría de las palabras están enlazadas con las palabras hebreas o griegas que traducen, directamente o a través de otro texto, y con las palabras de otras traducciones. Al señalar una palabra, sus equivalentes se iluminan en todas las columnas; al pulsarla se ven la palabra del original, su forma, su significado y cada versículo donde aparece. Para cada texto, el lector muestra cuántas palabras de un capítulo están enlazadas."
+          },
+          "names": {
+            "title": "Nombres que abren una ficha",
+            "text": "Cuando el texto nombra a una persona, un lugar, un pueblo, un objeto, una fiesta u otra cosa notable que tiene ficha, la palabra aparece subrayada. Al señalarla se muestra una tarjeta breve; al pulsarla se abre la ficha."
+          },
+          "context": {
+            "title": "Contexto del capítulo",
+            "text": "Junto a cada capítulo, el Contexto del capítulo reúne sus personas, lugares y pueblos, sus acontecimientos con sus años y un mapa de sus lugares; cuando corresponde, también medidas y dinero, mandamientos, temas de la Topical Bible de Nave y modelos 3D."
+          }
+        }
       },
-      "links": {
+      "reference": {
+        "heading": "Obras de consulta",
+        "points": {
+          "dictionaries": {
+            "title": "Diccionarios",
+            "text": "El Diccionario Strong abarca cada número Strong hebreo y griego, con cómo traducen la palabra las versiones y cada versículo que la usa. Junto a él están Brown-Driver-Briggs (BDB) para el hebreo y Thayer, Abbott-Smith y Liddell-Scott-Jones (LSJ) para el griego, donde tienen un artículo sobre el número."
+          },
+          "encyclopedia": {
+            "title": "Enciclopedia",
+            "text": "La enciclopedia tiene una ficha para cada persona, lugar, pueblo, objeto, fiesta, título, dios o criatura, y palabra para Dios que nombra el texto: más de 3.000 personas, 1.400 lugares y 240 pueblos. Una ficha da el nombre en los originales, lo que dice el texto, parientes y funciones, acontecimientos, dónde está un lugar y cada versículo que lo nombra."
+          },
+          "family": {
+            "title": "Árbol genealógico",
+            "text": "A partir de cualquier persona, el árbol genealógico muestra los parientes registrados: padres, abuelos, hermanos, cónyuges e hijos y, más allá, bisabuelos, nietos, tíos y primos. Donde el texto da otro padre, o un parentesco por ley, el árbol lo indica."
+          },
+          "timeline": {
+            "title": "Acontecimientos y línea de tiempo",
+            "text": "Cada acontecimiento fechado aparece en orden, con sus versículos, personas y lugares y el cálculo de su año. La línea de tiempo los dibuja con eras, reinados y vidas en un solo eje, la Escritura junto a la historia universal, según la cronología que se elija: la de Ussher, el Seder Olam rabínico u otras tres. Los reyes de Israel y de Judá, con sus profetas, tienen una página propia."
+          },
+          "map": {
+            "title": "Mapa",
+            "text": "Cada lugar que nombra el texto y cuya ubicación se puede determinar está en el mapa, con la seguridad de esa ubicación y los versículos que lo nombran. El mapa se puede acotar por testamento, periodo y libro, y cada lugar abre su ficha."
+          },
+          "concordance": {
+            "title": "Concordancia",
+            "text": "La concordancia parte de una palabra de una traducción y muestra qué palabras hebreas y griegas traduce, cuántas veces cada una y dónde. Se basa en los enlaces entre palabras, así que solo abarca las palabras enlazadas."
+          }
+        }
+      },
+      "method": {
         "heading": "Cómo se hacen y se comprueban los enlaces",
-        "text": "Cada enlace entre dos palabras registra qué lo estableció: una fuente que lo afirma, una revisión a mano o un método que lo dedujo, como un número Strong compartido o un alineador automático. Un enlace deducido lleva una estimación de su seguridad y nunca se presenta como uno que afirma una fuente. Donde una segunda fuente enlazó la misma palabra, el lector muestra con qué frecuencia coinciden ambas.",
-        "more": "Cada afirmación de una página se puede comprobar con los versículos de los que procede, y donde algo no se sabe, la página lo dice. De dónde procede cada texto y cada conjunto de datos, y bajo qué licencia, está en «Fuentes y licencias»."
+        "points": {
+          "basis": {
+            "title": "Cada enlace dice de dónde viene",
+            "text": "Cada enlace entre dos palabras registra qué lo estableció: una fuente que lo afirma, una persona que lo revisó a mano o un método que lo dedujo, como un número Strong compartido, un alineador automático o reglas explícitas."
+          },
+          "estimates": {
+            "title": "Lo deducido nunca pasa por afirmado",
+            "text": "Un enlace deducido lleva una estimación de su certeza y nunca se presenta como afirmado por una fuente. Bajo cada palabra el lector indica qué la enlazó y con qué certeza, si es una estimación; cuando dos enlaces llegan a una palabra, se muestra el afirmado."
+          },
+          "agreement": {
+            "title": "Fuentes contrastadas entre sí",
+            "text": "Donde una segunda fuente enlazó la misma palabra, el lector muestra con qué frecuencia coinciden ambas. Para cada texto indica además cuántos de sus enlaces con el original se revisaron a mano."
+          },
+          "verses": {
+            "title": "Cada afirmación se puede comprobar",
+            "text": "Lo que dice una ficha o la página de un acontecimiento remite a los versículos de los que procede, y donde algo no se sabe, la página lo dice."
+          }
+        }
+      },
+      "open": {
+        "heading": "Datos abiertos",
+        "points": {
+          "api": {
+            "title": "API abierta",
+            "text": "Todo lo que muestra el sitio procede de una API pública: JSON sobre HTTP, gratuita, sin clave y sin cuenta. Solo son privados los datos de una cuenta, como los marcadores, y las peticiones están limitadas por dirección para que el servicio siga siendo justo."
+          },
+          "sources": {
+            "title": "Fuentes y licencias",
+            "text": "De dónde procede cada texto y cada conjunto de datos, quién lo hizo y su licencia figuran en «Fuentes y licencias»; lo que se puede reutilizar, en la página «Licencia»."
+          }
+        }
       }
     }
   },
