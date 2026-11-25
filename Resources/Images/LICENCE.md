@@ -8,6 +8,7 @@ source page and licence, because no two pictures here need share them.
 |---|---|---|---|
 | `openbible/` | OpenBible.info's 512x512 place thumbnails | per picture, from its `image.jsonl`; see `../OpenBible/LICENCE.md` | `scripts/fetch-images.ps1` |
 | `commons/` | public works chosen for people and things, listed in `Essenthos.Forge/Loading/Encyclopedia/PublicImages.json` | per entry, read on each file's Wikimedia Commons page | `scripts/fetch-images.ps1` |
+| `commons/manifest.json` | public works found for records with no picture (the gods first, TSK-2053), each awaiting the owner's word in his console | per entry, read on each file's Wikimedia Commons page | `scripts/fetch-images.ps1`; the console writes the owner's review |
 | `generated/` | our own identity portraits, one per person, with a `manifest.json` | ours; the manifest states the credit and licence shown | by hand |
 | `places/` | a picture of each place drawn from the site's own map, one per language (`places/<eng\|ukr\|deu\|spa>/<slug>.webp`, 1024x1536), with a `manifest.json` | ours, drawn from OpenStreetMap (ODbL 1.0), OpenBible.info (CC BY 4.0), Natural Earth (public domain) and Terrain Tiles (public domain, credit asked); shown with that credit | `scripts/place-pictures/render.mjs` in essenthos-web (avioniq action `place-pictures`) |
 
@@ -44,6 +45,15 @@ natural, and its caption says so in each of the reader's languages (`captions` i
 text itself says only *the mountains of Ararat* (Genesis 8:4).
 The file is Commons' own 1920-pixel rendering of the 3872-pixel original, which is what `download`
 names.
+
+## Public works found for the owner's review
+
+`commons/manifest.json` has the shape of the generated manifest, with `"source": "Wikimedia Commons"` and each
+entry's own credit (the photographer, or the draughtsman of a drawing), Commons page, licence and translated
+captions. Every entry is listed with `"review": "pending"` and stays off the site until the owner approves it on
+the console's Pictures page, which writes `approved` or `rejected` into the entry and logs his word with
+`needs: images`. Only public domain, CC0, CC BY and CC BY-SA are taken, each read on the file's Commons page; an
+ancient object or a drawing of one is preferred, and a record with nothing faithful is left without.
 
 ## A generated portrait
 

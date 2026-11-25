@@ -338,8 +338,8 @@ public sealed class EntityImageTests : IDisposable
     }
 
     /// <summary>
-    /// The owner's word and his choices, as his console writes them: one of our own waiting for his
-    /// word or refused by it stays off the site, a picture he hid is left out, and the one he chose
+    /// The owner's word and his choices, as his console writes them: one of our own or a public work found for
+    /// him, waiting for his word or refused by it, stays off the site, a picture he hid is left out, and the one he chose
     /// leads with his caption under it.
     /// </summary>
     [Fact]
@@ -348,11 +348,24 @@ public sealed class EntityImageTests : IDisposable
         var own = Entity(EntityKind.Place, "tel-own", openBibleId: "a-own");
         var satellite = Entity(EntityKind.Place, "tel-satellite", openBibleId: "a-satellite");
         var moses = Entity(EntityKind.Person, "moses");
+        var baal = Entity(EntityKind.Being, "baal-god");
         await _db.SaveChangesAsync();
 
         var images = Path.Combine(_resources, EntityImageLoader.Folder);
         WriteJpeg(Path.Combine(images, "generated", "moses-new.jpg"));
         WriteJpeg(Path.Combine(images, "generated", "moses-refused.jpg"));
+        WriteJpeg(Path.Combine(images, "commons", "baal-stele.jpg"));
+        WriteJpeg(Path.Combine(images, "commons", "baal-figurine.jpg"));
+        File.WriteAllText(Path.Combine(images, "commons", "manifest.json"),
+            """
+            {
+              "source": "Wikimedia Commons",
+              "images": [
+                { "entity": "baal-god", "file": "commons/baal-stele.jpg", "credit": "Jastrow", "licence": "Public domain", "review": "approved" },
+                { "entity": "baal-god", "file": "commons/baal-figurine.jpg", "credit": "Somebody", "licence": "CC0", "review": "pending" }
+              ]
+            }
+            """);
         File.WriteAllText(Path.Combine(images, "generated", "manifest.json"),
             """
             {
@@ -381,7 +394,9 @@ public sealed class EntityImageTests : IDisposable
 
         var outcome = await RecordRowsWritten.Pictures(_db, _resources);
 
-        (outcome.Withheld, outcome.Hidden).Should().Be((2, 1));
+        (outcome.Withheld, outcome.Hidden).Should().Be((3, 1));
+        (await _db.EntityImages.Where(i => i.EntityId == baal.Id).Select(i => new { i.File, i.Kind, i.Source }).ToListAsync())
+            .Should().Equal(new { File = "commons/baal-stele.jpg", Kind = EntityImageLoader.Public, Source = "Wikimedia Commons" });
         (await _db.EntityImages.AnyAsync(i => i.EntityId == satellite.Id)).Should().BeFalse();
         var portraits = await _db.EntityImages.Where(i => i.EntityId == moses.Id).OrderBy(i => i.Role).ToListAsync();
         portraits.Select(i => (i.File, i.Role, i.Caption)).Should().Equal(
@@ -623,6 +638,32 @@ public sealed class EntityImageTests : IDisposable
         manifest.Images.Where(i => i.Captions != null).Should().OnlyContain(i =>
             i.Caption != null && new[] { "ukr", "deu", "spa" }.All(i.Captions!.ContainsKey),
             "a caption worth translating is one every reader needs");
+    }
+
+    /// <summary>
+    /// The public works found for the owner's review, as listed beside the pictures: each credited, under a licence
+    /// a public work is taken under, with its Commons page, its address and its file there, translated where it is
+    /// captioned, and waiting for or carrying his word; none of God.
+    /// </summary>
+    [Fact]
+    public void EveryFoundWorkIsCreditedFreelyLicensedAndReviewed()
+    {
+        var listed = Path.Combine(TestResources.Folder(EntityImageLoader.Folder), EntityImageLoader.CommonsFolder, EntityImageLoader.ManifestFile);
+        File.Exists(listed).Should().BeTrue("the found public works are listed in {0}", listed);
+        using var stream = File.OpenRead(listed);
+        var manifest = EntityImageLoader.Parse(stream, listed);
+
+        manifest.Images.Should().NotBeEmpty();
+        manifest.Images.Should().OnlyContain(i =>
+            i.Credit != null && i.CreditUrl != null && i.CreditUrl.StartsWith("https://commons.wikimedia.org/wiki/File:")
+            && i.Download != null && i.File.StartsWith("commons/")
+            && new[] { "Public domain", "CC0", "CC BY 2.5", "CC BY 4.0", "CC BY-SA 3.0", "CC BY-SA 4.0" }.Contains(i.Licence)
+            && (i.Licence == "Public domain" || i.LicenceUrl != null)
+            && new[] { "pending", "approved", "rejected" }.Contains(i.Review));
+        manifest.Images.Should().OnlyContain(i => File.Exists(Path.Combine(TestResources.Folder(EntityImageLoader.Folder), i.File)));
+        manifest.Images.Where(i => i.Captions != null).Should().OnlyContain(i =>
+            i.Caption != null && new[] { "ukr", "deu", "spa" }.All(i.Captions!.ContainsKey));
+        manifest.Images.Select(i => i.Entity).Should().NotContain(["yhvh", "yhvh-2", "elohim"]);
     }
 
     /// <summary>

@@ -363,6 +363,46 @@ public sealed class PortraitBoardTests : IDisposable
             ("openbible/hebron-old.jpg", false, true, null, null));
     }
 
+    /// <summary>
+    /// A god with no picture but a public work found for him is on the pictures page with the work waiting for the
+    /// owner's word; his word is written into the list beside the works and logged for the pictures step, and a word
+    /// that is none of the three, or a picture the list does not hold, is refused and changes nothing.
+    /// </summary>
+    [Fact]
+    public async Task APublicWorkFoundForAGodWaitsForTheOwnersWordAndHisWordIsWrittenBesideIt()
+    {
+        _db.Entities.Add(new Entity { Kind = EntityKind.Being, Subtype = "god", Slug = "baal-god", Name = "Baal" });
+        await _db.SaveChangesAsync();
+        Directory.CreateDirectory(_paths.Commons);
+        File.WriteAllText(Path.Combine(_paths.Commons, "baal.jpg"), "a stele");
+        File.WriteAllText(Path.Combine(_paths.Commons, PortraitBoard.ManifestFile),
+            """
+            { "source": "Wikimedia Commons", "images": [
+              { "entity": "baal-god", "file": "commons/baal.jpg", "caption": "Baal with thunderbolt", "credit": "Jastrow",
+                "licence": "Public domain", "review": "pending" }
+            ] }
+            """);
+        var board = new PortraitBoard(_db, _paths);
+
+        (await board.Pictured(default)).Entities.Select(e => (e.Slug, e.Kind, e.Pictures, e.Waiting, e.Leading)).Should().Equal(
+            ("baal-god", "being", 0, 1, "commons/baal.jpg"));
+        board.FoundWaiting().Should().Be(1);
+        (await board.Pictures("baal-god", default))!.Images.Select(i => (i.File, i.Kind, i.Loaded, i.OnDisk, i.Review, i.Credit))
+            .Should().Equal(("commons/baal.jpg", "public", false, true, ImageChoices.Pending, "Jastrow"));
+
+        var choices = new PictureChoices(_paths, _log);
+        (await choices.Review("baal-god", "being", new PictureReviewRequest("commons/baal.jpg", "maybe", null))).Should().BeFalse();
+        (await choices.Review("baal-god", "being", new PictureReviewRequest("commons/other.jpg", "approved", null))).Should().BeFalse();
+        _log.Read().Entries.Should().BeEmpty();
+
+        (await choices.Review("baal-god", "being", new PictureReviewRequest("commons/baal.jpg", "approved", "the Ugarit stele"), "Ваал"))
+            .Should().BeTrue();
+        (await board.Pictures("baal-god", default))!.Images.Single().Review.Should().Be(ImageChoices.Approved);
+        board.FoundWaiting().Should().Be(0);
+        var line = _log.Read().Entries.Should().ContainSingle().Which;
+        (line.Section, line.Action, line.Target, line.Needs).Should().Be(("pictures", "review", "being/baal-god commons/baal.jpg", "images"));
+    }
+
     [Fact]
     public async Task EachPictureSaysWhereTheSitesFileShowsIt()
     {

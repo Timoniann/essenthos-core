@@ -10,6 +10,10 @@ internal sealed record PictureChoiceRequest(string File, bool Hidden, bool Prima
 
 internal sealed record PictureChoice(string File, bool Hidden, bool Primary, string? Caption);
 
+/// <param name="File">The picture's path under the images folder.</param>
+/// <param name="Review"><c>pending</c>, <c>approved</c> or <c>rejected</c>.</param>
+internal sealed record PictureReviewRequest(string File, string Review, string? Note);
+
 /// <summary>
 /// The owner's choices about the pictures of one person or place — hidden, leading, captioned — in
 /// the tracked file the image loader applies over every list of pictures on its next run. Each is
@@ -136,6 +140,46 @@ internal sealed class PictureChoices(DeskPaths paths, ChangeLog log)
 
         await log.Append(Section, "choice", $"{slug} {file}", Logged(before), Logged(after), request.Note, "images", label);
         return after;
+    }
+
+    /// <summary>
+    /// Sets the owner's word on a public work found for his review, in the manifest that lists it beside the public
+    /// works: approved, it is shown once the pictures are drawn again; pending or rejected, it stays off the site.
+    /// False where the manifest lists no such picture of the record, or the word is none of the three.
+    /// </summary>
+    /// <param name="kind">The record's kind as the console names it, for the change log's target.</param>
+    public async Task<bool> Review(string slug, string kind, PictureReviewRequest request, string? label = null)
+    {
+        var manifest = Path.Combine(paths.Commons, "manifest.json");
+        var file = request.File.Replace('\\', '/').Trim();
+        if (request.Review is not (PortraitEditor.Pending or PortraitEditor.Approved or PortraitEditor.Rejected)
+            || !System.IO.File.Exists(manifest))
+        {
+            return false;
+        }
+
+        var (found, before) = await JsonFiles.Change(manifest, node =>
+        {
+            var entry = (node["images"]?.AsArray() ?? [])
+                .OfType<JsonObject>()
+                .FirstOrDefault(e => e["entity"]?.GetValue<string>() == slug && e["file"]?.GetValue<string>()?.Replace('\\', '/') == file);
+            if (entry is null)
+            {
+                return (false, (false, (string?)null));
+            }
+
+            var was = entry["review"]?.GetValue<string>();
+            entry["review"] = request.Review;
+            return (true, (true, was));
+        });
+        if (!found)
+        {
+            return false;
+        }
+
+        await log.Append(Section, "review", $"{kind}/{slug} {file}", JsonValue.Create(before), JsonValue.Create(request.Review),
+            request.Note, "images", label);
+        return true;
     }
 
     private static PictureChoice Of(JsonObject entry, string file) => new(

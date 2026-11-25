@@ -75,10 +75,11 @@ internal sealed record PortraitShare(string Slug, string Name, string? LocalName
 /// <param name="Brief">What the briefs file says about the person, as it says it, or null.</param>
 internal sealed record PortraitDetail(PortraitPerson Person, JsonNode? Brief, IReadOnlyList<PortraitImage> Images);
 
-/// <param name="Kind"><c>person</c>, <c>place</c> or <c>object</c>.</param>
+/// <param name="Kind"><c>person</c>, <c>place</c>, <c>object</c> or <c>being</c> (a god or a creature).</param>
 /// <param name="Leading">The file the page leads with now, for a thumbnail, or null.</param>
 /// <param name="Pictures">How many pictures the corpus holds of it.</param>
 /// <param name="Chosen">How many of them the owner chose something about.</param>
+/// <param name="Waiting">How many public works found for it wait for the owner's word.</param>
 internal sealed record PicturedEntity(
     string Slug,
     string Name,
@@ -88,7 +89,8 @@ internal sealed record PicturedEntity(
     string? Leading,
     int Pictures,
     int Hidden,
-    int Chosen);
+    int Chosen,
+    int Waiting = 0);
 
 internal sealed record PicturedResponse(IReadOnlyList<PicturedEntity> Entities);
 
@@ -194,17 +196,22 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
             await Images(row.Id, slug, manifest, brief, cancellationToken));
     }
 
-    /// <summary>Every person, place and thing with a picture, or with a choice the owner made about one.</summary>
+    /// <summary>
+    /// Every person, place, thing, god and creature with a picture, with a choice the owner made about one, or with
+    /// a public work found for his review.
+    /// </summary>
     public async Task<PicturedResponse> Pictured(CancellationToken cancellationToken)
     {
         var choices = PictureChoices.Read(paths);
-        var chosen = choices.Keys.ToList();
+        var found = Found();
+        var named = choices.Keys.Concat(Entries(found).Select(e => e["entity"]!.GetValue<string>())).Distinct().ToList();
         var rows = await Summaries(
-            db.Entities.Where(e => (e.Kind == EntityKind.Person || e.Kind == EntityKind.Place || e.Kind == EntityKind.Object)
-                                   && (e.Images.Any() || chosen.Contains(e.Slug))),
+            db.Entities.Where(e => (e.Kind == EntityKind.Person || e.Kind == EntityKind.Place || e.Kind == EntityKind.Object
+                                    || e.Kind == EntityKind.Being)
+                                   && (e.Images.Any() || named.Contains(e.Slug))),
             cancellationToken);
         return new PicturedResponse(rows
-            .Select(row => Pictured(row, choices.GetValueOrDefault(row.Slug) ?? []))
+            .Select(row => Pictured(row, choices.GetValueOrDefault(row.Slug) ?? [], found))
             .OrderBy(e => e.Kind).ThenBy(e => e.Name, StringComparer.Ordinal)
             .ToList());
     }
@@ -218,22 +225,25 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
         }
 
         var (manifest, briefs, _) = Beside();
+        var found = Found();
         return new PictureSet(
-            Pictured(row, PictureChoices.Read(paths).GetValueOrDefault(slug) ?? []),
-            await Images(row.Id, slug, manifest, BriefOf(briefs, slug), cancellationToken));
+            Pictured(row, PictureChoices.Read(paths).GetValueOrDefault(slug) ?? [], found),
+            await Images(row.Id, slug, manifest, BriefOf(briefs, slug), cancellationToken, found));
     }
 
     /// <summary>
-    /// The pictures of one entity: those the corpus holds, those our manifest lists that it does not
-    /// hold yet, and those the owner hid, which the corpus no longer holds once the pictures are loaded
-    /// again and which he must still be able to bring back.
+    /// The pictures of one entity: those the corpus holds, those our manifest and the manifest of found public works
+    /// list that it does not hold yet, and those the owner hid, which the corpus no longer holds once the pictures are
+    /// loaded again and which he must still be able to bring back.
     /// </summary>
     private async Task<List<PortraitImage>> Images(
-        int id, string slug, JsonNode? manifest, JsonNode? brief, CancellationToken cancellationToken)
+        int id, string slug, JsonNode? manifest, JsonNode? brief, CancellationToken cancellationToken, JsonNode? found = null)
     {
         var choices = (PictureChoices.Read(paths).GetValueOrDefault(slug) ?? []).ToDictionary(c => c.File, StringComparer.Ordinal);
         var site = OnSite(slug);
         var listed = Listed(manifest, slug).ToList();
+        found ??= Found();
+        var works = Listed(found, slug).ToList();
         var shared = await SharedOf(manifest, slug, cancellationToken);
         var loaded = await db.EntityImages
             .Where(i => i.EntityId == id)
@@ -244,12 +254,32 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
             .Select(i =>
             {
                 var entry = listed.FirstOrDefault(e => File(e) == i.File);
+                var work = works.FirstOrDefault(e => File(e) == i.File);
                 return new PortraitImage(i.File, i.Kind, i.Role, i.Caption, i.Credit, i.Licence, i.Source, true,
-                    OnDisk(i.File), entry is not null && Glory(entry), entry is null ? null : Review(entry),
+                    OnDisk(i.File), entry is not null && Glory(entry), entry is null ? work is null ? null : Review(work) : Review(entry),
                     choices.GetValueOrDefault(i.File), entry is null ? null : OptionOf(entry, brief),
                     shared.GetValueOrDefault(i.File) ?? []);
             })
             .ToList();
+        foreach (var work in works.Where(e => images.All(i => i.File != File(e))))
+        {
+            images.Add(new PortraitImage(
+                File(work),
+                Public,
+                work["role"]?.GetValue<string>() ?? "primary",
+                work["caption"]?.GetValue<string>(),
+                work["credit"]?.GetValue<string>(),
+                work["licence"]?.GetValue<string>(),
+                found?["source"]?.GetValue<string>(),
+                false,
+                OnDisk(File(work)),
+                false,
+                Review(work),
+                choices.GetValueOrDefault(File(work)),
+                null,
+                []));
+        }
+
         foreach (var entry in listed.Where(e => images.All(i => i.File != File(e))))
         {
             images.Add(new PortraitImage(
@@ -404,16 +434,33 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
                 e.Images.Count()))
             .ToListAsync(cancellationToken);
 
-    private static PicturedEntity Pictured(Summary row, IReadOnlyCollection<PictureChoice> choices) => new(
-        row.Slug,
-        row.Name,
-        row.LocalName,
-        row.Kind switch { EntityKind.Place => "place", EntityKind.Object => "object", _ => "person" },
-        row.Distinguisher,
-        choices.FirstOrDefault(c => c.Primary)?.File ?? row.Leading,
-        row.Pictures,
-        choices.Count(c => c.Hidden),
-        choices.Count);
+    private static PicturedEntity Pictured(Summary row, IReadOnlyCollection<PictureChoice> choices, JsonNode? found)
+    {
+        var works = Listed(found, row.Slug).ToList();
+        return new PicturedEntity(
+            row.Slug,
+            row.Name,
+            row.LocalName,
+            row.Kind switch
+            {
+                EntityKind.Place => "place", EntityKind.Object => "object", EntityKind.Being => "being", _ => "person",
+            },
+            row.Distinguisher,
+            choices.FirstOrDefault(c => c.Primary)?.File ?? row.Leading ?? works.Select(File).FirstOrDefault(),
+            row.Pictures,
+            choices.Count(c => c.Hidden),
+            choices.Count,
+            works.Count(e => Review(e) == PortraitEditor.Pending));
+    }
+
+    /// <summary>The manifest of the public works found for the owner's review, or null where there is none or it cannot be read now.</summary>
+    internal JsonNode? Found() => ReadOptional(Path.Combine(paths.Commons, ManifestFile), []);
+
+    /// <summary>How many public works found for the owner's review wait for his word; reads no database.</summary>
+    public int FoundWaiting() => Entries(Found()).Count(e => Review(e) == PortraitEditor.Pending);
+
+    private static IEnumerable<JsonNode> Entries(JsonNode? manifest) =>
+        (manifest?["images"]?.AsArray() ?? []).OfType<JsonNode>().Where(e => e["entity"] is not null && e["file"] is not null);
 
     private PortraitPerson Person(Row row, JsonNode? manifest, JsonArray? briefs)
     {

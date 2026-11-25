@@ -18,7 +18,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Missing">Pictures left out because their file is not in the images folder.</param>
 /// <param name="Unheld">Pictures of a place or a person the encyclopedia holds no record of.</param>
 /// <param name="Refused">Pictures of God other than the glory, which are never shown.</param>
-/// <param name="Withheld">Our own pictures the owner has not approved yet or has rejected.</param>
+/// <param name="Withheld">Pictures listed for the owner's review that he has not approved yet or has rejected.</param>
 /// <param name="Hidden">Pictures the owner hid in his console.</param>
 /// <param name="Unthings">Pictures drawn from a model of a record that is not a thing, which only things are given.</param>
 internal sealed record EntityImageOutcome(
@@ -41,7 +41,7 @@ internal sealed record EntityImageOutcome(
         $"own and {Rendered} drawn from the models of things; left out: {Unlicensed} under terms that do " +
         $"not allow showing them, {Uncredited} with nobody to credit, {Missing} whose file is not in the " +
         $"images folder, {Unheld} of records the encyclopedia does not hold, {Refused} of God that were not " +
-        $"the glory, {Withheld} of our own not approved, {Hidden} the owner hid and {Unthings} drawn from a " +
+        $"the glory, {Withheld} not approved by the owner,{Hidden} the owner hid and {Unthings} drawn from a " +
         $"model of what is not a thing, in {Elapsed}";
 }
 
@@ -56,6 +56,8 @@ internal sealed record EntityImageOutcome(
 /// them there: it unpacks the gazetteer's thumbnail archive into <c>openbible/</c> and downloads each
 /// curated work into the path its entry names. Generated portraits are dropped into
 /// <c>generated/</c> by hand, beside a <c>manifest.json</c> of the same shape as the curated list.
+/// Public works an agent found for the owner to look at are listed in <c>commons/manifest.json</c>,
+/// of the same shape again, each with its review, and are public works like the curated ones.
 /// </para>
 ///
 /// <para>
@@ -72,7 +74,7 @@ internal sealed record EntityImageOutcome(
 /// </para>
 ///
 /// <para>
-/// A generated entry may carry <c>"review"</c>: <c>pending</c> while the owner has not looked at it
+/// An entry of any list may carry <c>"review"</c>: <c>pending</c> while the owner has not looked at it
 /// and <c>rejected</c> once he has said no, and either keeps it off the site; <c>approved</c>, or no
 /// review at all for an entry written by hand, shows it. And the owner's choices in
 /// <c>Resources/Essenthos/image-choices.json</c> — a picture hidden, a different one leading, a
@@ -108,6 +110,9 @@ internal static class EntityImageLoader
 
     /// <summary>The folder of the pictures drawn from the models, beside their manifest.</summary>
     public const string RenderedFolder = "models";
+
+    /// <summary>The folder of the public works, beside the manifest of those found for the owner's review.</summary>
+    public const string CommonsFolder = "commons";
 
     public const string ManifestFile = "manifest.json";
 
@@ -185,7 +190,7 @@ internal static class EntityImageLoader
                     continue;
                 }
 
-                if (kind == Generated && entry.Review is ImageChoices.Pending or ImageChoices.Rejected)
+                if (entry.Review is ImageChoices.Pending or ImageChoices.Rejected)
                 {
                     withheld++;
                     continue;
@@ -478,7 +483,10 @@ internal static class EntityImageLoader
         return (rows, missing);
     }
 
-    /// <summary>The curated list inside the assembly, and the generated and the models' manifests where there are any.</summary>
+    /// <summary>
+    /// The curated list inside the assembly, and the generated, the models' and the found public works' manifests
+    /// where there are any.
+    /// </summary>
     private static IEnumerable<(ImageManifest Manifest, string Kind)> Manifests(string root)
     {
         using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(CuratedResource)
@@ -489,7 +497,7 @@ internal static class EntityImageLoader
             yield return (Parse(stream, "PublicImages.json"), Public);
         }
 
-        foreach (var (folder, kind) in new[] { (GeneratedFolder, Generated), (RenderedFolder, Rendered) })
+        foreach (var (folder, kind) in new[] { (GeneratedFolder, Generated), (RenderedFolder, Rendered), (CommonsFolder, Public) })
         {
             var listed = Path.Combine(root, folder, ManifestFile);
             if (File.Exists(listed))
