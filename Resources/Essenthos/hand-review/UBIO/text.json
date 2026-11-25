@@ -8,10 +8,13 @@
  },
  "pass": "Ohienko pass",
  "notes": [
-  "«на початку» = בְּ + רֵאשִׁית: a Ukrainian preposition with its noun may render one Hebrew word with its prefix.",
-  "Ukrainian «і», «та», «а» link to וְ/καί when they render it.",
-  "A Ukrainian possessive or pronoun («його», «Свій») links to the original word that carries that suffix or pronoun.",
-  "Ohienko's New Testament follows the Received Text, so a Ukrainian word with no Nestle 1904 counterpart is not an error: leave it unlinked.",
+  "«на початку»: «на» → בְּ, «початку» → רֵאשִׁית. A dative such as «Богові» for לַיהוָה (Gen 4:3) links to both לַ and יהוָה; «у» of «у всі дні свойого життя» for כָּל־יְמֵי חַיֶּיךָ (Gen 3:14) is supplied and stays unlinked.",
+  "«і», «та», «й», «а» link to וְ/καί when they render it; a supplied «і» stays unlinked. «І сталось»: «І» → וַ, «сталось» → יְהִי.",
+  "Possessives and object pronouns («його», «її», «їх», «свій», «мій», «твій», «йому», «тобі») link to the word carrying the suffix: «жінку свою» → אִשְׁתּוֹ (Gen 4:1), «брата йому» → אָחִיו (Gen 4:2). «свій» agrees with any person. Subject pronouns of a verb ending link to the verb: «вона завагітніла» → תַּהַר.",
+  "Verb forms of two words link to the one original verb: «буде пасти» → ποιμανεῖ, «Хай станеться» → יְהִי, «має народитись» → γεννᾶται. «напевно помреш» for מוֹת תָּמוּת: «напевно» → מוֹת, «помреш» → תָּמוּת.",
+  "Greek δέ is rendered by «а», «але», «же», «ж», «і»: link them to it; an emphatic «ж/же» that renders no word stays unlinked (Lk 11:13). A pronoun or demonstrative for the Greek article links to the article: ἡ δέ «А вона» (Mt 14:8); «тих» of «тих, хто вас проклинає» → τούς (Lk 6:28).",
+  "Ohienko usually writes «Господь» for יְהוָה and «Бог» for אֱלֹהִים, but sometimes «Бог» for יְהוָה («Богові» for לַיהוָה, Gen 4:3): that link is right.",
+  "Ohienko's New Testament follows the Received Text, so a Ukrainian word with no Nestle 1904 counterpart is not an error: leave it unlinked, and do not link it to another Nestle word (Mt 9:2 «тобі» renders the Received Text's σοι, not Nestle's σου).",
   "The corpus numbers Ohienko's verses as the English Bibles do: a psalm title is part of verse 1 here while the Hebrew numbers it as a verse of its own, and chapter ends differ in places; the frame line shows which Hebrew verses each verse maps to, and a link into the next Hebrew verse there is not a link to the wrong verse."
  ]
 }

@@ -8,7 +8,40 @@ The sheet below holds your verses. For each verse "## book.chapter:verse":
 - then the translation's words no link holds.
 Original positions written as bare numbers are in the one original verse shown; otherwise they are full addresses. A word address is book.chapter:verse.position (book = canonical ordinal, 1 = Genesis, 40 = Matthew), e.g. 1.1:1.3. Words in [brackets] are elided: not printed, like the Hebrew article inside לַ, shown as [elided] when it has no letters of its own.
 
-What a correct link is: the translation's word(s) carry the meaning of the Hebrew/Greek word(s). One translation word may link to several original words and vice versa (a verb with its pronoun suffix; a preposition with its noun when the original has one word for both). Prepositions link to the Hebrew prefix/word or Greek preposition they render; a conjunction to וְ/καί when it renders it. Names link to the same person/place. A possessive or pronoun links to the original word that carries that suffix or pronoun. Words the translator added with no counterpart stay unlinked (that is correct, not an error). The Hebrew article and the object marker אֵת usually have no counterpart; the Greek article usually none either. A link to the wrong occurrence of a repeated word (another καί, another אֱלֹהִים) is wrong.
+What a correct link is. These are the rules the owner and the board have settled; follow them over your own habits.
+
+Principles
+- A link says the {slug} word(s) render the original word(s), in this verse, at this occurrence. One word may link to several and several to one when together they render together (a verb with its pronoun suffix; one word for עֹבֵד אֲדָמָה "worker of the soil"; a compound number whole to whole, "twelve" = שְׁתַּיִם עֶשְׂרֵה).
+- A word with no counterpart stays unlinked; that is correct, not an error: words the translator supplied, words the edition marks as supplied.
+- Judge the words themselves. The method and confidence on the sheet are no evidence, and links the edition states can be wrong too.
+- A point marked "undecided" below: leave such a link as it stands (neither refuse nor accept it).
+
+Always wrong (refuse)
+- Wrong occurrence: the right word on another occurrence of a repeated word (another וְ, καί, μου, אֱלֹהִים, a repeated preposition or name). Take the occurrence in the same clause and order. This, with the swapped וְ, was the commonest error found so far.
+- Neighbour: a word on the original word beside the one it renders, or on one it does not render; two adjectives swapped.
+- A function word (particle, conjunction, preposition, pronoun) on a content word it does not render, e.g. an emphatic particle on a noun.
+- A pronoun linked to the noun it refers to rather than to the word that carries the pronoun. (The other way round, a name the translation writes where the original has a pronoun renders that pronoun.)
+
+Hebrew ({ot} writes the conjunction ו, the prefixes בְּ לְ כְּ מִ(ן) and the article ה as words of their own)
+- Prepositions link to the prefix word or preposition they render, not to the noun ("in the beginning": "in" → בְּ, "beginning" → רֵאשִׁית). A function word goes only on a prefix of its own kind: and → ו, to/for → ל, in/with/by → ב, as → כ, from/than → מִן; "for" never on ו. A dative or instrumental case ending can render a prefix: one word then links to the prefix and its noun ("to the LORD" in one word → לַ + יהוָה). A preposition the translation supplies where the Hebrew has none (an adverbial accusative of time, place or manner: "in all the days" for כָּל־יְמֵי) stays unlinked; linked to the noun it is wrong.
+- The article (also [elided] inside בַּ/לַ) and the object marker אֵת (H853) have no counterpart; a word on them is wrong. A suffixed אֹתוֹ/אֹתָם carries a pronoun, and that pronoun links to it. אֵת H854 "with" is a preposition.
+- A possessive or object pronoun links to the word carrying the suffix ("his wife" → both words on אִשְׁתּוֹ; "to you" → לָךְ; "him" → the verb carrying the object suffix). It agrees with the suffix's person and number, not with its noun's; never on a prefix, conjunction or article.
+- The form principle (owner): words a language needs for what one original word carries in its form link, with the content word, to that word: a subject pronoun in the verb's ending ("she conceived" → תַּהַר), a tense or mood auxiliary ("let there be" → יְהִי, "will feed" → ποιμανεῖ). Where the original writes the pronoun as a word (הוּא, אֲנִי, ἐγώ, αὐτός), the translation's pronoun links to that word.
+- "Be" that renders a written היה or εἰμί links to it (וַיְהִי: "and" → וַ, "it came to pass"/"was" → יְהִי). A copula supplied in a nominal clause with no verb in the original: undecided.
+- Infinitive absolute with its finite verb: a single word renders the finite verb; a word of its own for the emphasis renders the infinitive ("surely die": "surely" → מוֹת, "die" → תָּמוּת).
+- Construct chains: each noun links to its own noun; an adjective rendering a genitive noun links to that noun ("my holy mountain" for הַר־קָדְשִׁי: "holy" and "my" → קָדְשִׁי).
+- מִן of comparison takes "than". A negation links to לֹא, אַל, אֵין.
+
+Greek
+- The article only marking a noun has no counterpart. Where it stands as a pronoun, the pronoun renders it: ἡ δέ "but she"; τοὺς of τοὺς καταρωμένους "those who curse" ("those" → τούς; "who curse" → the participle). A relative word rendering a participle links to the participle.
+- δέ is often rendered by "but/and" or a particle; link it when rendered. An emphatic particle that renders no word stays unlinked.
+- A genitive pronoun (μου, σου, αὐτοῦ) is the possessive's own word: check which occurrence. A preposition may render a case (a dative, a genitive).
+- One negation for οὐ μή links to both.
+
+Names and numbers
+- A name links to the word naming the same person or place. In a genealogy "son" links to υἱός, never to a name. Names in a list match by identity, not by order.
+- The link follows what the word renders: "Lord" usually renders יְהוָה and "God" אֱלֹהִים, "LORD God" = יְהוָה אֱלֹהִים word for word, but a translation may write "God" for יְהוָה, and then that link is right. In אֲדֹנָי יְהוִה the first word renders אֲדֹנָי and the second יְהוִה. A vocative "O" goes with the noun addressed.
+- A number that differs from the original's stays unlinked (say so in the note).
 
 About this translation:
 {notes}
