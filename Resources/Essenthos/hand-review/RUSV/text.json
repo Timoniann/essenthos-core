@@ -5,10 +5,14 @@
  "targets": {"ot": "BHSA", "nt": "NESTLE1904"},
  "pass": "Synodal pass",
  "notes": [
-  "Russian «и», «а», «но» link to וְ/καί when they render it.",
-  "A Russian possessive or pronoun («его», «Свой») links to the original word that carries that suffix or pronoun.",
-  "The Synodal translation follows the Septuagint in places: words or clauses it has from the Greek Old Testament have no Hebrew counterpart and stay unlinked; a Hebrew word it renders after the Septuagint's reading is still its counterpart when the meaning corresponds.",
-  "The Synodal New Testament follows the Received Text, so a Russian word with no Nestle 1904 counterpart is not an error: leave it unlinked.",
+  "«В начале»: «В» → בְּ, «начале» → רֵאשִׁית. A dative such as «Господу» for לַיהוָה links to both לַ and יהוָה; a preposition the Russian supplies where the Hebrew has none stays unlinked.",
+  "Russian «и», «а», «но» link to וְ/καί when they render it; a supplied «и» stays unlinked. In Gen 1:1 «и» does not link to אֵת.",
+  "Possessives and object pronouns («его», «ее», «их», «свой», «мой», «твой», «ему», «тебе») link to the word carrying the suffix: «сына своего» → בְּנוֹ, «жену свою» → אִשְׁתּוֹ (Gen 4:1). «свой» agrees with any person. Subject pronouns of a verb ending link to the verb: «он сказал» → וַיֹּאמֶר.",
+  "Verb forms of two words link to the one original verb: «да будет» → יְהִי (Gen 1:3). «смертью умрешь» for מוֹת תָּמוּת: «смертью» → מוֹת, «умрешь» → תָּמוּת.",
+  "Greek δέ is rendered by «же», «а», «но», «и»: link them to it; an emphatic «же» that renders no word stays unlinked. A pronoun or demonstrative for the Greek article links to the article (ἡ δέ «Она же», Mt 14:8).",
+  "In אֲדֹנָי יְהוִה the Synodal writes «Владыка Господь» or «Господь Бог»: the first word renders אֲדֹנָי, the second יְהוִה.",
+  "The Synodal translation follows the Septuagint in places: words or clauses it has from the Greek Old Testament (often printed in brackets) have no Hebrew counterpart and stay unlinked; a Hebrew word it renders after the Septuagint's reading is still its counterpart when the meaning corresponds.",
+  "The Synodal New Testament follows the Received Text, so a Russian word with no Nestle 1904 counterpart is not an error: leave it unlinked, and do not link it to another Nestle word.",
   "The corpus numbers this text's chapters as the English Bibles do, but psalm titles are part of verse 1 here while the Hebrew numbers the title as a verse of its own; the frame line shows which Hebrew verses each verse maps to, and a link into the next Hebrew verse there is not a link to the wrong verse."
  ]
 }
