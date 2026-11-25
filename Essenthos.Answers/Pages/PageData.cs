@@ -53,6 +53,10 @@ internal static class PageData
     public static string PaneAddress(string text, string book, int chapter) =>
         $"/v1/panes/{Uri.EscapeDataString(text)}/{Uri.EscapeDataString(book)}/{chapter}";
 
+    /// <summary>How a text numbers a book, at the address the reader asks with: the text as the page's address names it.</summary>
+    public static string NumberingAddress(string text, string book) =>
+        $"/v1/text/{Uri.EscapeDataString(text)}/{Uri.EscapeDataString(book)}/numbering";
+
     public static string OccupationAddress(string slug, SiteLanguage language) =>
         $"/v1/occupations/{Uri.EscapeDataString(slug)}?language={language.Corpus}&prose={language.Corpus}" +
         $"&skip=0&take={OccupationPeople}";

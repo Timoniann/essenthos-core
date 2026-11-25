@@ -19,6 +19,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(StrongRenderingsResponse))]
 [JsonSerializable(typeof(StrongBookMapResponse))]
 [JsonSerializable(typeof(OccupationDetailResponse))]
+[JsonSerializable(typeof(TextNumberingResponse))]
 [JsonSerializable(typeof(System.Text.Json.Nodes.JsonObject))]
 [JsonSerializable(typeof(List<PlaceOutlineBand>))]
 internal partial class AnswerJsonContext : JsonSerializerContext;

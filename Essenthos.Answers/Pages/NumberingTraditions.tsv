@@ -1,0 +1,9 @@
+# The two numbering traditions a chapter can be known by, as the reader names them (essenthos-web
+# src/lib/numberingTraditions.json holds the same). The frame is the reader's grid: Hebrew for the Psalms, English
+# (the King James) for every other book. The other tradition is read from the numbering of the first of its texts
+# the corpus holds: the Greek psalter's for the Psalms (Brenton's Greek, Swete, Brenton's English, then the Synodal,
+# which numbers the Psalms as the Greek does), the Hebrew Bible's for every other book.
+# book: a book's slug, or * for every book not named; texts: the other tradition's texts, first preferred.
+book	frame	other	texts
+psalms	hebrewPsalms	greek	GRCBRENT,SWETE,BRENTON,RUSV
+*	english	hebrew	BHSA

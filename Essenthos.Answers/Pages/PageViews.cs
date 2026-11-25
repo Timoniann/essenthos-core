@@ -31,6 +31,15 @@ internal sealed record VerseView(int Book, string BookName, int Chapter, int Ver
 
     /// <summary>The texts the address names side by side, as the reader lays them out; empty for the one text alone.</summary>
     public IReadOnlyList<ReadingColumn> Columns { get; init; } = [];
+
+    /// <summary>The address the page was asked by, where it names the chapter in its first text's numbering.</summary>
+    public string? AddressPath { get; init; }
+
+    /// <summary>The chapter as the text it is read in numbers it, where that is not <see cref="Chapter"/>.</summary>
+    public string? Heading { get; init; }
+
+    /// <summary>The verse as the address names it, in its first text's numbering, where that is not the frame's.</summary>
+    public (int Chapter, int Verse)? Asked { get; init; }
 }
 
 /// <summary>A verse on its own page, in the text the page's language reads, with the same verse in others beside it.</summary>
@@ -79,7 +88,30 @@ internal sealed record ChapterView(
     /// the chapter is shown in its one text (<see cref="Verses"/>, <see cref="TextName"/>).
     /// </summary>
     public IReadOnlyList<ReadingColumn> Columns { get; init; } = [];
+
+    /// <summary>
+    /// The address the page was asked by, where it names the chapter in its first text's numbering
+    /// (<c>/read/psalms/90</c> for the Synodal's 90, the frame's 91), which the reader's script finds its copy by.
+    /// </summary>
+    public string? AddressPath { get; init; }
+
+    /// <summary>The chapter as the text it is read in numbers it, where that is not <see cref="Chapter"/>: <c>114–115</c>.</summary>
+    public string? Heading { get; init; }
+
+    /// <summary>The psalm's number in the other numbering tradition, which its title carries after its own: «Псалом 51 (50)».</summary>
+    public string? OtherNumber { get; init; }
+
+    /// <summary>The line under the heading that names the chapter in the other numbering tradition; null where both agree.</summary>
+    public OtherNumberingLine? Other { get; init; }
 }
+
+/// <summary>
+/// The chapter in the other numbering tradition, said under its heading, and the way to the chapter that tradition gives
+/// this number, as the reader says it.
+/// </summary>
+/// <param name="Sentence">What the chapter is in the other tradition, or null where it is the number shown.</param>
+/// <param name="Sought">The question for the chapter the other tradition numbers as this one, with its link.</param>
+internal sealed record OtherNumberingLine(string? Sentence, (string Question, string Link, string Path)? Sought);
 
 /// <summary>A piece of a record's description, linked where it names another record.</summary>
 internal sealed record LinePart(string Text, string? Href = null);
@@ -263,7 +295,9 @@ internal static partial class PageViews
 
     public static PageContent Verse(SiteLanguage language, PageWording t, VerseView verse)
     {
-        var reference = t.Reference(verse.BookName, verse.Chapter, verse.Verse);
+        var reference = verse.Asked is { } asked
+            ? t.Reference(verse.BookName, asked.Chapter, asked.Verse)
+            : t.Reference(verse.BookName, verse.Chapter, verse.Verse);
         var chapter = $"{verse.BookName} {verse.Chapter}";
         var verses = verse.Verses.Count > 0 ? verse.Verses : [(verse.Verse, verse.Text)];
         var body = Reading(language, t, new ChapterView(verse.Book, verse.BookName, verse.Chapter,
@@ -271,6 +305,8 @@ internal static partial class PageViews
         {
             TextLanguage = verse.TextLanguage,
             Columns = verse.Columns,
+            AddressPath = verse.AddressPath,
+            Heading = verse.Heading,
         }, verse.Verse);
         if (verse.Original is { } original)
         {
@@ -451,10 +487,10 @@ internal static partial class PageViews
     private static HtmlWriter Reading(SiteLanguage language, PageWording t, ChapterView chapter, int? landed)
     {
         var chapterPath = PageAddress.ChapterPath(chapter.Book, chapter.Chapter);
-        var reference = $"{chapter.BookName} {chapter.Chapter}";
+        var reference = $"{chapter.BookName} {chapter.Heading ?? chapter.Chapter.ToString(CultureInfo.InvariantCulture)}";
         var body = new HtmlWriter()
             .Open("article", "prerendered reading", lang: language.Code,
-                attributes: [("data-chapter", chapterPath), ("data-verse", landed?.ToString())])
+                attributes: [("data-chapter", chapter.AddressPath ?? chapterPath), ("data-verse", landed?.ToString())])
             .Open("div", "reading-bar").Close("div")
             .Open("div", "reading-page")
             .Open("nav", "reading-trail").Link(language.Path("/"), PageContent.SiteName);
@@ -464,7 +500,25 @@ internal static partial class PageViews
         }
 
         body.Close("nav")
-            .Open("div", "reading-head").Element("h1", reference).Close("div");
+            .Open("div", "reading-head").Element("h1", reference);
+        if (chapter.Other is { } other)
+        {
+            body.Open("p", "reading-other");
+            if (other.Sentence is { } sentence)
+            {
+                body.Text(sentence);
+            }
+
+            if (other.Sought is { } sought)
+            {
+                body.Text((other.Sentence is null ? "" : " ") + sought.Question + " ")
+                    .Link(sought.Path.StartsWith('/') ? language.Path(sought.Path) : sought.Path, "→ " + sought.Link);
+            }
+
+            body.Close("p");
+        }
+
+        body.Close("div");
         if (chapter.Columns.Count > 1)
         {
             Columns(body, language, t, chapter, landed);
@@ -589,7 +643,10 @@ internal static partial class PageViews
 
     public static PageContent Chapter(SiteLanguage language, PageWording t, ChapterView chapter)
     {
-        var reference = $"{chapter.BookName} {chapter.Chapter}";
+        var number = chapter.Heading ?? chapter.Chapter.ToString(CultureInfo.InvariantCulture);
+        var reference = chapter.OtherNumber is { } otherNumber
+            ? $"{t.Text("chapter.psalm", ("number", number))} ({otherNumber})"
+            : $"{chapter.BookName} {number}";
         var body = Reading(language, t, chapter, landed: null);
         var beside = Beside(t, OriginalOf(chapter.Book));
         var opening = string.Join(' ', chapter.Verses.Take(OpeningVerses).Select(verse => verse.Text));
