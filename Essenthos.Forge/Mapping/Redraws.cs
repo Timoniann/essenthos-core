@@ -13,11 +13,14 @@ namespace Essenthos.Core.Mapping;
 /// rulings. Its own pair's final and statuses are left out, or every merge would make it due again, and so are those of the
 /// compositions it reads back and forth with (<see cref="Mutual"/>). Drawn again, it trains
 /// what its hops lack (<see cref="Loading.Links.AlignmentPipeline.Trains"/>) and is held to the pair's floors by the merge
-/// like any other file.
+/// like any other file. A file <c>mapping/redraw-holds</c> names (<see cref="RedrawHold"/>) is never due.
 /// </para>
 /// </summary>
 internal static class Redraws
 {
+    /// <summary>The kept files the build leaves as they stand though they are due (<see cref="RedrawHold"/>).</summary>
+    public const string HoldsProduct = MappingProducts.Folder + "/redraw-holds";
+
     /// <summary>One file to draw again.</summary>
     /// <param name="Reads">The other pairs whose finals the file reads; it waits while one of them is due itself.</param>
     public sealed record Due(string Pair, string File, string Why, IReadOnlyList<string> Reads)
@@ -53,8 +56,9 @@ internal static class Redraws
         }
 
         var mutual = Mutual(candidates.Where(c => c.File == MappingMethods.Composed).ToDictionary(c => c.Pair, c => c.Reads, StringComparer.Ordinal));
+        var held = Holds(store).Select(hold => hold.Name).ToHashSet(StringComparer.Ordinal);
         var due = new List<Due>();
-        foreach (var (pair, file, current, reads) in candidates)
+        foreach (var (pair, file, current, reads) in candidates.Where(c => !held.Contains($"{c.Pair} {c.File}")))
         {
             var cycle = file == MappingMethods.Composed ? mutual.GetValueOrDefault(pair) ?? [] : [];
             var why = Lost(store, pair, file) ?? Moved(store, MappingProducts.Of(pair, file), [pair, .. cycle], current);
@@ -65,6 +69,35 @@ internal static class Redraws
         }
 
         return due;
+    }
+
+    /// <summary>The holds of <c>mapping/redraw-holds</c>, each naming a file the build draws again and what lifts it.</summary>
+    public static List<RedrawHold> Holds(ProductStore store)
+    {
+        if (!store.Exists(HoldsProduct))
+        {
+            return [];
+        }
+
+        using var reader = store.Open(HoldsProduct, RedrawHold.Schema);
+        var holds = reader.ReadAll();
+        foreach (var hold in holds)
+        {
+            MappingProducts.Split(hold.Pair);
+            if (!Files.Contains(hold.File))
+            {
+                throw new InvalidDataException(
+                    $"{HoldsProduct}: {hold.Pair} holds '{hold.File}', which the build never draws again; name one of {string.Join(", ", Files)}.");
+            }
+
+            if (hold.Until.Trim().Length == 0)
+            {
+                throw new InvalidDataException($"{HoldsProduct}: the hold of {hold.Name} names nothing that lifts it (column until).");
+            }
+        }
+
+        var twice = holds.GroupBy(hold => hold.Name, StringComparer.Ordinal).FirstOrDefault(g => g.Count() > 1);
+        return twice is null ? holds : throw new InvalidDataException($"{HoldsProduct}: {twice.Key} is held twice.");
     }
 
     /// <summary>
@@ -204,4 +237,24 @@ internal static class Redraws
                 .Distinct(StringComparer.Ordinal),
         ];
     }
+}
+
+/// <summary>
+/// A line of <c>mapping/redraw-holds</c>, kept by hand: a kept model-drawn file the store build leaves as it stands though what it
+/// reads moved. A redraw read by hand and found wrong is held on the file it would replace, by the owner's word, until the work
+/// named in <see cref="Until"/> fixes it; taking the line out lets the next build draw the file again.
+/// </summary>
+/// <param name="File">The file held: <c>composed</c> or <c>aligner</c>.</param>
+/// <param name="Until">The work that lifts the hold.</param>
+/// <param name="Why">Why the redraw is not taken, in words a person can check.</param>
+internal sealed record RedrawHold(string Pair, string File, string Until, string Why)
+{
+    public static readonly ProductSchema<RedrawHold> Schema = new ProductSchema<RedrawHold>()
+        .Text("pair", r => r.Pair)
+        .Text("file", r => r.File)
+        .Text("until", r => r.Until)
+        .Text("why", r => r.Why)
+        .Reads(row => new RedrawHold(row.Text(0).Trim(), row.Text(1).Trim(), row.Text(2).Trim(), row.Text(3).Trim()));
+
+    public string Name => $"{Pair} {File}";
 }

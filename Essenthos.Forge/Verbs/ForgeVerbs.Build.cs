@@ -355,10 +355,22 @@ internal static partial class ForgeVerbs
     /// Draws again every composition and kept aligner file that is due (<see cref="Redraws"/>), training what its hops lack, then
     /// runs the producers again so the merge and everything after it read what was drawn; until none is due or the rounds run
     /// out. A file whose redraw could not train (<see cref="Loading.ModelRuns"/>) is left as it was and drawn no more this build.
-    /// What is still due at the end is logged as <c>still needs</c> and named in the report; the build goes on.
+    /// What is still due at the end is logged as <c>still needs</c> and named in the report; the build goes on. A file held by hand
+    /// (<see cref="Redraws.HoldsProduct"/>) is logged as held and never drawn.
     /// </summary>
     private static async Task<bool> Redraw(ForgeRun forge, List<BuildStage> stages, int atOnce)
     {
+        var holds = Redraws.Holds(new ProductStore(forge.Resources));
+        foreach (var hold in holds)
+        {
+            forge.Logger.LogWarning("redraw: {Pair} {File} is held, not drawn again, until {Until}: {Why}", hold.Pair, hold.File, hold.Until, hold.Why);
+        }
+
+        if (holds.Count > 0)
+        {
+            stages.Add(new BuildStage("redraw", "held", TimeSpan.Zero, holds.Count, string.Join("; ", holds.Select(hold => $"{hold.Name} until {hold.Until}"))));
+        }
+
         var waiting = new Dictionary<string, string>(StringComparer.Ordinal);
         for (var round = 1; ; round++)
         {

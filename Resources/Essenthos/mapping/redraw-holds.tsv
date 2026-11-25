@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/redraw-holds.tsv
+# producer   by hand
+# Kept model-drawn files (composed, aligner) the store build does not draw again though what they read moved (Redraws.Holds): a redraw read by hand and found wrong is held, by the owner's word, on the file it would replace until the work named in until fixes it. forge build logs each line as "redraw: <pair> <file> is held, not drawn again, until <until>: <why>" and names it in its report (stage redraw, held). Take the line out to let the next build draw the file again.
+# Every hold is an exception to RUL-0206 (a pair whose inputs moved is mapped again by the methods it rests on, compositions included): the pair stays on a composition drawn from older inputs while it stands.
+pair	file	until	why
+RUSV-BHSA	composed	PRB-2040	owner 2026-11-25 (PRB-2040 question 1): the redraw under the floors rule settles 2,174 new links that read about 72% right (351 read by hand), under the 95% bar, and no floor fixes them; RUSV-BHSA stays on main's composed file while the other redrawn pairs land. Exception to RUL-0206. To lift: fix the composition (PRB-2040), take this line out, put back or measure again the floors read on the redraw (mapping/RUSV-BHSA/floors.tsv at essenthos-core 9874157f) in place of the line every other combination, and read the new redraw by hand

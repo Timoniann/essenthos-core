@@ -91,6 +91,41 @@ public sealed class RedrawsTests : IDisposable
     }
 
     [Fact]
+    public void A_held_composition_is_not_due_though_what_it_reads_moved_and_is_due_again_once_the_hold_is_taken_out()
+    {
+        Holds($"{Pair}\tcomposed\tPRB-0001\tits redraw read wrong by hand");
+        Final("KJV-BHSA", "the middle text, its names placed again");
+
+        Redraws.Holds(new ProductStore(_root)).Should().ContainSingle()
+            .Which.Should().Be(new RedrawHold(Pair, MappingMethods.Composed, "PRB-0001", "its redraw read wrong by hand"));
+        Due().Should().BeEmpty("the pair is held on the file it has");
+
+        File.Delete(Path.Combine(_root, ProductStore.EssenthosFolder, Redraws.HoldsProduct + ".tsv"));
+        Due().Should().ContainSingle().Which.Pair.Should().Be(Pair);
+    }
+
+    [Theory]
+    [InlineData("RUSV-BHSA\tfinal\tPRB-0001\twhy", "never draws again")]
+    [InlineData("RUSV-BHSA\tcomposed\t\twhy", "names nothing that lifts it")]
+    [InlineData("RUSV-BHSA\tcomposed\tPRB-0001\twhy\nRUSV-BHSA\tcomposed\tPRB-0002\twhy", "held twice")]
+    public void A_hold_that_could_bind_nothing_or_never_be_lifted_stops_the_build(string lines, string message)
+    {
+        Holds(lines);
+
+        var read = () => Redraws.Holds(new ProductStore(_root));
+
+        read.Should().Throw<InvalidDataException>().WithMessage($"*{message}*");
+    }
+
+    [Fact]
+    public void The_shipped_holds_read()
+    {
+        var read = () => Redraws.Holds(new ProductStore(TestResources.Shipped(".")));
+
+        read.Should().NotThrow();
+    }
+
+    [Fact]
     public void A_composition_waits_while_a_pair_whose_final_it_reads_is_due_itself()
     {
         var middle = new Redraws.Due("KJV-BHSA", MappingMethods.Composed, "moved", []);
@@ -123,6 +158,13 @@ public sealed class RedrawsTests : IDisposable
     {
         var store = new ProductStore(_root);
         return Redraws.Find(new ProductTexts(store), ProductGraph.Read(store), [_source]);
+    }
+
+    private void Holds(string lines)
+    {
+        var path = Path.Combine(_root, ProductStore.EssenthosFolder, Redraws.HoldsProduct + ".tsv");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, $"# producer   by hand\npair\tfile\tuntil\twhy\n{lines}\n");
     }
 
     private void Final(string pair, string content)
