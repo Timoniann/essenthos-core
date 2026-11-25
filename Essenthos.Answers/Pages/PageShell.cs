@@ -15,6 +15,9 @@ internal sealed record ShellReading(string Html, IReadOnlyDictionary<string, Pag
 
     /// <summary>When this process first read the shell as it is now, in UTC.</summary>
     public DateTime ReadAt { get; init; } = DateTime.UtcNow;
+
+    /// <summary>The site described in Markdown for language models, the reader's <c>/llms.txt</c>; null where its build serves none.</summary>
+    public string? Markdown { get; init; }
 }
 
 /// <summary>
@@ -90,11 +93,12 @@ internal sealed class PageShell(IConfiguration configuration, IHostEnvironment e
                     read.Append('\0').Append(raw);
                 }
 
+                var markdown = await Read(Beside(source, "llms.txt"), cancellationToken);
                 var version = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(read.ToString())))[..16];
                 // The same shell read again keeps the moment it was first read, so its pages keep their date.
                 _reading = _reading?.Version == version
-                    ? _reading with { Html = html, Wording = wording }
-                    : new ShellReading(html, wording) { Version = version, ReadAt = DateTime.UtcNow };
+                    ? _reading with { Html = html, Wording = wording, Markdown = markdown }
+                    : new ShellReading(html, wording) { Version = version, ReadAt = DateTime.UtcNow, Markdown = markdown };
             }
             catch (Exception exception) when (exception is HttpRequestException or IOException or TaskCanceledException
                                                   or UnauthorizedAccessException && !cancellationToken.IsCancellationRequested)
@@ -120,9 +124,7 @@ internal sealed class PageShell(IConfiguration configuration, IHostEnvironment e
     /// <returns>The wording, and the text it was read from; empty where the API's own copy stands in.</returns>
     private async Task<(PageWording Wording, string Raw)> Wording(string shell, string code, CancellationToken cancellationToken)
     {
-        var source = IsAddress(shell)
-            ? new Uri(new Uri(shell), $"meta/{code}.json").ToString()
-            : Path.Combine(Path.GetDirectoryName(shell) ?? "", "meta", $"{code}.json");
+        var source = Beside(shell, $"meta/{code}.json");
         try
         {
             return await Read(source, cancellationToken) is { } json ? (PageWording.Parse(code, json).Over(Compiled[code]), json) : (Compiled[code], "");
@@ -156,6 +158,12 @@ internal sealed class PageShell(IConfiguration configuration, IHostEnvironment e
         var path = Path.Combine(environment.ContentRootPath, source);
         return File.Exists(path) ? await File.ReadAllTextAsync(path, cancellationToken) : null;
     }
+
+    /// <summary>The address or file of something the reader's build publishes beside its index.html.</summary>
+    private static string Beside(string shell, string file) =>
+        IsAddress(shell)
+            ? new Uri(new Uri(shell), file).ToString()
+            : Path.Combine(Path.GetDirectoryName(shell) ?? "", file);
 
     private static bool IsAddress(string source) =>
         source.StartsWith("http://", StringComparison.OrdinalIgnoreCase)

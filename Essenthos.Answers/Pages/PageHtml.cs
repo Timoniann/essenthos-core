@@ -113,7 +113,7 @@ internal sealed class HtmlWriter
 /// The shell is the one the web container serves, so the scripts and styles it names are always the
 /// ones that container has. What the shell says about the site in general — its title, description,
 /// preview tags — is taken out and this page's put in its place, and the page's essentials go inside
-/// <c>#root</c>, where the application's first render replaces them.
+/// <c>#root</c>, in the page's <c>main</c> landmark, where the application's first render replaces them.
 /// </summary>
 internal static partial class PageHtml
 {
@@ -141,6 +141,7 @@ internal static partial class PageHtml
     private const string Style =
         "<style>.prerendered:not(.reading){max-width:44rem;margin:0 auto;padding:2rem 1rem 3rem;font:17px/1.65 Spectral,Georgia,serif}" +
         ".prerendered:not(.reading) h1{font-size:1.8rem;line-height:1.2;margin:0 0 .75rem}" +
+        ".prerendered:not(.reading) h2{font-size:1.25rem;line-height:1.3;margin:1.75rem 0 .5rem}" +
         ".prerendered:not(.reading) nav,.prerendered:not(.reading) .source{font:14px/1.5 'IBM Plex Sans',system-ui,sans-serif;margin:1rem 0}" +
         ".prerendered:not(.reading) p{margin:0 0 .75rem}.prerendered:not(.reading) a{color:inherit}" +
         ".prerendered:not(.reading) ul{padding-left:1.2rem}" +
@@ -246,7 +247,8 @@ internal static partial class PageHtml
         }
 
         var data = page.Data is { } answers ? PageData.Element(answers) : "";
-        return Root().Replace(html, match => match.Groups[1].Value + page.Body + match.Groups[2].Value + data, 1);
+        var body = page.Body.Length > 0 ? $"<main>{page.Body}</main>" : "";
+        return Root().Replace(html, match => match.Groups[1].Value + body + match.Groups[2].Value + data, 1);
     }
 
     private static string Absolute(string origin, string url) =>

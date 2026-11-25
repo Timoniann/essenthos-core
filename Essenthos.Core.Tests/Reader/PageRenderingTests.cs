@@ -247,7 +247,7 @@ public sealed class PageRenderingTests
     {
         var html = VersePage("Стань посередині!");
 
-        html.Should().MatchRegex("<div id=\"root\" class=\"h-full\"><article class=\"prerendered reading\" lang=\"uk\" data-chapter=\"/read/mark/3\" data-verse=\"3\">.*<h1>Від Марка 3</h1>.*</article></div>");
+        html.Should().MatchRegex("<div id=\"root\" class=\"h-full\"><main><article class=\"prerendered reading\" lang=\"uk\" data-chapter=\"/read/mark/3\" data-verse=\"3\">.*<h1>Від Марка 3</h1>.*</article></main></div>");
         html.Should().Contain("<a href=\"/uk/read/mark/3\">Від Марка 3</a>");
         html.Should().Contain("<a href=\"/uk/read/mark/2\" rel=\"prev\">← Від Марка 2</a><a href=\"/uk/read/mark/4\" rel=\"next\">Від Марка 4 →</a>");
     }
@@ -487,7 +487,7 @@ public sealed class PageRenderingTests
         var html = PageHtml.Render(Shell, page, SiteLanguage.English, Origin);
 
         html.Should().MatchRegex(
-            """</article></div><script type="application/json" id="page-data">\{"/v1/entities/moses\?language=ukr\\u0026prose=ukr":.*</script>""");
+            """</article></main></div><script type="application/json" id="page-data">\{"/v1/entities/moses\?language=ukr\\u0026prose=ukr":.*</script>""");
         html.Should().NotContain("</script><script>alert");
         html.Should().Contain("‘so’");
     }
@@ -613,6 +613,15 @@ public sealed class PageRenderingTests
             .And.Contain("Disallow: /es/search?\n")
             .And.EndWith($"Sitemap: {Origin}/sitemap.xml\n");
         robots.Should().NotContain("Disallow: /v1/\n", "a search engine that runs the page's script reads its data from the API");
+    }
+
+    [Fact]
+    public void RobotsSignalSearchAndAnswerInputButNothingAboutTraining()
+    {
+        var robots = PageEndpoints.Robots(Origin);
+
+        robots.Should().StartWith("User-agent: *\nContent-Signal: search=yes, ai-input=yes\n");
+        robots.Should().NotContain("ai-train");
     }
 
     private static string Title(string html) =>

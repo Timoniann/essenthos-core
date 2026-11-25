@@ -1035,8 +1035,30 @@ internal static partial class PageViews
         var description = t.Text("home.description");
         var body = Open(language)
             .Element("h1", PageContent.SiteName)
-            .Element("p", description)
-            .Open("nav").Open("ul");
+            .Element("p", description);
+        body.Open("section").Element("h2", t.Text("home.about.heading")).Element("p", t.Text("home.about.intro")).Close("section");
+        // The reader's home page shows the same groups as cards, each point's first line under its
+        // title and the rest when asked; here every point is written whole.
+        foreach (var group in t.Keys("home.about.groups"))
+        {
+            var at = $"home.about.groups.{group}";
+            body.Open("section").Element("h2", t.Text($"{at}.heading"));
+            if (t.Optional($"{at}.summary") is { } summary)
+            {
+                body.Element("p", summary);
+            }
+
+            foreach (var point in t.Keys($"{at}.points"))
+            {
+                var text = t.Text($"{at}.points.{point}.text");
+                body.Element("h3", t.Text($"{at}.points.{point}.title"))
+                    .Element("p", t.Optional($"{at}.points.{point}.more") is { } more ? $"{text} {more}" : text);
+            }
+
+            body.Close("section");
+        }
+
+        body.Open("nav").Open("ul");
         foreach (var key in HomeSections)
         {
             body.Open("li").Link(language.Path(PageSections.Named(key).Path), t.Text($"page.{key}.title")).Close("li");
