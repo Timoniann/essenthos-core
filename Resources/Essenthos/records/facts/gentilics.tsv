@@ -2,6 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-25
 strong	origin_strong	kind	origin	people	statement	by
 H1017	H1008	patrial	bethel	bethelites	patrial from בֵּית־אֵל (H1008) with the article interposed	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H1022	H1035	patrial	bethlehem	bethlehemites	patrial from בֵּית לֶחֶם (H1035) with the article inserted	Strong's Hebrew dictionary by James Strong, 1890, public domain
@@ -71,7 +72,7 @@ H373	H372	patronymic	iezer	jeezerites	patronymic from אִיעֶזֵר (H372)	St
 H3732	H3731	patrial	\N	caphthorim	patrial from כַּפְתֹּר (H3731)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H3757	H3756	patronymic	\N	carmites	patronymically from כַּרְמִי (H3756)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H3761	H3760	patronymic	\N	carmelites	patron from כַּרְמֶל (H3760)	Strong's Hebrew dictionary by James Strong, 1890, public domain
-H3778	H3777	patronymic	chesed	chaldeans	towards the Kasdites into Chaldea), patronymically from כֶּשֶׂד (H3777) (only in the plural)	Strong's Hebrew dictionary by James Strong, 1890, public domain
+H3778	H3777	patronymic	\N	chaldeans	towards the Kasdites into Chaldea), patronymically from כֶּשֶׂד (H3777) (only in the plural)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H3846	H3845	patronymic	\N	libnites	patronymically from לִבְנִי (H3845)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H3866	H3865	patrial	\N	lydians	patrial from לוּד (H3865)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H3881	H3878	patronymic	\N	levites	patronymically from לֵוִי (H3878)	Strong's Hebrew dictionary by James Strong, 1890, public domain
@@ -122,7 +123,7 @@ H6876	H6865	patrial	\N	tyrians	patrial from צֹר (H6865)	Strong's Hebrew dicti
 H6882	H6881	patrial	\N	zorites	patrial from צׇרְעָה (H6881)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H6956	H6955	patronymic	kohath	kohathites	patronymically from קְהָת (H6955)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H701	H694	patrial	\N	arbites	patrial from אֲרָב (H694)	Strong's Hebrew dictionary by James Strong, 1890, public domain
-H7017	H7014	patronymic	cain	kenites	(1 Chronicles 2:55), patronymic from קַיִן (H7014)	Strong's Hebrew dictionary by James Strong, 1890, public domain
+H7017	H7014	patronymic	\N	kenites	(1 Chronicles 2:55), patronymic from קַיִן (H7014)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H7074	H7073	patronymic	\N	kenizzites	patronymic from קְנַז (H7073)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H7145	H7141	patronymic	\N	korahites	patronymic from קֹרַח (H7141)	Strong's Hebrew dictionary by James Strong, 1890, public domain
 H716	H714	patronymic	\N	ardites	patronymic from אַרְדְּ (H714)	Strong's Hebrew dictionary by James Strong, 1890, public domain

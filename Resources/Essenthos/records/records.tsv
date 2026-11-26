@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-23
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-25
 # Our records. No dataset source: where a record came from is its claims; a dataset's id for it is in records/external-ids.
 slug	kind	subtype	place_kind	name	sex	sex_source	name_gender	tribe	origin	another_name_for	byname
 aaron	person	\N	\N	Aaron	male	\N	\N	Levi	\N	\N	\N
@@ -1039,7 +1039,7 @@ cenchreae	place	\N	settlement	Cenchreae	\N	\N	\N	\N	\N	\N	\N
 chagav	being	creature	\N	Chagav	\N	\N	\N	\N	\N	\N	\N
 chalcis	place	\N	settlement	Chalcis	\N	\N	\N	\N	\N	\N	\N
 chaldea	place	\N	geographic region	Chaldea	\N	\N	\N	\N	\N	\N	\N
-chaldeans	people	\N	\N	Chaldeans	\N	\N	\N	\N	chesed	\N	\N
+chaldeans	people	\N	\N	Chaldeans	\N	\N	\N	\N	\N	\N	\N
 chamor	being	creature	\N	Donkey	\N	\N	\N	\N	\N	\N	\N
 chargol	being	creature	\N	Chargol	\N	\N	\N	\N	\N	\N	\N
 charmande	place	\N	settlement	Charmande	\N	\N	\N	\N	\N	\N	\N
@@ -2875,7 +2875,7 @@ kenath	place	\N	settlement	Kenath	\N	\N	\N	\N	\N	\N	\N
 kenaz	person	\N	\N	Kenaz	male	\N	\N	Edomite	\N	\N	\N
 kenaz-2	person	\N	\N	Kenaz	male	\N	\N	Judah	\N	\N	\N
 kenaz-3	person	\N	\N	Kenaz	male	\N	\N	Judah	\N	\N	\N
-kenites	people	\N	\N	Kenites	\N	\N	\N	\N	cain	\N	\N
+kenites	people	\N	\N	Kenites	\N	\N	\N	\N	\N	\N	\N
 kenizzites	people	\N	\N	Kenizzites	\N	\N	\N	\N	\N	\N	\N
 kephir	being	creature	\N	Lion	\N	\N	\N	\N	\N	\N	\N
 kerenhappuch	person	\N	\N	Keren-happuch	female	\N	\N	\N	\N	\N	\N
